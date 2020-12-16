@@ -27,5 +27,5 @@ stages:
 lint:submission-checker:
   variables:
     PROJECT_PATH: services/submission-checker
-    <<: *lint
+  <<: *lint
 
