@@ -1,4 +1,5 @@
 stages:
+  - prepare
   - analyze
 
 #----------------------------------------------------------------------
@@ -7,6 +8,15 @@ stages:
 #
 #----------------------------------------------------------------------
 
+.job_template: &npm-dependencies
+  tags:
+    - docker
+  stage: prepare
+  image: node:14-alpine
+  script: npm install --prefix $PROJECT_PATH
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
 
 .job_template: &lint
   tags:
@@ -25,7 +35,14 @@ stages:
 # Submission Checker
 #-----------------------------------
 
+install-dependencies:submission-checker:
+  variables:
+    PROJECT_PATH: services/submission-checker
+  <<: *npm-dependencies
+
 lint:submission-checker:
+  needs:
+    - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
   <<: *lint
