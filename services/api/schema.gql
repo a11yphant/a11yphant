@@ -8,5 +8,5 @@ type HelloWorld {
 }
 
 type Query {
-  helloWorld: HelloWorld!
+  helloWorld: [HelloWorld!]!
 }
