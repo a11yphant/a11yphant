@@ -12,6 +12,7 @@ stages:
   tags:
     - docker
   stage: analyze
+  image: node:14-alpine
   script: npm run lint --prefix $PROJECT_PATH
 
 #----------------------------------------------------------------------
