@@ -1,0 +1,12 @@
+{
+  "name": "@a11y-challenges/submission-checker",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo \"Not specified\"",
+    "test": "echo \"Not specified\""
+  },
+  "author": "",
+  "license": "ISC"
+}
