@@ -1,6 +1,7 @@
 stages:
   - prepare
   - analyze
+  - test
 
 #----------------------------------------------------------------------
 #
@@ -25,6 +26,13 @@ stages:
   image: node:14-alpine
   script: npm run lint --prefix $PROJECT_PATH
 
+.job_template: &test
+  tags:
+    - docker
+  stage: test
+  image: node:14-alpine
+  script: npm run test --prefix $PROJECT_PATH
+
 #----------------------------------------------------------------------
 #
 # Jobs
@@ -47,3 +55,9 @@ lint:submission-checker:
     PROJECT_PATH: services/submission-checker
   <<: *lint
 
+test:submission-checker:
+  needs:
+    - install-dependencies:submission-checker
+  variables:
+    PROJECT_PATH: services/submission-checker
+  <<: *test
