@@ -1,8 +1,8 @@
 {
-  "name": "api",
+  "name": "a11y-challenges-api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
