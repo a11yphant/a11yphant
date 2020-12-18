@@ -6,9 +6,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const url = configService.get('API_URL');
-  const port = configService.get('API_PORT');
+
+  const url = configService.get('api.url');
+  const port = configService.get('api.port');
+
   await app.listen(port);
-  console.log(`App listening on http://${url}:${port}/`);
+  console.log(`App listening on ${url}/graphql`);
 }
 bootstrap();
