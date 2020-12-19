@@ -32,7 +32,7 @@
     "sort-imports": "off",
     "import/order": "off",
     "unused-imports/no-unused-imports": "error",
-    "prefer-template": "error",
+    "prefer-template": "error"
   },
   "ignorePatterns": ["**/*.generated.ts", "**/node_modules"]
 }
