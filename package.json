@@ -1,0 +1,16 @@
+{
+  "name": "a11y-challenges",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.mediacube.at/a11y-challenges/a11y-challenges.git"
+  },
+  "keywords": []
+}
