@@ -11,6 +11,7 @@
     "prebuild": "npm run generate",
     "build": "next build",
     "start": "node ./next-startup.js start",
+    "generate": "graphql-codegen",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
     "lint:eslint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
