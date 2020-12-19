@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { HelloWorld } from './models/hello-world.model';
-import * as uuid from 'uuid';
+import { Injectable } from "@nestjs/common";
+import * as uuid from "uuid";
+
+import { HelloWorld } from "./models/hello-world.model";
 
 @Injectable()
 export class HelloWorldService {
@@ -8,11 +9,11 @@ export class HelloWorldService {
     return [
       {
         id: uuid.v4(),
-        message: 'Hello',
+        message: "Hello",
       },
       {
         id: uuid.v4(),
-        message: 'World',
+        message: "World",
       },
     ];
   }
