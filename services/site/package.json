@@ -6,7 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "predev": "npm run generate",
     "dev": "node ./next-startup.js dev",
+    "prebuild": "npm run generate",
     "build": "next build",
     "start": "node ./next-startup.js start",
     "lint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
