@@ -25,12 +25,4 @@ switch (command) {
         cli = require("next/dist/cli/next-dev");
         cli.nextDev(["-p", port, ...args]);
         break;
-    case "build":
-        cli = require("next/dist/cli/next-build");
-        cli.nextBuild(["-p", port, ...args]);
-        break;
-    case "telemetry":
-        cli = require("next/dist/cli/next-telemetry");
-        cli.nextTelemetry(["-p", port, ...args]);
-        break;
 }
