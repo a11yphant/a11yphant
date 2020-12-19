@@ -17,17 +17,11 @@
     "es6": true
   },
   "rules": {
-    "@typescript-eslint/interface-name-prefix": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/explicit-function-return-type": [
-      "error",
-      {
-        "allowExpressions": true
-      }
-    ],
     "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "sort-imports": "off",
     "import/order": "off",
     "unused-imports/no-unused-imports": "error",
@@ -35,12 +29,23 @@
   },
   "overrides": [
     {
-      "files": ["*.jsx", "*.tsx"],
+      "files": ["./services/site/*.jsx", "./services/site/*.tsx"],
       "rules": {
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "react/display-name": "off",
         "react/prop-types": "off"
+      }
+    },
+    {
+      "files": ["./services/api/*.ts"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ]
       }
     }
   ],
