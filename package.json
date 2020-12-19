@@ -15,7 +15,5 @@
     "url": "https://gitlab.mediacube.at/a11y-challenges/a11y-challenges.git"
   },
   "keywords": [],
-  "devDependencies": {
-    "typescript": "^4.1.3"
-  }
+  "devDependencies": {}
 }
