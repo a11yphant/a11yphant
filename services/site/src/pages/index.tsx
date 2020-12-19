@@ -4,7 +4,12 @@ import { initializeApollo } from 'app/lib/apolloClient';
 import { HelloWorldDocument, useHelloWorldQuery } from 'app/generated/graphql';
 
 const Home = () => {
-  const { loading, data: { helloWorld: [{ message }] } }= useHelloWorldQuery();
+  const {
+    loading,
+    data: {
+      helloWorld: [{ message }],
+    },
+  } = useHelloWorldQuery();
   return (
     <main className="flex justify-center items-center w-screen h-screen">
       <Card heading={<h1>A11y Challenges</h1>}>
