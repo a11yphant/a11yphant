@@ -1,4 +1,4 @@
-.job_template: &test
+.test
   tags:
     - docker
   stage: test
