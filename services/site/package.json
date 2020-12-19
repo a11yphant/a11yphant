@@ -9,9 +9,11 @@
     "dev": "node ./next-startup.js dev",
     "build": "next build",
     "start": "node ./next-startup.js start",
-    "lint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "echo \"Not specified\""
+    "lint": "npm run lint:eslint && npm run lint:tsc",
+    "lint:tsc": "tsc --project ./tsconfig.lint.json",
+    "lint:eslint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
+    "lint:eslint:fix": "npm run lint:eslint -- --fix",
+    "test": "echo \"Not specified\"",
   },
   "dependencies": {
     "autoprefixer": "^10.1.0",
