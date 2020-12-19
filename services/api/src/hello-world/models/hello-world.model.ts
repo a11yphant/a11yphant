@@ -4,5 +4,7 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 export class HelloWorld {
   @Field(() => ID)
   id: string;
+
+  @Field(() => String)
   message: string;
 }
