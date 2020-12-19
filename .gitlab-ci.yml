@@ -59,7 +59,7 @@ generate-graphql-schema:api:
   script: npm run generate-schema --prefix $PROJECT_PATH
   artifacts:
     paths:
-      - $PROJECT_PATH/src/schema.gql
+      - $PROJECT_PATH/schema.gql
 
 lint:api:
   extends: .lint
