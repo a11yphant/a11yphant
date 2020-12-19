@@ -91,3 +91,9 @@ lint:site:
   variables:
     PROJECT_PATH: services/site
 
+test:site:
+  extends: .test
+  needs:
+    - install-dependencies:site
+  variables:
+    PROJECT_PATH: services/site

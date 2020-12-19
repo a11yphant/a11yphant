@@ -1,6 +1,12 @@
+source ~/.nvm/nvm.sh
 
 # jump to project root
 cd $(dirname $0)
+
+# use correct npm and install dependencies
+nvm install
+nvm use
+npm install
 
 # create .env from .env.example
 if [ ! -f ./.env ]; then
@@ -14,3 +20,7 @@ ln -s ./../../.env ./services/api/.env
 # create site symlinks
 rm -f ./services/site/.env
 ln -s ./../../.env ./services/site/.env
+
+# create site symlinks
+rm -f ./services/submission-checker/.env
+ln -s ./../../.env ./services/submission-checker/.env

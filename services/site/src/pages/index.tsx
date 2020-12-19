@@ -1,7 +1,7 @@
-import React from 'react';
-import Card from 'app/components/Card';
-import { initializeApollo } from 'app/lib/apolloClient';
-import { HelloWorldDocument, useHelloWorldQuery } from 'app/generated/graphql';
+import Card from "app/components/Card";
+import { HelloWorldDocument, useHelloWorldQuery } from "app/generated/graphql";
+import { initializeApollo } from "app/lib/apolloClient";
+import React from "react";
 
 const Home = () => {
   const {
@@ -14,11 +14,10 @@ const Home = () => {
     <main className="flex justify-center items-center w-screen h-screen">
       <Card heading={<h1>A11y Challenges</h1>}>
         <p>
-          Welcome to a11y-challenges.cool! This is a project created by Michael
-          Brandstätter, Thomas Dax, Daniela Kubesch and Luca Pircher during
+          Welcome to a11y-challenges.cool! This is a project created by Michael Brandstätter, Thomas Dax, Daniela Kubesch and Luca Pircher during
           their MMT Master degree program at FH Salzburg
         </p>
-        <p>{loading ? 'Loading' : message}</p>
+        <p>{loading ? "Loading" : message}</p>
       </Card>
     </main>
   );
