@@ -50,7 +50,7 @@ install-dependencies:api:
 generate-graphql-schema:api:
   tags:
     - docker
-  stage: analyze
+  stage: generate
   needs:
     - install-dependencies:api
   image: node:14-alpine
