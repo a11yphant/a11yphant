@@ -9,7 +9,8 @@
     "dev": "node ./next-startup.js dev",
     "build": "next build",
     "start": "node ./next-startup.js start",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix"
+    "lint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "autoprefixer": "^10.1.0",
