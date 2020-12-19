@@ -1,0 +1,19 @@
+{
+  "name": "a11y-challenges",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "postinstall": "npm --prefix services/api install && npm --prefix services/site install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.mediacube.at/a11y-challenges/a11y-challenges.git"
+  },
+  "keywords": [],
+  "devDependencies": {}
+}

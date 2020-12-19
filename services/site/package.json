@@ -9,8 +9,10 @@
     "dev": "node ./next-startup.js dev",
     "build": "next build",
     "start": "node ./next-startup.js start",
-    "lint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "npm run lint:eslint && npm run lint:tsc",
+    "lint:tsc": "tsc --project ./tsconfig.lint.json",
+    "lint:eslint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
+    "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "echo \"Not specified\""
   },
   "dependencies": {
@@ -34,7 +36,12 @@
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^1.0.1",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   }

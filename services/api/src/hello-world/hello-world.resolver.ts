@@ -1,6 +1,7 @@
-import { Query, Resolver } from '@nestjs/graphql';
-import { HelloWorld } from './models/hello-world.model';
-import { HelloWorldService } from './hello-world.service';
+import { Query, Resolver } from "@nestjs/graphql";
+
+import { HelloWorldService } from "./hello-world.service";
+import { HelloWorld } from "./models/hello-world.model";
 
 @Resolver()
 export class HelloWorldResolver {
