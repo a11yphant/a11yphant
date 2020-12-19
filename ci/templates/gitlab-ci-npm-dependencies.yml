@@ -1,4 +1,4 @@
-.npm-dependencies
+.npm-dependencies:
   tags:
     - docker
   stage: prepare

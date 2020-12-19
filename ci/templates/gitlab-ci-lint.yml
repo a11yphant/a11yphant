@@ -1,4 +1,4 @@
-.lint
+.lint:
   tags:
     - docker
   stage: analyze
