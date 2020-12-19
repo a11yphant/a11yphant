@@ -88,6 +88,7 @@ lint:site:
   extends: .lint
   needs:
     - install-dependencies:site
+    - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
 
