@@ -36,3 +36,31 @@ test:submission-checker:
     - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
+
+install-dependencies:submission-checker:
+  extends: .npm-dependencies
+  variables:
+    PROJECT_PATH: services/submission-checker
+
+#-----------------------------------
+# API
+#-----------------------------------
+
+install-dependencies:api:
+  extends: .npm-dependencies
+  variables:
+    PROJECT_PATH: services/api
+
+lint:api:
+  extends: .lint
+  needs:
+    - install-dependencies:api
+  variables:
+    PROJECT_PATH: services/api
+
+test:api:
+  extends: .test
+  needs:
+    - install-dependencies:api
+  variables:
+    PROJECT_PATH: services/api
