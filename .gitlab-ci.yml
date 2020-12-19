@@ -96,5 +96,6 @@ test:site:
   extends: .test
   needs:
     - install-dependencies:site
+    - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
