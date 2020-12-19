@@ -64,3 +64,26 @@ test:api:
     - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
+
+#-----------------------------------
+# Site
+#-----------------------------------
+
+install-dependencies:site:
+  extends: .npm-dependencies
+  variables:
+    PROJECT_PATH: services/site
+
+lint:site:
+  extends: .lint
+  needs:
+    - install-dependencies:site
+  variables:
+    PROJECT_PATH: services/site
+
+test:site:
+  extends: .test
+  needs:
+    - install-dependencies:site
+  variables:
+    PROJECT_PATH: services/site
