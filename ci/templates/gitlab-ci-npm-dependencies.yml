@@ -1,0 +1,9 @@
+.job_template: &npm-dependencies
+  tags:
+    - docker
+  stage: prepare
+  image: node:14-alpine
+  script: npm install --prefix $PROJECT_PATH
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules

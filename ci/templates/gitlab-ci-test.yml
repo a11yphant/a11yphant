@@ -1,0 +1,6 @@
+.job_template: &test
+  tags:
+    - docker
+  stage: test
+  image: node:14-alpine
+  script: npm run test --prefix $PROJECT_PATH
