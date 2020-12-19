@@ -1,0 +1,66 @@
+include:
+  - /ci/templates/gitlab-ci-npm-dependencies.yml
+  - /ci/templates/gitlab-ci-lint.yml
+  - /ci/templates/gitlab-ci-test.yml
+
+stages:
+  - prepare
+  - analyze
+  - test
+
+#----------------------------------------------------------------------
+#
+# Jobs
+#
+#----------------------------------------------------------------------
+
+#-----------------------------------
+# Submission Checker
+#-----------------------------------
+
+install-dependencies:submission-checker:
+  extends: .npm-dependencies
+  variables:
+    PROJECT_PATH: services/submission-checker
+
+lint:submission-checker:
+  extends: .lint
+  needs:
+    - install-dependencies:submission-checker
+  variables:
+    PROJECT_PATH: services/submission-checker
+
+test:submission-checker:
+  extends: .test
+  needs:
+    - install-dependencies:submission-checker
+  variables:
+    PROJECT_PATH: services/submission-checker
+
+install-dependencies:submission-checker:
+  extends: .npm-dependencies
+  variables:
+    PROJECT_PATH: services/submission-checker
+
+#-----------------------------------
+# API
+#-----------------------------------
+
+install-dependencies:api:
+  extends: .npm-dependencies
+  variables:
+    PROJECT_PATH: services/api
+
+lint:api:
+  extends: .lint
+  needs:
+    - install-dependencies:api
+  variables:
+    PROJECT_PATH: services/api
+
+test:api:
+  extends: .test
+  needs:
+    - install-dependencies:api
+  variables:
+    PROJECT_PATH: services/api
