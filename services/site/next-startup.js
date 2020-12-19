@@ -10,6 +10,7 @@ if (!(process.argv.length >= 3)) {
 
 const [, , command, ...args] = process.argv;
 const port = process.env.SITE_PORT || 3001;
+const host = process.env.SITE_HOST || "localhost";
 
 if (!existingCommands.includes(command)) {
     throw new Error(errorMessage);
@@ -19,10 +20,10 @@ let cli;
 switch (command) {
     case "start":
         cli = require("next/dist/cli/next-start");
-        cli.nextStart(["-p", port, ...args]);
+        cli.nextStart(["-p", port, "-H", host, ...args]);
         break;
     case "dev":
         cli = require("next/dist/cli/next-dev");
-        cli.nextDev(["-p", port, ...args]);
+        cli.nextDev(["-p", port, "-H", host, ...args]);
         break;
 }
