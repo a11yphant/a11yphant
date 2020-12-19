@@ -1,11 +1,15 @@
 import "app/styles/global.scss";
 
 import { ApolloProvider } from "@apollo/client";
+import { useApollo } from "app/lib/apolloClient";
 import React from "react";
 
-import { useApollo } from "../lib/apolloClient";
+interface AppProps {
+  Component: React.JSXElementConstructor<any>;
+  pageProps: any;
+}
 
-const App = ({ Component, pageProps }) => {
+const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (

@@ -1,9 +1,10 @@
 import Card from "app/components/Card";
 import { HelloWorldDocument, useHelloWorldQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apolloClient";
+import { GetStaticProps } from "next";
 import React from "react";
 
-const Home = () => {
+const Home: React.FunctionComponent = () => {
   const {
     loading,
     data: {
@@ -23,7 +24,7 @@ const Home = () => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
@@ -36,6 +37,6 @@ export async function getStaticProps() {
     },
     revalidate: 1,
   };
-}
+};
 
 export default Home;
