@@ -1,54 +1,15 @@
-.lint:
-  tags:
-    - docker
-  stage: analyze
-  image: node:14-alpine
-  script: npm run lint --prefix $PROJECT_PATH
+include:
+  - /ci/templates/gitlab-ci-npm-dependencies.yml
+  - /ci/templates/gitlab-ci-lint.yml
+  - /ci/templates/gitlab-ci-test.yml
+  - /ci/rules/gitlab-ci-rules.yml
 
-.npm-dependencies:
-  tags:
-    - docker
-  stage: prepare
-  image: node:14-alpine
-  script: npm install --prefix $PROJECT_PATH
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-
-.test:
-  tags:
-    - docker
-  stage: test
-  image: node:14-alpine
-  script: npm run test --prefix $PROJECT_PATH
 
 stages:
   - prepare
   - generate
   - analyze
   - test
-
-#----------------------------------------------------------------------
-#
-# Rules
-#
-#----------------------------------------------------------------------
-
-.api_rules: &api_rules
-  if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-  changes:
-    - services/api/**/*
-
-
-.site_rules: &site_rules
-  if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-  changes:
-    - services/site/**/*
-
-.submission-checker_rules: &submission-checker_rules
-  if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-  changes:
-    - services/submission-checker/**/*
 
 #----------------------------------------------------------------------
 #
