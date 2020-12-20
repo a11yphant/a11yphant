@@ -1,7 +1,26 @@
-include:
-  - /ci/templates/gitlab-ci-npm-dependencies.yml
-  - /ci/templates/gitlab-ci-lint.yml
-  - /ci/templates/gitlab-ci-test.yml
+.lint:
+  tags:
+    - docker
+  stage: analyze
+  image: node:14-alpine
+  script: npm run lint --prefix $PROJECT_PATH
+
+.npm-dependencies:
+  tags:
+    - docker
+  stage: prepare
+  image: node:14-alpine
+  script: npm install --prefix $PROJECT_PATH
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+
+.test:
+  tags:
+    - docker
+  stage: test
+  image: node:14-alpine
+  script: npm run test --prefix $PROJECT_PATH
 
 stages:
   - prepare
