@@ -9,9 +9,11 @@
     "postinstall": "npm --prefix services/api install && npm --prefix services/site install",
     "start": "npm run dev",
     "dev": "pm2 start ecosystem.config.js",
-    "dev:debug": "pm2 start ecosystem.config.js --no-daemon",
+    "dev:no-demon": "pm2 start ecosystem.config.js --no-daemon",
     "dev:api": "npm --prefix services/api install && npm --prefix services/api run start:dev",
     "dev:site": "npm --prefix services/site install && echo $API_PORT && wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",
+    "debug:api": "pm2 logs a11y-challenges-api",
+    "debug:site": "pm2 logs a11y-challenges-site",
     "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint"
   },
   "repository": {
