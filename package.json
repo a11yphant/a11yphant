@@ -7,13 +7,25 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "npm --prefix services/api install && npm --prefix services/site install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint"
+    "dotenv": "dotenv",
+    "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint",
+    "start": "npm run dev",
+    "dev": "pm2 start pm2-ecosystem.config.js",
+    "dev:no-daemon": "node pm2-start-no-daemon.js",
+    "stop": "pm2 stop a11y-challenges && pm2 del a11y-challenges",
+    "dev:api": "npm --prefix services/api install && npm --prefix services/api run start:dev",
+    "dev:site": "npm --prefix services/site install && wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",
+    "debug:api": "pm2 logs a11y-challenges-api",
+    "debug:site": "pm2 logs a11y-challenges-site"
   },
   "repository": {
     "type": "git",
     "url": "https://gitlab.mediacube.at/a11y-challenges/a11y-challenges.git"
   },
   "keywords": [],
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv-cli": "^4.0.0",
+    "pm2": "^4.5.1",
+    "wait-on": "^5.2.0"
+  }
 }
