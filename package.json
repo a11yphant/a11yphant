@@ -7,16 +7,16 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "npm --prefix services/api install && npm --prefix services/site install",
-    "start": "npm run dev",
-    "stop": "pm2 stop all && pm2 del all",
     "dotenv": "dotenv",
+    "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint",
+    "start": "npm run dev",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-demon": "node pm2-start-no-demon.js",
+    "stop": "pm2 stop all && pm2 del all",
     "dev:api": "npm --prefix services/api install && npm --prefix services/api run start:dev",
     "dev:site": "npm --prefix services/site install && wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",
     "debug:api": "pm2 logs a11y-challenges-api",
-    "debug:site": "pm2 logs a11y-challenges-site",
-    "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint"
+    "debug:site": "pm2 logs a11y-challenges-site"
   },
   "repository": {
     "type": "git",
