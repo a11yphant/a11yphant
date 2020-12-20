@@ -23,6 +23,9 @@ install-dependencies:submission-checker:
   extends: .npm-dependencies
   variables:
     PROJECT_PATH: services/submission-checker
+  rules:
+    - changes:
+        - services/submission-checker/**/*
 
 lint:submission-checker:
   extends: .lint
@@ -30,6 +33,9 @@ lint:submission-checker:
     - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
+  rules:
+    - changes:
+        - services/submission-checker/**/*
 
 test:submission-checker:
   extends: .test
@@ -37,6 +43,9 @@ test:submission-checker:
     - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
+  rules:
+    - changes:
+        - services/submission-checker/**/*
 
 #-----------------------------------
 # API
@@ -46,6 +55,11 @@ install-dependencies:api:
   extends: .npm-dependencies
   variables:
     PROJECT_PATH: services/api
+  rules:
+    - changes:
+        - services/api/**/*
+        - services/site/**/*
+
 
 generate-graphql-schema:api:
   tags:
@@ -64,6 +78,9 @@ generate-graphql-schema:api:
     - if: '$CI_COMMIT_BRANCH == "master"'
     - if: '$CI_COMMIT_BRANCH == "develop"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - changes:
+        - services/api/**/*
+        - services/site/**/*
 
 lint:api:
   extends: .lint
@@ -71,6 +88,9 @@ lint:api:
     - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
+  rules:
+    - changes:
+        - services/api/**/*
 
 test:api:
   extends: .test
@@ -78,6 +98,9 @@ test:api:
     - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
+  rules:
+    - changes:
+        - services/api/**/*
 
 #-----------------------------------
 # Site
@@ -87,6 +110,9 @@ install-dependencies:site:
   extends: .npm-dependencies
   variables:
     PROJECT_PATH: services/site
+  rules:
+    - changes:
+        - services/site/**/*
 
 lint:site:
   extends: .lint
@@ -95,6 +121,9 @@ lint:site:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
+  rules:
+    - changes:
+        - services/site/**/*
 
 test:site:
   extends: .test
@@ -103,3 +132,6 @@ test:site:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
+  rules:
+    - changes:
+        - services/site/**/*
