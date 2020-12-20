@@ -60,7 +60,7 @@ npm run stop
 Start all services in the foreground:
 
 ```sh 
-npm run dev:no-demon
+npm run dev:no-daemon
 ```
 
 ### Start individual services
