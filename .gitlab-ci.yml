@@ -5,6 +5,7 @@ include:
 
 stages:
   - prepare
+  - generate
   - analyze
   - test
 
@@ -37,11 +38,6 @@ test:submission-checker:
   variables:
     PROJECT_PATH: services/submission-checker
 
-install-dependencies:submission-checker:
-  extends: .npm-dependencies
-  variables:
-    PROJECT_PATH: services/submission-checker
-
 #-----------------------------------
 # API
 #-----------------------------------
@@ -50,6 +46,20 @@ install-dependencies:api:
   extends: .npm-dependencies
   variables:
     PROJECT_PATH: services/api
+
+generate-graphql-schema:api:
+  tags:
+    - docker
+  stage: generate
+  needs:
+    - install-dependencies:api
+  image: node:14-alpine
+  variables:
+    PROJECT_PATH: services/api
+  script: npm run generate-schema --prefix $PROJECT_PATH
+  artifacts:
+    paths:
+      - $PROJECT_PATH/schema.gql
 
 lint:api:
   extends: .lint
@@ -78,6 +88,7 @@ lint:site:
   extends: .lint
   needs:
     - install-dependencies:site
+    - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
 
@@ -85,5 +96,6 @@ test:site:
   extends: .test
   needs:
     - install-dependencies:site
+    - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site

@@ -6,9 +6,13 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "predev": "npm run gql:generate",
     "dev": "node ./next-startup.js dev",
+    "prebuild": "npm run gql:generate",
     "build": "next build",
     "start": "node ./next-startup.js start",
+    "gql:generate": "graphql-codegen",
+    "prelint": "npm run gql:generate",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
     "lint:eslint": "eslint \"./src/**/*.{js,ts,jsx,tsx}\"",
@@ -16,13 +20,16 @@
     "test": "echo \"Not specified\""
   },
   "dependencies": {
+    "@apollo/client": "3.3.6",
     "autoprefixer": "10.1.0",
     "date-fns": "2.16.1",
     "dotenv": "8.2.0",
+    "graphql": "15.4.0",
     "gray-matter": "4.0.2",
     "next": "10.0.3",
     "postcss": "8.2.1",
     "react": "16.14.0",
+    "react-apollo": "3.1.5",
     "react-dom": "16.14.0",
     "remark": "12.0.1",
     "remark-html": "12.0.0",
@@ -30,6 +37,11 @@
     "tailwindcss": "2.0.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.19.4",
+    "@graphql-codegen/fragment-matcher": "2.0.1",
+    "@graphql-codegen/typescript": "1.19.0",
+    "@graphql-codegen/typescript-operations": "1.17.12",
+    "@graphql-codegen/typescript-react-apollo": "2.2.1",
     "@types/node": "14.14.14",
     "@types/react": "17.0.0",
     "@typescript-eslint/eslint-plugin": "4.10.0",

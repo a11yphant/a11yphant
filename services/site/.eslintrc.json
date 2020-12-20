@@ -31,5 +31,5 @@
     "react/display-name": "off",
     "react/prop-types": "off"
   },
-  "ignorePatterns": ["**/*.generated.ts", "**/node_modules"]
+  "ignorePatterns": ["src/generated/**", "**/node_modules"]
 }
