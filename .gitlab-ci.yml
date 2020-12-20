@@ -60,6 +60,10 @@ generate-graphql-schema:api:
   artifacts:
     paths:
       - $PROJECT_PATH/schema.gql
+  only:
+    - master
+    - develop
+    - merge_request
 
 lint:api:
   extends: .lint
