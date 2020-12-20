@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: >-
+  a11y-challenges
+
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  api:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: services/api
+      Handler: entrypoint.handle
+      Runtime: nodejs12.x
+      Timeout: 60
+      Events:
+        HelloWorld:
+          Type: Api 
+          Properties:
+            Path: /graphql
+            Method: get
+          Properties:
+            Path: /graphql
+            Method: post
