@@ -7,3 +7,7 @@
   artifacts:
     paths:
       - $PROJECT_PATH/node_modules
+  only:
+    - master
+    - develop
+    - merge_request
