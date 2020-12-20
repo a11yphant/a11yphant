@@ -7,7 +7,7 @@
   artifacts:
     paths:
       - $PROJECT_PATH/node_modules
-  only:
-    - master
-    - develop
-    - merge_request
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
