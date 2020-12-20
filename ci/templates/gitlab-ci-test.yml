@@ -4,3 +4,7 @@
   stage: test
   image: node:14-alpine
   script: npm run test --prefix $PROJECT_PATH
+  only:
+    - master
+    - develop
+    - merge_request
