@@ -4,7 +4,3 @@
   stage: test
   image: node:14-alpine
   script: npm run test --prefix $PROJECT_PATH
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-    - if: '$CI_COMMIT_BRANCH == "develop"'
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
