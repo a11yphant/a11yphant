@@ -49,6 +49,12 @@ npm run debug:api
 npm run debug:site
 ```
 
+Stop all services:
+
+```sh 
+npm run stop
+```
+
 #### Foreground
 
 Start all services in the foreground:
@@ -69,14 +75,6 @@ npm run dotenv -- npm run dev:api
 
 # site
 npm run dotenv -- npm run dev:site
-```
-
-## Stop
-
-Stop all services:
-
-```sh 
-npm run stop
 ```
 
 ## Useful pm2 Commands
