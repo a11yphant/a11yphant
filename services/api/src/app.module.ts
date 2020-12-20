@@ -17,7 +17,7 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
       useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>("gql.debug"),
         playground: configService.get<boolean>("gql.playground"),
-        autoSchemaFile: "schema.gql",
+        autoSchemaFile: configService.get<boolean>("gql.inMemorySchema", true) ? true : "schema.gql",
         context: ({ req }) => ({ ...req }),
         cors: {
           credentials: true,
