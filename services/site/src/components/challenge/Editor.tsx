@@ -1,6 +1,5 @@
-import MonacoEditor, { EditorDidMount, EditorProps } from "@monaco-editor/react";
-import { editor } from "monaco-editor";
-import React, { useRef, useState } from "react";
+import { ControlledEditor, ControlledEditorOnChange, ControlledEditorProps } from "@monaco-editor/react";
+import React, { useState } from "react";
 
 enum EditorEnum {
   html = "html",
@@ -8,38 +7,25 @@ enum EditorEnum {
   javascript = "javascript",
 }
 
-const Editor: React.FunctionComponent<EditorProps> = (props) => {
-  const valueGetter = useRef<() => string>();
-  const editor = useRef<editor.IStandaloneCodeEditor>();
-
+const Editor: React.FunctionComponent<ControlledEditorProps> = (props) => {
   const [activeEditor, setActiveEditor] = useState<EditorEnum>(EditorEnum.html);
 
   const [htmlEditorValue, setHtmlEditorValue] = useState<string>("<!DOCTYPE html>");
   const [cssEditorValue, setCssEditorValue] = useState<string>("body {background: red}");
   const [jsEditorValue, setJsEditorValue] = useState<string>("console.log('ich bin so cool');");
 
-  React.useEffect(() => {
-    console.log("useEffect", { activeEditor });
-    editor.current?.onDidChangeModelContent((e) => {
-      console.log(e);
-      console.log("changeListener", { activeEditor });
-      switch (activeEditor) {
-        case EditorEnum.html:
-          setHtmlEditorValue(valueGetter.current());
-          break;
-        case EditorEnum.css:
-          setCssEditorValue(valueGetter.current());
-          break;
-        case EditorEnum.javascript:
-          setJsEditorValue(valueGetter.current());
-          break;
-      }
-    });
-  }, [activeEditor]);
-
-  const handleEditorDidMount: EditorDidMount = (_valueGetter, _editor) => {
-    valueGetter.current = _valueGetter;
-    editor.current = _editor;
+  const handleEditorChange: ControlledEditorOnChange = (event, value) => {
+    switch (activeEditor) {
+      case EditorEnum.html:
+        setHtmlEditorValue(value);
+        break;
+      case EditorEnum.css:
+        setCssEditorValue(value);
+        break;
+      case EditorEnum.javascript:
+        setJsEditorValue(value);
+        break;
+    }
   };
 
   return (
@@ -68,11 +54,11 @@ const Editor: React.FunctionComponent<EditorProps> = (props) => {
         </button>
       </div>
 
-      <MonacoEditor
+      <ControlledEditor
         {...props}
         language={activeEditor}
         value={activeEditor === EditorEnum.html ? htmlEditorValue : activeEditor === EditorEnum.css ? cssEditorValue : jsEditorValue}
-        editorDidMount={handleEditorDidMount}
+        onChange={handleEditorChange}
       />
     </div>
   );
