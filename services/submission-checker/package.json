@@ -72,7 +72,9 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "modulePathIgnorePatterns": ["<rootDir>/dist/"],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
