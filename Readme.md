@@ -1,6 +1,6 @@
 # A11y Challenges
 
-## Impotant Notice:
+## Important Notice:
 
 You must have Node installed via `nvm` for this project to work correctly 
 ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating))
