@@ -6,12 +6,14 @@ import { WebdriverFactory } from './webdriver.factory';
 export class BrowserService {
   constructor(private factory: WebdriverFactory) {}
 
-  async runAxeChecks(url: string): Promise<boolean> {
+  // TODO adapt return value type
+  async runAxeChecks(url: string): Promise<any> {
     const driver = this.factory.create();
     await driver.get(url);
     const axe = new AxeBuilder(driver).options();
-    const result = await axe.analyze();
+    const result = axe.analyze();
+    await driver.quit();
 
-    return true;
+    return result;
   }
 }
