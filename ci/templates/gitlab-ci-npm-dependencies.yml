@@ -3,4 +3,4 @@
     - docker
   stage: prepare
   image: node:14-alpine
-  script: npm install --prefix $PROJECT_PATH
+  script: npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline

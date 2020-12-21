@@ -3,4 +3,6 @@
     - docker
   stage: test
   image: node:14-alpine
+  before_script:
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   script: npm run test --prefix $PROJECT_PATH
