@@ -11,7 +11,7 @@ export class BrowserService {
     const driver = this.factory.create();
     await driver.get(url);
     const axe = new AxeBuilder(driver).options();
-    const result = axe.analyze();
+    const result = await axe.analyze();
     await driver.quit();
 
     return result;
