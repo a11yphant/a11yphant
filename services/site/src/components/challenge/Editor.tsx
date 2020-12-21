@@ -1,5 +1,6 @@
 import { ControlledEditorProps } from "@monaco-editor/react";
 import WrappedEditor from "app/components/challenge/editor/WrappedEditor";
+import TabBar from "app/components/TabBar";
 import React, { useState } from "react";
 
 enum EditorEnum {
@@ -17,29 +18,32 @@ const Editor: React.FunctionComponent<ControlledEditorProps> = (props) => {
 
   return (
     <div>
-      <div>
-        <button
-          onClick={() => {
-            setActiveEditor(EditorEnum.html);
-          }}
-        >
-          HTML
-        </button>
-        <button
-          onClick={() => {
-            setActiveEditor(EditorEnum.css);
-          }}
-        >
-          CSS
-        </button>
-        <button
-          onClick={() => {
-            setActiveEditor(EditorEnum.javascript);
-          }}
-        >
-          JavaScript
-        </button>
-      </div>
+      <TabBar
+        activeId={EditorEnum.html}
+        options={[
+          {
+            id: EditorEnum.html,
+            label: "HTML",
+            onClick: () => {
+              setActiveEditor(EditorEnum.html);
+            },
+          },
+          {
+            id: EditorEnum.css,
+            label: "CSS",
+            onClick: () => {
+              setActiveEditor(EditorEnum.css);
+            },
+          },
+          {
+            id: EditorEnum.javascript,
+            label: "JS",
+            onClick: () => {
+              setActiveEditor(EditorEnum.javascript);
+            },
+          },
+        ]}
+      />
 
       {activeEditor === EditorEnum.html && (
         <WrappedEditor
