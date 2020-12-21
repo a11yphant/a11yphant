@@ -96,7 +96,7 @@ generate-graphql-schema:api:
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
-  script: npm run generate-schema --prefix $PROJECT_PATH
+  script: echo $CI_PROJECT_DIR && ls -la $CI_PROJECT_DIR && npm run generate-schema --prefix $PROJECT_PATH
   rules:
     - *run_on_api_change
     - *run_on_site_change
