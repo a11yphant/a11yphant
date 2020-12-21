@@ -89,7 +89,7 @@ generate-graphql-schema:api:
   variables:
     PROJECT_PATH: services/api
   script: npm run generate-schema --prefix $PROJECT_PATH
-  artifacts:
+  cache:
     paths:
       - $PROJECT_PATH/schema.gql
   rules:
