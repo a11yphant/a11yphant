@@ -24,6 +24,8 @@ const Home: React.FunctionComponent = () => {
   );
 };
 
+console.log("a change");
+
 export const getStaticProps: GetStaticProps = async () => {
   const apolloClient = initializeApollo();
 
