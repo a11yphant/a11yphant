@@ -1,6 +1,3 @@
-include:
-  - /ci/templates/gitlab-ci-cache.yml
-
 .test:
   extends: .global-cache
   tags:

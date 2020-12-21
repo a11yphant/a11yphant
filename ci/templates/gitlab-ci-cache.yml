@@ -1,4 +1,5 @@
 .global-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - $PROJECT_PATH/node_modules/

@@ -1,8 +1,8 @@
 include:
+  - /ci/templates/gitlab-ci-cache.yml
   - /ci/templates/gitlab-ci-npm-dependencies.yml
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
-  - /ci/templates/gitlab-ci-cache.yml
 
 stages:
   - prepare

@@ -1,6 +1,3 @@
-include:
-  - /ci/templates/gitlab-ci-cache.yml
-
 .npm-dependencies:
   extends: .global-cache
   tags:
@@ -8,6 +5,3 @@ include:
   stage: prepare
   image: node:14-alpine
   script: npm install --prefix $PROJECT_PATH
-  cache:
-    paths:
-      - $PROJECT_PATH/node_modules/
