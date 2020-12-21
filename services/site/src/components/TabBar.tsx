@@ -11,6 +11,8 @@ interface TabBarProps {
   options: TabBarOption[];
 }
 
+// Based on https://tailwindui.com/components/application-ui/navigation/tabs#component-de43ff625fee032d234b14989e88422f
+
 const TabBar: React.FunctionComponent<TabBarProps> = ({ activeId, options }) => {
   const [active, setActive] = useState<string | number>(activeId);
 
