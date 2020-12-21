@@ -1,5 +1,5 @@
 {
-  "name": "a11y-challenges-api",
+  "name": "@a11y-challenges/api",
   "version": "0.0.1",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
@@ -15,7 +15,7 @@
     "start:prod": "node dist/main",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
-    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.{ts,json}\"",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
