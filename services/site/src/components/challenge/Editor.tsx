@@ -1,4 +1,5 @@
-import { ControlledEditor, ControlledEditorOnChange, ControlledEditorProps } from "@monaco-editor/react";
+import { ControlledEditorProps } from "@monaco-editor/react";
+import WrappedEditor from "app/components/challenge/editor/WrappedEditor";
 import React, { useState } from "react";
 
 enum EditorEnum {
@@ -13,20 +14,6 @@ const Editor: React.FunctionComponent<ControlledEditorProps> = (props) => {
   const [htmlEditorValue, setHtmlEditorValue] = useState<string>("<!DOCTYPE html>");
   const [cssEditorValue, setCssEditorValue] = useState<string>("body {background: red}");
   const [jsEditorValue, setJsEditorValue] = useState<string>("console.log('ich bin so cool');");
-
-  const handleEditorChange: ControlledEditorOnChange = (event, value) => {
-    switch (activeEditor) {
-      case EditorEnum.html:
-        setHtmlEditorValue(value);
-        break;
-      case EditorEnum.css:
-        setCssEditorValue(value);
-        break;
-      case EditorEnum.javascript:
-        setJsEditorValue(value);
-        break;
-    }
-  };
 
   return (
     <div>
@@ -54,12 +41,36 @@ const Editor: React.FunctionComponent<ControlledEditorProps> = (props) => {
         </button>
       </div>
 
-      <ControlledEditor
-        {...props}
-        language={activeEditor}
-        value={activeEditor === EditorEnum.html ? htmlEditorValue : activeEditor === EditorEnum.css ? cssEditorValue : jsEditorValue}
-        onChange={handleEditorChange}
-      />
+      {activeEditor === EditorEnum.html && (
+        <WrappedEditor
+          {...props}
+          language="html"
+          value={htmlEditorValue}
+          onChange={(event, value) => {
+            setHtmlEditorValue(value);
+          }}
+        />
+      )}
+      {activeEditor === EditorEnum.css && (
+        <WrappedEditor
+          {...props}
+          language="css"
+          value={cssEditorValue}
+          onChange={(event, value) => {
+            setCssEditorValue(value);
+          }}
+        />
+      )}
+      {activeEditor === EditorEnum.javascript && (
+        <WrappedEditor
+          {...props}
+          language="javascript"
+          value={jsEditorValue}
+          onChange={(event, value) => {
+            setJsEditorValue(value);
+          }}
+        />
+      )}
     </div>
   );
 };
