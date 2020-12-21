@@ -3,4 +3,4 @@
     - docker
   stage: analyze
   image: node:14-alpine
-  script: echo $CI_PROJECT_DIR && ls -la $CI_PROJECT_DIR && ls -la /builds/a11y-challenges/a11y-challenges/services/api/node_modules && npm run lint --prefix $PROJECT_PATH
+  script: npm run lint --prefix $PROJECT_PATH
