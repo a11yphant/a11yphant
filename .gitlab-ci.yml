@@ -106,6 +106,10 @@ lint:api:
     PROJECT_PATH: services/api
   rules:
     - *run_on_api_change
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - $PROJECT_PATH/node_modules/
 
 test:api:
   extends: .test
@@ -115,6 +119,10 @@ test:api:
     PROJECT_PATH: services/api
   rules:
     - *run_on_api_change
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - $PROJECT_PATH/node_modules/
 
 #-----------------------------------
 # Site
