@@ -3,4 +3,4 @@
     - docker
   stage: prepare
   image: node:14-alpine
-  script: npm install --prefix $PROJECT_PATH
+  script: npm install --prefix $PROJECT_PATH && echo $CI_PROJECT_DIR && ls -la $CI_PROJECT_DIR && ls -la /builds/a11y-challenges/a11y-challenges/services/api/node_modules
