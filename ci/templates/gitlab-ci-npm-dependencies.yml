@@ -1,4 +1,8 @@
+include:
+  - /ci/templates/gitlab-ci-cache.yml
+
 .npm-dependencies:
+  extends: .global-cache
   tags:
     - docker
   stage: prepare

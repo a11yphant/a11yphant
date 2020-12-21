@@ -1,4 +1,8 @@
+include:
+  - /ci/templates/gitlab-ci-cache.yml
+
 .lint:
+  extends: .global-cache
   tags:
     - docker
   stage: analyze
