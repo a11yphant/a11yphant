@@ -6,7 +6,7 @@ export class WebdriverFactory {
   create(): ThenableWebDriver {
     return new Builder()
       .forBrowser('chrome')
-      .usingServer('http://selenium:4444/wd/hub')
+      .usingServer('http://localhost:4444/wd/hub')
       .build();
   }
 }
