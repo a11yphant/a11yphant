@@ -7,7 +7,8 @@ cache:
   untracked: true
   key: "$CI_BUILD_REF_NAME"
   paths:
-    - node_modules/
+    - services/api/node_modules
+    - services/api/schema.gql
 
 stages:
   - prepare
