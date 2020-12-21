@@ -7,12 +7,12 @@ export class RendererController {
     show(@Res() response: Response, @Param('id') id: string) {
         response.send(`
             <!DOCTYPE html>
-            <html>
+            <html lang="en">
                 <head>
                     <title>Test</title>
                 </head>
                 <body>
-                    Insert snippet here
+                    Insert  snippet here
                 </body>
             </html>
         `);
