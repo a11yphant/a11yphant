@@ -9,7 +9,9 @@ enum EditorEnum {
   javascript = "javascript",
 }
 
-const Editor: React.FunctionComponent<ControlledEditorProps> = (props) => {
+type EditorProps = Omit<ControlledEditorProps, "language" | "value" | "onChange">;
+
+const Editor: React.FunctionComponent<EditorProps> = (props) => {
   const [activeEditor, setActiveEditor] = useState<EditorEnum>(EditorEnum.html);
 
   const [htmlEditorValue, setHtmlEditorValue] = useState<string>("<!DOCTYPE html>");
