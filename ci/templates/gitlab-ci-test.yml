@@ -1,5 +1,4 @@
 .test:
-  extends: .global-cache
   tags:
     - docker
   stage: test

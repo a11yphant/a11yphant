@@ -1,5 +1,4 @@
 .lint:
-  extends: .global-cache
   tags:
     - docker
   stage: analyze

@@ -1,8 +1,13 @@
 include:
-  - /ci/templates/gitlab-ci-cache.yml
   - /ci/templates/gitlab-ci-npm-dependencies.yml
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
+
+cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - node_modules/
 
 stages:
   - prepare
@@ -81,7 +86,6 @@ install-dependencies:api:
 
 
 generate-graphql-schema:api:
-  extends: .global-cache
   tags:
     - docker
   stage: generate
@@ -91,11 +95,6 @@ generate-graphql-schema:api:
   variables:
     PROJECT_PATH: services/api
   script: npm run generate-schema --prefix $PROJECT_PATH
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - $PROJECT_PATH/schema.gql
-      - $PROJECT_PATH/node_modules
   rules:
     - *run_on_api_change
     - *run_on_site_change
