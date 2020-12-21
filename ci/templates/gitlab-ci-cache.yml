@@ -2,4 +2,4 @@
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
-      - $PROJECT_PATH/node_modules/
+      - $PROJECT_PATH/node_modules

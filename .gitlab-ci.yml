@@ -92,6 +92,7 @@ generate-graphql-schema:api:
     PROJECT_PATH: services/api
   script: npm run generate-schema --prefix $PROJECT_PATH
   cache:
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - $PROJECT_PATH/schema.gql
   rules:
@@ -106,10 +107,6 @@ lint:api:
     PROJECT_PATH: services/api
   rules:
     - *run_on_api_change
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - $PROJECT_PATH/node_modules/
 
 test:api:
   extends: .test
@@ -119,10 +116,6 @@ test:api:
     PROJECT_PATH: services/api
   rules:
     - *run_on_api_change
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - $PROJECT_PATH/node_modules/
 
 #-----------------------------------
 # Site
