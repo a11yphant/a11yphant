@@ -6,9 +6,8 @@ import { BrowserService } from './browser.service';
 export class CheckSubmissionService {
   constructor(private config: ConfigService, private browser: BrowserService) {}
 
-  public async check(id: number): Promise<boolean> {
+  public check(id: number): Promise<any> {
     const url = `${this.config.get<string>('submissionRenderer.baseUrl')}${id}`;
-    await this.browser.runAxeChecks(url);
-    return true;
+    return this.browser.runAxeChecks(url);
   }
 }
