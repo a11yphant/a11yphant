@@ -6,10 +6,6 @@ include:
 cache:
   untracked: true
   key: "$CI_BUILD_REF_NAME"
-  paths:
-    - services/api/.npm/
-    - services/site/.npm/
-    - services/api/schema.gql
 
 stages:
   - prepare
