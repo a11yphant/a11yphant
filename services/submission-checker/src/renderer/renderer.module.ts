@@ -1,10 +1,8 @@
-import { Module } from "@nestjs/common";
-import { RendererController } from "./renderer.controller";
+import { Module } from '@nestjs/common';
+import { RendererController } from './renderer.controller';
 
 @Module({
-    providers: [],
-    controllers: [
-        RendererController
-    ]
+  providers: [],
+  controllers: [RendererController],
 })
 export class RendererModule {}
