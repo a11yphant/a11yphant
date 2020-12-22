@@ -8,7 +8,7 @@ const Challenge = () => {
   const [jsCode, setJsCode] = useState<string>("");
 
   return (
-    <div>
+    <main className="flex justify-between">
       <Editor
         htmlCode={htmlCode}
         setHtmlCode={setHtmlCode}
@@ -21,7 +21,7 @@ const Challenge = () => {
         theme="dark"
       />
       <Preview htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
-    </div>
+    </main>
   );
 };
 
