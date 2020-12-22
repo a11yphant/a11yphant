@@ -40,17 +40,20 @@ const requirements = [
   },
 ];
 
+const level = {
+  requirements,
+  submissions: [],
+};
+
 @Injectable()
 export class SubmissionService {
+  private store = new Map<number, Submission>();
+
   find(id: number): Submission {
-    return {
-      html: `<h1>This is submissiont ${id}</h1>`,
-      css: 'body { color: deepseagreen }',
-      javascript: `document.querySelector('h1').style.opacity = 0.5`,
-      level: {
-        requirements,
-        submissions: [],
-      },
-    };
+    return this.store.get(id);
+  }
+
+  create({ id, html, css, javascript }) {
+    this.store.set(id, { html, css, javascript, level });
   }
 }
