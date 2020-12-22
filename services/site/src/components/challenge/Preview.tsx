@@ -1,5 +1,4 @@
-import _ from "lodash";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 
 interface PreviewProps {
   cssCode: string;
@@ -9,25 +8,27 @@ interface PreviewProps {
 
 const Preview: React.FunctionComponent<PreviewProps> = ({ cssCode, htmlCode, jsCode }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
-  const [innerCssCode, setInnerCssCode] = useState<string>();
-  const [innerJsCode, setInnerJsCode] = useState<string>();
+  const [innerCssCode, setInnerCssCode] = useState<string>("");
+  const [innerJsCode, setInnerJsCode] = useState<string>("");
 
-  const updateCode = useCallback(
-    _.throttle(() => setInnerHtmlCode(htmlCode), 2000),
-    [htmlCode],
-  );
+  const [renderCountdown, setRenderCountdown] = useState<NodeJS.Timeout>();
+
+  const startRenderCountdown = () =>
+    setTimeout(() => {
+      setInnerHtmlCode(htmlCode);
+      setInnerCssCode(cssCode);
+      setInnerJsCode(jsCode);
+    }, 1000);
 
   React.useEffect(() => {
-    console.log("htmlCode", htmlCode);
+    if (renderCountdown) {
+      clearTimeout(renderCountdown);
+    }
 
-    updateCode();
+    setRenderCountdown(startRenderCountdown());
   }, [htmlCode, cssCode, jsCode]);
 
-  React.useEffect(() => {
-    console.log("innerHtmlCode", innerHtmlCode);
-  }, [innerHtmlCode]);
-
-  return <iframe className="border-8 w-1/2" srcDoc={`<style>${cssCode}</style>${innerHtmlCode}<script>${jsCode}</script>`} />;
+  return <iframe className="border-8 w-1/2" srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJsCode}</script>`} />;
 };
 
 export default Preview;
