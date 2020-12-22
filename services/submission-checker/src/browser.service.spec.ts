@@ -17,7 +17,10 @@ describe('browser service', () => {
     );
 
     const result = await browser.runAxeChecks(
-      `http://rendered-submission-url/1`
+      `http://rendered-submission-url/1`,
+      {
+        runOnly: ['landmark-one-main'],
+      },
     );
 
     expect(result).toBeTruthy();
