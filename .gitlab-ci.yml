@@ -5,8 +5,9 @@ include:
   - /ci/templates/gitlab-ci-rules.yml
 
 cache:
-  untracked: true
   key: "$CI_BUILD_REF_NAME"
+  paths:
+    - services/**/.npm/
 
 stages:
   - prepare
