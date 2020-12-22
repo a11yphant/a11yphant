@@ -3,7 +3,4 @@
     - docker
   stage: analyze
   image: node:14-alpine
-  before_script:
-    - ls -la $PROJECT_PATH/.npm
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   script: npm run lint --prefix $PROJECT_PATH

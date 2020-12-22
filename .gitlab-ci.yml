@@ -5,9 +5,13 @@ include:
   - /ci/templates/gitlab-ci-rules.yml
 
 cache:
-  key: "$CI_BUILD_REF_NAME"
+  key: $CI_BUILD_REF_NAME
   paths:
     - services/**/.npm/
+
+default:
+  before_script:
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 stages:
   - prepare
@@ -73,8 +77,6 @@ generate-graphql-schema:api:
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
-  before_script:
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   script: ls -la $PROJECT_PATH/.npm && npm run generate-schema --prefix $PROJECT_PATH
   artifacts:
     paths:
