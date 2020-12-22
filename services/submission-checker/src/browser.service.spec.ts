@@ -10,13 +10,14 @@ describe('browser service', () => {
         create: jest.fn().mockReturnValue(
           createMock<ThenableWebDriver>({
             get: jest.fn().mockResolvedValue(null),
+            quit: jest.fn().mockResolvedValue(null),
           }),
         ),
       }),
     );
 
     const result = await browser.runAxeChecks(
-      `http://rendered-submission-url/1`,
+      `http://rendered-submission-url/1`
     );
 
     expect(result).toBeTruthy();
