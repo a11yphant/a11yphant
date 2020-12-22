@@ -81,6 +81,7 @@ generate-graphql-schema:api:
   artifacts:
     paths:
       - $PROJECT_PATH/schema.gql
+    expire_in: 1 day
 
 lint:api:
   extends:
