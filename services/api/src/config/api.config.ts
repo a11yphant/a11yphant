@@ -7,5 +7,6 @@ export default registerAs("api", () => {
   return {
     port: port,
     url: `http://${host}:${port}`,
+    lambda: Boolean(+process.env.API_LAMBDA) || false,
   };
 });
