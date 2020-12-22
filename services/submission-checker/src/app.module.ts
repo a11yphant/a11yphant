@@ -6,21 +6,16 @@ import { CheckSubmissionService } from './check-submission.service';
 import submissionRenderer from './config/submission-renderer';
 import { RendererModule } from './renderer/renderer.module';
 import { WebdriverFactory } from './webdriver.factory';
+import appConfig from './config/app.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [submissionRenderer],
+      load: [appConfig, submissionRenderer],
     }),
-    RendererModule
+    RendererModule,
   ],
-  controllers: [
-    CheckSubmissionController
-  ],
-  providers: [
-    BrowserService,
-    CheckSubmissionService,
-    WebdriverFactory
-  ],
+  controllers: [CheckSubmissionController],
+  providers: [BrowserService, CheckSubmissionService, WebdriverFactory],
 })
 export class AppModule {}
