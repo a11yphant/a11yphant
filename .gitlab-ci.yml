@@ -54,7 +54,7 @@ generate-graphql-schema:api:
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
-  script: echo $CI_COMMIT_REF_SLUG && npm run generate-schema --prefix $PROJECT_PATH
+  script: npm run generate-schema --prefix $PROJECT_PATH
   artifacts:
     paths:
       - $PROJECT_PATH/schema.gql
