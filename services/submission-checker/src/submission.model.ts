@@ -1,5 +1,8 @@
-import { Requirement } from './check-result.interface';
+import { Level } from './level.model';
 
 export class Submission {
-  requirements: Requirement[];
+  html: string;
+  css: string;
+  javascript: string;
+  level: Level;
 }

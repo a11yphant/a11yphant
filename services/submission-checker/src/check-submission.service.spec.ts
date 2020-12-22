@@ -4,6 +4,7 @@ import { createMock, PartialFuncReturn } from '@golevelup/nestjs-testing';
 import { ConfigService } from '@nestjs/config';
 import { SubmissionService } from './submission.service';
 import { Submission } from './submission.model';
+import { Level } from './level.model';
 
 const axeMockResult = {
   violations: [
@@ -74,44 +75,50 @@ const axeMockResult = {
 };
 
 const mockSubmission: Submission = {
-  requirements: [
-    {
-      ruleAssignments: [
-        {
-          rule: {
-            name: 'The page has a specified language',
-            provider: 'axe',
-            configuration: { runOnly: ['html-has-lang'] },
+  html: `<h1>This is submission</h1>`,
+  css: 'body { color: deepseagreen }',
+  javascript: `document.querySelector('h1').style.opacity = 0.5`,
+  level: {
+    submissions: [],
+    requirements: [
+      {
+        ruleAssignments: [
+          {
+            rule: {
+              name: 'The page has a specified language',
+              provider: 'axe',
+              configuration: { runOnly: ['html-has-lang'] },
+            },
+            mustPass: true,
           },
-          mustPass: true,
-        },
-      ],
-    },
-    {
-      ruleAssignments: [
-        {
-          rule: {
-            name: 'The page must hava a main landmark',
-            provider: 'axe',
-            configuration: { runOnly: ['landmark-one-main'] },
+        ],
+      },
+      {
+        ruleAssignments: [
+          {
+            rule: {
+              name: 'The page must hava a main landmark',
+              provider: 'axe',
+              configuration: { runOnly: ['landmark-one-main'] },
+            },
+            mustPass: false,
           },
-          mustPass: false,
-        },
-      ],
-    },
-    {
-      ruleAssignments: [
-        {
-          rule: {
-            name: 'The page body must mot be hidden',
-            provider: 'axe',
-            configuration: { runOnly: ['aria-hidden-body'] },
+        ],
+      },
+      {
+        ruleAssignments: [
+          {
+            rule: {
+              name: 'The page body must mot be hidden',
+              provider: 'axe',
+              configuration: { runOnly: ['aria-hidden-body'] },
+            },
+            mustPass: true,
           },
-          mustPass: true,
-        },
-      ],
-    },
-  ],
+        ],
+      },
+    ],
+  },
 };
 
 const factory = ({

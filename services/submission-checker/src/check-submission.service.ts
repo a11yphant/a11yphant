@@ -25,7 +25,7 @@ export class CheckSubmissionService {
 
     // get axe rules from rules and extract axe checks to perform
     const options = {
-      runOnly: submission.requirements
+      runOnly: submission.level.requirements
         .map((req) => req.ruleAssignments)
         .flat()
         .filter((ra) => ra.rule.provider === 'axe')
@@ -38,7 +38,7 @@ export class CheckSubmissionService {
     const result = await this.browser.runAxeChecks(url, options);
 
     // map result of axe checks back into check result
-    return this.buildAxeCheckResult(result, submission.requirements);
+    return this.buildAxeCheckResult(result, submission.level.requirements);
   }
 
   private buildAxeCheckResult(
