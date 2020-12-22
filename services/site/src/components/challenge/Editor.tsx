@@ -9,14 +9,17 @@ enum EditorEnum {
   javascript = "javascript",
 }
 
-type EditorProps = Omit<ControlledEditorProps, "language" | "value" | "onChange">;
+interface EditorProps extends Omit<ControlledEditorProps, "language" | "value" | "onChange"> {
+  htmlCode: string;
+  setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
+  cssCode: string;
+  setCssCode: React.Dispatch<React.SetStateAction<string>>;
+  jsCode: string;
+  setJsCode: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const Editor: React.FunctionComponent<EditorProps> = (props) => {
+const Editor: React.FunctionComponent<EditorProps> = ({ htmlCode, setHtmlCode, cssCode, setCssCode, jsCode, setJsCode, ...props }) => {
   const [activeEditor, setActiveEditor] = useState<EditorEnum>(EditorEnum.html);
-
-  const [htmlEditorValue, setHtmlEditorValue] = useState<string>("<!DOCTYPE html>");
-  const [cssEditorValue, setCssEditorValue] = useState<string>("body {background: red}");
-  const [jsEditorValue, setJsEditorValue] = useState<string>("console.log('ich bin so cool');");
 
   return (
     <div>
@@ -51,9 +54,9 @@ const Editor: React.FunctionComponent<EditorProps> = (props) => {
         <WrappedEditor
           {...props}
           language="html"
-          value={htmlEditorValue}
+          value={htmlCode}
           onChange={(event, value) => {
-            setHtmlEditorValue(value);
+            setHtmlCode(value);
           }}
         />
       )}
@@ -61,9 +64,9 @@ const Editor: React.FunctionComponent<EditorProps> = (props) => {
         <WrappedEditor
           {...props}
           language="css"
-          value={cssEditorValue}
+          value={cssCode}
           onChange={(event, value) => {
-            setCssEditorValue(value);
+            setCssCode(value);
           }}
         />
       )}
@@ -71,9 +74,9 @@ const Editor: React.FunctionComponent<EditorProps> = (props) => {
         <WrappedEditor
           {...props}
           language="javascript"
-          value={jsEditorValue}
+          value={jsCode}
           onChange={(event, value) => {
-            setJsEditorValue(value);
+            setJsCode(value);
           }}
         />
       )}
