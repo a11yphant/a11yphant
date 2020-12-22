@@ -32,7 +32,8 @@
     "apollo-server-express": "2.19.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "6.6.3"
+    "rxjs": "6.6.3",
+    "selenium-webdriver": "^4.0.0-alpha.8"
   },
   "devDependencies": {
     "@golevelup/nestjs-testing": "^0.1.2",
