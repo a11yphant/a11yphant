@@ -37,7 +37,5 @@
       "pre-commit": "lint-staged"
     }
   },
-  "dependencies": {
-    "selenium-webdriver": "^4.0.0-alpha.8"
-  }
+  "dependencies": {}
 }
