@@ -4,7 +4,7 @@ include:
   - /ci/templates/gitlab-ci-rules.yml
 
 cache:
-  key: $CI_BUILD_REF_NAME
+  key: $CI_COMMIT_REF_SLUG
   paths:
     - services/**/.npm/
 
@@ -54,7 +54,7 @@ generate-graphql-schema:api:
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
-  script: ls -la $PROJECT_PATH/.npm && npm run generate-schema --prefix $PROJECT_PATH
+  script: echo $CI_COMMIT_REF_SLUG && npm run generate-schema --prefix $PROJECT_PATH
   artifacts:
     paths:
       - $PROJECT_PATH/schema.gql
