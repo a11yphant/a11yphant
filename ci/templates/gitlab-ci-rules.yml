@@ -1,0 +1,24 @@
+#----------------------------------------------------------------------
+#
+# Rules
+#
+#----------------------------------------------------------------------
+
+.run_on_api_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - services/api/**/*
+
+
+.run_on_site_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - services/site/**/*
+
+.run_on_submission-checker_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - services/submission-checker/**/*

@@ -2,34 +2,13 @@ include:
   - /ci/templates/gitlab-ci-npm-dependencies.yml
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
+  - /ci/templates/gitlab-ci-rules.yml
 
 stages:
   - prepare
   - generate
   - analyze
   - test
-
-#----------------------------------------------------------------------
-#
-# Rules
-#
-#----------------------------------------------------------------------
-
-.run_on_api_change: &run_on_api_change
-  if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-  changes:
-    - services/api/**/*
-
-
-.run_on_site_change: &run_on_site_change
-  if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-  changes:
-    - services/site/**/*
-
-.run_on_submission-checker_change: &run_on_submission-checker_change
-  if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-  changes:
-    - services/submission-checker/**/*
 
 #----------------------------------------------------------------------
 #
@@ -42,44 +21,47 @@ stages:
 #-----------------------------------
 
 install-dependencies:submission-checker:
-  extends: .npm-dependencies
+  extends:
+    - .npm-dependencies
+    - .run_on_submission-checker_change
   variables:
     PROJECT_PATH: services/submission-checker
-  rules:
-    - *run_on_submission-checker_change
 
 lint:submission-checker:
-  extends: .lint
+  extends:
+    - .lint
+    - .run_on_submission-checker_change
   needs:
     - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
-  rules:
-    - *run_on_submission-checker_change
 
 test:submission-checker:
-  extends: .test
+  extends:
+    - .test
+    - .run_on_submission-checker_change
   needs:
     - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
-  rules:
-    - *run_on_submission-checker_change
 
 #-----------------------------------
 # API
 #-----------------------------------
 
 install-dependencies:api:
-  extends: .npm-dependencies
+  extends:
+    - .npm-dependencies
+    - .run_on_api_change
+    - .run_on_site_change
   variables:
     PROJECT_PATH: services/api
-  rules:
-    - *run_on_api_change
-    - *run_on_site_change
 
 
 generate-graphql-schema:api:
+  extends:
+    - .run_on_api_change
+    - .run_on_site_change
   tags:
     - docker
   stage: generate
@@ -92,55 +74,52 @@ generate-graphql-schema:api:
   artifacts:
     paths:
       - $PROJECT_PATH/schema.gql
-  rules:
-    - *run_on_api_change
-    - *run_on_site_change
 
 lint:api:
-  extends: .lint
+  extends:
+    - .lint
+    - .run_on_api_change
   needs:
     - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
-  rules:
-    - *run_on_api_change
 
 test:api:
-  extends: .test
+  extends:
+    - .test
+    - .run_on_api_change
   needs:
     - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
-  rules:
-    - *run_on_api_change
 
 #-----------------------------------
 # Site
 #-----------------------------------
 
 install-dependencies:site:
-  extends: .npm-dependencies
+  extends:
+    - .npm-dependencies
+    - .run_on_site_change
   variables:
     PROJECT_PATH: services/site
-  rules:
-    - *run_on_site_change
 
 lint:site:
-  extends: .lint
+  extends:
+    - .lint
+    - .run_on_site_change
   needs:
     - install-dependencies:site
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
-  rules:
-    - *run_on_site_change
 
 test:site:
-  extends: .test
+  extends:
+    - .test
+    - .run_on_site_change
   needs:
     - install-dependencies:site
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
-  rules:
-    - *run_on_site_change
