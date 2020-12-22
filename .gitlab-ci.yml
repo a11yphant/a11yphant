@@ -1,11 +1,18 @@
 include:
-  - /ci/templates/gitlab-ci-npm-dependencies.yml
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
 
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - services/**/.npm/
+
+default:
+  before_script:
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+
 stages:
-  - prepare
   - generate
   - analyze
   - test
@@ -20,19 +27,10 @@ stages:
 # Submission Checker
 #-----------------------------------
 
-install-dependencies:submission-checker:
-  extends:
-    - .npm-dependencies
-    - .run_on_submission-checker_change
-  variables:
-    PROJECT_PATH: services/submission-checker
-
 lint:submission-checker:
   extends:
     - .lint
     - .run_on_submission-checker_change
-  needs:
-    - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
 
@@ -40,8 +38,6 @@ test:submission-checker:
   extends:
     - .test
     - .run_on_submission-checker_change
-  needs:
-    - install-dependencies:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
 
@@ -49,22 +45,12 @@ test:submission-checker:
 # API
 #-----------------------------------
 
-install-dependencies:api:
-  extends:
-    - .npm-dependencies
-    - .run_on_site_or_api_change
-  variables:
-    PROJECT_PATH: services/api
-
-
 generate-graphql-schema:api:
   extends:
     - .run_on_site_or_api_change
   tags:
     - docker
   stage: generate
-  needs:
-    - install-dependencies:api
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
@@ -72,13 +58,12 @@ generate-graphql-schema:api:
   artifacts:
     paths:
       - $PROJECT_PATH/schema.gql
+    expire_in: 1 day
 
 lint:api:
   extends:
     - .lint
     - .run_on_api_change
-  needs:
-    - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
 
@@ -86,8 +71,6 @@ test:api:
   extends:
     - .test
     - .run_on_api_change
-  needs:
-    - install-dependencies:api
   variables:
     PROJECT_PATH: services/api
 
@@ -95,19 +78,11 @@ test:api:
 # Site
 #-----------------------------------
 
-install-dependencies:site:
-  extends:
-    - .npm-dependencies
-    - .run_on_site_change
-  variables:
-    PROJECT_PATH: services/site
-
 lint:site:
   extends:
     - .lint
     - .run_on_site_change
   needs:
-    - install-dependencies:site
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
@@ -117,7 +92,6 @@ test:site:
     - .test
     - .run_on_site_change
   needs:
-    - install-dependencies:site
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
