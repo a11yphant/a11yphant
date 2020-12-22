@@ -7,8 +7,8 @@ import appConfig from './config/app.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [appConfig]
-    })
+      load: [appConfig],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
