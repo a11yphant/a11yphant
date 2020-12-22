@@ -52,16 +52,16 @@ test:submission-checker:
 install-dependencies:api:
   extends:
     - .npm-dependencies
-    - .run_on_api_change
     - .run_on_site_change
+    - .run_on_api_change
   variables:
     PROJECT_PATH: services/api
 
 
 generate-graphql-schema:api:
   extends:
-    - .run_on_api_change
     - .run_on_site_change
+    - .run_on_api_change
   tags:
     - docker
   stage: generate
