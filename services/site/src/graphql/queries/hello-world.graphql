@@ -1,0 +1,6 @@
+query helloWorld {
+  helloWorld {
+    id
+    message
+  }
+}

@@ -4,3 +4,7 @@
   stage: analyze
   image: node:14-alpine
   script: npm run lint --prefix $PROJECT_PATH
+  only:
+    - master
+    - develop
+    - merge_request
