@@ -2,6 +2,7 @@ include:
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
+  - /ci/templates/gitlab-ci-build.yml
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -74,6 +75,16 @@ test:api:
   variables:
     PROJECT_PATH: services/api
 
+build:api:
+  extends:
+    - .build
+  variables:
+    PROJECT_PATH: services/api
+  only:
+    - master
+    - develop
+    - merge_requests
+
 #-----------------------------------
 # Site
 #-----------------------------------
@@ -95,3 +106,16 @@ test:site:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
+
+deploy:
+  tags:
+    - docker
+  needs:
+    - build
+  image: pahud/aws-sam-cli
+  script:
+    - sam deploy
+  only:
+    - master
+    - develop
+    - merge_requests
