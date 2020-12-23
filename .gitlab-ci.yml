@@ -116,6 +116,8 @@ deploy:
   needs:
     - build:api
   image: pahud/aws-sam-cli
+  before_script:
+   - '' # overwrites default before_script
   script:
     - sam deploy
   only:
