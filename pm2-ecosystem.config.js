@@ -18,5 +18,11 @@ module.exports = {
       namespace: "a11y-challenges",
       autorestart: true,
     },
+    {
+      name: "docker-compose",
+      script: "docker-compose up",
+      namespace: "a11y-challenges",
+      autorestart: true
+    },
   ],
 };
