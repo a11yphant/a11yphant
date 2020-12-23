@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npm --prefix services/api install && npm --prefix services/site install",
+    "postinstall": "npm --prefix services/api install && npm --prefix services/site install && npm --prefix services/submission-checker install",
     "dotenv": "dotenv",
     "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint",
     "start": "npm run dev",
@@ -36,5 +36,6 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  }
+  },
+  "dependencies": {}
 }

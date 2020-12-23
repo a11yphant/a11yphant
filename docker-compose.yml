@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201202
+    restart: always
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - 4444:4444
