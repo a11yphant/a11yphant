@@ -28,7 +28,7 @@
     "graphql": "15.4.0",
     "gray-matter": "4.0.2",
     "monaco-editor": "0.21.2",
-    "next": "10.0.3",
+    "next": "10.0.4",
     "postcss": "8.2.1",
     "react": "17.0.1",
     "react-apollo": "3.1.5",
