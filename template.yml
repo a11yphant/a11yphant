@@ -33,6 +33,7 @@ Resources:
           API_LAMBDA: 1
           API_GRAPHQL_DEBUG: 1
           API_GRAPHQL_PLAYGROUND: 1
+          API_GRAPHQL_SCHEMA_INTROSPECTION: 1
       Events:
         GraphqlGet:
           Type: Api 
