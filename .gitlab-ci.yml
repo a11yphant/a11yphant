@@ -17,6 +17,8 @@ stages:
   - generate
   - analyze
   - test
+  - build
+  - deploy
 
 #----------------------------------------------------------------------
 #
@@ -110,8 +112,9 @@ test:site:
 deploy:
   tags:
     - docker
+  stage: deploy
   needs:
-    - build
+    - build:api
   image: pahud/aws-sam-cli
   script:
     - sam deploy
