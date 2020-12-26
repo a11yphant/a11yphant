@@ -18,7 +18,7 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
         debug: configService.get<boolean>("gql.debug"),
         playground: configService.get<boolean>("gql.playground"),
         introspection: configService.get<boolean>("gql.schemaIntrospection"),
-        autoSchemaFile: configService.get<boolean>("gql.inMemorySchema", true) ? true : "schema.gql",
+        autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
         context: ({ req }) => ({ ...req }),
         cors: {
           credentials: true,
