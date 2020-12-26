@@ -6,5 +6,5 @@ stack_name = "a11y-challenges"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-5e4265rbk7zw"
 s3_prefix = "a11y-challenges"
 region = "eu-central-1"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
