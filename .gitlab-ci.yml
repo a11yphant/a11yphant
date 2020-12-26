@@ -77,6 +77,28 @@ test:api:
   variables:
     PROJECT_PATH: services/api
 
+production-dependencies:api:
+  tags:
+    - docker
+  stage: build
+  # install dependencies using node 12 since lambdas run in a node 12 environment
+  image: node:12-alpine
+  variables:
+    PROJECT_PATH: services/api
+  before_script:
+    - '' # disable default npm install
+  script:
+    - npm ci --production --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+    expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_requests
+
 build:api:
   extends:
     - .build
@@ -115,11 +137,13 @@ deploy:
   stage: deploy
   needs:
     - build:api
+    - production-dependencies:api
   image: pahud/aws-sam-cli
+  cache: {} # disable cache
   before_script:
    - '' # overwrites default before_script
   script:
-    - sam deploy
+    - sam deploy --stack-name a11y-challenges --s3-prefix a11y-challenges
   only:
     - master
     - develop

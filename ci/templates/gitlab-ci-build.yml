@@ -5,10 +5,7 @@
   image: node:14-alpine
   script:
     - npm run build --prefix $PROJECT_PATH
-    - rm -r $PROJECT_PATH/node_modules
-    - npm ci --production --prefix $PROJECT_PATH
-    - rm -r $PROJECT_PATH/src $PROJECT_PATH/test
   artifacts:
     paths:
-      - $PROJECT_PATH
+      - $PROJECT_PATH/dist
     expire_in: 1 day
