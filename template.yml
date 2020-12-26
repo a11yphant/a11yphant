@@ -9,16 +9,11 @@ Globals:
     Function:
         Timeout: 60
 
-Parameters:
-  StageName:
-    Type: String
-    Default: Production
-
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: !Ref StageName
+      StageName: production
 
   GraphQLApiFunction:
     Type: AWS::Serverless::Function 
@@ -51,4 +46,4 @@ Resources:
 Outputs:
     GraphQLApi:
         Description: GraphQL API entrypoint
-        Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${StageName}"
+        Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com"
