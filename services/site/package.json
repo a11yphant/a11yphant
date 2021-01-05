@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.3.6",
-    "@monaco-editor/react": "3.7.4",
+    "@monaco-editor/react": "3.7.5",
     "autoprefixer": "10.1.0",
     "date-fns": "2.16.1",
     "dotenv": "8.2.0",
