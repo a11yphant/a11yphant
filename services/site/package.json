@@ -22,7 +22,7 @@
   "dependencies": {
     "@apollo/client": "3.3.7",
     "@monaco-editor/react": "3.8.3",
-    "autoprefixer": "10.2.1",
+    "autoprefixer": "10.2.3",
     "date-fns": "2.16.1",
     "dotenv": "8.2.0",
     "graphql": "15.4.0",
