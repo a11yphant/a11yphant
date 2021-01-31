@@ -138,12 +138,15 @@ deploy:
   needs:
     - build:api
     - production-dependencies:api
-  image: pahud/aws-sam-cli
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/terraform
   before_script:
    - '' # overwrites default before_script
   script:
-    - sam deploy --stack-name a11y-challenges --s3-prefix a11y-challenges
+    - gitlab-terraform init
+    - gitlab-terraform apply -var="current_version=$CI_COMMIT_SHA"
   only:
     - master
     - develop
