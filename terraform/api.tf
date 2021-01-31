@@ -30,6 +30,7 @@ resource "aws_lambda_function" "api" {
    environment {
     variables = {
       NODE_ENV = "production"
+      NO_COLOR = 1
       API_LAMBDA = 1
       API_GRAPHQL_DEBUG = 1
       API_GRAPHQL_PLAYGROUND = 1
