@@ -143,7 +143,8 @@ deploy:
   variables:
     TF_ROOT: ${CI_PROJECT_DIR}/terraform
   before_script:
-   - '' # overwrites default before_script
+   - apk update
+   - apk add zip
   script:
     - gitlab-terraform init
     - gitlab-terraform apply -var="current_version=$CI_COMMIT_SHA"
