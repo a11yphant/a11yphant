@@ -135,27 +135,17 @@ test:site:
 # Terraform
 #-----------------------------------
 
-terraform:plan:
+terraform:validate:
   extends:
     - .run_on_terraform_change
   tags:
     - docker
   stage: analyze
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  variables:
-    TF_PLAN: plan.cache
-    TF_PLAN_JSON: plan.json
   before_script:
-    - apk --no-cache add jq
-    # https://docs.gitlab.com/ee/user/infrastructure/mr_integration.html
-    - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
     - terraform -chdir=terraform init
   script:
-    - terraform -chdir=terraform plan -out=$TF_PLAN
-    - terraform -chdir=terraform show --json $TF_PLAN | convert_report > $TF_PLAN_JSON
-  artifacts:
-    reports:
-      terraform: terraform/$TF_PLAN_JSON
+    - terraform -chdir=terraform validate
 
 #-----------------------------------
 # Deployment
