@@ -165,7 +165,7 @@ deploy:
    - apk add zip
   script:
     - terraform -chdir=terraform init
-    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_SHA" -auto-approve
+    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -auto-approve
   only:
     - master
     - develop
