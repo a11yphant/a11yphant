@@ -1,8 +1,25 @@
+data "external" "api_code_zip" {
+  program = [ "${path.module}/../services/api/package.sh" ]
+}
+
+resource "aws_s3_bucket_object" "api_code_zip" {
+  bucket = aws_s3_bucket.code.id
+  key    = "api/${var.current_version}.zip"
+  source = "${path.module}/../services/api/lambda.zip"
+  etag = data.external.api_code_zip.result.hash
+
+  depends_on = [
+    data.external.api_code_zip,
+    aws_s3_bucket.code
+  ]
+}
+
 resource "aws_lambda_function" "api" {
    function_name = "api"
 
-   s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-5e4265rbk7zw"
-   s3_key    = "a11y-challenges/0133b93260bb5e654f992ed9974c7f95"
+   s3_bucket = aws_s3_bucket.code.id
+   s3_key    = aws_s3_bucket_object.api_code_zip.id
+   source_code_hash = data.external.api_code_zip.result.hash
 
    handler = "entrypoint.handle"
    runtime = "nodejs12.x"
@@ -21,12 +38,14 @@ resource "aws_lambda_function" "api" {
   }
 
   depends_on = [
+    aws_s3_bucket_object.api_code_zip,
     aws_iam_role_policy_attachment.lambda_logs,
   ]
 }
 
 resource "aws_iam_role" "api_role" {
    name = "api_role"
+   description = "IAM Role for executing a Lambda"
 
    assume_role_policy = <<EOF
 {
