@@ -140,14 +140,13 @@ deploy:
     - production-dependencies:api
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
-  variables:
-    TF_ROOT: ${CI_PROJECT_DIR}/terraform
   before_script:
    - apk update
    - apk add zip
   script:
-    - gitlab-terraform init
-    - gitlab-terraform apply -var="current_version=$CI_COMMIT_SHA"
+    - cd terraform
+    - terraform init
+    - terraform apply -var="current_version=$CI_COMMIT_SHA" -auto-approve
   only:
     - master
     - develop
