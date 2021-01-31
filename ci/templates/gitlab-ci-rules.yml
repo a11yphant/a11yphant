@@ -6,7 +6,11 @@
 
 .run_on_terraform_change:
   rules:
-    - changes: terraform/**/*
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - terraform/**/*
 
 .run_on_api_change:
   rules:
