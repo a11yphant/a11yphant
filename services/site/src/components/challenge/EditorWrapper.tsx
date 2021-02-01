@@ -12,7 +12,7 @@ interface EditorConfig {
   updateCode: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Editor: React.FunctionComponent<CustomEditorProps> = ({ editors, ...props }) => {
+const EditorWrapper: React.FunctionComponent<CustomEditorProps> = ({ editors, ...props }) => {
   return (
     <div>
       {editors.map((config) => (
@@ -29,4 +29,4 @@ const Editor: React.FunctionComponent<CustomEditorProps> = ({ editors, ...props 
   );
 };
 
-export default Editor;
+export default EditorWrapper;

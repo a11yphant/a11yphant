@@ -1,4 +1,4 @@
-import Editor from "app/components/challenge/Editor";
+import EditorWrapper from "app/components/challenge/EditorWrapper";
 import Preview from "app/components/challenge/Preview";
 import React, { useState } from "react";
 
@@ -9,7 +9,7 @@ const Challenge = () => {
 
   return (
     <main className="flex justify-between">
-      <Editor
+      <EditorWrapper
         editors={[
           { language: "html", code: htmlCode, updateCode: setHtmlCode },
           { language: "css", code: cssCode, updateCode: setCssCode },
