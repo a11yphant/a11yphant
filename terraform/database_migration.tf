@@ -1,5 +1,23 @@
+data "archive_file" "prisma_migrations" {
+    type        = "zip"
+    source_dir  = "${path.module}/../services/database-migration/prisma"
+    output_path = "${path.module}/../services/database-migration/prisma.zip"
+}
+
 data "external" "database_migration_code_zip" {
   program = [ "${path.module}/../services/database-migration/package.sh" ]
+}
+
+resource "aws_s3_bucket_object" "prisma_migrations" {
+    bucket = aws_s3_bucket.prisma.id
+    key    = "${var.current_version}.zip"
+    source = "${path.module}/../services/database-migration/prisma.zip"
+    etag   = data.archive_file.prisma_migrations.output_base64sha256
+
+    depends_on = [ 
+        data.archive_file.prisma_migrations,
+        aws_s3_bucket.prisma
+     ]
 }
 
 resource "aws_s3_bucket_object" "database_migration_code_zip" {
