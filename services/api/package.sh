@@ -11,4 +11,4 @@ zip -rq lambda.zip \
     nest-cli.json \
     package.json
 
-echo "{ \"hash\": \"$(cat lambda.zip | shasum -a 256 | cut -d " " -f 1 | xxd -r -p | base64)\"}"
+echo "{ \"hash\": \"$(cat .dockerenv | sha256sum | cut -d " " -f 1)\"}"

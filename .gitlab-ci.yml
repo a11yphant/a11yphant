@@ -2,6 +2,7 @@ include:
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
+  - /ci/templates/gitlab-ci-build.yml
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -16,6 +17,8 @@ stages:
   - generate
   - analyze
   - test
+  - build
+  - deploy
 
 #----------------------------------------------------------------------
 #
@@ -74,6 +77,38 @@ test:api:
   variables:
     PROJECT_PATH: services/api
 
+production-dependencies:api:
+  tags:
+    - docker
+  stage: build
+  # install dependencies using node 12 since lambdas run in a node 12 environment
+  image: node:12-alpine
+  variables:
+    PROJECT_PATH: services/api
+  before_script:
+    - '' # disable default npm install
+  script:
+    - npm ci --production --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+    expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_requests
+
+build:api:
+  extends:
+    - .build
+  variables:
+    PROJECT_PATH: services/api
+  only:
+    - master
+    - develop
+    - merge_requests
+
 #-----------------------------------
 # Site
 #-----------------------------------
@@ -95,3 +130,42 @@ test:site:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
+
+#-----------------------------------
+# Terraform
+#-----------------------------------
+
+terraform:validate:
+  extends:
+    - .run_on_terraform_change
+  tags:
+    - docker
+  stage: analyze
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  before_script:
+    - terraform -chdir=terraform init
+  script:
+    - terraform -chdir=terraform validate
+
+#-----------------------------------
+# Deployment
+#-----------------------------------
+
+deploy:
+  tags:
+    - docker
+  stage: deploy
+  needs:
+    - build:api
+    - production-dependencies:api
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {} # disable cache
+  before_script:
+   - apk update
+   - apk add zip
+  script:
+    - terraform -chdir=terraform init
+    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -auto-approve
+  only:
+    - master
+    - develop
