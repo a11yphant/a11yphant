@@ -1,4 +1,4 @@
-import { ControlledEditorProps } from "@monaco-editor/react";
+import { EditorProps } from "@monaco-editor/react";
 import WrappedEditor from "app/components/challenge/editor/WrappedEditor";
 import React from "react";
 
@@ -8,7 +8,7 @@ import React from "react";
 //   javascript = "javascript",
 // }
 
-interface EditorProps extends Omit<ControlledEditorProps, "language" | "value" | "onChange"> {
+interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   htmlCode: string;
   setHtmlCode: React.Dispatch<React.SetStateAction<string>>;
   cssCode: string;
@@ -24,14 +24,23 @@ interface ActiveEditors {
   js: boolean;
 }
 
-const Editor: React.FunctionComponent<EditorProps> = ({ htmlCode, setHtmlCode, cssCode, setCssCode, jsCode, setJsCode, activeEditors, ...props }) => {
+const Editor: React.FunctionComponent<CustomEditorProps> = ({
+  htmlCode,
+  setHtmlCode,
+  cssCode,
+  setCssCode,
+  jsCode,
+  setJsCode,
+  activeEditors,
+  ...props
+}) => {
   return (
     <div>
       <WrappedEditor
         {...props}
         language="html"
         value={htmlCode}
-        onChange={(event, value) => {
+        onChange={(value) => {
           setHtmlCode(value);
         }}
       />
@@ -39,7 +48,7 @@ const Editor: React.FunctionComponent<EditorProps> = ({ htmlCode, setHtmlCode, c
         {...props}
         language="css"
         value={cssCode}
-        onChange={(event, value) => {
+        onChange={(value) => {
           setCssCode(value);
         }}
       />
@@ -47,7 +56,7 @@ const Editor: React.FunctionComponent<EditorProps> = ({ htmlCode, setHtmlCode, c
         {...props}
         language="javascript"
         value={jsCode}
-        onChange={(event, value) => {
+        onChange={(value) => {
           setJsCode(value);
         }}
       />
