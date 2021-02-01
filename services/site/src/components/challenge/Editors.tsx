@@ -8,9 +8,9 @@ interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "on
 
 const Editors: React.FunctionComponent<CustomEditorProps> = ({ editors, ...props }) => {
   return (
-    <div className="flex flex-row justify-between h-screen w-full box-border">
+    <div className="flex flex-row justify-between h-screenHalf w-full box-border">
       {editors.map((config) => (
-        <WrappedEditor width="400px" height="400px" config={config} {...props} />
+        <WrappedEditor key={config.heading} width="400px" height="400px" config={config} {...props} />
       ))}
     </div>
   );

@@ -56,9 +56,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, wid
   return (
     <div
       ref={wrapperRef}
-      key={config.heading}
-      style={{ width: width, height: height }}
-      className="editor-container border-2 rounded-lg border-primary py-2 px-4 m-4"
+      // style={{ width: width, height: height }}
+      className="editor-container border-2 rounded-lg border-primary py-2 px-4 m-4 w-inherit"
     >
       <h3 ref={headingRef} className="text-primary mb-4">
         {config.heading}
