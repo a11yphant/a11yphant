@@ -19,6 +19,11 @@ const Challenge = () => {
         width="50vw"
         height="90vh"
         theme="dark"
+        activeEditors={{
+          html: true,
+          css: true,
+          js: true,
+        }}
       />
       <Preview htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
     </main>
