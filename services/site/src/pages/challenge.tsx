@@ -10,17 +10,11 @@ const Challenge = () => {
   return (
     <main className="flex justify-between">
       <Editor
-        htmlCode={htmlCode}
-        setHtmlCode={setHtmlCode}
-        cssCode={cssCode}
-        setCssCode={setCssCode}
-        jsCode={jsCode}
-        setJsCode={setJsCode}
-        activeEditors={{
-          html: true,
-          css: true,
-          js: true,
-        }}
+        editors={[
+          { language: "html", code: htmlCode, updateCode: setHtmlCode },
+          { language: "css", code: cssCode, updateCode: setCssCode },
+          { language: "javascript", code: jsCode, updateCode: setJsCode },
+        ]}
         width="50vw"
         height="90vh"
         theme="vs-dark"
