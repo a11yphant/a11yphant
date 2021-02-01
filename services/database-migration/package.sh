@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias sha256sum="shasum -a 256"
+fi
+
 SOURCE_DIR=$(dirname $0)
 cd $SOURCE_DIR
 zip -rq lambda.zip \

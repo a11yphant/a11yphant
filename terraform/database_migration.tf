@@ -16,7 +16,8 @@ resource "aws_s3_bucket_object" "prisma_migrations" {
 
     depends_on = [ 
         data.archive_file.prisma_migrations,
-        aws_s3_bucket.prisma
+        aws_s3_bucket.prisma,
+        aws_lambda_function.database_migration
      ]
 }
 
@@ -43,7 +44,7 @@ resource "aws_lambda_function" "database_migration" {
    runtime = "nodejs12.x"
    timeout = 60
 
-   role = aws_iam_role.api_role.arn
+   role = aws_iam_role.database_migration_role.arn
 
    environment {
     variables = {
@@ -101,4 +102,30 @@ resource "aws_s3_bucket_notification" "prisma_changed_notification" {
   }
 
   depends_on = [aws_lambda_permission.allow_prisma_bucket]
+}
+
+resource "aws_iam_policy" "read_prisma_bucket_object" {
+  name        = "read_prisma_bucket_object"
+  path        = "/"
+  description = "IAM policy for reading from the prisma bucket"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "${aws_s3_bucket.prisma.arn}/*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "database_migration_read_prisma_bucket_object" {
+  role       = aws_iam_role.database_migration_role.name
+  policy_arn = aws_iam_policy.read_prisma_bucket_object.arn
 }
