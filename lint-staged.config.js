@@ -5,6 +5,5 @@ module.exports = {
     "services/site/**/*.{ts,tsx}": () => "npm --prefix services/site run lint:tsc",
     "services/submission-checker/**/*.{ts,tsx,js,jsx,json}": "npm --prefix services/submission-checker run lint:eslint",
     "services/submission-checker/**/*.{ts,tsx}": () => "npm --prefix services/submission-checker run lint:tsc",
-    "services/database-migration/**/*.{ts,js,json}": "npm --prefix services/database-migration run lint:eslint",
-    "services/database-migration/**/*.{ts}": () => "npm --prefix services/database-migration run lint:tsc",
+    "services/database-migration/**/*.{js}": "npm --prefix services/database-migration run lint",
 };
