@@ -9,7 +9,7 @@ fi
 
 SOURCE_DIR=$(dirname $0)
 cd $SOURCE_DIR
-zip -rq lambda.zip \
+zip -rqX lambda.zip \
     dist \
     node_modules \
     entrypoint.js \
