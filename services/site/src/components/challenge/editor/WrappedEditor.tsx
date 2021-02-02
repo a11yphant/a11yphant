@@ -1,5 +1,5 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -24,8 +24,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
 
-  // hook if dependency changed
-  React.useEffect(() => {
+  const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
       const wrapperHeight = wrapperRef.current.offsetHeight;
       const headingHeight = headingRef.current.offsetHeight;
@@ -52,6 +51,15 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
       );
     }
   }, [wrapperRef.current, headingRef.current, buttonRef.current]);
+
+  // hook if dependency changed
+  React.useEffect(() => {
+    updateEditorSize();
+  }, [wrapperRef.current, headingRef.current, buttonRef.current]);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", updateEditorSize);
+  }, []);
 
   return (
     <div className="editor-container w-inherit h-full box-border">
