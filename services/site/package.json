@@ -22,9 +22,11 @@
   "dependencies": {
     "@apollo/client": "3.3.7",
     "@monaco-editor/react": "4.0.9",
+    "@vendia/serverless-express": "^4.1.0",
     "autoprefixer": "10.2.4",
     "date-fns": "2.16.1",
     "dotenv": "8.2.0",
+    "express": "^4.17.1",
     "graphql": "15.5.0",
     "gray-matter": "4.0.2",
     "monaco-editor": "0.22.3",
