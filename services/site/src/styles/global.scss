@@ -45,4 +45,9 @@
     p {
         @apply mb-4;
     }
+
+    .sidebar__content {
+        height: calc(100vh - 1rem - 1rem - 2rem - 2rem - 2rem);
+        overflow-y: auto;
+    }
 }

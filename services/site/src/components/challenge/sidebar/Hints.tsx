@@ -13,11 +13,14 @@ interface HintProps extends Hint {
 const Hints: React.FunctionComponent<HintProps> = ({ num, open, setOpen }) => {
   return (
     <div>
-      <h3 onClick={() => setOpen(SectionType.hints)} className="text-primary font-bold p-4 text-center border-t-2 border-primary">
+      <h3
+        onClick={() => setOpen(SectionType.hints)}
+        className="flex text-primary font-bold items-center justify-center h-16 border-t-2 border-primary"
+      >
         Hints
       </h3>
       {open && (
-        <div className="mt-10 text-center">
+        <div className="sidebar__content mt-10 text-center">
           <p>You can unlock hints by clicking on the button below.</p>
           <button className="border-2 rounded-lg border-primary p-4">show me a hint</button>
         </div>

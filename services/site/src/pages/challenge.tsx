@@ -29,6 +29,19 @@ const Challenge = () => {
             "The link can be detected as a link by screen readers.",
           ],
         }}
+        hints={{
+          num: 3,
+        }}
+        resources={[
+          {
+            label: "Creating valid and accessible links",
+            link: "https://www.a11yproject.com/posts/2019-02-15-creating-valid-and-accessible-links/",
+          },
+          {
+            label: "Setting up a screen reader in Google Chrome",
+            link: "https://chrome.google.com/webstore/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn?hl=de",
+          },
+        ]}
       />
       <Editors
         editors={[
