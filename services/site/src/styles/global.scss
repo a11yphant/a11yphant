@@ -46,8 +46,15 @@
         @apply mb-4;
     }
 
-    .sidebar__content {
-        height: calc(100vh - 1rem - 1rem - 2rem - 2rem - 2rem);
-        overflow-y: auto;
+    .editor-container {
+        padding: 0 0.5rem;
+
+        &:first-of-type {
+            padding-left: 0;
+        }
+
+        &:last-of-type {
+            padding-right: 0;
+        }
     }
 }

@@ -19,7 +19,7 @@ const InstructionSection: React.FunctionComponent<InstructionSectionProps> = ({ 
         Instructions
       </h3>
       {open && (
-        <div className="sidebar__content">
+        <div>
           <div className="mt-10">
             {text.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>

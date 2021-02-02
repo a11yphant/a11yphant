@@ -13,49 +13,54 @@ const Challenge = () => {
   const [jsCode, setJsCode] = useState<string>("");
 
   return (
-    <main className="flex justify-between flex-col">
-      <SideBar
-        instructions={{
-          text: [
-            "Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.",
-            "Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.",
-          ],
-          tldr:
-            "TL; DR: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)",
-          requirements: [
-            "The link can be activated using the mouse.",
-            "The link can be focused using the keyboard.",
-            "The link can be activated using the keyboard.",
-            "The link can be detected as a link by screen readers.",
-          ],
-        }}
-        hints={{
-          num: 3,
-        }}
-        resources={[
-          {
-            label: "Creating valid and accessible links",
-            link: "https://www.a11yproject.com/posts/2019-02-15-creating-valid-and-accessible-links/",
-          },
-          {
-            label: "Setting up a screen reader in Google Chrome",
-            link: "https://chrome.google.com/webstore/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn?hl=de",
-          },
-        ]}
-      />
-      <Editors
-        editors={[
-          { language: "html", code: htmlCode, updateCode: setHtmlCode, heading: "index.html" },
-          { language: "css", code: cssCode, updateCode: setCssCode, heading: "index.css" },
-          { language: "javascript", code: jsCode, updateCode: setJsCode, heading: "index.js" },
-        ]}
-        // width="50vw"
-        // height="500px"
-        theme="light"
-        options={{ fontSize: 15 }}
-      />
-      <Preview htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
-    </main>
+    <div className="w-screen h-screen">
+      {/*@Todo: Add header*/}
+      <main className="flex justify-between h-full box-border p-4">
+        <SideBar
+          classes="w-1/4 h-full"
+          instructions={{
+            text: [
+              "Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.",
+              "Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.",
+            ],
+            tldr:
+              "TL; DR: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)",
+            requirements: [
+              "The link can be activated using the mouse.",
+              "The link can be focused using the keyboard.",
+              "The link can be activated using the keyboard.",
+              "The link can be detected as a link by screen readers.",
+            ],
+          }}
+          hints={{
+            num: 3,
+          }}
+          resources={[
+            {
+              label: "Creating valid and accessible links",
+              link: "https://www.a11yproject.com/posts/2019-02-15-creating-valid-and-accessible-links/",
+            },
+            {
+              label: "Setting up a screen reader in Google Chrome",
+              link: "https://chrome.google.com/webstore/detail/screen-reader/kgejglhpjiefppelpmljglcjbhoiplfn?hl=de",
+            },
+          ]}
+        />
+        <div className="flex justify-between flex-col w-3/4 h-full box-border pl-4">
+          <Editors
+            classes="w-full h-3/5"
+            editors={[
+              { language: "html", code: htmlCode, updateCode: setHtmlCode, heading: "index.html" },
+              { language: "css", code: cssCode, updateCode: setCssCode, heading: "index.css" },
+              { language: "javascript", code: jsCode, updateCode: setJsCode, heading: "index.js" },
+            ]}
+            theme="light"
+            options={{ fontSize: 15 }}
+          />
+          <Preview classes="w-full h-2/5" htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
+        </div>
+      </main>
+    </div>
   );
 };
 

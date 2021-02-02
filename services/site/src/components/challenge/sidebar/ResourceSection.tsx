@@ -22,7 +22,7 @@ const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resour
         Resources
       </h3>
       {open && (
-        <div className="sidebar__content mt-10 ">
+        <div className="mt-10 ">
           <ul>
             {resources.map((resource) => (
               <li>
