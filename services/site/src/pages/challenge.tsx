@@ -18,7 +18,7 @@ const Challenge = () => {
         setJsCode={setJsCode}
         width="50vw"
         height="90vh"
-        theme="dark"
+        theme="vs-dark"
       />
       <Preview htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
     </main>
