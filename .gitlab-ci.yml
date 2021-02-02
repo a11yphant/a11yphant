@@ -146,7 +146,7 @@ production-dependencies:database-migration:
   stage: build
   image:
     name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: bash
+    entrypoint: ['bash']
   variables:
     PROJECT_PATH: services/database-migration
   before_script:
