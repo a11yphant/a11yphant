@@ -19,7 +19,7 @@ const InstructionSection: React.FunctionComponent<InstructionSectionProps> = ({ 
         Instructions
       </h3>
       {open && (
-        <div className="flex-auto">
+        <div className="flex-auto overflow-y-auto">
           <div className="mt-10">
             {text.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>

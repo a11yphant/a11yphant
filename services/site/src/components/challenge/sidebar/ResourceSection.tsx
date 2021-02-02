@@ -22,7 +22,7 @@ const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resour
         Resources
       </h3>
       {open && (
-        <div className="flex-auto mt-10">
+        <div className="flex-auto overflow-y-auto mt-10">
           <ul>
             {resources.map((resource) => (
               <li>
