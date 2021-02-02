@@ -139,6 +139,9 @@ lint:import-challenges:
     - .run_on_import_challenges_change
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm run prisma:generate --prefix services/import-challenges
 
 test:import-challenges:
   extends:
