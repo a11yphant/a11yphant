@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    alias sha256sum="shasum -a 256"
+    alias md5sum="md5 -r"
 fi
 
 SOURCE_DIR=$(dirname $0)
@@ -11,4 +11,4 @@ zip -rqX lambda.zip \
     entrypoint.js \
     package.json
 
-echo "{ \"hash\": \"$(cat lambda.zip | sha256sum | cut -d " " -f 1)\"}"
+echo "{ \"hash\": \"$(cat lambda.zip | md5sum | cut -d " " -f 1)\"}"

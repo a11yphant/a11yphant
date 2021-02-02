@@ -39,7 +39,6 @@ resource "aws_lambda_function" "database_migration" {
 
    s3_bucket = aws_s3_bucket.code.id
    s3_key    = aws_s3_bucket_object.database_migration_code_zip.id
-   source_code_hash = data.external.database_migration_code_zip.result.hash
 
    handler = "entrypoint.handler"
    runtime = "nodejs12.x"
