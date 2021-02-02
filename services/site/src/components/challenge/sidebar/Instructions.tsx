@@ -15,12 +15,12 @@ interface InstructionProps extends Instruction {
 const Instructions: React.FunctionComponent<InstructionProps> = ({ text, tldr, requirements, open, setOpen }) => {
   return (
     <div>
-      <h3 onClick={() => setOpen(SectionType.instructions)} className="text-primary font-bold p-4 mb-10 text-center">
+      <h3 onClick={() => setOpen(SectionType.instructions)} className="text-primary font-bold p-4 text-center">
         Instructions
       </h3>
       {open && (
         <>
-          <div>
+          <div className="mt-10">
             {text.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
