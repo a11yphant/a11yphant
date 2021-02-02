@@ -14,7 +14,7 @@ interface InstructionSectionProps extends Instructions {
 
 const InstructionSection: React.FunctionComponent<InstructionSectionProps> = ({ text, tldr, requirements, open, setOpen }) => {
   return (
-    <div>
+    <>
       <h3 onClick={() => setOpen(SectionType.instructions)} className="flex text-primary font-bold items-center justify-center h-16">
         Instructions
       </h3>
@@ -38,7 +38,7 @@ const InstructionSection: React.FunctionComponent<InstructionSectionProps> = ({ 
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

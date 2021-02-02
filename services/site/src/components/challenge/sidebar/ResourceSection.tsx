@@ -14,7 +14,7 @@ interface ResourceSectionProps {
 
 const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resources, open, setOpen }) => {
   return (
-    <div>
+    <>
       <h3
         onClick={() => setOpen(SectionType.resources)}
         className="flex text-primary font-bold items-center justify-center h-16 border-t-2 border-primary"
@@ -35,7 +35,7 @@ const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resour
           </ul>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

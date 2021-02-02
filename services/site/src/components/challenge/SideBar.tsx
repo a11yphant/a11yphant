@@ -19,7 +19,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ instructions, hints, r
   const [openSection, setOpenSection] = useState<SectionType>(SectionType.instructions);
 
   return (
-    <aside className="h-screen w-1/4 border-2 rounded-lg border-primary m-4 px-8 relative box-border">
+    <aside className="flex flex-col h-screen w-1/4 border-2 rounded-lg border-primary m-4 px-8 relative box-border">
       <button className="border-l-2 border-b-2 border-primary p-4 h-16 absolute -top-px -right-px box-border text-2xl">Back</button>
       <InstructionSection {...instructions} open={openSection === SectionType.instructions} setOpen={setOpenSection} />
       <HintSection {...hints} open={openSection === SectionType.hints} setOpen={setOpenSection} />

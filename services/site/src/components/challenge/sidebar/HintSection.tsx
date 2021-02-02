@@ -12,7 +12,7 @@ interface HintSectionProps extends Hints {
 
 const HintSection: React.FunctionComponent<HintSectionProps> = ({ num, open, setOpen }) => {
   return (
-    <div>
+    <>
       <h3
         onClick={() => setOpen(SectionType.hints)}
         className="flex text-primary font-bold items-center justify-center h-16 border-t-2 border-primary"
@@ -25,7 +25,7 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ num, open, set
           <button className="border-2 rounded-lg border-primary p-4">show me a hint</button>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
