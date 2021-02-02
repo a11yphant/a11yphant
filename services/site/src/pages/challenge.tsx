@@ -8,7 +8,7 @@ const Challenge = () => {
     '<h1>The Device Vibration API </h1>\r\n\r\n<p> Today I learned about the device vibration API. This API allows you to control the vibration hardware of a phone from a website. There are some really good \r\n<span onlick="window.location =\r\nhttps://developer.mozilla.org/en-US/docs/Web/API/Vibration_API" class="link">vibration API examples in the MDN docs</span>.</p>',
   );
   const [cssCode, setCssCode] = useState<string>(
-    "html, body {\r\n  font-family: Arial, sans-serif;\r\n  font-size: 1.2rem;\r\n  line-height: 1.6rem;\r\n  letter-spacing: 0.02rem;\r\n  max-width: 80ch;\r\n}\r\n\r\n.link {\r\n  color: black;\r\n  text-decoration: none;\r\n  border-bottom: 3px solid blue;\r\n}\r\n\r\n.link:hover, .link:active, .link:focus {\r\n  color: blue;\r\n  border-color: blue;\r\n  cursor: pointer;\r\n  border-width: 0px;\r\n}",
+    "html, body {\r\n  font-family: Arial, sans-serif;\r\n  font-size: 1rem;\r\n  line-height: 1.6rem;\r\n  letter-spacing: 0.02rem;\r\n  max-width: 80ch;\r\n}\r\n\r\n.link {\r\n  color: black;\r\n  text-decoration: none;\r\n  border-bottom: 3px solid blue;\r\n}\r\n\r\n.link:hover, .link:active, .link:focus {\r\n  color: blue;\r\n  border-color: blue;\r\n  cursor: pointer;\r\n  border-width: 0px;\r\n}",
   );
   const [jsCode, setJsCode] = useState<string>("");
 
@@ -17,7 +17,7 @@ const Challenge = () => {
       {/*@Todo: Add header*/}
       <main className="flex justify-between h-full box-border p-4">
         <SideBar
-          classes="w-1/4 h-full"
+          classes="w-1/5 h-full"
           instructions={{
             text: [
               "Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.",
@@ -46,7 +46,7 @@ const Challenge = () => {
             },
           ]}
         />
-        <div className="flex justify-between flex-col w-3/4 h-full box-border pl-4">
+        <div className="flex justify-between flex-col w-4/5 h-full box-border pl-4">
           <Editors
             classes="w-full h-3/5"
             editors={[
@@ -55,7 +55,12 @@ const Challenge = () => {
               { language: "javascript", code: jsCode, updateCode: setJsCode, heading: "index.js" },
             ]}
             theme="light"
-            options={{ fontSize: 15 }}
+            options={{
+              fontSize: 12,
+              minimap: {
+                enabled: false,
+              },
+            }}
           />
           <Preview classes="w-full h-2/5" htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
         </div>
