@@ -3,9 +3,10 @@ import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphq
 import { writeFileSync } from "fs";
 import { printSchema } from "graphql";
 
-import { HelloWorldResolver } from "./hello-world/hello-world.resolver";
+import { ChallengeResolver } from "./challenge/challenge.resolver";
+// import { HelloWorldResolver } from "./hello-world/hello-world.resolver";
 
-const resolvers = [HelloWorldResolver];
+const resolvers = [ChallengeResolver];
 
 const scalars = [];
 

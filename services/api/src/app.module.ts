@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 
+import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
 import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
-import { HelloWorldModule } from "./hello-world/hello-world.module";
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
       }),
       inject: [ConfigService],
     }),
-    HelloWorldModule,
+    ChallengeModule,
   ],
 })
 export class AppModule {}
