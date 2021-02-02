@@ -97,7 +97,6 @@ production-dependencies:api:
   only:
     - master
     - develop
-    - merge_requests
 
 build:api:
   extends:
