@@ -1,16 +1,16 @@
 import { SectionType } from "app/components/challenge/SideBar";
 import React, { SetStateAction } from "react";
 
-export interface Hint {
+export interface Hints {
   num: number;
 }
 
-interface HintProps extends Hint {
+interface HintSectionProps extends Hints {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<SectionType>>;
 }
 
-const Hints: React.FunctionComponent<HintProps> = ({ num, open, setOpen }) => {
+const HintSection: React.FunctionComponent<HintSectionProps> = ({ num, open, setOpen }) => {
   return (
     <div>
       <h3
@@ -29,4 +29,4 @@ const Hints: React.FunctionComponent<HintProps> = ({ num, open, setOpen }) => {
   );
 };
 
-export default Hints;
+export default HintSection;

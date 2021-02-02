@@ -6,13 +6,13 @@ export interface Resource {
   link: string;
 }
 
-interface ResourcesProps {
+interface ResourceSectionProps {
   resources: Resource[];
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<SectionType>>;
 }
 
-const Resources: React.FunctionComponent<ResourcesProps> = ({ resources, open, setOpen }) => {
+const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resources, open, setOpen }) => {
   return (
     <div>
       <h3
@@ -39,4 +39,4 @@ const Resources: React.FunctionComponent<ResourcesProps> = ({ resources, open, s
   );
 };
 
-export default Resources;
+export default ResourceSection;

@@ -1,18 +1,18 @@
 import { SectionType } from "app/components/challenge/SideBar";
 import React, { SetStateAction } from "react";
 
-export interface Instruction {
+export interface Instructions {
   text: string[];
   tldr: string;
   requirements: string[];
 }
 
-interface InstructionProps extends Instruction {
+interface InstructionSectionProps extends Instructions {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<SectionType>>;
 }
 
-const Instructions: React.FunctionComponent<InstructionProps> = ({ text, tldr, requirements, open, setOpen }) => {
+const InstructionSection: React.FunctionComponent<InstructionSectionProps> = ({ text, tldr, requirements, open, setOpen }) => {
   return (
     <div>
       <h3 onClick={() => setOpen(SectionType.instructions)} className="flex text-primary font-bold items-center justify-center h-16">
@@ -42,4 +42,4 @@ const Instructions: React.FunctionComponent<InstructionProps> = ({ text, tldr, r
   );
 };
 
-export default Instructions;
+export default InstructionSection;
