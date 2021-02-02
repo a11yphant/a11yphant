@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Challenge" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );

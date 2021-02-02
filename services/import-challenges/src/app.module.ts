@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 
+import { YamlReaderService } from './yaml-reader.service';
+
 @Module({
   imports: [],
-  providers: [],
+  providers: [YamlReaderService],
 })
 export class AppModule {}

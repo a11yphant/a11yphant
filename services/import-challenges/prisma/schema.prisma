@@ -11,5 +11,5 @@ generator client {
 }
 
 model Challenge {
-  id    Int     @id @default(autoincrement())
+  id    String     @id @default(uuid())
 }
