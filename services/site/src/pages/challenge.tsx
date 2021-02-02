@@ -1,5 +1,6 @@
 import Editors from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
+import SideBar from "app/components/challenge/SideBar";
 import React, { useState } from "react";
 
 const Challenge = () => {
@@ -13,6 +14,7 @@ const Challenge = () => {
 
   return (
     <main className="flex justify-between flex-col">
+      <SideBar sections={[{ title: "Instructions", content: "hallo" }]} />
       <Editors
         editors={[
           { language: "html", code: htmlCode, updateCode: setHtmlCode, heading: "index.html" },
