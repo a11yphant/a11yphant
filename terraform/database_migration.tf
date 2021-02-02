@@ -12,12 +12,13 @@ resource "aws_s3_bucket_object" "prisma_migrations" {
     bucket = aws_s3_bucket.prisma.id
     key    = "${var.current_version}.zip"
     source = "${path.module}/../services/database-migration/prisma.zip"
-    etag   = data.archive_file.prisma_migrations.output_base64sha256
+    etag   = data.archive_file.prisma_migrations.output_md5
 
     depends_on = [ 
         data.archive_file.prisma_migrations,
         aws_s3_bucket.prisma,
-        aws_lambda_function.database_migration
+        aws_lambda_function.database_migration,
+        aws_s3_bucket_notification.prisma_changed_notification
      ]
 }
 
@@ -49,12 +50,26 @@ resource "aws_lambda_function" "database_migration" {
    environment {
     variables = {
       NODE_ENV = "production"
+      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}"
     }
+  }
+
+  vpc_config {
+    subnet_ids         = [ 
+        aws_subnet.postgres_cluster_network_zone_a.id,
+        aws_subnet.postgres_cluster_network_zone_b.id,
+        aws_subnet.postgres_cluster_network_zone_c.id
+    ]
+    security_group_ids = [ aws_security_group.allow_all_egress.id ]
   }
 
   depends_on = [
     aws_s3_bucket_object.database_migration_code_zip,
     aws_iam_role_policy_attachment.database_migration_lambda_logs,
+    aws_subnet.postgres_cluster_network_zone_a,
+    aws_subnet.postgres_cluster_network_zone_b,
+    aws_subnet.postgres_cluster_network_zone_c,
+    aws_security_group.allow_all_egress
   ]
 }
 
@@ -82,6 +97,11 @@ EOF
 resource "aws_iam_role_policy_attachment" "database_migration_lambda_logs" {
   role       = aws_iam_role.database_migration_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
+}
+
+resource "aws_iam_role_policy_attachment" "database_migration_vpc_access" {
+  role       = aws_iam_role.database_migration_role.name
+  policy_arn = aws_iam_policy.vpc_access.arn
 }
 
 resource "aws_lambda_permission" "allow_prisma_bucket" {
