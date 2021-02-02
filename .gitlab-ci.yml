@@ -107,7 +107,6 @@ build:api:
   only:
     - master
     - develop
-    - merge_requests
 
 #-----------------------------------
 # Site
@@ -130,6 +129,17 @@ test:site:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
+
+#-----------------------------------
+# Terraform
+#-----------------------------------
+
+lint:database-migrations:
+  extends:
+    - .lint
+    - .run_on_database_migration_change
+  variables:
+    PROJECT_PATH: services/database-migration
 
 #-----------------------------------
 # Terraform
