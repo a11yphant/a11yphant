@@ -2,13 +2,14 @@
   "name": "@a11y-challenges/database-migration",
   "version": "1.0.0",
   "description": "",
+  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "private": true,
+  "license": "UNLICENSED",
   "main": "entrypoint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ext .js ."
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@prisma/client": "^2.15.0",
     "@prisma/cli": "^2.15.0",
