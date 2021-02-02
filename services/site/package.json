@@ -27,7 +27,7 @@
     "dotenv": "8.2.0",
     "graphql": "15.5.0",
     "gray-matter": "4.0.2",
-    "monaco-editor": "0.22.1",
+    "monaco-editor": "0.22.3",
     "next": "10.0.6",
     "postcss": "8.2.4",
     "react": "17.0.1",
