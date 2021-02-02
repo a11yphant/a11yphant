@@ -15,25 +15,20 @@ const Challenge = () => {
   return (
     <main className="flex justify-between flex-col">
       <SideBar
-        sections={[
-          {
-            title: "Instructions",
-            content: {
-              text: [
-                "Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.",
-                "Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.",
-              ],
-              tldr:
-                "TL; DR: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)",
-              requirements: [
-                "The link can be activated using the mouse.",
-                "The link can be focused using the keyboard.",
-                "The link can be activated using the keyboard.",
-                "The link can be detected as a link by screen readers.",
-              ],
-            },
-          },
-        ]}
+        instructions={{
+          text: [
+            "Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.",
+            "Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.",
+          ],
+          tldr:
+            "TL; DR: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)",
+          requirements: [
+            "The link can be activated using the mouse.",
+            "The link can be focused using the keyboard.",
+            "The link can be activated using the keyboard.",
+            "The link can be detected as a link by screen readers.",
+          ],
+        }}
       />
       <Editors
         editors={[
