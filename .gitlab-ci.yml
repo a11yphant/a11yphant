@@ -154,7 +154,7 @@ production-dependencies:site:
   stage: build
   image:
     name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: ['bash']
+    entrypoint: [""]
   variables:
     PROJECT_PATH: services/site
   before_script:
