@@ -1,5 +1,6 @@
 import { createMock } from '@golevelup/ts-jest';
 import * as mock from 'mock-fs';
+import { join } from 'path';
 
 import { ImportService } from './import.service';
 import { PrismaService } from './prisma/prisma.service';
@@ -27,7 +28,7 @@ describe('import service', () => {
   it('imports yml files from a folder', async () => {
     const upsert = jest.fn();
     mock({
-      'test-challenges': {
+      [join(__dirname, 'test-challenges')]: {
         '1.yml': '',
         '2.yml': '',
         'asdf.png': '',
