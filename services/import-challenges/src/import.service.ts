@@ -24,11 +24,12 @@ export class ImportService {
     const importPromises = (await readdir(path))
       .filter((file) => file.endsWith('.yml'))
       .map(async (file) => {
+        this.logger.log(`Importing file: ${file}`);
         const filePath = join(path, file);
         const content = await this.ymlReader.readChallenge(filePath);
         await this.importChallenge(content);
       });
-
+    this.logger.log(`Imported ${importPromises.length} challenges`);
     await Promise.all(importPromises);
   }
 
