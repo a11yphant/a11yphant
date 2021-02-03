@@ -136,7 +136,6 @@ test:site:
 build:site:
   extends:
     - .build
-    - .run_on_site_change
   needs:
     - generate-graphql-schema:api
   variables:
