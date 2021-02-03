@@ -1,3 +1,4 @@
+import ToggleButton from "app/components/buttons/ToggleButton";
 import { SectionType } from "app/components/challenge/SideBar";
 import React, { SetStateAction } from "react";
 
@@ -15,10 +16,8 @@ interface InstructionSectionProps extends Instructions {
 const InstructionSection: React.FunctionComponent<InstructionSectionProps> = ({ text, tldr, requirements, open, setOpen }) => {
   return (
     <>
-      <h3 className="flex items-center justify-center h-16">
-        <button onClick={() => setOpen(SectionType.instructions)} className="text-primary font-bold h-16 w-full">
-          Instructions
-        </button>
+      <h3 className={`${open === true ? "disableBtn" : ""} flex items-center justify-center h-16`}>
+        <ToggleButton onClick={() => setOpen(SectionType.instructions)} text="Instructions" disabled={open} />
       </h3>
       {open && (
         <div className="flex-auto overflow-y-auto px-8">

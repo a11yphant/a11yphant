@@ -8,7 +8,8 @@ module.exports = {
         screenHalf: "50vh",
       },
       colors: {
-        primary: "#5000B7",
+        primary: "#7331FF",
+        primaryDark: "#5000B7",
       },
       fontFamily: {
         ibmPlex: ["IBM Plex Sans", "sans-serif"],

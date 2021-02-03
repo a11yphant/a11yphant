@@ -31,7 +31,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
     window.requestAnimationFrame(() => {
       // width animation
       asideRef.current.classList.toggle("w-1/5");
-      asideRef.current.classList.toggle("w-20");
+      asideRef.current.classList.toggle("w-16");
 
       // button animation
       buttonRef.current.classList.toggle("chevron-open");

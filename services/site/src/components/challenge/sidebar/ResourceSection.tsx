@@ -1,3 +1,4 @@
+import ToggleButton from "app/components/buttons/ToggleButton";
 import { SectionType } from "app/components/challenge/SideBar";
 import React, { SetStateAction } from "react";
 
@@ -15,10 +16,8 @@ interface ResourceSectionProps {
 const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resources, open, setOpen }) => {
   return (
     <>
-      <h3 className="flex items-center justify-center h-16 border-t-2 border-primary">
-        <button onClick={() => setOpen(SectionType.resources)} className="text-primary font-bold h-16 w-full">
-          Resources
-        </button>
+      <h3 className={`${open === true ? "disableBtn" : ""} flex items-center justify-center h-16 border-t-2 border-primary`}>
+        <ToggleButton onClick={() => setOpen(SectionType.resources)} text="Resources" disabled={open} />
       </h3>
       {open && (
         <div className="flex-auto overflow-y-auto mt-10 px-8">
