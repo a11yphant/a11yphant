@@ -6,8 +6,8 @@ import React, { useState } from "react";
 interface SideBarProps {
   classes: string;
   instructions: Instructions;
-  hints?: Hints;
-  resources?: Resource[];
+  hints: Hints;
+  resources: Resource[];
 }
 
 export enum SectionType {
