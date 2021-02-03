@@ -21,7 +21,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      textColor: ["group-focus"],
+    },
   },
   plugins: [],
 };

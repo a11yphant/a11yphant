@@ -3,7 +3,7 @@ import InstructionSection, { Instructions } from "app/components/challenge/sideb
 import ResourceSection, { Resource } from "app/components/challenge/sidebar/ResourceSection";
 import React, { useRef, useState } from "react";
 
-import ChevronLeft from "../icons/ChevronLeft";
+import IconOnlyButton from "../buttons/IconOnlyButton";
 
 interface SideBarProps {
   classes: string;
@@ -20,6 +20,7 @@ export enum SectionType {
 
 const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions, hints, resources }) => {
   const [openSection, setOpenSection] = useState<SectionType>(SectionType.instructions);
+  const [updateButtonText, setUpdateButtonText] = useState<string>("Close sidebar");
 
   // open animation
   const asideRef = useRef<HTMLDivElement>();
@@ -51,6 +52,8 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
           divClosedRef.current.style.display = "none";
           divOpenRef.current.style.display = "flex";
         }, 750);
+
+        setUpdateButtonText("Close sidebar");
       }
       // open to closed
       else if (getComputedStyle(divClosedRef.current).display === "none") {
@@ -62,6 +65,8 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
           divOpenRef.current.style.display = "none";
           divClosedRef.current.style.display = "flex";
         }, 750);
+
+        setUpdateButtonText("Open sidebar");
       }
     });
   };
@@ -71,13 +76,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
       ref={asideRef}
       className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden w-1/5`}
     >
-      <button
-        ref={buttonRef}
-        onClick={changeWidth}
-        className="border-l-2 border-b-2 border-primary p-4 h-16 absolute -top-px -right-px box-border text-2xl transition duration-700"
-      >
-        <ChevronLeft />
-      </button>
+      <IconOnlyButton buttonRef={buttonRef} onClick={changeWidth} text={updateButtonText} />
       <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-700">
         <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
