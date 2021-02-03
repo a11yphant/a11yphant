@@ -83,11 +83,17 @@ export class ImportService {
             tldr: level.tldr,
             instructions: level.instructions,
             challengeId,
+            html: level.code?.html,
+            css: level.code?.css,
+            js: level.code?.js,
           },
           update: {
             tldr: level.tldr,
             instructions: level.instructions,
             challengeId,
+            html: level.code?.html,
+            css: level.code?.css,
+            js: level.code?.js,
           },
         });
       }),

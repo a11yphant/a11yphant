@@ -11,6 +11,13 @@ export interface Level {
   requirements: Requirement[];
   hints: Hint[];
   resources: Resource[];
+  code?: Code;
+}
+
+interface Code {
+  html?: string;
+  css?: string;
+  js?: string;
 }
 
 export interface Requirement {

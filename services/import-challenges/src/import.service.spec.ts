@@ -70,6 +70,46 @@ describe('import service', () => {
     expect(upsert).toHaveBeenCalledTimes(1);
   });
 
+  it('can import the levels with code for a challenge', async () => {
+    const upsert = jest.fn();
+    const challenge: Challenge = {
+      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      name: 'test',
+      levels: [
+        {
+          id: 'a',
+          tldr: 'hi',
+          instructions: 'hi',
+          hints: [],
+          requirements: [],
+          resources: [],
+          code: {
+            html: '<a href="/">hi</a>',
+            css: 'a { color: blue }',
+            js: 'alert("hi")',
+          },
+        },
+      ],
+    };
+
+    const importer = new ImportService(
+      createMock<Logger>(),
+      createMock<PrismaService>({
+        challenge: { upsert: jest.fn().mockResolvedValue(null) },
+        level: { upsert },
+        requirement: { upsert: jest.fn().mockResolvedValue(null) },
+        hint: { upsert: jest.fn().mockResolvedValue(null) },
+        resource: { upsert: jest.fn().mockResolvedValue(null) },
+      }),
+      createMock<YamlReaderService>(),
+    );
+
+    await importer.importChallenge(challenge);
+
+    expect(upsert).toHaveBeenCalled();
+    expect(upsert).toHaveBeenCalledTimes(1);
+  });
+
   it('can import the requirements for a level', async () => {
     const upsert = jest.fn();
     const challenge: Challenge = {
