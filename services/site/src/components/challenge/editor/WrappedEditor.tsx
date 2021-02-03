@@ -23,6 +23,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
   // state
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
+  const [editorTop, setEditorTop] = useState<number>(0);
 
   const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
@@ -49,6 +50,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
           parseInt(marginButton.marginTop) -
           parseInt(marginButton.marginBottom),
       );
+
+      setEditorTop(parseInt(paddingWrapper.paddingTop) + headingHeight + parseInt(marginHeading.marginTop) + parseInt(marginHeading.marginBottom));
     }
   }, [wrapperRef.current, headingRef.current, buttonRef.current]);
 
@@ -63,20 +66,22 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
 
   return (
     <div className="editor-container w-inherit h-full box-border">
-      <div ref={wrapperRef} className="border-2 rounded-lg border-primary py-2 px-4 w-inherit h-full">
+      <div ref={wrapperRef} className="relative border-2 rounded-lg border-primary py-2 px-4 w-inherit h-full">
         <h3 ref={headingRef} className="text-primary mb-4">
           {config.heading}
         </h3>
-        <Editor
-          {...props}
-          language={config.language}
-          value={config.code}
-          onChange={(value) => {
-            config.updateCode(value);
-          }}
-          width={editorWidth}
-          height={editorHeight}
-        />
+        <div className="absolute" style={{ top: editorTop }}>
+          <Editor
+            {...props}
+            language={config.language}
+            value={config.code}
+            onChange={(value) => {
+              config.updateCode(value);
+            }}
+            width={editorWidth}
+            height={editorHeight}
+          />
+        </div>
         <button ref={buttonRef}>Reset</button>
       </div>
     </div>
