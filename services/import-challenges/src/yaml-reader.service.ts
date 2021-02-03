@@ -8,7 +8,7 @@ const readFile = promisify(readFileCallback);
 
 @Injectable()
 export class YamlReaderService {
-  public async readChallenge(path: string): Promise<any> {
+  public async readChallenge(path: string): Promise<Challenge> {
     const yml = await readFile(path);
     const { challenge } = load(yml.toString()) as { challenge: Challenge };
 

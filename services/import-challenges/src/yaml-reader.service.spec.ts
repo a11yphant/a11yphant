@@ -14,7 +14,9 @@ describe('YAML reader service', () => {
 
   it('can read a yaml file', async () => {
     mock({
-      'test/1.yml': yamlOne,
+      test: {
+        '1.yml': yamlOne,
+      },
     });
     const reader = new YamlReaderService();
 
