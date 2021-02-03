@@ -145,6 +145,9 @@ build:site:
     paths:
       - $PROJECT_PATH/.next
     expire_in: 1 day
+  only:
+    - master
+    - develop
 
 production-dependencies:site:
   tags:
