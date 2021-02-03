@@ -70,8 +70,8 @@ resource "aws_iam_role_policy_attachment" "api_lambda_logs" {
 }
 
 
-resource "aws_lambda_permission" "api_gateway_api" {
-   statement_id  = "allow_api_gateway_invoke_api"
+resource "aws_lambda_permission" "api_gateway" {
+   statement_id  = "AllowAPIGatewayInvoke"
    action        = "lambda:InvokeFunction"
    function_name = aws_lambda_function.api.function_name
    principal     = "apigateway.amazonaws.com"
