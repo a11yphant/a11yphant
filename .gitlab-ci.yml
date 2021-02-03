@@ -242,7 +242,7 @@ deploy:
    - apk add zip
   script:
     - terraform -chdir=terraform init
-    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -auto-approve
+    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
   only:
     - master
     - develop
