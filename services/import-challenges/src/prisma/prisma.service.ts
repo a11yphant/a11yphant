@@ -11,7 +11,9 @@ import { PrismaClient } from '@prisma/client';
 export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy {
-  constructor(private logger: Logger, config: ConfigService) {
+  private readonly logger = new Logger(PrismaService.name);
+
+  constructor(config: ConfigService) {
     super({
       datasources: {
         db: {

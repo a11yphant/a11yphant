@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Challenge } from '@prisma/client';
 import { readdir as readdirCallback } from 'fs';
 import { join } from 'path';
@@ -11,16 +11,20 @@ const readdir = promisify(readdirCallback);
 
 @Injectable()
 export class ImportService {
+  private logger = new Logger(ImportService.name);
+
   constructor(
     private prisma: PrismaService,
     private ymlReader: YamlReaderService,
   ) {}
 
   public async importAllFromFolder(folder: string): Promise<void> {
-    const importPromises = (await readdir(folder))
+    const path = join(__dirname, folder);
+    this.logger.log(`Importing yml files from ${path}`);
+    const importPromises = (await readdir(path))
       .filter((file) => file.endsWith('.yml'))
       .map(async (file) => {
-        const filePath = join(folder, file);
+        const filePath = join(path, file);
         const content = await this.ymlReader.readChallenge(filePath);
         await this.importChallenge(content);
       });
