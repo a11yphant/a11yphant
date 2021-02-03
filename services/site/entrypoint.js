@@ -5,11 +5,12 @@ const next = require("next");
 
 const nextServer = next({ dev: false });
 const handle = nextServer.getRequestHandler();
-let app = null;
+let serverless = null;
 
 async function init() {
   await nextServer.prepare();
-  app = express();
+  const app = express();
+  serverless = configure({ app });
 
   app.get("*", (req, res) => {
     return handle(req, res);
@@ -22,8 +23,8 @@ async function init() {
 
 const initializationPromise = init();
 
-exports.handler = async (event, context, callback) => {
+exports.handler = async (...args) => {
   await initializationPromise;
-  const serverless = configure({ app });
-  return serverless.proxy({ event, context, callback });
+
+  return serverless.handler(...args);
 };
