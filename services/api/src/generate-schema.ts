@@ -4,9 +4,9 @@ import { writeFileSync } from "fs";
 import { printSchema } from "graphql";
 
 import { ChallengeResolver } from "./challenge/challenge.resolver";
-// import { HelloWorldResolver } from "./hello-world/hello-world.resolver";
+import { HelloWorldResolver } from "./hello-world/hello-world.resolver";
 
-const resolvers = [ChallengeResolver];
+const resolvers = [HelloWorldResolver, ChallengeResolver];
 
 const scalars = [];
 
