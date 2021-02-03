@@ -6,6 +6,7 @@ import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
 import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
+import { HelloWorldModule } from "./hello-world/hello-world.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import nodeConfig from "./config/node.config";
       }),
       inject: [ConfigService],
     }),
+    HelloWorldModule,
     ChallengeModule,
   ],
 })
