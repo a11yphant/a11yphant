@@ -1,5 +1,6 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -60,9 +61,14 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
     updateEditorSize();
   }, [wrapperRef.current, headingRef.current, buttonRef.current]);
 
-  React.useEffect(() => {
-    window.addEventListener("resize", updateEditorSize);
-  }, []);
+  // React.useEffect(() => {
+  //   window.addEventListener("resize", updateEditorSize);
+  // }, []);
+
+  useResizeDetector({
+    targetRef: wrapperRef,
+    onResize: updateEditorSize,
+  });
 
   return (
     <div className="editor-container w-inherit h-full box-border">
