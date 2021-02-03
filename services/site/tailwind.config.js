@@ -10,6 +10,9 @@ module.exports = {
       colors: {
         primary: "#5000B7",
       },
+      fontFamily: {
+        ibmPlex: ["IBM Plex Sans", "sans-serif"],
+      },
     },
   },
   variants: {
