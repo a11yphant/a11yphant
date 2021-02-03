@@ -1,7 +1,7 @@
 import Card from "app/components/Card";
 import { HelloWorldDocument, useHelloWorldQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apolloClient";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import React from "react";
 
 const Home: React.FunctionComponent = () => {
@@ -24,7 +24,7 @@ const Home: React.FunctionComponent = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
@@ -35,7 +35,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
     },
-    revalidate: 1,
   };
 };
 
