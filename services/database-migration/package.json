@@ -11,12 +11,12 @@
     "lint": "eslint --ext .js ."
   },
   "dependencies": {
-    "@prisma/client": "^2.15.0",
-    "@prisma/cli": "^2.15.0",
-    "unzipper": "^0.10.11"
+    "@prisma/client": "2.15.0",
+    "@prisma/cli": "2.15.0",
+    "unzipper": "0.10.11"
   },
   "devDependencies": {
-    "aws-sdk": "^2.834.0",
+    "aws-sdk": "2.834.0",
     "eslint": "7.19.0",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
