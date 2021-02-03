@@ -1,5 +1,6 @@
 import { createMock } from '@golevelup/ts-jest';
 import { Logger } from '@nestjs/common';
+import { Challenge } from '@prisma/client';
 import * as mock from 'mock-fs';
 import { join } from 'path';
 
@@ -10,8 +11,9 @@ import { YamlReaderService } from './yaml-reader.service';
 describe('import service', () => {
   it('can import a challenge into the db', async () => {
     const upsert = jest.fn();
-    const challenge = {
+    const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      name: 'test',
     };
 
     const importer = new ImportService(
