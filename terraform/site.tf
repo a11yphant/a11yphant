@@ -30,6 +30,7 @@ resource "aws_lambda_function" "site" {
     variables = {
       NODE_ENV = "production"
       NO_COLOR = 1
+      SITE_GRAPHQL_ENDPOINT = "${aws_api_gateway_deployment.api_gateway_deployment.invoke_url}/graphql"
     }
   }
 
