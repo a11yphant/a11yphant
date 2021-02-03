@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "api_gateway" {
-  name        = "api_gateway"
+  name        = "${terraform.workspace}-api-gateway"
   description = "A11y challenges API gateway"
 }
 

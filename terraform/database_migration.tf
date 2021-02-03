@@ -35,7 +35,7 @@ resource "aws_s3_bucket_object" "database_migration_code_zip" {
 }
 
 resource "aws_lambda_function" "database_migration" {
-   function_name = "database_migration"
+   function_name = "${terraform.workspace}-database-migration"
 
    s3_bucket = aws_s3_bucket.code.id
    s3_key    = aws_s3_bucket_object.database_migration_code_zip.id
@@ -73,7 +73,7 @@ resource "aws_lambda_function" "database_migration" {
 }
 
 resource "aws_iam_role" "database_migration_role" {
-   name = "database_migration_role"
+   name = "${terraform.workspace}-database-migration-role"
    description = "IAM Role for executing a Lambda"
 
    assume_role_policy = <<EOF
@@ -124,7 +124,7 @@ resource "aws_s3_bucket_notification" "prisma_changed_notification" {
 }
 
 resource "aws_iam_policy" "read_prisma_bucket_object" {
-  name        = "read_prisma_bucket_object"
+  name        = "${terraform.workspace}-read-prisma-bucket-object"
   path        = "/"
   description = "IAM policy for reading from the prisma bucket"
 

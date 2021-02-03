@@ -1,5 +1,5 @@
 resource "aws_security_group" "allow_all_egress" {
-    name = "allow_all_egress"
+    name = "${terraform.workspace}-allow-all-egres"
     vpc_id = aws_vpc.main_network.id
 
     egress {
@@ -11,7 +11,7 @@ resource "aws_security_group" "allow_all_egress" {
 }
 
 resource "aws_security_group" "allow_postgres_ingress" {
-    name = "allow_postgres_ingress"
+    name   = "${terraform.workspace}-allow-postgres-ingress"
     vpc_id = aws_vpc.main_network.id
 
     ingress {

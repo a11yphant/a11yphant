@@ -2,7 +2,7 @@
 # Lambda
 #-----------------------------------
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "lambda_logging"
+  name        = "${terraform.workspace}-lambda-logging"
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
@@ -25,7 +25,7 @@ EOF
 }
 
 resource "aws_iam_policy" "vpc_access" {
-  name        = "vpc_access"
+  name        = "vpc-access-${terraform.workspace}"
   path        = "/"
   description = "IAM policy for allowing the lambda to gaining access to a vpc by creating network interfaces"
 

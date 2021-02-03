@@ -15,7 +15,7 @@ resource "aws_s3_bucket_object" "api_code_zip" {
 }
 
 resource "aws_lambda_function" "api" {
-   function_name = "api"
+   function_name = "${terraform.workspace}-api"
 
    s3_bucket = aws_s3_bucket.code.id
    s3_key    = aws_s3_bucket_object.api_code_zip.id
@@ -44,7 +44,7 @@ resource "aws_lambda_function" "api" {
 }
 
 resource "aws_iam_role" "api_role" {
-   name = "api_role"
+   name = "${terraform.workspace}-api-role"
    description = "IAM Role for executing a Lambda"
 
    assume_role_policy = <<EOF
@@ -71,7 +71,7 @@ resource "aws_iam_role_policy_attachment" "api_lambda_logs" {
 
 
 resource "aws_lambda_permission" "api_gateway" {
-   statement_id  = "AllowAPIGatewayInvoke"
+   statement_id  = "allow-api-gateway-invoke"
    action        = "lambda:InvokeFunction"
    function_name = aws_lambda_function.api.function_name
    principal     = "apigateway.amazonaws.com"
