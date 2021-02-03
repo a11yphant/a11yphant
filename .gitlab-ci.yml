@@ -158,12 +158,35 @@ test:import-challenges:
 # Database Migrations
 #-----------------------------------
 
-lint:database-migrations:
+lint:database-migration:
   extends:
     - .lint
     - .run_on_database_migration_change
   variables:
     PROJECT_PATH: services/database-migration
+
+production-dependencies:database-migration:
+  tags:
+    - docker
+  stage: build
+  image:
+    name: public.ecr.aws/lambda/nodejs:12
+    entrypoint: [""]
+  variables:
+    PROJECT_PATH: services/database-migration
+  before_script:
+    - '' # disable default npm install
+  cache: {} # disable cache because lambda/nodejs uses centOS
+  script:
+    - npm ci --production --prefix $PROJECT_PATH
+    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+    expire_in: 1 day
+  only:
+    - master
+    - develop
 
 #-----------------------------------
 # Terraform
@@ -192,6 +215,7 @@ deploy:
   needs:
     - build:api
     - production-dependencies:api
+    - production-dependencies:database-migration
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
@@ -199,7 +223,7 @@ deploy:
    - apk add zip
   script:
     - terraform -chdir=terraform init
-    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -auto-approve
+    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
   only:
     - master
     - develop

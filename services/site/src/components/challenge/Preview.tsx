@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
 interface PreviewProps {
+  classes: string;
   cssCode: string;
   htmlCode: string;
   jsCode: string;
 }
 
-const Preview: React.FunctionComponent<PreviewProps> = ({ cssCode, htmlCode, jsCode }) => {
+const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, jsCode }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJsCode, setInnerJsCode] = useState<string>("");
@@ -28,7 +29,12 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ cssCode, htmlCode, jsC
     setRenderCountdown(startRenderCountdown());
   }, [htmlCode, cssCode, jsCode]);
 
-  return <iframe className="border-8 w-1/2" srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJsCode}</script>`} />;
+  return (
+    <iframe
+      className={`${classes} border-2 rounded-lg border-primary py-2 px-4 box-border`}
+      srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJsCode}</script>`}
+    />
+  );
 };
 
 export default Preview;

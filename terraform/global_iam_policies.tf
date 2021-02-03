@@ -27,7 +27,7 @@ EOF
 resource "aws_iam_policy" "vpc_access" {
   name        = "vpc_access"
   path        = "/"
-  description = "IAM policy for logging from a lambda"
+  description = "IAM policy for allowing the lambda to gaining access to a vpc by creating network interfaces"
 
   policy = <<EOF
 {
