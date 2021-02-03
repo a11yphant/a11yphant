@@ -28,7 +28,14 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ cssCode, htmlCode, jsC
     setRenderCountdown(startRenderCountdown());
   }, [htmlCode, cssCode, jsCode]);
 
-  return <iframe className="border-8 w-1/2" srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJsCode}</script>`} />;
+  return (
+    <div className="w-full h-screenHalf p-4 box-border">
+      <iframe
+        className="border-2 rounded-lg border-primary w-full h-full py-2 px-4 box-border"
+        srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJsCode}</script>`}
+      />
+    </div>
+  );
 };
 
 export default Preview;
