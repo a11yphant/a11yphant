@@ -57,6 +57,7 @@ const Challenge = () => {
             theme="light"
             options={{
               fontSize: 12,
+              wordWrap: "on",
               minimap: {
                 enabled: false,
               },
