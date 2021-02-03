@@ -43,25 +43,25 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
 
       // closed to open
       if (getComputedStyle(divOpenRef.current).display === "none") {
-        divOpenRef.current.style.transitionDelay = "300ms";
+        divOpenRef.current.style.transitionDelay = "750ms";
         divClosedRef.current.style.opacity = "0";
         divOpenRef.current.style.opacity = "1";
 
         setTimeout(() => {
           divClosedRef.current.style.display = "none";
           divOpenRef.current.style.display = "flex";
-        }, 300);
+        }, 750);
       }
       // open to closed
       else if (getComputedStyle(divClosedRef.current).display === "none") {
-        divClosedRef.current.style.transitionDelay = "300ms";
+        divClosedRef.current.style.transitionDelay = "750ms";
         divOpenRef.current.style.opacity = "0";
         divClosedRef.current.style.opacity = "1";
 
         setTimeout(() => {
           divOpenRef.current.style.display = "none";
           divClosedRef.current.style.display = "flex";
-        }, 300);
+        }, 750);
       }
     });
   };
@@ -78,7 +78,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
       >
         <ChevronLeft />
       </button>
-      <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-300">
+      <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-700">
         <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
         </div>
@@ -89,7 +89,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
           <span className="text-primary transform -rotate-90 text-xl">Resources</span>
         </div>
       </div>
-      <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-300">
+      <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-700">
         <InstructionSection {...instructions} open={openSection === SectionType.instructions} setOpen={setOpenSection} />
         <HintSection {...hints} open={openSection === SectionType.hints} setOpen={setOpenSection} />
         <ResourceSection resources={resources} open={openSection === SectionType.resources} setOpen={setOpenSection} />
