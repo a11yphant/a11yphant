@@ -1,5 +1,5 @@
 resource "aws_security_group" "allow_all_egress" {
-    name = "${terraform.workspace}-allow-all-egres"
+    name = "${terraform.workspace}-allow-all-egress"
     vpc_id = aws_vpc.main_network.id
 
     egress {
