@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import databaseConfig from './config/database.config';
@@ -14,6 +14,6 @@ import { YamlReaderService } from './yaml-reader.service';
     }),
     PrismaModule,
   ],
-  providers: [YamlReaderService, ImportService],
+  providers: [YamlReaderService, ImportService, Logger],
 })
 export class AppModule {}

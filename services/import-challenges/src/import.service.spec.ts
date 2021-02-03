@@ -1,4 +1,5 @@
 import { createMock } from '@golevelup/ts-jest';
+import { Logger } from '@nestjs/common';
 import * as mock from 'mock-fs';
 import { join } from 'path';
 
@@ -14,6 +15,7 @@ describe('import service', () => {
     };
 
     const importer = new ImportService(
+      createMock<Logger>(),
       createMock<PrismaService>({
         challenge: { upsert },
       }),
@@ -37,6 +39,7 @@ describe('import service', () => {
     });
 
     const importer = new ImportService(
+      createMock<Logger>(),
       createMock<PrismaService>({
         challenge: { upsert },
       }),

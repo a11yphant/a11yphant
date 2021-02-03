@@ -11,26 +11,32 @@ const readdir = promisify(readdirCallback);
 
 @Injectable()
 export class ImportService {
-  private logger = new Logger(ImportService.name);
-
   constructor(
+    private logger: Logger,
     private prisma: PrismaService,
     private ymlReader: YamlReaderService,
   ) {}
 
   public async importAllFromFolder(folder: string): Promise<void> {
     const path = join(__dirname, folder);
-    this.logger.log(`Importing yml files from ${path}`);
+    this.logger.log(`Importing yml files from ${path}`, ImportService.name);
+
     const importPromises = (await readdir(path))
       .filter((file) => file.endsWith('.yml'))
       .map(async (file) => {
-        this.logger.log(`Importing file: ${file}`);
+        this.logger.log(`Importing file: ${file}`, ImportService.name);
+
         const filePath = join(path, file);
         const content = await this.ymlReader.readChallenge(filePath);
+
         await this.importChallenge(content);
       });
-    this.logger.log(`Imported ${importPromises.length} challenges`);
+
     await Promise.all(importPromises);
+    this.logger.log(
+      `Imported ${importPromises.length} challenges`,
+      ImportService.name,
+    );
   }
 
   public async importChallenge(challenge: Challenge): Promise<void> {
