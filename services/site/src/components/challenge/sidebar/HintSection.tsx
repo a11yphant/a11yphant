@@ -14,7 +14,7 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ num, open, set
   return (
     <>
       <h3 className="flex items-center justify-center h-16 border-t-2 border-primary">
-        <button onClick={() => setOpen(SectionType.hints)} className="text-primary font-bold h-16">
+        <button onClick={() => setOpen(SectionType.hints)} className="text-primary font-bold h-16 w-full">
           Hints
         </button>
       </h3>
