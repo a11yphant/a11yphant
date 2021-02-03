@@ -19,6 +19,12 @@ module.exports = {
       autorestart: true,
     },
     {
+      name: "a11y-challenges-import-challenges",
+      script: "npm run dotenv -- npm run dev:import-challenges",
+      namespace: "a11y-challenges",
+      autorestart: true,
+    },
+    {
       name: "docker-compose",
       script: "docker-compose up",
       namespace: "a11y-challenges",
