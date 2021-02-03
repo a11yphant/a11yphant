@@ -21,6 +21,10 @@ ln -s ./../../.env ./services/api/.env
 rm -f ./services/site/.env
 ln -s ./../../.env ./services/site/.env
 
-# create site symlinks
+# create submission-checker symlinks
 rm -f ./services/submission-checker/.env
 ln -s ./../../.env ./services/submission-checker/.env
+
+# create import-challenges symlinks
+rm -f ./services/import-challenges/.env
+ln -s ./../../.env ./services/import-challenges/.env
