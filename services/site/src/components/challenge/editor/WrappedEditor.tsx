@@ -61,10 +61,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
     updateEditorSize();
   }, [wrapperRef.current, headingRef.current, buttonRef.current]);
 
-  // React.useEffect(() => {
-  //   window.addEventListener("resize", updateEditorSize);
-  // }, []);
-
   useResizeDetector({
     targetRef: wrapperRef,
     onResize: updateEditorSize,
