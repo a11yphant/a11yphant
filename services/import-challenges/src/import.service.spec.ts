@@ -9,6 +9,10 @@ import { PrismaService } from './prisma/prisma.service';
 import { YamlReaderService } from './yaml-reader.service';
 
 describe('import service', () => {
+  afterEach(() => {
+    mock.restore();
+  });
+
   it('can import a challenge into the db', async () => {
     const upsert = jest.fn();
     const challenge: Challenge = {
