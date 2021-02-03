@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npm --prefix services/api install && npm --prefix services/site install && npm --prefix services/submission-checker install",
+    "postinstall": "npm --prefix services/api install && npm --prefix services/site install && npm --prefix services/submission-checker install && npm --prefix services/database-migration install",
     "dotenv": "dotenv",
     "lint": "npm --prefix services/api run lint && npm --prefix services/site run lint",
     "start": "npm run dev",
