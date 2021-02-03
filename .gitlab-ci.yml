@@ -266,7 +266,7 @@ deploy:
    - apk update
    - apk add zip
   script:
-    - terraform -chdir=terraform workspace $CI_COMMIT_REF_SLUG
+    - terraform -chdir=terraform workspace select $CI_COMMIT_REF_SLUG
     - terraform -chdir=terraform init
     - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
   only:
