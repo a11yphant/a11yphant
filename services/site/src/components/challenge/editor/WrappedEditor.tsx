@@ -14,7 +14,7 @@ export interface EditorConfig {
 
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
-const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, width, height, ...props }) => {
+const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...props }) => {
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
   const headingRef = useRef<HTMLHeadingElement>();
@@ -51,28 +51,26 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, wid
           parseInt(marginButton.marginBottom),
       );
     }
-  }, [width, height, wrapperRef.current, headingRef.current, buttonRef.current]);
+  }, [wrapperRef.current, headingRef.current, buttonRef.current]);
 
   return (
-    <div
-      ref={wrapperRef}
-      // style={{ width: width, height: height }}
-      className="editor-container border-2 rounded-lg border-primary py-2 px-4 m-4 w-inherit"
-    >
-      <h3 ref={headingRef} className="text-primary mb-4">
-        {config.heading}
-      </h3>
-      <Editor
-        {...props}
-        language={config.language}
-        value={config.code}
-        onChange={(value) => {
-          config.updateCode(value);
-        }}
-        width={editorWidth}
-        height={editorHeight}
-      />
-      <button ref={buttonRef}>Reset</button>
+    <div className="editor-container w-inherit h-full box-border">
+      <div ref={wrapperRef} className="border-2 rounded-lg border-primary py-2 px-4 w-inherit h-full">
+        <h3 ref={headingRef} className="text-primary mb-4">
+          {config.heading}
+        </h3>
+        <Editor
+          {...props}
+          language={config.language}
+          value={config.code}
+          onChange={(value) => {
+            config.updateCode(value);
+          }}
+          width={editorWidth}
+          height={editorHeight}
+        />
+        <button ref={buttonRef}>Reset</button>
+      </div>
     </div>
   );
 };

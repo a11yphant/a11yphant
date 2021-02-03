@@ -3,14 +3,15 @@ import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/Wra
 import React from "react";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
+  classes: string;
   editors: EditorConfig[];
 }
 
-const Editors: React.FunctionComponent<CustomEditorProps> = ({ editors, ...props }) => {
+const Editors: React.FunctionComponent<CustomEditorProps> = ({ classes, editors, ...props }) => {
   return (
-    <div className="flex flex-row justify-between h-screenHalf w-full box-border">
+    <div className={`${classes} flex flex-row justify-between box-border pb-2`}>
       {editors.map((config) => (
-        <WrappedEditor key={config.heading} width="400px" height="400px" config={config} {...props} />
+        <WrappedEditor key={config.heading} config={config} {...props} />
       ))}
     </div>
   );

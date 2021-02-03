@@ -20,7 +20,7 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ num, open, set
         Hints
       </h3>
       {open && (
-        <div className="sidebar__content mt-10 text-center">
+        <div className="flex-auto overflow-y-auto mt-10 text-center">
           <p>You can unlock hints by clicking on the button below.</p>
           <button className="border-2 rounded-lg border-primary p-4">show me a hint</button>
         </div>
