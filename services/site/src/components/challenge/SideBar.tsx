@@ -3,6 +3,8 @@ import InstructionSection, { Instructions } from "app/components/challenge/sideb
 import ResourceSection, { Resource } from "app/components/challenge/sidebar/ResourceSection";
 import React, { useState } from "react";
 
+import ChevronLeft from "../icons/ChevronLeft";
+
 interface SideBarProps {
   classes: string;
   instructions: Instructions;
@@ -21,7 +23,9 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
 
   return (
     <aside className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border`}>
-      <button className="border-l-2 border-b-2 border-primary p-4 h-16 absolute -top-px -right-px box-border text-2xl">{"<"}</button>
+      <button className="border-l-2 border-b-2 border-primary p-4 h-16 absolute -top-px -right-px box-border text-2xl">
+        <ChevronLeft />
+      </button>
       <div className="flex h-full flex-col justify-around">
         <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
