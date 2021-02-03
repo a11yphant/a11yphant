@@ -15,5 +15,5 @@ export class Challenge {
   @Field(() => [Level], {
     description: "An array of all levels of the challenge.",
   })
-  level: Level[];
+  levels: Level[];
 }

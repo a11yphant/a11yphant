@@ -8,7 +8,7 @@ export class ChallengeService {
     return {
       id: "5557e647-7a14-47b7-b51c-142f25cc998c",
       name: "Accessible Links",
-      level: [
+      levels: [
         {
           id: "5557e647-7a14-47b7-b51c-142f25cc998c",
           instructions: `Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.
