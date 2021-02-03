@@ -1,5 +1,5 @@
 output "api_base_url" {
-  value = aws_api_gateway_deployment.api_gateway_deployment.invoke_url
+  value = aws_apigatewayv2_api.api_http_api.api_endpoint
 }
 
 output "site_base_url" {
