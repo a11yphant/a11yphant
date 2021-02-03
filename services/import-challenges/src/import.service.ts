@@ -3,8 +3,14 @@ import { readdir as readdirCallback } from 'fs';
 import { join } from 'path';
 import { promisify } from 'util';
 
+import {
+  Challenge,
+  Hint,
+  Level,
+  Requirement,
+  Resource,
+} from './challenge.interface';
 import { PrismaService } from './prisma/prisma.service';
-import { RawChallenge } from './raw-challenge.interface';
 import { YamlReaderService } from './yaml-reader.service';
 
 const readdir = promisify(readdirCallback);
@@ -39,7 +45,7 @@ export class ImportService {
     );
   }
 
-  public async importChallenge(challenge: RawChallenge): Promise<void> {
+  public async importChallenge(challenge: Challenge): Promise<void> {
     await this.upsertChallenge(challenge);
 
     await this.upsertLevelsForChallenge(challenge.levels, challenge.id);
@@ -51,7 +57,7 @@ export class ImportService {
     }
   }
 
-  private async upsertChallenge(challenge: RawChallenge): Promise<void> {
+  private async upsertChallenge(challenge: Challenge): Promise<void> {
     await this.prisma.challenge.upsert({
       where: { id: challenge.id },
       create: {
@@ -65,7 +71,7 @@ export class ImportService {
   }
 
   private async upsertLevelsForChallenge(
-    levels,
+    levels: Level[],
     challengeId: string,
   ): Promise<void> {
     await Promise.all(
@@ -89,7 +95,7 @@ export class ImportService {
   }
 
   private async upsertRequirementsForLevel(
-    requirements,
+    requirements: Requirement[],
     levelId: string,
   ): Promise<void> {
     await Promise.all(
@@ -107,7 +113,10 @@ export class ImportService {
     );
   }
 
-  private async upsertResourcesForLevel(resources, levelId): Promise<void> {
+  private async upsertResourcesForLevel(
+    resources: Resource[],
+    levelId: string,
+  ): Promise<void> {
     await Promise.all(
       resources.map(async (resource) => {
         await this.prisma.resource.upsert({
@@ -128,7 +137,10 @@ export class ImportService {
     );
   }
 
-  private async upsertHintsForLevel(hints, levelId: string): Promise<void> {
+  private async upsertHintsForLevel(
+    hints: Hint[],
+    levelId: string,
+  ): Promise<void> {
     await Promise.all(
       hints.map(async (hint) => {
         await this.prisma.hint.upsert({

@@ -1,10 +1,10 @@
-export interface RawChallenge {
+export interface Challenge {
   id: string;
   name: string;
   levels: Level[];
 }
 
-interface Level {
+export interface Level {
   id: string;
   tldr: string;
   instructions: string;
@@ -13,17 +13,17 @@ interface Level {
   resources: Resource[];
 }
 
-interface Requirement {
+export interface Requirement {
   id: string;
   title: string;
 }
 
-interface Hint {
+export interface Hint {
   id: string;
   content: string;
 }
 
-interface Resource {
+export interface Resource {
   id: string;
   title: string;
   link: string;

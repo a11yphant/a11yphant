@@ -3,15 +3,15 @@ import { readFile as readFileCallback } from 'fs';
 import { load } from 'js-yaml';
 import { promisify } from 'util';
 
-import { RawChallenge } from './raw-challenge.interface';
+import { Challenge } from './challenge.interface';
 
 const readFile = promisify(readFileCallback);
 
 @Injectable()
 export class YamlReaderService {
-  public async readChallenge(path: string): Promise<RawChallenge> {
+  public async readChallenge(path: string): Promise<Challenge> {
     const yml = await readFile(path);
-    const { challenge } = load(yml.toString()) as { challenge: RawChallenge };
+    const { challenge } = load(yml.toString()) as { challenge: Challenge };
 
     return challenge;
   }

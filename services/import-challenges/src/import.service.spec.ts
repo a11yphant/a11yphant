@@ -3,15 +3,15 @@ import { Logger } from '@nestjs/common';
 import * as mock from 'mock-fs';
 import { join } from 'path';
 
+import { Challenge } from './challenge.interface';
 import { ImportService } from './import.service';
 import { PrismaService } from './prisma/prisma.service';
-import { RawChallenge } from './raw-challenge.interface';
 import { YamlReaderService } from './yaml-reader.service';
 
 describe('import service', () => {
   it('can import a challenge into the db', async () => {
     const upsert = jest.fn();
-    const challenge: RawChallenge = {
+    const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
       name: 'test',
       levels: [],
@@ -37,7 +37,7 @@ describe('import service', () => {
 
   it('can import the levels for a challenge', async () => {
     const upsert = jest.fn();
-    const challenge: RawChallenge = {
+    const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
       name: 'test',
       levels: [
@@ -72,7 +72,7 @@ describe('import service', () => {
 
   it('can import the requirements for a level', async () => {
     const upsert = jest.fn();
-    const challenge: RawChallenge = {
+    const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
       name: 'test',
       levels: [
@@ -107,7 +107,7 @@ describe('import service', () => {
 
   it('can import the hints for a level', async () => {
     const upsert = jest.fn();
-    const challenge: RawChallenge = {
+    const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
       name: 'test',
       levels: [
@@ -142,7 +142,7 @@ describe('import service', () => {
 
   it('can import the resources for a level', async () => {
     const upsert = jest.fn();
-    const challenge: RawChallenge = {
+    const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
       name: 'test',
       levels: [
