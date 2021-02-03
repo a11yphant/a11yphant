@@ -28,49 +28,48 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
   const divOpenRef = useRef<HTMLDivElement>();
 
   const changeWidth = () => {
-    // width animation
-    const currentWidth = asideRef.current.style.width;
-    asideRef.current.style.width = currentWidth === "20%" ? "5rem" : "20%";
+    window.requestAnimationFrame(() => {
+      // width animation
+      asideRef.current.classList.toggle("w-1/5");
+      asideRef.current.classList.toggle("w-20");
 
-    // button animation
-    buttonRef.current.classList.toggle("chevron-open");
+      // button animation
+      buttonRef.current.classList.toggle("chevron-open");
 
-    // change content
-    // delay initially null
-    divOpenRef.current.style.transitionDelay = "0";
-    divClosedRef.current.style.transitionDelay = "0";
+      // change content
+      // delay initially null
+      divOpenRef.current.style.transitionDelay = "0ms";
+      divClosedRef.current.style.transitionDelay = "0ms";
 
-    // closed to open
-    if (getComputedStyle(divOpenRef.current).display === "none") {
-      divOpenRef.current.style.transitionDelay = "700";
-      divClosedRef.current.style.opacity = "0";
-      setTimeout(() => {
-        divClosedRef.current.style.display = "none";
-      }, 700);
-      divOpenRef.current.style.opacity = "1";
-      setTimeout(() => {
-        divOpenRef.current.style.display = "flex";
-      }, 700);
-    }
-    // open to closed
-    else if (getComputedStyle(divClosedRef.current).display === "none") {
-      divClosedRef.current.style.transitionDelay = "700";
-      divOpenRef.current.style.opacity = "0";
-      setTimeout(() => {
-        divOpenRef.current.style.display = "none";
-      }, 700);
-      divClosedRef.current.style.opacity = "1";
-      setTimeout(() => {
-        divClosedRef.current.style.display = "flex";
-      }, 700);
-    }
+      // closed to open
+      if (getComputedStyle(divOpenRef.current).display === "none") {
+        divOpenRef.current.style.transitionDelay = "300ms";
+        divClosedRef.current.style.opacity = "0";
+        divOpenRef.current.style.opacity = "1";
+
+        setTimeout(() => {
+          divClosedRef.current.style.display = "none";
+          divOpenRef.current.style.display = "flex";
+        }, 300);
+      }
+      // open to closed
+      else if (getComputedStyle(divClosedRef.current).display === "none") {
+        divClosedRef.current.style.transitionDelay = "300ms";
+        divOpenRef.current.style.opacity = "0";
+        divClosedRef.current.style.opacity = "1";
+
+        setTimeout(() => {
+          divOpenRef.current.style.display = "none";
+          divClosedRef.current.style.display = "flex";
+        }, 300);
+      }
+    });
   };
 
   return (
     <aside
       ref={asideRef}
-      style={{ width: "20%" }}
-      className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden`}
+      className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden w-1/5`}
     >
       <button
         ref={buttonRef}
@@ -79,7 +78,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
       >
         <ChevronLeft />
       </button>
-      <div ref={divClosedRef} className="h-full flex-col justify-around hidden transition-opacity duration-700">
+      <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-300">
         <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
         </div>
@@ -90,7 +89,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
           <span className="text-primary transform -rotate-90 text-xl">Resources</span>
         </div>
       </div>
-      <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-700">
+      <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-300">
         <InstructionSection {...instructions} open={openSection === SectionType.instructions} setOpen={setOpenSection} />
         <HintSection {...hints} open={openSection === SectionType.hints} setOpen={setOpenSection} />
         <ResourceSection resources={resources} open={openSection === SectionType.resources} setOpen={setOpenSection} />
