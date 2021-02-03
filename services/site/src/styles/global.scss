@@ -57,4 +57,10 @@
             padding-right: 0;
         }
     }
+
+    .chevron-open {
+        @apply transform;
+        @apply rotate-180;
+        @apply border-none;
+    }
 }

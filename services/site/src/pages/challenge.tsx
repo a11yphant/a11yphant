@@ -17,7 +17,7 @@ const Challenge = () => {
       {/*@Todo: Add header*/}
       <main className="flex justify-between h-full box-border p-4">
         <SideBar
-          classes="w-1/5 h-full"
+          classes="h-full"
           instructions={{
             text: [
               "Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.",
@@ -46,7 +46,7 @@ const Challenge = () => {
             },
           ]}
         />
-        <div className="flex justify-between flex-col w-4/5 h-full box-border pl-4">
+        <div className="flex justify-between flex-col flex-auto h-full box-border pl-4">
           <Editors
             classes="w-full h-3/5"
             editors={[

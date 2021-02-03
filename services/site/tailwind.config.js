@@ -13,6 +13,10 @@ module.exports = {
       fontFamily: {
         ibmPlex: ["IBM Plex Sans", "sans-serif"],
       },
+      transitionProperty: {
+        width: "width",
+        display: "display",
+      },
     },
   },
   variants: {
