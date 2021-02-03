@@ -82,7 +82,9 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
             height={editorHeight}
           />
         </div>
-        <button ref={buttonRef}>Reset</button>
+        <button className="absolute bottom-2" ref={buttonRef}>
+          Reset
+        </button>
       </div>
     </div>
   );
