@@ -113,7 +113,7 @@ const Challenge = () => {
               },
             }}
           />
-          <Preview classes="w-full h-2/5" htmlCode={currHtmlCode} cssCode={currCssCode} jsCode={currJavascriptCode} />
+          <Preview classes="w-full h-2/5" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
         </div>
       </main>
     </div>
