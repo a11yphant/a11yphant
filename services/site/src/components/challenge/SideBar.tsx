@@ -1,7 +1,7 @@
 import HintSection, { Hints } from "app/components/challenge/sidebar/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/InstructionSection";
 import ResourceSection, { Resource } from "app/components/challenge/sidebar/ResourceSection";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 import IconOnlyButton from "../buttons/IconOnlyButton";
 import ChevronLeft from "../icons/ChevronLeft";
@@ -29,55 +29,55 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
   const divClosedRef = useRef<HTMLDivElement>();
   const divOpenRef = useRef<HTMLDivElement>();
 
-  const changeWidth = () => {
+  const toggleSidebarState = useCallback(() => {
     window.requestAnimationFrame(() => {
-      // width animation
+      // toggle sidebar width
       asideRef.current.classList.toggle("w-1/5");
       asideRef.current.classList.toggle("w-16");
 
-      // button animation
+      // toggle button icon
       buttonRef.current.classList.toggle("chevron-open");
 
       // change content
-      // delay initially null
-      divOpenRef.current.style.transitionDelay = "0ms";
-      divClosedRef.current.style.transitionDelay = "0ms";
+      // set delay to 0 initially
+      divOpenRef.current.style.removeProperty("transition-delay");
+      divClosedRef.current.style.removeProperty("transition-delay");
 
-      // closed to open
+      let currentContent, upcomingContent;
+
+      // from closed to open
       if (getComputedStyle(divOpenRef.current).display === "none") {
-        divOpenRef.current.style.transitionDelay = "750ms";
-        divClosedRef.current.style.opacity = "0";
-        divOpenRef.current.style.opacity = "1";
-
-        setTimeout(() => {
-          divClosedRef.current.style.display = "none";
-          divOpenRef.current.style.display = "flex";
-        }, 750);
+        currentContent = divClosedRef.current;
+        upcomingContent = divOpenRef.current;
 
         setUpdateButtonText("Close sidebar");
-      }
-      // open to closed
-      else if (getComputedStyle(divClosedRef.current).display === "none") {
-        divClosedRef.current.style.transitionDelay = "750ms";
-        divOpenRef.current.style.opacity = "0";
-        divClosedRef.current.style.opacity = "1";
-
-        setTimeout(() => {
-          divOpenRef.current.style.display = "none";
-          divClosedRef.current.style.display = "flex";
-        }, 750);
+      } else {
+        // from open to closed
+        currentContent = divOpenRef.current;
+        upcomingContent = divClosedRef.current;
 
         setUpdateButtonText("Open sidebar");
       }
+
+      upcomingContent.style.transitionDelay = "750ms";
+      currentContent.style.opacity = "0";
+      upcomingContent.style.opacity = "1";
+
+      // Hide current content and show upcoming
+      // content after fadeOut animation finished
+      setTimeout(() => {
+        currentContent.style.display = "none";
+        upcomingContent.style.display = "flex";
+      }, 750);
     });
-  };
+  }, [asideRef.current, buttonRef.current, divOpenRef.current, divClosedRef.current]);
 
   return (
     <aside
       ref={asideRef}
       className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden w-1/5`}
     >
-      <IconOnlyButton buttonRef={buttonRef} onClick={changeWidth} text={updateButtonText} icon={<ChevronLeft />} />
+      <IconOnlyButton buttonRef={buttonRef} onClick={toggleSidebarState} text={updateButtonText} icon={<ChevronLeft />} />
       <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-700">
         <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
