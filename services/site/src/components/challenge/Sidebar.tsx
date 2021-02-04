@@ -68,8 +68,10 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
       // Hide current content and show upcoming
       // content after fadeOut animation finished
       setTimeout(() => {
-        currentContent.style.display = "none";
-        upcomingContent.style.display = "flex";
+        window.requestAnimationFrame(() => {
+          currentContent.style.display = "none";
+          upcomingContent.style.display = "flex";
+        });
       }, 750);
     });
   }, [asideRef.current, buttonRef.current, divOpenRef.current, divClosedRef.current]);
