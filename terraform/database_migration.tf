@@ -11,7 +11,7 @@ data "external" "database_migration_code_zip" {
 resource "aws_s3_bucket_object" "prisma_migrations" {
     bucket = aws_s3_bucket.prisma.id
     key    = "${var.current_version}.zip"
-    source = "${path.module}/../services/database-migration/prisma.zip"
+    source = "${path.module}/../services/import-challenges/prisma.zip"
     etag   = data.archive_file.prisma_migrations.output_md5
 
     depends_on = [ 
