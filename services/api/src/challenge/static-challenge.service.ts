@@ -11,6 +11,7 @@ export class ChallengeService {
       levels: [
         {
           id: "5557e647-7a14-47b7-b51c-142f25cc998c",
+          tldr: "Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader",
           instructions: `Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.
 Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.
 TL; DR: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)`,
@@ -63,6 +64,7 @@ TL; DR: Refactor the given code so that the link is navigable using input device
         },
         {
           id: "0682b540-67cb-45b6-bdf3-692fb78e871d",
+          tldr: "",
           instructions: `Your friend Charles has reached out for your help again. He wants to link to additional resources in his blog post, but he is not sure how to structure the additional resources section. Can you write the markup for him (you don't have to style it for now)?
 
 Charles wants to add links to the following pages:

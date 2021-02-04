@@ -11,6 +11,11 @@ export class Level {
   id: string;
 
   @Field(() => String, {
+    description: "A shortened version of the instructions.",
+  })
+  tldr: string;
+
+  @Field(() => String, {
     description: "Instructions use HTML to provide basic formatting.",
   })
   instructions: string;
