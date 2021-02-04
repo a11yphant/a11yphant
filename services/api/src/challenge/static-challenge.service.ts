@@ -4,7 +4,7 @@ import { Challenge } from "./models/challenge.model";
 
 @Injectable()
 export class ChallengeService {
-  async find(): Promise<Challenge> {
+  async findOne(): Promise<Challenge> {
     return {
       id: "5557e647-7a14-47b7-b51c-142f25cc998c",
       name: "Accessible Links",
