@@ -1,4 +1,5 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
+import Button from "app/components/buttons/Button";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
@@ -102,6 +103,14 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
           onCancel={() => {
             setModalOpen(false);
           }}
+          overrideButtons={
+            <>
+              <Button classes="mr-4">Reset All</Button>
+              <Button full>
+                Reset <span className="uppercase ml-1">{config.language}</span>
+              </Button>
+            </>
+          }
         />
       </div>
     </div>

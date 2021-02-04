@@ -9,8 +9,8 @@ const Button: React.FunctionComponent<ButtonProps> = ({ full = false, classes, c
   return (
     <button
       className={`${
-        full ? "bg-primary" : ""
-      } border-primary border-2 rounded-lg px-4 py-2 tracking-wider inline-flex items-center transition duration-300 text-white hover:text-white hover:bg-primaryDark focus:text-white focus:bg-primaryDark ${classes}`}
+        full ? "bg-primary text-white" : ""
+      } border-primary border-2 rounded-lg px-4 py-2 tracking-wider inline-flex items-center transition duration-300 hover:text-white hover:bg-primaryDark focus:text-white focus:bg-primaryDark ${classes}`}
       {...props}
     >
       {children}
