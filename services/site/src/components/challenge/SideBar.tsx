@@ -72,6 +72,11 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
     });
   }, [asideRef.current, buttonRef.current, divOpenRef.current, divClosedRef.current]);
 
+  const handleClosedButtonClick = (sectionToOpen: SectionType) => {
+    setOpenSection(sectionToOpen);
+    toggleSidebarState();
+  };
+
   return (
     <aside
       ref={asideRef}
@@ -79,13 +84,43 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
     >
       <IconOnlyButton buttonRef={buttonRef} onClick={toggleSidebarState} text={updateButtonText} icon={<ChevronLeft />} />
       <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-700">
-        <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
+        <div
+          onClick={() => handleClosedButtonClick(SectionType.instructions)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              handleClosedButtonClick(SectionType.instructions);
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
+        >
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
         </div>
-        <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
+        <div
+          onClick={() => handleClosedButtonClick(SectionType.hints)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              handleClosedButtonClick(SectionType.hints);
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
+        >
           <span className="text-primary transform -rotate-90 text-xl">Hints</span>
         </div>
-        <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
+        <div
+          onClick={() => handleClosedButtonClick(SectionType.resources)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              handleClosedButtonClick(SectionType.resources);
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
+        >
           <span className="text-primary transform -rotate-90 text-xl">Resources</span>
         </div>
       </div>
