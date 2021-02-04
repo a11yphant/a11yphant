@@ -26,7 +26,7 @@
     "stop": "pm2 stop a11y-challenges && pm2 del a11y-challenges",
     "dev:api": "npm run package-dependencies:api && npm --prefix services/api run start:dev",
     "dev:site": "npm run package-dependencies:site && wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",
-    "dev:submission-checker": "npm run package-dependencies:submission-checker install && npm --prefix services/submission-checker run start:dev",
+    "dev:submission-checker": "npm run package-dependencies:submission-checker && npm --prefix services/submission-checker run start:dev",
     "dev:import-challenges": "npm run package-dependencies:import-challenges && npm --prefix services/import-challenges run start:dev",
     "debug:api": "pm2 logs a11y-challenges-api",
     "debug:site": "pm2 logs a11y-challenges-site",
