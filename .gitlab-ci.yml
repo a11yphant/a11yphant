@@ -106,6 +106,10 @@ build:api:
   only:
     - master
     - develop
+  artifacts:
+    paths:
+      - $PROJECT_PATH/dist
+    expire_in: 1 day
 
 #-----------------------------------
 # Site
@@ -129,8 +133,71 @@ test:site:
   variables:
     PROJECT_PATH: services/site
 
+build:site:
+  extends:
+    - .build
+  needs:
+    - generate-graphql-schema:api
+  variables:
+    PROJECT_PATH: services/site
+  artifacts:
+    paths:
+      - $PROJECT_PATH/.next
+    expire_in: 1 day
+  only:
+    - master
+    - develop
+
+production-dependencies:site:
+  tags:
+    - docker
+  stage: build
+  image:
+    name: public.ecr.aws/lambda/nodejs:12
+    entrypoint: [""]
+  variables:
+    PROJECT_PATH: services/site
+  before_script:
+    - '' # disable default npm install
+  cache: {} # disable cache because lambda/nodejs uses centOS
+  script:
+    - npm ci --production --prefix $PROJECT_PATH
+    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+    expire_in: 1 day
+  only:
+    - master
+    - develop
+
 #-----------------------------------
-# Terraform
+# Import Challenges
+#-----------------------------------
+
+lint:import-challenges:
+  extends:
+    - .lint
+    - .run_on_import_challenges_change
+  variables:
+    PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm install --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm run prisma:generate --prefix services/import-challenges
+
+test:import-challenges:
+  extends:
+    - .test
+    - .run_on_import_challenges_change
+  variables:
+    PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm install --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm run prisma:generate --prefix services/import-challenges
+
+
+#-----------------------------------
+# Database Migrations
 #-----------------------------------
 
 lint:database-migration:
@@ -146,7 +213,7 @@ production-dependencies:database-migration:
   stage: build
   image:
     name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: ['bash']
+    entrypoint: [""]
   variables:
     PROJECT_PATH: services/database-migration
   before_script:
@@ -191,6 +258,8 @@ deploy:
     - build:api
     - production-dependencies:api
     - production-dependencies:database-migration
+    - build:site
+    - production-dependencies:site
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:

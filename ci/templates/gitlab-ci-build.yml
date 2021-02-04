@@ -5,7 +5,3 @@
   image: node:14-alpine
   script:
     - npm run build --prefix $PROJECT_PATH
-  artifacts:
-    paths:
-      - $PROJECT_PATH/dist
-    expire_in: 1 day

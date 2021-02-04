@@ -1,5 +1,5 @@
-import ToggleButton from "app/components/buttons/ToggleButton";
 import { SectionType } from "app/components/challenge/SideBar";
+import ToggleButton from "app/components/challenge/sidebar/ToggleButton";
 import React, { SetStateAction } from "react";
 
 export interface Instructions {

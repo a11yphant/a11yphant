@@ -12,5 +12,5 @@ variable "postgres_cluster_root_password" {
 
 variable "postgres_cluster_database_name" {
   type    = string
-  default = "a11y-challenges"
+  default = "a11ychallenges"
 }
