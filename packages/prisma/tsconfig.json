@@ -11,6 +11,7 @@
     "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "./lib",
-    "incremental": true
-  }
+  },
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts", "tests"]
 }

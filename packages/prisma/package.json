@@ -8,7 +8,8 @@
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc --project ./tsconfig.build.json",
+    "build": "tsc",
+    "postbuild": "cp -r lib/client dist/client",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
@@ -18,10 +19,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "prepack": "rm -f ./dist/client/query-engine-*",
+    "postinstall": "node ./scripts/download-engine.js"
   },
   "dependencies": {
-    "@prisma/client": "2.16.0"
+    "@prisma/client": "2.16.0",
+    "@prisma/engines": "2.17.0-5.b461f67b862d1920b19389df49c7dbbd2a30efff",
+    "@prisma/fetch-engine": "2.16.0"
   },
   "peerDependencies": {
     "@nestjs/common": "^7.6.7",

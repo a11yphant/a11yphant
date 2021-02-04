@@ -1,0 +1,17 @@
+const { download } = require("@prisma/fetch-engine");
+const { enginesVersion } = require("@prisma/engines");
+const { join } = require("path");
+
+const runtimePath = join(__dirname, "../dist/client");
+
+download({
+  binaries: {
+    "query-engine": runtimePath,
+  },
+  showProgress: true,
+  ignoreCache: true,
+  version: enginesVersion,
+}).catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
