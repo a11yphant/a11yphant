@@ -1,5 +1,6 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -23,6 +24,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
   // state
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
+  const [editorTop, setEditorTop] = useState<number>(0);
 
   const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
@@ -49,6 +51,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
           parseInt(marginButton.marginTop) -
           parseInt(marginButton.marginBottom),
       );
+
+      setEditorTop(parseInt(paddingWrapper.paddingTop) + headingHeight + parseInt(marginHeading.marginTop) + parseInt(marginHeading.marginBottom));
     }
   }, [wrapperRef.current, headingRef.current, buttonRef.current]);
 
@@ -57,27 +61,32 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
     updateEditorSize();
   }, [wrapperRef.current, headingRef.current, buttonRef.current]);
 
-  React.useEffect(() => {
-    window.addEventListener("resize", updateEditorSize);
-  }, []);
+  useResizeDetector({
+    targetRef: wrapperRef,
+    onResize: updateEditorSize,
+  });
 
   return (
     <div className="editor-container w-inherit h-full box-border">
-      <div ref={wrapperRef} className="border-2 rounded-lg border-primary py-2 px-4 w-inherit h-full">
+      <div ref={wrapperRef} className="relative border-2 rounded-lg border-primary py-2 px-4 w-inherit h-full">
         <h3 ref={headingRef} className="text-primary mb-4">
           {config.heading}
         </h3>
-        <Editor
-          {...props}
-          language={config.language}
-          value={config.code}
-          onChange={(value) => {
-            config.updateCode(value);
-          }}
-          width={editorWidth}
-          height={editorHeight}
-        />
-        <button ref={buttonRef}>Reset</button>
+        <div className="absolute" style={{ top: editorTop }}>
+          <Editor
+            {...props}
+            language={config.language}
+            value={config.code}
+            onChange={(value) => {
+              config.updateCode(value);
+            }}
+            width={editorWidth}
+            height={editorHeight}
+          />
+        </div>
+        <button className="absolute bottom-2" ref={buttonRef}>
+          Reset
+        </button>
       </div>
     </div>
   );

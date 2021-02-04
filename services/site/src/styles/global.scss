@@ -57,4 +57,22 @@
             padding-right: 0;
         }
     }
+
+    .chevron-open {
+        @apply transform;
+        @apply rotate-180;
+        @apply border-none;
+    }
+
+    .disableBtn {
+        button {
+            cursor: auto;
+
+            &:hover,
+            &:focus {
+                @apply bg-white;
+                @apply text-primary;
+            }
+        }
+    }
 }

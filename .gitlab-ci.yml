@@ -49,8 +49,6 @@ test:submission-checker:
 #-----------------------------------
 
 generate-graphql-schema:api:
-  extends:
-    - .run_on_site_or_api_change
   tags:
     - docker
   stage: generate
@@ -62,6 +60,10 @@ generate-graphql-schema:api:
     paths:
       - $PROJECT_PATH/schema.gql
     expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_request
 
 lint:api:
   extends:
