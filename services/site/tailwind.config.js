@@ -8,6 +8,7 @@ module.exports = {
         screenHalf: "50vh",
       },
       colors: {
+        primaryLight: "#9262FA",
         primary: "#7331FF",
         primaryDark: "#5000B7",
       },

@@ -4,13 +4,13 @@ interface PreviewProps {
   classes: string;
   cssCode: string;
   htmlCode: string;
-  jsCode: string;
+  javascriptCode: string;
 }
 
-const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, jsCode }) => {
+const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, javascriptCode }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
-  const [innerJsCode, setInnerJsCode] = useState<string>("");
+  const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
 
   const [renderCountdown, setRenderCountdown] = useState<NodeJS.Timeout>();
 
@@ -18,7 +18,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
     setTimeout(() => {
       setInnerHtmlCode(htmlCode);
       setInnerCssCode(cssCode);
-      setInnerJsCode(jsCode);
+      setInnerJavascriptCode(javascriptCode);
     }, 1000);
 
   React.useEffect(() => {
@@ -27,12 +27,12 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
     }
 
     setRenderCountdown(startRenderCountdown());
-  }, [htmlCode, cssCode, jsCode]);
+  }, [htmlCode, cssCode, javascriptCode]);
 
   return (
     <iframe
       className={`${classes} border-2 rounded-lg border-primary py-2 px-4 box-border`}
-      srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJsCode}</script>`}
+      srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
     />
   );
 };

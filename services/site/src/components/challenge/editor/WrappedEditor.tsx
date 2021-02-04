@@ -1,13 +1,18 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
+import Button from "app/components/buttons/Button";
+import { EditorLanguage } from "app/components/challenge/Editors";
+import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
+  reset: (language?: EditorLanguage) => void;
 }
 
 export interface EditorConfig {
-  language: string;
+  languageLabel: string;
+  language: EditorLanguage;
   code: string;
   updateCode: React.Dispatch<React.SetStateAction<string>>;
   heading: string;
@@ -15,13 +20,15 @@ export interface EditorConfig {
 
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
-const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...props }) => {
+const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, config, ...props }) => {
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
   const headingRef = useRef<HTMLHeadingElement>();
   const buttonRef = useRef<HTMLButtonElement>();
 
   // state
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
   const [editorTop, setEditorTop] = useState<number>(0);
@@ -84,9 +91,44 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
             height={editorHeight}
           />
         </div>
-        <button className="absolute bottom-2" ref={buttonRef}>
+        <button
+          onClick={() => {
+            setModalOpen(true);
+          }}
+          className="absolute bottom-2"
+          ref={buttonRef}
+        >
           Reset
         </button>
+        <ConfirmationModal
+          open={modalOpen}
+          title="Do you really want to reset the code?"
+          onCancel={() => {
+            setModalOpen(false);
+          }}
+          overrideButtons={
+            <>
+              <Button
+                classes="mr-4"
+                onClick={() => {
+                  reset();
+                  setModalOpen(false);
+                }}
+              >
+                Reset All
+              </Button>
+              <Button
+                full
+                onClick={() => {
+                  reset(config.language);
+                  setModalOpen(false);
+                }}
+              >
+                Reset <span className="ml-1">{config.languageLabel}</span>
+              </Button>
+            </>
+          }
+        />
       </div>
     </div>
   );
