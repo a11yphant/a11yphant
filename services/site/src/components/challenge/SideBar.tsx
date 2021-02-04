@@ -1,3 +1,4 @@
+import ClosedSidebar from "app/components/challenge/sidebar/ClosedSidebar/ClosedSidebar";
 import HintSection, { Hints } from "app/components/challenge/sidebar/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/InstructionSection";
 import ResourceSection, { Resource } from "app/components/challenge/sidebar/ResourceSection";
@@ -14,9 +15,9 @@ interface SideBarProps {
 }
 
 export enum SectionType {
-  instructions = "instructions",
-  hints = "hints",
-  resources = "resources",
+  instructions = "Instructions",
+  hints = "Hints",
+  resources = "Resources",
 }
 
 const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions, hints, resources }) => {
@@ -83,47 +84,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
       className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden w-1/5`}
     >
       <IconOnlyButton buttonRef={buttonRef} onClick={toggleSidebarState} text={updateButtonText} icon={<ChevronLeft />} />
-      <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-700">
-        <div
-          onClick={() => handleClosedButtonClick(SectionType.instructions)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              handleClosedButtonClick(SectionType.instructions);
-            }
-          }}
-          tabIndex={0}
-          role="button"
-          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
-        >
-          <span className="text-primary transform -rotate-90 text-xl">Instructions</span>
-        </div>
-        <div
-          onClick={() => handleClosedButtonClick(SectionType.hints)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              handleClosedButtonClick(SectionType.hints);
-            }
-          }}
-          tabIndex={0}
-          role="button"
-          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
-        >
-          <span className="text-primary transform -rotate-90 text-xl">Hints</span>
-        </div>
-        <div
-          onClick={() => handleClosedButtonClick(SectionType.resources)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              handleClosedButtonClick(SectionType.resources);
-            }
-          }}
-          tabIndex={0}
-          role="button"
-          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
-        >
-          <span className="text-primary transform -rotate-90 text-xl">Resources</span>
-        </div>
-      </div>
+      <ClosedSidebar ref={divClosedRef} handleClick={handleClosedButtonClick} sections={SectionType} />
       <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-700">
         <InstructionSection {...instructions} open={openSection === SectionType.instructions} setOpen={setOpenSection} />
         <HintSection {...hints} open={openSection === SectionType.hints} setOpen={setOpenSection} />
