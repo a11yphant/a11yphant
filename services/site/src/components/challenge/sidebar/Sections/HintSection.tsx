@@ -1,5 +1,5 @@
 import IconButton from "app/components/buttons/IconButton";
-import ArrowRight from "app/components/icons/ArrowRight";
+import LightBulb from "app/components/icons/LightBulb";
 import React, { useState } from "react";
 
 export interface Hints {
@@ -38,7 +38,7 @@ const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
         </ul>
       )}
       {usedHints < maxHints && (
-        <IconButton onClick={loadNextHint} text={usedHints === 0 ? "show me a hint" : "show me another hint"} icon={<ArrowRight />} />
+        <IconButton onClick={loadNextHint} text={usedHints === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
       )}
     </div>
   );
