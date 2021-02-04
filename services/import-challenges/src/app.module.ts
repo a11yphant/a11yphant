@@ -1,10 +1,10 @@
+import { PrismaModule } from '@a11y-challenges/prisma';
 import { Logger, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import databaseConfig from './config/database.config';
 import importChallengesConfig from './config/import-challenges.config';
 import { ImportService } from './import.service';
-import { PrismaModule } from './prisma/prisma.module';
 import { YamlReaderService } from './yaml-reader.service';
 
 @Module({
@@ -12,7 +12,13 @@ import { YamlReaderService } from './yaml-reader.service';
     ConfigModule.forRoot({
       load: [importChallengesConfig, databaseConfig],
     }),
-    PrismaModule,
+    PrismaModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => ({
+        databaseUrl: config.get<string>('database.url'),
+      }),
+      inject: [ConfigService],
+    }),
   ],
   providers: [YamlReaderService, ImportService, Logger],
 })

@@ -1,3 +1,4 @@
+import { PrismaService } from '@a11y-challenges/prisma';
 import { createMock } from '@golevelup/ts-jest';
 import { Logger } from '@nestjs/common';
 import * as mock from 'mock-fs';
@@ -5,7 +6,6 @@ import { join } from 'path';
 
 import { Challenge } from './challenge.interface';
 import { ImportService } from './import.service';
-import { PrismaService } from './prisma/prisma.service';
 import { YamlReaderService } from './yaml-reader.service';
 
 describe('import service', () => {
