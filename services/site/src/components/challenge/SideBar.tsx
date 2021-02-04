@@ -1,7 +1,8 @@
 import ClosedSidebar from "app/components/challenge/sidebar/ClosedSidebar/ClosedSidebar";
-import HintSection, { Hints } from "app/components/challenge/sidebar/HintSection";
-import InstructionSection, { Instructions } from "app/components/challenge/sidebar/InstructionSection";
-import ResourceSection, { Resource } from "app/components/challenge/sidebar/ResourceSection";
+import HintSection, { Hints } from "app/components/challenge/sidebar/Sections/HintSection";
+import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
+import ResourceSection, { Resource } from "app/components/challenge/sidebar/Sections/ResourceSection";
+import SidebarSection from "app/components/challenge/sidebar/SidebarSection";
 import React, { useCallback, useRef, useState } from "react";
 
 import IconOnlyButton from "../buttons/IconOnlyButton";
@@ -86,9 +87,24 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
       <IconOnlyButton buttonRef={buttonRef} onClick={toggleSidebarState} text={updateButtonText} icon={<ChevronLeft />} />
       <ClosedSidebar ref={divClosedRef} handleClick={handleClosedButtonClick} sections={SectionType} />
       <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-700">
-        <InstructionSection {...instructions} open={openSection === SectionType.instructions} setOpen={setOpenSection} />
-        <HintSection {...hints} open={openSection === SectionType.hints} setOpen={setOpenSection} />
-        <ResourceSection resources={resources} open={openSection === SectionType.resources} setOpen={setOpenSection} />
+        <SidebarSection
+          title={"Instructions"}
+          open={openSection === SectionType.instructions}
+          onClick={() => setOpenSection(SectionType.instructions)}
+        >
+          <InstructionSection {...instructions} />
+        </SidebarSection>
+        <SidebarSection title={"Hints"} border={true} open={openSection === SectionType.hints} onClick={() => setOpenSection(SectionType.hints)}>
+          <HintSection {...hints} />
+        </SidebarSection>
+        <SidebarSection
+          title={"Resources"}
+          border={true}
+          open={openSection === SectionType.resources}
+          onClick={() => setOpenSection(SectionType.resources)}
+        >
+          <ResourceSection resources={resources} />
+        </SidebarSection>
       </div>
     </aside>
   );
