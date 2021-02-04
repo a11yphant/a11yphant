@@ -4,6 +4,7 @@ import ResourceSection, { Resource } from "app/components/challenge/sidebar/Reso
 import React, { useRef, useState } from "react";
 
 import IconOnlyButton from "../buttons/IconOnlyButton";
+import ChevronLeft from "../icons/ChevronLeft";
 
 interface SideBarProps {
   classes: string;
@@ -76,7 +77,7 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
       ref={asideRef}
       className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden w-1/5`}
     >
-      <IconOnlyButton buttonRef={buttonRef} onClick={changeWidth} text={updateButtonText} />
+      <IconOnlyButton buttonRef={buttonRef} onClick={changeWidth} text={updateButtonText} icon={<ChevronLeft />} />
       <div ref={divClosedRef} className="hidden h-full flex-col justify-around transition-opacity duration-700">
         <div className="border-b-2 border-primary flex-auto w-full items-center justify-center flex">
           <span className="text-primary transform -rotate-90 text-xl">Instructions</span>

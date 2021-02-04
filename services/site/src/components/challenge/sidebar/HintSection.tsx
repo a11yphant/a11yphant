@@ -1,6 +1,7 @@
 import IconButton from "app/components/buttons/IconButton";
-import ToggleButton from "app/components/buttons/ToggleButton";
 import { SectionType } from "app/components/challenge/SideBar";
+import ToggleButton from "app/components/challenge/sidebar/ToggleButton";
+import ArrowRight from "app/components/icons/ArrowRight";
 import React, { SetStateAction } from "react";
 
 export interface Hints {
@@ -21,7 +22,7 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ num, open, set
       {open && (
         <div className="flex-auto overflow-y-auto mt-10 text-center px-8">
           <p>You can unlock hints by clicking on the button below.</p>
-          <IconButton onClick={() => setOpen(SectionType.hints)} text="show me a hint" />
+          <IconButton onClick={() => setOpen(SectionType.hints)} text="show me a hint" icon={<ArrowRight />} />
         </div>
       )}
     </>
