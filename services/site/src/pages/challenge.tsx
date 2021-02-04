@@ -1,16 +1,53 @@
-import Editors from "app/components/challenge/Editors";
+import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import React, { useState } from "react";
 
-const Challenge = () => {
-  const [htmlCode, setHtmlCode] = useState<string>(
+export interface Code {
+  html: string;
+  css: string;
+  javascript: string;
+}
+
+const code: Code = {
+  html:
     '<h1>The Device Vibration API </h1>\r\n\r\n<p> Today I learned about the device vibration API. This API allows you to control the vibration hardware of a phone from a website. There are some really good \r\n<span onlick="window.location =\r\nhttps://developer.mozilla.org/en-US/docs/Web/API/Vibration_API" class="link">vibration API examples in the MDN docs</span>.</p>',
-  );
-  const [cssCode, setCssCode] = useState<string>(
+  css:
     "html, body {\r\n  font-family: Arial, sans-serif;\r\n  font-size: 1rem;\r\n  line-height: 1.6rem;\r\n  letter-spacing: 0.02rem;\r\n  max-width: 80ch;\r\n}\r\n\r\n.link {\r\n  color: black;\r\n  text-decoration: none;\r\n  border-bottom: 3px solid blue;\r\n}\r\n\r\n.link:hover, .link:active, .link:focus {\r\n  color: blue;\r\n  border-color: blue;\r\n  cursor: pointer;\r\n  border-width: 0px;\r\n}",
-  );
-  const [jsCode, setJsCode] = useState<string>("");
+  javascript: "",
+};
+
+const Challenge = () => {
+  const [currHtmlCode, setCurrHtmlCode] = useState<string>();
+  const [currCssCode, setCurrCssCode] = useState<string>();
+  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>();
+
+  const [initialCode, setInitialCode] = useState<Code>();
+
+  const resetToInitialCode = (language?: EditorLanguage) => {
+    // if language === undefined => reset all
+    const newCode: Code = {
+      html: !language ? initialCode.html : currHtmlCode,
+      css: !language ? initialCode.css : currCssCode,
+      javascript: !language ? initialCode.javascript : currJavascriptCode,
+    };
+
+    if (language) {
+      newCode[language] = initialCode[language];
+    }
+
+    setCurrHtmlCode(newCode.html);
+    setCurrCssCode(newCode.css);
+    setCurrJavascriptCode(newCode.javascript);
+  };
+
+  React.useEffect(() => {
+    setInitialCode(code);
+
+    setCurrHtmlCode(code.html);
+    setCurrCssCode(code.css);
+    setCurrJavascriptCode(code.javascript);
+  }, []);
 
   return (
     <div className="w-screen h-screen">
@@ -60,11 +97,12 @@ const Challenge = () => {
         />
         <div className="flex justify-between flex-col flex-auto h-full box-border pl-4">
           <Editors
+            reset={resetToInitialCode}
             classes="w-full h-3/5"
             editors={[
-              { language: "html", code: htmlCode, updateCode: setHtmlCode, heading: "index.html" },
-              { language: "css", code: cssCode, updateCode: setCssCode, heading: "index.css" },
-              { language: "javascript", code: jsCode, updateCode: setJsCode, heading: "index.js" },
+              { language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
+              { language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
+              { language: EditorLanguage.javascript, code: currJavascriptCode, updateCode: setCurrJavascriptCode, heading: "index.js" },
             ]}
             theme="light"
             options={{
@@ -75,7 +113,7 @@ const Challenge = () => {
               },
             }}
           />
-          <Preview classes="w-full h-2/5" htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode} />
+          <Preview classes="w-full h-2/5" htmlCode={currHtmlCode} cssCode={currCssCode} jsCode={currJavascriptCode} />
         </div>
       </main>
     </div>
