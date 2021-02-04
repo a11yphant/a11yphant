@@ -26,10 +26,22 @@ const Challenge = () => {
             tldr:
               "TL; DR: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)",
             requirements: [
-              "The link can be activated using the mouse.",
-              "The link can be focused using the keyboard.",
-              "The link can be activated using the keyboard.",
-              "The link can be detected as a link by screen readers.",
+              {
+                id: "a",
+                title: "The link can be activated using the mouse.",
+              },
+              {
+                id: "b",
+                title: "The link can be focused using the keyboard.",
+              },
+              {
+                id: "c",
+                title: "The link can be activated using the keyboard.",
+              },
+              {
+                id: "d",
+                title: "The link can be detected as a link by screen readers.",
+              },
             ],
           }}
           hints={{
