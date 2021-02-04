@@ -1,4 +1,4 @@
-import { Requirement } from "app/components/challenge/sidebar/InstructionSection";
+import { Requirement } from "app/components/challenge/sidebar/Sections/InstructionSection";
 import React from "react";
 
 interface CheckboxListProps {
