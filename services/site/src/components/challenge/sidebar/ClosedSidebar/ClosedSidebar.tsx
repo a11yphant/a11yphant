@@ -19,9 +19,9 @@ const ClosedSidebar = React.forwardRef<HTMLDivElement, ClosedSidebarProps>(({ ha
           }}
           tabIndex={0}
           role="button"
-          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex"
+          className="border-b-2 border-primary flex-auto w-full items-center justify-center flex transition duration-300 group hover:bg-primary group-hover:text-white group-focus:text-white focus:bg-primary"
         >
-          <span className="text-primary transform -rotate-90 text-xl">{section}</span>
+          <span className="text-primary transform -rotate-90 text-xl group-hover:text-white group-focus:text-white">{section}</span>
         </div>
       ))}
     </div>
