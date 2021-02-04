@@ -11,7 +11,7 @@ export class Level {
   id: string;
 
   @Field(() => String, {
-    description: "Instructions are formatted as a multi-line string with line breaks.",
+    description: "Instructions use HTML to provide basic formatting.",
   })
   instructions: string;
 
@@ -23,9 +23,11 @@ export class Level {
   })
   hints: Hint[];
 
-  @Field(() => [Resource])
+  @Field(() => [Resource], {
+    description: "Resources which provide more information on the topic of the current level.",
+  })
   resources: Resource[];
 
-  @Field(() => Code, { nullable: true })
+  @Field(() => Code, { nullable: true, description: "The initial code for the challenge." })
   code?: Code;
 }

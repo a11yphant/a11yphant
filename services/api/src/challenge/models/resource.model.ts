@@ -8,6 +8,6 @@ export class Resource {
   @Field(() => String)
   title: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: "External link to the resource (Blog, Spec, etc.)" })
   link: string;
 }
