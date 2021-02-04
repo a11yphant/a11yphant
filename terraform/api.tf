@@ -15,10 +15,11 @@ resource "aws_s3_bucket_object" "api_code_zip" {
 }
 
 resource "aws_lambda_function" "api" {
-   function_name = "api"
+   function_name = "${terraform.workspace}-api"
 
    s3_bucket = aws_s3_bucket.code.id
    s3_key    = aws_s3_bucket_object.api_code_zip.id
+   source_code_hash = data.external.api_code_zip.result.hash
 
    handler = "entrypoint.handle"
    runtime = "nodejs12.x"
@@ -44,7 +45,7 @@ resource "aws_lambda_function" "api" {
 }
 
 resource "aws_iam_role" "api_role" {
-   name = "api_role"
+   name = "${terraform.workspace}-api-role"
    description = "IAM Role for executing a Lambda"
 
    assume_role_policy = <<EOF
@@ -70,12 +71,17 @@ resource "aws_iam_role_policy_attachment" "api_lambda_logs" {
 }
 
 
-resource "aws_lambda_permission" "api_gateway" {
-   statement_id  = "AllowAPIGatewayInvoke"
+resource "aws_lambda_permission" "api_gateway_api" {
+   statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-api"
    action        = "lambda:InvokeFunction"
    function_name = aws_lambda_function.api.function_name
    principal     = "apigateway.amazonaws.com"
 
-   # The "/*/*" portion grants access from any method on any resource within the API Gateway REST API.
-   source_arn = "${aws_api_gateway_rest_api.api_gateway.execution_arn}/*/*"
+   source_arn = "${aws_apigatewayv2_api.api_http_api.execution_arn}/*/*"
+}
+
+resource "aws_apigatewayv2_api" "api_http_api" {
+  name          = "${terraform.workspace}-api-http-api"
+  protocol_type = "HTTP"
+  target        = aws_lambda_function.api.invoke_arn
 }

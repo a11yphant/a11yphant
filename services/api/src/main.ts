@@ -1,14 +1,16 @@
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
+// the serverless-express package does not work as expected
+// when using it with a es-module import, hence the require
+// eslint-disable-next-line
+const serverlessExpress = require("@vendia/serverless-express");
 import { APIGatewayProxyHandler } from "aws-lambda";
-import * as serverlessExpress from "aws-serverless-express";
 import * as express from "express";
-import { Server } from "http";
 
 import { AppModule } from "./app.module";
 
-async function bootstrap(): Promise<Server | null> {
+async function bootstrap(): Promise<ReturnType<typeof serverlessExpress> | null> {
   /**
    * We need to manually instantiate an express instance, because we have to
    * forward lambda invocations to to the Nest router. To be able to
@@ -48,17 +50,17 @@ async function bootstrap(): Promise<Server | null> {
    * the express server. To do that we first have to extract a node HTTP server
    * from the express instance.
    *
-   * We later need the node HTTP server for creating a proxy between the lambda events
+   * We later need the node HTTP server for forwarding between the lambda events
    * and our server.
    */
-  return serverlessExpress.createServer(expressApp);
+  return serverlessExpress({ app: expressApp });
 }
 
 const server = bootstrap();
 
-export const handle: APIGatewayProxyHandler = async (event, context) => {
+export const handle: APIGatewayProxyHandler = async (...args) => {
   /**
-   * The serverless express proxy converts the api gateway events in to HTTP requests
+   * The serverless express handler converts the api gateway events in to HTTP requests
    * and forwards them to the HTTP server.
    *
    * On the first invocation of the lambda function (cold start), we have to wait until
@@ -66,5 +68,5 @@ export const handle: APIGatewayProxyHandler = async (event, context) => {
    * the HTTP server resolves. For subsequent requests, there will not be
    * a delay since the server promise is already resolved.
    */
-  return serverlessExpress.proxy(await server, event, context, "PROMISE").promise;
+  return (await server).handler(...args);
 };
