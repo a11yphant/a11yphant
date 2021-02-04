@@ -100,9 +100,15 @@ const Challenge = () => {
             reset={resetToInitialCode}
             classes="w-full h-3/5"
             editors={[
-              { language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
-              { language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
-              { language: EditorLanguage.javascript, code: currJavascriptCode, updateCode: setCurrJavascriptCode, heading: "index.js" },
+              { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
+              { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
+              {
+                languageLabel: "JavaScript",
+                language: EditorLanguage.javascript,
+                code: currJavascriptCode,
+                updateCode: setCurrJavascriptCode,
+                heading: "index.js",
+              },
             ]}
             theme="light"
             options={{

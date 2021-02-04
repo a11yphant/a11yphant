@@ -11,6 +11,7 @@ interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "on
 }
 
 export interface EditorConfig {
+  languageLabel: string;
   language: EditorLanguage;
   code: string;
   updateCode: React.Dispatch<React.SetStateAction<string>>;
@@ -123,7 +124,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
                   setModalOpen(false);
                 }}
               >
-                Reset <span className="uppercase ml-1">{config.language}</span>
+                Reset <span className="ml-1">{config.languageLabel}</span>
               </Button>
             </>
           }
