@@ -5,6 +5,7 @@
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "private": true,
   "license": "UNLICENSED",
+  "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --project ./tsconfig.build.json",
