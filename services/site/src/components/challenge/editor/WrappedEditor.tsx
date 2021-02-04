@@ -1,4 +1,5 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
+import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
@@ -22,6 +23,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
   const buttonRef = useRef<HTMLButtonElement>();
 
   // state
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
   const [editorTop, setEditorTop] = useState<number>(0);
@@ -84,9 +87,22 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ config, ...
             height={editorHeight}
           />
         </div>
-        <button className="absolute bottom-2" ref={buttonRef}>
+        <button
+          onClick={() => {
+            setModalOpen(true);
+          }}
+          className="absolute bottom-2"
+          ref={buttonRef}
+        >
           Reset
         </button>
+        <ConfirmationModal
+          open={modalOpen}
+          title="Do you really want to reset the code?"
+          onCancel={() => {
+            setModalOpen(false);
+          }}
+        />
       </div>
     </div>
   );
