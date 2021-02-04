@@ -1,7 +1,7 @@
 data "archive_file" "prisma_migrations" {
     type        = "zip"
-    source_dir  = "${path.module}/../services/database-migration/prisma"
-    output_path = "${path.module}/../services/database-migration/prisma.zip"
+    source_dir  = "${path.module}/../services/import-challenges/prisma"
+    output_path = "${path.module}/../services/import-challenges/prisma.zip"
 }
 
 data "external" "database_migration_code_zip" {
