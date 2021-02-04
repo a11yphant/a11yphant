@@ -8,7 +8,7 @@ import React, { useCallback, useRef, useState } from "react";
 import IconOnlyButton from "../buttons/IconOnlyButton";
 import ChevronLeft from "../icons/ChevronLeft";
 
-interface SideBarProps {
+interface SidebarProps {
   classes: string;
   instructions: Instructions;
   hints: Hints;
@@ -21,7 +21,7 @@ export enum SectionType {
   resources = "Resources",
 }
 
-const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions, hints, resources }) => {
+const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions, hints, resources }) => {
   const [openSection, setOpenSection] = useState<SectionType>(SectionType.instructions);
   const [updateButtonText, setUpdateButtonText] = useState<string>("Close sidebar");
 
@@ -110,4 +110,4 @@ const SideBar: React.FunctionComponent<SideBarProps> = ({ classes, instructions,
   );
 };
 
-export default SideBar;
+export default Sidebar;

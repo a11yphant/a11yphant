@@ -1,4 +1,4 @@
-import { SectionType } from "app/components/challenge/SideBar";
+import { SectionType } from "app/components/challenge/Sidebar";
 import React from "react";
 
 interface ClosedSidebarProps {

@@ -1,6 +1,6 @@
 import Editors from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
-import SideBar from "app/components/challenge/SideBar";
+import Sidebar from "app/components/challenge/Sidebar";
 import React, { useState } from "react";
 
 const Challenge = () => {
@@ -16,7 +16,7 @@ const Challenge = () => {
     <div className="w-screen h-screen">
       {/*@Todo: Add header*/}
       <main className="flex justify-between h-full box-border p-4">
-        <SideBar
+        <Sidebar
           classes="h-full"
           instructions={{
             text: [
