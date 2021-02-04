@@ -1,6 +1,9 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { Code } from "./code.model";
+import { Hint } from "./hint.model";
+import { Requirement } from "./requirement.model";
+import { Resource } from "./resource.model";
 
 @ObjectType()
 export class Level {
@@ -12,17 +15,17 @@ export class Level {
   })
   instructions: string;
 
-  @Field(() => [String])
-  requirements: string[];
+  @Field(() => [Requirement])
+  requirements: Requirement[];
 
-  @Field(() => [String], {
+  @Field(() => [Hint], {
     description: "Hints are ordered by the information content of the hint; eg more general hints are first.",
   })
-  hints: string[];
+  hints: Hint[];
 
-  @Field(() => [String])
-  resources: string[];
+  @Field(() => [Resource])
+  resources: Resource[];
 
   @Field(() => Code, { nullable: true })
-  startingCode?: Code;
+  code?: Code;
 }
