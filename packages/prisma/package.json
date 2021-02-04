@@ -8,19 +8,18 @@
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc",
-    "postbuild": "cp -r lib/client dist/client",
+    "build": "tsc --project tsconfig.build.json",
+    "postbuild": "cp -r lib/client dist/client && rm -f ./dist/client/query-engine-*",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
-    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.{ts,json}\"",
+    "lint:eslint": "eslint \"**/*.ts\"",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "prisma:generate": "prisma generate",
-    "prepack": "rm -f ./dist/client/query-engine-*",
     "postinstall": "node ./scripts/download-engine.js"
   },
   "dependencies": {
@@ -36,9 +35,9 @@
   },
   "devDependencies": {
     "@golevelup/ts-jest": "0.3.1",
-    "@nestjs/testing": "7.6.7",
     "@nestjs/common": "7.6.7",
     "@nestjs/core": "7.6.7",
+    "@nestjs/testing": "7.6.7",
     "@types/jest": "26.0.20",
     "@types/mock-fs": "4.13.0",
     "@types/node": "14.14.25",

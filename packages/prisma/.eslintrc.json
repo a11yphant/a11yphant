@@ -1,22 +1,35 @@
 {
-    "parserOptions": {
-      "ecmaVersion": 2018
-    },
-    "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-    "plugins": ["simple-import-sort", "unused-imports"],
-    "root": true,
-    "env": {
-      "node": true,
-      "es6": true
-    },
-    "rules": {
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
-      "sort-imports": "off",
-      "import/order": "off",
-      "unused-imports/no-unused-imports": "error",
-      "prefer-template": "error"
-    },
-    "ignorePatterns": ["**/node_modules"]
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports"],
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-imports": "off",
+    "import/order": "off",
+    "unused-imports/no-unused-imports": "error",
+    "prefer-template": "error"
+  },
+    "ignorePatterns": ["**/node_modules", "dist/**", "prisma/**", "lib/client/**"]
   }
   

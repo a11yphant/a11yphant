@@ -1,11 +1,36 @@
-import { Test } from '@nestjs/testing';
-import { PrismaModule } from './prisma.module';
+import { DynamicModule } from "@nestjs/common";
+import { Test } from "@nestjs/testing";
 
-describe('prisma module', () => {
-    it('can instantiate the module', async () => {
-        const moduleRef = await Test.createTestingModule({
-            imports: [PrismaModule]
-        }).compile();
-        expect(moduleRef).toBeTruthy();
-    })
-})
+import { PRISMA_MODULE_CONFIG } from "./constants";
+import { PrismaModule } from "./prisma.module";
+
+describe("prisma module", () => {
+  it("can instantiate the module", async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [PrismaModule],
+    }).compile();
+
+    expect(moduleRef).toBeTruthy();
+  });
+
+  it("provides the database url with forRoot", () => {
+    const module = PrismaModule.forRoot({ databaseUrl: "url" });
+    const url = (module.providers?.find((provider: any) => provider.provide === PRISMA_MODULE_CONFIG) as unknown) as any;
+
+    expect(url?.useValue).toEqual("url");
+  });
+
+  it("provides the database url with forRootAsync", async () => {
+    const module = await PrismaModule.forRootAsync({
+      imports: [("module" as unknown) as DynamicModule],
+      useFactory: (value) => ({ databaseUrl: value }),
+      inject: ["service"],
+    });
+    const url = (module.providers?.find((provider: any) => provider.provide === PRISMA_MODULE_CONFIG) as unknown) as any;
+
+    expect(module.imports).toContain("module");
+    expect(url).toBeTruthy();
+    expect(url.useFactory).toBeTruthy();
+    expect(url.inject).toEqual(["service"]);
+  });
+});
