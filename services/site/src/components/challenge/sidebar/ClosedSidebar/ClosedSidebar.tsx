@@ -11,6 +11,7 @@ const ClosedSidebar = React.forwardRef<HTMLDivElement, ClosedSidebarProps>(({ ha
     <div ref={ref} className="hidden h-full flex-col justify-around transition-opacity duration-700">
       {Object.values(sections).map((section: SectionType) => (
         <div
+          key={section}
           onClick={() => handleClick(section)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
