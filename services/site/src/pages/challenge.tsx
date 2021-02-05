@@ -2,6 +2,7 @@ import Button from "app/components/buttons/Button";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
+import Navigation from "app/components/Navigation";
 import React, { useState } from "react";
 
 export interface Code {
@@ -52,8 +53,8 @@ const Challenge = () => {
 
   return (
     <div className="w-screen h-screen">
-      {/*@Todo: Add header*/}
-      <main className="flex justify-between h-full box-border p-4">
+      <Navigation challengeName="Accessible Links" currentLevel="01" maxLevel="03" />
+      <main className="flex justify-between h-19/20 box-border p-4">
         <Sidebar
           classes="h-full"
           instructions={{
