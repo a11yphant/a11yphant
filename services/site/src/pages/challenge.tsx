@@ -1,3 +1,4 @@
+import Button from "app/components/buttons/Button";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
@@ -95,7 +96,7 @@ const Challenge = () => {
             },
           ]}
         />
-        <div className="flex justify-between flex-col flex-auto h-full box-border pl-4">
+        <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
           <Editors
             reset={resetToInitialCode}
             classes="w-full h-3/5"
@@ -120,6 +121,17 @@ const Challenge = () => {
             }}
           />
           <Preview classes="w-full h-2/5" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
+          <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
+            <Button
+              full
+              onClick={() => {
+                alert("Thank you Mario, but our princess is in another castle!");
+              }}
+              classes="px-10 tracking-wider"
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </main>
     </div>
