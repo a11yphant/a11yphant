@@ -41,11 +41,14 @@ exports.handler = async (event) => {
 
   try {
     const { stdout, stderr } = await execPromise(
-      `node_modules/prisma/build/index.js migrate deploy --preview-feature --schema=/tmp/prisma/schema.prisma`, { env: {
-        DATABASE_URL: dbUrl,
-        PATH: process.env.PATH,
-        NODE_ENV: process.env.NODE_ENV
-      }}
+      `node_modules/prisma/build/index.js migrate deploy --preview-feature --schema=/tmp/prisma/schema.prisma`,
+      {
+        env: {
+          DATABASE_URL: dbUrl,
+          PATH: process.env.PATH,
+          NODE_ENV: process.env.NODE_ENV,
+        },
+      },
     );
 
     if (stderr) {
