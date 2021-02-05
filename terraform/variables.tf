@@ -51,5 +51,5 @@ variable "file_types" {
     "woff"   = "font/woff"
     "woff2"  = "font/woff2"
   }
-  description = "Map from file suffixes, which must begin with a period and contain no periods, to the corresponding Content-Type values."
+  description = "Map from file suffixes, which must contain no periods, to the corresponding Content-Type values."
 }
