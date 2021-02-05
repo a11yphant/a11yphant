@@ -1,6 +1,7 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
+import Trash from "app/components/icons/Trash";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
@@ -95,9 +96,10 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           onClick={() => {
             setModalOpen(true);
           }}
-          className="absolute bottom-2"
+          className="absolute bottom-2 flex items-center tracking-wide transition duration-300 text-primary font-bold group hover:text-primaryDark group-hover:text-primaryDark"
           ref={buttonRef}
         >
+          <Trash />
           Reset
         </button>
         <ConfirmationModal
