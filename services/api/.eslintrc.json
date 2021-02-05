@@ -7,8 +7,13 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
-  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports", "react", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports"],
   "root": true,
   "env": {
     "node": true,
@@ -34,5 +39,5 @@
     "unused-imports/no-unused-imports": "error",
     "prefer-template": "error"
   },
-  "ignorePatterns": ["**/*.generated.ts", "**/node_modules"]
+  "ignorePatterns": ["**/*.generated.ts", "**/node_modules", "dist/"]
 }
