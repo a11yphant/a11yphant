@@ -31,7 +31,7 @@
     "@nestjs/graphql": "7.9.8",
     "@nestjs/platform-express": "7.6.11",
     "@types/aws-serverless-express": "3.3.3",
-    "@vendia/serverless-express": "4.1.2",
+    "@vendia/serverless-express": "4.3.0",
     "apollo-server-express": "2.19.2",
     "aws-lambda": "1.0.6",
     "graphql": "15.5.0",
