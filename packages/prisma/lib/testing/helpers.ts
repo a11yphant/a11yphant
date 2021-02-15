@@ -70,7 +70,7 @@ export async function setupDatabase(): Promise<void> {
   await client.$disconnect();
 }
 
-export function getCurrentDbUrl() {
+export function getCurrentDbUrl(): string {
   return presetDbUrl.toString().replace(presetDbUrl.pathname.slice(1), getDatabaseName());
 }
 
