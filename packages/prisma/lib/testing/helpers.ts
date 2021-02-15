@@ -53,6 +53,8 @@ export async function setupDatabase(): Promise<void> {
     },
   });
 
+  await dropOtherConnectionsToCurrentDatabase(client);
+
   for (let worker = 1; worker < os.cpus().length; worker++) {
     try {
       await client.$executeRaw(`DROP DATABASE IF EXISTS "${getDatabaseName(worker)}";`);
