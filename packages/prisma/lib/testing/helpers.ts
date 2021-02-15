@@ -19,6 +19,12 @@ export function getDatabaseName(workerId?: number): string {
   return `${dbUrl.pathname.slice(1)}-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
 }
 
+async function dropOtherConnectionsToCurrentDatabase(client: PrismaClient): Promise<void> {
+  await client.$executeRaw(
+    `SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();`,
+  );
+}
+
 async function createPresetDb(): Promise<void> {
   const client = new PrismaClient({
     datasources: {
@@ -29,6 +35,7 @@ async function createPresetDb(): Promise<void> {
   });
 
   await client.$connect();
+  await dropOtherConnectionsToCurrentDatabase(client);
   await client.$executeRaw(`DROP DATABASE IF EXISTS "${presetDbUrl.pathname.slice(1)}"`);
   await client.$executeRaw(`CREATE DATABASE "${presetDbUrl.pathname.slice(1)}"`);
   await client.$disconnect();
@@ -80,6 +87,17 @@ export function createTestingPrismaClient(logger: Logger): PrismaService {
   });
 }
 
+async function clearTableContents(client: PrismaClient): Promise<void> {
+  const tableNames = await client.$queryRaw(`
+          SELECT table_name FROM information_schema.tables
+          WHERE table_schema = 'public' AND table_name != '_Migration';
+        `);
+
+  for (const tableName of tableNames.map((row: any) => row.table_name)) {
+    await client.$executeRaw(`DELETE FROM "${tableName}";`);
+  }
+}
+
 export function useDatabase(logger: Logger): { getPrismaService: () => PrismaService } {
   const client = createTestingPrismaClient(logger);
 
@@ -93,14 +111,7 @@ export function useDatabase(logger: Logger): { getPrismaService: () => PrismaSer
 
   afterEach(async () => {
     try {
-      const tableNames = await client.$queryRaw(`
-          SELECT table_name FROM information_schema.tables
-          WHERE table_schema = 'public' AND table_name != '_Migration';
-        `);
-
-      for (const tableName of tableNames.map((row: any) => row.table_name)) {
-        await client.$executeRaw(`DELETE FROM "${tableName}";`);
-      }
+      await clearTableContents(client);
     } catch (err) {
       console.error(err);
     }
