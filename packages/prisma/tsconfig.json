@@ -10,8 +10,7 @@
     "target": "es6",
     "sourceMap": false,
     "outDir": "./dist",
-    "rootDir": "./lib",
-    "allowJs": true
+    "rootDir": "./lib"
   },
   "include": ["lib/**/*"],
   "exclude": ["node_modules", "test"]
