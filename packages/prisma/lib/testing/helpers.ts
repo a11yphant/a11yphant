@@ -100,10 +100,6 @@ export function useDatabase(logger: Logger): { getPrismaService: () => PrismaSer
 
       for (const tableName of tableNames.map((row: any) => row.table_name)) {
         await client.$executeRaw(`DELETE FROM "${tableName}";`);
-
-        if (!["Store"].includes(tableName)) {
-          await client.$executeRaw(`ALTER SEQUENCE "${tableName}_id_seq" RESTART WITH 1;`);
-        }
       }
     } catch (err) {
       console.error(err);
