@@ -1,8 +1,9 @@
 import { Logger } from "@nestjs/common";
 import { execSync } from "child_process";
 import os from "os";
+import { join } from "path";
 
-import { PrismaClient } from "../client";
+import { PrismaClient } from "../../client";
 import { PrismaService } from "../prisma.service";
 
 const dbUrl = new URL(process.env.DB_URL || "postgresql://please-provide-a-connection-url/db");
@@ -43,7 +44,14 @@ async function createPresetDb(): Promise<void> {
 
 export async function setupDatabase(): Promise<void> {
   await createPresetDb();
-  execSync(`DATABASE_URL=${presetDbUrl.toString()} npx prisma migrate dev --preview-feature`);
+
+  const schemaPath = join(__dirname, "../../client/schema.prisma");
+  execSync(`npx prisma migrate dev --preview-feature --schema ${schemaPath}`, {
+    env: {
+      PATH: process.env.PATH,
+      DATABASE_URL: presetDbUrl.toString(),
+    },
+  });
 
   const client = new PrismaClient({
     datasources: {

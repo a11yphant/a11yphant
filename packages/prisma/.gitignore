@@ -1,7 +1,7 @@
 # compiled output
 /node_modules
 /dist
-/lib/client
+/client
 
 # Logs
 logs

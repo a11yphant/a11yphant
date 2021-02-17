@@ -2,7 +2,7 @@ const { download } = require("@prisma/fetch-engine");
 const { enginesVersion } = require("@prisma/engines");
 const { join } = require("path");
 
-const runtimePath = join(__dirname, "../dist/client");
+const runtimePath = join(__dirname, "../client");
 
 download({
   binaries: {

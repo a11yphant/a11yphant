@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 
-import { PrismaClient } from "./client";
+import { PrismaClient } from "../client";
 import { PRISMA_MODULE_CONFIG } from "./constants";
 import { PrismaModuleConfig } from "./prisma.module";
 
