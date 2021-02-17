@@ -61,26 +61,22 @@ export async function setupDatabase(): Promise<void> {
     },
   });
 
-  await dropOtherConnectionsToCurrentDatabase(client);
-
   for (let worker = 1; worker < os.cpus().length; worker++) {
     try {
       await client.$executeRaw(`DROP DATABASE IF EXISTS "${getDatabaseName(worker)}";`);
     } catch {
-      console.log("Failed dropping existing test database");
       await client.$disconnect();
-      return;
+      throw new Error("Failed dropping existing test database");
     }
 
     try {
+      await dropOtherConnectionsToCurrentDatabase(client);
       await client.$executeRaw(
         `CREATE DATABASE "${getDatabaseName(worker)}" TEMPLATE "${presetDbUrl.pathname.slice(1)}" OWNER "${presetDbUrl.username}";`,
       );
     } catch (error) {
-      console.log("Failed duplicating the template database");
-      console.log(error);
       await client.$disconnect();
-      return;
+      throw new Error(`Failed duplicating the template database: ${error.message}`);
     }
   }
 
