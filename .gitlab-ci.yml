@@ -51,7 +51,7 @@ test:prisma:
     POSTGRES_USER: a11y-challenges
     POSTGRES_PASSWORD: secret
     DATABASE_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
-    PROJECT_PATH: services/submission-checker
+    PROJECT_PATH: packages/prisma
 
 build:prisma:
   tags:
