@@ -20,7 +20,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "dotenv -e ../../.env prisma migrate dev -- --preview-feature"
+    "prisma:migrate": "dotenv -e ../../.env prisma migrate dev -- --preview-feature",
+    "postinstall": "cp node_modules/@prisma/engines/query-engine-* client/"
   },
   "dependencies": {
     "@prisma/client": "2.16.0",
