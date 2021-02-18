@@ -40,6 +40,19 @@ lint:prisma:
   variables:
     PROJECT_PATH: packages/prisma
 
+test:submission-checker:
+  extends:
+    - .test
+    - .run_on_prisma_change
+  services:
+    - postgres
+  variables:
+    POSTGRES_DB: a11y-challenges
+    POSTGRES_USER: a11y-challenges
+    POSTGRES_PASSWORD: secret
+    DATABASE_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    PROJECT_PATH: services/submission-checker
+
 build:prisma:
   tags:
     - docker
