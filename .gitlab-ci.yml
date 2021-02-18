@@ -40,7 +40,7 @@ lint:prisma:
   variables:
     PROJECT_PATH: packages/prisma
 
-test:submission-checker:
+test:prisma:
   extends:
     - .test
     - .run_on_prisma_change
