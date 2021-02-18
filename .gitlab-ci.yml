@@ -46,6 +46,9 @@ test:prisma:
     - .run_on_prisma_change
   services:
     - postgres
+  script:
+    - npm run prisma:generate --prefix $PROJECT_PATH
+    - npm run test --prefix $PROJECT_PATH
   variables:
     POSTGRES_DB: a11y-challenges
     POSTGRES_USER: a11y-challenges
