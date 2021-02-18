@@ -49,7 +49,7 @@ export async function setupDatabase(): Promise<void> {
   execSync(`npx prisma migrate dev --preview-feature --schema ${schemaPath}`, {
     env: {
       PATH: process.env.PATH,
-      DATABASE_URL: presetDbUrl.toString(),
+      DB_URL: presetDbUrl.toString(),
     },
   });
 

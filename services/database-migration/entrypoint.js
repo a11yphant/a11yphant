@@ -41,7 +41,7 @@ exports.handler = async (event) => {
 
   try {
     const { stdout, stderr } = await execPromise(
-      `DATABASE_URL=${dbUrl} node_modules/@prisma/cli/build/index.js migrate deploy --preview-feature --schema=/tmp/prisma/schema.prisma`,
+      `DB_URL=${dbUrl} node_modules/@prisma/cli/build/index.js migrate deploy --preview-feature --schema=/tmp/prisma/schema.prisma`,
     );
 
     if (stderr) {
