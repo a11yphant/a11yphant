@@ -243,7 +243,13 @@ test:import-challenges:
   needs:
    - build:prisma
   variables:
+    POSTGRES_DB: a11y-challenges
+    POSTGRES_USER: a11y-challenges
+    POSTGRES_PASSWORD: secret
+    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
     PROJECT_PATH: services/import-challenges
+  services:
+    - postgres
 
 
 #-----------------------------------
