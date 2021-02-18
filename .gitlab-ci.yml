@@ -39,7 +39,7 @@ lint:prisma:
 
 build:prisma:
   extends:
-    - .build
+    - .build-package
   variables:
     PROJECT_PATH: packages/prisma
   artifacts:
@@ -202,7 +202,7 @@ lint:import-challenges:
     - .lint
     - .run_on_import_challenges_change
   needs:
-   - build:prisma
+    - build:prisma
   variables:
     PROJECT_PATH: services/import-challenges
 
