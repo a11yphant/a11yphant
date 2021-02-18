@@ -38,13 +38,22 @@ lint:prisma:
     PROJECT_PATH: packages/prisma
 
 build:prisma:
-  extends:
-    - .build-package
+  tags:
+    - docker
+  stage: generate
+  image: node:14-alpine
   variables:
     PROJECT_PATH: packages/prisma
+  script:
+    - npm run prisma:generate --prefix $PROJECT_PATH
+    - npm run build --prefix $PROJECT_PATH
   artifacts:
     paths:
       - $PROJECT_PATH/dist
+  only:
+    - develop
+    - master
+    - merge_request
 
 #-----------------------------------
 # Submission Checker

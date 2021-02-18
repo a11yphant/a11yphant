@@ -5,11 +5,3 @@
   image: node:14-alpine
   script:
     - npm run build --prefix $PROJECT_PATH
-
-.build-package:
-  tags:
-    - docker
-  stage: generate
-  image: node:14-alpine
-  script:
-    - npm run build --prefix $PROJECT_PATH
