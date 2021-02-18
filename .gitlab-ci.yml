@@ -34,6 +34,9 @@ lint:prisma:
   extends:
     - .lint
     - .run_on_prisma_change
+  script:
+    - npm run prisma:generate --prefix $PROJECT_PATH
+    - npm run lint --prefix $PROJECT_PATH
   variables:
     PROJECT_PATH: packages/prisma
 
