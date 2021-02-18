@@ -43,7 +43,7 @@ lint:prisma:
 build:prisma:
   tags:
     - docker
-  stage: generate
+  stage: build
   image: node:14-alpine
   variables:
     PROJECT_PATH: packages/prisma
@@ -210,23 +210,23 @@ production-dependencies:site:
 # Import Challenges
 #-----------------------------------
 
-lint:import-challenges:
-  extends:
-    - .lint
-    - .run_on_import_challenges_change
-  needs:
-    - build:prisma
-  variables:
-    PROJECT_PATH: services/import-challenges
+# lint:import-challenges:
+#   extends:
+#     - .lint
+#     - .run_on_import_challenges_change
+#   needs:
+#     - build:prisma
+#   variables:
+#     PROJECT_PATH: services/import-challenges
 
-test:import-challenges:
-  extends:
-    - .test
-    - .run_on_import_challenges_change
-  needs:
-   - build:prisma
-  variables:
-    PROJECT_PATH: services/import-challenges
+# test:import-challenges:
+#   extends:
+#     - .test
+#     - .run_on_import_challenges_change
+#   needs:
+#    - build:prisma
+#   variables:
+#     PROJECT_PATH: services/import-challenges
 
 
 #-----------------------------------
