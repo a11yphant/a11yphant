@@ -11,6 +11,7 @@ cache:
 
 default:
   before_script:
+    - npm ci
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 stages:
@@ -226,23 +227,23 @@ production-dependencies:site:
 # Import Challenges
 #-----------------------------------
 
-# lint:import-challenges:
-#   extends:
-#     - .lint
-#     - .run_on_import_challenges_change
-#   needs:
-#     - build:prisma
-#   variables:
-#     PROJECT_PATH: services/import-challenges
+lint:import-challenges:
+  extends:
+    - .lint
+    - .run_on_import_challenges_change
+  needs:
+    - build:prisma
+  variables:
+    PROJECT_PATH: services/import-challenges
 
-# test:import-challenges:
-#   extends:
-#     - .test
-#     - .run_on_import_challenges_change
-#   needs:
-#    - build:prisma
-#   variables:
-#     PROJECT_PATH: services/import-challenges
+test:import-challenges:
+  extends:
+    - .test
+    - .run_on_import_challenges_change
+  needs:
+   - build:prisma
+  variables:
+    PROJECT_PATH: services/import-challenges
 
 
 #-----------------------------------
