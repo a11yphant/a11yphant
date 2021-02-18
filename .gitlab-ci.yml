@@ -27,6 +27,26 @@ stages:
 #----------------------------------------------------------------------
 
 #-----------------------------------
+# Prisma Client
+#-----------------------------------
+
+lint:prisma:
+  extends:
+    - .lint
+    - .run_on_prisma_change
+  variables:
+    PROJECT_PATH: packages/prisma
+
+build:prisma:
+  extends:
+    - .build
+  variables:
+    PROJECT_PATH: packages/prisma
+  artifacts:
+    paths:
+      - $PROJECT_PATH/dist
+
+#-----------------------------------
 # Submission Checker
 #-----------------------------------
 
@@ -181,21 +201,19 @@ lint:import-challenges:
   extends:
     - .lint
     - .run_on_import_challenges_change
+  needs:
+   - build:prisma
   variables:
     PROJECT_PATH: services/import-challenges
-  before_script:
-    - npm install --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm run prisma:generate --prefix services/import-challenges
 
 test:import-challenges:
   extends:
     - .test
     - .run_on_import_challenges_change
+  needs:
+   - build:prisma
   variables:
     PROJECT_PATH: services/import-challenges
-  before_script:
-    - npm install --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm run prisma:generate --prefix services/import-challenges
 
 
 #-----------------------------------
