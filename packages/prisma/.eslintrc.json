@@ -30,6 +30,6 @@
     "unused-imports/no-unused-imports": "error",
     "prefer-template": "error"
   },
-    "ignorePatterns": ["**/node_modules", "dist/**", "prisma/**", "lib/client/**"]
+    "ignorePatterns": ["**/node_modules", "dist/**", "prisma/**", "client/**"]
   }
   
