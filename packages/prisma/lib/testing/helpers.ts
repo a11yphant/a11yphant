@@ -61,12 +61,14 @@ export async function setupDatabase(): Promise<void> {
     },
   });
 
+  await dropOtherConnectionsToCurrentDatabase(client);
+
   for (let worker = 1; worker < os.cpus().length; worker++) {
     try {
       await client.$executeRaw(`DROP DATABASE IF EXISTS "${getDatabaseName(worker)}";`);
-    } catch {
+    } catch (error) {
       await client.$disconnect();
-      throw new Error("Failed dropping existing test database");
+      throw new Error(`Failed dropping existing test database: ${error.message}`);
     }
 
     try {
@@ -96,7 +98,7 @@ export function createTestingPrismaClient(logger: Logger): PrismaService {
 async function clearTableContents(client: PrismaClient): Promise<void> {
   const tableNames = await client.$queryRaw(`
           SELECT table_name FROM information_schema.tables
-          WHERE table_schema = 'public' AND table_name != '_Migration';
+          WHERE table_schema = 'public' AND table_name != '_prisma_migrations';
         `);
 
   for (const tableName of tableNames.map((row: any) => row.table_name)) {
@@ -106,7 +108,6 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
 
 export function useDatabase(logger: Logger): { getPrismaService: () => PrismaService } {
   const client = createTestingPrismaClient(logger);
-
   beforeAll(async () => {
     await client.$connect();
   });
@@ -116,11 +117,7 @@ export function useDatabase(logger: Logger): { getPrismaService: () => PrismaSer
   });
 
   afterEach(async () => {
-    try {
-      await clearTableContents(client);
-    } catch (err) {
-      console.error(err);
-    }
+    await clearTableContents(client);
   });
 
   return {
