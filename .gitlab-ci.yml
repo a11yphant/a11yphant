@@ -60,7 +60,7 @@ test:prisma:
 build:prisma:
   tags:
     - docker
-  stage: prepare
+  stage: generate
   image: node:14-alpine
   variables:
     PROJECT_PATH: packages/prisma
