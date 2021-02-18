@@ -53,6 +53,7 @@ build:prisma:
   artifacts:
     paths:
       - $PROJECT_PATH/dist
+      - $PROJECT_PATH/client
   only:
     - develop
     - master
