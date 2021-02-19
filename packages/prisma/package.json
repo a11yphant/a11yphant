@@ -29,10 +29,10 @@
     "@prisma/fetch-engine": "2.16.0"
   },
   "peerDependencies": {
-    "@nestjs/common": "^7.6.7",
-    "@nestjs/core": "^7.6.7",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^6.6.3"
+    "@nestjs/common": "7.6.12",
+    "@nestjs/core": "7.6.12",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "6.6.3"
   },
   "devDependencies": {
     "@golevelup/ts-jest": "0.3.1",
