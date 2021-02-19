@@ -1,4 +1,4 @@
-import { Requirement } from "app/components/challenge/sidebar/InstructionSection";
+import { Requirement } from "app/components/challenge/sidebar/Sections/InstructionSection";
 import React from "react";
 
 interface CheckboxListProps {
@@ -9,7 +9,7 @@ const CheckboxList: React.FunctionComponent<CheckboxListProps> = ({ items }) => 
   return (
     <ul>
       {items.map((item) => (
-        <li className="my-2">
+        <li key={item.id} className="my-2">
           <input className="mr-1" id={item.id} name={item.id} type="checkbox" /> <label htmlFor={item.id}>{item.title}</label>
         </li>
       ))}

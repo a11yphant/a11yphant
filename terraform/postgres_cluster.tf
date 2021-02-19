@@ -31,7 +31,7 @@ resource "aws_subnet" "postgres_cluster_network_zone_c" {
 
 
 resource "aws_db_subnet_group" "postgres_cluster_subnet_group" {
-  name       = "postgres_cluster_subnet_group"
+  name       = "${terraform.workspace}-postgres-cluster_subnet-group"
   subnet_ids = [ 
       aws_subnet.postgres_cluster_network_zone_a.id,
       aws_subnet.postgres_cluster_network_zone_b.id,
@@ -40,7 +40,7 @@ resource "aws_db_subnet_group" "postgres_cluster_subnet_group" {
 }
 
 resource "aws_rds_cluster" "postgres" {
-  cluster_identifier      = "postgres-cluster"
+  cluster_identifier      = "${terraform.workspace}-postgres-cluster"
   engine                  = "aurora-postgresql"
   availability_zones      = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
   database_name           = var.postgres_cluster_database_name
