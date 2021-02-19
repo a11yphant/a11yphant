@@ -1,5 +1,5 @@
 const { download } = require("@prisma/fetch-engine");
-const { enginesVersion } = require("@prisma/engines");
+const { enginesVersion } = require("@prisma/engines-version");
 const { join } = require("path");
 
 const runtimePath = join(__dirname, "../client");
