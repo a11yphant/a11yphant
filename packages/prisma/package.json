@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "@golevelup/ts-jest": "0.3.1",
-    "@nestjs/common": "7.6.7",
-    "@nestjs/core": "7.6.7",
-    "@nestjs/testing": "7.6.7",
+    "@nestjs/common": "7.6.12",
+    "@nestjs/core": "7.6.12",
+    "@nestjs/testing": "7.6.12",
     "@types/jest": "26.0.20",
     "@types/mock-fs": "4.13.0",
     "@types/node": "14.14.25",
