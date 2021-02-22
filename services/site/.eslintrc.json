@@ -1,5 +1,4 @@
 {
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -7,29 +6,13 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
-  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports", "react", "react-hooks"],
+  "extends": ["@a11y-challenges/eslint-config/react"],
   "root": true,
   "env": {
     "node": true,
     "jest": true,
     "browser": true,
     "es6": true
-  },
-  "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "sort-imports": "off",
-    "import/order": "off",
-    "unused-imports/no-unused-imports": "error",
-    "prefer-template": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/display-name": "off",
-    "react/prop-types": "off"
   },
   "ignorePatterns": ["src/generated/**", "**/node_modules"]
 }
