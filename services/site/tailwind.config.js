@@ -6,6 +6,8 @@ module.exports = {
       spacing: {
         inherit: "inherit",
         screenHalf: "50vh",
+        "1/20": "5%",
+        "19/20": "95%",
       },
       colors: {
         primaryLight: "#9262FA",

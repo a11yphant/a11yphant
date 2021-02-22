@@ -12,18 +12,18 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "@prisma/client": "2.16.0",
-    "prisma": "2.16.0",
+    "@prisma/client": "2.17.0",
+    "prisma": "2.17.0",
     "unzipper": "0.10.11"
   },
   "devDependencies": {
-    "aws-sdk": "2.838.0",
-    "eslint": "7.19.0",
+    "aws-sdk": "2.848.0",
+    "eslint": "7.20.0",
     "eslint-config-prettier": "7.2.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-simple-import-sort": "7.0.0",
-    "eslint-plugin-unused-imports": "1.0.1",
+    "eslint-plugin-unused-imports": "1.1.0",
     "prettier": "2.2.1"
   }
 }
