@@ -11,6 +11,7 @@ cache:
 
 default:
   before_script:
+    - npm ci --ignore-scripts
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 stages:
