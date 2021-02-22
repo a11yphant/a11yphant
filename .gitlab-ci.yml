@@ -185,7 +185,8 @@ lint:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm install --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
     - npm run prisma:generate --prefix services/import-challenges
 
 test:import-challenges:
@@ -195,7 +196,8 @@ test:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm install --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
     - npm run prisma:generate --prefix services/import-challenges
 
 
