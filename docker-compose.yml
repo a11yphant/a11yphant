@@ -21,5 +21,19 @@ services:
     ports:
       - 5432:5432
 
+  localstack:
+    image: localstack/localstack
+    restart: always
+    environment:
+      SERVICES: sns,sqs
+      DATA_DIR: /tmp/localstack/data
+    ports:
+      - 4566:4566
+      - 4571:4571
+    volumes:
+      - localstack_data:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+
 volumes:
   postgres_data:
+  localstack_data:
