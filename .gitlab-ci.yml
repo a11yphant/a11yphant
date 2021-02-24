@@ -236,7 +236,7 @@ production-dependencies:database-migration:
 # Terraform
 #-----------------------------------
 
-terraform:validate:
+terraform:cloud:validate:
   extends:
     - .run_on_terraform_change
   tags:
@@ -247,6 +247,18 @@ terraform:validate:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud validate
+
+terraform:local:validate:
+  extends:
+    - .run_on_terraform_change
+  tags:
+    - docker
+  stage: analyze
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  before_script:
+    - terraform -chdir=terraform/local init
+  script:
+    - terraform -chdir=terraform/local validate
 
 #-----------------------------------
 # Deployment
