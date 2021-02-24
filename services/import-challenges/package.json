@@ -54,7 +54,7 @@
     "mock-fs": "4.13.0",
     "prettier": "2.2.1",
     "prisma": "2.17.0",
-    "ts-jest": "26.5.1",
+    "ts-jest": "26.5.2",
     "ts-loader": "8.0.17",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
