@@ -4,6 +4,7 @@ generated/
 lambda.zip
 plan.cache
 plan.json
+terraform.tfstate
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,linux,windows,visualstudiocode,phpstorm+all,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,windows,visualstudiocode,phpstorm+all,node
