@@ -244,9 +244,9 @@ terraform:validate:
   stage: analyze
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   before_script:
-    - terraform -chdir="terraform/cloud" init
+    - terraform -chdir=terraform/cloud init
   script:/cloud
-    - terraform -chdir="terraform/cloud" validate
+    - terraform -chdir=terraform/cloud validate
 
 #-----------------------------------
 # Deployment
@@ -268,9 +268,9 @@ deploy:
    - apk update
    - apk add zip
   script:
-    - terraform -chdir="terraform/cloud" init
-    - terraform -chdir="terraform/cloud" workspace select $CI_COMMIT_REF_SLUG
-    - terraform -chdir="terraform/cloud" apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+    - terraform -chdir=terraform/cloud init
+    - terraform -chdir=terraform/cloud workspace select $CI_COMMIT_REF_SLUG
+    - terraform -chdir=terraform/cloud apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
   only:
     - master
     - develop
