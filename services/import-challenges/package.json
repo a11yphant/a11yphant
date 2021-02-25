@@ -31,7 +31,7 @@
     "js-yaml": "4.0.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "6.6.3"
+    "rxjs": "6.6.6"
   },
   "devDependencies": {
     "@golevelup/ts-jest": "0.3.1",
