@@ -32,7 +32,8 @@
     "debug:site": "pm2 logs a11y-challenges-site",
     "debug:submission-checker": "pm2 logs a11y-challenges-submission-checker",
     "debug:import-challenges": "pm2 logs a11y-challenges-import-challenges",
-    "tf:apply": "terraform -chdir=terraform/local init && terraform -chdir=terraform/local apply -auto-approve",
+    "tf:init": "terraform -chdir=terraform/local init",
+    "tf:apply": "terraform -chdir=terraform/local apply -auto-approve",
     "tf:destroy": "terraform -chdir=terraform/local destroy -auto-approve"
   },
   "repository": {
