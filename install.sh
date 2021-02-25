@@ -8,9 +8,6 @@ nvm install
 nvm use
 npm install
 
-# install terraform dependencies
-npm run tf:init
-
 # create .env from .env.example
 if [ ! -f ./.env ]; then
     cp ./.env.example ./.env

@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npm run package-dependencies",
+    "postinstall": "npm run package-dependencies && npm run tf:init",
     "package-dependencies": "npm-run-all package-dependencies:**",
     "package-dependencies:api": "npm --prefix services/api install",
     "package-dependencies:database-migration": "npm --prefix services/database-migration install",
