@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { Submission } from './submission.model';
 
 const requirements = [
@@ -53,7 +54,17 @@ export class SubmissionService {
     return this.store.get(id);
   }
 
-  create({ id, html, css, javascript }) {
+  create({
+    id,
+    html,
+    css,
+    javascript,
+  }: {
+    id: number;
+    html: string;
+    css: string;
+    javascript: string;
+  }): void {
     this.store.set(id, { html, css, javascript, level });
   }
 }

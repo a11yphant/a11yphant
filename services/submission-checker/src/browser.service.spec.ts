@@ -1,5 +1,6 @@
 import { createMock } from '@golevelup/nestjs-testing';
 import { ThenableWebDriver } from 'selenium-webdriver';
+
 import { BrowserService } from './browser.service';
 import { WebdriverFactory } from './webdriver.factory';
 
