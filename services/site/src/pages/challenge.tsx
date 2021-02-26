@@ -19,14 +19,14 @@ const code: Code = {
   javascript: "",
 };
 
-const Challenge = () => {
+const Challenge: React.FunctionComponent = () => {
   const [currHtmlCode, setCurrHtmlCode] = useState<string>();
   const [currCssCode, setCurrCssCode] = useState<string>();
   const [currJavascriptCode, setCurrJavascriptCode] = useState<string>();
 
   const [initialCode, setInitialCode] = useState<Code>();
 
-  const resetToInitialCode = (language?: EditorLanguage) => {
+  const resetToInitialCode = (language?: EditorLanguage): void => {
     // if language === undefined => reset all
     const newCode: Code = {
       html: !language ? initialCode.html : currHtmlCode,

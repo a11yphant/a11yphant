@@ -14,7 +14,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
 
   const [renderCountdown, setRenderCountdown] = useState<NodeJS.Timeout>();
 
-  const startRenderCountdown = () =>
+  const startRenderCountdown = (): NodeJS.Timeout =>
     setTimeout(() => {
       setInnerHtmlCode(htmlCode);
       setInnerCssCode(cssCode);

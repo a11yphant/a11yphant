@@ -1,10 +1,10 @@
-import { BrowserService } from './browser.service';
-import { CheckSubmissionService } from './check-submission.service';
 import { createMock, PartialFuncReturn } from '@golevelup/nestjs-testing';
 import { ConfigService } from '@nestjs/config';
-import { SubmissionService } from './submission.service';
+
+import { BrowserService } from './browser.service';
+import { CheckSubmissionService } from './check-submission.service';
 import { Submission } from './submission.model';
-import { Level } from './level.model';
+import { SubmissionService } from './submission.service';
 
 const axeMockResult = {
   violations: [
@@ -127,7 +127,7 @@ const factory = ({
 }: {
   configService?: PartialFuncReturn<ConfigService>;
   browserService?: PartialFuncReturn<BrowserService>;
-} = {}) => {
+} = {}): CheckSubmissionService => {
   return new CheckSubmissionService(
     createMock<ConfigService>({
       get: jest.fn().mockReturnValue(''),

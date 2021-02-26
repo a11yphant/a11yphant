@@ -62,12 +62,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
 
       setEditorTop(parseInt(paddingWrapper.paddingTop) + headingHeight + parseInt(marginHeading.marginTop) + parseInt(marginHeading.marginBottom));
     }
-  }, [wrapperRef.current, headingRef.current, buttonRef.current]);
+  }, [wrapperRef, headingRef, buttonRef]);
 
   // hook if dependency changed
   React.useEffect(() => {
     updateEditorSize();
-  }, [wrapperRef.current, headingRef.current, buttonRef.current]);
+  }, [updateEditorSize]);
 
   useResizeDetector({
     targetRef: wrapperRef,
