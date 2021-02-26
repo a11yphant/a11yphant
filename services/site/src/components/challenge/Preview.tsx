@@ -14,20 +14,20 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
 
   const [renderCountdown, setRenderCountdown] = useState<NodeJS.Timeout>();
 
-  React.useEffect(() => {
-    const startRenderCountdown = (): NodeJS.Timeout =>
-      setTimeout(() => {
-        setInnerHtmlCode(htmlCode);
-        setInnerCssCode(cssCode);
-        setInnerJavascriptCode(javascriptCode);
-      }, 1000);
+  const startRenderCountdown = (): NodeJS.Timeout =>
+    setTimeout(() => {
+      setInnerHtmlCode(htmlCode);
+      setInnerCssCode(cssCode);
+      setInnerJavascriptCode(javascriptCode);
+    }, 1000);
 
+  React.useEffect(() => {
     if (renderCountdown) {
       clearTimeout(renderCountdown);
     }
 
     setRenderCountdown(startRenderCountdown());
-  }, [htmlCode, cssCode, javascriptCode, renderCountdown]);
+  }, [htmlCode, cssCode, javascriptCode]);
 
   return (
     <iframe
