@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "npm run package-dependencies",
+    "postinstall": "npm run package-dependencies && npm run tf:init",
     "package-dependencies": "npm-run-all package-dependencies:**",
     "package-dependencies:api": "npm --prefix services/api install",
     "package-dependencies:database-migration": "npm --prefix services/database-migration install",
@@ -20,6 +20,7 @@
     "lint:import-challenges": "npm --prefix services/import-challenges run lint",
     "lint:site": "npm --prefix services/site run lint",
     "lint:submission-checker": "npm --prefix services/submission-checker run lint",
+    "prestart": "npm run tf:apply",
     "start": "npm run dev",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
@@ -31,7 +32,11 @@
     "debug:api": "pm2 logs a11y-challenges-api",
     "debug:site": "pm2 logs a11y-challenges-site",
     "debug:submission-checker": "pm2 logs a11y-challenges-submission-checker",
-    "debug:import-challenges": "pm2 logs a11y-challenges-import-challenges"
+    "debug:import-challenges": "pm2 logs a11y-challenges-import-challenges",
+    "tf": "docker-compose run --rm terraform -chdir=terraform/local",
+    "tf:init": "npm run tf init",
+    "tf:apply": "npm run tf apply -- -auto-approve",
+    "tf:destroy": "npm run tf destroy -- -auto-approve"
   },
   "repository": {
     "type": "git",

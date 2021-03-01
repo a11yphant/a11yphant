@@ -239,7 +239,7 @@ production-dependencies:database-migration:
 # Terraform
 #-----------------------------------
 
-terraform:validate:
+terraform:cloud:validate:
   extends:
     - .run_on_terraform_change
   tags:
@@ -247,9 +247,21 @@ terraform:validate:
   stage: analyze
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   before_script:
-    - terraform -chdir=terraform init
+    - terraform -chdir=terraform/cloud init
   script:
-    - terraform -chdir=terraform validate
+    - terraform -chdir=terraform/cloud validate
+
+terraform:local:validate:
+  extends:
+    - .run_on_terraform_change
+  tags:
+    - docker
+  stage: analyze
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  before_script:
+    - terraform -chdir=terraform/local init
+  script:
+    - terraform -chdir=terraform/local validate
 
 #-----------------------------------
 # Deployment
@@ -268,12 +280,12 @@ deploy:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
-   - apk update
-   - apk add zip
+    - apk update
+    - apk add zip
+    - terraform -chdir=terraform/cloud init
+    - terraform -chdir=terraform/cloud workspace select $CI_COMMIT_REF_SLUG
   script:
-    - terraform -chdir=terraform init
-    - terraform -chdir=terraform workspace select $CI_COMMIT_REF_SLUG
-    - terraform -chdir=terraform apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+    - terraform -chdir=terraform/cloud apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
   only:
     - master
     - develop

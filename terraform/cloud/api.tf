@@ -1,11 +1,11 @@
 data "external" "api_code_zip" {
-  program = [ "${path.module}/../services/api/package.sh" ]
+  program = [ "${path.module}/../../services/api/package.sh" ]
 }
 
 resource "aws_s3_bucket_object" "api_code_zip" {
   bucket = aws_s3_bucket.code.id
   key    = "api/${var.current_version}.zip"
-  source = "${path.module}/../services/api/lambda.zip"
+  source = "${path.module}/../../services/api/lambda.zip"
   etag = data.external.api_code_zip.result.hash
 
   depends_on = [
