@@ -20,6 +20,7 @@
     "lint:import-challenges": "npm --prefix services/import-challenges run lint",
     "lint:site": "npm --prefix services/site run lint",
     "lint:submission-checker": "npm --prefix services/submission-checker run lint",
+    "prestart": "npm run tf:apply",
     "start": "npm run dev",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
