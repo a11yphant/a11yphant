@@ -8,8 +8,8 @@ provider "aws" {
     region                      = "us-east-1"
 
     endpoints {
-        sns     = "http://localhost:4566"
-        sqs     = "http://localhost:4566"
+        sns     = "http://localstack:4566"
+        sqs     = "http://localstack:4566"
     }
 }
 
