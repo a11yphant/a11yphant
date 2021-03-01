@@ -7,7 +7,7 @@ export class RendererController {
   constructor(private submissionService: SubmissionService) {}
 
   @Get(':id')
-  show(@Res() response: Response, @Param('id') id: number) {
+  show(@Res() response: Response, @Param('id') id: number): void {
     const submission = this.submissionService.find(id);
     response.send(`
             <!DOCTYPE html>

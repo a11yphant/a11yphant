@@ -15,3 +15,7 @@ terraform {
 provider "aws" {
    region = "eu-central-1"
 }
+
+module "messaging" {
+  source = "../modules/messaging"
+}

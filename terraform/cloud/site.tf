@@ -4,13 +4,13 @@ locals {
 
 
 data "external" "site_code_zip" {
-  program = [ "${path.module}/../services/site/package.sh" ]
+  program = [ "${path.module}/../../services/site/package.sh" ]
 }
 
 resource "aws_s3_bucket_object" "site_code_zip" {
   bucket = aws_s3_bucket.code.id
   key    = "site/${var.current_version}.zip"
-  source = "${path.module}/../services/site/lambda.zip"
+  source = "${path.module}/../../services/site/lambda.zip"
   etag = data.external.site_code_zip.result.hash
 
   depends_on = [

@@ -17,9 +17,10 @@
     "unzipper": "0.10.11"
   },
   "devDependencies": {
-    "aws-sdk": "2.848.0",
-    "eslint": "7.20.0",
-    "eslint-config-prettier": "7.2.0",
+    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "aws-sdk": "2.853.0",
+    "eslint": "7.21.0",
+    "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-simple-import-sort": "7.0.0",
