@@ -74,9 +74,9 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
         });
       }, 750);
     });
-  }, [asideRef.current, buttonRef.current, divOpenRef.current, divClosedRef.current]);
+  }, [asideRef, buttonRef, divOpenRef, divClosedRef]);
 
-  const handleClosedButtonClick = (sectionToOpen: SectionType) => {
+  const handleClosedButtonClick = (sectionToOpen: SectionType): void => {
     setOpenSection(sectionToOpen);
     toggleSidebarState();
   };

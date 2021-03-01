@@ -17,7 +17,7 @@ const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
   const [usedHints, setUsedHints] = useState<number>(0);
   const [hints, setHints] = useState<string[]>([]);
 
-  const loadNextHint = () => {
+  const loadNextHint = (): void => {
     const nextHint = allHints[usedHints];
 
     setHints((prevHints) => [...prevHints, nextHint]);

@@ -1,43 +1,14 @@
 {
-  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports"],
+  "extends": ["@a11y-challenges/eslint-config/typescript"],
   "root": true,
   "env": {
     "node": true,
     "jest": true,
-    "browser": true,
     "es6": true
-  },
-  "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-    "@typescript-eslint/explicit-function-return-type": [
-      "error",
-      {
-        "allowExpressions": true
-      }
-    ],
-    "@typescript-eslint/explicit-module-boundary-types": "error",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "sort-imports": "off",
-    "import/order": "off",
-    "unused-imports/no-unused-imports": "error",
-    "prefer-template": "error"
   },
   "ignorePatterns": ["**/*.generated.ts", "**/node_modules", "dist/"]
 }

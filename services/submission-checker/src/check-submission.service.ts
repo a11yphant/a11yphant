@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxeResults } from 'axe-core';
+
 import { BrowserService } from './browser.service';
 import {
-  CheckResult,
-  Requirement,
   CheckedRequirement,
   CheckedRule,
+  CheckResult,
+  Requirement,
   RuleAssignment,
 } from './check-result.interface';
 import { SubmissionService } from './submission.service';
@@ -61,7 +62,7 @@ export class CheckSubmissionService {
     axeResults: AxeResults,
     ruleAssignment: RuleAssignment,
   ): CheckedRule {
-    const filterFunc = (res) =>
+    const filterFunc = (res): boolean =>
       ruleAssignment.rule.configuration.runOnly.includes(res.id);
 
     const passedAllRules =
