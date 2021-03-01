@@ -1,92 +1,61 @@
 import { Logger } from "@nestjs/common";
-import { execSync } from "child_process";
+import { Migrate } from "@prisma/migrate";
 import os from "os";
 import { join } from "path";
 
 import { PrismaClient } from "../../client";
 import { PrismaService } from "../prisma.service";
 
-const dbUrl = new URL(process.env.DB_URL || "postgresql://please-provide-a-connection-url/db");
-const presetDbUrl = getPresetDBUrl();
-
-function getPresetDBUrl(): URL {
-  const presetDbName = `${dbUrl.pathname.slice(1)}-testing-preset`;
-  const presetDbUrl = new URL(dbUrl.toString());
-  presetDbUrl.pathname = `/${presetDbName}`;
-  return presetDbUrl;
+function getDbUrl(): URL {
+  return new URL(process.env.DB_URL || "postgresql://please-provide-a-connection-url/db");
 }
 
 export function getDatabaseName(workerId?: number): string {
-  return `${dbUrl.pathname.slice(1)}-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
-}
-
-async function dropOtherConnectionsToCurrentDatabase(client: PrismaClient): Promise<void> {
-  await client.$executeRaw(
-    `SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();`,
-  );
-}
-
-async function createPresetDb(): Promise<void> {
-  const client = new PrismaClient({
-    datasources: {
-      db: {
-        url: dbUrl.toString(),
-      },
-    },
-  });
-
-  await client.$connect();
-  await dropOtherConnectionsToCurrentDatabase(client);
-  await client.$executeRaw(`DROP DATABASE IF EXISTS "${presetDbUrl.pathname.slice(1)}"`);
-  await client.$executeRaw(`CREATE DATABASE "${presetDbUrl.pathname.slice(1)}"`);
-  await client.$disconnect();
+  return `${getDbUrl().pathname.slice(1)}-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
 }
 
 export async function setupDatabase(): Promise<void> {
-  await createPresetDb();
-
   const schemaPath = join(__dirname, "../../client/schema.prisma");
-  execSync(`npx prisma migrate dev --preview-feature --schema ${schemaPath}`, {
-    env: {
-      PATH: process.env.PATH,
-      DB_URL: presetDbUrl.toString(),
-    },
-  });
 
   const client = new PrismaClient({
     datasources: {
       db: {
-        url: presetDbUrl.toString(),
+        url: getDbUrl().toString(),
       },
     },
   });
 
-  await dropOtherConnectionsToCurrentDatabase(client);
+  try {
+    await client.$connect();
+  } catch {
+    throw new Error("Could not connect to the database");
+  }
 
   for (let worker = 1; worker < os.cpus().length; worker++) {
     try {
-      await client.$executeRaw(`DROP DATABASE IF EXISTS "${getDatabaseName(worker)}";`);
-    } catch (error) {
-      await client.$disconnect();
-      throw new Error(`Failed dropping existing test database: ${error.message}`);
+      await client.$executeRaw(`CREATE DATABASE "${getDatabaseName(worker)}" OWNER "${getDbUrl().username}"`);
+    } catch {
+      // ignore errors since the database could already exist and postgres does not have a CREATE IF NOT EXISTS
     }
 
     try {
-      await dropOtherConnectionsToCurrentDatabase(client);
-      await client.$executeRaw(
-        `CREATE DATABASE "${getDatabaseName(worker)}" TEMPLATE "${presetDbUrl.pathname.slice(1)}" OWNER "${presetDbUrl.username}";`,
-      );
+      process.env.DB_URL = getCurrentDbUrl(worker);
+      const migrate = new Migrate(schemaPath);
+      await migrate.applyMigrations();
+      await migrate.stop();
     } catch (error) {
-      await client.$disconnect();
-      throw new Error(`Failed duplicating the template database: ${error.message}`);
+      throw new Error(`Failed migrating the test database ${getDatabaseName(worker)}: ${error.message}`);
     }
   }
 
   await client.$disconnect();
+  process.env.DB_URL = getDbUrl().toString();
 }
 
-export function getCurrentDbUrl(): string {
-  return presetDbUrl.toString().replace(presetDbUrl.pathname.slice(1), getDatabaseName());
+export function getCurrentDbUrl(workerId?: number): string {
+  const url = new URL(getDbUrl().toString());
+  url.pathname = getDatabaseName(workerId);
+  return url.toString();
 }
 
 export function createTestingPrismaClient(logger: Logger): PrismaService {
