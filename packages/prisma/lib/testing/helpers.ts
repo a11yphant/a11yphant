@@ -34,7 +34,6 @@ export async function setupDatabase(): Promise<void> {
 
   for (let worker = 1; worker < os.cpus().length - 1; worker++) {
     try {
-      console.log(`Creating schema: ${getSchemaName(worker)}`);
       await client.$executeRaw(`CREATE SCHEMA IF NOT EXISTS "${getSchemaName(worker)}"`);
     } catch (e) {
       throw new Error(`Could not create a schema for worker ${worker}: ${e.message}`);
@@ -42,7 +41,6 @@ export async function setupDatabase(): Promise<void> {
 
     try {
       process.env.DB_URL = getCurrentSchemaUrl(worker);
-      console.log(`Migrating: ${process.env.DB_URL}`);
       const migrate = new Migrate(schemaPath);
       await migrate.applyMigrations();
       process.env.DB_URL = originalDBUrl;
