@@ -26,13 +26,13 @@
   "dependencies": {
     "@prisma/client": "2.16.0",
     "@prisma/engines-version": "2.18.0-6.43e73b6d61a0d707a4b605daa6169624acc33b74",
-    "@prisma/fetch-engine": "2.16.0"
+    "@prisma/fetch-engine": "2.16.0",
+    "@prisma/migrate": "2.17.0",
+    "@prisma/sdk": "2.17.0"
   },
   "peerDependencies": {
     "@nestjs/common": "7.6.13",
     "@nestjs/core": "7.6.13",
-    "@prisma/migrate": "2.17.0",
-    "@prisma/sdk": "2.17.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.6"
   },
@@ -41,8 +41,6 @@
     "@nestjs/common": "7.6.13",
     "@nestjs/core": "7.6.13",
     "@nestjs/testing": "7.6.13",
-    "@prisma/migrate": "2.17.0",
-    "@prisma/sdk": "2.17.0",
     "@types/jest": "26.0.20",
     "@types/mock-fs": "4.13.0",
     "@types/node": "14.14.25",
