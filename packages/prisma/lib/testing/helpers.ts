@@ -60,6 +60,7 @@ export function getCurrentSchemaUrl(workerId?: number): string {
 }
 
 export function createTestingPrismaClient(logger: Logger): PrismaService {
+  console.log(getCurrentSchemaUrl());
   return new PrismaService(logger, {
     databaseUrl: getCurrentSchemaUrl(),
   });
