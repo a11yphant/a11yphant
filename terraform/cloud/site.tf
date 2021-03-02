@@ -113,25 +113,25 @@ resource "aws_s3_bucket" "site_static_assets" {
 }
 
 resource "aws_s3_bucket_object" "site_static_assets_public" {
-  for_each = fileset("${path.module}/../services/site/public", "**")
+  for_each = fileset("${path.module}/../../services/site/public", "**")
 
   bucket       = aws_s3_bucket.site_static_assets.id
   key          = each.value
-  source       = "${path.module}/../services/site/public/${each.value}"
+  source       = "${path.module}/../../services/site/public/${each.value}"
   # get the file ending for the file ".png" for example and lookup the corresponding mime type in the input variables
   content_type = lookup(var.file_types, split(".", each.value)[length(split(".", each.value))-1], "binary/octet-stream")
 
-  etag = filemd5("${path.module}/../services/site/public/${each.value}")
+  etag = filemd5("${path.module}/../../services/site/public/${each.value}")
 }
 
 resource "aws_s3_bucket_object" "site_static_next_static" {
-  for_each = fileset("${path.module}/../services/site/.next/static", "**")
+  for_each = fileset("${path.module}/../../services/site/.next/static", "**")
 
   bucket       = aws_s3_bucket.site_static_assets.id
   key          = "_next/static/${each.value}"
-  source       = "${path.module}/../services/site/.next/static/${each.value}"
+  source       = "${path.module}/../../services/site/.next/static/${each.value}"
   # get the file ending for the file ".png" for example and lookup the corresponding mime type in the input variables
   content_type = lookup(var.file_types, split(".", each.value)[length(split(".", each.value))-1], "binary/octet-stream")
 
-  etag = filemd5("${path.module}/../services/site/.next/static/${each.value}")
+  etag = filemd5("${path.module}/../../services/site/.next/static/${each.value}")
 }
