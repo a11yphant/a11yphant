@@ -10,7 +10,7 @@ function getDbUrl(): URL {
   return new URL(process.env.DB_URL || "postgresql://please-provide-a-connection-url/db");
 }
 
-export function getDatabaseName(workerId?: number): string {
+export function getSchemaName(workerId?: number): string {
   return `a11y-challenges-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
 }
 
@@ -34,34 +34,34 @@ export async function setupDatabase(): Promise<void> {
 
   for (let worker = 1; worker < os.cpus().length - 1; worker++) {
     try {
-      await client.$executeRaw(`CREATE DATABASE "${getDatabaseName(worker)}" OWNER "${getDbUrl().username}"`);
-    } catch {
-      // ignore errors since the database could already exist and postgres does not have a CREATE IF NOT EXISTS
+      await client.$executeRaw(`CREATE SCHEMA IF NOT EXISTS "${getSchemaName(worker)}"`);
+    } catch (e) {
+      throw new Error(`Could not create a schema for worker ${worker}: ${e.message}`);
     }
 
     try {
-      process.env.DB_URL = getCurrentDbUrl(worker);
+      process.env.DB_URL = getCurrentSchemaUrl(worker);
       const migrate = new Migrate(schemaPath);
       await migrate.applyMigrations();
       process.env.DB_URL = originalDBUrl;
       migrate.stop();
     } catch (error) {
-      throw new Error(`Failed migrating the test database ${getDatabaseName(worker)}: ${error.message}`);
+      throw new Error(`Failed migrating the test schema ${getSchemaName(worker)}: ${error.message}`);
     }
   }
 
   await client.$disconnect();
 }
 
-export function getCurrentDbUrl(workerId?: number): string {
+export function getCurrentSchemaUrl(workerId?: number): string {
   const url = new URL(getDbUrl().toString());
-  url.pathname = getDatabaseName(workerId);
+  url.searchParams.set("schema", getSchemaName(workerId));
   return url.toString();
 }
 
 export function createTestingPrismaClient(logger: Logger): PrismaService {
   return new PrismaService(logger, {
-    databaseUrl: getCurrentDbUrl(),
+    databaseUrl: getCurrentSchemaUrl(),
   });
 }
 
