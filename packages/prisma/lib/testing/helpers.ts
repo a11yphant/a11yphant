@@ -11,11 +11,12 @@ function getDbUrl(): URL {
 }
 
 export function getDatabaseName(workerId?: number): string {
-  return `${getDbUrl().pathname.slice(1)}-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
+  return `a11y-challenges-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
 }
 
 export async function setupDatabase(): Promise<void> {
-  const schemaPath = join(__dirname, "../../client/schema.prisma");
+  const originalDBUrl = getDbUrl().toString();
+  const schemaPath = join(__dirname, "../../prisma/schema.prisma");
 
   const client = new PrismaClient({
     datasources: {
@@ -27,11 +28,11 @@ export async function setupDatabase(): Promise<void> {
 
   try {
     await client.$connect();
-  } catch {
-    throw new Error("Could not connect to the database");
+  } catch (e) {
+    throw new Error(`Could not connect to the database: ${e.message}`);
   }
 
-  for (let worker = 1; worker < os.cpus().length; worker++) {
+  for (let worker = 1; worker < os.cpus().length - 1; worker++) {
     try {
       await client.$executeRaw(`CREATE DATABASE "${getDatabaseName(worker)}" OWNER "${getDbUrl().username}"`);
     } catch {
@@ -42,14 +43,14 @@ export async function setupDatabase(): Promise<void> {
       process.env.DB_URL = getCurrentDbUrl(worker);
       const migrate = new Migrate(schemaPath);
       await migrate.applyMigrations();
-      await migrate.stop();
+      process.env.DB_URL = originalDBUrl;
+      migrate.stop();
     } catch (error) {
       throw new Error(`Failed migrating the test database ${getDatabaseName(worker)}: ${error.message}`);
     }
   }
 
   await client.$disconnect();
-  process.env.DB_URL = getDbUrl().toString();
 }
 
 export function getCurrentDbUrl(workerId?: number): string {
