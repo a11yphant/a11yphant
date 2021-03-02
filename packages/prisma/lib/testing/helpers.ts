@@ -32,9 +32,7 @@ export async function setupDatabase(): Promise<void> {
     throw new Error(`Could not connect to the database: ${e.message}`);
   }
 
-  console.log(`Number of jest workers: ${os.cpus().length - 1}`);
-
-  for (let worker = 1; worker < os.cpus().length - 1; worker++) {
+  for (let worker = 1; worker < os.cpus().length; worker++) {
     try {
       await client.$executeRaw(`CREATE SCHEMA IF NOT EXISTS "${getSchemaName(worker)}"`);
     } catch (e) {
