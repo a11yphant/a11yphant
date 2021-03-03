@@ -3,24 +3,13 @@ import { DynamicModule, FactoryProvider, Logger, Module, ModuleMetadata } from "
 import { PRISMA_MODULE_CONFIG } from "./constants";
 import { PrismaService } from "./prisma.service";
 
-const defaultProviders = [PrismaService, Logger];
-const defaultExports = [PrismaService];
+const defaultProviders = [Logger];
 
 @Module({
-  providers: [...defaultProviders],
-  exports: defaultExports,
+  providers: [...defaultProviders, PrismaService],
+  exports: [PrismaService],
 })
 export class PrismaModule {
-  static forRoot(config: PrismaModuleConfig): DynamicModule {
-    const configProvider = { provide: PRISMA_MODULE_CONFIG, useValue: config.databaseUrl };
-    return {
-      global: true,
-      module: PrismaModule,
-      providers: [...defaultProviders, configProvider],
-      exports: [...defaultExports, configProvider],
-    };
-  }
-
   static async forRootAsync(config: PrismaAsyncModuleConfig): Promise<DynamicModule> {
     const configProvider = {
       provide: PRISMA_MODULE_CONFIG,
@@ -35,7 +24,7 @@ export class PrismaModule {
       module: PrismaModule,
       imports: [...(config.imports || [])],
       providers: [...defaultProviders, configProvider],
-      exports: [...defaultExports, configProvider],
+      exports: [configProvider],
     };
   }
 }
