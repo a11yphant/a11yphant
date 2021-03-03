@@ -1,9 +1,12 @@
+import { PrismaModule } from "@a11y-challenges/prisma";
 import { Module } from "@nestjs/common";
 
 import { ChallengeResolver } from "./challenge.resolver";
-import { ChallengeService } from "./static-challenge.service";
+import { ChallengeService } from "./challenge.service";
+import { LevelService } from "./level.service";
 
 @Module({
-  providers: [ChallengeResolver, ChallengeService],
+  imports: [PrismaModule],
+  providers: [ChallengeResolver, ChallengeService, LevelService],
 })
 export class ChallengeModule {}

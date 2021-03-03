@@ -12,6 +12,6 @@ export class ChallengeService {
       where: { id },
     });
 
-    return Challenge.fromDatabaseRecord(challenge);
+    return challenge ? Challenge.fromDatabaseRecord(challenge) : null;
   }
 }
