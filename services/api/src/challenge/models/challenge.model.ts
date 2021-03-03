@@ -1,3 +1,4 @@
+import { Challenge as ChallengeRecord } from "@a11y-challenges/prisma";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { Level } from "./level.model";
@@ -16,4 +17,12 @@ export class Challenge {
     description: "All levels for this challenge.",
   })
   levels: Level[];
+
+  static fromDatabaseRecord(record: ChallengeRecord): Challenge {
+    const challenge = new Challenge();
+    challenge.id = record.id;
+    challenge.name = record.name;
+
+    return challenge;
+  }
 }
