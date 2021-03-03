@@ -12,8 +12,8 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "@prisma/client": "2.17.0",
-    "prisma": "2.17.0",
+    "@prisma/client": "2.18.0",
+    "prisma": "2.18.0",
     "unzipper": "0.10.11"
   },
   "devDependencies": {
