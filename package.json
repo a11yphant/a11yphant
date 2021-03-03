@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "prepare": "husky install",
     "postinstall": "npm run package-dependencies && npm run tf:init",
     "package-dependencies": "npm-run-all package-dependencies:**",
     "package-dependencies:api": "npm --prefix services/api install",
@@ -20,6 +21,7 @@
     "lint:import-challenges": "npm --prefix services/import-challenges run lint",
     "lint:site": "npm --prefix services/site run lint",
     "lint:submission-checker": "npm --prefix services/submission-checker run lint",
+    "lint-staged": "lint-staged",
     "prestart": "npm run tf:apply",
     "start": "npm run dev",
     "dev": "pm2 start pm2-ecosystem.config.js",
@@ -46,17 +48,12 @@
   "devDependencies": {
     "@typescript-eslint/parser": "4.16.1",
     "dotenv-cli": "4.0.0",
-    "husky": "4.3.8",
+    "husky": "5.1.3",
     "lint-staged": "10.5.4",
     "npm-run-all": "4.1.5",
     "pm2": "4.5.5",
     "typescript": "4.1.5",
     "wait-on": "5.2.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {}
 }
