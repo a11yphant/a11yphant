@@ -1,3 +1,8 @@
+locals {
+  site_static_assets_bucket_name = "${terraform.workspace}-site-static-assets"
+}
+
+
 data "external" "site_code_zip" {
   program = [ "${path.module}/../../services/site/package.sh" ]
 }
@@ -80,4 +85,53 @@ resource "aws_apigatewayv2_api" "site_http_api" {
   name          = "${terraform.workspace}-site-http-api"
   protocol_type = "HTTP"
   target        = aws_lambda_function.site.invoke_arn
+}
+
+data "aws_iam_policy_document" "site_static_assets_policy" {
+  statement {
+    actions = [
+      "s3:GetObject"
+    ]
+    principals {
+      identifiers = ["*"]
+      type = "AWS"
+    }
+    resources = [
+      "arn:aws:s3:::${local.site_static_assets_bucket_name}/*"
+    ]
+  }
+}
+
+resource "aws_s3_bucket" "site_static_assets" {
+  bucket = local.site_static_assets_bucket_name
+  acl    = "public-read"
+  policy = data.aws_iam_policy_document.site_static_assets_policy.json
+
+  website {
+    index_document = "favicon.ico"
+  }
+}
+
+resource "aws_s3_bucket_object" "site_static_assets_public" {
+  for_each = fileset("${path.module}/../../services/site/public", "**")
+
+  bucket       = aws_s3_bucket.site_static_assets.id
+  key          = each.value
+  source       = "${path.module}/../../services/site/public/${each.value}"
+  # get the file ending for the file ".png" for example and lookup the corresponding mime type in the input variables
+  content_type = lookup(var.file_types, split(".", each.value)[length(split(".", each.value))-1], "binary/octet-stream")
+
+  etag = filemd5("${path.module}/../../services/site/public/${each.value}")
+}
+
+resource "aws_s3_bucket_object" "site_static_next_static" {
+  for_each = fileset("${path.module}/../../services/site/.next/static", "**")
+
+  bucket       = aws_s3_bucket.site_static_assets.id
+  key          = "_next/static/${each.value}"
+  source       = "${path.module}/../../services/site/.next/static/${each.value}"
+  # get the file ending for the file ".png" for example and lookup the corresponding mime type in the input variables
+  content_type = lookup(var.file_types, split(".", each.value)[length(split(".", each.value))-1], "binary/octet-stream")
+
+  etag = filemd5("${path.module}/../../services/site/.next/static/${each.value}")
 }
