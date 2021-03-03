@@ -1,9 +1,11 @@
+import { PrismaModule } from "@a11y-challenges/prisma";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 
 import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
+import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
@@ -11,7 +13,7 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, gqlConfig, nodeConfig],
+      load: [apiConfig, gqlConfig, nodeConfig, databaseConfig],
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
@@ -25,6 +27,13 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
           credentials: true,
           origin: true,
         },
+      }),
+      inject: [ConfigService],
+    }),
+    PrismaModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => ({
+        databaseUrl: config.get<string>("database.url"),
       }),
       inject: [ConfigService],
     }),
