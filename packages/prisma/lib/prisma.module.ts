@@ -3,41 +3,28 @@ import { DynamicModule, FactoryProvider, Logger, Module, ModuleMetadata } from "
 import { PRISMA_MODULE_CONFIG } from "./constants";
 import { PrismaService } from "./prisma.service";
 
-const defaultProviders = [PrismaService, Logger];
-const defaultExports = [PrismaService];
-
-const defaultPrismaConfig: PrismaModuleConfig = {
-  databaseUrl: "postgresql://please:provide@a:5432/database-url",
-};
+const defaultProviders = [Logger];
 
 @Module({
-  providers: [...defaultProviders, { provide: PRISMA_MODULE_CONFIG, useValue: defaultPrismaConfig }],
-  exports: defaultExports,
+  providers: [...defaultProviders, PrismaService],
+  exports: [PrismaService],
 })
 export class PrismaModule {
-  static forRoot(config: PrismaModuleConfig): DynamicModule {
-    return {
-      module: PrismaModule,
-      providers: [...defaultProviders, { provide: PRISMA_MODULE_CONFIG, useValue: config.databaseUrl }],
-      exports: defaultExports,
-    };
-  }
-
   static async forRootAsync(config: PrismaAsyncModuleConfig): Promise<DynamicModule> {
+    const configProvider = {
+      provide: PRISMA_MODULE_CONFIG,
+      useFactory: async (...args) => {
+        return await config.useFactory(...args);
+      },
+      inject: config.inject || [],
+    };
+
     return {
+      global: true,
       module: PrismaModule,
       imports: [...(config.imports || [])],
-      providers: [
-        ...defaultProviders,
-        {
-          provide: PRISMA_MODULE_CONFIG,
-          useFactory: async (...args) => {
-            return await config.useFactory(...args);
-          },
-          inject: config.inject || [],
-        },
-      ],
-      exports: defaultExports,
+      providers: [...defaultProviders, configProvider],
+      exports: [configProvider],
     };
   }
 }

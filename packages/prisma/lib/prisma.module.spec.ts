@@ -7,17 +7,17 @@ import { PrismaModule } from "./prisma.module";
 describe("prisma module", () => {
   it("can instantiate the module", async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [PrismaModule],
+      imports: [
+        PrismaModule.forRootAsync({
+          useFactory: () => ({
+            databaseUrl: process.env.DB_URL,
+          }),
+        }),
+        PrismaModule,
+      ],
     }).compile();
 
     expect(moduleRef).toBeTruthy();
-  });
-
-  it("provides the database url with forRoot", () => {
-    const module = PrismaModule.forRoot({ databaseUrl: "url" });
-    const url = (module.providers?.find((provider: any) => provider.provide === PRISMA_MODULE_CONFIG) as unknown) as any;
-
-    expect(url?.useValue).toEqual("url");
   });
 
   it("provides the database url with forRootAsync", async () => {
