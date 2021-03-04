@@ -90,6 +90,11 @@
     "reporters": [
       "default",
       "jest-junit"
-    ]
+    ],
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ],
+    "coverageDirectory": "<rootDir>"
   }
 }
