@@ -84,6 +84,12 @@
     "reporters": [
       "default",
       "jest-junit"
-    ]
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "cobertura"
+    ],
+    "coverageDirectory": "<rootDir>"
   }
 }
