@@ -3,4 +3,10 @@
     - docker
   stage: test
   image: node:14-alpine
-  script: npm run test --prefix $PROJECT_PATH
+  script: npm run test:coverage --prefix $PROJECT_PATH
+  artifacts:
+    when: always
+    paths:
+      - junit.xml
+    reports:
+        junit: junit.xml
