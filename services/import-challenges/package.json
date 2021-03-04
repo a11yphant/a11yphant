@@ -19,7 +19,7 @@
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "prisma:generate": "prisma generate"
   },
@@ -28,6 +28,7 @@
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.13",
     "@prisma/client": "2.18.0",
+    "jest-junit": "^12.0.0",
     "js-yaml": "4.0.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
@@ -67,15 +68,28 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "./",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "<rootDir>/src/**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "cobertura"
+    ],
+    "coverageDirectory": "<rootDir>"
   }
 }

@@ -3,4 +3,12 @@
     - docker
   stage: test
   image: node:14-alpine
-  script: npm run test --prefix $PROJECT_PATH
+  script: npm run test:coverage --prefix $PROJECT_PATH
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - $PROJECT_PATH/junit.xml
+    reports:
+        junit: $PROJECT_PATH/junit.xml
+        cobertura: $PROJECT_PATH/cobertura-coverage.xml

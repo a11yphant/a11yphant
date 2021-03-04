@@ -1,5 +1,7 @@
 # A11y Challenges
 
+![coverage](https://gitlab.mediacube.at/a11y-challenges/a11y-challenges/badges/develop/coverage.svg)
+
 ## Important Notice:
 
 You must have Node installed via `nvm` for this project to work correctly 

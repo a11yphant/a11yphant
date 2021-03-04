@@ -17,9 +17,8 @@
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:coverage": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +29,7 @@
     "@nestjs/core": "7.6.13",
     "@nestjs/platform-express": "7.6.13",
     "apollo-server-express": "2.21.0",
+    "jest-junit": "^12.0.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "6.6.6",
@@ -70,17 +70,27 @@
       "ts"
     ],
     "rootDir": "./",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "modulePathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ],
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "<rootDir>/src/**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "cobertura"
+    ],
+    "coverageDirectory": "<rootDir>"
   }
 }
