@@ -93,6 +93,7 @@
     ],
     "coverageReporters": [
       "text",
+      "text-summary",
       "cobertura"
     ],
     "coverageDirectory": "<rootDir>"
