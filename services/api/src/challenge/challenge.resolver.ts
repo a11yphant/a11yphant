@@ -9,7 +9,7 @@ import { Level } from "./models/level.model";
 export class ChallengeResolver {
   constructor(private readonly challengeService: ChallengeService, private readonly levelService: LevelService) {}
 
-  @Query(() => Challenge)
+  @Query(() => Challenge, { nullable: true })
   async challenge(@Args("id", { type: () => ID }) id: string): Promise<Challenge> {
     return this.challengeService.findOne(id);
   }
