@@ -15,6 +15,7 @@ default:
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 stages:
+  - build-packages
   - generate
   - analyze
   - test
@@ -60,7 +61,7 @@ test:prisma:
 build:prisma:
   tags:
     - docker
-  stage: generate
+  stage: build-packages
   image: node:14-alpine
   variables:
     PROJECT_PATH: packages/prisma
