@@ -1,4 +1,3 @@
-import { Resource as ResourceRecord } from "@a11y-challenges/prisma";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 export class Resource {
@@ -16,14 +15,4 @@ export class Resource {
 
   @Field(() => String, { description: "External link to the resource (Blog, Spec, etc.)" })
   link: string;
-
-  static fromDatabaseRecord(record: ResourceRecord): Resource {
-    const resource = new Resource({
-      id: record.id,
-      title: record.title,
-      link: record.link,
-    });
-
-    return resource;
-  }
 }

@@ -1,4 +1,4 @@
-import { PrismaService } from "@a11y-challenges/prisma";
+import { Challenge as ChallengeRecord, PrismaService } from "@a11y-challenges/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Challenge } from "./models/challenge.model";
@@ -12,6 +12,12 @@ export class ChallengeService {
       where: { id },
     });
 
-    return challenge ? Challenge.fromDatabaseRecord(challenge) : null;
+    return challenge ? ChallengeService.createModelFromDatabaseRecord(challenge) : null;
+  }
+
+  static createModelFromDatabaseRecord(record: ChallengeRecord): Challenge {
+    const challenge = new Challenge({ id: record.id, name: record.name });
+
+    return challenge;
   }
 }

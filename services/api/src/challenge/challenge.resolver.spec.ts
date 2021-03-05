@@ -10,7 +10,7 @@ describe("challenge resolver", () => {
   it("can resolve a challenge", async () => {
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
-        findOne: jest.fn().mockResolvedValue(Challenge.fromDatabaseRecord({ id: "uuid", name: "test" })),
+        findOne: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test" })),
       }),
       createMock<LevelService>(),
     );
@@ -21,7 +21,7 @@ describe("challenge resolver", () => {
   });
 
   it("resolves the levels for a challenge", async () => {
-    const challenge = Challenge.fromDatabaseRecord({ id: "uuid", name: "test" });
+    const challenge = new Challenge({ id: "uuid", name: "test" });
     const levels: Level[] = [
       { id: "uuid", hints: [], instructions: "please read the instructions", requirements: [], resources: [], tldr: "don't want to read" },
     ];

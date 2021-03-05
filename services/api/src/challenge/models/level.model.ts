@@ -1,4 +1,3 @@
-import { Level as LevelRecord } from "@a11y-challenges/prisma";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { Code } from "./code.model";
@@ -36,23 +35,4 @@ export class Level {
 
   @Field(() => Code, { nullable: true, description: "The initial code for the challenge." })
   code?: Code;
-
-  public static fromDatabaseRecord(record: LevelRecord): Level {
-    const level = new Level();
-    level.id = record.id;
-    level.tldr = record.tldr;
-    level.instructions = record.instructions;
-
-    if (!record.html && !record.css && !record.js) {
-      return level;
-    }
-
-    level.code = new Code({
-      html: record.html,
-      css: record.css,
-      js: record.js,
-    });
-
-    return level;
-  }
 }

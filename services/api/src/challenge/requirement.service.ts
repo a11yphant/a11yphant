@@ -1,4 +1,4 @@
-import { PrismaService } from "@a11y-challenges/prisma";
+import { PrismaService, Requirement as RequirementRecord } from "@a11y-challenges/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Requirement } from "./models/requirement.model";
@@ -12,6 +12,15 @@ export class RequirementService {
       where: { levelId },
     });
 
-    return requirements.map((requirement) => Requirement.fromDatabaseRecord(requirement));
+    return requirements.map((requirement) => RequirementService.createModelFromDatabaseRecord(requirement));
+  }
+
+  static createModelFromDatabaseRecord(record: RequirementRecord): Requirement {
+    const requirement = new Requirement({
+      id: record.id,
+      title: record.title,
+    });
+
+    return requirement;
   }
 }

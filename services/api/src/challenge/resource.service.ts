@@ -1,4 +1,4 @@
-import { PrismaService } from "@a11y-challenges/prisma";
+import { PrismaService, Resource as ResourceRecord } from "@a11y-challenges/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Resource } from "./models/resource.model";
@@ -12,6 +12,16 @@ export class ResourceService {
       where: { levelId },
     });
 
-    return resources.map((resource) => Resource.fromDatabaseRecord(resource));
+    return resources.map((resource) => ResourceService.createModelFromDatabaseRecord(resource));
+  }
+
+  static createModelFromDatabaseRecord(record: ResourceRecord): Resource {
+    const resource = new Resource({
+      id: record.id,
+      title: record.title,
+      link: record.link,
+    });
+
+    return resource;
   }
 }

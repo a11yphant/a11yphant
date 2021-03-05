@@ -1,4 +1,4 @@
-import { PrismaService } from "@a11y-challenges/prisma";
+import { Hint as HintRecord, PrismaService } from "@a11y-challenges/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Hint } from "./models/hint.model";
@@ -12,6 +12,12 @@ export class HintService {
       where: { levelId },
     });
 
-    return hints.map((hint) => Hint.fromDatabaseRecord(hint));
+    return hints.map((hint) => HintService.createModelFromDatabaseRecord(hint));
+  }
+
+  static createModelFromDatabaseRecord(record: HintRecord): Hint {
+    const hint = new Hint({ id: record.id, content: record.content });
+
+    return hint;
   }
 }

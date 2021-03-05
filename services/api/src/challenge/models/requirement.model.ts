@@ -1,4 +1,3 @@
-import { Requirement as RequirementRecord } from "@a11y-challenges/prisma";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
@@ -13,13 +12,4 @@ export class Requirement {
 
   @Field(() => String)
   title: string;
-
-  static fromDatabaseRecord(record: RequirementRecord): Requirement {
-    const requirement = new Requirement({
-      id: record.id,
-      title: record.title,
-    });
-
-    return requirement;
-  }
 }
