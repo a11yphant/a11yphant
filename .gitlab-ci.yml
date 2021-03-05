@@ -68,6 +68,7 @@ build:prisma:
     - npm run prisma:generate --prefix $PROJECT_PATH
     - npm run build --prefix $PROJECT_PATH
   artifacts:
+    expire_in: 1 day
     paths:
       - $PROJECT_PATH/dist
       - $PROJECT_PATH/client
