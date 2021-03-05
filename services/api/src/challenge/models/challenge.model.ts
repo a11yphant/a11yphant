@@ -7,6 +7,11 @@ import { Level } from "./level.model";
   description: "General and level information for a specific challenge.",
 })
 export class Challenge {
+  constructor(properties: { id: string; name: string }) {
+    this.id = properties.id;
+    this.name = properties.name;
+  }
+
   @Field(() => ID)
   id: string;
 
@@ -19,9 +24,7 @@ export class Challenge {
   levels: Level[];
 
   static fromDatabaseRecord(record: ChallengeRecord): Challenge {
-    const challenge = new Challenge();
-    challenge.id = record.id;
-    challenge.name = record.name;
+    const challenge = new Challenge({ id: record.id, name: record.name });
 
     return challenge;
   }

@@ -2,6 +2,12 @@ import { Resource as ResourceRecord } from "@a11y-challenges/prisma";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 export class Resource {
+  constructor(properties: { id: string; title: string; link: string }) {
+    this.id = properties.id;
+    this.title = properties.title;
+    this.link = properties.link;
+  }
+
   @Field(() => ID)
   id: string;
 
@@ -12,10 +18,11 @@ export class Resource {
   link: string;
 
   static fromDatabaseRecord(record: ResourceRecord): Resource {
-    const resource = new Resource();
-    resource.id = record.id;
-    resource.title = record.title;
-    resource.link = record.link;
+    const resource = new Resource({
+      id: record.id,
+      title: record.title,
+      link: record.link,
+    });
 
     return resource;
   }

@@ -47,10 +47,11 @@ export class Level {
       return level;
     }
 
-    level.code = new Code();
-    level.code.html = record.html;
-    level.code.css = record.css;
-    level.code.js = record.js;
+    level.code = new Code({
+      html: record.html,
+      css: record.css,
+      js: record.js,
+    });
 
     return level;
   }
