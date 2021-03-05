@@ -24,7 +24,6 @@
     "@apollo/client": "3.3.11",
     "@monaco-editor/react": "4.0.11",
     "@vendia/serverless-express": "4.3.4",
-    "date-fns": "2.19.0",
     "express": "4.17.1",
     "graphql": "15.5.0",
     "monaco-editor": "0.23.0",
