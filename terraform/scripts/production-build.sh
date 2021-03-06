@@ -6,7 +6,10 @@ cd $(dirname $0)
 cd ../..
 alias aws-npm="docker run --rm -v\"$(pwd)/:/app\" -w=\"/app\" --entrypoint=\"\" public.ecr.aws/lambda/nodejs:12 npm"
 
+npm ci --ignore-scripts
+
 npm install --prefix packages/prisma
+npm run prisma:generate --prefix packages/prisma
 npm run build --prefix packages/prisma
 rm -rf packages/prisma/node_modules
 
