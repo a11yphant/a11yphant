@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@prisma/client": "2.18.0",
-    "@prisma/engines-version": "2.18.0-6.43e73b6d61a0d707a4b605daa6169624acc33b74",
+    "@prisma/engines-version": "2.18.0-34.da6fafb57b24e0b61ca20960c64e2d41f9e8cff1",
     "@prisma/fetch-engine": "2.18.0",
     "@prisma/migrate": "2.18.0",
     "@prisma/sdk": "2.18.0"
