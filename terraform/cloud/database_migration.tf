@@ -1,7 +1,7 @@
 data "archive_file" "prisma_migrations" {
     type        = "zip"
-    source_dir  = "${path.module}/../../services/import-challenges/prisma"
-    output_path = "${path.module}/../../services/import-challenges/prisma.zip"
+    source_dir  = "${path.module}/../../packages/prisma/prisma"
+    output_path = "${path.module}/../../packages/prisma/prisma.zip"
 }
 
 data "external" "database_migration_code_zip" {
@@ -11,7 +11,7 @@ data "external" "database_migration_code_zip" {
 resource "aws_s3_bucket_object" "prisma_migrations" {
     bucket = aws_s3_bucket.prisma.id
     key    = "${var.current_version}.zip"
-    source = "${path.module}/../../services/import-challenges/prisma.zip"
+    source = "${path.module}/../../packages/prisma/prisma.zip"
     etag   = data.archive_file.prisma_migrations.output_md5
 
     depends_on = [ 

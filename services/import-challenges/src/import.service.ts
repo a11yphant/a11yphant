@@ -1,3 +1,4 @@
+import { PrismaService } from '@a11y-challenges/prisma';
 import { Injectable, Logger } from '@nestjs/common';
 import { readdir as readdirCallback } from 'fs';
 import { join } from 'path';
@@ -10,7 +11,6 @@ import {
   Requirement,
   Resource,
 } from './challenge.interface';
-import { PrismaService } from './prisma/prisma.service';
 import { YamlReaderService } from './yaml-reader.service';
 
 const readdir = promisify(readdirCallback);
