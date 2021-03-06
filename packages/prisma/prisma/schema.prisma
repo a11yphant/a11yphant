@@ -3,11 +3,12 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DB_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../client"
 }
 
 model Challenge {

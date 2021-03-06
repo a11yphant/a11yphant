@@ -28,6 +28,56 @@ stages:
 #----------------------------------------------------------------------
 
 #-----------------------------------
+# Prisma Client
+#-----------------------------------
+
+lint:prisma:
+  extends:
+    - .lint
+    - .run_on_prisma_change
+  script:
+    - npm run prisma:generate --prefix $PROJECT_PATH
+    - npm run lint --prefix $PROJECT_PATH
+  variables:
+    PROJECT_PATH: packages/prisma
+
+test:prisma:
+  extends:
+    - .test
+    - .run_on_prisma_change
+  services:
+    - postgres
+  script:
+    - npm run prisma:generate --prefix $PROJECT_PATH
+    - npm run test --prefix $PROJECT_PATH
+  variables:
+    POSTGRES_DB: a11y-challenges
+    POSTGRES_USER: a11y-challenges
+    POSTGRES_PASSWORD: secret
+    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    PROJECT_PATH: packages/prisma
+
+build:prisma:
+  tags:
+    - docker
+  stage: generate
+  image: node:14-alpine
+  variables:
+    PROJECT_PATH: packages/prisma
+  script:
+    - npm run prisma:generate --prefix $PROJECT_PATH
+    - npm run build --prefix $PROJECT_PATH
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - $PROJECT_PATH/dist
+      - $PROJECT_PATH/client
+  only:
+    - develop
+    - master
+    - merge_request
+
+#-----------------------------------
 # Submission Checker
 #-----------------------------------
 
@@ -182,23 +232,25 @@ lint:import-challenges:
   extends:
     - .lint
     - .run_on_import_challenges_change
+  needs:
+    - build:prisma
   variables:
     PROJECT_PATH: services/import-challenges
-  before_script:
-    - npm ci --ignore-scripts
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm run prisma:generate --prefix services/import-challenges
 
 test:import-challenges:
   extends:
     - .test
     - .run_on_import_challenges_change
+  needs:
+   - build:prisma
   variables:
+    POSTGRES_DB: a11y-challenges
+    POSTGRES_USER: a11y-challenges
+    POSTGRES_PASSWORD: secret
+    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
     PROJECT_PATH: services/import-challenges
-  before_script:
-    - npm ci --ignore-scripts
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm run prisma:generate --prefix services/import-challenges
+  services:
+    - postgres
 
 
 #-----------------------------------

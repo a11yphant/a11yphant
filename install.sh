@@ -28,3 +28,4 @@ ln -s ./../../.env ./services/submission-checker/.env
 # create import-challenges symlinks
 rm -f ./services/import-challenges/.env
 ln -s ./../../.env ./services/import-challenges/.env
+
