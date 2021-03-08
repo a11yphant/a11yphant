@@ -25,7 +25,6 @@ rm -f services/import-challenges/lambda.zip
 npm install --prefix services/import-challenges
 npm run build --prefix services/import-challenges
 aws-npm ci --only=production --prefix services/import-challenges
-rm -rf packages/prisma/node_modules
 
 rm -f services/site/lambda.zip
 rm -rf services/site/.next
