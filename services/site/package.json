@@ -17,9 +17,13 @@
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
     "lint:eslint": "eslint \"./src/**/*.{js,ts,jsx,tsx,json}\"",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
+    "pretest": "npm run gql:generate",
     "test": "jest",
+    "pretest:watch": "npm run gql:generate",
     "test:watch": "jest --watch",
+    "pretest:coverage": "npm run gql:generate",
     "test:coverage": "jest --coverage --reporter=default",
+    "pretest:debug": "npm run gql:generate",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
