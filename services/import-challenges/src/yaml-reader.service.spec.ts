@@ -1,4 +1,4 @@
-import * as mock from 'mock-fs';
+import mock from 'mock-fs';
 
 import { YamlReaderService } from './yaml-reader.service';
 

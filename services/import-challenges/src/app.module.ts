@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import databaseConfig from './config/database.config';
 import importChallengesConfig from './config/import-challenges.config';
 import { ImportService } from './import.service';
+import { S3DownloadService } from './s3-download.service';
 import { YamlReaderService } from './yaml-reader.service';
 
 @Module({
@@ -20,6 +21,6 @@ import { YamlReaderService } from './yaml-reader.service';
       inject: [ConfigService],
     }),
   ],
-  providers: [YamlReaderService, ImportService, Logger],
+  providers: [YamlReaderService, ImportService, Logger, S3DownloadService],
 })
 export class AppModule {}

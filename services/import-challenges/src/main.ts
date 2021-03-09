@@ -5,6 +5,7 @@ import { S3Handler } from 'aws-lambda';
 
 import { AppModule } from './app.module';
 import { ImportService } from './import.service';
+import { S3DownloadService } from './s3-download.service';
 
 async function bootstrap(): Promise<INestApplicationContext | void> {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -15,40 +16,61 @@ async function bootstrap(): Promise<INestApplicationContext | void> {
     return app;
   }
 
-  await importChallenges(app);
+  const logger = app.get<Logger>(Logger);
+
+  try {
+    await importChallenges(app);
+  } catch (error) {
+    logger.error(`Challenge import failed: ${error.message}`, AppModule.name);
+  } finally {
+    logger.log('Stopping Nest application...', AppModule.name);
+    await app.close();
+  }
 }
 
 async function importChallenges(app: INestApplicationContext): Promise<void> {
   const config = app.get<ConfigService>(ConfigService);
   const importer = app.get<ImportService>(ImportService);
-  const logger = new Logger(AppModule.name);
+  const logger = app.get<Logger>(Logger);
 
-  logger.log('Starting challenge import');
-  try {
-    await importer.importAllFromFolder(
-      config.get<string>('import-challenges.challenges-location'),
-    );
-    logger.log('Successfully imported challenges');
-  } catch (error) {
-    logger.error(`Challenge import failed: ${error.message}`);
-  } finally {
-    logger.log('Stopping Nest application...');
-    await app.close();
-  }
+  logger.log('Starting challenge import', AppModule.name);
+
+  await importer.importAllFromFolder(
+    config.get<string>('import-challenges.challenges-location'),
+  );
+
+  logger.log('Successfully imported challenges', AppModule.name);
 }
 
 const appPromise = bootstrap();
 
 export const handle: S3Handler = async (event) => {
   const app = await (appPromise as Promise<INestApplicationContext>);
-  const logger = new Logger(AppModule.name);
+  const config = app.get<ConfigService>(ConfigService);
+  const logger = app.get<Logger>(Logger);
 
   const bucket = event.Records[0].s3.bucket.name;
   const key = decodeURIComponent(
     event.Records[0].s3.object.key.replace(/\+/g, ' '),
   );
 
-  logger.log(`Loading migrations from S3 (Bucket: ${bucket}, Key: ${key})`);
+  logger.log(
+    `Loading challenges from S3 (Bucket: ${bucket}, Key: ${key})`,
+    AppModule.name,
+  );
+  const downloader = await app.get<S3DownloadService>(S3DownloadService);
+  await downloader.downloadAndUnzip(
+    bucket,
+    key,
+    config.get<string>('import-challenges.challenges-location'),
+  );
 
-  await app.close();
+  try {
+    await importChallenges(app);
+  } catch (error) {
+    logger.error(`Challenge import failed: ${error.message}`, AppModule.name);
+  } finally {
+    logger.log('Stopping Nest application...', AppModule.name);
+    await app.close();
+  }
 };
