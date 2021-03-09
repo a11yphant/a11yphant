@@ -25,6 +25,10 @@ ln -s ./../../.env ./services/site/.env
 rm -f ./services/submission-checker/.env
 ln -s ./../../.env ./services/submission-checker/.env
 
+# create submission-renderer symlinks
+rm -f ./services/submission-renderer/.env
+ln -s ./../../.env ./services/submission-renderer/.env
+
 # create import-challenges symlinks
 rm -f ./services/import-challenges/.env
 ln -s ./../../.env ./services/import-challenges/.env
