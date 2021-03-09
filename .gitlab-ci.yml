@@ -245,6 +245,10 @@ lint:import-challenges:
     - build:prisma
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 test:import-challenges:
   extends:
@@ -260,6 +264,10 @@ test:import-challenges:
     PROJECT_PATH: services/import-challenges
   services:
     - postgres
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 
 #-----------------------------------
