@@ -22,6 +22,8 @@ async function bootstrap(): Promise<INestApplicationContext | void> {
     await importChallenges(app);
   } catch (error) {
     logger.error(`Challenge import failed: ${error.message}`, AppModule.name);
+  } finally {
+    await app.close();
   }
 }
 
