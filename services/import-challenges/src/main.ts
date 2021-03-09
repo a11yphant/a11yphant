@@ -22,9 +22,6 @@ async function bootstrap(): Promise<INestApplicationContext | void> {
     await importChallenges(app);
   } catch (error) {
     logger.error(`Challenge import failed: ${error.message}`, AppModule.name);
-  } finally {
-    logger.log('Stopping Nest application...', AppModule.name);
-    await app.close();
   }
 }
 
@@ -69,8 +66,5 @@ export const handle: S3Handler = async (event) => {
     await importChallenges(app);
   } catch (error) {
     logger.error(`Challenge import failed: ${error.message}`, AppModule.name);
-  } finally {
-    logger.log('Stopping Nest application...', AppModule.name);
-    await app.close();
   }
 };
