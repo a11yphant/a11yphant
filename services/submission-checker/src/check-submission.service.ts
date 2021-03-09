@@ -35,7 +35,9 @@ export class CheckSubmissionService {
     };
 
     // run axe
-    const url = `${this.config.get<string>('submissionRenderer.baseUrl')}${id}`;
+    const url = `${this.config.get<string>(
+      'submission-checker.renderer-base-url',
+    )}${id}`;
     const result = await this.browser.runAxeChecks(url, options);
 
     // map result of axe checks back into check result
