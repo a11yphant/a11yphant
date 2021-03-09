@@ -38,6 +38,15 @@
         - services/../*
         - services/submission-checker/**/*
 
+.run_on_submission_renderer_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - services/../*
+        - services/submission-renderer/**/*
+
 .run_on_database_migration_change:
   rules:
      - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
