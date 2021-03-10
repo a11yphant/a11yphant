@@ -5,12 +5,8 @@ import { GetServerSideProps } from "next";
 import React from "react";
 
 const Home: React.FunctionComponent = () => {
-  const {
-    loading,
-    data: {
-      helloWorld: [{ message }],
-    },
-  } = useHelloWorldQuery();
+  const { loading, data } = useHelloWorldQuery();
+
   return (
     <main className="flex justify-center items-center w-screen h-screen">
       <Card heading={<h1>A11y Challenges</h1>}>
@@ -18,7 +14,7 @@ const Home: React.FunctionComponent = () => {
           Welcome to a11y-challenges.cool! This is a project created by Michael Brandstätter, Thomas Dax, Daniela Kubesch and Luca Pircher during
           their MMT Master degree program at FH Salzburg
         </p>
-        <p>{loading ? "Loading" : message}</p>
+        <p>{loading ? "Loading" : data?.helloWorld[0].message}</p>
       </Card>
     </main>
   );
