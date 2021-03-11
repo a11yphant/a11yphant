@@ -36,7 +36,7 @@
     "next": "10.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-resize-detector": "6.6.1"
+    "react-resize-detector": "6.6.3"
   },
   "devDependencies": {
     "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
