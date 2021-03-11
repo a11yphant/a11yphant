@@ -36,3 +36,8 @@ rm -f services/submission-checker/lambda.zip
 npm ci --prefix services/submission-checker
 npm run build --prefix services/submission-checker
 npm ci --only=production --prefix services/submission-checker
+
+rm -f services/submission-renderer/lambda.zip
+npm ci --prefix services/submission-renderer
+npm run build --prefix services/submission-renderer
+npm ci --only=production --prefix services/submission-renderer
