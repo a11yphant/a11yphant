@@ -1,4 +1,4 @@
-import { Level } from './level.model';
+import { Level } from "./level.model";
 
 export class Submission {
   html: string;

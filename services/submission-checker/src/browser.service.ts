@@ -1,8 +1,8 @@
-import AxeBuilder from '@axe-core/webdriverjs';
-import { Injectable } from '@nestjs/common';
-import { AxeResults } from 'axe-core';
+import AxeBuilder from "@axe-core/webdriverjs";
+import { Injectable } from "@nestjs/common";
+import { AxeResults } from "axe-core";
 
-import { WebdriverFactory } from './webdriver.factory';
+import { WebdriverFactory } from "./webdriver.factory";
 
 @Injectable()
 export class BrowserService {

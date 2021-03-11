@@ -1,9 +1,9 @@
-import { Logger, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 
-import submissionRenderer from './config/submission-renderer.config';
-import { RendererController } from './renderer.controller';
-import { SubmissionService } from './submission.service';
+import submissionRenderer from "./config/submission-renderer.config";
+import { RendererController } from "./renderer.controller";
+import { SubmissionService } from "./submission.service";
 
 @Module({
   imports: [

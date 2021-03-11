@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 
-import { Submission } from './submission.model';
+import { Submission } from "./submission.model";
 
 @Injectable()
 export class SubmissionService {

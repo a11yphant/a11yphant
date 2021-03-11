@@ -1,5 +1,5 @@
-describe('dummy module', () => {
-  it('is true', () => {
+describe("dummy module", () => {
+  it("is true", () => {
     expect(true).toBeTruthy();
   });
 });

@@ -1,15 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 
-import { Submission } from './submission.model';
+import { Submission } from "./submission.model";
 
 const requirements = [
   {
     ruleAssignments: [
       {
         rule: {
-          name: 'The page has a specified language',
-          provider: 'axe',
-          configuration: { runOnly: ['html-has-lang'] },
+          name: "The page has a specified language",
+          provider: "axe",
+          configuration: { runOnly: ["html-has-lang"] },
         },
         mustPass: true,
       },
@@ -19,9 +19,9 @@ const requirements = [
     ruleAssignments: [
       {
         rule: {
-          name: 'The page must hava a main landmark',
-          provider: 'axe',
-          configuration: { runOnly: ['landmark-one-main'] },
+          name: "The page must hava a main landmark",
+          provider: "axe",
+          configuration: { runOnly: ["landmark-one-main"] },
         },
         mustPass: false,
       },
@@ -31,9 +31,9 @@ const requirements = [
     ruleAssignments: [
       {
         rule: {
-          name: 'The page body must mot be hidden',
-          provider: 'axe',
-          configuration: { runOnly: ['aria-hidden-body'] },
+          name: "The page body must mot be hidden",
+          provider: "axe",
+          configuration: { runOnly: ["aria-hidden-body"] },
         },
         mustPass: true,
       },
@@ -54,17 +54,7 @@ export class SubmissionService {
     return this.store.get(id);
   }
 
-  create({
-    id,
-    html,
-    css,
-    javascript,
-  }: {
-    id: number;
-    html: string;
-    css: string;
-    javascript: string;
-  }): void {
+  create({ id, html, css, javascript }: { id: number; html: string; css: string; javascript: string }): void {
     this.store.set(id, { html, css, javascript, level });
   }
 }
