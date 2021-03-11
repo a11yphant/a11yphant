@@ -31,6 +31,7 @@ resource "aws_lambda_function" "submission_checker" {
     variables = {
       NODE_ENV = "production"
       NO_COLOR = 1
+      SUBMISSION_CHECKER_RENDERER_BASE_URL = "${aws_apigatewayv2_api.submission_renderer_http_api.api_endpoint}/render/"
     }
   }
 

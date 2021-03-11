@@ -66,3 +66,19 @@ resource "aws_iam_role_policy_attachment" "submission_renderer_lambda_logs" {
   role       = aws_iam_role.submission_renderer_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
+
+resource "aws_lambda_permission" "api_gateway_submission_renderer" {
+   statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-submission-renderer"
+   action        = "lambda:InvokeFunction"
+   function_name = aws_lambda_function.submission_renderer.function_name
+   principal     = "apigateway.amazonaws.com"
+
+   source_arn = "${aws_apigatewayv2_api.submission_renderer_http_api.execution_arn}/*/*"
+}
+
+resource "aws_apigatewayv2_api" "submission_renderer_http_api" {
+  name          = "${terraform.workspace}-submission-renderer-http-api"
+  protocol_type = "HTTP"
+  target        = aws_lambda_function.submission_renderer.invoke_arn
+}
+
