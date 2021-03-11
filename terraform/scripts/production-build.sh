@@ -8,26 +8,31 @@ alias aws-npm="docker run --rm -v\"$(pwd)/:/app\" -w=\"/app\" --entrypoint=\"\" 
 
 npm ci --ignore-scripts
 
-npm install --prefix packages/prisma
+npm ci --prefix packages/prisma
 npm run prisma:generate --prefix packages/prisma
 npm run build --prefix packages/prisma
 rm -rf packages/prisma/node_modules
 
 rm -f services/api/lambda.zip
-npm install --prefix services/api
+npm ci --prefix services/api
 npm run build --prefix services/api
-aws-npm ci --only=production --prefix services/api
+aws-npm ci --only=production --prefix services/api --cache .npm --prefer-offline
 
 rm -f services/database-migration/lambda.zip
-aws-npm ci --only=production --prefix services/database-migration
+aws-npm ci --only=production --prefix services/database-migration --cache .npm --prefer-offline
 
 rm -f services/import-challenges/lambda.zip
-npm install --prefix services/import-challenges
+npm ci --prefix services/import-challenges
 npm run build --prefix services/import-challenges
-aws-npm ci --only=production --prefix services/import-challenges
+aws-npm ci --only=production --prefix services/import-challenges --cache .npm --prefer-offline
 
 rm -f services/site/lambda.zip
 rm -rf services/site/.next
-npm install --prefix services/site
+npm ci --prefix services/site
 npm run build --prefix services/site
-aws-npm ci --only=production --prefix services/site
+npm ci --only=production --prefix services/site
+
+rm -f services/submission-checker/lambda.zip
+npm ci --prefix services/submission-checker
+npm run build --prefix services/submission-checker
+npm ci --only=production --prefix services/submission-checker
