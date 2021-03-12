@@ -25,7 +25,7 @@
     "lint:submission-renderer": "npm --prefix services/submission-renderer run lint",
     "lint-staged": "lint-staged",
     "start": "npm run dev",
-    "postdev": "npm run tf:apply",
+    "predev": "npm run tf:apply",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
     "stop": "pm2 stop a11y-challenges && pm2 del a11y-challenges",
