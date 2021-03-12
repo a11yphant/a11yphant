@@ -1,7 +1,7 @@
 import { PrismaService } from '@a11y-challenges/prisma';
 import { Injectable, Logger } from '@nestjs/common';
 import { readdir as readdirCallback } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { promisify } from 'util';
 
 import {
@@ -24,7 +24,7 @@ export class ImportService {
   ) {}
 
   public async importAllFromFolder(folder: string): Promise<void> {
-    const path = join(__dirname, folder);
+    const path = resolve(__dirname, folder);
     this.logger.log(`Importing yml files from ${path}`, ImportService.name);
 
     const importPromises = (await readdir(path))

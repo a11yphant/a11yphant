@@ -1,7 +1,7 @@
 import { PrismaService, useDatabase } from '@a11y-challenges/prisma';
 import { createMock } from '@golevelup/ts-jest';
 import { Logger } from '@nestjs/common';
-import * as mock from 'mock-fs';
+import mock from 'mock-fs';
 import { join } from 'path';
 
 import { Challenge } from './challenge.interface';
