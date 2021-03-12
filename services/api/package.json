@@ -24,6 +24,7 @@
     "generate-schema": "ts-node src/generate-schema.ts"
   },
   "dependencies": {
+    "@a11y-challenges/prisma": "file:../../packages/prisma",
     "@nestjs/common": "7.6.13",
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.13",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@golevelup/ts-jest": "^0.3.1",
     "@nestjs/cli": "7.5.6",
     "@nestjs/schematics": "7.3.0",
     "@nestjs/testing": "7.6.13",
@@ -53,6 +55,7 @@
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.17.0",
     "@typescript-eslint/parser": "4.17.0",
+    "dotenv": "8.2.0",
     "aws-lambda": "1.0.6",
     "eslint": "7.21.0",
     "eslint-config-prettier": "8.1.0",
@@ -83,7 +86,7 @@
     ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.ts$": "ts-jest"
     },
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.(t|j)s"
@@ -98,6 +101,7 @@
       "text-summary",
       "cobertura"
     ],
+    "globalSetup": "<rootDir>/test/setup.ts",
     "coverageDirectory": "<rootDir>"
   }
 }

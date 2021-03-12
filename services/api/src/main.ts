@@ -1,3 +1,4 @@
+import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
@@ -19,7 +20,8 @@ async function bootstrap(): Promise<ReturnType<typeof serverlessExpress> | null>
   const expressApp = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
-  const configService = app.get(ConfigService);
+  const configService = app.get<ConfigService>(ConfigService);
+  const logger = app.get<Logger>(Logger);
 
   const url = configService.get("api.url");
   const port = configService.get("api.port");
@@ -31,7 +33,7 @@ async function bootstrap(): Promise<ReturnType<typeof serverlessExpress> | null>
      */
 
     await app.listen(port);
-    console.log(`App listening on ${url}/graphql`);
+    logger.log(`App listening on ${url}/graphql`, AppModule.name);
     return null;
   }
 
