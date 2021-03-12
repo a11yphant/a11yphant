@@ -1,0 +1,17 @@
+.production-dependencies:
+  tags:
+    - docker
+  stage: build
+  image:
+    name: public.ecr.aws/lambda/nodejs:12
+    entrypoint: [""]
+  before_script:
+    - '' # disable default npm install
+  cache: {} # disable cache because lambda/nodejs uses centOS
+  script:
+    - npm ci --production --prefix $PROJECT_PATH
+    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+    expire_in: 1 day
