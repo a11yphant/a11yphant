@@ -139,12 +139,18 @@ test:api:
     POSTGRES_PASSWORD: secret
     DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 production-dependencies:api:
   extends:
     - .production-dependencies
   variables:
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --productionn --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
   only:
     - master
     - develop
@@ -249,6 +255,8 @@ production-dependencies:import-challenges:
     - .production-dependencies
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
   only:
   - master
   - develop
