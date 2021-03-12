@@ -3,6 +3,7 @@ include:
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
+  - /ci/templates/gitlab-ci-production-dependencies.yml
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -140,22 +141,10 @@ test:api:
     PROJECT_PATH: services/api
 
 production-dependencies:api:
-  tags:
-    - docker
-  stage: build
-  # install dependencies using node 12 since lambdas run in a node 12 environment
-  image: node:12-alpine
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/api
-  before_script:
-    - '' # disable default npm install
-  script:
-    - npm ci --production --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
   only:
     - master
     - develop
@@ -211,24 +200,10 @@ build:site:
     - develop
 
 production-dependencies:site:
-  tags:
-    - docker
-  stage: build
-  image:
-    name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: [""]
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/site
-  before_script:
-    - '' # disable default npm install
-  cache: {} # disable cache because lambda/nodejs uses centOS
-  script:
-    - npm ci --production --prefix $PROJECT_PATH
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
   only:
     - master
     - develop
@@ -270,27 +245,13 @@ test:import-challenges:
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 production-dependencies:import-challenges:
-  tags:
-    - docker
-  stage: build
-  image:
-    name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: [""]
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/import-challenges
-  before_script:
-    - '' # disable default npm install
-  cache: {} # disable cache because lambda/nodejs uses centOS
-  script:
-    - npm ci --production --prefix $PROJECT_PATH
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
   only:
-    - master
-    - develop
+  - master
+  - develop
 
 build:import-challenges:
   extends:
@@ -317,24 +278,10 @@ lint:database-migration:
     PROJECT_PATH: services/database-migration
 
 production-dependencies:database-migration:
-  tags:
-    - docker
-  stage: build
-  image:
-    name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: [""]
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/database-migration
-  before_script:
-    - '' # disable default npm install
-  cache: {} # disable cache because lambda/nodejs uses centOS
-  script:
-    - npm ci --production --prefix $PROJECT_PATH
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
   only:
     - master
     - develop
