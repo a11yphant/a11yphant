@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
-    "@golevelup/ts-jest": "^0.3.1",
+    "@golevelup/ts-jest": "0.3.1",
     "@nestjs/cli": "7.5.6",
     "@nestjs/schematics": "7.3.0",
     "@nestjs/testing": "7.6.14",
