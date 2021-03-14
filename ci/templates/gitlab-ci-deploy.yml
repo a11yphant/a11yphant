@@ -16,8 +16,9 @@
     - apk update
     - apk add zip
     - terraform -chdir=terraform/cloud init
-    - terraform -chdir=terraform/cloud workspace select $TF_WORKSPACE
   script:
+    - terraform -chdir="terraform/cloud" workspace new $TF_WORKSPACE || echo ""
+    - terraform -chdir=terraform/cloud workspace select $TF_WORKSPACE
     - terraform -chdir=terraform/cloud apply
         -var="current_version=$TF_WORKSPACE"
         -var="postgres_cluster_root_user=root"

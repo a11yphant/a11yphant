@@ -162,9 +162,6 @@ build:api:
     - .build
   variables:
     PROJECT_PATH: services/api
-  only:
-    - master
-    - develop
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -365,9 +362,10 @@ stop_review:
     TF_WORKSPACE: $CI_COMMIT_REF_SLUG
   before_script:
     - terraform -chdir=terraform/cloud init
-    - terraform -chdir=terraform/cloud workspace select $TF_WORKSPACE
   script:
+    - terraform -chdir=terraform/cloud workspace select $TF_WORKSPACE
     - terraform -chdir=terraform/cloud destroy
+    - terraform -chdir=terraform/cloud workspace delete $TF_WORKSPACE
   when: manual
   environment:
     name: review/$CI_COMMIT_REF_NAME
