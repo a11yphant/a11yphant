@@ -6,12 +6,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
 }
 
-const IconOnlyButton: React.FunctionComponent<ButtonProps> = ({ text, onClick, icon, ...props }) => {
+const IconOnlyButton: React.FunctionComponent<ButtonProps> = ({ text, onClick, icon, className, ...props }) => {
   return (
     <button
       {...props}
       onClick={onClick}
-      className="border-l-2 border-b-2 border-primary p-4 h-16 absolute bg-white right-0 box-border text-2xl group group-focus:text-white hover:bg-primary focus:bg-primary"
+      className={`border-l-2 border-b-2 border-primary p-4 h-16 absolute bg-white right-0 box-border text-2xl group group-focus:text-white hover:bg-primary focus:bg-primary ${className}`}
     >
       <span className="sr-only">{text}</span>
       {icon}

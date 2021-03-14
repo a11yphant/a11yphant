@@ -6,11 +6,9 @@ interface ClosedSidebarProps extends HTMLAttributes<HTMLDivElement> {
   sections: typeof SectionType;
 }
 
-const ClosedSidebar: React.FunctionComponent<ClosedSidebarProps> = ({ handleClick, sections, ...props }) => {
-  console.log(props.style);
-
+const ClosedSidebar: React.FunctionComponent<ClosedSidebarProps> = ({ handleClick, sections, className, ...props }) => {
   return (
-    <div {...props} className="h-full flex-col justify-around">
+    <div {...props} className={`flex flex-col h-full justify-around ${className}`}>
       {Object.values(sections).map((section: SectionType) => (
         <div
           key={section}
