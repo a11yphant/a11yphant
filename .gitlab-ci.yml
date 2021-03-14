@@ -323,6 +323,7 @@ deploy-review:
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
     on_stop: stop_review
   allow_failure: true
+  when: manual
   only:
     - merge_request
 
