@@ -155,6 +155,7 @@ production-dependencies:api:
   only:
     - master
     - develop
+    - merge_request
 
 build:api:
   extends:
@@ -168,6 +169,10 @@ build:api:
     paths:
       - $PROJECT_PATH/dist
     expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_request
 
 #-----------------------------------
 # Site
@@ -205,6 +210,7 @@ build:site:
   only:
     - master
     - develop
+    - merge_request
 
 production-dependencies:site:
   extends:
@@ -214,6 +220,7 @@ production-dependencies:site:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Import Challenges
@@ -259,8 +266,9 @@ production-dependencies:import-challenges:
   before_script:
     - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
   only:
-  - master
-  - develop
+    - master
+    - develop
+    - merge_request
 
 build:import-challenges:
   extends:
@@ -274,6 +282,7 @@ build:import-challenges:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Database Migrations
@@ -294,6 +303,7 @@ production-dependencies:database-migration:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Terraform
