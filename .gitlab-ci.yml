@@ -317,7 +317,7 @@ deploy-review:
   extends:
     - .deploy
   variables:
-    TF_WORKSPACE: $CI_COMMIT_REF_SLUG
+    WORKSPACE: $CI_COMMIT_REF_SLUG
   environment:
     name: review/$CI_COMMIT_REF_NAME
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
@@ -329,7 +329,7 @@ deploy:
   extends:
     - .deploy
   variables:
-    TF_WORKSPACE: $CI_COMMIT_REF_SLUG
+    WORKSPACE: $CI_COMMIT_REF_SLUG
   only:
     - master
     - develop
@@ -337,13 +337,14 @@ deploy:
 stop_review:
   stage: deploy
   variables:
-    TF_WORKSPACE: $CI_COMMIT_REF_SLUG
+    WORKSPACE: $CI_COMMIT_REF_SLUG
   before_script:
     - terraform -chdir=terraform/cloud init
   script:
-    - terraform -chdir=terraform/cloud workspace select $TF_WORKSPACE
+    - terraform -chdir=terraform/cloud workspace select $WORKSPACE
     - terraform -chdir=terraform/cloud destroy
-    - terraform -chdir=terraform/cloud workspace delete $TF_WORKSPACE
+    - terraform -chdir=terraform/cloud workspace select default
+    - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
   when: manual
   environment:
     name: review/$CI_COMMIT_REF_NAME
