@@ -30,7 +30,7 @@ const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
       {hints.length > 0 && (
         <ul>
           {hints.map((hint, idx) => (
-            <li>
+            <li key={hint}>
               <h4 className="text-primary">Hint {idx + 1}</h4>
               <p>{hint}</p>
             </li>
