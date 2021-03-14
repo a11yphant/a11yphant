@@ -4,6 +4,7 @@ include:
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
   - /ci/templates/gitlab-ci-production-dependencies.yml
+  - /ci/templates/gitlab-ci-deploy.yml
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -326,27 +327,38 @@ terraform:local:validate:
 # Deployment
 #-----------------------------------
 
+deploy-review:
+  extends:
+    - .deploy
+  variables:
+    TF_WORKSPACE: $CI_COMMIT_REF_SLUG
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    # url: https://$CI_ENVIRONMENT_SLUG.example.com
+    on_stop: stop_review
+  when: manual
+  only:
+    - merge_request
+
 deploy:
-  tags:
-    - docker
-  stage: deploy
-  needs:
-    - build:api
-    - production-dependencies:api
-    - production-dependencies:database-migration
-    - build:site
-    - production-dependencies:site
-    - build:import-challenges
-    - production-dependencies:import-challenges
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {} # disable cache
-  before_script:
-    - apk update
-    - apk add zip
-    - terraform -chdir=terraform/cloud init
-    - terraform -chdir=terraform/cloud workspace select $CI_COMMIT_REF_SLUG
-  script:
-    - terraform -chdir=terraform/cloud apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+  extends:
+    - .deploy
+  variables:
+    TF_WORKSPACE: $CI_COMMIT_REF_SLUG
   only:
     - master
     - develop
+
+stop_review:
+  stage: deploy
+  variables:
+    TF_WORKSPACE: $CI_COMMIT_REF_SLUG
+  before_script:
+    - terraform -chdir=terraform/cloud init
+    - terraform -chdir=terraform/cloud workspace select $TF_WORKSPACE
+  script:
+    - terraform -chdir=terraform/cloud destroy
+  when: manual
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
