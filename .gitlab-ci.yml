@@ -322,8 +322,6 @@ deploy-review:
     name: review/$CI_COMMIT_REF_NAME
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
     on_stop: stop_review
-  allow_failure: true
-  when: manual
   only:
     - merge_request
 
