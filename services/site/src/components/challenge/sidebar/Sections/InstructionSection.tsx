@@ -1,4 +1,4 @@
-import CheckboxList from "app/components/challenge/sidebar/CheckboxList";
+import CheckboxList from "app/components/challenge/sidebar/NumberedList";
 import React from "react";
 
 export interface Instructions {
@@ -22,6 +22,9 @@ const InstructionSection: React.FunctionComponent<Instructions> = ({ text, tldr,
         <p className="text-primary font-bold mt-8">{tldr}</p>
       </div>
       <h3 className="text-primary font-bold mt-10 mb-8 text-center">Requirements</h3>
+      <p className="mb-6">
+        This level is evaluated based on the following requirements. More information on each topic can be found in the resources.
+      </p>
       <div>
         <CheckboxList items={requirements} />
       </div>
