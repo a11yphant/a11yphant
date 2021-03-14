@@ -64,3 +64,10 @@
         - *run_on_ci_change
         - packages/../*
         - packages/prisma/**/*
+
+.run_on_master_develop_and_manual_for_merge_requests:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop")
+      when: always
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event")
+      when: manual
