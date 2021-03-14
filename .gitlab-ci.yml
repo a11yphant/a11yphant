@@ -97,6 +97,28 @@ test:submission-checker:
   variables:
     PROJECT_PATH: services/submission-checker
 
+production-dependencies:submission-checker:
+  extends:
+    - .production-dependencies
+  variables:
+    PROJECT_PATH: services/submission-checker
+  only:
+    - master
+    - develop
+
+build:submission-checker:
+  extends:
+    - .build
+  variables:
+    PROJECT_PATH: services/submission-checker
+  artifacts:
+    paths:
+      - $PROJECT_PATH/dist
+    expire_in: 1 day
+  only:
+    - master
+    - develop
+
 #-----------------------------------
 # Submission Renderer
 #-----------------------------------
@@ -114,6 +136,28 @@ test:submission-renderer:
     - .run_on_submission_renderer_change
   variables:
     PROJECT_PATH: services/submission-renderer
+
+production-dependencies:submission-renderer:
+  extends:
+    - .production-dependencies
+  variables:
+    PROJECT_PATH: services/submission-renderer
+  only:
+    - master
+    - develop
+
+build:submission-renderer:
+  extends:
+    - .build
+  variables:
+    PROJECT_PATH: services/submission-renderer
+  artifacts:
+    paths:
+      - $PROJECT_PATH/dist
+    expire_in: 1 day
+  only:
+    - master
+    - develop
 
 #-----------------------------------
 # API
@@ -356,6 +400,10 @@ deploy:
     - production-dependencies:site
     - build:import-challenges
     - production-dependencies:import-challenges
+    - build:submission-checker
+    - production-dependencies:submission-checker
+    - build:submission-renderer
+    - production-dependencies:submission-renderer
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
