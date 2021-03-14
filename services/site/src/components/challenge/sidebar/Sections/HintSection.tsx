@@ -26,7 +26,11 @@ const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
 
   return (
     <div className="flex-auto overflow-y-auto mt-10 text-center px-8">
-      {hints.length === 0 && <p>You can unlock hints by clicking on the button below.</p>}
+      {hints.length === 0 && <p>You can unlock {maxHints} hints by clicking on the button below.</p>}
+      {hints.length > 0 && usedHints !== maxHints && maxHints - usedHints !== 1 && <p>You can unlock {maxHints - usedHints} more hints.</p>}
+      {hints.length > 0 && maxHints - usedHints === 1 && <p>You can unlock {maxHints - usedHints} more hint.</p>}
+      {hints.length > 0 && maxHints === usedHints && <p>There are no more hints to unlock.</p>}
+
       {hints.length > 0 && (
         <ul>
           {hints.map((hint, idx) => (
