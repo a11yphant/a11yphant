@@ -74,28 +74,64 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
     toggleSidebarState();
   };
 
+  // any is necessary here because the types of react-spring are somehow messed up
   const animation: any = useSpring({
     to: async (next) => {
       if (open) {
-        await next({ openDivDisplay: openSidebarStyle.openDiv.display });
+        // Fade out closed div
+        await next({
+          closedDivOpacity: openSidebarStyle.closedDiv.opacity,
+          config: {
+            duration: 200,
+          },
+        });
+
+        // Hide closed div
+        await next({
+          closedDivDisplay: openSidebarStyle.closedDiv.display,
+          config: {
+            duration: 1,
+          },
+        });
+
+        // Show open div
+        await next({
+          openDivDisplay: openSidebarStyle.openDiv.display,
+          config: {
+            duration: 1,
+          },
+        });
+
+        // Increase width and rest
         await next({
           sidebarWidth: openSidebarStyle.sidebar.width,
           iconTransform: openSidebarStyle.icon.transform,
           iconBorderStyle: openSidebarStyle.icon.borderStyle,
           openDivOpacity: openSidebarStyle.openDiv.opacity,
-          closedDivOpacity: openSidebarStyle.closedDiv.opacity,
         });
-        await next({ closedDivDisplay: openSidebarStyle.closedDiv.display });
       } else {
-        await next({ closedDivDisplay: closedSidebarStyle.closedDiv.display });
+        // Shrink width and rest
         await next({
           sidebarWidth: closedSidebarStyle.sidebar.width,
           iconTransform: closedSidebarStyle.icon.transform,
           iconBorderStyle: closedSidebarStyle.icon.borderStyle,
           openDivOpacity: closedSidebarStyle.openDiv.opacity,
+        });
+
+        // Hide open div
+        await next({
+          openDivDisplay: closedSidebarStyle.openDiv.display,
+        });
+
+        // Show closed div
+        await next({
+          closedDivDisplay: closedSidebarStyle.closedDiv.display,
+        });
+
+        // Fade in closed div
+        await next({
           closedDivOpacity: closedSidebarStyle.closedDiv.opacity,
         });
-        await next({ openDivDisplay: closedSidebarStyle.openDiv.display });
       }
     },
     from: {
@@ -129,7 +165,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
         handleClick={handleClosedButtonClick}
         sections={SectionType}
       />
-      <animated.div style={{ display: animation.openDivDisplay, opacity: animation.openDivOpacity }} className="flex flex-col h-full absolute">
+      <animated.div style={{ display: animation.openDivDisplay, opacity: animation.openDivOpacity }} className="flex flex-col w-80 h-full absolute">
         <SidebarSection
           title={"Instructions"}
           open={activeSection === SectionType.instructions}
