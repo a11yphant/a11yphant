@@ -360,5 +360,5 @@ stop_review:
     - terraform -chdir=terraform/cloud destroy
   when: manual
   environment:
-    name: review/$CI_BUILD_REF_NAME
+    name: review/$CI_COMMIT_REF_NAME
     action: stop
