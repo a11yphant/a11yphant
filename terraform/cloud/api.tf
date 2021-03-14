@@ -35,12 +35,24 @@ resource "aws_lambda_function" "api" {
       API_GRAPHQL_DEBUG = 1
       API_GRAPHQL_PLAYGROUND = 1
       API_GRAPHQL_SCHEMA_INTROSPECTION = 1
+      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?pool_timeout=30"
     }
   }
 
+  vpc_config {
+    subnet_ids         = [ 
+        aws_subnet.postgres_cluster_network_zone_a.id,
+        aws_subnet.postgres_cluster_network_zone_b.id,
+        aws_subnet.postgres_cluster_network_zone_c.id
+    ]
+    security_group_ids = [ aws_security_group.allow_all_egress.id ]
+  }
+
   depends_on = [
-    aws_s3_bucket_object.api_code_zip,
-    aws_iam_role_policy_attachment.api_lambda_logs,
+    aws_subnet.postgres_cluster_network_zone_a,
+    aws_subnet.postgres_cluster_network_zone_b,
+    aws_subnet.postgres_cluster_network_zone_c,
+    aws_security_group.allow_all_egress
   ]
 }
 
@@ -68,6 +80,11 @@ EOF
 resource "aws_iam_role_policy_attachment" "api_lambda_logs" {
   role       = aws_iam_role.api_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
+}
+
+resource "aws_iam_role_policy_attachment" "api_vpc_access" {
+  role       = aws_iam_role.api_role.name
+  policy_arn = aws_iam_policy.vpc_access.arn
 }
 
 

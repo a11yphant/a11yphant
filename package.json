@@ -9,6 +9,7 @@
     "prepare": "husky install",
     "postinstall": "npm run package-dependencies && npm run tf:init",
     "package-dependencies": "npm-run-all package-dependencies:**",
+    "package-dependencies:prisma": "npm --prefix packages/prisma install",
     "package-dependencies:api": "npm --prefix services/api install",
     "package-dependencies:database-migration": "npm --prefix services/database-migration install",
     "package-dependencies:import-challenges": "npm --prefix services/import-challenges install",
@@ -50,8 +51,8 @@
   },
   "keywords": [],
   "devDependencies": {
-    "@nestjs/common": "7.6.13",
-    "@nestjs/core": "7.6.13",
+    "@nestjs/common": "7.6.14",
+    "@nestjs/core": "7.6.14",
     "@typescript-eslint/parser": "4.17.0",
     "dotenv-cli": "4.0.0",
     "husky": "5.1.3",

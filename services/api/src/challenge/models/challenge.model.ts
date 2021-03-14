@@ -6,6 +6,11 @@ import { Level } from "./level.model";
   description: "General and level information for a specific challenge.",
 })
 export class Challenge {
+  constructor(properties: { id: string; name: string }) {
+    this.id = properties.id;
+    this.name = properties.name;
+  }
+
   @Field(() => ID)
   id: string;
 

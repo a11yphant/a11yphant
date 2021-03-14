@@ -3,6 +3,7 @@ include:
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
+  - /ci/templates/gitlab-ci-production-dependencies.yml
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -15,6 +16,7 @@ default:
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 stages:
+  - build-packages
   - generate
   - analyze
   - test
@@ -60,7 +62,7 @@ test:prisma:
 build:prisma:
   tags:
     - docker
-  stage: generate
+  stage: build-packages
   image: node:14-alpine
   variables:
     PROJECT_PATH: packages/prisma
@@ -145,26 +147,28 @@ test:api:
   extends:
     - .test
     - .run_on_api_change
+  needs:
+   - build:prisma
+  services:
+    - postgres
   variables:
+    POSTGRES_DB: a11y-challenges
+    POSTGRES_USER: a11y-challenges
+    POSTGRES_PASSWORD: secret
+    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
 production-dependencies:api:
-  tags:
-    - docker
-  stage: build
-  # install dependencies using node 12 since lambdas run in a node 12 environment
-  image: node:12-alpine
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - '' # disable default npm install
-  script:
-    - npm ci --production --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
+    - npm ci --productionn --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
   only:
     - master
     - develop
@@ -220,24 +224,10 @@ build:site:
     - develop
 
 production-dependencies:site:
-  tags:
-    - docker
-  stage: build
-  image:
-    name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: [""]
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/site
-  before_script:
-    - '' # disable default npm install
-  cache: {} # disable cache because lambda/nodejs uses centOS
-  script:
-    - npm ci --production --prefix $PROJECT_PATH
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
   only:
     - master
     - develop
@@ -278,6 +268,29 @@ test:import-challenges:
     - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
 
+production-dependencies:import-challenges:
+  extends:
+    - .production-dependencies
+  variables:
+    PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+  only:
+  - master
+  - develop
+
+build:import-challenges:
+  extends:
+    - .build
+  variables:
+    PROJECT_PATH: services/import-challenges
+  artifacts:
+    paths:
+      - $PROJECT_PATH/.next
+    expire_in: 1 day
+  only:
+    - master
+    - develop
 
 #-----------------------------------
 # Database Migrations
@@ -291,24 +304,10 @@ lint:database-migration:
     PROJECT_PATH: services/database-migration
 
 production-dependencies:database-migration:
-  tags:
-    - docker
-  stage: build
-  image:
-    name: public.ecr.aws/lambda/nodejs:12
-    entrypoint: [""]
+  extends:
+    - .production-dependencies
   variables:
     PROJECT_PATH: services/database-migration
-  before_script:
-    - '' # disable default npm install
-  cache: {} # disable cache because lambda/nodejs uses centOS
-  script:
-    - npm ci --production --prefix $PROJECT_PATH
-    - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-    expire_in: 1 day
   only:
     - master
     - develop
@@ -355,6 +354,8 @@ deploy:
     - production-dependencies:database-migration
     - build:site
     - production-dependencies:site
+    - build:import-challenges
+    - production-dependencies:import-challenges
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
