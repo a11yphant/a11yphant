@@ -32,7 +32,6 @@
     "@nestjs/platform-express": "7.6.14",
     "@vendia/serverless-express": "4.3.4",
     "apollo-server-express": "2.21.1",
-    "aws-lambda": "1.0.6",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "express": "4.17.1",
