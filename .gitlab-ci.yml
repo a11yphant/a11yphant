@@ -84,6 +84,11 @@ production-dependencies:prisma:
     - .production-dependencies
   variables:
     PROJECT_PATH: packages/prisma
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+      - $PROJECT_PATH/client/query-engine-*
+    expire_in: 1 day
   only:
     - develop
     - master
