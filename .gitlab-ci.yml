@@ -79,6 +79,15 @@ build:prisma:
     - master
     - merge_request
 
+production-dependencies:prisma:
+  extends:
+    - .production-dependencies
+  variables:
+    PROJECT_PATH: packages/prisma
+  only:
+    - develop
+    - master
+
 #-----------------------------------
 # Submission Checker
 #-----------------------------------
@@ -332,6 +341,7 @@ deploy:
   stage: deploy
   needs:
     - build:prisma
+    - production-dependencies:prisma
     - build:api
     - production-dependencies:api
     - production-dependencies:database-migration
