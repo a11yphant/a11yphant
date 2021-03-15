@@ -87,7 +87,6 @@ production-dependencies:prisma:
   only:
     - develop
     - master
-    - merge_request
 
 #-----------------------------------
 # Submission Checker
