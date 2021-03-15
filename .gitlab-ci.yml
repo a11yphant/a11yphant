@@ -268,7 +268,7 @@ build:import-challenges:
     PROJECT_PATH: services/import-challenges
   artifacts:
     paths:
-      - $PROJECT_PATH/.next
+      - $PROJECT_PATH/dist
     expire_in: 1 day
   only:
     - master
