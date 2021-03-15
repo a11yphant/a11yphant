@@ -84,11 +84,6 @@ production-dependencies:prisma:
     - .production-dependencies
   variables:
     PROJECT_PATH: packages/prisma
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-      - $PROJECT_PATH/client/query-engine-*
-    expire_in: 1 day
   only:
     - develop
     - master
@@ -164,7 +159,12 @@ production-dependencies:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --productionn --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+      - packages/prisma/client/query-engine-*
+    expire_in: 1 day
   only:
     - master
     - develop
