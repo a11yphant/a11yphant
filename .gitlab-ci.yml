@@ -80,6 +80,15 @@ build:prisma:
     - master
     - merge_request
 
+production-dependencies:prisma:
+  extends:
+    - .production-dependencies
+  variables:
+    PROJECT_PATH: packages/prisma
+  only:
+    - develop
+    - master
+
 #-----------------------------------
 # Submission Checker
 #-----------------------------------
@@ -152,7 +161,7 @@ production-dependencies:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --productionn --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
 
 build:api:
   extends:
@@ -260,7 +269,7 @@ build:import-challenges:
     PROJECT_PATH: services/import-challenges
   artifacts:
     paths:
-      - $PROJECT_PATH/.next
+      - $PROJECT_PATH/dist
     expire_in: 1 day
 
 #-----------------------------------
@@ -338,6 +347,8 @@ stop_review:
   stage: deploy
   variables:
     WORKSPACE: $CI_COMMIT_REF_SLUG
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {} # disable cache
   before_script:
     - terraform -chdir=terraform/cloud init
   script:
