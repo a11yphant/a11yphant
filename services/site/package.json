@@ -27,7 +27,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
-    "@apollo/client": "3.3.11",
+    "@apollo/client": "3.3.12",
     "@monaco-editor/react": "4.0.11",
     "@vendia/serverless-express": "4.3.4",
     "express": "4.17.1",
