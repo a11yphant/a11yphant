@@ -23,7 +23,7 @@ resource "aws_lambda_function" "api" {
 
    handler = "entrypoint.handle"
    runtime = "nodejs12.x"
-   timeout = 10
+   timeout = 30
 
    role = aws_iam_role.api_role.arn
 
