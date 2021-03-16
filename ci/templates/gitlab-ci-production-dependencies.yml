@@ -10,10 +10,9 @@
   cache:
     key: ${CI_COMMIT_REF_SLUG}-cent-os
     paths:
-      - .npm
-      - services/**/.npm/
+      - .npm-cent-os
   script:
-    - npm ci --production --prefix $PROJECT_PATH --cache .npm
+    - npm ci --production --prefix $PROJECT_PATH --cache .npm-cent-os
     - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
   artifacts:
     paths:
