@@ -7,9 +7,13 @@
     entrypoint: [""]
   before_script:
     - '' # disable default npm install
-  cache: {} # disable cache because lambda/nodejs uses centOS
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-cent-os
+    paths:
+      - .npm
+      - services/**/.npm/
   script:
-    - npm ci --production --prefix $PROJECT_PATH
+    - npm ci --production --prefix $PROJECT_PATH --cache .npm
     - find $PROJECT_PATH/* -mtime +10950 -exec touch {} \; # search for files with corrupt timestamps and update them
   artifacts:
     paths:
