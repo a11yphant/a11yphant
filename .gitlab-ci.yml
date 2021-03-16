@@ -88,6 +88,7 @@ production-dependencies:prisma:
   only:
     - develop
     - master
+    - merge_request
 
 #-----------------------------------
 # Submission Checker
@@ -157,22 +158,28 @@ test:api:
 production-dependencies:api:
   extends:
     - .production-dependencies
-    - .run_on_master_develop_and_manual_for_merge_requests
   variables:
     PROJECT_PATH: services/api
   before_script:
     - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+  only:
+    - master
+    - develop
+    - merge_request
 
 build:api:
   extends:
     - .build
-    - .run_on_master_develop_and_manual_for_merge_requests
   variables:
     PROJECT_PATH: services/api
   artifacts:
     paths:
       - $PROJECT_PATH/dist
     expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_request
 
 #-----------------------------------
 # Site
@@ -199,7 +206,6 @@ test:site:
 build:site:
   extends:
     - .build
-    - .run_on_master_develop_and_manual_for_merge_requests
   needs:
     - generate-graphql-schema:api
   variables:
@@ -208,13 +214,20 @@ build:site:
     paths:
       - $PROJECT_PATH/.next
     expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_request
 
 production-dependencies:site:
   extends:
     - .production-dependencies
-    - .run_on_master_develop_and_manual_for_merge_requests
   variables:
     PROJECT_PATH: services/site
+  only:
+    - master
+    - develop
+    - merge_request
 
 #-----------------------------------
 # Import Challenges
@@ -255,22 +268,28 @@ test:import-challenges:
 production-dependencies:import-challenges:
   extends:
     - .production-dependencies
-    - .run_on_master_develop_and_manual_for_merge_requests
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
     - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+  only:
+    - master
+    - develop
+    - merge_request
 
 build:import-challenges:
   extends:
     - .build
-    - .run_on_master_develop_and_manual_for_merge_requests
   variables:
     PROJECT_PATH: services/import-challenges
   artifacts:
     paths:
       - $PROJECT_PATH/dist
     expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_request
 
 #-----------------------------------
 # Database Migrations
@@ -286,9 +305,12 @@ lint:database-migration:
 production-dependencies:database-migration:
   extends:
     - .production-dependencies
-    - .run_on_master_develop_and_manual_for_merge_requests
   variables:
     PROJECT_PATH: services/database-migration
+  only:
+    - master
+    - develop
+    - merge_request
 
 #-----------------------------------
 # Terraform
