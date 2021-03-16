@@ -356,14 +356,27 @@ deploy-review:
   only:
     - merge_request
 
-deploy:
+deploy-staging:
   extends:
     - .deploy
   variables:
-    WORKSPACE: $CI_COMMIT_REF_SLUG
+    WORKSPACE: staging
+  environment:
+    name: staging
+    # url: https://staging.example.com
+  only:
+    - develop
+
+deploy-production:
+  extends:
+    - .deploy
+  variables:
+    WORKSPACE: production
+  environment:
+    name: staging
+    # url: https://example.com
   only:
     - master
-    - develop
 
 stop_review:
   stage: deploy
