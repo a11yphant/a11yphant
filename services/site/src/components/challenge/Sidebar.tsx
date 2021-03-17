@@ -3,7 +3,8 @@ import HintSection, { Hints } from "app/components/challenge/sidebar/Sections/Hi
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
 import ResourceSection, { Resource } from "app/components/challenge/sidebar/Sections/ResourceSection";
 import SidebarSection from "app/components/challenge/sidebar/SidebarSection";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useState } from "react";
+import { animated, useSpring } from "react-spring";
 
 import IconOnlyButton from "../buttons/IconOnlyButton";
 import ChevronLeft from "../icons/ChevronLeft";
@@ -21,94 +22,170 @@ export enum SectionType {
   resources = "Resources",
 }
 
+const openSidebarStyle = {
+  sidebar: {
+    width: "20rem",
+  },
+  icon: {
+    transform: "rotate(0deg)",
+    borderStyle: "solid",
+  },
+  openDiv: {
+    display: "flex",
+    opacity: 1,
+  },
+  closedDiv: {
+    display: "none",
+    opacity: 0,
+  },
+};
+
+const closedSidebarStyle = {
+  sidebar: {
+    width: "4rem",
+  },
+  icon: {
+    transform: "rotate(180deg)",
+    borderStyle: "hidden",
+  },
+  openDiv: {
+    display: "none",
+    opacity: 0,
+  },
+  closedDiv: {
+    display: "flex",
+    opacity: 1,
+  },
+};
+
+const AnimatedIconOnlyButton = animated(IconOnlyButton);
+const AnimatedClosedSidebar = animated(ClosedSidebar);
+
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions, hints, resources }) => {
-  const [openSection, setOpenSection] = useState<SectionType>(SectionType.instructions);
-  const [updateButtonText, setUpdateButtonText] = useState<string>("Close sidebar");
+  const [activeSection, setActiveSection] = useState<SectionType>(SectionType.instructions);
+  const [open, setOpen] = useState<boolean>(true);
 
-  // open animation
-  const asideRef = useRef<HTMLDivElement>();
-  const buttonRef = useRef<HTMLButtonElement>();
-  const divClosedRef = useRef<HTMLDivElement>();
-  const divOpenRef = useRef<HTMLDivElement>();
-
-  const toggleSidebarState = useCallback(() => {
-    window.requestAnimationFrame(() => {
-      // toggle sidebar width
-      asideRef.current.classList.toggle("w-1/5");
-      asideRef.current.classList.toggle("w-16");
-
-      // toggle button icon
-      buttonRef.current.classList.toggle("chevron-open");
-
-      // change content
-      // set delay to 0 initially
-      divOpenRef.current.style.removeProperty("transition-delay");
-      divClosedRef.current.style.removeProperty("transition-delay");
-
-      let currentContent, upcomingContent;
-
-      // from closed to open
-      if (getComputedStyle(divOpenRef.current).display === "none") {
-        currentContent = divClosedRef.current;
-        upcomingContent = divOpenRef.current;
-
-        setUpdateButtonText("Close sidebar");
-      } else {
-        // from open to closed
-        currentContent = divOpenRef.current;
-        upcomingContent = divClosedRef.current;
-
-        setUpdateButtonText("Open sidebar");
-      }
-
-      upcomingContent.style.transitionDelay = "750ms";
-      currentContent.style.opacity = "0";
-      upcomingContent.style.opacity = "1";
-
-      // Hide current content and show upcoming
-      // content after fadeOut animation finished
-      setTimeout(() => {
-        window.requestAnimationFrame(() => {
-          currentContent.style.display = "none";
-          upcomingContent.style.display = "flex";
-        });
-      }, 750);
-    });
-  }, [asideRef, buttonRef, divOpenRef, divClosedRef]);
+  const toggleSidebarState = (): void => {
+    setOpen((prevState) => !prevState);
+  };
 
   const handleClosedButtonClick = (sectionToOpen: SectionType): void => {
-    setOpenSection(sectionToOpen);
+    setActiveSection(sectionToOpen);
     toggleSidebarState();
   };
 
+  // any is necessary here because the types of react-spring are somehow messed up
+  const animation: any = useSpring({
+    to: async (next) => {
+      if (open) {
+        // Fade out closed div
+        await next({
+          closedDivOpacity: openSidebarStyle.closedDiv.opacity,
+          config: {
+            duration: 200,
+          },
+        });
+
+        // Hide closed div
+        await next({
+          closedDivDisplay: openSidebarStyle.closedDiv.display,
+          config: {
+            duration: 1,
+          },
+        });
+
+        // Show open div
+        await next({
+          openDivDisplay: openSidebarStyle.openDiv.display,
+          config: {
+            duration: 1,
+          },
+        });
+
+        // Increase width and rest
+        await next({
+          sidebarWidth: openSidebarStyle.sidebar.width,
+          iconTransform: openSidebarStyle.icon.transform,
+          iconBorderStyle: openSidebarStyle.icon.borderStyle,
+          openDivOpacity: openSidebarStyle.openDiv.opacity,
+        });
+      } else {
+        // Shrink width and rest
+        await next({
+          sidebarWidth: closedSidebarStyle.sidebar.width,
+          iconTransform: closedSidebarStyle.icon.transform,
+          iconBorderStyle: closedSidebarStyle.icon.borderStyle,
+          openDivOpacity: closedSidebarStyle.openDiv.opacity,
+        });
+
+        // Hide open div
+        await next({
+          openDivDisplay: closedSidebarStyle.openDiv.display,
+        });
+
+        // Show closed div
+        await next({
+          closedDivDisplay: closedSidebarStyle.closedDiv.display,
+        });
+
+        // Fade in closed div
+        await next({
+          closedDivOpacity: closedSidebarStyle.closedDiv.opacity,
+        });
+      }
+    },
+    from: {
+      sidebarWidth: open ? openSidebarStyle.sidebar.width : closedSidebarStyle.sidebar.width,
+      iconTransform: open ? openSidebarStyle.icon.transform : closedSidebarStyle.icon.transform,
+      iconBorderStyle: open ? openSidebarStyle.icon.borderStyle : closedSidebarStyle.icon.borderStyle,
+      openDivDisplay: open ? openSidebarStyle.openDiv.display : closedSidebarStyle.openDiv.display,
+      openDivOpacity: open ? openSidebarStyle.openDiv.opacity : closedSidebarStyle.openDiv.opacity,
+      closedDivDisplay: open ? openSidebarStyle.closedDiv.display : closedSidebarStyle.closedDiv.display,
+      closedDivOpacity: open ? openSidebarStyle.closedDiv.opacity : closedSidebarStyle.closedDiv.opacity,
+    },
+    config: {
+      duration: 500,
+    },
+  });
+
   return (
-    <aside
-      ref={asideRef}
-      className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border duration-700 transition-width overflow-hidden w-1/5`}
+    <animated.aside
+      style={{ width: animation.sidebarWidth }}
+      className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border overflow-hidden w-1/5`}
     >
-      <IconOnlyButton buttonRef={buttonRef} onClick={toggleSidebarState} text={updateButtonText} icon={<ChevronLeft />} />
-      <ClosedSidebar ref={divClosedRef} handleClick={handleClosedButtonClick} sections={SectionType} />
-      <div ref={divOpenRef} className="flex flex-col h-full transition-opacity duration-700">
+      <AnimatedIconOnlyButton
+        style={{ transform: animation.iconTransform, borderStyle: animation.iconBorderStyle }}
+        className="z-10"
+        onClick={toggleSidebarState}
+        text={open ? "Close sidebar" : "Open sidebar"}
+        icon={<ChevronLeft />}
+      />
+      <AnimatedClosedSidebar
+        style={{ display: animation.closedDivDisplay, opacity: animation.closedDivOpacity }}
+        handleClick={handleClosedButtonClick}
+        sections={SectionType}
+      />
+      <animated.div style={{ display: animation.openDivDisplay, opacity: animation.openDivOpacity }} className="flex flex-col w-80 h-full absolute">
         <SidebarSection
           title={"Instructions"}
-          open={openSection === SectionType.instructions}
-          onClick={() => setOpenSection(SectionType.instructions)}
+          open={activeSection === SectionType.instructions}
+          onClick={() => setActiveSection(SectionType.instructions)}
         >
           <InstructionSection {...instructions} />
         </SidebarSection>
-        <SidebarSection title={"Hints"} border={true} open={openSection === SectionType.hints} onClick={() => setOpenSection(SectionType.hints)}>
+        <SidebarSection title={"Hints"} border={true} open={activeSection === SectionType.hints} onClick={() => setActiveSection(SectionType.hints)}>
           <HintSection {...hints} />
         </SidebarSection>
         <SidebarSection
           title={"Resources"}
           border={true}
-          open={openSection === SectionType.resources}
-          onClick={() => setOpenSection(SectionType.resources)}
+          open={activeSection === SectionType.resources}
+          onClick={() => setActiveSection(SectionType.resources)}
         >
           <ResourceSection resources={resources} />
         </SidebarSection>
-      </div>
-    </aside>
+      </animated.div>
+    </animated.aside>
   );
 };
 

@@ -79,6 +79,15 @@ build:prisma:
     - master
     - merge_request
 
+production-dependencies:prisma:
+  extends:
+    - .production-dependencies
+  variables:
+    PROJECT_PATH: packages/prisma
+  only:
+    - develop
+    - master
+
 #-----------------------------------
 # Submission Checker
 #-----------------------------------
@@ -212,7 +221,12 @@ production-dependencies:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --productionn --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+      - packages/prisma/client/query-engine-*
+    expire_in: 1 day
   only:
     - master
     - develop
@@ -330,7 +344,7 @@ build:import-challenges:
     PROJECT_PATH: services/import-challenges
   artifacts:
     paths:
-      - $PROJECT_PATH/.next
+      - $PROJECT_PATH/dist
     expire_in: 1 day
   only:
     - master
@@ -393,6 +407,8 @@ deploy:
     - docker
   stage: deploy
   needs:
+    - build:prisma
+    - production-dependencies:prisma
     - build:api
     - production-dependencies:api
     - production-dependencies:database-migration
