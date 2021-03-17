@@ -20,4 +20,27 @@ describe("hint service", () => {
 
     expect((await service.findForLevel(level.id)).length).toEqual(2);
   });
+
+  it("can get a hint by id", async () => {
+    const prisma = getPrismaService();
+    const service = new HintService(prisma);
+    const level = await prisma.level.create({
+      data: {
+        instructions: "",
+        tldr: "",
+        challenge: { create: { name: "level" } },
+        hints: { create: [{ content: "1" }, { content: "2" }] },
+      },
+      include: { hints: {} },
+    });
+
+    expect(await service.findOneById(level.hints[0].id)).toHaveProperty("id", level.hints[0].id);
+  });
+
+  it("returns null when trying to get an not existing hint", async () => {
+    const prisma = getPrismaService();
+    const service = new HintService(prisma);
+
+    expect(await service.findOneById("asdf")).toBeFalsy();
+  });
 });

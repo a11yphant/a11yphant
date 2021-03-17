@@ -1,14 +1,14 @@
 import { SectionType } from "app/components/challenge/Sidebar";
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
-interface ClosedSidebarProps {
+interface ClosedSidebarProps extends HTMLAttributes<HTMLDivElement> {
   handleClick: (sectionType: SectionType) => void;
   sections: typeof SectionType;
 }
 
-const ClosedSidebar = React.forwardRef<HTMLDivElement, ClosedSidebarProps>(({ handleClick, sections }, ref) => {
+const ClosedSidebar: React.FunctionComponent<ClosedSidebarProps> = ({ handleClick, sections, className, ...props }) => {
   return (
-    <div ref={ref} className="hidden h-full flex-col justify-around transition-opacity duration-700">
+    <div {...props} className={`flex flex-col h-full justify-around ${className}`}>
       {Object.values(sections).map((section: SectionType) => (
         <div
           key={section}
@@ -27,6 +27,6 @@ const ClosedSidebar = React.forwardRef<HTMLDivElement, ClosedSidebarProps>(({ ha
       ))}
     </div>
   );
-});
+};
 
 export default ClosedSidebar;
