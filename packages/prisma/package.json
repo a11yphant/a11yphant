@@ -60,7 +60,7 @@
     "prisma": "2.19.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.6",
-    "ts-jest": "26.5.0",
+    "ts-jest": "26.5.4",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
     "typescript": "4.1.3"
