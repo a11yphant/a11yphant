@@ -373,7 +373,7 @@ deploy-production:
   variables:
     WORKSPACE: production
   environment:
-    name: staging
+    name: production
     # url: https://example.com
   only:
     - master
