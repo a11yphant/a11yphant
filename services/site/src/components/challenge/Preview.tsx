@@ -31,7 +31,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
-    <div className={`${classes} preview-container box-border relative border-2 rounded-lg border-primary py-2 px-4`}>
+    <div className={`${classes} box-border relative border-2 rounded-lg border-primary py-2 px-4`}>
       <h3 className="text-primary mb-4">{heading}</h3>
       <iframe className="w-full h-auto" srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJavascriptCode}</script>`} />
     </div>
