@@ -160,6 +160,9 @@ production-dependencies:api:
     - .production-dependencies
   variables:
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/node_modules
@@ -175,6 +178,9 @@ build:api:
     - .build
   variables:
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -273,6 +279,9 @@ production-dependencies:import-challenges:
     - .production-dependencies
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/node_modules
@@ -288,6 +297,9 @@ build:import-challenges:
     - .build
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
