@@ -24,12 +24,21 @@ const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
     setUsedHints((prevUsedHints) => ++prevUsedHints);
   };
 
+  const displayAvailableHints = (maxHints: number, usedHints: number): String => {
+    if (usedHints === 0) {
+      return `You can unlock ${maxHints} hints by clicking on the button below.`;
+    } else if (usedHints > 0 && usedHints !== maxHints && maxHints - usedHints !== 1) {
+      return `You can unlock ${maxHints - usedHints} more hints.`;
+    } else if (usedHints > 0 && maxHints - usedHints === 1) {
+      return `You can unlock ${maxHints - usedHints} more hint.`;
+    } else {
+      return "There are no more hints to unlock.";
+    }
+  };
+
   return (
     <div className="flex-auto overflow-y-auto mt-10 text-center px-8">
-      {hints.length === 0 && <p>You can unlock {maxHints} hints by clicking on the button below.</p>}
-      {hints.length > 0 && usedHints !== maxHints && maxHints - usedHints !== 1 && <p>You can unlock {maxHints - usedHints} more hints.</p>}
-      {hints.length > 0 && maxHints - usedHints === 1 && <p>You can unlock {maxHints - usedHints} more hint.</p>}
-      {hints.length > 0 && maxHints === usedHints && <p>There are no more hints to unlock.</p>}
+      <p>{displayAvailableHints(maxHints, usedHints)}</p>
 
       {hints.length > 0 && (
         <ul>
