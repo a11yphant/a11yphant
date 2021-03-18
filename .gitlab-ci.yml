@@ -368,7 +368,7 @@ deploy-review:
   extends:
     - .deploy
   variables:
-    WORKSPACE: $CI_COMMIT_REF_SLUG
+   WORKSPACE: review-${CI_MERGE_REQUEST_IID}
   environment:
     name: review/$CI_COMMIT_REF_NAME
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
@@ -401,7 +401,7 @@ deploy-production:
 stop-environment:
   stage: deploy
   variables:
-    WORKSPACE: $CI_COMMIT_REF_SLUG
+    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
