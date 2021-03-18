@@ -9,7 +9,6 @@ cd $SOURCE_DIR
 zip -rqX lambda.zip \
     node_modules \
     dist \
-    entrypoint.js \
     package.json
 
 echo "{ \"hash\": \"$(cat lambda.zip | md5sum | cut -d " " -f 1)\"}"

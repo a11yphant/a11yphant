@@ -161,7 +161,13 @@ production-dependencies:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+      - packages/prisma/client/query-engine-*
+    expire_in: 1 day
   only:
     - master
     - develop
@@ -172,6 +178,10 @@ build:api:
     - .build
   variables:
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -271,7 +281,13 @@ production-dependencies:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+      - packages/prisma/client/query-engine-*
+    expire_in: 1 day
   only:
     - master
     - develop
@@ -282,6 +298,10 @@ build:import-challenges:
     - .build
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -352,7 +372,7 @@ deploy-review:
   environment:
     name: review/$CI_COMMIT_REF_NAME
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
-    on_stop: stop_review
+    on_stop: stop-environment
   only:
     - merge_request
 
@@ -378,7 +398,7 @@ deploy-production:
   only:
     - master
 
-stop_review:
+stop-environment:
   stage: deploy
   variables:
     WORKSPACE: $CI_COMMIT_REF_SLUG
@@ -395,3 +415,5 @@ stop_review:
   environment:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
+  only:
+    - merge_request

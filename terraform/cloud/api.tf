@@ -23,7 +23,7 @@ resource "aws_lambda_function" "api" {
 
    handler = "entrypoint.handle"
    runtime = "nodejs12.x"
-   timeout = 10
+   timeout = 30
 
    role = aws_iam_role.api_role.arn
 
@@ -35,7 +35,7 @@ resource "aws_lambda_function" "api" {
       API_GRAPHQL_DEBUG = 1
       API_GRAPHQL_PLAYGROUND = 1
       API_GRAPHQL_SCHEMA_INTROSPECTION = 1
-      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?pool_timeout=30"
+      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
     }
   }
 

@@ -42,7 +42,7 @@ resource "aws_lambda_function" "import_challenges" {
    s3_key    = aws_s3_bucket_object.import_challenges_code_zip.id
    source_code_hash = data.external.import_challenges_code_zip.result.hash
 
-   handler = "entrypoint.handle"
+   handler = "dist/main.handle"
    runtime = "nodejs14.x"
    timeout = 60
 
@@ -52,7 +52,7 @@ resource "aws_lambda_function" "import_challenges" {
     variables = {
       NODE_ENV = "production"
       NO_COLOR = 1
-      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?pool_timeout=30"
+      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
       IMPORT_CHALLENGES_CHALLENGES_LOCATION = "/tmp/challenges"
       IMPORT_CHALLENGES_IS_LAMBDA = 1
     }

@@ -3,6 +3,8 @@
     - docker
   stage: deploy
   needs:
+    - build:prisma
+    - production-dependencies:prisma
     - build:api
     - production-dependencies:api
     - production-dependencies:database-migration
