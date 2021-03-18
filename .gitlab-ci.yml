@@ -368,7 +368,7 @@ deploy-review:
   extends:
     - .deploy
   variables:
-    WORKSPACE: $CI_COMMIT_REF_SLUG
+   WORKSPACE: review-${CI_MERGE_REQUEST_IID}
   environment:
     name: review/$CI_COMMIT_REF_NAME
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
@@ -401,14 +401,14 @@ deploy-production:
 stop-environment:
   stage: deploy
   variables:
-    WORKSPACE: $CI_COMMIT_REF_SLUG
+    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy
+    - terraform -chdir=terraform/cloud destroy -var="current_version=$WORKSPACE" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
     - terraform -chdir=terraform/cloud workspace select default
     - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
   when: manual
