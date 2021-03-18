@@ -121,7 +121,7 @@ const Challenge: React.FunctionComponent = () => {
               },
             }}
           />
-          <Preview classes="w-full h-2/5" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
+          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
           <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
             <Button
               full

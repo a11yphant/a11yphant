@@ -14,31 +14,42 @@ const allHints = [
 ];
 
 const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
-  const [usedHints, setUsedHints] = useState<number>(0);
   const [hints, setHints] = useState<string[]>([]);
 
   const loadNextHint = (): void => {
-    const nextHint = allHints[usedHints];
+    const nextHint = allHints[hints.length];
 
     setHints((prevHints) => [...prevHints, nextHint]);
-    setUsedHints((prevUsedHints) => ++prevUsedHints);
+  };
+
+  const displayAvailableHints = (maxHints: number, usedHints: number): String => {
+    if (usedHints === 0) {
+      return `You can unlock ${maxHints} hints by clicking on the button below.`;
+    } else if (usedHints > 0 && usedHints !== maxHints && maxHints - usedHints !== 1) {
+      return `You can unlock ${maxHints - usedHints} more hints.`;
+    } else if (usedHints > 0 && maxHints - usedHints === 1) {
+      return `You can unlock ${maxHints - usedHints} more hint.`;
+    } else {
+      return "There are no more hints to unlock.";
+    }
   };
 
   return (
     <div className="flex-auto overflow-y-auto mt-10 text-center px-8">
-      {hints.length === 0 && <p>You can unlock hints by clicking on the button below.</p>}
+      <p>{displayAvailableHints(maxHints, hints.length)}</p>
+
       {hints.length > 0 && (
         <ul>
           {hints.map((hint, idx) => (
-            <li>
+            <li key={hint}>
               <h4 className="text-primary">Hint {idx + 1}</h4>
               <p>{hint}</p>
             </li>
           ))}
         </ul>
       )}
-      {usedHints < maxHints && (
-        <IconButton onClick={loadNextHint} text={usedHints === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
+      {hints.length < maxHints && (
+        <IconButton onClick={loadNextHint} text={hints.length === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
       )}
     </div>
   );
