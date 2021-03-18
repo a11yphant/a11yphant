@@ -181,6 +181,7 @@ build:api:
   before_script:
     - npm ci --ignore-scripts
     - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -300,6 +301,7 @@ build:import-challenges:
   before_script:
     - npm ci --ignore-scripts
     - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
