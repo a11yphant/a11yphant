@@ -13,14 +13,20 @@ module.exports = {
       autorestart: true,
     },
     {
+      name: "a11y-challenges-import-challenges",
+      script: "npm run dotenv -- npm run dev:import-challenges",
+      namespace: "a11y-challenges",
+      autorestart: true,
+    },
+    {
       name: "a11y-challenges-submission-checker",
       script: "npm run dotenv -- npm run dev:submission-checker",
       namespace: "a11y-challenges",
       autorestart: true,
     },
     {
-      name: "a11y-challenges-import-challenges",
-      script: "npm run dotenv -- npm run dev:import-challenges",
+      name: "a11y-challenges-submission-renderer",
+      script: "npm run dotenv -- npm run dev:submission-renderer",
       namespace: "a11y-challenges",
       autorestart: true,
     },

@@ -1,58 +1,52 @@
 {
-  "name": "@a11y-challenges/import-challenges",
+  "name": "@a11y-challenges/submission-renderer",
   "version": "0.0.1",
   "description": "",
-  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
-  "private": true,
-  "license": "UNLICENSED",
+  "main": "index.js",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch --preserveWatchOutput",
     "start:debug": "nest start --debug --watch --preserveWatchOutput",
     "start:prod": "node dist/main",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
-    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.{ts,json}\"",
+    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prisma:generate": "prisma generate"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@a11y-challenges/prisma": "file:../../packages/prisma",
     "@nestjs/common": "7.6.14",
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.14",
-    "@prisma/client": "2.19.0",
-    "js-yaml": "4.0.0",
+    "@nestjs/platform-express": "7.6.14",
+    "@vendia/serverless-express": "4.3.4",
+    "express": "4.17.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "6.6.6",
-    "unzipper": "0.10.11"
+    "rxjs": "6.6.6"
   },
   "devDependencies": {
     "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
-    "@golevelup/ts-jest": "0.3.1",
+    "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "7.5.6",
-    "@nestjs/schematics": "7.3.0",
-    "@nestjs/testing": "7.6.14",
+    "@nestjs/schematics": "7.2.9",
+    "@nestjs/testing": "7.6.13",
     "@types/aws-lambda": "8.10.72",
-    "@types/jest": "26.0.21",
-    "@types/js-yaml": "4.0.0",
-    "@types/mock-fs": "4.13.0",
-    "@types/node": "14.14.35",
-    "@typescript-eslint/eslint-plugin": "4.18.0",
-    "@typescript-eslint/parser": "4.18.0",
+    "@types/express": "4.17.11",
+    "@types/jest": "26.0.20",
+    "@types/node": "14.14.31",
+    "@types/supertest": "2.0.10",
+    "@typescript-eslint/eslint-plugin": "4.17.0",
+    "@typescript-eslint/parser": "4.17.0",
     "aws-lambda": "1.0.6",
-    "aws-sdk": "2.867.0",
-    "aws-sdk-mock": "5.1.0",
-    "dotenv": "8.2.0",
-    "eslint": "7.22.0",
+    "eslint": "7.21.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
@@ -60,11 +54,10 @@
     "eslint-plugin-unused-imports": "1.1.0",
     "jest": "26.6.3",
     "jest-junit": "12.0.0",
-    "mock-fs": "4.13.0",
     "prettier": "2.2.1",
-    "prisma": "2.19.0",
-    "ts-jest": "26.5.4",
-    "ts-loader": "8.0.18",
+    "supertest": "6.1.3",
+    "ts-jest": "26.5.3",
+    "ts-loader": "8.0.17",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
     "typescript": "4.2.3"
@@ -82,7 +75,7 @@
     ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.ts$": "ts-jest"
+      "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.(t|j)s"
@@ -97,7 +90,6 @@
       "text-summary",
       "cobertura"
     ],
-    "globalSetup": "<rootDir>/test/setup.ts",
     "coverageDirectory": "<rootDir>"
   }
 }

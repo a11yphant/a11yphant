@@ -1,11 +1,17 @@
-import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { INestApplicationContext } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
 
-import { AppModule } from './app.module';
+import { AppModule } from "./app.module";
 
-async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
-  const config = app.get<ConfigService>(ConfigService);
-  await app.listen(config.get<number>('app.port'));
+async function bootstrap(): Promise<INestApplicationContext> {
+  const app = await NestFactory.createApplicationContext(AppModule);
+
+  await app.init();
+
+  return app;
 }
-bootstrap();
+const app = bootstrap();
+
+export async function handle(): Promise<void> {
+  await app;
+}
