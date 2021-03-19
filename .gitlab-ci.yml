@@ -4,6 +4,7 @@ include:
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
   - /ci/templates/gitlab-ci-production-dependencies.yml
+  - /ci/templates/gitlab-ci-deploy.yml
 
 cache:
   key: $CI_COMMIT_REF_SLUG
@@ -87,6 +88,7 @@ production-dependencies:prisma:
   only:
     - develop
     - master
+    - merge_request
 
 #-----------------------------------
 # Submission Checker
@@ -221,7 +223,8 @@ production-dependencies:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/node_modules
@@ -230,19 +233,25 @@ production-dependencies:api:
   only:
     - master
     - develop
+    - merge_request
 
 build:api:
   extends:
     - .build
   variables:
     PROJECT_PATH: services/api
-  only:
-    - master
-    - develop
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
     expire_in: 1 day
+  only:
+    - master
+    - develop
+    - merge_request
 
 #-----------------------------------
 # Site
@@ -280,6 +289,7 @@ build:site:
   only:
     - master
     - develop
+    - merge_request
 
 production-dependencies:site:
   extends:
@@ -289,6 +299,7 @@ production-dependencies:site:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Import Challenges
@@ -332,16 +343,27 @@ production-dependencies:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
+  artifacts:
+    paths:
+      - $PROJECT_PATH/node_modules
+      - packages/prisma/client/query-engine-*
+    expire_in: 1 day
   only:
-  - master
-  - develop
+    - master
+    - develop
+    - merge_request
 
 build:import-challenges:
   extends:
     - .build
   variables:
     PROJECT_PATH: services/import-challenges
+  before_script:
+    - npm ci --ignore-scripts
+    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -349,6 +371,7 @@ build:import-challenges:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Database Migrations
@@ -369,6 +392,7 @@ production-dependencies:database-migration:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Terraform
@@ -402,33 +426,56 @@ terraform:local:validate:
 # Deployment
 #-----------------------------------
 
-deploy:
-  tags:
-    - docker
+deploy-review:
+  extends:
+    - .deploy
+  variables:
+   WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    # url: https://$CI_ENVIRONMENT_SLUG.example.com
+    on_stop: stop-environment
+  only:
+    - merge_request
+
+deploy-staging:
+  extends:
+    - .deploy
+  variables:
+    WORKSPACE: staging
+  environment:
+    name: staging
+    # url: https://staging.example.com
+  only:
+    - develop
+
+deploy-production:
+  extends:
+    - .deploy
+  variables:
+    WORKSPACE: production
+  environment:
+    name: production
+    # url: https://example.com
+  only:
+    - master
+
+stop-environment:
   stage: deploy
-  needs:
-    - build:prisma
-    - production-dependencies:prisma
-    - build:api
-    - production-dependencies:api
-    - production-dependencies:database-migration
-    - build:site
-    - production-dependencies:site
-    - build:import-challenges
-    - production-dependencies:import-challenges
-    - build:submission-checker
-    - production-dependencies:submission-checker
-    - build:submission-renderer
-    - production-dependencies:submission-renderer
+  variables:
+    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
-    - apk update
-    - apk add zip
     - terraform -chdir=terraform/cloud init
-    - terraform -chdir=terraform/cloud workspace select $CI_COMMIT_REF_SLUG
   script:
-    - terraform -chdir=terraform/cloud apply -var="current_version=$CI_COMMIT_REF_NAME" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+    - terraform -chdir=terraform/cloud workspace select $WORKSPACE
+    - terraform -chdir=terraform/cloud destroy -var="current_version=$WORKSPACE" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+    - terraform -chdir=terraform/cloud workspace select default
+    - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
   only:
-    - master
-    - develop
+    - merge_request

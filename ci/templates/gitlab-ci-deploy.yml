@@ -1,0 +1,26 @@
+.deploy:
+  tags:
+    - docker
+  stage: deploy
+  needs:
+    - build:prisma
+    - production-dependencies:prisma
+    - build:api
+    - production-dependencies:api
+    - production-dependencies:database-migration
+    - build:site
+    - production-dependencies:site
+    - build:import-challenges
+    - production-dependencies:import-challenges
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {} # disable cache
+  variables:
+    TF_IN_AUTOMATION: 1
+  before_script:
+    - apk update
+    - apk add zip
+    - terraform -chdir=terraform/cloud init
+  script:
+    - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
+    - terraform -chdir=terraform/cloud workspace select $WORKSPACE
+    - terraform -chdir=terraform/cloud apply -auto-approve -var="current_version=$WORKSPACE" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD"

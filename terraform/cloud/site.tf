@@ -28,7 +28,7 @@ resource "aws_lambda_function" "site" {
 
    handler = "entrypoint.handler"
    runtime = "nodejs12.x"
-   timeout = 10
+   timeout = 30
 
    role = aws_iam_role.site_role.arn
 
@@ -36,7 +36,7 @@ resource "aws_lambda_function" "site" {
     variables = {
       NODE_ENV = "production"
       NO_COLOR = 1
-      SITE_GRAPHQL_ENDPOINT = "${aws_apigatewayv2_api.api_http_api.api_endpoint}/graphql"
+      NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT = "${aws_apigatewayv2_api.api_http_api.api_endpoint}/graphql"
     }
   }
 

@@ -5,9 +5,10 @@ interface PreviewProps {
   cssCode: string;
   htmlCode: string;
   javascriptCode: string;
+  heading: string;
 }
 
-const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, javascriptCode }) => {
+const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, javascriptCode, heading }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
@@ -30,10 +31,10 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
-    <iframe
-      className={`${classes} border-2 rounded-lg border-primary py-2 px-4 box-border`}
-      srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
-    />
+    <div className={`${classes} box-border relative border-2 rounded-lg border-primary py-2 px-4`}>
+      <h3 className="text-primary mb-4">{heading}</h3>
+      <iframe className="w-full h-auto" srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJavascriptCode}</script>`} />
+    </div>
   );
 };
 
