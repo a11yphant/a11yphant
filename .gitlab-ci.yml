@@ -135,6 +135,7 @@ build:submission-checker:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Submission Renderer
