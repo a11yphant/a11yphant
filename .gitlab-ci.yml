@@ -122,6 +122,7 @@ production-dependencies:submission-checker:
   only:
     - master
     - develop
+    - merge_request
 
 build:submission-checker:
   extends:
@@ -135,6 +136,7 @@ build:submission-checker:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # Submission Renderer
@@ -165,6 +167,7 @@ production-dependencies:submission-renderer:
   only:
     - master
     - develop
+    - merge_request
 
 build:submission-renderer:
   extends:
@@ -178,6 +181,7 @@ build:submission-renderer:
   only:
     - master
     - develop
+    - merge_request
 
 #-----------------------------------
 # API
