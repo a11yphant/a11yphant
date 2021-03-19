@@ -1,5 +1,6 @@
 variable "postgres_cluster_root_user" {
-  type = string
+  type    = string
+  default = "root"
 }
 
 variable "postgres_cluster_root_password" {
