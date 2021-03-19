@@ -47,7 +47,6 @@ lint:prisma:
 test:prisma:
   extends:
     - .test
-    - .run_on_prisma_change
   services:
     - postgres
   script:
@@ -59,6 +58,10 @@ test:prisma:
     POSTGRES_PASSWORD: secret
     DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
     PROJECT_PATH: packages/prisma
+  only:
+    - master
+    - develop
+    - merge_request
 
 build:prisma:
   tags:
@@ -104,9 +107,12 @@ lint:submission-checker:
 test:submission-checker:
   extends:
     - .test
-    - .run_on_submission-checker_change
   variables:
     PROJECT_PATH: services/submission-checker
+  only:
+    - master
+    - develop
+    - merge_request
 
 production-dependencies:submission-checker:
   extends:
@@ -204,7 +210,6 @@ lint:api:
 test:api:
   extends:
     - .test
-    - .run_on_api_change
   needs:
    - build:prisma
   services:
@@ -219,6 +224,10 @@ test:api:
     - npm ci --ignore-scripts
     - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+  only:
+    - master
+    - develop
+    - merge_request
 
 production-dependencies:api:
   extends:
@@ -272,11 +281,14 @@ lint:site:
 test:site:
   extends:
     - .test
-    - .run_on_site_change
   needs:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
+  only:
+    - master
+    - develop
+    - merge_request
 
 build:site:
   extends:
@@ -324,7 +336,6 @@ lint:import-challenges:
 test:import-challenges:
   extends:
     - .test
-    - .run_on_import_challenges_change
   needs:
    - build:prisma
   variables:
@@ -339,6 +350,10 @@ test:import-challenges:
     - npm ci --ignore-scripts
     - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+  only:
+    - master
+    - develop
+    - merge_request
 
 production-dependencies:import-challenges:
   extends:
