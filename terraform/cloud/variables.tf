@@ -1,7 +1,3 @@
-variable "current_version" {
-  type = string
-}
-
 variable "postgres_cluster_root_user" {
   type = string
 }
