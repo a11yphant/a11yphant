@@ -9,35 +9,35 @@ data "external" "database_migration_code_zip" {
 }
 
 resource "aws_s3_bucket_object" "prisma_migrations" {
-    bucket = aws_s3_bucket.prisma.id
-    key    = "${var.current_version}.zip"
+    bucket = aws_s3_bucket.resources.id
+    key    = "prisma/prisma.zip"
     source = "${path.module}/../../packages/prisma/prisma.zip"
     etag   = data.archive_file.prisma_migrations.output_md5
 
     depends_on = [ 
         data.archive_file.prisma_migrations,
-        aws_s3_bucket.prisma,
+        aws_s3_bucket.resources,
         aws_lambda_function.database_migration,
         aws_s3_bucket_notification.prisma_changed_notification
      ]
 }
 
 resource "aws_s3_bucket_object" "database_migration_code_zip" {
-  bucket = aws_s3_bucket.code.id
-  key    = "database_migration/${var.current_version}.zip"
+  bucket = aws_s3_bucket.resources.id
+  key    = "code/lambdas/database-migration.zip"
   source = "${path.module}/../../services/database-migration/lambda.zip"
   etag = data.external.database_migration_code_zip.result.hash
 
   depends_on = [
     data.external.database_migration_code_zip,
-    aws_s3_bucket.code
+    aws_s3_bucket.resources
   ]
 }
 
 resource "aws_lambda_function" "database_migration" {
    function_name = "${terraform.workspace}-database-migration"
 
-   s3_bucket = aws_s3_bucket.code.id
+   s3_bucket = aws_s3_bucket.resources.id
    s3_key    = aws_s3_bucket_object.database_migration_code_zip.id
    source_code_hash = data.external.database_migration_code_zip.result.hash
 
@@ -109,16 +109,17 @@ resource "aws_lambda_permission" "allow_prisma_bucket" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.database_migration.arn
   principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.prisma.arn
+  source_arn    = aws_s3_bucket.resources.arn
 }
 
 resource "aws_s3_bucket_notification" "prisma_changed_notification" {
-  bucket = aws_s3_bucket.prisma.id
+  bucket = aws_s3_bucket.resources.id
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.database_migration.arn
     events              = ["s3:ObjectCreated:*"]
     filter_suffix       = ".zip"
+    filter_prefix       = "prisma/"
   }
 
   depends_on = [aws_lambda_permission.allow_prisma_bucket]
@@ -138,7 +139,7 @@ resource "aws_iam_policy" "read_prisma_bucket_object" {
       "Action": [
         "s3:GetObject"
       ],
-      "Resource": "${aws_s3_bucket.prisma.arn}/*"
+      "Resource": "${aws_s3_bucket.resources.arn}/*"
     }
   ]
 }

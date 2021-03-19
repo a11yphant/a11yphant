@@ -24,21 +24,21 @@ resource "aws_s3_bucket_object" "challenges" {
 }
 
 resource "aws_s3_bucket_object" "import_challenges_code_zip" {
-  bucket = aws_s3_bucket.code.id
-  key    = "import_challenges/${var.current_version}.zip"
+  bucket = aws_s3_bucket.resources.id
+  key    = "code/lambdas/import-challenges.zip"
   source = "${path.module}/../../services/import-challenges/lambda.zip"
   etag = data.external.import_challenges_code_zip.result.hash
 
   depends_on = [
     data.external.import_challenges_code_zip,
-    aws_s3_bucket.code
+    aws_s3_bucket.resources
   ]
 }
 
 resource "aws_lambda_function" "import_challenges" {
    function_name = "${terraform.workspace}-import-challenges"
 
-   s3_bucket = aws_s3_bucket.code.id
+   s3_bucket = aws_s3_bucket.resources.id
    s3_key    = aws_s3_bucket_object.import_challenges_code_zip.id
    source_code_hash = data.external.import_challenges_code_zip.result.hash
 
