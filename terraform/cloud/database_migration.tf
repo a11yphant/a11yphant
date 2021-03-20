@@ -44,7 +44,7 @@ resource "aws_lambda_function" "database_migration" {
     variables = {
       NODE_ENV = "production"
       DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
-      S3_BUKCET = aws_s3_bucket.resources.id
+      S3_BUCKET = aws_s3_bucket.resources.id
       S3_KEY = aws_s3_bucket_object.prisma_migrations.id
     }
   }
