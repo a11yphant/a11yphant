@@ -14,13 +14,6 @@ resource "aws_s3_bucket_object" "challenges" {
     key    = "challenges/challenges.zip"
     source = "${path.module}/../../challenges.zip"
     etag   = data.archive_file.challenges.output_md5
-
-    depends_on = [ 
-        data.archive_file.challenges,
-        aws_s3_bucket.resources,
-        aws_lambda_function.import_challenges,
-        aws_s3_bucket_notification.challenges_changed_notification
-     ]
 }
 
 resource "aws_s3_bucket_object" "import_challenges_code_zip" {
@@ -28,11 +21,6 @@ resource "aws_s3_bucket_object" "import_challenges_code_zip" {
   key    = "code/lambdas/import-challenges.zip"
   source = "${path.module}/../../services/import-challenges/lambda.zip"
   etag = data.external.import_challenges_code_zip.result.hash
-
-  depends_on = [
-    data.external.import_challenges_code_zip,
-    aws_s3_bucket.resources
-  ]
 }
 
 resource "aws_lambda_function" "import_challenges" {
@@ -55,6 +43,8 @@ resource "aws_lambda_function" "import_challenges" {
       DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
       IMPORT_CHALLENGES_CHALLENGES_LOCATION = "/tmp/challenges"
       IMPORT_CHALLENGES_IS_LAMBDA = 1
+      IMPORT_CHALLENGES_S3_BUCKET = aws_s3_bucket.resources.id
+      IMPORT_CHALLENGES_S3_OBJECT_KEY = aws_s3_bucket_object.challenges.id
     }
   }
 
@@ -106,20 +96,6 @@ resource "aws_lambda_permission" "allow_resources_bucket" {
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.resources.arn
 }
-
-resource "aws_s3_bucket_notification" "challenges_changed_notification" {
-  bucket = aws_s3_bucket.resources.id
-
-  lambda_function {
-    lambda_function_arn = aws_lambda_function.import_challenges.arn
-    events              = ["s3:ObjectCreated:*"]
-    filter_suffix       = ".zip"
-    filter_prefix       = "challenges/"
-  }
-
-  depends_on = [aws_lambda_permission.allow_resources_bucket]
-}
-
 resource "aws_iam_policy" "read_resources_bucket_object" {
   name        = "${terraform.workspace}-read-resources-bucket-object"
   path        = "/"
@@ -144,4 +120,17 @@ EOF
 resource "aws_iam_role_policy_attachment" "import_challenges_read_resources_bucket_object" {
   role       = aws_iam_role.import_challenges_role.name
   policy_arn = aws_iam_policy.read_resources_bucket_object.arn
+}
+
+data "aws_lambda_invocation" "run_challenge_import" {
+  function_name = aws_lambda_function.import_challenges.function_name
+
+  input = "{}"
+
+  depends_on = [
+    aws_iam_role_policy_attachment.import_challenges_read_resources_bucket_object,
+    aws_s3_bucket_object.challenges,
+    aws_lambda_function.import_challenges,
+    data.aws_lambda_invocation.run_database_migrations
+  ]
 }
