@@ -16,6 +16,8 @@
     "package-dependencies:site": "npm --prefix services/site install",
     "package-dependencies:submission-checker": "npm --prefix services/submission-checker install",
     "package-dependencies:submission-renderer": "npm --prefix services/submission-renderer install",
+    "build-packages": "npm-run-all build-packages:**",
+    "build-packages:prisma": "npm --prefix packages/prisma run build && npm --prefix packages/prisma run postinstall",
     "dotenv": "dotenv",
     "lint": "npm-run-all lint:**",
     "lint:api": "npm --prefix services/api run lint",
@@ -26,7 +28,7 @@
     "lint:submission-renderer": "npm --prefix services/submission-renderer run lint",
     "lint-staged": "lint-staged",
     "start": "npm run dev",
-    "predev": "npm run tf:apply",
+    "predev": "npm run build-packages && npm run tf:apply && npm run db:migrate",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
     "stop": "pm2 stop a11y-challenges && pm2 del a11y-challenges",
@@ -43,7 +45,9 @@
     "tf": "docker-compose run --rm terraform -chdir=terraform/local",
     "tf:init": "npm run tf init",
     "tf:apply": "npm run tf apply -- -auto-approve",
-    "tf:destroy": "npm run tf destroy -- -auto-approve"
+    "tf:destroy": "npm run tf destroy -- -auto-approve",
+    "tf:clear-state": "rm -f terraform/local/terraform.tfstate*",
+    "db:migrate": "docker-compose up -d postgres && npm --prefix packages/prisma run prisma:migrate && docker-compose down"
   },
   "repository": {
     "type": "git",
