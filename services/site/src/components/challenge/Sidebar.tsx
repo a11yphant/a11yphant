@@ -1,9 +1,9 @@
 import ClosedSidebar from "app/components/challenge/sidebar/ClosedSidebar/ClosedSidebar";
-import HintSection, { Hints } from "app/components/challenge/sidebar/Sections/HintSection";
+import HintSection from "app/components/challenge/sidebar/Sections/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
 import ResourceSection from "app/components/challenge/sidebar/Sections/ResourceSection";
 import SidebarSection from "app/components/challenge/sidebar/SidebarSection";
-import { Resource } from "app/generated/graphql";
+import { HintIdFragment, Resource } from "app/generated/graphql";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
@@ -13,7 +13,7 @@ import ChevronLeft from "../icons/ChevronLeft";
 interface SidebarProps {
   classes: string;
   instructions: Instructions;
-  hints: Hints;
+  hints: HintIdFragment[];
   resources: Resource[];
 }
 
@@ -175,7 +175,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
           <InstructionSection {...instructions} />
         </SidebarSection>
         <SidebarSection title={"Hints"} border={true} open={activeSection === SectionType.hints} onClick={() => setActiveSection(SectionType.hints)}>
-          <HintSection {...hints} />
+          <HintSection hints={hints} />
         </SidebarSection>
         <SidebarSection
           title={"Resources"}

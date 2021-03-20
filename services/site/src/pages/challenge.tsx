@@ -54,9 +54,7 @@ const Challenge: React.FunctionComponent = () => {
             tldr: level1.tldr,
             requirements: level1.requirements,
           }}
-          hints={{
-            num: 3,
-          }}
+          hints={level1.hints}
           resources={level1.resources}
         />
         <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">

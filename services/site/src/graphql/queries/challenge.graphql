@@ -1,3 +1,7 @@
+fragment HintId on Hint {
+    id
+}
+
 query challenge ($id: ID!) {
     challenge(id: $id) {
         id
@@ -11,8 +15,7 @@ query challenge ($id: ID!) {
                 title
             }
             hints {
-                id
-                content
+                ...HintId
             }
             resources {
                 id
