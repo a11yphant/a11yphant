@@ -1,0 +1,29 @@
+query challenge ($id: ID!) {
+    challenge(id: $id) {
+        id
+        name
+        levels {
+            id
+            tldr
+            instructions
+            requirements {
+                id
+                title
+            }
+            hints {
+                id
+                content
+            }
+            resources {
+                id
+                title
+                link
+            }
+            code {
+                html
+                css
+                js
+            }
+        }
+    }
+}

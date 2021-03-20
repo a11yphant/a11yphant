@@ -1,8 +1,9 @@
 import ClosedSidebar from "app/components/challenge/sidebar/ClosedSidebar/ClosedSidebar";
 import HintSection, { Hints } from "app/components/challenge/sidebar/Sections/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
-import ResourceSection, { Resource } from "app/components/challenge/sidebar/Sections/ResourceSection";
+import ResourceSection from "app/components/challenge/sidebar/Sections/ResourceSection";
 import SidebarSection from "app/components/challenge/sidebar/SidebarSection";
+import { Resource } from "app/generated/graphql";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 

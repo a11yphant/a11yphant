@@ -2,7 +2,7 @@ import CheckboxList from "app/components/challenge/sidebar/NumberedList";
 import React from "react";
 
 export interface Instructions {
-  text: string[];
+  instructions: string;
   tldr: string;
   requirements: Requirement[];
 }
@@ -12,11 +12,11 @@ export interface Requirement {
   title: string;
 }
 
-const InstructionSection: React.FunctionComponent<Instructions> = ({ text, tldr, requirements }) => {
+const InstructionSection: React.FunctionComponent<Instructions> = ({ instructions, tldr, requirements }) => {
   return (
     <div className="flex-auto overflow-y-auto px-8 mb-4">
       <div className="mt-10">
-        {text.map((paragraph) => (
+        {instructions.split("\n").map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
         <p className="text-primary font-bold mt-8">{tldr}</p>
