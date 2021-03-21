@@ -42,7 +42,7 @@ resource "aws_lambda_function" "database_migration" {
    source_code_hash = data.external.database_migration_code_zip.result.hash
 
    handler = "entrypoint.handler"
-   runtime = "nodejs12.x"
+   runtime = "nodejs14.x"
    timeout = 60
 
    role = aws_iam_role.database_migration_role.arn

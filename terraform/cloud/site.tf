@@ -27,7 +27,7 @@ resource "aws_lambda_function" "site" {
    source_code_hash = data.external.site_code_zip.result.hash
 
    handler = "entrypoint.handler"
-   runtime = "nodejs12.x"
+   runtime = "nodejs14.x"
    timeout = 30
 
    role = aws_iam_role.site_role.arn

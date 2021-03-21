@@ -22,7 +22,7 @@ resource "aws_lambda_function" "api" {
    source_code_hash = data.external.api_code_zip.result.hash
 
    handler = "dist/main.handle"
-   runtime = "nodejs12.x"
+   runtime = "nodejs14.x"
    timeout = 30
 
    role = aws_iam_role.api_role.arn
