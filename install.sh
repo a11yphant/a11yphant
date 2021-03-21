@@ -33,7 +33,7 @@ ln -s ./../../.env ./services/submission-renderer/.env
 rm -f ./services/import-challenges/.env
 ln -s ./../../.env ./services/import-challenges/.env
 
-# create nest-js-aws-messaging-transport-strategy symlinks
-rm -f ./packages/nest-js-aws-messaging-transport-strategy/.env
-ln -s ./../../.env ./packages/nest-js-aws-messaging-transport-strategy/.env
+# create nest-js-aws-messaging symlinks
+rm -f ./packages/nest-js-aws-messaging/.env
+ln -s ./../../.env ./packages/nest-js-aws-messaging/.env
 
