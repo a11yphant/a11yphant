@@ -3,21 +3,21 @@ data "external" "submission_checker_code_zip" {
 }
 
 resource "aws_s3_bucket_object" "submission_checker_code_zip" {
-  bucket = aws_s3_bucket.code.id
-  key    = "submission-checker/${var.current_version}.zip"
+  bucket = aws_s3_bucket.resources.id
+  key    = "code/lambdas/submission-checker.zip"
   source = "${path.module}/../../services/submission-checker/lambda.zip"
   etag = data.external.submission_checker_code_zip.result.hash
 
   depends_on = [
     data.external.submission_checker_code_zip,
-    aws_s3_bucket.code
+    aws_s3_bucket.resources
   ]
 }
 
 resource "aws_lambda_function" "submission_checker" {
    function_name = "${terraform.workspace}-submission-checker"
 
-   s3_bucket = aws_s3_bucket.code.id
+   s3_bucket = aws_s3_bucket.resources.id
    s3_key    = aws_s3_bucket_object.submission_checker_code_zip.id
    source_code_hash = data.external.submission_checker_code_zip.result.hash
 

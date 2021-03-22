@@ -3,21 +3,21 @@ data "external" "api_code_zip" {
 }
 
 resource "aws_s3_bucket_object" "api_code_zip" {
-  bucket = aws_s3_bucket.code.id
-  key    = "api/${var.current_version}.zip"
+  bucket = aws_s3_bucket.resources.id
+  key    = "code/lambdas/api.zip"
   source = "${path.module}/../../services/api/lambda.zip"
   etag = data.external.api_code_zip.result.hash
 
   depends_on = [
     data.external.api_code_zip,
-    aws_s3_bucket.code
+    aws_s3_bucket.resources
   ]
 }
 
 resource "aws_lambda_function" "api" {
    function_name = "${terraform.workspace}-api"
 
-   s3_bucket = aws_s3_bucket.code.id
+   s3_bucket = aws_s3_bucket.resources.id
    s3_key    = aws_s3_bucket_object.api_code_zip.id
    source_code_hash = data.external.api_code_zip.result.hash
 

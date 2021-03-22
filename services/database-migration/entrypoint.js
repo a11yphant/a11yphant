@@ -8,13 +8,11 @@ const writeFilePromise = promisify(writeFile);
 
 const s3 = new aws.S3({ httpOptions: { timeout: 3000 } });
 const dbUrl = process.env.DB_URL;
+const bucket = process.env.S3_BUCKET;
+const key = process.env.S3_KEY;
 
-exports.handler = async (event) => {
+exports.handler = async () => {
   console.log("Starting migration");
-
-  const bucket = event.Records[0].s3.bucket.name;
-  const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
-
   console.log(`Loading migrations from S3 (Bucket: ${bucket}, Key: ${key})`);
 
   try {

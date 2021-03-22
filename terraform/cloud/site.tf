@@ -8,21 +8,21 @@ data "external" "site_code_zip" {
 }
 
 resource "aws_s3_bucket_object" "site_code_zip" {
-  bucket = aws_s3_bucket.code.id
-  key    = "site/${var.current_version}.zip"
+  bucket = aws_s3_bucket.resources.id
+  key    = "code/lambdas/site.zip"
   source = "${path.module}/../../services/site/lambda.zip"
   etag = data.external.site_code_zip.result.hash
 
   depends_on = [
     data.external.site_code_zip,
-    aws_s3_bucket.code
+    aws_s3_bucket.resources
   ]
 }
 
 resource "aws_lambda_function" "site" {
    function_name = "${terraform.workspace}-site"
 
-   s3_bucket = aws_s3_bucket.code.id
+   s3_bucket = aws_s3_bucket.resources.id
    s3_key    = aws_s3_bucket_object.site_code_zip.id
    source_code_hash = data.external.site_code_zip.result.hash
 
