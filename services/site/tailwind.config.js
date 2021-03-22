@@ -9,6 +9,7 @@ module.exports = {
         "1/20": "5%",
         "19/20": "95%",
         "18/20": "92.5%",
+        fitContent: "fit-content",
       },
       colors: {
         primaryLight: "#9262FA",
