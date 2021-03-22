@@ -19,6 +19,7 @@ export async function setupDatabase(): Promise<void> {
   const schemaPath = join(__dirname, "../../prisma/schema.prisma");
 
   const client = new PrismaClient({
+    log: ["query"],
     datasources: {
       db: {
         url: getDbUrl().toString(),
