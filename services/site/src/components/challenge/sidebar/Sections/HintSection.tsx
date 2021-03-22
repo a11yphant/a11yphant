@@ -1,55 +1,64 @@
 import IconButton from "app/components/buttons/IconButton";
 import LightBulb from "app/components/icons/LightBulb";
+import { Hint, HintIdFragment, useHintLazyQuery } from "app/generated/graphql";
 import React, { useState } from "react";
 
-export interface Hints {
-  num: number;
+interface HintSectionProps {
+  hints: HintIdFragment[];
 }
 
-// @Todo: replace with api
-const allHints = [
-  "The browser has a native way of handling hyperlinks. You don’t need any JavaScript for that.",
-  "The span element is certainly not the right choice here.",
-  "You should try using the anchor element (<a>) for solving this task.",
-];
+const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints }) => {
+  const [getNextHint, { data }] = useHintLazyQuery();
 
-const HintSection: React.FunctionComponent<Hints> = ({ num: maxHints }) => {
-  const [hints, setHints] = useState<string[]>([]);
+  const totalHints = hints.length;
+  const [usedHints, setUsedHints] = useState<Hint[]>([]);
 
   const loadNextHint = (): void => {
-    const nextHint = allHints[hints.length];
+    if (usedHints.length === totalHints) {
+      return;
+    }
 
-    setHints((prevHints) => [...prevHints, nextHint]);
+    const nextHintId = hints[usedHints.length].id;
+    getNextHint({ variables: { id: nextHintId } });
   };
 
-  const displayAvailableHints = (maxHints: number, usedHints: number): String => {
-    if (usedHints === 0) {
-      return `You can unlock ${maxHints} hints by clicking on the button below.`;
-    } else if (usedHints > 0 && usedHints !== maxHints && maxHints - usedHints !== 1) {
-      return `You can unlock ${maxHints - usedHints} more hints.`;
-    } else if (usedHints > 0 && maxHints - usedHints === 1) {
-      return `You can unlock ${maxHints - usedHints} more hint.`;
+  React.useEffect(() => {
+    if (data?.hint) {
+      const nextHint = data.hint;
+      setUsedHints((prevHints) => [...prevHints, nextHint]);
+    }
+  }, [data]);
+
+  const displayAvailableHints = React.useMemo(() => {
+    const remainingHints = totalHints - usedHints.length;
+
+    if (remainingHints === totalHints) {
+      return `You can unlock ${totalHints} hints by clicking on the button below.`;
+    } else if (remainingHints > 1) {
+      return `You can unlock ${remainingHints} more hints.`;
+    } else if (remainingHints === 1) {
+      return `You can unlock 1 more hint.`;
     } else {
       return "There are no more hints to unlock.";
     }
-  };
+  }, [totalHints, usedHints.length]);
 
   return (
     <div className="flex-auto overflow-y-auto mt-10 text-center px-8">
-      <p>{displayAvailableHints(maxHints, hints.length)}</p>
+      <p>{displayAvailableHints}</p>
 
-      {hints.length > 0 && (
+      {usedHints.length > 0 && (
         <ul>
-          {hints.map((hint, idx) => (
-            <li key={hint}>
+          {usedHints.map((hint, idx) => (
+            <li key={hint.id}>
               <h4 className="text-primary">Hint {idx + 1}</h4>
-              <p>{hint}</p>
+              <p>{hint.content}</p>
             </li>
           ))}
         </ul>
       )}
-      {hints.length < maxHints && (
-        <IconButton onClick={loadNextHint} text={hints.length === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
+      {usedHints.length < totalHints && (
+        <IconButton onClick={loadNextHint} text={usedHints.length === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
       )}
     </div>
   );
