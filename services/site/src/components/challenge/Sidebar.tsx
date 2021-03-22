@@ -1,3 +1,4 @@
+import Button from "app/components/buttons/Button";
 import ClosedSidebar from "app/components/challenge/sidebar/ClosedSidebar/ClosedSidebar";
 import HintSection from "app/components/challenge/sidebar/Sections/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
@@ -7,7 +8,6 @@ import { HintIdFragment, Resource } from "app/generated/graphql";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
-import IconOnlyButton from "../buttons/IconOnlyButton";
 import ChevronLeft from "../icons/ChevronLeft";
 
 interface SidebarProps {
@@ -59,7 +59,7 @@ const closedSidebarStyle = {
   },
 };
 
-const AnimatedIconOnlyButton = animated(IconOnlyButton);
+const AnimatedButton = animated(Button);
 const AnimatedClosedSidebar = animated(ClosedSidebar);
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions, hints, resources }) => {
@@ -154,12 +154,13 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
       style={{ width: animation.sidebarWidth }}
       className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border overflow-hidden w-1/5`}
     >
-      <AnimatedIconOnlyButton
+      <AnimatedButton
         style={{ transform: animation.iconTransform, borderStyle: animation.iconBorderStyle }}
-        className="z-10"
+        className="z-10 border-l-2 border-b-2 border-primary p-4 h-16 absolute bg-white right-0 box-border text-2xl group group-focus:text-white hover:bg-primary focus:bg-primary"
+        overrideClassname
         onClick={toggleSidebarState}
-        text={open ? "Close sidebar" : "Open sidebar"}
         icon={<ChevronLeft />}
+        srText={open ? "Close sidebar" : "Open sidebar"}
       />
       <AnimatedClosedSidebar
         style={{ display: animation.closedDivDisplay, opacity: animation.closedDivOpacity }}
