@@ -88,7 +88,7 @@ const Challenge: React.FunctionComponent = () => {
               onClick={() => {
                 alert("Thank you Mario, but our princess is in another castle!");
               }}
-              classes="px-10 tracking-wider"
+              className="px-10 tracking-wider"
             >
               Submit
             </Button>
