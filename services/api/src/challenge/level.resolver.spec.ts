@@ -22,7 +22,7 @@ describe("level resolver", () => {
       createMock<ResourceService>(),
     );
 
-    expect(await resolver.levelByChallengeSlugAndIndex("level", 1)).toHaveProperty("id", "second-id");
+    expect(await resolver.levelByChallengeSlugAndIndex({ challengeSlug: "level", index: 1 })).toHaveProperty("id", "second-id");
     expect(findOneForChallengeAtIndex).toHaveBeenCalledWith("level", 1);
   });
 
