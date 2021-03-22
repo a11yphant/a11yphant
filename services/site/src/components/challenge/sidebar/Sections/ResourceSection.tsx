@@ -11,10 +11,12 @@ const ResourceSection: React.FunctionComponent<ResourceSectionProps> = ({ resour
       <ul>
         {resources.map((resource) => (
           <li key={resource.id} className="text-primary mb-4">
-            {resource.title}
-            <br />
-            <a href={resource.link} target="_blank" className="text-black border-primary border-b-2 break-all">
-              {resource.link}
+            <a
+              href={resource.link}
+              target="_blank"
+              className="text-primary border-primary border-b-2 break-all hover:text-primaryDark hover:border-primaryDark"
+            >
+              {resource.title}
             </a>
           </li>
         ))}
