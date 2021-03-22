@@ -1,4 +1,4 @@
-import IconButton from "app/components/buttons/IconButton";
+import Button from "app/components/buttons/Button";
 import LightBulb from "app/components/icons/LightBulb";
 import { Hint, HintIdFragment, useHintLazyQuery } from "app/generated/graphql";
 import React, { useState } from "react";
@@ -58,7 +58,9 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints }) => {
         </ul>
       )}
       {usedHints.length < totalHints && (
-        <IconButton onClick={loadNextHint} text={usedHints.length === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
+        <Button onClick={loadNextHint} icon={<LightBulb />}>
+          {hints.length === 0 ? "show me a hint" : "show me another hint"}
+        </Button>
       )}
     </div>
   );

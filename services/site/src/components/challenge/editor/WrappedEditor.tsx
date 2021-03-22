@@ -111,7 +111,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           overrideButtons={
             <>
               <Button
-                classes="mr-4"
+                className="mr-4"
                 onClick={() => {
                   reset();
                   setModalOpen(false);
