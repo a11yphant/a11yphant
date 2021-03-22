@@ -1,3 +1,4 @@
+import { parse } from "node-html-parser";
 import React, { useState } from "react";
 
 interface PreviewProps {
@@ -8,6 +9,16 @@ interface PreviewProps {
   heading: string;
 }
 
+const addTargetBlank = (html: string): string => {
+  const dom = parse(html);
+
+  dom.querySelectorAll("a").forEach((anchor) => {
+    anchor.setAttribute("target", "_blank");
+  });
+
+  return dom.toString();
+};
+
 const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, javascriptCode, heading }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
@@ -17,7 +28,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
 
   const startRenderCountdown = (): NodeJS.Timeout =>
     setTimeout(() => {
-      setInnerHtmlCode(htmlCode);
+      setInnerHtmlCode(addTargetBlank(htmlCode));
       setInnerCssCode(cssCode);
       setInnerJavascriptCode(javascriptCode);
     }, 1000);
