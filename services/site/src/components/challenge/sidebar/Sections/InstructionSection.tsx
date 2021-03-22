@@ -1,5 +1,6 @@
 import CheckboxList from "app/components/challenge/sidebar/NumberedList";
 import React from "react";
+import sanitizeHtml from "sanitize-html";
 
 export interface Instructions {
   instructions: string;
@@ -16,9 +17,7 @@ const InstructionSection: React.FunctionComponent<Instructions> = ({ instruction
   return (
     <div className="flex-auto overflow-y-auto px-8 mb-4">
       <div className="mt-10">
-        {instructions.split("\n").map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+        <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(instructions) }} />
         <p className="text-primary font-bold mt-8">{tldr}</p>
       </div>
       <h3 className="text-primary font-bold mt-10 mb-8 text-center">Requirements</h3>
