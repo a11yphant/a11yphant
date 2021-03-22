@@ -9,6 +9,7 @@ interface PreviewProps {
   heading: string;
 }
 
+//@TODO: Remove once base element support is better (https://caniuse.com/mdn-html_elements_base)
 const addTargetBlank = (html: string): string => {
   const dom = parse(html);
 
@@ -44,7 +45,10 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   return (
     <div className={`${classes} box-border relative border-2 rounded-lg border-primary py-2 px-4`}>
       <h3 className="text-primary mb-4">{heading}</h3>
-      <iframe className="w-full h-auto" srcDoc={`<style>${innerCssCode}</style>${innerHtmlCode}<script>${innerJavascriptCode}</script>`} />
+      <iframe
+        className="w-full h-auto"
+        srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
+      />
     </div>
   );
 };
