@@ -71,9 +71,8 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
           SELECT table_name FROM information_schema.tables
           WHERE table_schema = '${getSchemaName()}' AND table_name != '_prisma_migrations';
         `);
-  console.log(tableNames.map((row: any) => row.table_name));
+
   for (const tableName of tableNames.map((row: any) => row.table_name)) {
-    console.log(`clearing ${tableName}`);
     await client.$executeRaw(`DELETE FROM "${tableName}";`);
   }
 }
