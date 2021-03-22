@@ -1,8 +1,10 @@
 challenge:
   id: 242003d6-402e-49b7-9ec2-702445b37c8e
   name: Accessible Links
+  slug: accessible-links
   levels:
     - id: 5557e647-7a14-47b7-b51c-142f25cc998c
+      index: 1
       tldr: >
          Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader
       instructions: >
@@ -53,6 +55,7 @@ challenge:
             border-color: darkblue;
           }
     - id: 0682b540-67cb-45b6-bdf3-692fb78e871d
+      index: 2
       tldr: ""
       instructions: >
           Your friend Charles has reached out for your help again. He wants to link to additional resources in his blog post, but he is not sure how to structure the additional resources section. Can you write the markup for him (you don't have to style it for now)?
