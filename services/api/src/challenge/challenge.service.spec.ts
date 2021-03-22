@@ -1,4 +1,4 @@
-import { useDatabase } from "@a11y-challenges/prisma";
+import { getCurrentSchemaUrl, useDatabase } from "@a11y-challenges/prisma";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
@@ -11,6 +11,8 @@ describe("challenge service", () => {
     it("can get a challenge for a given id", async () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
+      console.log(getCurrentSchemaUrl());
+      console.log(await prisma.challenge.findMany());
       const { id } = await prisma.challenge.create({
         data: {
           name: "test",
@@ -36,6 +38,8 @@ describe("challenge service", () => {
     it("can get a challenge for a given slug", async () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
+      console.log(getCurrentSchemaUrl());
+      console.log(await prisma.challenge.findMany());
       const { slug } = await prisma.challenge.create({
         data: {
           name: "test",

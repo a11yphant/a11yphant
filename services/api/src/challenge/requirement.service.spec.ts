@@ -1,4 +1,4 @@
-import { useDatabase } from "@a11y-challenges/prisma";
+import { getCurrentSchemaUrl, useDatabase } from "@a11y-challenges/prisma";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
@@ -9,6 +9,8 @@ describe("requirement service", () => {
   it("can get requirements for a level", async () => {
     const prisma = getPrismaService();
     const service = new RequirementService(prisma);
+    console.log(getCurrentSchemaUrl());
+    console.log(await prisma.challenge.findMany());
     const level = await prisma.level.create({
       data: {
         instructions: "",
