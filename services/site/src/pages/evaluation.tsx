@@ -1,3 +1,4 @@
+import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import Navigation from "app/components/Navigation";
 import { useChallengeQuery } from "app/generated/graphql";
 import React from "react";
@@ -14,7 +15,9 @@ const Evaluation: React.FunctionComponent = () => {
   return (
     <div className="w-screen h-screen">
       <Navigation challengeName="Accessible Links" currentLevel="01" maxLevel="03" />
-      <main className="flex justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg"></main>
+      <main className="flex justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
+        <EvaluationHeader challenge="Accessible Links" level="01"></EvaluationHeader>
+      </main>
     </div>
   );
 };
