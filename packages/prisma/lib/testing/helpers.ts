@@ -69,7 +69,7 @@ export function createTestingPrismaClient(logger: Logger): PrismaService {
 async function clearTableContents(client: PrismaClient): Promise<void> {
   const tableNames = await client.$queryRaw(`
           SELECT table_name FROM information_schema.tables
-          WHERE table_schema = 'public' AND table_name != '_prisma_migrations';
+          WHERE table_schema = '${getSchemaName()}' AND table_name != '_prisma_migrations';
         `);
   console.log(tableNames.map((row: any) => row.table_name));
   for (const tableName of tableNames.map((row: any) => row.table_name)) {
