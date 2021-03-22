@@ -82,7 +82,7 @@ export class ImportService {
           where: { id: level.id },
           create: {
             id: level.id,
-            index: level.index,
+            order: level.order,
             tldr: level.tldr,
             instructions: level.instructions,
             challengeId,
@@ -92,7 +92,7 @@ export class ImportService {
           },
           update: {
             tldr: level.tldr,
-            index: level.index,
+            order: level.order,
             instructions: level.instructions,
             challengeId,
             html: level.code?.html,

@@ -7,7 +7,7 @@ export interface Challenge {
 
 export interface Level {
   id: string;
-  index: number;
+  order: number;
   tldr: string;
   instructions: string;
   requirements: Requirement[];

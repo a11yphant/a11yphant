@@ -47,7 +47,7 @@ describe('import service', () => {
       levels: [
         {
           id: 'a',
-          index: 1,
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
@@ -69,7 +69,7 @@ describe('import service', () => {
     const level = challenge.levels[0];
     const storedLevel = await prisma.level.findFirst();
     expect(storedLevel.id).toEqual(level.id);
-    expect(storedLevel.index).toEqual(level.index);
+    expect(storedLevel.order).toEqual(level.order);
     expect(storedLevel.tldr).toEqual(level.tldr);
     expect(storedLevel.instructions).toEqual(level.instructions);
     expect(storedLevel.challengeId).toEqual(challenge.id);
@@ -84,7 +84,7 @@ describe('import service', () => {
       levels: [
         {
           id: 'a',
-          index: 1,
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
@@ -124,7 +124,7 @@ describe('import service', () => {
       levels: [
         {
           id: 'a',
-          index: 1,
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
@@ -159,7 +159,7 @@ describe('import service', () => {
       levels: [
         {
           id: 'a',
-          index: 1,
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [{ id: 'asdf', content: 'lala' }],
@@ -194,7 +194,7 @@ describe('import service', () => {
       levels: [
         {
           id: 'a',
-          index: 1,
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],

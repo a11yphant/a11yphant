@@ -13,6 +13,7 @@ describe("level service", () => {
       const { id } = await prisma.challenge.create({
         data: {
           name: "test",
+          slug: "test",
           levels: {
             create: {
               instructions: "instructions",

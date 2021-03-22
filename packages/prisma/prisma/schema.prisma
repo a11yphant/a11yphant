@@ -14,7 +14,7 @@ generator client {
 model Challenge {
   @@map(name: "challenges")
   id      String     @id @default(uuid())
-  slug    String     @default("")
+  slug    String     @unique
   name    String
   levels  Level[]
 }
@@ -22,7 +22,7 @@ model Challenge {
 model Level {
   @@map(name: "levels")
   id            String        @id @default(uuid())
-  index         Int           @default(0)
+  order         Int           @default(0)
   tldr          String
   instructions  String
   challenge     Challenge     @relation(fields: [challengeId], references: [id])
