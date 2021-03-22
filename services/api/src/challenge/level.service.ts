@@ -16,11 +16,24 @@ export class LevelService {
     return levels.map((level) => LevelService.createModelFromDatabaseRecord(level));
   }
 
+  async findOneForChallengeAtIndex(challengeSlug: string, index: number): Promise<Level> {
+    const record = await this.prisma.level.findFirst({
+      where: {
+        challenge: {
+          slug: challengeSlug,
+        },
+      },
+      orderBy: {
+        order: "asc",
+      },
+      skip: index,
+    });
+
+    return record ? LevelService.createModelFromDatabaseRecord(record) : null;
+  }
+
   public static createModelFromDatabaseRecord(record: LevelRecord): Level {
-    const level = new Level();
-    level.id = record.id;
-    level.tldr = record.tldr;
-    level.instructions = record.instructions;
+    const level = new Level({ id: record.id, tldr: record.tldr, instructions: record.instructions });
 
     if (!record.html && !record.css && !record.js) {
       return level;

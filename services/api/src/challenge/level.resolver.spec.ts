@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 
 import { HintService } from "./hint.service";
 import { LevelResolver } from "./level.resolver";
+import { LevelService } from "./level.service";
 import { Hint } from "./models/hint.model";
 import { Level } from "./models/level.model";
 import { Requirement } from "./models/requirement.model";
@@ -10,8 +11,24 @@ import { RequirementService } from "./requirement.service";
 import { ResourceService } from "./resource.service";
 
 describe("level resolver", () => {
+  it("resolves a level by challenge slug and index", async () => {
+    const findOneForChallengeAtIndex = jest.fn().mockResolvedValue(new Level({ id: "second-id", tldr: "hi", instructions: "difficult" }));
+    const resolver = new LevelResolver(
+      createMock<LevelService>({
+        findOneForChallengeAtIndex,
+      }),
+      createMock<RequirementService>(),
+      createMock<HintService>(),
+      createMock<ResourceService>(),
+    );
+
+    expect(await resolver.levelByChallengeSlugAndIndex("level", 1)).toHaveProperty("id", "second-id");
+    expect(findOneForChallengeAtIndex).toHaveBeenCalledWith("level", 1);
+  });
+
   it("resolves the requirements for a level", async () => {
     const resolver = new LevelResolver(
+      createMock<LevelService>(),
       createMock<RequirementService>({
         findForLevel: jest
           .fn()
@@ -20,21 +37,22 @@ describe("level resolver", () => {
       createMock<HintService>(),
       createMock<ResourceService>(),
     );
-    const level = new Level();
-    level.id = "uuid";
+
+    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr" });
 
     expect((await resolver.requirements(level)).length).toEqual(2);
   });
 
   it("resolves the hints for a level", async () => {
     const resolver = new LevelResolver(
+      createMock<LevelService>(),
       createMock<RequirementService>(),
       createMock<HintService>({
         findForLevel: jest.fn().mockResolvedValue([new Hint({ id: "id-0", content: "Hint 1" }), new Hint({ id: "id-4", content: "Hint 2" })]),
       }),
       createMock<ResourceService>(),
     );
-    const level = new Level();
+    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr" });
     level.id = "uuid";
 
     expect((await resolver.hints(level)).length).toEqual(2);
@@ -42,6 +60,7 @@ describe("level resolver", () => {
 
   it("resolves the resources for a level", async () => {
     const resolver = new LevelResolver(
+      createMock<LevelService>(),
       createMock<RequirementService>(),
       createMock<HintService>(),
       createMock<ResourceService>({
@@ -53,7 +72,7 @@ describe("level resolver", () => {
           ]),
       }),
     );
-    const level = new Level();
+    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr" });
     level.id = "uuid";
 
     expect((await resolver.resources(level)).length).toEqual(2);
