@@ -72,7 +72,7 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
         `);
 
   for (const tableName of tableNames.map((row: any) => row.table_name)) {
-    await client.$executeRaw(`DELETE FROM "${getSchemaName()}"."${tableName}";`);
+    await client.$executeRaw(`DELETE FROM "${tableName}";`);
   }
 }
 
