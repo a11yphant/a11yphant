@@ -10,5 +10,5 @@
     "jest": true,
     "es6": true
   },
-  "ignorePatterns": ["dist", "client", "**/node_modules"]
+  "ignorePatterns": ["dist", "**/node_modules"]
 }
