@@ -19,7 +19,7 @@ const Evaluation: React.FunctionComponent = () => {
     <div className="w-screen h-screen">
       <Navigation challengeName="Accessible Links" currentLevel="01" maxLevel="03" />
       <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
-        <EvaluationHeader challenge="Accessible Links" level="01"></EvaluationHeader>
+        <EvaluationHeader challengeName="Accessible Links" levelIdx="01"></EvaluationHeader>
         <div className="flex justify-end">
           <Button
             onClick={() => {
