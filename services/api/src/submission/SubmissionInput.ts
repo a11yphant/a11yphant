@@ -1,9 +1,8 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { UuidScalar } from "src/scalars/uuid";
 
 @InputType()
 export class SubmissionInput {
-  @Field(() => UuidScalar)
+  @Field()
   levelId: string;
   @Field({ description: "HTML is formatted as a multi-line string with line breaks.", nullable: true })
   html: string;
