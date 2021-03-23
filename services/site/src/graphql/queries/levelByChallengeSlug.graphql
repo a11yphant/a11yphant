@@ -1,0 +1,24 @@
+query levelByChallengeSlug ($challengeSlug: String!, $nth: Int!) {
+    level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
+        id
+        tldr
+        instructions
+        requirements {
+            id
+            title
+        }
+        hints {
+            ...HintId
+        }
+        resources {
+            id
+            title
+            link
+        }
+        code {
+            html
+            css
+            js
+        }
+    }
+}
