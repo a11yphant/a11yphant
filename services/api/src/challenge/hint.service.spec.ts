@@ -13,7 +13,7 @@ describe("hint service", () => {
       data: {
         instructions: "",
         tldr: "",
-        challenge: { create: { name: "level" } },
+        challenge: { create: { name: "level", slug: "slug" } },
         hints: { create: [{ content: "1" }, { content: "2" }] },
       },
     });
@@ -28,7 +28,7 @@ describe("hint service", () => {
       data: {
         instructions: "",
         tldr: "",
-        challenge: { create: { name: "level" } },
+        challenge: { create: { name: "level", slug: "slug" } },
         hints: { create: [{ content: "1" }, { content: "2" }] },
       },
       include: { hints: {} },

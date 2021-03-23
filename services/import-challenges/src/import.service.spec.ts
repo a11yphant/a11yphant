@@ -18,6 +18,7 @@ describe('import service', () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      slug: 'slug',
       name: 'test',
       levels: [],
     };
@@ -34,16 +35,19 @@ describe('import service', () => {
     const storedChallenge = await prisma.challenge.findFirst();
     expect(storedChallenge.id).toEqual(challenge.id);
     expect(storedChallenge.name).toEqual(challenge.name);
+    expect(storedChallenge.slug).toEqual(challenge.slug);
   });
 
   it('can import the levels for a challenge', async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      slug: 'test-slug',
       name: 'test',
       levels: [
         {
           id: 'a',
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
@@ -65,6 +69,7 @@ describe('import service', () => {
     const level = challenge.levels[0];
     const storedLevel = await prisma.level.findFirst();
     expect(storedLevel.id).toEqual(level.id);
+    expect(storedLevel.order).toEqual(level.order);
     expect(storedLevel.tldr).toEqual(level.tldr);
     expect(storedLevel.instructions).toEqual(level.instructions);
     expect(storedLevel.challengeId).toEqual(challenge.id);
@@ -74,10 +79,12 @@ describe('import service', () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      slug: 'test-slug',
       name: 'test',
       levels: [
         {
           id: 'a',
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
@@ -112,10 +119,12 @@ describe('import service', () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      slug: 'test-slug',
       name: 'test',
       levels: [
         {
           id: 'a',
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
@@ -145,10 +154,12 @@ describe('import service', () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      slug: 'test-slug',
       name: 'test',
       levels: [
         {
           id: 'a',
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [{ id: 'asdf', content: 'lala' }],
@@ -178,10 +189,12 @@ describe('import service', () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
       id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+      slug: 'test-slug',
       name: 'test',
       levels: [
         {
           id: 'a',
+          order: 1,
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
