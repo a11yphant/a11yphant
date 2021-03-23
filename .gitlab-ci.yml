@@ -7,14 +7,14 @@ include:
   - /ci/templates/gitlab-ci-deploy.yml
 
 cache:
-  key: $CI_COMMIT_REF_SLUG
+  key: ${CI_COMMIT_REF_SLUG}-alpine
   paths:
-    - services/**/.npm/
+    - .npm-alpine
 
 default:
   before_script:
-    - npm ci --ignore-scripts
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
 stages:
   - build-packages
@@ -225,9 +225,9 @@ test:api:
     DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --ignore-scripts
-    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/prisma --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -239,7 +239,7 @@ production-dependencies:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --ignore-scripts
+    - npm ci --ignore-scripts --cache .npm-cent-os
     - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
   artifacts:
     paths:
@@ -257,9 +257,9 @@ build:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
-    - npm ci --ignore-scripts
-    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --production --prefix packages/prisma --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -333,9 +333,9 @@ lint:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm ci --ignore-scripts
-    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/prisma --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
 test:import-challenges:
   extends:
@@ -351,9 +351,9 @@ test:import-challenges:
   services:
     - postgres
   before_script:
-    - npm ci --ignore-scripts
-    - npm ci --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/prisma --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -365,7 +365,7 @@ production-dependencies:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm ci --ignore-scripts
+    - npm ci --ignore-scripts --cache .npm-cent-os
     - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
   artifacts:
     paths:
@@ -383,9 +383,9 @@ build:import-challenges:
   variables:
     PROJECT_PATH: services/import-challenges
   before_script:
-    - npm ci --ignore-scripts
-    - npm ci --production --prefix packages/prisma --cache $PROJECT_PATH/.npm --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache $PROJECT_PATH/.npm --prefer-offline
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --production --prefix packages/prisma --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist
@@ -492,7 +492,7 @@ stop-environment:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy -var="current_version=$WORKSPACE" -var="postgres_cluster_root_user=root" -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+    - terraform -chdir=terraform/cloud destroy -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
     - terraform -chdir=terraform/cloud workspace select default
     - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
   when: manual

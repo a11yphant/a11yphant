@@ -43,15 +43,13 @@ async function importChallenges(app: INestApplicationContext): Promise<void> {
 
 const appPromise = bootstrap();
 
-export const handle: S3Handler = async (event) => {
+export const handle: S3Handler = async () => {
   const app = await (appPromise as Promise<INestApplicationContext>);
   const config = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);
 
-  const bucket = event.Records[0].s3.bucket.name;
-  const key = decodeURIComponent(
-    event.Records[0].s3.object.key.replace(/\+/g, ' '),
-  );
+  const bucket = config.get<string>('import-challenges.s3-bucket');
+  const key = config.get<string>('import-challenges.s3-object-key');
 
   logger.log(
     `Loading challenges from S3 (Bucket: ${bucket}, Key: ${key})`,
