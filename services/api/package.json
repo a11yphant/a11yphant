@@ -100,7 +100,7 @@
       "text-summary",
       "cobertura"
     ],
-    "globalSetup": "<rootDir>/test/setup.ts",
+    "globalSetup": "<rootDir>/tests/setup.ts",
     "coverageDirectory": "<rootDir>"
   }
 }
