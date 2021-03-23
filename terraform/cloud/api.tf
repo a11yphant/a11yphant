@@ -21,8 +21,8 @@ resource "aws_lambda_function" "api" {
    s3_key    = aws_s3_bucket_object.api_code_zip.id
    source_code_hash = data.external.api_code_zip.result.hash
 
-   handler = "entrypoint.handle"
-   runtime = "nodejs12.x"
+   handler = "dist/main.handle"
+   runtime = "nodejs14.x"
    timeout = 30
 
    role = aws_iam_role.api_role.arn
