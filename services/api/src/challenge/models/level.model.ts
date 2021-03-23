@@ -7,6 +7,12 @@ import { Resource } from "./resource.model";
 
 @ObjectType()
 export class Level {
+  constructor(properties: { id: string; tldr: string; instructions: string }) {
+    this.id = properties.id;
+    this.tldr = properties.tldr;
+    this.instructions = properties.instructions;
+  }
+
   @Field(() => ID)
   id: string;
 

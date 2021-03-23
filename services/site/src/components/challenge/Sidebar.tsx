@@ -8,7 +8,7 @@ import { Hint, HintIdFragment, Resource, useHintLazyQuery } from "app/generated/
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
-import ChevronLeft from "../icons/ChevronLeft";
+import Chevron from "../icons/Chevron";
 
 interface SidebarProps {
   classes: string;
@@ -177,7 +177,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
         className="z-10 border-l-2 border-b-2 border-primary p-4 h-16 absolute bg-white right-0 box-border text-2xl group group-focus:text-white hover:bg-primary focus:bg-primary"
         overrideClassname
         onClick={toggleSidebarState}
-        icon={<ChevronLeft />}
+        icon={<Chevron className="text-primary group-hover:text-white group-focus:text-white transform rotate-90" />}
         srText={open ? "Close sidebar" : "Open sidebar"}
       />
       <AnimatedClosedSidebar

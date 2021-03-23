@@ -14,6 +14,11 @@ export class ChallengeResolver {
     return this.challengeService.findOne(id);
   }
 
+  @Query(() => Challenge, { nullable: true })
+  async challengeBySlug(@Args("slug", { type: () => String }) slug: string): Promise<Challenge> {
+    return this.challengeService.findOneBySlug(slug);
+  }
+
   @ResolveField()
   async levels(@Parent() challenge: Challenge): Promise<Level[]> {
     return this.levelService.findForChallenge(challenge.id);

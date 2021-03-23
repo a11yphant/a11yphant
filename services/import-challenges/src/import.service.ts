@@ -63,9 +63,11 @@ export class ImportService {
       create: {
         id: challenge.id,
         name: challenge.name,
+        slug: challenge.slug,
       },
       update: {
         name: challenge.name,
+        slug: challenge.slug,
       },
     });
   }
@@ -80,6 +82,7 @@ export class ImportService {
           where: { id: level.id },
           create: {
             id: level.id,
+            order: level.order,
             tldr: level.tldr,
             instructions: level.instructions,
             challengeId,
@@ -89,6 +92,7 @@ export class ImportService {
           },
           update: {
             tldr: level.tldr,
+            order: level.order,
             instructions: level.instructions,
             challengeId,
             html: level.code?.html,

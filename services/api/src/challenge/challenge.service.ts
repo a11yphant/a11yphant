@@ -15,8 +15,16 @@ export class ChallengeService {
     return challenge ? ChallengeService.createModelFromDatabaseRecord(challenge) : null;
   }
 
+  public async findOneBySlug(slug: string): Promise<Challenge> {
+    const record = await this.prisma.challenge.findUnique({
+      where: { slug },
+    });
+
+    return record ? ChallengeService.createModelFromDatabaseRecord(record) : null;
+  }
+
   static createModelFromDatabaseRecord(record: ChallengeRecord): Challenge {
-    const challenge = new Challenge({ id: record.id, name: record.name });
+    const challenge = new Challenge({ id: record.id, name: record.name, slug: record.slug });
 
     return challenge;
   }

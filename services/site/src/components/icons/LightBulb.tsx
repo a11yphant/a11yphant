@@ -9,6 +9,7 @@ const LightBulb: React.FunctionComponent = () => {
       stroke="currentColor"
       className="text-white h-7 w-7 pl-2"
       aria-hidden="true"
+      focusable="false"
     >
       <path
         strokeLinecap="round"
