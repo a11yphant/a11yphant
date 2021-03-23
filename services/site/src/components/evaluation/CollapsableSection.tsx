@@ -8,9 +8,11 @@ import X from "../icons/X";
 interface CollapsibleSectionProps {
   className?: string;
   passed: boolean;
+  title: string;
+  description: string;
 }
 
-const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed }) => {
+const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed, title, description }) => {
   const [showDescription, setShowDescription] = useState(false);
 
   const showDetails = (): void => {
@@ -28,14 +30,11 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             aria-expanded={showDescription}
             icon={<Chevron className="text-white mr-8 group-hover:text-primaryDark group-focus:text-primaryDark" />}
           >
-            1.1 Global Requirements
+            {title}
           </Button>
         </h4>
         <div hidden={!showDescription}>
-          <p className="text-white ml-16 my-4">
-            The HTML code must comply to all markup rules established by the W3C. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus
-            donec mattis sit accumsan, pulvinar in felis, vel arcu. Eu pellentesque purus amet, nibh eget.
-          </p>
+          <p className="text-white ml-16 my-4">{description}</p>
         </div>
       </div>
       {passed ? <Check className="h-20 w-20 text-white ml-10" /> : <X className="h-20 w-20 text-white ml-10" />}
