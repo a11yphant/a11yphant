@@ -7,8 +7,9 @@ import { ChallengeResolver } from "./challenge/challenge.resolver";
 import { HintResolver } from "./challenge/hint.resolver";
 import { LevelResolver } from "./challenge/level.resolver";
 import { HelloWorldResolver } from "./hello-world/hello-world.resolver";
+import { SubmissionResolver } from "./submission/submission.resolver";
 
-const resolvers = [HelloWorldResolver, ChallengeResolver, HintResolver, LevelResolver];
+const resolvers = [HelloWorldResolver, ChallengeResolver, HintResolver, LevelResolver, SubmissionResolver];
 
 const scalars = [];
 

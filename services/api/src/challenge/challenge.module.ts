@@ -24,5 +24,6 @@ import { ResourceService } from "./resource.service";
     HintService,
     ResourceService,
   ],
+  exports: [LevelService],
 })
 export class ChallengeModule {}

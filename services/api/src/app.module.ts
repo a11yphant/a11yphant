@@ -9,6 +9,7 @@ import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
+import { SubmissionModule } from "./submission/submission.module";
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
     }),
     HelloWorldModule,
     ChallengeModule,
+    SubmissionModule,
   ],
 })
 export class AppModule {}

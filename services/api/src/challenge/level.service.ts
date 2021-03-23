@@ -7,6 +7,15 @@ import { Level } from "./models/level.model";
 @Injectable()
 export class LevelService {
   constructor(private prisma: PrismaService) {}
+
+  async findOne(id: string): Promise<Level> {
+    const level = await this.prisma.level.findUnique({
+      where: { id },
+    });
+
+    return level ? LevelService.createModelFromDatabaseRecord(level) : null;
+  }
+
   async findForChallenge(challengeId: string): Promise<Level[]> {
     const levels = await this.prisma.level.findMany({
       where: {
