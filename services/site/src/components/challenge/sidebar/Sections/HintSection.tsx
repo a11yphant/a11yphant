@@ -1,33 +1,16 @@
 import Button from "app/components/buttons/Button";
 import LightBulb from "app/components/icons/LightBulb";
-import { Hint, HintIdFragment, useHintLazyQuery } from "app/generated/graphql";
-import React, { useState } from "react";
+import { Hint, HintIdFragment } from "app/generated/graphql";
+import React from "react";
 
 interface HintSectionProps {
   hints: HintIdFragment[];
+  usedHints: Hint[];
+  loadNextHint: () => void;
 }
 
-const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints }) => {
-  const [getNextHint, { data }] = useHintLazyQuery();
-
+const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints, usedHints, loadNextHint }) => {
   const totalHints = hints.length;
-  const [usedHints, setUsedHints] = useState<Hint[]>([]);
-
-  const loadNextHint = (): void => {
-    if (usedHints.length === totalHints) {
-      return;
-    }
-
-    const nextHintId = hints[usedHints.length].id;
-    getNextHint({ variables: { id: nextHintId } });
-  };
-
-  React.useEffect(() => {
-    if (data?.hint) {
-      const nextHint = data.hint;
-      setUsedHints((prevHints) => [...prevHints, nextHint]);
-    }
-  }, [data]);
 
   const displayAvailableHints = React.useMemo(() => {
     const remainingHints = totalHints - usedHints.length;

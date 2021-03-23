@@ -4,7 +4,7 @@ import HintSection from "app/components/challenge/sidebar/Sections/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
 import ResourceSection from "app/components/challenge/sidebar/Sections/ResourceSection";
 import SidebarSection from "app/components/challenge/sidebar/SidebarSection";
-import { HintIdFragment, Resource } from "app/generated/graphql";
+import { Hint, HintIdFragment, Resource, useHintLazyQuery } from "app/generated/graphql";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
@@ -65,6 +65,8 @@ const AnimatedClosedSidebar = animated(ClosedSidebar);
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions, hints, resources }) => {
   const [activeSection, setActiveSection] = useState<SectionType>(SectionType.instructions);
   const [open, setOpen] = useState<boolean>(true);
+  const [getNextHint, { data }] = useHintLazyQuery();
+  const [usedHints, setUsedHints] = useState<Hint[]>([]);
 
   const toggleSidebarState = (): void => {
     setOpen((prevState) => !prevState);
@@ -74,6 +76,22 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
     setActiveSection(sectionToOpen);
     toggleSidebarState();
   };
+
+  const loadNextHint = (): void => {
+    if (usedHints.length === hints.length) {
+      return;
+    }
+
+    const nextHintId = hints[usedHints.length].id;
+    getNextHint({ variables: { id: nextHintId } });
+  };
+
+  React.useEffect(() => {
+    if (data?.hint) {
+      const nextHint = data.hint;
+      setUsedHints((prevHints) => [...prevHints, nextHint]);
+    }
+  }, [data]);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const animation: any = useSpring({
@@ -176,7 +194,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
           <InstructionSection {...instructions} />
         </SidebarSection>
         <SidebarSection title={"Hints"} border={true} open={activeSection === SectionType.hints} onClick={() => setActiveSection(SectionType.hints)}>
-          <HintSection hints={hints} />
+          <HintSection hints={hints} usedHints={usedHints} loadNextHint={loadNextHint} />
         </SidebarSection>
         <SidebarSection
           title={"Resources"}
