@@ -10,6 +10,7 @@ import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
 import { UuidScalar } from "./scalars/uuid";
+import { SubmissionModule } from "./submission/submission.module";
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { UuidScalar } from "./scalars/uuid";
     }),
     HelloWorldModule,
     ChallengeModule,
+    SubmissionModule,
   ],
   providers: [UuidScalar],
 })
