@@ -11,7 +11,7 @@ export class SubmissionResolver {
   constructor(private readonly submissionService: SubmissionService, private readonly levelService: LevelService) {}
 
   @Mutation(() => Submission)
-  async submit(@Args("submissionData") submissionInput: SubmissionInput): Promise<Submission> {
+  async submit(@Args("submissionInput") submissionInput: SubmissionInput): Promise<Submission> {
     const level = await this.levelService.findOne(submissionInput.levelId);
 
     if (!level) {
