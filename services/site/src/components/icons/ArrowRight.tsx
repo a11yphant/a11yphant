@@ -9,6 +9,7 @@ const ArrowRight: React.FunctionComponent = () => {
       stroke="currentColor"
       className="text-white h-7 w-7 pl-2"
       aria-hidden="true"
+      focusable="false"
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
     </svg>

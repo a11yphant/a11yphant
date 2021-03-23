@@ -8,6 +8,8 @@ const ChevronLeft: React.FunctionComponent = () => {
       viewBox="0 0 24 24"
       stroke="currentColor"
       className="h-8 w-8 text-primary transition duration-700 group group-hover:text-white group-focus:text-white"
+      aria-hidden="true"
+      focusable="false"
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
     </svg>
