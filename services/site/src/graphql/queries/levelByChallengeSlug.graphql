@@ -1,3 +1,7 @@
+fragment HintId on Hint {
+    id
+}
+
 query levelByChallengeSlug ($challengeSlug: String!, $nth: Int!) {
     level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
         id
