@@ -38,7 +38,7 @@ describe("challenge resolver", () => {
     expect(resolvedLevels.length).toEqual(levels.length);
   });
 
-  it("can resolve a by slug", async () => {
+  it("can resolve a challenge by slug", async () => {
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
         findOneBySlug: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "slug" })),
