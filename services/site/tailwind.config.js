@@ -11,6 +11,9 @@ module.exports = {
         "18/20": "92.5%",
         fitContent: "fit-content",
       },
+      maxWidth: {
+        "80ch": "80ch",
+      },
       colors: {
         primaryLight: "#9262FA",
         primary: "#7331FF",
