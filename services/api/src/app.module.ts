@@ -9,6 +9,7 @@ import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
+import { UuidScalar } from "./scalars/uuid";
 
 @Module({
   imports: [
@@ -40,5 +41,6 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
     HelloWorldModule,
     ChallengeModule,
   ],
+  providers: [UuidScalar],
 })
 export class AppModule {}
