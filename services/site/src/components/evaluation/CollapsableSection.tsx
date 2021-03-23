@@ -15,16 +15,14 @@ interface CollapsibleSectionProps {
 const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed, title, description }) => {
   const [showDescription, setShowDescription] = useState(false);
 
-  const showDetails = (): void => {
-    setShowDescription((prevShowDescription) => !prevShowDescription);
-  };
-
   return (
     <div className={`${className} flex flex-row items-start w-full box-border py-2`}>
       <div className="flex flex-col w-full">
         <h4>
           <Button
-            onClick={showDetails}
+            onClick={() => {
+              setShowDescription((prevShowDescription) => !prevShowDescription);
+            }}
             className="h3 flex flex-row-reverse m-0 py-4 pr-4 group text-white font-bold transition duration-300 hover:text-primaryDark focus:text-primaryDark"
             overrideClassname
             aria-expanded={showDescription}
