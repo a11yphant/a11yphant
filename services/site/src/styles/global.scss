@@ -44,6 +44,7 @@
     }
     p {
         @apply mb-4;
+        @apply max-w-80ch;
     }
 
     .editor-container {
