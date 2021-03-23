@@ -7,6 +7,6 @@ export class LevelByChallengeSlugAndIndexArgs {
   challengeSlug: string;
 
   @Field(() => Int)
-  @Min(0)
-  index: number;
+  @Min(1)
+  nth: number;
 }

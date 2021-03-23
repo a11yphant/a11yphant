@@ -20,8 +20,8 @@ export class LevelResolver {
   ) {}
 
   @Query(() => Level, { nullable: true })
-  async levelByChallengeSlugAndIndex(@Args() { challengeSlug, index }: LevelByChallengeSlugAndIndexArgs): Promise<Level> {
-    return this.levelService.findOneForChallengeAtIndex(challengeSlug, index);
+  async levelByChallengeSlug(@Args() { challengeSlug, nth }: LevelByChallengeSlugAndIndexArgs): Promise<Level> {
+    return this.levelService.findOneForChallengeAtIndex(challengeSlug, nth - 1);
   }
 
   @ResolveField()
