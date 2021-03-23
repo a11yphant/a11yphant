@@ -16,6 +16,7 @@ describe("submission service", () => {
     const { id: challengeId } = await prisma.challenge.create({
       data: {
         name: "submission service test",
+        slug: "sub-serv-test",
       },
     });
 
