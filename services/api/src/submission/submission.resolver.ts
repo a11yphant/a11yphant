@@ -1,4 +1,5 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { UserInputError } from "apollo-server-express";
 
 import { LevelService } from "../challenge/level.service";
 import { Submission } from "./models/submission.model";
@@ -11,11 +12,10 @@ export class SubmissionResolver {
 
   @Mutation(() => Submission)
   async submit(@Args("submissionData") submissionInput: SubmissionInput): Promise<Submission> {
-    const level = this.levelService.findOne(submissionInput.levelId);
+    const level = await this.levelService.findOne(submissionInput.levelId);
 
     if (!level) {
-      // TODO better error
-      throw Error("Level not found.");
+      throw new UserInputError(`Level to provided levelId not found: ${submissionInput.levelId}.`);
     }
 
     return this.submissionService.save(submissionInput);
