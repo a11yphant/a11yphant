@@ -13,5 +13,6 @@ import { ResourceService } from "./resource.service";
 @Module({
   imports: [PrismaModule],
   providers: [ChallengeResolver, ChallengeService, LevelResolver, LevelService, RequirementService, HintResolver, HintService, ResourceService],
+  exports: [LevelService],
 })
 export class ChallengeModule {}
