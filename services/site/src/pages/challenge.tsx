@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 const challengeSlug = "accessible-links";
-const nthLevel = 1;
+const nthLevel = "01";
 
 const Challenge: React.FunctionComponent = () => {
   const router = useRouter();
