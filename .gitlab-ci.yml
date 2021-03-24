@@ -126,7 +126,7 @@ build:nestjs-aws-messaging:
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
   script:
-    - npm run build --prefix packages/$PROJECT_PATH
+    - npm run build --prefix $PROJECT_PATH
   artifacts:
     expire_in: 1 day
     paths:
