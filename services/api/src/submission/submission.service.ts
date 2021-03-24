@@ -9,6 +9,14 @@ import { SubmissionInput } from "./SubmissionInput";
 export class SubmissionService {
   constructor(private prisma: PrismaService) {}
 
+  public async findOne(id: string): Promise<Submission> {
+    const submission = await this.prisma.submission.findUnique({
+      where: { id },
+    });
+
+    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+  }
+
   public async save(input: SubmissionInput): Promise<Submission> {
     const submission = await this.prisma.submission.create({
       data: {
@@ -21,7 +29,7 @@ export class SubmissionService {
   }
 
   static createModelFromDatabaseRecord(record: SubmissionRecord): Submission {
-    const submission = new Submission({ id: record.id, html: record.html, css: record.css, js: record.js });
+    const submission = new Submission({ id: record.id, html: record.html, css: record.css, js: record.js, levelId: record.levelId });
 
     return submission;
   }
