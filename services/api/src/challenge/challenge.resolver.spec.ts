@@ -50,4 +50,20 @@ describe("challenge resolver", () => {
 
     expect(challenge).toBeTruthy();
   });
+
+  it("finds all challenges", async () => {
+    const slugs = ["dani", "thomas", "luca", "michi"];
+
+    const resolver = new ChallengeResolver(
+      createMock<ChallengeService>({
+        findAll: jest.fn().mockResolvedValue(slugs.map((slug) => new Challenge({ id: "uuid", name: "test", slug }))),
+      }),
+      createMock<LevelService>(),
+    );
+
+    const challenges = await resolver.challenges();
+
+    expect(challenges).toBeTruthy();
+    expect(challenges.length).toBe(slugs.length);
+  });
 });
