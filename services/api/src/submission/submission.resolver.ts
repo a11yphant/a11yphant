@@ -24,7 +24,6 @@ export class SubmissionResolver {
 
   @ResolveField()
   async level(@Parent() sub: Submission): Promise<Level> {
-    const level = await this.levelService.findOne(sub.levelId);
-    return level;
+    return this.levelService.findOne(sub.levelId);
   }
 }
