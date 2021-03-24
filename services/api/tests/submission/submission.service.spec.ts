@@ -28,24 +28,24 @@ describe("submission service", () => {
       },
     });
 
-    const createdSub = await service.save({
+    const createdSubmission = await service.save({
       levelId,
       html,
       css: null,
       js: null,
     });
 
-    expect(createdSub).toBeTruthy();
-    expect(createdSub.html).toBe(html);
+    expect(createdSubmission).toBeTruthy();
+    expect(createdSubmission.html).toBe(html);
 
-    const queriedSub = await prisma.submission.findUnique({
+    const queriedSubmission = await prisma.submission.findUnique({
       where: {
-        id: createdSub.id,
+        id: createdSubmission.id,
       },
     });
 
-    expect(queriedSub).toBeTruthy();
-    expect(queriedSub.html).toBe(html);
+    expect(queriedSubmission).toBeTruthy();
+    expect(queriedSubmission.html).toBe(html);
   });
 
   it("finds a submission to a given id", async () => {
@@ -69,7 +69,7 @@ describe("submission service", () => {
       },
     });
 
-    const { id: subId } = await prisma.submission.create({
+    const { id: submissionId } = await prisma.submission.create({
       data: {
         levelId,
         html,
@@ -78,10 +78,10 @@ describe("submission service", () => {
       },
     });
 
-    const sub = await service.findOne(subId);
+    const submission = await service.findOne(submissionId);
 
-    expect(sub).toBeTruthy();
-    expect(sub.html).toBe(html);
+    expect(submission).toBeTruthy();
+    expect(submission.html).toBe(html);
   });
 
   it("throws error if no level is found for id", () => {

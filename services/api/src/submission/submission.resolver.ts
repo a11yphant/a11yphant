@@ -23,7 +23,7 @@ export class SubmissionResolver {
   }
 
   @ResolveField()
-  async level(@Parent() sub: Submission): Promise<Level> {
-    return this.levelService.findOne(sub.levelId);
+  async level(@Parent() submission: Submission): Promise<Level> {
+    return this.levelService.findOne(submission.levelId);
   }
 }
