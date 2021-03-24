@@ -15,31 +15,14 @@ interface CollapsibleSectionProps {
 const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed, title, description }) => {
   const [showDescription, setShowDescription] = useState(false);
 
-  const AnimatedIcon = animated(Chevron);
-
-  const openSectionStyle = {
-    icon: {
-      transform: "rotate(0deg)",
-      tension: 0,
-      delay: 0,
-      easing: "d3-ease",
-    },
-  };
-
-  const closedSectionStyle = {
-    icon: {
-      transform: "rotate(180deg)",
-      tension: 0,
-      delay: 0,
-      easing: "d3-ease",
-    },
-  };
+  const AnimatedChevron = animated(Chevron);
 
   // any is necessary here because the types of react-spring are somehow messed up
-  const animation: any = useSpring({
-    iconTransform: showDescription ? closedSectionStyle.icon.transform : openSectionStyle.icon.transform,
+  const { transform }: any = useSpring({
+    transform: showDescription ? "rotate(180deg)" : "rotate(0deg)",
     config: {
-      duration: 300,
+      tension: 0,
+      delay: 0,
     },
   });
 
@@ -55,8 +38,8 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             overrideClassname
             aria-expanded={showDescription}
             icon={
-              <AnimatedIcon
-                style={{ transform: animation.iconTransform }}
+              <AnimatedChevron
+                style={{ transform: transform }}
                 className="text-white mr-8 group-hover:text-primaryDark group-focus:text-primaryDark"
               />
             }
