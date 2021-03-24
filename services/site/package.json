@@ -31,7 +31,7 @@
     "@monaco-editor/react": "4.1.0",
     "@types/sanitize-html": "1.27.1",
     "@vendia/serverless-express": "4.3.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
     "express": "4.17.1",
     "graphql": "15.5.0",
     "monaco-editor": "0.23.0",
