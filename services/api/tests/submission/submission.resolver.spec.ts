@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
-import { Level } from "src/challenge/models/level.model";
 
 import { LevelService } from "../../src/challenge/level.service";
+import { Level } from "../../src/challenge/models/level.model";
 import { Submission } from "../../src/submission/models/submission.model";
 import { SubmissionResolver } from "../../src/submission/submission.resolver";
 import { SubmissionService } from "../../src/submission/submission.service";
