@@ -2,7 +2,7 @@ import { SQSEvent, SQSRecord } from "aws-lambda";
 import AWS from "aws-sdk";
 import AWSMock from "aws-sdk-mock";
 
-import { AwsTransportStrategy } from "../lib/AwsTransportStrategy";
+import { AwsTransportStrategy } from "../lib/aws-transport-strategy";
 
 describe("AWS Transport Strategy", () => {
   beforeEach(() => {
@@ -85,7 +85,7 @@ describe("AWS Transport Strategy", () => {
     transport.listen(callback);
 
     expect(receiveMessage).toHaveBeenCalledTimes(1);
-    expect(messageHandler).toHaveBeenCalledWith(expect.objectContaining(messageData.Messages[0]));
+    expect(messageHandler).toHaveBeenCalledWith(expect.objectContaining(JSON.parse(messageData.Messages[0].Body)));
     transport.close();
   });
 
@@ -115,7 +115,7 @@ describe("AWS Transport Strategy", () => {
           messageAttributes: {
             type: { dataType: "String", stringValue: "test-message", binaryListValues: undefined, stringListValues: undefined },
           },
-          body: '{ content: "hi" }',
+          body: '{ "content": "hi" }',
         } as SQSRecord,
       ],
     });
@@ -140,7 +140,7 @@ describe("AWS Transport Strategy", () => {
           messageAttributes: {
             type: { dataType: "String", stringValue: "unknown-message", binaryListValues: undefined, stringListValues: undefined },
           },
-          body: '{ content: "hi" }',
+          body: '{ "content": "hi" }',
         } as SQSRecord,
       ],
     };
@@ -171,7 +171,7 @@ describe("AWS Transport Strategy", () => {
           messageAttributes: {
             type: { dataType: "String", stringValue: "test-message", binaryListValues: undefined, stringListValues: undefined },
           },
-          body: '{ content: "hi" }',
+          body: '{ "content": "hi" }',
         } as SQSRecord,
       ],
     });
