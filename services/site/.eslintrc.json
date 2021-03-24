@@ -6,7 +6,8 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "extends": ["@a11y-challenges/eslint-config/react"],
+  "plugins": ["jsx-a11y"],
+  "extends": ["@a11y-challenges/eslint-config/react", "plugin:jsx-a11y/recommended"],
   "root": true,
   "env": {
     "node": true,
