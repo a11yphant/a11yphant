@@ -46,12 +46,12 @@ export class ResultResolver {
   }
 
   @ResolveField()
-  checkCount(@Parent() result: Result): number {
+  numberOfChecks(@Parent() result: Result): number {
     return result.requirements.reduce((pre, cur) => pre + cur.checks.length, 0);
   }
 
   @ResolveField()
-  failedChecks(@Parent() result: Result): number {
+  numberOfFailedChecks(@Parent() result: Result): number {
     return result.requirements.reduce((pre, cur) => pre + cur.checks.filter((ch) => ch.result !== CheckStatus.SUCCESS).length, 0);
   }
 }
