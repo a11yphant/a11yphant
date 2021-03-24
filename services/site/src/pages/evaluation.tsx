@@ -3,11 +3,45 @@ import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import Navigation from "app/components/Navigation";
-import React from "react";
+import {
+  ResultForSubmissionDocument,
+  ResultForSubmissionQueryResult,
+  ResultForSubmissionQueryVariables,
+  ResultStatus,
+  useResultForSubmissionLazyQuery,
+} from "app/generated/graphql";
+import { initializeApollo } from "app/lib/apolloClient";
+import { GetServerSideProps } from "next";
+import React, { useState } from "react";
+
+const submissionId = "3fc86d0e-28de-4b68-b26d-021bf28a50cb";
 
 const Evaluation: React.FunctionComponent = () => {
+  // state
+  const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
+
+  // query data with lazy query
+  const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
+  const status = data?.resultForSubmission?.status;
+
+  // fetch every 3 seconds
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      getResultForSubmission({ variables: { id: submissionId } });
+    }, 3000);
+
+    setQueryInterval(interval);
+  }, []);
+
+  // stop fetch when status is not PENDING anymore
+  React.useEffect(() => {
+    if (status && status !== ResultStatus.Pending) {
+      clearInterval(queryInterval);
+    }
+  }, [status, queryInterval]);
+
+  // level is completed when all checks passed
   const levelCompleted = false;
-  const result = "pending";
 
   const mockData = {
     requirement: "1.0 The link can be activated using the mouse",
@@ -23,7 +57,7 @@ const Evaluation: React.FunctionComponent = () => {
       <Navigation challengeName="Accessible Links" currentLevel="01" maxLevel="03" />
       <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
         <EvaluationHeader challengeName="Accessible Links" levelIdx="01"></EvaluationHeader>
-        {result === "pending" ? (
+        {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
           <>
@@ -46,3 +80,20 @@ const Evaluation: React.FunctionComponent = () => {
 };
 
 export default Evaluation;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query<ResultForSubmissionQueryResult, ResultForSubmissionQueryVariables>({
+    query: ResultForSubmissionDocument,
+    variables: {
+      id: submissionId,
+    },
+  });
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+  };
+};
