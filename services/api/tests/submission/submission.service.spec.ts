@@ -48,6 +48,42 @@ describe("submission service", () => {
     expect(queriedSub.html).toBe(html);
   });
 
+  it("finds a submission to a given id", async () => {
+    const html = "<div>hello</div>";
+
+    const prisma = getPrismaService();
+    const service = new SubmissionService(prisma);
+
+    const { id: challengeId } = await prisma.challenge.create({
+      data: {
+        name: "submission service test",
+        slug: "sub-serv-test",
+      },
+    });
+
+    const { id: levelId } = await prisma.level.create({
+      data: {
+        instructions: "testing the submission service",
+        tldr: "testing stuff",
+        challengeId,
+      },
+    });
+
+    const { id: subId } = await prisma.submission.create({
+      data: {
+        levelId,
+        html,
+        css: null,
+        js: null,
+      },
+    });
+
+    const sub = await service.findOne(subId);
+
+    expect(sub).toBeTruthy();
+    expect(sub.html).toBe(html);
+  });
+
   it("throws error if no level is found for id", () => {
     const prisma = getPrismaService();
     const service = new SubmissionService(prisma);
