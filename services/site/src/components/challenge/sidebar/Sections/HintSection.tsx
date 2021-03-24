@@ -16,7 +16,11 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints, usedHin
     const remainingHints = totalHints - usedHints.length;
 
     if (remainingHints === totalHints) {
-      return `You can unlock ${totalHints} hints by clicking on the button below.`;
+      return (
+        <>
+          There are <b>{totalHints}</b> hints to help you with this level.
+        </>
+      );
     } else if (remainingHints > 1) {
       return `You can unlock ${remainingHints} more hints.`;
     } else if (remainingHints === 1) {
