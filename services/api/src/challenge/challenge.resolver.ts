@@ -19,7 +19,7 @@ export class ChallengeResolver {
     return this.challengeService.findOneBySlug(slug);
   }
 
-  @Query(() => [Challenge])
+  @Query(() => [Challenge], { description: "Get all existing challenges." })
   async challenges(): Promise<Challenge[]> {
     return this.challengeService.findAll();
   }
