@@ -1,23 +1,7 @@
-import { Field, ID, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { Check } from "./check.model";
-
-export enum CheckStatus {
-  SUCCESS,
-  FAIL,
-}
-
-registerEnumType(CheckStatus, {
-  name: "CheckStatus",
-  valuesMap: {
-    SUCCESS: {
-      description: "The user fulfilled the check/requirement.",
-    },
-    FAIL: {
-      description: "The user failed the check/requirement.",
-    },
-  },
-});
+import { CheckStatus } from "./check-status.enum";
 
 @ObjectType()
 export class Requirement {

@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { CheckStatus } from "./requirement.model";
+import { CheckStatus } from "./check-status.enum";
 
 @ObjectType()
 export class Check {
