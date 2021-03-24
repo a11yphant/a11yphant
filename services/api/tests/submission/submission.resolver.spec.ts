@@ -1,4 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
+import { Level } from "src/challenge/models/level.model";
 
 import { LevelService } from "../../src/challenge/level.service";
 import { Submission } from "../../src/submission/models/submission.model";
@@ -12,6 +13,7 @@ describe("submission resolver", () => {
         save: jest.fn().mockResolvedValue(
           new Submission({
             id: "identifier",
+            levelId: "best level ever",
           }),
         ),
       }),
@@ -21,5 +23,25 @@ describe("submission resolver", () => {
     const submission = await resolver.submit({ levelId: "hallo luca" });
 
     expect(submission).toBeTruthy();
+  });
+
+  it("can resolve a level", async () => {
+    const mockLevel = new Level({
+      id: "id",
+      tldr: "halloo",
+      instructions: "hallo aus den tests",
+    });
+
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>(),
+      createMock<LevelService>({
+        findOne: jest.fn().mockResolvedValue(mockLevel),
+      }),
+    );
+
+    const level = await resolver.level(new Submission({ id: "bla", levelId: "blu" }));
+
+    expect(level).toBeTruthy();
+    expect(level.id).toBe(mockLevel.id);
   });
 });

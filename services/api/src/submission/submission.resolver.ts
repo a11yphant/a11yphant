@@ -1,7 +1,8 @@
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Parent, ResolveField, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-express";
 
 import { LevelService } from "../challenge/level.service";
+import { Level } from "../challenge/models/level.model";
 import { Submission } from "./models/submission.model";
 import { SubmissionService } from "./submission.service";
 import { SubmissionInput } from "./SubmissionInput";
@@ -19,5 +20,11 @@ export class SubmissionResolver {
     }
 
     return this.submissionService.save(submissionInput);
+  }
+
+  @ResolveField()
+  async level(@Parent() sub: Submission): Promise<Level> {
+    const level = await this.levelService.findOne(sub.levelId);
+    return level;
   }
 }
