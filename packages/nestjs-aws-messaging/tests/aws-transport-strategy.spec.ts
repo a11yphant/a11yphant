@@ -61,15 +61,19 @@ describe("AWS Transport Strategy", () => {
     const callback = jest.fn();
     const messageHandler = jest.fn().mockResolvedValue(null);
 
+    const event = { content: "hi" };
     const messageData: AWS.SQS.ReceiveMessageResult = {
       Messages: [
         {
           MessageId: "id",
-          Body: '{ "content": "hi" }',
+          Body: JSON.stringify({
+            Message: JSON.stringify(event),
+            Timestamp: new Date().toISOString(),
+            MessageAttributes: {
+              type: { DataType: "String", Value: "test-message" },
+            },
+          }),
           ReceiptHandle: "Hi",
-          MessageAttributes: {
-            type: { DataType: "String", StringValue: "test-message" },
-          },
         },
       ],
     };
@@ -84,9 +88,10 @@ describe("AWS Transport Strategy", () => {
     transport.addHandler("test-message", messageHandler);
     transport.listen(callback);
 
-    expect(receiveMessage).toHaveBeenCalledTimes(1);
-    expect(messageHandler).toHaveBeenCalledWith(expect.objectContaining(JSON.parse(messageData.Messages[0].Body)));
+    expect(callback).toHaveBeenCalled();
     transport.close();
+    expect(receiveMessage).toHaveBeenCalledTimes(1);
+    expect(messageHandler).toHaveBeenCalledWith(expect.objectContaining(event));
   });
 
   it("can close a connection when polling is disabled", () => {
@@ -106,16 +111,15 @@ describe("AWS Transport Strategy", () => {
       Records: [
         {
           messageId: "1",
-          awsRegion: "eu-central-1",
-          eventSource: "a",
-          eventSourceARN: "arn",
           md5OfBody: "asdf",
-          attributes: { ApproximateFirstReceiveTimestamp: "timestamp", ApproximateReceiveCount: "1", SenderId: "23", SentTimestamp: "timestamp" },
           receiptHandle: "handle",
-          messageAttributes: {
-            type: { dataType: "String", stringValue: "test-message", binaryListValues: undefined, stringListValues: undefined },
-          },
-          body: '{ "content": "hi" }',
+          body: JSON.stringify({
+            Message: '{ "content": "hi" }',
+            Timestamp: new Date().toISOString(),
+            MessageAttributes: {
+              type: { DataType: "String", Value: "test-message" },
+            },
+          }),
         } as SQSRecord,
       ],
     });
@@ -131,16 +135,14 @@ describe("AWS Transport Strategy", () => {
       Records: [
         {
           messageId: "1",
-          awsRegion: "eu-central-1",
-          eventSource: "a",
-          eventSourceARN: "arn",
-          md5OfBody: "asdf",
-          attributes: { ApproximateFirstReceiveTimestamp: "timestamp", ApproximateReceiveCount: "1", SenderId: "23", SentTimestamp: "timestamp" },
           receiptHandle: "handle",
-          messageAttributes: {
-            type: { dataType: "String", stringValue: "unknown-message", binaryListValues: undefined, stringListValues: undefined },
-          },
-          body: '{ "content": "hi" }',
+          body: JSON.stringify({
+            Message: '{ "content": "hi" }',
+            Timestamp: new Date().toISOString(),
+            MessageAttributes: {
+              type: { DataType: "String", Value: "test-message" },
+            },
+          }),
         } as SQSRecord,
       ],
     };
@@ -162,16 +164,14 @@ describe("AWS Transport Strategy", () => {
       Records: [
         {
           messageId: "1",
-          awsRegion: "eu-central-1",
-          eventSource: "a",
-          eventSourceARN: "arn",
-          md5OfBody: "asdf",
-          attributes: { ApproximateFirstReceiveTimestamp: "timestamp", ApproximateReceiveCount: "1", SenderId: "23", SentTimestamp: "timestamp" },
           receiptHandle: "handle",
-          messageAttributes: {
-            type: { dataType: "String", stringValue: "test-message", binaryListValues: undefined, stringListValues: undefined },
-          },
-          body: '{ "content": "hi" }',
+          body: JSON.stringify({
+            Message: '{ "content": "hi" }',
+            Timestamp: new Date().toISOString(),
+            MessageAttributes: {
+              type: { DataType: "String", Value: "test-message" },
+            },
+          }),
         } as SQSRecord,
       ],
     });

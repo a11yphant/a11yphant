@@ -3,6 +3,7 @@ import { SQSEvent, SQSRecord } from "aws-lambda";
 import AWS from "aws-sdk";
 
 import { AwsTransportStrategyOptions } from "./aws-transport-strategy-options.interface";
+import { Event } from "./event.interface";
 
 export class AwsTransportStrategy extends Server implements CustomTransportStrategy {
   private continuePolling = false;
@@ -27,7 +28,7 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
 
   async handleSQSEvent(event: SQSEvent): Promise<void> {
     for (const message of event.Records) {
-      await this.processEvent(message);
+      await this.processMessage(message);
     }
   }
 
@@ -64,7 +65,7 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
           this.logger.log(`Received ${data.Messages.length} messages`, AwsTransportStrategy.name);
 
           for (const message of data.Messages) {
-            await this.processEvent(message);
+            await this.processMessage(message);
           }
 
           resolve();
@@ -73,31 +74,43 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
     });
   }
 
-  private async processEvent(message: SQSRecord | AWS.SQS.Message): Promise<void> {
-    const type = this.getMessageType(message);
-    const handler = this.getHandlerByPattern(type);
+  private async processMessage(message: SQSRecord | AWS.SQS.Message): Promise<void> {
+    const event = this.extractMessageFromEvent(message);
+
+    const handler = this.getHandlerByPattern(event.type);
 
     if (!handler) {
+      this.logger.warn(`Could not find handler for message type ${event.type}`, AwsTransportStrategy.name);
       return;
     }
-    const messageId = (message as SQSRecord).messageId || (message as AWS.SQS.Message).MessageId;
-    const body = (message as SQSRecord).body || (message as AWS.SQS.Message).Body;
+
     try {
-      await handler(JSON.parse(body));
+      await handler(event.body);
     } catch (error) {
-      this.logger.error(`Could not process event ${messageId}: ${error.message}`, null, AwsTransportStrategy.name);
+      this.logger.error(`Could not process event ${event.messageId}: ${error.message}`, null, AwsTransportStrategy.name);
       return;
     }
 
     try {
       await this.deleteMessageFromQueue(message);
     } catch (error) {
-      this.logger.error(`Could not delete message ${messageId} from the queue: ${error.message}`, null, AwsTransportStrategy.name);
+      this.logger.error(`Could not delete message ${event.messageId} from the queue: ${error.message}`, null, AwsTransportStrategy.name);
       return;
     }
   }
 
-  private async deleteMessageFromQueue(message): Promise<void> {
+  private extractMessageFromEvent(event: SQSRecord | AWS.SQS.Message): Event {
+    const body = (event as SQSRecord).body || (event as AWS.SQS.Message).Body;
+    const { MessageId, Message, Timestamp, MessageAttributes } = JSON.parse(body);
+    return {
+      messageId: MessageId,
+      timestamp: new Date(Timestamp),
+      type: MessageAttributes.type.Value,
+      body: JSON.parse(Message),
+    };
+  }
+
+  private async deleteMessageFromQueue(message: SQSRecord | AWS.SQS.Message): Promise<void> {
     return new Promise((resolve, reject) => {
       this.sqs.deleteMessage(
         {
@@ -114,9 +127,5 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
         },
       );
     });
-  }
-
-  private getMessageType(message: SQSRecord | AWS.SQS.Message): string {
-    return (message as SQSRecord)?.messageAttributes?.type?.stringValue || (message as AWS.SQS.Message)?.MessageAttributes?.type?.StringValue;
   }
 }
