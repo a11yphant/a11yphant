@@ -23,6 +23,7 @@ const Evaluation: React.FunctionComponent = () => {
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
   const status = data?.resultForSubmission?.status;
+  const failedChecks = data?.resultForSubmission?.numberOfFailedChecks;
 
   // fetch every 3 seconds
   React.useEffect(() => {
@@ -41,7 +42,10 @@ const Evaluation: React.FunctionComponent = () => {
   }, [status, queryInterval]);
 
   // level is completed when all checks passed
-  const levelCompleted = false;
+  let levelCompleted = false;
+  if (failedChecks && failedChecks == 0) {
+    levelCompleted = true;
+  }
 
   const mockData = {
     requirement: "1.0 The link can be activated using the mouse",
