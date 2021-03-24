@@ -12,61 +12,67 @@ generator client {
 }
 
 model Challenge {
+  id     String  @id @default(uuid())
+  slug   String  @unique
+  name   String
+  levels Level[]
+
   @@map(name: "challenges")
-  id      String     @id @default(uuid())
-  slug    String     @unique
-  name    String
-  levels  Level[]
 }
 
 model Level {
+  id           String        @id @default(uuid())
+  order        Int           @default(0)
+  tldr         String
+  instructions String
+  challenge    Challenge     @relation(fields: [challengeId], references: [id])
+  challengeId  String
+  requirements Requirement[]
+  hints        Hint[]
+  resources    Resource[]
+  submissions  Submission[]
+  html         String?
+  css          String?
+  js           String?
+
   @@map(name: "levels")
-  id            String        @id @default(uuid())
-  order         Int           @default(0)
-  tldr          String
-  instructions  String
-  challenge     Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId   String
-  requirements  Requirement[]
-  hints         Hint[]
-  resources     Resource[]
-  submissions   Submission[]
-  html          String?
-  css           String?
-  js            String?
 }
 
 model Requirement {
+  id      String @id @default(uuid())
+  title   String
+  level   Level  @relation(fields: [levelId], references: [id])
+  levelId String
+
   @@map(name: "requirements")
-  id            String      @id @default(uuid())
-  title         String
-  level         Level       @relation(fields: [levelId], references: [id])
-  levelId       String
 }
 
 model Hint {
+  id      String @id @default(uuid())
+  content String
+  level   Level  @relation(fields: [levelId], references: [id])
+  levelId String
+
   @@map(name: "hints")
-  id            String      @id @default(uuid())
-  content       String
-  level         Level       @relation(fields: [levelId], references: [id])
-  levelId       String
 }
 
 model Resource {
+  id      String @id @default(uuid())
+  title   String
+  link    String
+  level   Level  @relation(fields: [levelId], references: [id])
+  levelId String
+
   @@map(name: "resources")
-  id            String      @id @default(uuid())
-  title         String
-  link          String
-  level         Level       @relation(fields: [levelId], references: [id])
-  levelId       String
 }
 
 model Submission {
+  id      String  @id @default(uuid())
+  html    String?
+  css     String?
+  js      String?
+  level   Level   @relation(fields: [levelId], references: [id])
+  levelId String
+
   @@map(name: "submissions")
-  id            String      @id @default(uuid())
-  html          String?
-  css           String?
-  js            String?
-  level         Level       @relation(fields: [levelId], references: [id])
-  levelId       String
 }
