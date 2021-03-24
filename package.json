@@ -10,7 +10,7 @@
     "postinstall": "npm run package-dependencies && npm run tf:init",
     "package-dependencies": "npm-run-all package-dependencies:**",
     "package-dependencies:prisma": "npm --prefix packages/prisma install",
-    "package-dependencies:nest-js-aws-messaging": "npm --prefix packages/nest-js-aws-messaging install",
+    "package-dependencies:nestjs-aws-messaging": "npm --prefix packages/nestjs-aws-messaging install",
     "package-dependencies:api": "npm --prefix services/api install",
     "package-dependencies:database-migration": "npm --prefix services/database-migration install",
     "package-dependencies:import-challenges": "npm --prefix services/import-challenges install",
