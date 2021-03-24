@@ -5,13 +5,14 @@
 ### Allgemein
 
 - [ ] Code Review
-- [ ] Test Coverage bleibt gleich hoch
-- [ ] Mitteilung an alle wenn sich env file ändert
+- [ ] Test Coverage ist mindestens gleich hoch
+- [ ] Mitteilung an alle, wenn sich env file ändert
 - [ ] Ticket im Board wird aktualisiert (weitergezogen)
 
 ### Backend
 
 - [ ] Resolver in generate-schema.ts
+- [ ] Description für Endpoints und Models ist vorhanden
 
 ### Frontend
 
