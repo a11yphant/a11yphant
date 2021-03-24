@@ -1,6 +1,8 @@
-import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
+import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { HintService } from "./hint.service";
+import { LevelService } from "./level.service";
+import { LevelByChallengeSlugAndIndexArgs } from "./level-by-challenge-slug-and-index.args";
 import { Hint } from "./models/hint.model";
 import { Level } from "./models/level.model";
 import { Requirement } from "./models/requirement.model";
@@ -10,7 +12,17 @@ import { ResourceService } from "./resource.service";
 
 @Resolver(() => Level)
 export class LevelResolver {
-  constructor(private requirementService: RequirementService, private hintService: HintService, private resourceService: ResourceService) {}
+  constructor(
+    private levelService: LevelService,
+    private requirementService: RequirementService,
+    private hintService: HintService,
+    private resourceService: ResourceService,
+  ) {}
+
+  @Query(() => Level, { nullable: true })
+  async levelByChallengeSlug(@Args() { challengeSlug, nth }: LevelByChallengeSlugAndIndexArgs): Promise<Level> {
+    return this.levelService.findOneForChallengeAtIndex(challengeSlug, nth - 1);
+  }
 
   @ResolveField()
   async requirements(@Parent() level: Level): Promise<Requirement[]> {

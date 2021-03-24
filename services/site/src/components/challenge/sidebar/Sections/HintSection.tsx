@@ -1,39 +1,26 @@
-import IconButton from "app/components/buttons/IconButton";
+import Button from "app/components/buttons/Button";
 import LightBulb from "app/components/icons/LightBulb";
-import { Hint, HintIdFragment, useHintLazyQuery } from "app/generated/graphql";
-import React, { useState } from "react";
+import { Hint, HintIdFragment } from "app/generated/graphql";
+import React from "react";
 
 interface HintSectionProps {
   hints: HintIdFragment[];
+  usedHints: Hint[];
+  loadNextHint: () => void;
 }
 
-const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints }) => {
-  const [getNextHint, { data }] = useHintLazyQuery();
-
+const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints, usedHints, loadNextHint }) => {
   const totalHints = hints.length;
-  const [usedHints, setUsedHints] = useState<Hint[]>([]);
-
-  const loadNextHint = (): void => {
-    if (usedHints.length === totalHints) {
-      return;
-    }
-
-    const nextHintId = hints[usedHints.length].id;
-    getNextHint({ variables: { id: nextHintId } });
-  };
-
-  React.useEffect(() => {
-    if (data?.hint) {
-      const nextHint = data.hint;
-      setUsedHints((prevHints) => [...prevHints, nextHint]);
-    }
-  }, [data]);
 
   const displayAvailableHints = React.useMemo(() => {
     const remainingHints = totalHints - usedHints.length;
 
     if (remainingHints === totalHints) {
-      return `You can unlock ${totalHints} hints by clicking on the button below.`;
+      return (
+        <>
+          There are <b>{totalHints}</b> hints to help you with this level.
+        </>
+      );
     } else if (remainingHints > 1) {
       return `You can unlock ${remainingHints} more hints.`;
     } else if (remainingHints === 1) {
@@ -58,7 +45,9 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints }) => {
         </ul>
       )}
       {usedHints.length < totalHints && (
-        <IconButton onClick={loadNextHint} text={usedHints.length === 0 ? "show me a hint" : "show me another hint"} icon={<LightBulb />} />
+        <Button onClick={loadNextHint} icon={<LightBulb />} full>
+          {usedHints.length === 0 ? "show me a hint" : "show me another hint"}
+        </Button>
       )}
     </div>
   );

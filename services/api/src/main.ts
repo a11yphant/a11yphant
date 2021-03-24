@@ -1,4 +1,4 @@
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
@@ -19,6 +19,7 @@ async function bootstrap(): Promise<ReturnType<typeof serverlessExpress> | null>
    */
   const expressApp = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);

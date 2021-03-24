@@ -1,11 +1,13 @@
 export interface Challenge {
   id: string;
+  slug: string;
   name: string;
   levels: Level[];
 }
 
 export interface Level {
   id: string;
+  order: number;
   tldr: string;
   instructions: string;
   requirements: Requirement[];

@@ -14,6 +14,7 @@ generator client {
 model Challenge {
   @@map(name: "challenges")
   id      String     @id @default(uuid())
+  slug    String     @unique
   name    String
   levels  Level[]
 }
@@ -21,6 +22,7 @@ model Challenge {
 model Level {
   @@map(name: "levels")
   id            String        @id @default(uuid())
+  order         Int           @default(0)
   tldr          String
   instructions  String
   challenge     Challenge     @relation(fields: [challengeId], references: [id])
@@ -28,6 +30,7 @@ model Level {
   requirements  Requirement[]
   hints         Hint[]
   resources     Resource[]
+  submissions   Submission[]
   html          String?
   css           String?
   js            String?
@@ -54,6 +57,16 @@ model Resource {
   id            String      @id @default(uuid())
   title         String
   link          String
+  level         Level       @relation(fields: [levelId], references: [id])
+  levelId       String
+}
+
+model Submission {
+  @@map(name: "submissions")
+  id            String      @id @default(uuid())
+  html          String?
+  css           String?
+  js            String?
   level         Level       @relation(fields: [levelId], references: [id])
   levelId       String
 }

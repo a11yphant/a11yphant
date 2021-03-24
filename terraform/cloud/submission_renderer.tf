@@ -22,7 +22,7 @@ resource "aws_lambda_function" "submission_renderer" {
    source_code_hash = data.external.submission_renderer_code_zip.result.hash
 
    handler = "dist/main.handler"
-   runtime = "nodejs12.x"
+   runtime = "nodejs14.x"
    timeout = 10
 
    role = aws_iam_role.submission_renderer_role.arn

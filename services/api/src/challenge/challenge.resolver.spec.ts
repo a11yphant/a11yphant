@@ -10,7 +10,7 @@ describe("challenge resolver", () => {
   it("can resolve a challenge", async () => {
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
-        findOne: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test" })),
+        findOne: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "test-slug" })),
       }),
       createMock<LevelService>(),
     );
@@ -21,7 +21,7 @@ describe("challenge resolver", () => {
   });
 
   it("resolves the levels for a challenge", async () => {
-    const challenge = new Challenge({ id: "uuid", name: "test" });
+    const challenge = new Challenge({ id: "uuid", name: "test", slug: "test-slug" });
     const levels: Level[] = [
       { id: "uuid", hints: [], instructions: "please read the instructions", requirements: [], resources: [], tldr: "don't want to read" },
     ];
@@ -36,5 +36,34 @@ describe("challenge resolver", () => {
 
     expect(resolvedLevels).toBeTruthy();
     expect(resolvedLevels.length).toEqual(levels.length);
+  });
+
+  it("can resolve a challenge by slug", async () => {
+    const resolver = new ChallengeResolver(
+      createMock<ChallengeService>({
+        findOneBySlug: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "slug" })),
+      }),
+      createMock<LevelService>(),
+    );
+
+    const challenge = await resolver.challengeBySlug("test-slug");
+
+    expect(challenge).toBeTruthy();
+  });
+
+  it("finds all challenges", async () => {
+    const slugs = ["dani", "thomas", "luca", "michi"];
+
+    const resolver = new ChallengeResolver(
+      createMock<ChallengeService>({
+        findAll: jest.fn().mockResolvedValue(slugs.map((slug) => new Challenge({ id: "uuid", name: "test", slug }))),
+      }),
+      createMock<LevelService>(),
+    );
+
+    const challenges = await resolver.challenges();
+
+    expect(challenges).toBeTruthy();
+    expect(challenges.length).toBe(slugs.length);
   });
 });

@@ -1,14 +1,14 @@
+import Button from "app/components/buttons/Button";
 import ClosedSidebar from "app/components/challenge/sidebar/ClosedSidebar/ClosedSidebar";
 import HintSection from "app/components/challenge/sidebar/Sections/HintSection";
 import InstructionSection, { Instructions } from "app/components/challenge/sidebar/Sections/InstructionSection";
 import ResourceSection from "app/components/challenge/sidebar/Sections/ResourceSection";
 import SidebarSection from "app/components/challenge/sidebar/SidebarSection";
-import { HintIdFragment, Resource } from "app/generated/graphql";
+import { Hint, HintIdFragment, Resource, useHintLazyQuery } from "app/generated/graphql";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
-import IconOnlyButton from "../buttons/IconOnlyButton";
-import ChevronLeft from "../icons/ChevronLeft";
+import Chevron from "../icons/Chevron";
 
 interface SidebarProps {
   classes: string;
@@ -59,12 +59,14 @@ const closedSidebarStyle = {
   },
 };
 
-const AnimatedIconOnlyButton = animated(IconOnlyButton);
+const AnimatedButton = animated(Button);
 const AnimatedClosedSidebar = animated(ClosedSidebar);
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions, hints, resources }) => {
   const [activeSection, setActiveSection] = useState<SectionType>(SectionType.instructions);
   const [open, setOpen] = useState<boolean>(true);
+  const [getNextHint, { data }] = useHintLazyQuery();
+  const [usedHints, setUsedHints] = useState<Hint[]>([]);
 
   const toggleSidebarState = (): void => {
     setOpen((prevState) => !prevState);
@@ -74,6 +76,22 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
     setActiveSection(sectionToOpen);
     toggleSidebarState();
   };
+
+  const loadNextHint = (): void => {
+    if (usedHints.length === hints.length) {
+      return;
+    }
+
+    const nextHintId = hints[usedHints.length].id;
+    getNextHint({ variables: { id: nextHintId } });
+  };
+
+  React.useEffect(() => {
+    if (data?.hint) {
+      const nextHint = data.hint;
+      setUsedHints((prevHints) => [...prevHints, nextHint]);
+    }
+  }, [data]);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const animation: any = useSpring({
@@ -154,12 +172,13 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
       style={{ width: animation.sidebarWidth }}
       className={`${classes} flex flex-col border-2 rounded-lg border-primary relative box-border overflow-hidden w-1/5`}
     >
-      <AnimatedIconOnlyButton
+      <AnimatedButton
         style={{ transform: animation.iconTransform, borderStyle: animation.iconBorderStyle }}
-        className="z-10"
+        className="z-10 border-l-2 border-b-2 border-primary p-4 h-16 absolute bg-white right-0 box-border text-2xl group group-focus:text-white hover:bg-primary focus:bg-primary"
+        overrideClassname
         onClick={toggleSidebarState}
-        text={open ? "Close sidebar" : "Open sidebar"}
-        icon={<ChevronLeft />}
+        icon={<Chevron className="text-primary group-hover:text-white group-focus:text-white transform rotate-90" />}
+        srText={open ? "Close sidebar" : "Open sidebar"}
       />
       <AnimatedClosedSidebar
         style={{ display: animation.closedDivDisplay, opacity: animation.closedDivOpacity }}
@@ -175,7 +194,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
           <InstructionSection {...instructions} />
         </SidebarSection>
         <SidebarSection title={"Hints"} border={true} open={activeSection === SectionType.hints} onClick={() => setActiveSection(SectionType.hints)}>
-          <HintSection hints={hints} />
+          <HintSection hints={hints} usedHints={usedHints} loadNextHint={loadNextHint} />
         </SidebarSection>
         <SidebarSection
           title={"Resources"}

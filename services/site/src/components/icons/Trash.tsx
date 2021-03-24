@@ -9,6 +9,7 @@ const Trash: React.FunctionComponent = () => {
       stroke="currentColor"
       className="h-5 w-5 m-1 text-primary transition duration-300 group group-hover:text-primaryDark group-focus:text-primaryDark"
       aria-hidden="true"
+      focusable="false"
     >
       <path
         strokeLinecap="round"

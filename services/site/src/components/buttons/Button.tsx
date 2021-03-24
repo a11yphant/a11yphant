@@ -2,18 +2,26 @@ import React from "react";
 
 interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   full?: boolean;
-  classes?: string;
+  icon?: React.ReactNode;
+  srText?: string;
+  overrideClassname?: boolean;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({ full = false, classes, children, ...props }) => {
+const Button: React.FunctionComponent<ButtonProps> = ({ full = false, icon, srText, className, overrideClassname = false, children, ...props }) => {
   return (
     <button
-      className={`${
-        full ? "bg-primary text-white" : ""
-      } border-primary border-2 rounded-lg px-4 py-2 tracking-wider inline-flex items-center transition duration-300 hover:text-white hover:bg-primaryDark focus:text-white focus:bg-primaryDark ${classes}`}
+      className={`
+      ${className}
+      ${full ? "bg-primary text-white" : ""} 
+      ${
+        !overrideClassname &&
+        "border-primary border-2 rounded-lg px-4 py-2 tracking-wider inline-flex items-center transition duration-300 hover:text-white hover:bg-primaryDark focus:text-white focus:bg-primaryDark"
+      }`}
       {...props}
     >
       {children}
+      {icon}
+      {srText && <span className="sr-only">{srText}</span>}
     </button>
   );
 };
