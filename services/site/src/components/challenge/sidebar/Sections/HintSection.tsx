@@ -42,7 +42,7 @@ const HintSection: React.FunctionComponent<HintSectionProps> = ({ hints, usedHin
       )}
       {usedHints.length < totalHints && (
         <Button onClick={loadNextHint} icon={<LightBulb />} full>
-          {hints.length === 0 ? "show me a hint" : "show me another hint"}
+          {usedHints.length === 0 ? "show me a hint" : "show me another hint"}
         </Button>
       )}
     </div>
