@@ -81,8 +81,9 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
       return;
     }
     const messageId = (message as SQSRecord).messageId || (message as AWS.SQS.Message).MessageId;
+    const body = (message as SQSRecord).body || (message as AWS.SQS.Message).Body;
     try {
-      await handler(message);
+      await handler(JSON.parse(body));
     } catch (error) {
       this.logger.error(`Could not process event ${messageId}: ${error.message}`, null, AwsTransportStrategy.name);
       return;
