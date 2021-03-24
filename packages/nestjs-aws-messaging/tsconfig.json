@@ -9,8 +9,6 @@
     "target": "es2019",
     "sourceMap": false,
     "outDir": "./dist",
-    "rootDir": "./lib"
-  },
-  "include": ["lib"],
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+    "baseUrl": "./"
+  }
 }
