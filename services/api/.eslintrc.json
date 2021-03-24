@@ -10,5 +10,8 @@
     "jest": true,
     "es6": true
   },
+  "rules": {
+    "jsx-a11y/anchor-is-valid": "off"
+  },
   "ignorePatterns": ["**/*.generated.ts", "**/node_modules", "dist/"]
 }
