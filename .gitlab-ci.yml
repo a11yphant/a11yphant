@@ -483,6 +483,8 @@ deploy-production:
     - master
 
 stop-environment:
+  tags:
+    - docker
   stage: deploy
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
