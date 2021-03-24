@@ -6,8 +6,9 @@ import { Level } from "../../challenge/models/level.model";
   description: "A submission of an user.",
 })
 export class Submission {
-  constructor(properties: { id: string; html?: string; css?: string; js?: string }) {
+  constructor(properties: { id: string; html?: string; css?: string; js?: string; levelId: string }) {
     this.id = properties.id;
+    this.levelId = properties.levelId;
 
     this.html = properties.html;
     this.css = properties.css;
@@ -21,6 +22,8 @@ export class Submission {
     description: "The level this submission is for.",
   })
   level: Level;
+
+  levelId: string;
 
   @Field(() => String, {
     nullable: true,
