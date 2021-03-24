@@ -20,7 +20,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ challengeName, c
           <ol className="flex items-center">
             <li>
               <div>
-                <a href="#" className="text-gray-400 hover:text-gray-500">
+                <a href="/" className="text-gray-400 hover:text-gray-500">
                   <span className="sr-only">Home</span>
                   <Home />
                 </a>
@@ -29,7 +29,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ challengeName, c
             <li>
               <div className="flex items-center">
                 <Slash />
-                <a href="#" className="ml-1 text-gray-500 hover:text-primaryDark">
+                <a href="/" className="ml-1 text-gray-500 hover:text-primaryDark">
                   Dashboard
                 </a>
               </div>
@@ -37,7 +37,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ challengeName, c
             <li>
               <div className="flex items-center">
                 <Slash />
-                <a href="#" aria-current="page" className="ml-1 text-primary hover:text-primaryDark">
+                <a href="/" aria-current="page" className="ml-1 text-primary hover:text-primaryDark">
                   {challengeName}
                 </a>
               </div>

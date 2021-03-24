@@ -56,4 +56,37 @@ describe("challenge service", () => {
       expect(challenge).toBeFalsy();
     });
   });
+
+  describe("findAll", () => {
+    it("finds all challenges", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const challenges = ["dani", "thomas", "luca", "michi"];
+
+      await Promise.all(
+        challenges.map((challengeSlug) =>
+          prisma.challenge.create({
+            data: {
+              name: "hello",
+              slug: challengeSlug,
+            },
+          }),
+        ),
+      );
+
+      const queriedChallenges = await service.findAll();
+
+      expect(queriedChallenges).toBeTruthy();
+      expect(queriedChallenges.length).toBe(challenges.length);
+    });
+
+    it("returns an empty array when no challenges are found", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const emptyChallenges = await service.findAll();
+      expect(emptyChallenges.length).toBe(0);
+    });
+  });
 });
