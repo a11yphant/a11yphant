@@ -51,7 +51,7 @@ test:prisma:
     - postgres
   script:
     - npm run prisma:generate --prefix $PROJECT_PATH
-    - npm run test --prefix $PROJECT_PATH
+    - npm run test:coverage --prefix $PROJECT_PATH
   variables:
     POSTGRES_DB: a11y-challenges
     POSTGRES_USER: a11y-challenges
@@ -88,6 +88,46 @@ production-dependencies:prisma:
     - .production-dependencies
   variables:
     PROJECT_PATH: packages/prisma
+  only:
+    - develop
+    - master
+    - merge_request
+
+
+#-----------------------------------
+# NestJS AWS Messaging
+#-----------------------------------
+
+lint:nestjs-aws-messaging:
+  extends:
+    - .lint
+    - .run_on_nestjs_aws_messaging_change
+  variables:
+    PROJECT_PATH: packages/nestjs-aws-messaging
+
+test:nestjs-aws-messaging:
+  extends:
+    - .test
+  variables:
+    PROJECT_PATH: packages/nestjs-aws-messaging
+  only:
+    - master
+    - develop
+    - merge_request
+
+build:nestjs-aws-messaging:
+  tags:
+    - docker
+  stage: build-packages
+  image: node:14-alpine
+  variables:
+    PROJECT_PATH: packages/nestjs-aws-messaging
+  script:
+    - npm run build --prefix $PROJECT_PATH
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - $PROJECT_PATH/dist
   only:
     - develop
     - master
