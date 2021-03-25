@@ -4,13 +4,7 @@ import React from "react";
 import Avatar from "./icons/Avatar";
 import Save from "./icons/Save";
 
-interface NavigationProps {
-  challengeName: string;
-  currentLevel: string;
-  maxLevel: string;
-}
-
-const Navigation: React.FunctionComponent<NavigationProps> = ({ challengeName, currentLevel, maxLevel }) => {
+const Navigation: React.FunctionComponent = () => {
   return (
     <header className="flex justify-between items-center p-6 h-1/20">
       <h1 className="logo">A11y Challenges</h1>
