@@ -14,6 +14,7 @@ import { initializeApollo } from "app/lib/apolloClient";
 import { GetServerSideProps } from "next";
 import React, { useState } from "react";
 
+// TODO: replace with API data
 const submissionId = "3fc86d0e-28de-4b68-b26d-021bf28a50cb";
 
 const Evaluation: React.FunctionComponent = () => {
@@ -25,6 +26,7 @@ const Evaluation: React.FunctionComponent = () => {
   const status = data?.resultForSubmission?.status;
   const failedChecks = data?.resultForSubmission?.numberOfFailedChecks;
   const totalChecks = data?.resultForSubmission?.numberOfChecks;
+  const requirements = data?.resultForSubmission?.requirements || [];
 
   // fetch every 3 seconds
   React.useEffect(() => {
@@ -52,14 +54,11 @@ const Evaluation: React.FunctionComponent = () => {
   const score = 100 - (failedChecks / totalChecks) * 100;
   const totalScore = parseInt(score.toFixed(2));
 
-  const mockData = {
-    requirement: "1.0 The link can be activated using the mouse",
-    check: {
-      title: "1.1 Global Requirements",
-      description:
-        "The HTML code must comply to all markup rules established by the W3C. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus donec mattis sit accumsan, pulvinar in felis, vel arcu. Eu pellentesque purus amet, nibh eget.",
-    },
-  };
+  // render requirements
+  const getRequirements = requirements.map((requirement, idx) => {
+    const requirementTitle = `${idx + 1}. ${requirement.title}`;
+    return <EvaluationBody requirementTitle={requirementTitle} checks={requirement.checks} />;
+  });
 
   return (
     <div className="w-screen h-screen">
@@ -70,7 +69,9 @@ const Evaluation: React.FunctionComponent = () => {
           <LoadingScreen />
         ) : (
           <>
-            <EvaluationBody requirementTitle={mockData.requirement} checks={mockData.check} />
+            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
+              {getRequirements}
+            </div>
             <div className="absolute bottom-8 right-8">
               <Button
                 onClick={() => {
