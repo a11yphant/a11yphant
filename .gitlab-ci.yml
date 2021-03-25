@@ -234,6 +234,10 @@ generate-graphql-schema:api:
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
+  before_script:
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   script: npm run generate-schema --prefix $PROJECT_PATH
   artifacts:
     paths:
@@ -268,6 +272,7 @@ test:api:
   before_script:
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/prisma --cache .npm-alpine --prefer-offline
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
@@ -299,6 +304,7 @@ build:api:
     PROJECT_PATH: services/api
   before_script:
     - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --production --prefix packages/prisma --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   artifacts:
