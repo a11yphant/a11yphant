@@ -7,8 +7,10 @@ import { AWS_MESSAGING_MODULE_CONFIG } from "./constants";
 
 export class AwsMessagingClient extends ClientProxy {
   private sns: AWS.SNS;
+
   constructor(@Inject(AWS_MESSAGING_MODULE_CONFIG) private options: AwsMessagingModuleConfig, private logger: Logger) {
     super();
+
     AWS.config.update({ region: this.options.region });
     this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint });
   }
