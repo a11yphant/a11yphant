@@ -38,7 +38,7 @@ model Level {
   @@map(name: "levels")
 }
 
-model Check {
+model Rule {
   id               String        @id @default(uuid())
   key              String        @unique
   title            String
@@ -46,15 +46,15 @@ model Check {
   longDescription  String
   requirements     Requirement[]
 
-  @@map(name: "checks")
+  @@map(name: "rules")
 }
 
 model Requirement {
-  id      String  @id @default(uuid())
+  id      String @id @default(uuid())
   title   String
-  level   Level   @relation(fields: [levelId], references: [id])
+  level   Level  @relation(fields: [levelId], references: [id])
   levelId String
-  checks  Check[]
+  rules   Rule[]
 
   @@map(name: "requirements")
 }
