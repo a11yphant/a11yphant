@@ -13,7 +13,7 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
       <h2 className="text-white leading-10">
         <strong>Evaluation</strong> <br /> {challengeName} <br /> Level {levelIdx}
       </h2>
-      <p className="text-8xl text-white font-bold">{isNaN(score) ? "" : `${score}%`}</p>
+      <p className="text-8xl text-white font-bold">{score && `${score.toFixed(0)}%`}</p>
     </div>
   );
 };

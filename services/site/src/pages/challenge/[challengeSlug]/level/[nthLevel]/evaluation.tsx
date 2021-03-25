@@ -60,8 +60,10 @@ const Evaluation: React.FunctionComponent = () => {
   }
 
   // total score in %
-  const score = 100 - (failedChecks / totalChecks) * 100;
-  const totalScore = parseInt(score.toFixed(2));
+  let totalScore;
+  if (failedChecks && totalChecks) {
+    totalScore = 100 - (failedChecks / totalChecks) * 100;
+  }
 
   // render requirements
   const getRequirements = requirements.map((requirement, idx) => {
