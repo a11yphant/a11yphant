@@ -238,7 +238,7 @@ describe('import service', () => {
         challenge: { upsert },
       }),
       createMock<YamlReaderService>({
-        readChallenge: jest
+        readFile: jest
           .fn()
           .mockResolvedValueOnce({
             id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
