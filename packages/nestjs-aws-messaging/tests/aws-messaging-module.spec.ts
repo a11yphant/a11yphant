@@ -6,7 +6,7 @@ import AWSMock from "aws-sdk-mock";
 import { AwsMessagingModule } from "../lib/aws-messaging.module";
 import { AWS_MESSAGING_MODULE_CONFIG } from "../lib/constants";
 
-describe("prisma module", () => {
+describe("AWS Messaging Module", () => {
   beforeEach(() => {
     AWSMock.setSDKInstance(AWS);
   });
