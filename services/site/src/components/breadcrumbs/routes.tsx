@@ -5,7 +5,11 @@ import { ParsedUrlQuery } from "querystring";
 import React from "react";
 
 export interface Routes {
-  [key: string]: { getBreadcrumbInfo: (urlParams: ParsedUrlQuery, apolloClient?: ApolloClient<object>) => Promise<BreadcrumbInfo> };
+  [key: string]: RouteInfo;
+}
+
+export interface RouteInfo {
+  getBreadcrumbInfo: (urlParams: ParsedUrlQuery, apolloClient?: ApolloClient<object>) => Promise<BreadcrumbInfo>;
 }
 
 export interface BreadcrumbInfo {
