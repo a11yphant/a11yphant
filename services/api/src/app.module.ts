@@ -1,3 +1,4 @@
+import { AwsMessagingModule } from "@a11y-challenges/nestjs-aws-messaging";
 import { PrismaModule } from "@a11y-challenges/prisma";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -35,6 +36,15 @@ import { SubmissionModule } from "./submission/submission.module";
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
         databaseUrl: config.get<string>("database.url"),
+      }),
+      inject: [ConfigService],
+    }),
+    AwsMessagingModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => ({
+        region: config.get<string>("sns.region"),
+        topics: config.get<Record<string, string>>("sns.topics"),
+        snsEndpoint: config.get<string>("sns.endpoint"),
       }),
       inject: [ConfigService],
     }),

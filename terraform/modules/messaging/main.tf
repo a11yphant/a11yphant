@@ -18,7 +18,7 @@ resource "aws_sns_topic_subscription" "submission_subscription_for_submission_ch
   endpoint  = aws_sqs_queue.submission_checker_queue.arn
 
   filter_policy = jsonencode({
-    type = ["submission.submitted"]
+    type = ["submission.created"]
   })
 }
 
