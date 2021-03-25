@@ -1,14 +1,16 @@
+import { Inject, Logger } from "@nestjs/common";
 import { ClientProxy, ReadPacket, WritePacket } from "@nestjs/microservices";
 import AWS from "aws-sdk";
 
-import { AwsMessagingClientOptions } from "./aws-messaging-client-options";
+import { AwsMessagingModuleConfig } from "./aws-messaging.module";
+import { AWS_MESSAGING_MODULE_CONFIG } from "./constants";
 
 export class AwsMessagingClient extends ClientProxy {
   private sns: AWS.SNS;
-  constructor(private options: AwsMessagingClientOptions) {
+  constructor(@Inject(AWS_MESSAGING_MODULE_CONFIG) private options: AwsMessagingModuleConfig, private logger: Logger) {
     super();
     AWS.config.update({ region: this.options.region });
-    this.sns = new AWS.SNS({ apiVersion: "2010-03-31" });
+    this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint });
   }
 
   async connect(): Promise<void> {
@@ -25,7 +27,10 @@ export class AwsMessagingClient extends ClientProxy {
       const arn = this.options.topics[topic];
 
       if (!arn) {
-        reject(new Error(`Cannot find arn for topic ${topic}. Make sure that the arn is included in the configuration`));
+        const errorMessage = `Cannot find arn for topic ${topic}. Make sure that the arn is included in the configuration`;
+        this.logger.error(errorMessage);
+        reject(new Error(errorMessage));
+        return;
       }
 
       const message: AWS.SNS.PublishInput = {
@@ -38,9 +43,12 @@ export class AwsMessagingClient extends ClientProxy {
         },
         TopicArn: arn,
       };
-      this.sns.publish(message, (error) => {
+
+      this.sns.publish(message, (error, a) => {
         if (error) {
-          reject(new Error(`Could not publish message: ${error.message}`));
+          const errorMessage = `Could not publish message: ${error.message}`;
+          this.logger.error(errorMessage);
+          reject(new Error(errorMessage));
           return;
         }
 
@@ -50,7 +58,9 @@ export class AwsMessagingClient extends ClientProxy {
   }
 
   publish(packet: ReadPacket<any>, callback: (packet: WritePacket<any>) => void): () => void {
-    throw new Error("Publishing messages is currently not supported. Only emitting events is available");
+    const message = "Publishing messages is currently not supported. Only emitting events is available";
+    this.logger.error(message);
+    throw new Error(message);
   }
 
   private getTopicFromPattern(pattern: string): string {

@@ -1,3 +1,5 @@
+import { createMock } from "@golevelup/ts-jest";
+import { Logger } from "@nestjs/common";
 import { ReadPacket } from "@nestjs/microservices";
 import AWS from "aws-sdk";
 import AWSMock from "aws-sdk-mock";
@@ -14,28 +16,37 @@ describe("AWS Messaging Client", () => {
   });
 
   it("can create a connection", () => {
-    const client = new AwsMessagingClient({
-      topics: {},
-      region: "eu-central-1",
-    });
+    const client = new AwsMessagingClient(
+      {
+        topics: {},
+        region: "eu-central-1",
+      },
+      createMock<Logger>(),
+    );
 
     expect(() => client.connect()).not.toThrow(expect.any(Error));
   });
 
   it("can close the connection", () => {
-    const client = new AwsMessagingClient({
-      topics: {},
-      region: "eu-central-1",
-    });
+    const client = new AwsMessagingClient(
+      {
+        topics: {},
+        region: "eu-central-1",
+      },
+      createMock<Logger>(),
+    );
 
     expect(() => client.close()).not.toThrow(expect.any(Error));
   });
 
   it("cannot publish a message", () => {
-    const client = new AwsMessagingClient({
-      topics: {},
-      region: "eu-central-1",
-    });
+    const client = new AwsMessagingClient(
+      {
+        topics: {},
+        region: "eu-central-1",
+      },
+      createMock<Logger>(),
+    );
 
     const packet: ReadPacket<string> = {
       pattern: "test",
@@ -59,7 +70,7 @@ describe("AWS Messaging Client", () => {
     const eventName = "submission.something-happened";
 
     const topics = { submission: "submission-topic-arn" };
-    const client = new AwsMessagingClient({ topics, region: "eu-central-1" });
+    const client = new AwsMessagingClient({ topics, region: "eu-central-1" }, createMock<Logger>());
 
     const result = await client.dispatchEvent({
       pattern: eventName,
@@ -94,7 +105,7 @@ describe("AWS Messaging Client", () => {
     const eventName = "unknown-topic.something-happened";
 
     const topics = { submission: "submission-topic-arn" };
-    const client = new AwsMessagingClient({ topics, region: "eu-central-1" });
+    const client = new AwsMessagingClient({ topics, region: "eu-central-1" }, createMock<Logger>());
 
     expect(
       client.dispatchEvent({
@@ -116,7 +127,7 @@ describe("AWS Messaging Client", () => {
     const eventName = "unknown-topic.something-happened";
 
     const topics = { submission: "submission-topic-arn" };
-    const client = new AwsMessagingClient({ topics, region: "eu-central-1" });
+    const client = new AwsMessagingClient({ topics, region: "eu-central-1" }, createMock<Logger>());
 
     expect(
       client.dispatchEvent({
