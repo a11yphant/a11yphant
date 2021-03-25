@@ -43,7 +43,7 @@ model Rule {
   key                   String        @unique
   title                 String
   shortDescription      String
-  additionalDescription String
+  additionalDescription String?
   requirements          Requirement[]
 
   @@map(name: "rules")
