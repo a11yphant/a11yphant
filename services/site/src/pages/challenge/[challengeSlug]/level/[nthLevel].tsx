@@ -114,7 +114,7 @@ export default Level;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo();
 
-  const { challengeSlug, nthLevel } = context.query;
+  const { challengeSlug, nthLevel } = context.params;
 
   await apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
     query: LevelByChallengeSlugDocument,
