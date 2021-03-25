@@ -12,7 +12,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
 
   const [routeList, setRouteList] = React.useState<BreadcrumbInfo[]>([]);
 
-  const getRouteList = async (): Promise<BreadcrumbInfo[]> => {
+  const getRouteList = React.useCallback(async (): Promise<BreadcrumbInfo[]> => {
     const urlParams = router.query;
     const pathname = router.pathname;
     const pathnameArr = pathname.split("/");
@@ -28,7 +28,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
 
       return routeInfoList;
     }, Promise.resolve([]));
-  };
+  }, [apolloClient, router.pathname, router.query, routes]);
 
   React.useEffect(() => {
     const asyncGetRouteList = async (): Promise<void> => {
@@ -37,7 +37,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
     };
 
     asyncGetRouteList();
-  }, []);
+  }, [getRouteList, router.pathname]);
 
   return (
     <nav className="flex" aria-label="Breadcrumb">
