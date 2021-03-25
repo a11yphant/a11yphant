@@ -81,4 +81,4 @@
         - *run_on_root_change
         - *run_on_ci_change
         - packages/../*
-        - packages/run_on_nestjs_aws_messaging_change/**/*
+        - packages/nestjs-aws-messaging/**/*
