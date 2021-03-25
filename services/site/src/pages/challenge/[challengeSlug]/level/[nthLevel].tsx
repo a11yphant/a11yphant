@@ -11,9 +11,12 @@ import {
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apolloClient";
+import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+
+import { useSubmitMutation } from "../../../../generated/graphql";
 
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
@@ -24,11 +27,15 @@ const Level: React.FunctionComponent = () => {
     data: { level },
   } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
 
+  const [submitLevelMutation] = useSubmitMutation();
+
+  const challengeContext = useChallenge();
+
   const [initialCode] = useState<Code>(level?.code);
 
   const [currHtmlCode, setCurrHtmlCode] = useState<string>(level?.code?.html);
   const [currCssCode, setCurrCssCode] = useState<string>(level?.code?.css);
-  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
+  // const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     // if language === undefined => reset all
@@ -37,7 +44,7 @@ const Level: React.FunctionComponent = () => {
       : {
           html: currHtmlCode,
           css: currCssCode,
-          js: currJavascriptCode,
+          // js: currJavascriptCode,
         };
 
     if (language) {
@@ -46,7 +53,23 @@ const Level: React.FunctionComponent = () => {
 
     setCurrHtmlCode(newCode.html);
     setCurrCssCode(newCode.css);
-    setCurrJavascriptCode(newCode.js);
+    // setCurrJavascriptCode(newCode.js);
+  };
+
+  const submitLevel = async (): Promise<void> => {
+    const { data } = await submitLevelMutation({
+      variables: {
+        submissionInput: {
+          levelId: level.id,
+          html: currHtmlCode,
+          css: currCssCode,
+          // js: currJavascriptCode,
+        },
+      },
+    });
+
+    challengeContext.setSubmissionId(data.submit.id);
+    router.push(`${router.asPath}/evaluation`);
   };
 
   if (loading) {
@@ -74,13 +97,13 @@ const Level: React.FunctionComponent = () => {
             editors={[
               { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
               { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
-              {
-                languageLabel: "JavaScript",
-                language: EditorLanguage.javascript,
-                code: currJavascriptCode,
-                updateCode: setCurrJavascriptCode,
-                heading: "index.js",
-              },
+              // {
+              //   languageLabel: "JavaScript",
+              //   language: EditorLanguage.javascript,
+              //   code: currJavascriptCode,
+              //   updateCode: setCurrJavascriptCode,
+              //   heading: "index.js",
+              // },
             ]}
             theme="light"
             options={{
@@ -91,15 +114,9 @@ const Level: React.FunctionComponent = () => {
               },
             }}
           />
-          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
+          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
           <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
-            <Button
-              full
-              onClick={() => {
-                alert("Thank you Mario, but our princess is in another castle!");
-              }}
-              className="px-10 tracking-wider"
-            >
+            <Button full onClick={submitLevel} className="px-10 tracking-wider">
               Submit
             </Button>
           </div>
@@ -114,7 +131,7 @@ export default Level;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo();
 
-  const { challengeSlug, nthLevel } = context.query;
+  const { challengeSlug, nthLevel } = context.params;
 
   await apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
     query: LevelByChallengeSlugDocument,

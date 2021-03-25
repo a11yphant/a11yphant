@@ -1,0 +1,23 @@
+
+# Write your query or mutation here
+
+query resultForSubmission ($id: String!, $resultWish: ResultStatus) {
+  resultForSubmission(submissionId: $id, resultWish: $resultWish) {
+    id
+    status
+    numberOfChecks
+    numberOfFailedChecks
+    requirements {
+      id
+      title
+      checks {
+        id
+        title
+        key
+        description
+        result
+      }
+      result
+    }
+  }
+}
