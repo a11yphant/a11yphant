@@ -256,6 +256,7 @@ test:api:
     - .test
   needs:
    - build:prisma
+   - build:nestjs-aws-messaging
   services:
     - postgres
   variables:
