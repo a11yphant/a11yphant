@@ -27,7 +27,7 @@ describe("prisma module", () => {
     expect(moduleRef).toBeTruthy();
   });
 
-  it("provides the database url with forRootAsync", async () => {
+  it("provides the injected values with forRootAsync", async () => {
     const module = await AwsMessagingModule.forRootAsync({
       imports: [("module" as unknown) as DynamicModule],
       useFactory: (region: string, arn: string) => ({ region, topics: { test: arn } }),
