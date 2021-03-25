@@ -4,11 +4,11 @@ import { BreadcrumbChallengeDocument, BreadcrumbChallengeQuery, BreadcrumbChalle
 import { ParsedUrlQuery } from "querystring";
 import React from "react";
 
-interface Routes {
-  [key: string]: (urlParams: ParsedUrlQuery, apolloClient?: ApolloClient<object>) => Promise<RouteInfo>;
+export interface Routes {
+  [key: string]: { getBreadcrumbInfo: (urlParams: ParsedUrlQuery, apolloClient?: ApolloClient<object>) => Promise<BreadcrumbInfo> };
 }
 
-export interface RouteInfo {
+export interface BreadcrumbInfo {
   href: string;
   breadcrumb: React.ReactNode;
 }
@@ -18,36 +18,42 @@ export const useRoutes = (): Routes => {
 };
 
 const routes: Routes = {
-  "/": async () => {
-    return {
-      href: "/",
-      breadcrumb: (
-        <>
-          <span className="sr-only">Home</span>
-          <Home />
-        </>
-      ),
-    };
+  "/": {
+    getBreadcrumbInfo: async () => {
+      return {
+        href: "/",
+        breadcrumb: (
+          <>
+            <span className="sr-only">Home</span>
+            <Home />
+          </>
+        ),
+      };
+    },
   },
-  "/challenge/[challengeSlug]": async (urlParams, apolloClient) => {
-    const { challengeSlug } = urlParams;
+  "/challenge/[challengeSlug]": {
+    getBreadcrumbInfo: async (urlParams, apolloClient) => {
+      const { challengeSlug } = urlParams;
 
-    const { data } = await apolloClient.query<BreadcrumbChallengeQuery, BreadcrumbChallengeQueryVariables>({
-      query: BreadcrumbChallengeDocument,
-      variables: { slug: challengeSlug as string },
-    });
+      const { data } = await apolloClient.query<BreadcrumbChallengeQuery, BreadcrumbChallengeQueryVariables>({
+        query: BreadcrumbChallengeDocument,
+        variables: { slug: challengeSlug as string },
+      });
 
-    return {
-      href: `/challenge/${challengeSlug}`,
-      breadcrumb: data.challenge?.name,
-    };
+      return {
+        href: `/challenge/${challengeSlug}`,
+        breadcrumb: data.challenge?.name,
+      };
+    },
   },
-  "/challenge/[challengeSlug]/level/[nthLevel]": async (urlParams) => {
-    const { challengeSlug, nthLevel } = urlParams;
+  "/challenge/[challengeSlug]/level/[nthLevel]": {
+    getBreadcrumbInfo: async (urlParams) => {
+      const { challengeSlug, nthLevel } = urlParams;
 
-    return {
-      href: `/challenge/${challengeSlug}/level/${nthLevel}`,
-      breadcrumb: `Level ${nthLevel}`,
-    };
+      return {
+        href: `/challenge/${challengeSlug}/level/${nthLevel}`,
+        breadcrumb: `Level ${nthLevel}`,
+      };
+    },
   },
 };

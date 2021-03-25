@@ -1,5 +1,5 @@
 import { useApolloClient } from "@apollo/client";
-import { RouteInfo, useRoutes } from "app/components/breadcrumbs/routes";
+import { BreadcrumbInfo, useRoutes } from "app/components/breadcrumbs/routes";
 import Slash from "app/components/icons/Slash";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,18 +10,18 @@ const Breadcrumbs: React.FunctionComponent = () => {
   const routes = useRoutes();
   const apolloClient = useApolloClient();
 
-  const [routeList, setRouteList] = React.useState<RouteInfo[]>([]);
+  const [routeList, setRouteList] = React.useState<BreadcrumbInfo[]>([]);
 
-  const getRouteList = async (): Promise<RouteInfo[]> => {
+  const getRouteList = async (): Promise<BreadcrumbInfo[]> => {
     const urlParams = router.query;
     const pathname = router.pathname;
     const pathnameArr = pathname.split("/");
 
-    return pathnameArr.reduce<Promise<RouteInfo[]>>(async (routeInfoList, pathSegment, idx) => {
+    return pathnameArr.reduce<Promise<BreadcrumbInfo[]>>(async (routeInfoList, pathSegment, idx) => {
       const pathname = pathnameArr.slice(0, idx + 1).join("/") || "/";
 
       if (routes[pathname]) {
-        const routeInfo = await routes[pathname](urlParams, apolloClient);
+        const routeInfo = await routes[pathname].getBreadcrumbInfo(urlParams, apolloClient);
         const existingRouteInfoList = await routeInfoList;
         return [...existingRouteInfoList, routeInfo];
       }
