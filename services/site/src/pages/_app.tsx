@@ -1,7 +1,6 @@
 import "app/styles/global.scss";
 
 import { ApolloProvider } from "@apollo/client";
-import { BreadcrumbsContextProvider } from "app/components/breadcrumbs/BreadcrumbsContext";
 import { useApollo } from "app/lib/apolloClient";
 import React from "react";
 
@@ -15,9 +14,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <BreadcrumbsContextProvider>
-        <Component {...pageProps} />
-      </BreadcrumbsContextProvider>
+      <Component {...pageProps} />
     </ApolloProvider>
   );
 };

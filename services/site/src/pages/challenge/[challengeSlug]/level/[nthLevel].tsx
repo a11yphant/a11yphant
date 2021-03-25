@@ -1,9 +1,7 @@
-import { useBreadcrumbs } from "app/components/breadcrumbs/BreadcrumbsContext";
 import Button from "app/components/buttons/Button";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
-import Home from "app/components/icons/Home";
 import Navigation from "app/components/Navigation";
 import {
   Code,
@@ -20,8 +18,6 @@ import React, { useState } from "react";
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
-
-  const { setBreadcrumbs } = useBreadcrumbs();
 
   const {
     loading,
@@ -52,29 +48,6 @@ const Level: React.FunctionComponent = () => {
     setCurrCssCode(newCode.css);
     setCurrJavascriptCode(newCode.js);
   };
-
-  // @TODO: Not really practicable to add this to every page. Maybe some kind of stack api or url matching?
-  React.useEffect(() => {
-    setBreadcrumbs([
-      {
-        href: "/",
-        children: (
-          <>
-            <span className="sr-only">Home</span>
-            <Home />
-          </>
-        ),
-      },
-      {
-        href: `/challenge/${challengeSlug}`,
-        children: "Challenge",
-      },
-      {
-        href: `/challenge/${challengeSlug}/level/${nthLevel}`,
-        children: `Level ${nthLevel}`,
-      },
-    ]);
-  }, [challengeSlug, nthLevel, setBreadcrumbs]);
 
   if (loading) {
     return <div>Loading ...</div>;
@@ -141,7 +114,7 @@ export default Level;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo();
 
-  const { challengeSlug, nthLevel } = context.query;
+  const { challengeSlug, nthLevel } = context.params;
 
   await apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
     query: LevelByChallengeSlugDocument,

@@ -1,5 +1,4 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
-import { useBreadcrumbs } from "app/components/breadcrumbs/BreadcrumbsContext";
 import React from "react";
 
 import Avatar from "./icons/Avatar";
@@ -13,13 +12,11 @@ interface NavigationProps {
 }
 
 const Navigation: React.FunctionComponent<NavigationProps> = ({ challengeName, currentLevel, maxLevel }) => {
-  const { breadcrumbs } = useBreadcrumbs();
-
   return (
     <header className="flex justify-between items-center p-6 h-1/20">
       <h1 className="logo">A11y Challenges</h1>
       <div className="flex justify-center items-center">
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        <Breadcrumbs />
         <div className="flex items-center text-primary ml-4">
           <span>{currentLevel}</span>
           <Slash classes="text-primary" />

@@ -1,0 +1,6 @@
+query breadcrumbChallenge ($slug: String!) {
+    challenge: challengeBySlug(slug: $slug) {
+        id
+        name
+    }
+}
