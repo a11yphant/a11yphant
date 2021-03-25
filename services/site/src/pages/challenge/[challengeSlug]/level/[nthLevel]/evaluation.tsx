@@ -27,7 +27,7 @@ const Evaluation: React.FunctionComponent = () => {
 
   // state
   const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
-  const challenge = useChallenge();
+  const challengeContext = useChallenge();
 
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
@@ -38,9 +38,9 @@ const Evaluation: React.FunctionComponent = () => {
 
   // fetch every 3 seconds
   React.useEffect(() => {
-    console.log(challenge.submissionId);
+    console.log(challengeContext.submissionId);
     const interval = setInterval(() => {
-      getResultForSubmission({ variables: { id: challenge.submissionId } });
+      getResultForSubmission({ variables: { id: challengeContext.submissionId } });
     }, 3000);
 
     setQueryInterval(interval);

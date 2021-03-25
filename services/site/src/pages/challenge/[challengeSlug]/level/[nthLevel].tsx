@@ -29,7 +29,7 @@ const Level: React.FunctionComponent = () => {
 
   const [submitLevelMutation] = useSubmitMutation();
 
-  const challenge = useChallenge();
+  const challengeContext = useChallenge();
 
   const [initialCode] = useState<Code>(level?.code);
 
@@ -68,7 +68,7 @@ const Level: React.FunctionComponent = () => {
       },
     });
 
-    challenge.setSubmissionId(data.submit.id);
+    challengeContext.setSubmissionId(data.submit.id);
     router.push(`${router.asPath}/evaluation`);
   };
 
