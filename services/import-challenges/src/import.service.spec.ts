@@ -128,7 +128,7 @@ describe('import service', () => {
           tldr: 'hi',
           instructions: 'hi',
           hints: [],
-          requirements: [{ id: 'asdf', title: 'lala' }],
+          requirements: [{ id: 'asdf', title: 'lala', rules: [] }],
           resources: [],
         },
       ],
