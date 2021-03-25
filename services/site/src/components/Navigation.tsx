@@ -20,7 +20,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
     <header className="flex justify-between items-center p-6 h-1/20">
       <h1 className="logo">
         <Link href="/">
-          <a>A11y Challenges</a>
+          <a className="hover:text-primary">A11y Challenges</a>
         </Link>
       </h1>
       {displayBreadcrumbs && (
