@@ -15,7 +15,7 @@
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:coverage": "jest --coverage --reporter=default",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "peerDependencies": {
@@ -49,6 +49,7 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-unused-imports": "1.1.0",
     "jest": "26.6.3",
+    "jest-junit": "^12.0.0",
     "prettier": "2.2.1",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.6",
@@ -64,14 +65,24 @@
       "ts"
     ],
     "rootDir": "./",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.ts$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.ts"
+    "testEnvironment": "node",
+    "reporters": [
+      "default",
+      "jest-junit"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "cobertura"
+    ],
+    "coverageDirectory": "<rootDir>"
   }
 }

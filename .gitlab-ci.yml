@@ -110,8 +110,6 @@ test:nestjs-aws-messaging:
     - .test
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
-  script:
-    - npm run test --prefix $PROJECT_PATH
   only:
     - master
     - develop
@@ -124,8 +122,6 @@ build:nestjs-aws-messaging:
   image: node:14-alpine
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
-  script:
-    - npm run build --prefix $PROJECT_PATH
   artifacts:
     expire_in: 1 day
     paths:
