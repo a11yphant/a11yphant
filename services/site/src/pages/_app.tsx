@@ -2,6 +2,7 @@ import "app/styles/global.scss";
 
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "app/lib/apolloClient";
+import ChallengeContextProvider from "app/lib/ChallengeContext";
 import React from "react";
 
 interface AppProps {
@@ -14,7 +15,9 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Component {...pageProps} />
+      <ChallengeContextProvider>
+        <Component {...pageProps} />
+      </ChallengeContextProvider>
     </ApolloProvider>
   );
 };
