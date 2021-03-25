@@ -3,5 +3,5 @@ export interface Rule {
   key: string;
   title: string;
   shortDescription: string;
-  longDescription: string;
+  additionalDescription?: string;
 }
