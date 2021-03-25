@@ -57,7 +57,7 @@ const Evaluation: React.FunctionComponent = () => {
   // render requirements
   const getRequirements = requirements.map((requirement, idx) => {
     const requirementTitle = `${idx + 1}. ${requirement.title}`;
-    return <EvaluationBody requirementTitle={requirementTitle} checks={requirement.checks} />;
+    return <EvaluationBody key={requirement.id} requirementTitle={requirementTitle} checks={requirement.checks} requirementIdx={idx + 1} />;
   });
 
   return (
