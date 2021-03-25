@@ -1,6 +1,6 @@
 import { ApolloClient } from "@apollo/client";
 import Home from "app/components/icons/Home";
-import { BreadcrumbChallengeDocument, BreadcrumbChallengeQuery, BreadcrumbChallengeQueryVariables } from "app/generated/graphql";
+import { ChallengeBySlugDocument, ChallengeBySlugQuery, ChallengeBySlugQueryVariables } from "app/generated/graphql";
 import { ParsedUrlQuery } from "querystring";
 import React from "react";
 
@@ -39,8 +39,8 @@ const routes: Routes = {
     getBreadcrumbInfo: async (urlParams, apolloClient) => {
       const { challengeSlug } = urlParams;
 
-      const { data } = await apolloClient.query<BreadcrumbChallengeQuery, BreadcrumbChallengeQueryVariables>({
-        query: BreadcrumbChallengeDocument,
+      const { data } = await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+        query: ChallengeBySlugDocument,
         variables: { slug: challengeSlug as string },
       });
 
@@ -51,12 +51,28 @@ const routes: Routes = {
     },
   },
   "/challenge/[challengeSlug]/level/[nthLevel]": {
+    getBreadcrumbInfo: async (urlParams, apolloClient) => {
+      const { challengeSlug, nthLevel } = urlParams;
+
+      const { data } = await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+        query: ChallengeBySlugDocument,
+        variables: { slug: challengeSlug as string },
+      });
+      const totalLevels = data.challenge.levels.length;
+
+      return {
+        href: `/challenge/${challengeSlug}/level/${nthLevel}`,
+        breadcrumb: `Level ${nthLevel} / 0${totalLevels}`,
+      };
+    },
+  },
+  "/challenge/[challengeSlug]/level/[nthLevel]/evaluation": {
     getBreadcrumbInfo: async (urlParams) => {
       const { challengeSlug, nthLevel } = urlParams;
 
       return {
-        href: `/challenge/${challengeSlug}/level/${nthLevel}`,
-        breadcrumb: `Level ${nthLevel}`,
+        href: `/challenge/${challengeSlug}/level/${nthLevel}/evaluation`,
+        breadcrumb: "Evaluation",
       };
     },
   },
