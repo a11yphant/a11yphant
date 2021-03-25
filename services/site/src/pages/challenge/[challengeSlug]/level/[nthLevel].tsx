@@ -33,7 +33,7 @@ const Level: React.FunctionComponent = () => {
 
   const [currHtmlCode, setCurrHtmlCode] = useState<string>(level?.code?.html);
   const [currCssCode, setCurrCssCode] = useState<string>(level?.code?.css);
-  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
+  // const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     // if language === undefined => reset all
@@ -42,7 +42,7 @@ const Level: React.FunctionComponent = () => {
       : {
           html: currHtmlCode,
           css: currCssCode,
-          js: currJavascriptCode,
+          // js: currJavascriptCode,
         };
 
     if (language) {
@@ -51,7 +51,7 @@ const Level: React.FunctionComponent = () => {
 
     setCurrHtmlCode(newCode.html);
     setCurrCssCode(newCode.css);
-    setCurrJavascriptCode(newCode.js);
+    // setCurrJavascriptCode(newCode.js);
   };
 
   const submitLevel = (): void => {
@@ -61,7 +61,7 @@ const Level: React.FunctionComponent = () => {
           levelId: level.id,
           html: currHtmlCode,
           css: currCssCode,
-          js: currJavascriptCode,
+          // js: currJavascriptCode,
         },
       },
     });
@@ -92,13 +92,13 @@ const Level: React.FunctionComponent = () => {
             editors={[
               { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
               { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
-              {
-                languageLabel: "JavaScript",
-                language: EditorLanguage.javascript,
-                code: currJavascriptCode,
-                updateCode: setCurrJavascriptCode,
-                heading: "index.js",
-              },
+              // {
+              //   languageLabel: "JavaScript",
+              //   language: EditorLanguage.javascript,
+              //   code: currJavascriptCode,
+              //   updateCode: setCurrJavascriptCode,
+              //   heading: "index.js",
+              // },
             ]}
             theme="light"
             options={{
@@ -109,7 +109,7 @@ const Level: React.FunctionComponent = () => {
               },
             }}
           />
-          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
+          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
           <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
             <Button full onClick={submitLevel} className="px-10 tracking-wider">
               Submit
