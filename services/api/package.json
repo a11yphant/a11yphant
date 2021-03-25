@@ -24,6 +24,7 @@
     "generate-schema": "ts-node src/generate-schema.ts"
   },
   "dependencies": {
+    "@a11y-challenges/nestjs-aws-messaging": "file:../../packages/nestjs-aws-messaging",
     "@a11y-challenges/prisma": "file:../../packages/prisma",
     "@nestjs/common": "7.6.14",
     "@nestjs/config": "0.6.3",
