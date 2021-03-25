@@ -24,6 +24,7 @@ const Evaluation: React.FunctionComponent = () => {
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
   const status = data?.resultForSubmission?.status;
   const failedChecks = data?.resultForSubmission?.numberOfFailedChecks;
+  const totalChecks = data?.resultForSubmission?.numberOfChecks;
 
   // fetch every 3 seconds
   React.useEffect(() => {
@@ -47,6 +48,10 @@ const Evaluation: React.FunctionComponent = () => {
     levelCompleted = true;
   }
 
+  // total score in %
+  const score = 100 - (failedChecks / totalChecks) * 100;
+  const totalScore = parseInt(score.toFixed(2));
+
   const mockData = {
     requirement: "1.0 The link can be activated using the mouse",
     check: {
@@ -60,7 +65,7 @@ const Evaluation: React.FunctionComponent = () => {
     <div className="w-screen h-screen">
       <Navigation challengeName="Accessible Links" currentLevel="01" maxLevel="03" />
       <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
-        <EvaluationHeader challengeName="Accessible Links" levelIdx="01"></EvaluationHeader>
+        <EvaluationHeader challengeName="Accessible Links" levelIdx="01" score={totalScore}></EvaluationHeader>
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
