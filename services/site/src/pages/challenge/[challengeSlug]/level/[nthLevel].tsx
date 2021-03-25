@@ -15,6 +15,8 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
+import { useSubmitMutation } from "../../../../generated/graphql";
+
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
@@ -23,6 +25,9 @@ const Level: React.FunctionComponent = () => {
     loading,
     data: { level },
   } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
+
+  // mutation
+  const [submitLevelMutation] = useSubmitMutation();
 
   const [initialCode] = useState<Code>(level?.code);
 
@@ -47,6 +52,19 @@ const Level: React.FunctionComponent = () => {
     setCurrHtmlCode(newCode.html);
     setCurrCssCode(newCode.css);
     setCurrJavascriptCode(newCode.js);
+  };
+
+  const submitLevel = (): void => {
+    submitLevelMutation({
+      variables: {
+        submissionInput: {
+          levelId: level.id,
+          html: currHtmlCode,
+          css: currCssCode,
+          js: currJavascriptCode,
+        },
+      },
+    });
   };
 
   if (loading) {
@@ -93,13 +111,7 @@ const Level: React.FunctionComponent = () => {
           />
           <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={currJavascriptCode} />
           <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
-            <Button
-              full
-              onClick={() => {
-                alert("Thank you Mario, but our princess is in another castle!");
-              }}
-              className="px-10 tracking-wider"
-            >
+            <Button full onClick={submitLevel} className="px-10 tracking-wider">
               Submit
             </Button>
           </div>
