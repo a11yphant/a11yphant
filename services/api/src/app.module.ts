@@ -9,13 +9,14 @@ import apiConfig from "./config/api.config";
 import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import nodeConfig from "./config/node.config";
+import snsConfig from "./config/sns.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
 import { SubmissionModule } from "./submission/submission.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, gqlConfig, nodeConfig, databaseConfig],
+      load: [apiConfig, gqlConfig, nodeConfig, databaseConfig, snsConfig],
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
