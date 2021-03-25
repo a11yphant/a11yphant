@@ -1,9 +1,9 @@
 import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
-import { Check } from "src/challenge/models/check.model";
-import { RequirementService } from "src/challenge/requirement.service";
 import { v4 as uuidv4 } from "uuid";
 
+import { Check } from "../challenge/models/check.model";
 import { CheckStatus } from "../challenge/models/check-status.enum";
+import { RequirementService } from "../challenge/requirement.service";
 import { Result } from "./models/result.model";
 import { ResultStatus } from "./models/result-status.enum";
 import { SubmissionService } from "./submission.service";
