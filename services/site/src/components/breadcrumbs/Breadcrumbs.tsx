@@ -48,7 +48,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
               <div className="flex items-center">
                 {idx > 0 && <Slash />}
                 <Link href={route.href}>
-                  <a className="ml-1 text-gray-500 hover:text-primaryDark">{route.breadcrumb}</a>
+                  <a className={`${idx === routeList.length - 1 && "text-primary"} ml-1 text-gray-500 hover:text-primaryDark`}>{route.breadcrumb}</a>
                 </Link>
               </div>
             </li>
