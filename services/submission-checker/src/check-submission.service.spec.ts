@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { BrowserService } from "./browser.service";
 import { CheckSubmissionService } from "./check-submission.service";
-import { Submission } from "./submission.model";
+import { Submission } from "./submission.interface";
 import { SubmissionService } from "./submission.service";
 
 const axeMockResult = {
@@ -70,6 +70,7 @@ const axeMockResult = {
 };
 
 const mockSubmission: Submission = {
+  id: "1234",
   html: `<h1>This is submission</h1>`,
   css: "body { color: deepseagreen }",
   javascript: `document.querySelector('h1').style.opacity = 0.5`,

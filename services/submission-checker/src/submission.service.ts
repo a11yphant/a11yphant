@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { Submission } from "./submission.model";
+import { Submission } from "./submission.interface";
 
 const requirements = [
   {
@@ -48,13 +48,13 @@ const level = {
 
 @Injectable()
 export class SubmissionService {
-  private store = new Map<number, Submission>();
+  private store = new Map<string, Submission>();
 
-  find(id: number): Submission {
+  find(id: string): Submission {
     return this.store.get(id);
   }
 
-  create({ id, html, css, javascript }: { id: number; html: string; css: string; javascript: string }): void {
-    this.store.set(id, { html, css, javascript, level });
+  create({ id, html, css, javascript }: { id: string; html: string; css: string; javascript: string }): void {
+    this.store.set(id, { id, html, css, javascript, level });
   }
 }

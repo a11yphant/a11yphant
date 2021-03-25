@@ -12,7 +12,7 @@ export class CheckSubmissionService {
 
   public async check(id: number): Promise<CheckResult> {
     // get rules for level of submission from database
-    const submission = this.submissionService.find(id);
+    const submission = this.submissionService.find((id as unknown) as string);
 
     // get axe rules from rules and extract axe checks to perform
     const options = {
