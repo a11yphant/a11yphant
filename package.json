@@ -57,8 +57,8 @@
   },
   "keywords": [],
   "devDependencies": {
-    "@nestjs/common": "7.6.14",
-    "@nestjs/core": "7.6.14",
+    "@nestjs/common": "7.6.15",
+    "@nestjs/core": "7.6.15",
     "@typescript-eslint/parser": "4.19.0",
     "dotenv-cli": "4.0.0",
     "husky": "5.2.0",
