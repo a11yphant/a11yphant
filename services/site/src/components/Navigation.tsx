@@ -3,7 +3,6 @@ import React from "react";
 
 import Avatar from "./icons/Avatar";
 import Save from "./icons/Save";
-import Slash from "./icons/Slash";
 
 interface NavigationProps {
   challengeName: string;
@@ -17,11 +16,6 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ challengeName, c
       <h1 className="logo">A11y Challenges</h1>
       <div className="flex justify-center items-center">
         <Breadcrumbs />
-        <div className="flex items-center text-primary ml-4">
-          <span>{currentLevel}</span>
-          <Slash classes="text-primary" />
-          <span>{maxLevel}</span>
-        </div>
       </div>
       <div className="flex justify-center items-center">
         <Save />
