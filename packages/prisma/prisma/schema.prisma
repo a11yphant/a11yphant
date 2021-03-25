@@ -39,12 +39,12 @@ model Level {
 }
 
 model Rule {
-  id               String        @id @default(uuid())
-  key              String        @unique
-  title            String
-  shortDescription String
-  longDescription  String
-  requirements     Requirement[]
+  id                    String        @id @default(uuid())
+  key                   String        @unique
+  title                 String
+  shortDescription      String
+  additionalDescription String
+  requirements          Requirement[]
 
   @@map(name: "rules")
 }
