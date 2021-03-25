@@ -7,8 +7,8 @@ import Avatar from "./icons/Avatar";
 import Save from "./icons/Save";
 
 interface NavigationProps {
-  displayBreadcrumbs: boolean;
-  displaySave: boolean;
+  displayBreadcrumbs?: boolean;
+  displaySave?: boolean;
 }
 
 const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, displaySave = false }) => {
