@@ -6,9 +6,13 @@ import Button from "./buttons/Button";
 import Avatar from "./icons/Avatar";
 import Save from "./icons/Save";
 
-const Navigation: React.FunctionComponent = () => {
-  const displayBreadcrumbs = true;
-  const displaySave = true;
+interface NavigationProps {
+  displayBreadcrumbs: boolean;
+  displaySave: boolean;
+}
+
+const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, displaySave = false }) => {
+  // TODO: replace when login is implemented
   const displayUserProfile = true;
   const displayRegistration = false;
 

@@ -18,7 +18,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     <ApolloProvider client={apolloClient}>
       <ChallengeContextProvider>
         <div className="w-screen h-screen">
-          <Navigation />
+          <Navigation displayBreadcrumbs={pageProps.displayBreadcrumbs} displaySave={pageProps.displaySave} />
           <Component {...pageProps} />
         </div>
       </ChallengeContextProvider>
