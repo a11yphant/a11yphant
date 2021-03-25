@@ -3,11 +3,28 @@ import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import Navigation from "app/components/Navigation";
-import { ResultStatus, useResultForSubmissionLazyQuery } from "app/generated/graphql";
+import {
+  ChallengeBySlugDocument,
+  ChallengeBySlugQuery,
+  ChallengeBySlugQueryVariables,
+  ResultStatus,
+  useChallengeBySlugQuery,
+  useResultForSubmissionLazyQuery,
+} from "app/generated/graphql";
+import { initializeApollo } from "app/lib/apolloClient";
 import { useChallenge } from "app/lib/ChallengeContext";
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Evaluation: React.FunctionComponent = () => {
+  const router = useRouter();
+  const { challengeSlug, nthLevel } = router.query;
+
+  const {
+    data: { challenge: challengeData },
+  } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
+
   // state
   const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
   const challenge = useChallenge();
@@ -54,9 +71,9 @@ const Evaluation: React.FunctionComponent = () => {
 
   return (
     <div className="w-screen h-screen">
-      <Navigation challengeName="Accessible Links" currentLevel="01" maxLevel="03" />
+      <Navigation challengeName={challengeData.name} currentLevel={nthLevel as string} maxLevel="03" />
       <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
-        <EvaluationHeader challengeName="Accessible Links" levelIdx="01" score={totalScore}></EvaluationHeader>
+        <EvaluationHeader challengeName={challengeData.name} levelIdx={nthLevel as string} score={totalScore}></EvaluationHeader>
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
@@ -82,3 +99,22 @@ const Evaluation: React.FunctionComponent = () => {
 };
 
 export default Evaluation;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const apolloClient = initializeApollo();
+
+  const { challengeSlug } = context.params;
+
+  await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+    query: ChallengeBySlugDocument,
+    variables: {
+      slug: challengeSlug as string,
+    },
+  });
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+  };
+};
