@@ -1,4 +1,5 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
+import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
@@ -13,7 +14,11 @@ const Navigation: React.FunctionComponent = () => {
 
   return (
     <header className="flex justify-between items-center p-6 h-1/20">
-      <h1 className="logo">A11y Challenges</h1>
+      <h1 className="logo">
+        <Link href="/">
+          <a>A11y Challenges</a>
+        </Link>
+      </h1>
       {displayBreadcrumbs && (
         <>
           <div className="flex justify-center items-center">
