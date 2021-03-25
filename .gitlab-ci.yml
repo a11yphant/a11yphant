@@ -252,6 +252,10 @@ lint:api:
   extends:
     - .lint
     - .run_on_api_change
+  before_script:
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   variables:
     PROJECT_PATH: services/api
 
