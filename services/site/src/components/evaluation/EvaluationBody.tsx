@@ -12,12 +12,14 @@ interface EvaluationBodyProps {
 
 const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirementTitle, checks, requirementIdx }) => {
   // render checks
-  const getChecks = checks.map((check, idx) => {
-    const checkTitle = `${requirementIdx}.${idx + 1} ${check.title}`;
-    return (
-      <CollapsableSection key={check.id} passed={check.result === "SUCCESS" ? true : false} title={checkTitle} description={check.description} />
-    );
-  });
+  const getChecks = React.useMemo(() => {
+    return checks.map((check, idx) => {
+      const checkTitle = `${requirementIdx}.${idx + 1} ${check.title}`;
+      return (
+        <CollapsableSection key={check.id} passed={check.result === "SUCCESS" ? true : false} title={checkTitle} description={check.description} />
+      );
+    });
+  }, [checks, requirementIdx]);
 
   return (
     <div className={`${className} flex flex-col items-left w-full box-border h-full m-auto mb-8`}>
