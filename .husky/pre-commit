@@ -1,1 +1,2 @@
 npm run lint-staged
+npm --prefix services/api run generate-schema
