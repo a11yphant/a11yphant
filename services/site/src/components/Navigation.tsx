@@ -14,35 +14,29 @@ const Navigation: React.FunctionComponent = () => {
   return (
     <header className="flex justify-between items-center p-6 h-1/20">
       <h1 className="logo">A11y Challenges</h1>
-      {displayBreadcrumbs ? (
+      {displayBreadcrumbs && (
         <>
           <div className="flex justify-center items-center">
             <Breadcrumbs />
           </div>
         </>
-      ) : (
-        ""
       )}
       <div className="flex justify-center items-center">
-        {displaySave ? <Save /> : ""}
-        {displayUserProfile ? (
+        {displaySave && <Save />}
+        {displayUserProfile && (
           <>
             <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100 ml-8">
               <Avatar />
             </span>
           </>
-        ) : (
-          ""
         )}
-        {displayRegistration ? (
+        {displayRegistration && (
           <>
             <Button full className="mx-4">
               Sign Up
             </Button>{" "}
             <Button>Login</Button>
           </>
-        ) : (
-          ""
         )}
       </div>
     </header>
