@@ -68,13 +68,13 @@ export class ResultResolver {
   // TODO remove
   @ResolveField(() => Int, { deprecationReason: "Renamed to numberOfRules." })
   numberOfChecks(@Parent() result: Result): number {
-    return 0;
+    return this.numberOfRules(result);
   }
 
   // deprecated
   // TODO remove
   @ResolveField(() => Int, { deprecationReason: "Renamed to numberOfFailedRules." })
   numberOfFailedChecks(@Parent() result: Result): number {
-    return 0;
+    return this.numberOfFailedRules(result);
   }
 }
