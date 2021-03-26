@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 
 import { Requirement } from "../../challenge/models/requirement.model";
 import { ResultStatus } from "./result-status.enum";
@@ -8,9 +8,6 @@ import { Submission } from "./submission.model";
   description: "The Result to a submission.",
 })
 export class Result {
-  @Field(() => ID)
-  id: string;
-
   @Field(() => Submission)
   submission: Submission;
 
