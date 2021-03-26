@@ -36,7 +36,7 @@ resource "aws_lambda_function" "api" {
       API_GRAPHQL_PLAYGROUND = 1
       API_GRAPHQL_SCHEMA_INTROSPECTION = 1
       DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
-      API_CHECKER_MESSAGING_TOPIC = "submission=${module.messaging.submission_topic_arn}"
+      API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
       API_MESSAGING_REGION = "eu-central-1"
     }
   }
