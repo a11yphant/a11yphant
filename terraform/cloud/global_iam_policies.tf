@@ -57,7 +57,7 @@ resource "aws_iam_policy" "submission_topic_publishing" {
     "Action" : [
         "sns:Publish",
     ],
-    "Effect" : "Allow",
+    "Effect" : "Allow"
     "Resource" : [
         { "Ref" : "${module.messaging.submission_topic_arn}" }
     ]
