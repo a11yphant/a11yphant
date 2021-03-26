@@ -8,15 +8,15 @@ import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
 import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
+import messaging from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
-import snsConfig from "./config/sns.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
 import { SubmissionModule } from "./submission/submission.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, gqlConfig, nodeConfig, databaseConfig, snsConfig],
+      load: [apiConfig, gqlConfig, nodeConfig, databaseConfig, messaging],
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
@@ -43,9 +43,9 @@ import { SubmissionModule } from "./submission/submission.module";
     AwsMessagingModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
-        region: config.get<string>("sns.region"),
-        topics: config.get<Record<string, string>>("sns.topics"),
-        snsEndpoint: config.get<string>("sns.endpoint"),
+        region: config.get<string>("messaging.region"),
+        topics: config.get<Record<string, string>>("messaging.topics"),
+        snsEndpoint: config.get<string>("messaging.sns-endpoint"),
       }),
       inject: [ConfigService],
     }),
