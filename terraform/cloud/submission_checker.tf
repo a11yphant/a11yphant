@@ -41,6 +41,11 @@ resource "aws_lambda_function" "submission_checker" {
   ]
 }
 
+resource "aws_lambda_event_source_mapping" "trigger_submission_checker_from_queue" {
+  event_source_arn = module.messaging.submission_checker_queue_arn
+  function_name    = aws_lambda_function.submission_checker.arn
+}
+
 resource "aws_iam_role" "submission_checker_role" {
    name = "${terraform.workspace}-submission-checker-role"
    description = "IAM Role for executing a Lambda"
