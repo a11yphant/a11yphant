@@ -36,6 +36,8 @@ resource "aws_lambda_function" "api" {
       API_GRAPHQL_PLAYGROUND = 1
       API_GRAPHQL_SCHEMA_INTROSPECTION = 1
       DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
+      API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
+      API_MESSAGING_REGION = "eu-central-1"
     }
   }
 
@@ -85,6 +87,11 @@ resource "aws_iam_role_policy_attachment" "api_lambda_logs" {
 resource "aws_iam_role_policy_attachment" "api_vpc_access" {
   role       = aws_iam_role.api_role.name
   policy_arn = aws_iam_policy.vpc_access.arn
+}
+
+resource "aws_iam_role_policy_attachment" "api_submission_topic_publishing" {
+  role       = aws_iam_role.api_role.name
+  policy_arn = aws_iam_policy.submission_topic_publishing.arn
 }
 
 

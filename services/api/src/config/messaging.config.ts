@@ -8,8 +8,8 @@ function parseTopics(topics: string): Record<string, string> {
   }, {});
 }
 
-export default registerAs("sns", () => ({
-  region: process.env.API_SNS_REGION || "us-east-1",
-  topics: parseTopics(process.env.API_SNS_TOPICS || ""),
-  endpoint: process.env.API_SNS_ENDPOINT,
+export default registerAs("messaging", () => ({
+  region: process.env.API_MESSAGING_REGION || "us-east-1",
+  topics: parseTopics(process.env.API_MESSAGING_TOPICS || ""),
+  "sns-endpoint": process.env.API_MESSAGING_ENDPOINT,
 }));
