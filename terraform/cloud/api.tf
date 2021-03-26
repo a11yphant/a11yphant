@@ -89,6 +89,11 @@ resource "aws_iam_role_policy_attachment" "api_vpc_access" {
   policy_arn = aws_iam_policy.vpc_access.arn
 }
 
+resource "aws_iam_role_policy_attachment" "api_submission_topic_publishing" {
+  role       = aws_iam_role.api_role.name
+  policy_arn = aws_iam_policy.submission_topic_publishing.arn
+}
+
 
 resource "aws_lambda_permission" "api_gateway_api" {
    statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-api"

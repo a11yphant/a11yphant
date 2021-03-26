@@ -46,3 +46,22 @@ resource "aws_iam_policy" "vpc_access" {
 }
 EOF
 }
+
+resource "aws_iam_policy" "submission_topic_publishing" {
+  name        = "${terraform.workspace}-vpc-access"
+  path        = "/"
+  description = "IAM policy for allowing the lambda to gaining access to a vpc by creating network interfaces"
+
+  policy = <<EOF
+{
+    "Action" : [
+        "sns:Publish",
+        "sns:Subscribe"
+    ],
+    "Effect" : "Allow",
+    "Resource" : [
+        { "Ref" : "${module.messaging.submission_topic_arn}" }
+    ]
+}
+EOF
+}
