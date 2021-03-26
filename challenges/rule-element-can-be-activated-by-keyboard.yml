@@ -1,0 +1,8 @@
+rule:
+  id: 73c7f36f-2b9b-4af2-9bf4-ba1ec3f62eba
+  key: element-can-be-activated-by-keyboard
+  title: Element is clickable with the keyboard only
+  shortDescription: >
+    The element with [attribute]=[value] must be activatable using the following keys: [key1, key2, ...].
+  additionalDescription: >
+    Keyboard users and assistive technologies that mimic the keyboard expect native behavior. When it is not possible to use the native HTML element, use ARIA to mimic the functionality.

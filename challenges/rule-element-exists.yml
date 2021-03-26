@@ -1,0 +1,6 @@
+rule:
+  id: ef86682e-32a4-47de-9ae6-e4a4e2b360b2
+  key: element-exists
+  title: Element exists
+  shortDescription: >
+    The element with [attribute]=[value] must must exist on the page.

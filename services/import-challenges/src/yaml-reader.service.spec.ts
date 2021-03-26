@@ -1,5 +1,6 @@
 import mock from 'mock-fs';
 
+import { Challenge } from './challenge.interface';
 import { YamlReaderService } from './yaml-reader.service';
 
 const yamlOne = `
@@ -20,7 +21,10 @@ describe('YAML reader service', () => {
     });
     const reader = new YamlReaderService();
 
-    const challenge = await reader.readChallenge('test/1.yml');
+    const challenge = await reader.readFile<Challenge>(
+      'test/1.yml',
+      'challenge',
+    );
 
     expect(challenge).toBeTruthy();
     expect(challenge.id).toEqual('6a15a6de-306c-4a8b-9765-a1d5c6b91083');
