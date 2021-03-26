@@ -1,4 +1,5 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { v4 as uuidv4 } from "uuid";
 
 import { Check } from "../challenge/models/check.model";
 import { RuleStatus } from "../challenge/models/rule-status.enum";
@@ -46,6 +47,7 @@ export class ResultResolver {
     });
 
     return {
+      id: uuidv4(),
       requirements,
       // aggregate all requirements
       status:
