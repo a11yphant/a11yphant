@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Evaluation: React.FunctionComponent = () => {
+  const challengeContext = useChallenge();
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
 
@@ -26,7 +27,7 @@ const Evaluation: React.FunctionComponent = () => {
 
   // state
   const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
-  const challengeContext = useChallenge();
+  const [totalScore, setTotalScore] = useState<number | undefined>();
 
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
@@ -51,19 +52,17 @@ const Evaluation: React.FunctionComponent = () => {
     }
   }, [status, queryInterval]);
 
+  React.useEffect(() => {
+    if (failedChecks && totalChecks) {
+      setTotalScore(100 - (failedChecks / totalChecks) * 100);
+    }
+  }, [failedChecks, totalChecks]);
+
   // // level is completed when all checks passed
   // let levelCompleted = false;
   // if (failedChecks && failedChecks == 0) {
   //   levelCompleted = true;
   // }
-
-  // total score in %
-  let totalScore;
-  if (failedChecks && totalChecks) {
-    totalScore = 100 - (failedChecks / totalChecks) * 100;
-  }
-
-  const nextLevel = parseInt(nthLevel as string) + 1;
 
   // render requirements
   const getRequirements = React.useMemo(
@@ -76,6 +75,7 @@ const Evaluation: React.FunctionComponent = () => {
   );
 
   return (
+<<<<<<< HEAD
     <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
       <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
       {!status || status === ResultStatus.Pending ? (
@@ -101,6 +101,39 @@ const Evaluation: React.FunctionComponent = () => {
         </>
       )}
     </main>
+=======
+    <div className="w-screen h-screen">
+      <Navigation challengeName={challenge.name} currentLevel={nthLevel as string} maxLevel="03" />
+      <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
+        <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
+        {!status || status === ResultStatus.Pending ? (
+          <LoadingScreen />
+        ) : (
+          <>
+            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
+              {getRequirements}
+            </div>
+            <div className="absolute bottom-8 right-8">
+              <Button
+                onClick={() => {
+                  const nextLevel = parseInt(nthLevel as string) + 1;
+                  if (nextLevel <= challenge.levels.length) {
+                    router.push(`/challenge/${challengeSlug}/level/0${parseInt(nthLevel as string) + 1}`);
+                  } else {
+                    router.push("/");
+                  }
+                }}
+                className="bg-white text-primary px-10"
+              >
+                {/*{levelCompleted ? "Next Level" : "Retry"}*/}
+                {parseInt(nthLevel as string) + 1 <= challenge.levels.length ? "Next Level" : "To Homescreen"}
+              </Button>
+            </div>
+          </>
+        )}
+      </main>
+    </div>
+>>>>>>> refactor(evaluation): move totalScore into state
   );
 };
 
