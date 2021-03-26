@@ -2,7 +2,6 @@ import Button from "app/components/buttons/Button";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
-import Navigation from "app/components/Navigation";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
@@ -72,31 +71,26 @@ const Evaluation: React.FunctionComponent = () => {
   });
 
   return (
-    <div className="w-screen h-screen">
-      <Navigation challengeName={challengeData.name} currentLevel={nthLevel as string} maxLevel="03" />
-      <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
-        <EvaluationHeader challengeName={challengeData.name} levelIdx={nthLevel as string} score={totalScore}></EvaluationHeader>
-        {!status || status === ResultStatus.Pending ? (
-          <LoadingScreen />
-        ) : (
-          <>
-            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
-              {getRequirements}
-            </div>
-            <div className="absolute bottom-8 right-8">
-              <Button
-                onClick={() => {
-                  alert("Thank you Mario, but our princess is in another castle!");
-                }}
-                className="bg-white text-primary px-10"
-              >
-                {levelCompleted ? "Next Level" : "Retry"}
-              </Button>
-            </div>
-          </>
-        )}
-      </main>
-    </div>
+    <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
+      <EvaluationHeader challengeName={challengeData.name} levelIdx={nthLevel as string} score={totalScore}></EvaluationHeader>
+      {!status || status === ResultStatus.Pending ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">{getRequirements}</div>
+          <div className="absolute bottom-8 right-8">
+            <Button
+              onClick={() => {
+                alert("Thank you Mario, but our princess is in another castle!");
+              }}
+              className="bg-white text-primary px-10"
+            >
+              {levelCompleted ? "Next Level" : "Retry"}
+            </Button>
+          </div>
+        </>
+      )}
+    </main>
   );
 };
 
