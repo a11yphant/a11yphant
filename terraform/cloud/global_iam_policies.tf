@@ -55,7 +55,7 @@ resource "aws_iam_policy" "submission_topic_publishing" {
   policy = <<EOF
 {
     "Action" : [
-        "sns:Publish",
+        "sns:Publish"
     ],
     "Effect" : "Allow"
     "Resource" : [
