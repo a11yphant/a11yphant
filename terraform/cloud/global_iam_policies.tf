@@ -56,11 +56,11 @@ resource "aws_iam_policy" "submission_topic_publishing" {
 {
   "Version": "2012-10-17",
   "Statement": [
-    "Effect" : "Allow",
-    "Action" : [
-        "sns:Publish"
-    ],
-    "Resource" : "${module.messaging.submission_topic_arn}"
+    {
+      "Effect": "Allow",
+      "Action": "sns:Publish",
+      "Resource": "${module.messaging.submission_topic_arn}"
+    }
   ]
 }
 EOF
