@@ -54,6 +54,7 @@ export class AwsMessagingClient extends ClientProxy {
           return;
         }
 
+        this.logger.log(`Published message to topic ${topic} with type ${message.MessageAttributes.type.StringValue}`, AwsMessagingClient.name);
         resolve(data);
       });
     });
