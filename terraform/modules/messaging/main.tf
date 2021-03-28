@@ -47,7 +47,10 @@ resource "aws_sqs_queue_policy" "submission_topic_send_to_submission_queue" {
 
   policy = <<EOF
 {
+  "Version": "2012-10-17",
+  "Id": "allow_sns_publish_to_submission_checker_queue_from_submission_topic",
   "Statement": [{
+    "Sid": "1",
     "Effect":"Allow",
     "Principal": {
       "Service": "sns.amazonaws.com"
@@ -69,7 +72,10 @@ resource "aws_sqs_queue_policy" "submission_topic_send_to_api_queue" {
 
   policy = <<EOF
 {
+  "Version": "2012-10-17",
+  "Id": "allow_sns_publish_to_api_queue_from_submission_topic",
   "Statement": [{
+    "Sid": "1",
     "Effect":"Allow",
     "Principal": {
       "Service": "sns.amazonaws.com"
