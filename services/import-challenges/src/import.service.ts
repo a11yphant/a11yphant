@@ -11,6 +11,7 @@ import {
   Requirement,
   Resource,
 } from './challenge.interface';
+import { Rule } from './rule.interface';
 import { YamlReaderService } from './yaml-reader.service';
 
 const readdir = promisify(readdirCallback);
@@ -27,22 +28,65 @@ export class ImportService {
     const path = resolve(__dirname, folder);
     this.logger.log(`Importing yml files from ${path}`, ImportService.name);
 
-    const importPromises = (await readdir(path))
-      .filter((file) => file.endsWith('.yml'))
+    const fileNames = await readdir(path);
+
+    const ruleImportPromises = fileNames
+      .filter((file) => file.endsWith('.yml') && file.startsWith('rule-'))
       .map(async (file) => {
         this.logger.log(`Importing file: ${file}`, ImportService.name);
 
         const filePath = join(path, file);
-        const content = await this.ymlReader.readChallenge(filePath);
+        const content = await this.ymlReader.readFile<Rule>(filePath, 'rule');
+
+        await this.upsertRule(content);
+      });
+
+    await Promise.all(ruleImportPromises);
+
+    this.logger.log(
+      `Imported ${ruleImportPromises.length} rules`,
+      ImportService.name,
+    );
+
+    const challengeImportPromises = fileNames
+      .filter((file) => file.endsWith('.yml') && file.startsWith('challenge-'))
+      .map(async (file) => {
+        this.logger.log(`Importing file: ${file}`, ImportService.name);
+
+        const filePath = join(path, file);
+        const content = await this.ymlReader.readFile<Challenge>(
+          filePath,
+          'challenge',
+        );
 
         await this.importChallenge(content);
       });
 
-    await Promise.all(importPromises);
+    await Promise.all(challengeImportPromises);
+
     this.logger.log(
-      `Imported ${importPromises.length} challenges`,
+      `Imported ${challengeImportPromises.length} challenges`,
       ImportService.name,
     );
+  }
+
+  public async upsertRule(rule: Rule): Promise<void> {
+    await this.prisma.rule.upsert({
+      where: { id: rule.id },
+      create: {
+        id: rule.id,
+        key: rule.key,
+        title: rule.title,
+        shortDescription: rule.shortDescription,
+        additionalDescription: rule.additionalDescription,
+      },
+      update: {
+        key: rule.key,
+        title: rule.title,
+        shortDescription: rule.shortDescription,
+        additionalDescription: rule.additionalDescription,
+      },
+    });
   }
 
   public async importChallenge(challenge: Challenge): Promise<void> {
@@ -119,6 +163,21 @@ export class ImportService {
           },
           update: { title: requirement.title, levelId },
         });
+
+        await Promise.all(
+          requirement.rules?.map(async (ruleKey) => {
+            await this.prisma.requirement.update({
+              where: { id: requirement.id },
+              data: {
+                rules: {
+                  connect: {
+                    key: ruleKey,
+                  },
+                },
+              },
+            });
+          }),
+        );
       }),
     );
   }

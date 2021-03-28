@@ -1,0 +1,8 @@
+rule:
+  id: db7a2e41-34ed-4370-b9f7-e9b5da9e0a1d
+  key: element-has-correct-role
+  title: Element has the correct role
+  shortDescription: >
+    The element with [attribute]=[value] must have role [role] to be properly announced to users of assistive technologies.
+  additionalDescription: >
+    It is always preferable to use the native HTML elements as they are more widely supported by older user agents and assistive technology. Only use roles when the native HTML element does not provide the desired functionality by default.

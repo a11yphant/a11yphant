@@ -23,6 +23,16 @@ export enum SectionType {
   resources = "Resources",
 }
 
+interface AnimationProps {
+  sidebarWidth: string;
+  iconTransform: string;
+  iconBorderStyle: string;
+  openDivDisplay: string;
+  openDivOpacity: number;
+  closedDivDisplay: string;
+  closedDivOpacity: number;
+}
+
 const openSidebarStyle = {
   sidebar: {
     width: "20rem",
@@ -93,8 +103,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
     }
   }, [data]);
 
-  // any is necessary here because the types of react-spring are somehow messed up
-  const animation: any = useSpring({
+  const animation = useSpring<AnimationProps>({
     to: async (next) => {
       if (open) {
         // Fade out closed div
@@ -152,15 +161,6 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, instructions,
           closedDivOpacity: closedSidebarStyle.closedDiv.opacity,
         });
       }
-    },
-    from: {
-      sidebarWidth: open ? openSidebarStyle.sidebar.width : closedSidebarStyle.sidebar.width,
-      iconTransform: open ? openSidebarStyle.icon.transform : closedSidebarStyle.icon.transform,
-      iconBorderStyle: open ? openSidebarStyle.icon.borderStyle : closedSidebarStyle.icon.borderStyle,
-      openDivDisplay: open ? openSidebarStyle.openDiv.display : closedSidebarStyle.openDiv.display,
-      openDivOpacity: open ? openSidebarStyle.openDiv.opacity : closedSidebarStyle.openDiv.opacity,
-      closedDivDisplay: open ? openSidebarStyle.closedDiv.display : closedSidebarStyle.closedDiv.display,
-      closedDivOpacity: open ? openSidebarStyle.closedDiv.opacity : closedSidebarStyle.closedDiv.opacity,
     },
     config: {
       duration: 500,

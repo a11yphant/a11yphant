@@ -6,23 +6,35 @@ challenge:
     - id: 5557e647-7a14-47b7-b51c-142f25cc998c
       order: 1
       tldr: >
-         Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)
+        Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)
       instructions: >
         Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.
         Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.
       requirements:
         - id: 3a344173-98bf-4a2b-a6ad-9790a557332b
           title: The HTML code is valid.
+          rules:
+            - html-is-valid
         - id: 036b54a7-62c3-4c3c-ab84-dcdc80888add
           title: The link can be clicked using the mouse.
+          rules:
+            - element-is-clickable
         - id: 4573b54f-cb36-46ee-9e23-34de0fa301a4
           title: The link can be focused using the keyboard.
+          rules:
+            - element-is-focusable
         - id: 4199dc41-c225-473d-aff0-45c6ada992a6
           title: The link can be clicked using the keyboard.
+          rules:
+            - element-can-be-activated-by-keyboard
         - id: 1f14ad50-3ce5-4c1a-8cad-9ca339bf70ca
           title: The link can be detected as a link by screen readers.
+          rules:
+            - element-has-correct-role
         - id: 5335dcb0-8029-4504-a70b-4974eda672c4
           title: Screen readers can detect the text of the link.
+          rules:
+            - axe-link-name
       hints:
         - id: 344c6772-2948-4a2d-838e-1b4e79f6fee9
           content: The browser has a native way of handling hyperlinks. You don’t need any JavaScript for that.
@@ -86,19 +98,26 @@ challenge:
       order: 2
       tldr: ""
       instructions: >
-          Your friend Charles has reached out for your help again. He wants to link to additional resources in his blog post, but he is not sure how to structure the additional resources section. Can you write the markup for him (you don't have to style it for now)?
+        Your friend Charles has reached out for your help again. He wants to link to additional resources in his blog post, but he is not sure how to structure the additional resources section. Can you write the markup for him (you don't have to style it for now)?
 
-          Charles wants to add links to the following pages:
-            - Introduction to web APIs https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
-            - Vibrationssss https://www.amorelie.at/sexspielzeug/vibratoren/mit-fernbedienung/
-            - Can I use https://caniuse.com/vibration
+        Charles wants to add links to the following pages:
+          - Introduction to web APIs https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
+          - Vibrationssss https://www.amorelie.at/sexspielzeug/vibratoren/mit-fernbedienung/
+          - Can I use https://caniuse.com/vibration
       requirements:
         - id: 37ecfa42-2365-4447-84be-050a966cd1e2
           title: The links have to be in the same order as in the instructions.
+          rules: []
         - id: d7847b28-acde-49aa-b569-5aac195b9719
           title: All three links can be activated using the mouse and keyboard.
+          rules:
+            - element-is-clickable
+            - element-is-focusable
+            - element-can-be-activated-by-keyboard
         - id: b7685cf5-5ff2-492d-99dc-ad4806d69036
           title: A screenereader can determine how many items are in the additional resources.
+          rules:
+            - element-has-correct-role
       hints:
         - id: 7cd5af2b-3fb8-4fac-912f-39951b19c868
           content: Use what you have learned in level 1.

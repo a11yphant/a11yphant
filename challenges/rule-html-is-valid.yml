@@ -1,0 +1,8 @@
+rule:
+  id: e21cb632-0edd-4094-aab3-08de5af67696
+  key: html-is-valid
+  title: HTML is valid
+  shortDescription: >
+    The HTML code must comply to all markup rules established by the W3C.
+  additionalDescription: >
+    The free Markup Validator by W3C helps to check the validity of websites. Validation is an important step during the development process to assure quality and accessibility. It also eases maintenance and teaches good practices. Validation errors are among the main causes of poor accessibility on websites.
