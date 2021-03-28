@@ -45,7 +45,7 @@ export class AwsMessagingClient extends ClientProxy {
         },
         TopicArn: arn,
       };
-
+      console.log("pre publish");
       this.sns.publish(message, (error) => {
         if (error) {
           console.log("publish error");
