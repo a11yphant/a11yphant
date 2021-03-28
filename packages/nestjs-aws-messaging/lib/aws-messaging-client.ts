@@ -48,12 +48,14 @@ export class AwsMessagingClient extends ClientProxy {
 
       this.sns.publish(message, (error) => {
         if (error) {
+          console.log("publish error");
           const errorMessage = `Could not publish message: ${error.message}`;
           this.logger.error(errorMessage);
           reject(new Error(errorMessage));
           return;
         }
 
+        console.log("publish success");
         this.logger.log(`Published message to topic ${topic} with type ${message.MessageAttributes.type.StringValue}`, AwsMessagingClient.name);
         resolve(data);
       });
