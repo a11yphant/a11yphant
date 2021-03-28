@@ -42,3 +42,48 @@ resource "aws_sns_topic_subscription" "submission_subscription_for_api_queue" {
   })
 }
 
+resource "aws_sqs_queue_policy" "submission_topic_send_to_submission_queue" {
+  queue_url = aws_sqs_queue.submission_checker_queue.id
+
+  policy = <<EOF
+{
+  "Statement": [{
+    "Effect":"Allow",
+    "Principal": {
+      "Service": "sns.amazonaws.com"
+    },
+    "Action":"sqs:SendMessage",
+    "Resource":"${aws_sqs_queue.submission_checker_queue.arn}",
+    "Condition":{
+      "ArnEquals":{
+        "aws:SourceArn":"${aws_sns_topic.submission.arn}"
+      }
+    }
+  }]
+}
+EOF
+}
+
+resource "aws_sqs_queue_policy" "submission_topic_send_to_api_queue" {
+  queue_url = aws_sqs_queue.api_queue.id
+
+  policy = <<EOF
+{
+  "Statement": [{
+    "Effect":"Allow",
+    "Principal": {
+      "Service": "sns.amazonaws.com"
+    },
+    "Action":"sqs:SendMessage",
+    "Resource":"${aws_sqs_queue.api_queue.arn}",
+    "Condition":{
+      "ArnEquals":{
+        "aws:SourceArn":"${aws_sns_topic.submission.arn}"
+      }
+    }
+  }]
+}
+EOF
+}
+
+
