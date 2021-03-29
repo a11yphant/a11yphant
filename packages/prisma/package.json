@@ -94,6 +94,8 @@
       "cobertura"
     ],
     "coverageDirectory": "<rootDir>",
-    "coveragePathIgnorePatterns": ["<rootDir>/client"]
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/client"
+    ]
   }
 }
