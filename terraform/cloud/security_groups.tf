@@ -23,7 +23,7 @@ resource "aws_security_group" "allow_postgres_ingress" {
 }
 
 resource "aws_security_group" "allow_https_ingress" {
-    name   = "${terraform.workspace}-allow-postgres-ingress"
+    name   = "${terraform.workspace}-allow-https-ingress"
     vpc_id = aws_vpc.main_network.id
 
     ingress {
