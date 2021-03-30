@@ -32,11 +32,21 @@ resource "aws_vpc_endpoint" "s3" {
 }
 
 resource "aws_vpc_endpoint" "sns" {
-  vpc_id       = aws_vpc.main_network.id
-  service_name = "com.amazonaws.eu-central-1.sns"
+  vpc_id            = aws_vpc.main_network.id
+  service_name      = "com.amazonaws.eu-central-1.sns"
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    aws_security_group.allow_https_ingress.id
+  ]
 }
 
 resource "aws_vpc_endpoint" "sqs" {
-  vpc_id       = aws_vpc.main_network.id
-  service_name = "com.amazonaws.eu-central-1.sqs"
+  vpc_id            = aws_vpc.main_network.id
+  service_name      = "com.amazonaws.eu-central-1.sqs"
+  vpc_endpoint_type = "Interface"
+
+  security_group_ids = [
+    aws_security_group.allow_https_ingress.id
+  ]
 }
