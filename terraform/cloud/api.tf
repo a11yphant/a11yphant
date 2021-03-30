@@ -24,6 +24,7 @@ resource "aws_lambda_function" "api" {
    handler = "dist/src/main.handle"
    runtime = "nodejs14.x"
    timeout = 30
+   memory_size = 256
 
    role = aws_iam_role.api_role.arn
 
