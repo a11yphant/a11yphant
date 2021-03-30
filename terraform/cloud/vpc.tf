@@ -16,7 +16,27 @@ resource "aws_vpc_endpoint_route_table_association" "main_network_s3" {
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
 }
 
+resource "aws_vpc_endpoint_route_table_association" "main_network_sns" {
+  route_table_id  = aws_route_table.main_network_route_table.id
+  vpc_endpoint_id = aws_vpc_endpoint.sns.id
+}
+
+resource "aws_vpc_endpoint_route_table_association" "main_network_sqs" {
+  route_table_id  = aws_route_table.main_network_route_table.id
+  vpc_endpoint_id = aws_vpc_endpoint.sqs.id
+}
+
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = aws_vpc.main_network.id
   service_name = "com.amazonaws.eu-central-1.s3"
+}
+
+resource "aws_vpc_endpoint" "sns" {
+  vpc_id       = aws_vpc.main_network.id
+  service_name = "com.amazonaws.eu-central-1.sns"
+}
+
+resource "aws_vpc_endpoint" "sqs" {
+  vpc_id       = aws_vpc.main_network.id
+  service_name = "com.amazonaws.eu-central-1.sqs"
 }
