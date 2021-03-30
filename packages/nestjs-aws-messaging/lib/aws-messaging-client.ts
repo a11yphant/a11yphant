@@ -24,42 +24,37 @@ export class AwsMessagingClient extends ClientProxy {
   }
 
   async dispatchEvent<T = any>({ pattern, data }: ReadPacket<T>): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
-      const topic = this.getTopicFromPattern(pattern);
-      const arn = this.options.topics[topic];
+    const topic = this.getTopicFromPattern(pattern);
+    const arn = this.options.topics[topic];
 
-      if (!arn) {
-        const errorMessage = `Cannot find arn for topic ${topic}. Make sure that the arn is included in the configuration`;
-        this.logger.error(errorMessage);
-        reject(new Error(errorMessage));
-        return;
-      }
+    if (!arn) {
+      const errorMessage = `Cannot find arn for topic ${topic}. Make sure that the arn is included in the configuration`;
+      this.logger.error(errorMessage);
+      throw new Error(errorMessage);
+    }
 
-      const message: AWS.SNS.PublishInput = {
-        Message: JSON.stringify(data),
-        MessageAttributes: {
-          type: {
-            DataType: "String",
-            StringValue: pattern,
-          },
+    const message: AWS.SNS.PublishInput = {
+      Message: JSON.stringify(data),
+      MessageAttributes: {
+        type: {
+          DataType: "String",
+          StringValue: pattern,
         },
-        TopicArn: arn,
-      };
-      console.log("pre publish");
-      this.sns.publish(message, (error) => {
-        if (error) {
-          console.log("publish error");
-          const errorMessage = `Could not publish message: ${error.message}`;
-          this.logger.error(errorMessage);
-          reject(new Error(errorMessage));
-          return;
-        }
+      },
+      TopicArn: arn,
+    };
 
-        console.log("publish success");
-        this.logger.log(`Published message to topic ${topic} with type ${message.MessageAttributes.type.StringValue}`, AwsMessagingClient.name);
-        resolve(data);
-      });
-    });
+    try {
+      await this.sns.publish(message).promise();
+    } catch (error) {
+      const errorMessage = `Could not publish message: ${error.message}`;
+      this.logger.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    this.logger.log(`Published message to topic ${topic} with type ${message.MessageAttributes.type.StringValue}`, AwsMessagingClient.name);
+
+    return data;
   }
 
   publish(packet: ReadPacket<any>, callback: (packet: WritePacket<any>) => void): () => void {
