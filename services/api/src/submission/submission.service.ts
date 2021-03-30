@@ -28,21 +28,23 @@ export class SubmissionService {
       },
     });
 
-    this.clientProxy.emit("submission.created", {
-      submission: {
-        id: submission.id,
-        html: submission.html,
-        css: submission.css,
-        js: submission.js,
-      },
-      rules: [
-        {
-          id: "3d90d8e6-5dce-4684-9aec-f05b6551aa43",
-          key: "axe-link-name",
-          options: {},
+    await this.clientProxy
+      .emit("submission.created", {
+        submission: {
+          id: submission.id,
+          html: submission.html,
+          css: submission.css,
+          js: submission.js,
         },
-      ],
-    });
+        rules: [
+          {
+            id: "3d90d8e6-5dce-4684-9aec-f05b6551aa43",
+            key: "axe-link-name",
+            options: {},
+          },
+        ],
+      })
+      .toPromise();
 
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }

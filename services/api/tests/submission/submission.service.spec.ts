@@ -12,7 +12,10 @@ describe("submission service", () => {
     const html = "<div>good morning :)</div>";
 
     const prisma = getPrismaService();
-    const service = new SubmissionService(prisma, createMock<ClientProxy>());
+    const service = new SubmissionService(
+      prisma,
+      createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
+    );
 
     const { id: challengeId } = await prisma.challenge.create({
       data: {
@@ -53,7 +56,10 @@ describe("submission service", () => {
     const html = "<div>hello</div>";
 
     const prisma = getPrismaService();
-    const service = new SubmissionService(prisma, createMock<ClientProxy>());
+    const service = new SubmissionService(
+      prisma,
+      createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
+    );
 
     const { id: challengeId } = await prisma.challenge.create({
       data: {
@@ -87,7 +93,10 @@ describe("submission service", () => {
 
   it("throws error if no level is found for id", () => {
     const prisma = getPrismaService();
-    const service = new SubmissionService(prisma, createMock<ClientProxy>());
+    const service = new SubmissionService(
+      prisma,
+      createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
+    );
 
     expect(async () =>
       service.save({
@@ -97,7 +106,7 @@ describe("submission service", () => {
   });
 
   it("emits a submission.created event when a new submission is created", async () => {
-    const emit = jest.fn();
+    const emit = jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) }));
     const submission = { id: "uuid", html: "html", css: "css", js: "js" };
     const service = new SubmissionService(
       createMock<PrismaService>({
