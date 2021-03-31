@@ -39,6 +39,7 @@ resource "aws_lambda_function" "api" {
       DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
       API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
       API_MESSAGING_REGION = "eu-central-1"
+      API_MESSAGING_ENDPOINT = "https://sns.eu-central-1.amazonaws.com"
     }
   }
 
