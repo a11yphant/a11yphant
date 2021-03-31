@@ -19,7 +19,7 @@ describe("AWS Transport Strategy", () => {
   });
 
   it("can handle incomming events", async () => {
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
     const event: SQSEvent = {
       Records: [],
     };
@@ -33,7 +33,7 @@ describe("AWS Transport Strategy", () => {
 
     AWSMock.mock("SQS", "receiveMessage", receiveMessage);
 
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
     transport.listen(callback);
 
     expect(callback).toHaveBeenCalled();
@@ -46,7 +46,7 @@ describe("AWS Transport Strategy", () => {
 
     AWSMock.mock("SQS", "receiveMessage", receiveMessage);
 
-    const transport = new AwsTransportStrategy({ polling: true, queueUrl: "queue-url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: true, queueUrl: "queue-url", region: "eu-central-1", deleteHandled: true });
     transport.listen(callback);
 
     expect(callback).toHaveBeenCalled();
@@ -84,7 +84,7 @@ describe("AWS Transport Strategy", () => {
 
     AWSMock.mock("SQS", "receiveMessage", receiveMessage);
 
-    const transport = new AwsTransportStrategy({ polling: true, queueUrl: "queue-url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: true, queueUrl: "queue-url", region: "eu-central-1", deleteHandled: true });
     transport.addHandler("test-message", messageHandler);
     transport.listen(callback);
 
@@ -95,13 +95,13 @@ describe("AWS Transport Strategy", () => {
   });
 
   it("can close a connection when polling is disabled", () => {
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
 
     expect(() => transport.close()).not.toThrow();
   });
 
   it("forwards events to the correct message handler", async () => {
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
     const messageHandler = jest.fn().mockResolvedValue(null);
     const otherHandler = jest.fn().mockResolvedValue(null);
     transport.addHandler("test-message", messageHandler);
@@ -129,7 +129,7 @@ describe("AWS Transport Strategy", () => {
   });
 
   it("can handle unknown event types", async () => {
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
 
     const event = {
       Records: [
@@ -156,7 +156,7 @@ describe("AWS Transport Strategy", () => {
     AWSMock.restore("SQS", "deleteMessage");
     AWSMock.mock("SQS", "deleteMessage", deleteMessage);
 
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1" });
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
     const messageHandler = jest.fn().mockResolvedValue(null);
     transport.addHandler("test-message", messageHandler);
 
@@ -177,5 +177,34 @@ describe("AWS Transport Strategy", () => {
     });
 
     expect(deleteMessage).toHaveBeenCalledWith(expect.objectContaining({ ReceiptHandle: "handle" }), expect.anything());
+  });
+
+  it("does not delete handled messages if its disabled", async () => {
+    const deleteMessage = jest.fn((_, cb) => cb(null));
+
+    AWSMock.restore("SQS", "deleteMessage");
+    AWSMock.mock("SQS", "deleteMessage", deleteMessage);
+
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: false });
+    const messageHandler = jest.fn().mockResolvedValue(null);
+    transport.addHandler("test-message", messageHandler);
+
+    await transport.handleSQSEvent({
+      Records: [
+        {
+          messageId: "1",
+          receiptHandle: "handle",
+          body: JSON.stringify({
+            Message: '{ "content": "hi" }',
+            Timestamp: new Date().toISOString(),
+            MessageAttributes: {
+              type: { DataType: "String", Value: "test-message" },
+            },
+          }),
+        } as SQSRecord,
+      ],
+    });
+
+    expect(deleteMessage).not.toHaveBeenCalled();
   });
 });

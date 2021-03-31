@@ -91,6 +91,10 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
       return;
     }
 
+    if (!this.options.deleteHandled) {
+      return;
+    }
+
     try {
       await this.deleteMessageFromQueue(message);
     } catch (error) {
