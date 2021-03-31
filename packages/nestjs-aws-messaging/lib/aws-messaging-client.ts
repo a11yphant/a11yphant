@@ -12,8 +12,7 @@ export class AwsMessagingClient extends ClientProxy {
     super();
 
     AWS.config.update({ region: this.options.region });
-    AWS.config.logger = console;
-    this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint });
+    this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint, httpOptions: { timeout: 3000 } });
   }
 
   async connect(): Promise<void> {
