@@ -1,5 +1,6 @@
+import { AwsMessagingModule } from "@a11y-challenges/nestjs-aws-messaging";
 import { Logger, Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { BrowserService } from "./browser.service";
 import { CheckSubmissionService } from "./check-submission.service";
@@ -13,6 +14,15 @@ import { WebdriverFactory } from "./webdriver.factory";
   imports: [
     ConfigModule.forRoot({
       load: [submissionRenderer, messagingConfig],
+    }),
+    AwsMessagingModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => ({
+        region: config.get<string>("messaging.region"),
+        topics: config.get<Record<string, string>>("messaging.topics"),
+        snsEndpoint: config.get<string>("messaging.sns-endpoint"),
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [SubmissionController],
