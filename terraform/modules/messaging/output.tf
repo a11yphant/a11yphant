@@ -10,6 +10,10 @@ output "api_queue_url" {
   value = aws_sqs_queue.api_queue.id
 }
 
+output "api_queue_arn" {
+  value = aws_sqs_queue.api_queue.arn
+}
+
 output "submission_topic_arn" {
   value = aws_sns_topic.submission.arn
 }

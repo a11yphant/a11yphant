@@ -96,7 +96,6 @@ resource "aws_iam_role_policy_attachment" "api_submission_topic_publishing" {
   policy_arn = aws_iam_policy.submission_topic_publishing.arn
 }
 
-
 resource "aws_lambda_permission" "api_gateway_api" {
    statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-api"
    action        = "lambda:InvokeFunction"
@@ -110,4 +109,37 @@ resource "aws_apigatewayv2_api" "api_http_api" {
   name          = "${terraform.workspace}-api-http-api"
   protocol_type = "HTTP"
   target        = aws_lambda_function.api.invoke_arn
+}
+
+resource "aws_iam_policy" "access_api_queue" {
+  name        = "${terraform.workspace}-access-api-queue"
+  path        = "/"
+  description = "IAM policy for allowing the lambda to work on jobs from the api queue"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${module.messaging.api_queue_arn}"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "api_api_queue_access" {
+  role       = aws_iam_role.api_role.name
+  policy_arn = aws_iam_policy.access_api_queue.arn
+}
+
+resource "aws_lambda_event_source_mapping" "trigger_api_from_queue" {
+  event_source_arn = module.messaging.api_queue_arn
+  function_name    = aws_lambda_function.api.arn
 }
