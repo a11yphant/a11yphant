@@ -15,6 +15,7 @@ async function bootstrap(): Promise<AwsTransportStrategy> {
     polling: configService.get<boolean>("messaging.poll-queue"),
     queueUrl: configService.get<string>("messaging.queue-url"),
     region: configService.get<string>("messaging.region"),
+    deleteHandled: configService.get<boolean>("messaging.delete-handled-messages"),
   });
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
