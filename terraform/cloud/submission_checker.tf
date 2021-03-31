@@ -102,3 +102,8 @@ resource "aws_iam_role_policy_attachment" "submission_checker_submission_checker
   role       = aws_iam_role.submission_checker_role.name
   policy_arn = aws_iam_policy.access_submission_checker_queue.arn
 }
+
+resource "aws_iam_role_policy_attachment" "submission_checker_submission_topic_publishing" {
+  role       = aws_iam_role.submission_checker_role.name
+  policy_arn = aws_iam_policy.submission_topic_publishing.arn
+}
