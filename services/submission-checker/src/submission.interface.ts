@@ -1,6 +1,6 @@
 import { Level } from "./level.interface";
 
-export class Submission {
+export interface Submission {
   id: string;
   html: string;
   css: string;
