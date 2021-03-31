@@ -11,7 +11,7 @@ export class AwsMessagingClient extends ClientProxy {
   constructor(@Inject(AWS_MESSAGING_MODULE_CONFIG) private options: AwsMessagingModuleConfig, private logger: Logger) {
     super();
 
-    AWS.config.update({ region: this.options.region, logger: console });
+    AWS.config.update({ region: this.options.region });
     this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint });
   }
 
@@ -51,8 +51,6 @@ export class AwsMessagingClient extends ClientProxy {
       this.logger.error(errorMessage);
       throw new Error(errorMessage);
     }
-
-    this.logger.log(`Published message to topic ${topic} with type ${message.MessageAttributes.type.StringValue}`, AwsMessagingClient.name);
 
     return data;
   }
