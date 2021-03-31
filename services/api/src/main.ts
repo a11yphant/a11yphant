@@ -4,7 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter, NestExpressApplication } from "@nestjs/platform-express";
 import serverlessExpress from "@vendia/serverless-express";
 import { APIGatewayProxyEventV2, Callback, Context, SQSEvent } from "aws-lambda";
-import * as express from "express";
+import express from "express";
 
 import { AppModule } from "./app.module";
 
