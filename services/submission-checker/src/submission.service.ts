@@ -55,6 +55,6 @@ export class SubmissionService {
   }
 
   create({ id, html, css, javascript }: { id: string; html: string; css: string; javascript: string }): void {
-    this.store.set(id, { id, html, css, javascript, level });
+    this.store.set(id, { id, html, css, js: javascript, level });
   }
 }

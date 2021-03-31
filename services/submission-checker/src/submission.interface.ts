@@ -4,6 +4,6 @@ export class Submission {
   id: string;
   html: string;
   css: string;
-  javascript: string;
-  level: Level;
+  js: string;
+  level?: Level;
 }

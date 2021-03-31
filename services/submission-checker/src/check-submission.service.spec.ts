@@ -73,7 +73,7 @@ const mockSubmission: Submission = {
   id: "1234",
   html: `<h1>This is submission</h1>`,
   css: "body { color: deepseagreen }",
-  javascript: `document.querySelector('h1').style.opacity = 0.5`,
+  js: `document.querySelector('h1').style.opacity = 0.5`,
   level: {
     submissions: [],
     requirements: [
