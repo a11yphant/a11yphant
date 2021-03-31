@@ -25,6 +25,7 @@ interface Code {
 export interface Requirement {
   id: string;
   title: string;
+  rules: string[];
 }
 
 export interface Hint {

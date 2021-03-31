@@ -1,10 +1,13 @@
+// Kept but marked as deprecated in the API.
+// TODO remove when no longer needed.
+
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { CheckStatus } from "./check-status.enum";
+import { RuleStatus } from "./rule-status.enum";
 
 @ObjectType()
 export class Check {
-  constructor(properties: { id: string; title: string; description: string; key: string; result?: CheckStatus }) {
+  constructor(properties: { id: string; title: string; description: string; key: string; result?: RuleStatus }) {
     this.id = properties.id;
     this.title = properties.title;
     this.description = properties.description;
@@ -24,6 +27,6 @@ export class Check {
   @Field(() => String)
   description: string;
 
-  @Field(() => CheckStatus, { nullable: true, description: "The result of an submission check. Only applicable in context of an result." })
-  result: CheckStatus;
+  @Field(() => RuleStatus, { nullable: true, description: "The result of an submission check. Only applicable in context of an result." })
+  result: RuleStatus;
 }

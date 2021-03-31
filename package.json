@@ -30,7 +30,7 @@
     "lint:submission-renderer": "npm --prefix services/submission-renderer run lint",
     "lint-staged": "lint-staged",
     "start": "npm run dev",
-    "predev": "npm run build-packages && npm run tf:apply && npm run db:migrate",
+    "predev": "npm run build-packages &&  npm run tf:clear-state && npm run tf:apply && npm run db:migrate",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
     "stop": "pm2 stop a11y-challenges && pm2 del a11y-challenges",
@@ -49,7 +49,7 @@
     "tf:apply": "npm run tf apply -- -auto-approve",
     "tf:destroy": "npm run tf destroy -- -auto-approve",
     "tf:clear-state": "rm -f terraform/local/terraform.tfstate*",
-    "db:migrate": "docker-compose up -d postgres && npm --prefix packages/prisma run prisma:migrate && docker-compose down"
+    "db:migrate": "docker-compose up -d postgres && npm --prefix packages/prisma run prisma:migrate"
   },
   "repository": {
     "type": "git",
@@ -59,14 +59,14 @@
   "devDependencies": {
     "@nestjs/common": "7.6.15",
     "@nestjs/core": "7.6.15",
-    "@typescript-eslint/parser": "4.19.0",
+    "@typescript-eslint/parser": "4.20.0",
     "dotenv-cli": "4.0.0",
-    "husky": "5.2.0",
+    "husky": "6.0.0",
     "lint-staged": "10.5.4",
     "npm-run-all": "4.1.5",
     "pm2": "4.5.5",
     "reflect-metadata": "0.1.13",
-    "rxjs": "6.6.6",
+    "rxjs": "6.6.7",
     "typescript": "4.2.3",
     "wait-on": "5.3.0"
   },

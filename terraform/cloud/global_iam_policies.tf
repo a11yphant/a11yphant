@@ -54,13 +54,14 @@ resource "aws_iam_policy" "submission_topic_publishing" {
 
   policy = <<EOF
 {
-    "Action" : [
-        "sns:Publish",
-    ],
-    "Effect" : "Allow"
-    "Resource" : [
-        { "Ref" : "${module.messaging.submission_topic_arn}" }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "sns:Publish",
+      "Resource": "${module.messaging.submission_topic_arn}"
+    }
+  ]
 }
 EOF
 }

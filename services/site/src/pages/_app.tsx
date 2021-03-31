@@ -1,7 +1,9 @@
 import "app/styles/global.scss";
 
 import { ApolloProvider } from "@apollo/client";
+import Navigation from "app/components/Navigation";
 import { useApollo } from "app/lib/apolloClient";
+import ChallengeContextProvider from "app/lib/ChallengeContext";
 import React from "react";
 
 interface AppProps {
@@ -14,7 +16,12 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <Component {...pageProps} />
+      <ChallengeContextProvider>
+        <div className="w-screen h-screen">
+          <Navigation displayBreadcrumbs={pageProps.displayBreadcrumbs} displaySave={pageProps.displaySave} />
+          <Component {...pageProps} />
+        </div>
+      </ChallengeContextProvider>
     </ApolloProvider>
   );
 };

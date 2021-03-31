@@ -1,0 +1,8 @@
+rule:
+  id: 5b5f2159-f7ba-44c1-aaf6-dd2eb09ab517
+  key: axe-link-name
+  title: Links must have discernible text
+  shortDescription: >
+    Link text and alternate text for images, when used as links, must be discernible by a screen reader, must not have a duplicate label and must be focusable.
+  additionalDescription: >
+    Common unhelpful link texts are 'click here', 'read more' and 'link'. These are problematic because when a person using a screen reader is navigating using links alone these will be read out of context.

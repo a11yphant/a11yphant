@@ -1,0 +1,9 @@
+rule:
+  id: 84e12775-9b24-4d01-9d13-d6c90841adf2
+  key: element-is-focusable
+  title: Element is focusable
+  shortDescription: >
+    The element with [attribute]=[value] must be focusable via keyboard.
+  additionalDescription: >
+    Keyboard accessibility is one of the most important aspects of web accessibility as many users rely on a keyboard and a lot of assistive technologies mimic its functionality. Typically the 'Tab'-key is used to navigate through interactive elements on a website, like links, buttons, input fields, etc. 
+    When an element is focused, a visual indicator like an outline must be present. Focus indicators are provided automatically by web browsers. As their appearance varies it is recommended to create a custom focus styling with CSS.
