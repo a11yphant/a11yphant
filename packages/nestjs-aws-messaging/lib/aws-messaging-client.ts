@@ -11,8 +11,8 @@ export class AwsMessagingClient extends ClientProxy {
   constructor(@Inject(AWS_MESSAGING_MODULE_CONFIG) private options: AwsMessagingModuleConfig, private logger: Logger) {
     super();
 
-    AWS.config.update({ region: this.options.region });
-    this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint, httpOptions: { timeout: 3000 } });
+    AWS.config.update({ region: this.options.region, logger: console });
+    this.sns = new AWS.SNS({ apiVersion: "2010-03-31", endpoint: this.options.snsEndpoint });
   }
 
   async connect(): Promise<void> {
