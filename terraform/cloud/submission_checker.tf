@@ -74,3 +74,31 @@ resource "aws_iam_role_policy_attachment" "submission_checker_lambda_logs" {
   role       = aws_iam_role.submission_checker_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
+
+resource "aws_iam_policy" "access_submission_checker_queue" {
+  name        = "${terraform.workspace}-access-submission-checker-queue"
+  path        = "/"
+  description = "IAM policy for allowing the lambda to work on jobs from the submission checker queue"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${module.messaging.submission_checker_queue_arn}"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "submission_checker_submission_checker_queue_access" {
+  role       = aws_iam_role.submission_checker_role.name
+  policy_arn = aws_iam_policy.access_submission_checker_queue.arn
+}
