@@ -25,6 +25,24 @@ resource "aws_sns_topic_subscription" "submission_subscription_for_submission_ch
 resource "aws_sqs_queue" "api_queue" {
   name                      = "${terraform.workspace}-api-queue"
   receive_wait_time_seconds = 10
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.dead_letter.arn
+    maxReceiveCount     = 4
+  })
+  /*
+    if the timeout is set to zero, deleting the message from the queue fails because the event is handled to fast
+    (at least locally)
+  */
+  visibility_timeout_seconds = 1
+}
+
+resource "aws_sqs_queue" "dead_letter" {
+  name                      = "${terraform.workspace}-dead-letter-queue"
+  receive_wait_time_seconds = 10
+    redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.dead_letter.arn
+    maxReceiveCount     = 4
+  })
   /*
     if the timeout is set to zero, deleting the message from the queue fails because the event is handled to fast
     (at least locally)
