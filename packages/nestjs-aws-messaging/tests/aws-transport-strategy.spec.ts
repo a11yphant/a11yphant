@@ -1,4 +1,4 @@
-import { SQSEvent, SQSRecord } from "aws-lambda";
+import { SQSEvent, SQSRecord, SQSRecordAttributes } from "aws-lambda";
 import AWS from "aws-sdk";
 import AWSMock from "aws-sdk-mock";
 
@@ -18,13 +18,40 @@ describe("AWS Transport Strategy", () => {
     AWSMock.restore();
   });
 
-  it("can handle incomming events", async () => {
-    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: true });
+  it("can handle incoming events", async () => {
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: false });
     const event: SQSEvent = {
       Records: [],
     };
 
     expect(transport.handleSQSEvent(event)).resolves.toBeUndefined();
+  });
+
+  it("throws an error if there is an error while handling an event", async () => {
+    const transport = new AwsTransportStrategy({ polling: false, queueUrl: "url", region: "eu-central-1", deleteHandled: false });
+    const event: SQSEvent = {
+      Records: [
+        {
+          messageId: "id",
+          md5OfBody: "234",
+          messageAttributes: {},
+          attributes: {} as SQSRecordAttributes,
+          eventSource: "source",
+          eventSourceARN: "arn",
+          awsRegion: "eu-central-1",
+          body: JSON.stringify({
+            message: JSON.stringify("{}"),
+            timestamp: new Date().toISOString(),
+            messageAttributes: {
+              type: { dataType: "String", value: "test-message" },
+            },
+          }),
+          receiptHandle: "Hi",
+        },
+      ],
+    };
+
+    expect(transport.handleSQSEvent(event)).rejects.toBeTruthy();
   });
 
   it("can start listening when polling is disabled", () => {
