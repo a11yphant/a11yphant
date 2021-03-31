@@ -7,7 +7,6 @@ import { CheckSubmissionService } from "./check-submission.service";
 import messagingConfig from "./config/messaging.config";
 import submissionRenderer from "./config/submission-checker.config";
 import { SubmissionController } from "./submission.controller";
-import { SubmissionService } from "./submission.service";
 import { WebdriverFactory } from "./webdriver.factory";
 
 @Module({
@@ -26,6 +25,6 @@ import { WebdriverFactory } from "./webdriver.factory";
     }),
   ],
   controllers: [SubmissionController],
-  providers: [BrowserService, CheckSubmissionService, WebdriverFactory, SubmissionService, Logger],
+  providers: [BrowserService, CheckSubmissionService, WebdriverFactory, Logger],
 })
 export class AppModule {}
