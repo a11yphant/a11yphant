@@ -59,6 +59,7 @@
   "devDependencies": {
     "@nestjs/common": "7.6.15",
     "@nestjs/core": "7.6.15",
+    "@nestjs/microservices": "7.6.15",
     "@typescript-eslint/parser": "4.20.0",
     "dotenv-cli": "4.0.0",
     "husky": "6.0.0",
