@@ -1,14 +1,13 @@
-import { AwsMessagingClient } from "@a11y-challenges/nestjs-aws-messaging";
-import { Controller, Inject, Logger } from "@nestjs/common";
-import { ClientProxy, EventPattern } from "@nestjs/microservices";
+import { Controller, Logger } from "@nestjs/common";
+import { EventPattern } from "@nestjs/microservices";
 
-import { SubmissionCheckCompleted } from "./submission-check-completed-event.interface";
+import { SubmissionCheckCompletedEvent } from "./submission-check-completed-event.interface";
 
 @Controller()
 export class SubmissionController {
-  constructor(private logger: Logger, @Inject(AwsMessagingClient) private clientProxy: ClientProxy) {}
+  constructor(private logger: Logger) {}
   @EventPattern("submission.check-completed")
-  public async handleSubmissionEvent(event: SubmissionCheckCompleted): Promise<void> {
+  public async handleSubmissionEvent(event: SubmissionCheckCompletedEvent): Promise<void> {
     this.logger.log(`Received submission.check-completed for ${event.submissionId}`, SubmissionController.name);
   }
 }

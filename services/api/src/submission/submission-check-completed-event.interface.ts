@@ -1,4 +1,4 @@
-export interface SubmissionCheckCompleted {
+export interface SubmissionCheckCompletedEvent {
   submissionId: string;
   ruleCheckResults: RuleCheckResult[];
 }
