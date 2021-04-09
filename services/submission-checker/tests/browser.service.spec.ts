@@ -1,8 +1,8 @@
 import { createMock } from "@golevelup/nestjs-testing";
 import { ThenableWebDriver } from "selenium-webdriver";
 
-import { BrowserService } from "./browser.service";
-import { WebdriverFactory } from "./webdriver.factory";
+import { BrowserService } from "../src/browser.service";
+import { WebdriverFactory } from "../src/webdriver.factory";
 
 describe("browser service", () => {
   it("can run axe checks on a website", async () => {
