@@ -11,6 +11,11 @@ cache:
   paths:
     - .npm-alpine
 
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_BUILDKIT: 1
+  DOCKER_CLI_EXPERIMENTAL: enabled
+
 default:
   before_script:
     - npm ci --ignore-scripts --cache .npm-alpine
@@ -67,12 +72,25 @@ build:prisma:
   tags:
     - docker
   stage: build-packages
-  image: node:14-alpine
+  image: docker:20
   variables:
     PROJECT_PATH: packages/prisma
+    IMAGE_NAME: a11y-challenges/a11y-challenges/prisma-package
+    IMAGE: $CI_REGISTRY/$IMAGE_NAME:review-$CI_MERGE_REQUEST_IID
+  cache: {}
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - npm run prisma:generate --prefix $PROJECT_PATH
-    - npm run build --prefix $PROJECT_PATH
+    - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE
+    - docker push $IMAGE
+    # extract artifacts for compatability with the existing pipeline
+    - CONTAINER_ID=$(docker create $IMAGE "")
+    - docker cp $CONTAINER_ID:dist - > $PROJECT_PATH/dist.tar
+    - docker cp $CONTAINER_ID:client - > $PROJECT_PATH/client.tar
+    - cd $PROJECT_PATH
+    - tar -xvf dist.tar
+    - tar -xvf client.tar
   artifacts:
     expire_in: 1 day
     paths:
@@ -273,37 +291,22 @@ test:api:
     - develop
     - merge_request
 
-production-dependencies:api:
-  extends:
-    - .production-dependencies
-  variables:
-    PROJECT_PATH: services/api
-  before_script:
-    - npm ci --ignore-scripts --cache .npm-cent-os
-    - npm ci --production --prefix packages/prisma --cache .npm-cent-os --prefer-offline
-  artifacts:
-    paths:
-      - $PROJECT_PATH/node_modules
-      - packages/prisma/client/query-engine-*
-    expire_in: 1 day
-  only:
-    - master
-    - develop
-    - merge_request
-
 build:api:
-  extends:
-    - .build
+  tags:
+    - docker
+  stage: build
+  image: docker:20
   variables:
     PROJECT_PATH: services/api
+    IMAGE_NAME: a11y-challenges/a11y-challenges/api
+    IMAGE: $CI_REGISTRY/$IMAGE_NAME:review-$CI_MERGE_REQUEST_IID
+  cache: {}
   before_script:
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --production --prefix packages/prisma --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
-  artifacts:
-    paths:
-      - $PROJECT_PATH/dist
-    expire_in: 1 day
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE --build-arg PRISMA_PACKAGE_IMAGE=$CI_REGISTRY/a11y-challenges/a11y-challenges/prisma-package --build-arg VERSION=review-$CI_MERGE_REQUEST_IID
+    - docker push $IMAGE
   only:
     - master
     - develop
