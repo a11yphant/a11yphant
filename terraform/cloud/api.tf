@@ -19,3 +19,16 @@ resource "heroku_formation" "api" {
     quantity = 0
     size = "hobby"
 }
+
+data "docker_registry_image" "api" {
+  name = "gitlab.mediacube.at:5050/a11y-challenges/a11y-challenges/api:${terraform.workspace}"
+}
+
+resource "docker_image" "api_heroku_image" {
+  name = "registry.heroku.com/review-445-a11yphant-api/web"
+  pull_triggers = [data.docker_registry_image.api.sha256_digest]
+}
+
+resource "docker_registry_image" "api_heroku_image" {
+  name = docker_image.api_heroku_image.name
+}
