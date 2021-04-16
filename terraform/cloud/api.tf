@@ -16,6 +16,6 @@ resource "heroku_addon" "api_database" {
 resource "heroku_formation" "api" {
     app = heroku_app.api.name
     type = "web"
-    quantity = 1
-    size = "free"
+    quantity = 0
+    size = "hobby"
 }
