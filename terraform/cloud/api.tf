@@ -1,7 +1,8 @@
 resource "heroku_app" "api" {
   name    = "${terraform.workspace}-a11yphant-api"
   region  = "eu"
-  stack   = "docker"
+  stack   = "container"
+  size = "Free"
 
   organization {
     name = var.heroku_team_id
