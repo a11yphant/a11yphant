@@ -9,12 +9,18 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
+
+    heroku = {
+      source = "heroku/heroku"
+    }
   }
 }
 
 provider "aws" {
    region = "eu-central-1"
 }
+
+provider "heroku" {}
 
 module "messaging" {
   source = "../modules/messaging"

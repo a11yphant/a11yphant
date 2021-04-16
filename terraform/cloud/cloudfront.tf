@@ -20,7 +20,7 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   origin {
-    domain_name = replace(aws_apigatewayv2_api.api_http_api.api_endpoint, "/^https?://([^/]*).*/", "$1")
+    domain_name = replace(heroku_app.api.web_url, "/^https?://([^/]*).*/", "$1")
     origin_id   = local.origin_id_api_http_api
     
     custom_origin_config {
