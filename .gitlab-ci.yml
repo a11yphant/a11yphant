@@ -510,8 +510,7 @@ start-review-app:
     - docker
   image: lucapircher/gitlab-ci-heroku
   stage: post-deployment
-  before_script:
-    - # overwrite default script
+  before_script: []
   script:
     - heroku ps:scale web=1 -a review-${CI_MERGE_REQUEST_IID}-a11yphant-api
   when: manual
@@ -523,8 +522,7 @@ stop-review-app:
     - docker
   image: lucapircher/gitlab-ci-heroku
   stage: post-deployment
-  before_script:
-    - # overwrite default script
+  before_script: []
   script:
     - heroku ps:scale web=0 -a review-${CI_MERGE_REQUEST_IID}-a11yphant-api
   when: manual
