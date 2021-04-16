@@ -28,6 +28,7 @@ stages:
   - test
   - build
   - deploy
+  - post-deployment
 
 #----------------------------------------------------------------------
 #
@@ -503,6 +504,24 @@ deploy-production:
     # url: https://example.com
   only:
     - master
+
+start-review-app:
+  image: lucapircher/gitlab-ci-heroku
+  stage: post-deployment
+  script:
+    - heroku ps:scale web=1 -a review-${CI_MERGE_REQUEST_IID}-a11yphant-api
+  when: manual
+  only:
+    - merge_request
+
+stop-review-app:
+  image: lucapircher/gitlab-ci-heroku
+  stage: post-deployment
+  script:
+    - heroku ps:scale web=0 -a review-${CI_MERGE_REQUEST_IID}-a11yphant-api
+  when: manual
+  only:
+    - merge_request
 
 stop-environment:
   tags:
