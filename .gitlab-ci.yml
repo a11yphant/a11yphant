@@ -506,6 +506,8 @@ deploy-production:
     - master
 
 start-review-app:
+  tags:
+    - docker
   image: lucapircher/gitlab-ci-heroku
   stage: post-deployment
   script:
@@ -515,6 +517,8 @@ start-review-app:
     - merge_request
 
 stop-review-app:
+  tags:
+    - docker
   image: lucapircher/gitlab-ci-heroku
   stage: post-deployment
   script:
