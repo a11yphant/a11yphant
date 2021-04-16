@@ -38,7 +38,7 @@
     "@typescript-eslint/eslint-plugin": "4.21.0",
     "@typescript-eslint/parser": "4.21.0",
     "aws-lambda": "1.0.6",
-    "aws-sdk": "2.880.0",
+    "aws-sdk": "2.888.0",
     "aws-sdk-mock": "5.1.0",
     "dotenv": "8.2.0",
     "dotenv-cli": "4.0.0",
