@@ -25,7 +25,7 @@ data "docker_registry_image" "api" {
 }
 
 resource "docker_image" "api_heroku_image" {
-  name = "registry.heroku.com/review-445-a11yphant-api/web"
+  name = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web"
   pull_triggers = [data.docker_registry_image.api.sha256_digest]
 }
 
