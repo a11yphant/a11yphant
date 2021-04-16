@@ -439,27 +439,6 @@ build:import-challenges:
     - merge_request
 
 #-----------------------------------
-# Database Migrations
-#-----------------------------------
-
-lint:database-migration:
-  extends:
-    - .lint
-    - .run_on_database_migration_change
-  variables:
-    PROJECT_PATH: services/database-migration
-
-production-dependencies:database-migration:
-  extends:
-    - .production-dependencies
-  variables:
-    PROJECT_PATH: services/database-migration
-  only:
-    - master
-    - develop
-    - merge_request
-
-#-----------------------------------
 # Terraform
 #-----------------------------------
 

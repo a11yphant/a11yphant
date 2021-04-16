@@ -6,7 +6,6 @@
     - build:prisma
     - production-dependencies:prisma
     - build:api
-    - production-dependencies:database-migration
     - build:site
     - production-dependencies:site
     - build:import-challenges

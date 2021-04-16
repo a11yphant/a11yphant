@@ -121,16 +121,3 @@ resource "aws_iam_role_policy_attachment" "import_challenges_read_resources_buck
   role       = aws_iam_role.import_challenges_role.name
   policy_arn = aws_iam_policy.read_resources_bucket_object.arn
 }
-
-data "aws_lambda_invocation" "run_challenge_import" {
-  function_name = aws_lambda_function.import_challenges.function_name
-
-  input = "{}"
-
-  depends_on = [
-    aws_iam_role_policy_attachment.import_challenges_read_resources_bucket_object,
-    aws_s3_bucket_object.challenges,
-    aws_lambda_function.import_challenges,
-    data.aws_lambda_invocation.run_database_migrations
-  ]
-}

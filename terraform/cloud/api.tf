@@ -18,6 +18,10 @@ resource "heroku_formation" "api" {
     type = "web"
     quantity = 0
     size = "hobby"
+
+    depends_on = [
+      docker_registry_image.api_heroku_image
+    ]
 }
 
 data "docker_registry_image" "api" {
