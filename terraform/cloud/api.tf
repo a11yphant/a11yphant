@@ -48,7 +48,8 @@ resource "null_resource" "tag_image_for_heroku" {
 }
 
 resource "docker_registry_image" "api_heroku_image" {
-  name = local.heroku_api_image
+  name          = local.heroku_api_image
+  keep_remotely = true
 
   depends_on = [null_resource.tag_image_for_heroku]
 }
