@@ -37,7 +37,7 @@ resource "docker_image" "api_image" {
   pull_triggers = [data.docker_registry_image.api.sha256_digest]
 
   provisioner "local-exec" {
-    command = "echo -e \"POST /v1.24/images/${data.docker_registry_image.api}/tag?repo=${local.heroku_api_image}&tag=latest HTTP/1.0\r\n\" | nc -U /var/run/docker.sock"
+    command = "echo -e \"POST /v1.24/images/${data.docker_registry_image.api.name}/tag?repo=${local.heroku_api_image}&tag=latest HTTP/1.0\r\n\" | nc -U /var/run/docker.sock"
   }
 }
 
