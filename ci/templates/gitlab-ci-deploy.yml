@@ -20,7 +20,7 @@
     TF_IN_AUTOMATION: 1
   before_script:
     - apk update
-    - apk add zip
+    - apk add zip socat
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
