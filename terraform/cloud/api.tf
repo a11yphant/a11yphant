@@ -1,3 +1,7 @@
+locals {
+  heroku_api_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web"
+}
+
 resource "heroku_app" "api" {
   name    = "${terraform.workspace}-a11yphant-api"
   region  = "eu"
@@ -28,11 +32,17 @@ data "docker_registry_image" "api" {
   name = "gitlab.mediacube.at:5050/a11y-challenges/a11y-challenges/api:${terraform.workspace}"
 }
 
-resource "docker_image" "api_heroku_image" {
-  name = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web"
+resource "docker_image" "api_image" {
+  name          = data.docker_registry_image.api.name
   pull_triggers = [data.docker_registry_image.api.sha256_digest]
+
+  provisioner "local-exec" {
+    command = "echo -e \"POST /v1.24/images/${data.docker_registry_image.api}/tag?repo=${local.heroku_api_image}&tag=latest HTTP/1.0\r\n\" | nc -U /var/run/docker.sock"
+  }
 }
 
 resource "docker_registry_image" "api_heroku_image" {
-  name = docker_image.api_heroku_image.name
+  name = local.heroku_api_image
+
+  depends_on = [docker_image.api_image]
 }
