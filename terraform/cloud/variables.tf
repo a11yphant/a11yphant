@@ -17,14 +17,6 @@ variable "heroku_team_id" {
   default = "a11yphant"
 }
 
-variable "gitlab_ci_registery_user" {
-  type = string
-}
-
-variable "gitlab_ci_registry_password" {
-  type = string
-}
-
 variable "heroku_registry_user" {
   type    = string
   default = "_"
