@@ -38,16 +38,13 @@ resource "docker_image" "api_image" {
 }
 
 resource "null_resource" "tag_image_for_heroku" {
-  triggers = {
-    "digest" = "${data.docker_registry_image.api.sha256_digest}"
-  }
   provisioner "local-exec" {
     command = "echo -e \"POST /v1.24/images/${docker_image.api_image.latest}/tag?repo=${local.heroku_api_image}&tag=latest HTTP/1.0\r\n\" | socat unix-connect:/var/run/docker.sock STDIO"
   }
 
-  depends_on = [
-    docker_image.api_image
-  ]
+  triggers = {
+    "before" = docker_image.api_image.latest
+  }
 }
 
 resource "docker_registry_image" "api_heroku_image" {
