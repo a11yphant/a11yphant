@@ -42,13 +42,16 @@ FROM node:14-alpine AS release
 
 WORKDIR /app
 
+ENV API_CHALLENGES_LOCATION=/app/challenges
+
 RUN apk add --no-cache curl
 
 COPY --from=production-dependencies /services/api/package* ./
 COPY --from=production-dependencies /services/api/node_modules ./node_modules
 COPY packages/prisma/prisma ./prisma
+COPY challenges/ ./challenges
 
-CMD ["sh", "-c", "DB_URL=$DATABASE_URL npm run prisma:migrate:prod"]
+CMD ["sh", "-c", "DB_URL=$DATABASE_URL npm run prisma:migrate:prod && npm run console:prod import:challenges"]
 
 FROM node:14-alpine
 

@@ -24,7 +24,8 @@
     "generate-schema": "ts-node src/generate-schema.ts",
     "prisma:migrate": "dotenv -e ../../.env prisma migrate dev",
     "prisma:migrate:prod": "prisma migrate deploy",
-    "console": "ts-node src/console.ts"
+    "console": "ts-node src/console.ts",
+    "console:prod": "node dist/console.ts"
   },
   "dependencies": {
     "@a11y-challenges/prisma": "file:../../packages/prisma",
