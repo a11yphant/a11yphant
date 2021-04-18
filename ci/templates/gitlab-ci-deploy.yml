@@ -25,7 +25,7 @@
     - apk add zip docker-cli
     - terraform -chdir=terraform/cloud init
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker login -u _ -p $HEROKU_AUTH_TOKEN
+    - docker login -u _ -p $HEROKU_AUTH_TOKEN registry.heroku.com
   script:
     - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
