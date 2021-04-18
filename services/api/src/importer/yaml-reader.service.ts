@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { readFile as readFileCallback } from 'fs';
-import { load } from 'js-yaml';
-import { promisify } from 'util';
+import { Injectable } from "@nestjs/common";
+import { readFile as readFileCallback } from "fs";
+import { load } from "js-yaml";
+import { promisify } from "util";
 
 const readFile = promisify(readFileCallback);
 

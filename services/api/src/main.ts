@@ -7,7 +7,7 @@ import { ExpressAdapter } from "@nestjs/platform-express";
 // eslint-disable-next-line
 const serverlessExpress = require("@vendia/serverless-express");
 import { APIGatewayProxyHandler } from "aws-lambda";
-import * as express from "express";
+import express from "express";
 
 import { AppModule } from "./app.module";
 

@@ -1,34 +1,30 @@
-import { PrismaService, useDatabase } from '@a11y-challenges/prisma';
-import { createMock } from '@golevelup/ts-jest';
-import { Logger } from '@nestjs/common';
-import mock from 'mock-fs';
-import { join } from 'path';
+import { PrismaService, useDatabase } from "@a11y-challenges/prisma";
+import { createMock } from "@golevelup/ts-jest";
+import { Logger } from "@nestjs/common";
+import mock from "mock-fs";
+import { join } from "path";
 
-import { Challenge } from './challenge.interface';
-import { ImportService } from './import.service';
-import { Rule } from './rule.interface';
-import { YamlReaderService } from './yaml-reader.service';
+import { Challenge } from "../../src/importer/challenge.interface";
+import { ImportService } from "../../src/importer/import.service";
+import { Rule } from "../../src/importer/rule.interface";
+import { YamlReaderService } from "../../src/importer/yaml-reader.service";
 
-describe('import service', () => {
+describe("import service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
   afterEach(() => {
     mock.restore();
   });
 
-  it('can import a challenge into the db', async () => {
+  it("can import a challenge into the db", async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
-      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
-      slug: 'slug',
-      name: 'test',
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "slug",
+      name: "test",
       levels: [],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.importChallenge(challenge);
 
@@ -39,20 +35,16 @@ describe('import service', () => {
     expect(storedChallenge.slug).toEqual(challenge.slug);
   });
 
-  it('can import a rule into the db', async () => {
+  it("can import a rule into the db", async () => {
     const prisma = getPrismaService();
     const rule: Rule = {
-      id: 'e9bf90c3-61fb-4d2f-99b0-33d380a8aa40',
-      key: 'a-test-rule',
-      title: 'test',
-      shortDescription: 'testing is awesome!',
+      id: "e9bf90c3-61fb-4d2f-99b0-33d380a8aa40",
+      key: "a-test-rule",
+      title: "test",
+      shortDescription: "testing is awesome!",
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.upsertRule(rule);
 
@@ -61,18 +53,18 @@ describe('import service', () => {
     expect(storedRule.id).toEqual(rule.id);
   });
 
-  it('can import the levels for a challenge', async () => {
+  it("can import the levels for a challenge", async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
-      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
-      slug: 'test-slug',
-      name: 'test',
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "test-slug",
+      name: "test",
       levels: [
         {
-          id: 'a',
+          id: "a",
           order: 1,
-          tldr: 'hi',
-          instructions: 'hi',
+          tldr: "hi",
+          instructions: "hi",
           hints: [],
           requirements: [],
           resources: [],
@@ -80,11 +72,7 @@ describe('import service', () => {
       ],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.importChallenge(challenge);
 
@@ -98,35 +86,31 @@ describe('import service', () => {
     expect(storedLevel.challengeId).toEqual(challenge.id);
   });
 
-  it('can import the levels with code for a challenge', async () => {
+  it("can import the levels with code for a challenge", async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
-      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
-      slug: 'test-slug',
-      name: 'test',
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "test-slug",
+      name: "test",
       levels: [
         {
-          id: 'a',
+          id: "a",
           order: 1,
-          tldr: 'hi',
-          instructions: 'hi',
+          tldr: "hi",
+          instructions: "hi",
           hints: [],
           requirements: [],
           resources: [],
           code: {
             html: '<a href="/">hi</a>',
-            css: 'a { color: blue }',
+            css: "a { color: blue }",
             js: 'alert("hi")',
           },
         },
       ],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.importChallenge(challenge);
 
@@ -138,30 +122,26 @@ describe('import service', () => {
     expect(storedLevel.js).toEqual(level.code.js);
   });
 
-  it('can import the requirements for a level', async () => {
+  it("can import the requirements for a level", async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
-      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
-      slug: 'test-slug',
-      name: 'test',
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "test-slug",
+      name: "test",
       levels: [
         {
-          id: 'a',
+          id: "a",
           order: 1,
-          tldr: 'hi',
-          instructions: 'hi',
+          tldr: "hi",
+          instructions: "hi",
           hints: [],
-          requirements: [{ id: 'asdf', title: 'lala', rules: [] }],
+          requirements: [{ id: "asdf", title: "lala", rules: [] }],
           resources: [],
         },
       ],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.importChallenge(challenge);
 
@@ -173,30 +153,26 @@ describe('import service', () => {
     expect(storedRequirement.levelId).toEqual(challenge.levels[0].id);
   });
 
-  it('can import the hints for a level', async () => {
+  it("can import the hints for a level", async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
-      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
-      slug: 'test-slug',
-      name: 'test',
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "test-slug",
+      name: "test",
       levels: [
         {
-          id: 'a',
+          id: "a",
           order: 1,
-          tldr: 'hi',
-          instructions: 'hi',
-          hints: [{ id: 'asdf', content: 'lala' }],
+          tldr: "hi",
+          instructions: "hi",
+          hints: [{ id: "asdf", content: "lala" }],
           requirements: [],
           resources: [],
         },
       ],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.importChallenge(challenge);
 
@@ -208,30 +184,26 @@ describe('import service', () => {
     expect(storedHint.levelId).toEqual(challenge.levels[0].id);
   });
 
-  it('can import the resources for a level', async () => {
+  it("can import the resources for a level", async () => {
     const prisma = getPrismaService();
     const challenge: Challenge = {
-      id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
-      slug: 'test-slug',
-      name: 'test',
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "test-slug",
+      name: "test",
       levels: [
         {
-          id: 'a',
+          id: "a",
           order: 1,
-          tldr: 'hi',
-          instructions: 'hi',
+          tldr: "hi",
+          instructions: "hi",
           hints: [],
           requirements: [],
-          resources: [{ id: 'asdf', title: 'lala', link: 'http://asdf.com' }],
+          resources: [{ id: "asdf", title: "lala", link: "http://asdf.com" }],
         },
       ],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.importChallenge(challenge);
 
@@ -244,14 +216,15 @@ describe('import service', () => {
     expect(storedResource.levelId).toEqual(challenge.levels[0].id);
   });
 
-  it('imports yml files from a folder', async () => {
+  it("imports yml files from a folder", async () => {
     const upsert = jest.fn();
+    const path = join(__dirname, "test-challenges");
     mock({
-      [join(__dirname, 'test-challenges')]: {
-        'challenge-1.yml': '',
-        'challenge-2.yml': '',
-        'asdf.png': '',
-        '.': {},
+      [path]: {
+        "challenge-1.yml": "",
+        "challenge-2.yml": "",
+        "asdf.png": "",
+        ".": {},
       },
     });
 
@@ -264,61 +237,61 @@ describe('import service', () => {
         readFile: jest
           .fn()
           .mockResolvedValueOnce({
-            id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083',
+            id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
             levels: [],
           })
           .mockResolvedValueOnce({
-            id: '7a15a6de-306c-4a8b-9765-a1d5c6b91085',
+            id: "7a15a6de-306c-4a8b-9765-a1d5c6b91085",
             levels: [],
           }),
       }),
     );
 
-    await importer.importAllFromFolder('test-challenges');
+    await importer.importAllFromFolder(path);
 
     expect(upsert).toHaveBeenCalledTimes(2);
     expect(upsert).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        where: { id: '6a15a6de-306c-4a8b-9765-a1d5c6b91083' },
+        where: { id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083" },
       }),
     );
 
     expect(upsert).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        where: { id: '7a15a6de-306c-4a8b-9765-a1d5c6b91085' },
+        where: { id: "7a15a6de-306c-4a8b-9765-a1d5c6b91085" },
       }),
     );
   });
 
-  it('can associate a rule with a requirement', async () => {
-    const ruleKey = 'a-test-rule';
+  it("can associate a rule with a requirement", async () => {
+    const ruleKey = "a-test-rule";
 
     const prisma = getPrismaService();
     const rule: Rule = {
-      id: 'e9bf90c3-61fb-4d2f-99b0-33d380a8aa40',
+      id: "e9bf90c3-61fb-4d2f-99b0-33d380a8aa40",
       key: ruleKey,
-      title: 'test',
-      shortDescription: 'testing is awesome!',
+      title: "test",
+      shortDescription: "testing is awesome!",
     };
 
     const challenge: Challenge = {
-      id: '8d42d73f-e566-4575-8250-2c1532feb856',
-      slug: 'super-challenge',
-      name: 'best challenge ever',
+      id: "8d42d73f-e566-4575-8250-2c1532feb856",
+      slug: "super-challenge",
+      name: "best challenge ever",
       levels: [
         {
-          id: 'f3b74759-59b7-4e42-83de-f68886b30a61',
+          id: "f3b74759-59b7-4e42-83de-f68886b30a61",
           hints: [],
-          tldr: 'xoxo',
+          tldr: "xoxo",
           order: 0,
-          instructions: 'do your best',
+          instructions: "do your best",
           resources: [],
           requirements: [
             {
-              id: '3d4c5f81-dad5-4c1b-b732-71d789506b4c',
-              title: 'teeeeest',
+              id: "3d4c5f81-dad5-4c1b-b732-71d789506b4c",
+              title: "teeeeest",
               rules: [ruleKey],
             },
           ],
@@ -326,11 +299,7 @@ describe('import service', () => {
       ],
     };
 
-    const importer = new ImportService(
-      createMock<Logger>(),
-      prisma,
-      createMock<YamlReaderService>(),
-    );
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
 
     await importer.upsertRule(rule);
     await importer.importChallenge(challenge);
