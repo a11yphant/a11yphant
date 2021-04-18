@@ -8,8 +8,6 @@
     - build:api
     - build:site
     - production-dependencies:site
-    - build:import-challenges
-    - production-dependencies:import-challenges
     - build:submission-checker
     - production-dependencies:submission-checker
     - build:submission-renderer
