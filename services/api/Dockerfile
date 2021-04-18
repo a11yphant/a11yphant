@@ -38,6 +38,18 @@ RUN npm ci --production && rm node_modules/@a11y-challenges/prisma/
 COPY --from=prisma-package / ./node_modules/@a11y-challenges/prisma/
 RUN node node_modules/@a11y-challenges/prisma/scripts/download-engine.js
 
+FROM node:14-alpine AS release
+
+WORKDIR /app
+
+RUN apk add --no-cache curl
+
+COPY --from=production-dependencies /services/api/package* ./
+COPY --from=production-dependencies /services/api/node_modules ./node_modules
+COPY packages/prisma/prisma ./prisma
+
+CMD ["sh", "-c", "DB_URL=$DATABASE_URL npm run prisma:migrate:prod"]
+
 FROM node:14-alpine
 
 WORKDIR /app

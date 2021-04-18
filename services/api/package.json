@@ -21,7 +21,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --reporter=default",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "generate-schema": "ts-node src/generate-schema.ts"
+    "generate-schema": "ts-node src/generate-schema.ts",
+    "prisma:migrate": "dotenv -e ../../.env prisma migrate dev",
+    "prisma:migrate:prod": "prisma migrate deploy"
   },
   "dependencies": {
     "@a11y-challenges/prisma": "file:../../packages/prisma",
@@ -36,6 +38,7 @@
     "class-validator": "0.13.1",
     "express": "4.17.1",
     "graphql": "15.5.0",
+    "prisma": "2.21.2",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "6.6.7",
