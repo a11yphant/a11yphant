@@ -1,12 +1,17 @@
+import { ConfigService } from "@nestjs/config";
 import { Command, Console } from "nestjs-console";
+
+import { ImportService } from "./import.service";
 
 @Console()
 export class ImportChallenges {
+  constructor(private config: ConfigService, private importer: ImportService) {}
+
   @Command({
     command: "import:challenges",
     description: "Imports challenges from the filesystem into the database",
   })
-  importChallenges(): void {
-    console.log("hi");
+  async importChallenges(): Promise<void> {
+    await this.importer.importAllFromFolder(this.config.get<string>("api.challenges-location"));
   }
 }

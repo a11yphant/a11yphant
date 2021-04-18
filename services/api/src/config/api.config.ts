@@ -7,6 +7,7 @@ export default registerAs("api", () => {
   return {
     port: port,
     url: `http://${host}:${port}`,
+    "challenges-location": process.env.API_CHALLENGES_LOCATION,
     lambda: Boolean(+process.env.API_LAMBDA) || false,
   };
 });
