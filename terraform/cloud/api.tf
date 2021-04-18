@@ -8,6 +8,14 @@ resource "heroku_app" "api" {
   region  = "eu"
   stack   = "container"
 
+  config_vars = {
+    NODE_ENV = "production"
+    NO_COLOR = 1
+    API_GRAPHQL_DEBUG = 1
+    API_GRAPHQL_PLAYGROUND = 1
+    API_GRAPHQL_SCHEMA_INTROSPECTION = 1
+  }
+
   organization {
     name = var.heroku_team_id
   }
