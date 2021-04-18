@@ -48,6 +48,8 @@ RUN apk add --no-cache curl
 
 COPY --from=production-dependencies /services/api/package* ./
 COPY --from=production-dependencies /services/api/node_modules ./node_modules
+COPY --from=builder /services/api/nest-cli.json ./
+COPY --from=builder /services/api/dist ./dist
 COPY packages/prisma/prisma ./prisma
 COPY challenges/ ./challenges
 
