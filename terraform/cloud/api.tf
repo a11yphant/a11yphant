@@ -36,7 +36,6 @@ resource "heroku_formation" "api" {
 
     depends_on = [
       herokux_app_container_release.api_app_container_release,
-      herokux_app_container_release.api_release_container_release,
     ]
 }
 
