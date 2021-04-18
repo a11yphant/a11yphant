@@ -1,6 +1,30 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/davidji99/herokux" {
+  version = "0.22.0"
+  hashes = [
+    "h1:BcqlI1QlN7vqh9XIiwr6Q/MhFYbQlTwtYqzfohO4xG4=",
+    "zh:0830e453d94feceb91ceb5e4f83e0a6f60b66bf7745ebae194a562fb3342bc7e",
+    "zh:2708cc5ebe4f411f5f22cdf5822e387324bbafdce955b80b5b75a276630e6380",
+    "zh:342ffca617427e80e3c5934667a5572dc8e0a92f6a0ec4990439b5ff7cfa9745",
+    "zh:35aaa94bf12a1cc30e019f12fddba5f03ffeafd250067317173d41c5647dfa41",
+    "zh:35dffcec9dd89be3f1281984a6d5c0ae49f2b53acb6213909eb6aa7b98c3c7f3",
+    "zh:4f1088ac165a17669215adb72897310a07c27e5f7ef9460f1e95cced6f4900bc",
+    "zh:55a5ffdb74429fb245c6b7923d0319e30b06e79fd2340f253b16828dd5674732",
+    "zh:603f5da7ab66ad2d6388794ecce9b36f2fa7dcf5ef5f46b1fb53eeb46713fbea",
+    "zh:74146e30243c7355108d5287fba6b8dfcbaa08febf437fec03a067746ca9d1f7",
+    "zh:87fcd53fc95a47ce9866073bdd530b7053bc83b137861c04dc48fd2f70bc0e89",
+    "zh:970d8680a79055e9bbfb2d1005ea961b1a9f599e054b94ddcb576c808b37ae73",
+    "zh:aaf36ec769eb48d7b7e224df21b28e79572279caaf27a3aeba952d485678ee3b",
+    "zh:b0e9e01dda417f357efc2e2609324dd34a8f35f66f52b13da4e564dcb017f70b",
+    "zh:c2309c53ecb245aaeb203e3f5ac7644265d883709ef628ac9774463d69af4c1c",
+    "zh:ced37d3a2280eabfea04398b9edfeccd8e9cc2e3c57a3233e92e2c6abd6956bd",
+    "zh:e8a71675dfcf404bfe59a54a5fda3d482af29a752b7114ab74491dd38dc0d0eb",
+    "zh:f6a677fc421113517ebc57044e35bafdedeb4f1b0dc22dc6ad88ce83f4f20bca",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/aws" {
   version = "3.37.0"
   hashes = [

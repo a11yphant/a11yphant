@@ -25,7 +25,7 @@ resource "heroku_formation" "api" {
     size = "hobby"
 
     depends_on = [
-      null_resource.push_api_image_to_heroku
+      herokux_app_container_release.api_release
     ]
 }
 
@@ -63,4 +63,20 @@ resource "null_resource" "push_api_image_to_heroku" {
   depends_on = [
     null_resource.tag_api_image_for_heroku
   ]
+}
+
+data "herokux_registry_image" "api" {
+  app_id = heroku_app.foobar.uuid
+  process_type = "web"
+  docker_tag = "latest"
+
+  depends_on = [
+    null_resource.push_api_image_to_heroku
+  ]
+}
+
+resource "herokux_app_container_release" "api_release" {
+    app_id = heroku_app.api.uuid
+    image_id = data.herokux_registry_image.api.digest
+    process_type = "web"
 }

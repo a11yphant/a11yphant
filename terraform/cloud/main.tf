@@ -14,6 +14,10 @@ terraform {
       source = "heroku/heroku"
     }
 
+    herokux = {
+      source = "davidji99/herokux"
+    }
+
     docker = {
       source = "kreuzwerker/docker"
     }
@@ -25,6 +29,8 @@ provider "aws" {
 }
 
 provider "heroku" {}
+
+provider "herokux" {}
 
 provider "docker" {
   host = "unix:///var/run/docker.sock"
