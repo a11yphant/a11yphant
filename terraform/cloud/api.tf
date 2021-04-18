@@ -1,6 +1,6 @@
 locals {
   gitlab_ci_image = "gitlab.mediacube.at:5050/a11y-challenges/a11y-challenges/api:${terraform.workspace}"
-  heroku_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web"
+  heroku_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web:latest"
 }
 
 resource "heroku_app" "api" {
