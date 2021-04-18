@@ -301,7 +301,7 @@ build:api:
     PROJECT_PATH: services/api
     IMAGE_NAME_APP: a11y-challenges/a11y-challenges/api
     IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:review-$CI_MERGE_REQUEST_IID
-    IMAGE_NAME_RELEASE: a11y-challenges/a11y-challenges/api
+    IMAGE_NAME_RELEASE: a11y-challenges/a11y-challenges/api-release
     IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_APP:review-$CI_MERGE_REQUEST_IID
   cache: {}
   before_script:
