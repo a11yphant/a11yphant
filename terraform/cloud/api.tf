@@ -66,7 +66,7 @@ resource "null_resource" "push_api_image_to_heroku" {
 }
 
 data "herokux_registry_image" "api" {
-  app_id = heroku_app.foobar.uuid
+  app_id = heroku_app.api.uuid
   process_type = "web"
   docker_tag = "latest"
 
