@@ -11,7 +11,7 @@ function getDbUrl(): URL {
 }
 
 export function getSchemaName(workerId?: number): string {
-  return `a11y-challenges-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
+  return `a11yphant-test-${workerId || process.env.JEST_WORKER_ID || 1}`;
 }
 
 export async function setupDatabase(): Promise<void> {

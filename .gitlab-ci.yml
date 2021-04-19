@@ -53,10 +53,10 @@ test:prisma:
     - npm run prisma:generate --prefix $PROJECT_PATH
     - npm run test:coverage --prefix $PROJECT_PATH
   variables:
-    POSTGRES_DB: a11y-challenges
-    POSTGRES_USER: a11y-challenges
+    POSTGRES_DB: a11yphant
+    POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: packages/prisma
   only:
     - master
@@ -259,10 +259,10 @@ test:api:
   services:
     - postgres
   variables:
-    POSTGRES_DB: a11y-challenges
-    POSTGRES_USER: a11y-challenges
+    POSTGRES_DB: a11yphant
+    POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/api
   before_script:
     - npm ci --ignore-scripts --cache .npm-alpine
@@ -383,10 +383,10 @@ test:import-challenges:
   needs:
    - build:prisma
   variables:
-    POSTGRES_DB: a11y-challenges
-    POSTGRES_USER: a11y-challenges
+    POSTGRES_DB: a11yphant
+    POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/import-challenges
   services:
     - postgres

@@ -1,4 +1,4 @@
-import { Challenge as ChallengeRecord, PrismaService } from "@a11y-challenges/prisma";
+import { Challenge as ChallengeRecord, PrismaService } from "@a11yphant/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Challenge } from "./models/challenge.model";

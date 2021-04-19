@@ -1,4 +1,4 @@
-import { PrismaModule } from "@a11y-challenges/prisma";
+import { PrismaModule } from "@a11yphant/prisma";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";

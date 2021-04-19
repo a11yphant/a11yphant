@@ -1,4 +1,4 @@
-import { PrismaModule } from '@a11y-challenges/prisma';
+import { PrismaModule } from '@a11yphant/prisma';
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 

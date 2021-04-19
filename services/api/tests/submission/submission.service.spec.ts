@@ -1,4 +1,4 @@
-import { useDatabase } from "@a11y-challenges/prisma";
+import { useDatabase } from "@a11yphant/prisma";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
