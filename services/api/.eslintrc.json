@@ -3,7 +3,7 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "extends": ["@a11y-challenges/eslint-config/typescript"],
+  "extends": ["@a11yphant/eslint-config/typescript"],
   "root": true,
   "env": {
     "node": true,

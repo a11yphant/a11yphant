@@ -4,7 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import { S3Handler } from 'aws-lambda';
 
 import { AppModule } from './app.module';
-import { ImportService } from './import.service';
 import { S3DownloadService } from './s3-download.service';
 
 async function bootstrap(): Promise<INestApplicationContext | void> {
@@ -28,15 +27,9 @@ async function bootstrap(): Promise<INestApplicationContext | void> {
 }
 
 async function importChallenges(app: INestApplicationContext): Promise<void> {
-  const config = app.get<ConfigService>(ConfigService);
-  const importer = app.get<ImportService>(ImportService);
   const logger = app.get<Logger>(Logger);
 
   logger.log('Starting challenge import', AppModule.name);
-
-  await importer.importAllFromFolder(
-    config.get<string>('import-challenges.challenges-location'),
-  );
 
   logger.log('Successfully imported challenges', AppModule.name);
 }

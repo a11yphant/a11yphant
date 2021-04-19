@@ -1,5 +1,5 @@
 {
-  "name": "@a11y-challenges/import-challenges",
+  "name": "@a11yphant/import-challenges",
   "version": "0.0.1",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
@@ -24,7 +24,7 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@a11y-challenges/prisma": "file:../../packages/prisma",
+    "@a11yphant/prisma": "file:../../packages/prisma",
     "@nestjs/common": "7.6.15",
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.15",
@@ -36,7 +36,7 @@
     "unzipper": "0.10.11"
   },
   "devDependencies": {
-    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
     "@golevelup/ts-jest": "0.3.1",
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
@@ -64,7 +64,7 @@
     "prettier": "2.2.1",
     "prisma": "2.21.2",
     "ts-jest": "26.5.5",
-    "ts-loader": "8.1.0",
+    "ts-loader": "9.0.0",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
     "typescript": "4.2.4"

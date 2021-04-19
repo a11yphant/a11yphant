@@ -1,5 +1,5 @@
 {
-  "name": "@a11y-challenges/submission-checker",
+  "name": "@a11yphant/submission-checker",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -30,10 +30,10 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "6.6.7",
-    "selenium-webdriver": "^4.0.0-alpha.8"
+    "selenium-webdriver": "^4.0.0-beta"
   },
   "devDependencies": {
-    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
     "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
@@ -56,7 +56,7 @@
     "prettier": "2.2.1",
     "supertest": "6.1.3",
     "ts-jest": "26.5.5",
-    "ts-loader": "8.1.0",
+    "ts-loader": "9.0.0",
     "ts-node": "9.1.1",
     "tsconfig-paths": "3.9.0",
     "typescript": "4.2.4"

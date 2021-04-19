@@ -1,4 +1,4 @@
-import { PrismaService, Submission as SubmissionRecord } from "@a11y-challenges/prisma";
+import { PrismaService, Submission as SubmissionRecord } from "@a11yphant/prisma";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
