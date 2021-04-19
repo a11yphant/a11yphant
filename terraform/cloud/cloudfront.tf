@@ -7,6 +7,8 @@ locals {
 resource "aws_cloudfront_distribution" "site" {
   comment = "${terraform.workspace}-site-distribution"
 
+  aliases = [ var.domain ]
+
   origin {
     domain_name = replace(aws_apigatewayv2_api.site_http_api.api_endpoint, "/^https?://([^/]*).*/", "$1")
     origin_id   = local.origin_id_site_http_api
@@ -127,4 +129,16 @@ resource "aws_cloudfront_distribution" "site" {
 
 resource "aws_cloudfront_origin_access_identity" "site_access_identity" {
   comment = "${terraform.workspace} cloudfront site_access_identity"
+}
+
+resource "aws_route53_record" "cdn_domain" {
+  zone_id = var.route53_zone_id
+  name = var.domain
+  type = "A"
+
+  alias {
+    name = aws_cloudfront_distribution.site.domain_name
+    zone_id = aws_cloudfront_distribution.site.hosted_zone_id
+    evaluate_target_health = false
+  }
 }
