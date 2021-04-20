@@ -18,11 +18,6 @@ npm ci --prefix services/api
 npm run build --prefix services/api
 aws-npm ci --only=production --prefix services/api --cache .npm --prefer-offline
 
-rm -f services/import-challenges/lambda.zip
-npm ci --prefix services/import-challenges
-npm run build --prefix services/import-challenges
-aws-npm ci --only=production --prefix services/import-challenges --cache .npm --prefer-offline
-
 rm -f services/site/lambda.zip
 rm -rf services/site/.next
 npm ci --prefix services/site
