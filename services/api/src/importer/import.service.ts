@@ -1,9 +1,9 @@
-import { PrismaService } from "@a11yphant/prisma";
 import { Injectable, Logger } from "@nestjs/common";
 import { readdir as readdirCallback } from "fs";
 import { join, resolve } from "path";
 import { promisify } from "util";
 
+import { PrismaService } from "../prisma/prisma.service";
 import { Challenge, Hint, Level, Requirement, Resource } from "./challenge.interface";
 import { Rule } from "./rule.interface";
 import { YamlReaderService } from "./yaml-reader.service";

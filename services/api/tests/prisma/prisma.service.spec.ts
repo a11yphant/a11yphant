@@ -1,8 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { PrismaService } from "./prisma.service";
-import { getCurrentSchemaUrl } from "./testing/helpers";
+import { PrismaService } from "../../src/prisma/prisma.service";
+import { getCurrentSchemaUrl } from "../helpers";
 
 describe("prisma service", () => {
   it("can connect and disconnect to the database", () => {

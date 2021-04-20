@@ -8,11 +8,6 @@ alias aws-npm="docker run --rm -v\"$(pwd)/:/app\" -w=\"/app\" --entrypoint=\"\" 
 
 npm ci --ignore-scripts
 
-npm ci --prefix packages/prisma
-npm run prisma:generate --prefix packages/prisma
-npm run build --prefix packages/prisma
-rm -rf packages/prisma/node_modules
-
 rm -f services/api/lambda.zip
 npm ci --prefix services/api
 npm run build --prefix services/api

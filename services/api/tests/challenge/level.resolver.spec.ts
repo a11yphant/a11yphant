@@ -1,14 +1,14 @@
 import { createMock } from "@golevelup/ts-jest";
 
-import { HintService } from "./hint.service";
-import { LevelResolver } from "./level.resolver";
-import { LevelService } from "./level.service";
-import { Hint } from "./models/hint.model";
-import { Level } from "./models/level.model";
-import { Requirement } from "./models/requirement.model";
-import { Resource } from "./models/resource.model";
-import { RequirementService } from "./requirement.service";
-import { ResourceService } from "./resource.service";
+import { HintService } from "../../src/challenge/hint.service";
+import { LevelResolver } from "../../src/challenge/level.resolver";
+import { LevelService } from "../../src/challenge/level.service";
+import { Hint } from "../../src/challenge/models/hint.model";
+import { Level } from "../../src/challenge/models/level.model";
+import { Requirement } from "../../src/challenge/models/requirement.model";
+import { Resource } from "../../src/challenge/models/resource.model";
+import { RequirementService } from "../../src/challenge/requirement.service";
+import { ResourceService } from "../../src/challenge/resource.service";
 
 describe("level resolver", () => {
   it("resolves a level by challenge slug and index", async () => {

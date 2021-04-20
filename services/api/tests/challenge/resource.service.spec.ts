@@ -1,20 +1,25 @@
-import { useDatabase } from "@a11yphant/prisma";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { RequirementService } from "./requirement.service";
+import { ResourceService } from "../../src/challenge/resource.service";
+import { useDatabase } from "../helpers";
 
-describe("requirement service", () => {
+describe("resource service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
-  it("can get requirements for a level", async () => {
+  it("can get resources for a level", async () => {
     const prisma = getPrismaService();
-    const service = new RequirementService(prisma);
+    const service = new ResourceService(prisma);
     const level = await prisma.level.create({
       data: {
         instructions: "",
         tldr: "",
         challenge: { create: { name: "level", slug: "level" } },
-        requirements: { create: [{ title: "1" }, { title: "2" }] },
+        resources: {
+          create: [
+            { title: "1", link: "http://1.com" },
+            { title: "2", link: "http://2.com" },
+          ],
+        },
       },
     });
 

@@ -9,14 +9,12 @@
     "prepare": "husky install",
     "postinstall": "npm run package-dependencies && npm run tf:init",
     "package-dependencies": "npm-run-all package-dependencies:**",
-    "package-dependencies:prisma": "npm --prefix packages/prisma install",
     "package-dependencies:nestjs-aws-messaging": "npm --prefix packages/nestjs-aws-messaging install",
     "package-dependencies:api": "npm --prefix services/api install",
     "package-dependencies:site": "npm --prefix services/site install",
     "package-dependencies:submission-checker": "npm --prefix services/submission-checker install",
     "package-dependencies:submission-renderer": "npm --prefix services/submission-renderer install",
     "build-packages": "npm-run-all build-packages:**",
-    "build-packages:prisma": "npm --prefix packages/prisma run build && npm --prefix packages/prisma run postinstall",
     "build-packages:nestjs-aws-messaging": "npm --prefix packages/nestjs-aws-messaging run build",
     "dotenv": "dotenv",
     "lint": "npm-run-all lint:**",
@@ -43,7 +41,7 @@
     "tf:apply": "npm run tf apply -- -auto-approve",
     "tf:destroy": "npm run tf destroy -- -auto-approve",
     "tf:clear-state": "rm -f terraform/local/terraform.tfstate*",
-    "db:migrate": "docker-compose up -d postgres && npm --prefix packages/prisma run prisma:migrate && docker-compose down"
+    "db:migrate": "docker-compose up -d postgres && npm --prefix services/api run prisma:migrate && docker-compose down"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
 
-import { ChallengeResolver } from "./challenge.resolver";
-import { ChallengeService } from "./challenge.service";
-import { LevelService } from "./level.service";
-import { Challenge } from "./models/challenge.model";
-import { Level } from "./models/level.model";
+import { ChallengeResolver } from "../../src/challenge/challenge.resolver";
+import { ChallengeService } from "../../src/challenge/challenge.service";
+import { LevelService } from "../../src/challenge/level.service";
+import { Challenge } from "../../src/challenge/models/challenge.model";
+import { Level } from "../../src/challenge/models/level.model";
 
 describe("challenge resolver", () => {
   it("can resolve a challenge", async () => {

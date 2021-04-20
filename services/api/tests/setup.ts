@@ -1,6 +1,7 @@
-import { setupDatabase } from "@a11yphant/prisma";
 import { config } from "dotenv";
 import { resolve } from "path";
+
+import { setupDatabase } from "./helpers";
 
 config({ path: resolve(__dirname, "../.env") });
 

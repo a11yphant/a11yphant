@@ -1,8 +1,8 @@
 import { DynamicModule } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 
-import { PRISMA_MODULE_CONFIG } from "./constants";
-import { PrismaModule } from "./prisma.module";
+import { PRISMA_MODULE_CONFIG } from "../../src/prisma/constants";
+import { PrismaModule } from "../../src/prisma/prisma.module";
 
 describe("prisma module", () => {
   it("can instantiate the module", async () => {

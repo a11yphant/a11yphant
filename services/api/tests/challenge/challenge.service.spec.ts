@@ -1,8 +1,8 @@
-import { useDatabase } from "@a11yphant/prisma";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { ChallengeService } from "./challenge.service";
+import { ChallengeService } from "../../src/challenge/challenge.service";
+import { useDatabase } from "../helpers";
 
 describe("challenge service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());

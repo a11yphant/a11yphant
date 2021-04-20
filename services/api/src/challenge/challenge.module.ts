@@ -1,6 +1,6 @@
-import { PrismaModule } from "@a11yphant/prisma";
 import { Module } from "@nestjs/common";
 
+import { PrismaModule } from "../prisma/prisma.module";
 import { ChallengeResolver } from "./challenge.resolver";
 import { ChallengeService } from "./challenge.service";
 import { HintResolver } from "./hint.resolver";

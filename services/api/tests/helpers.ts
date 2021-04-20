@@ -1,10 +1,10 @@
 import { Logger } from "@nestjs/common";
+import { PrismaClient } from "@prisma/client";
 import { Migrate } from "@prisma/migrate";
 import os from "os";
 import { join } from "path";
 
-import { PrismaClient } from "../../client";
-import { PrismaService } from "../prisma.service";
+import { PrismaService } from "../src/prisma/prisma.service";
 
 function getDbUrl(): URL {
   return new URL(process.env.DB_URL || "postgresql://please-provide-a-connection-url/db");
@@ -16,7 +16,7 @@ export function getSchemaName(workerId?: number): string {
 
 export async function setupDatabase(): Promise<void> {
   const originalDBUrl = getDbUrl().toString();
-  const schemaPath = join(__dirname, "../../prisma/schema.prisma");
+  const schemaPath = join(__dirname, "../prisma/schema.prisma");
 
   const client = new PrismaClient({
     datasources: {

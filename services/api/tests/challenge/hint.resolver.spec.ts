@@ -1,8 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
 
-import { HintResolver } from "./hint.resolver";
-import { HintService } from "./hint.service";
-import { Hint } from "./models/hint.model";
+import { HintResolver } from "../../src/challenge/hint.resolver";
+import { HintService } from "../../src/challenge/hint.service";
+import { Hint } from "../../src/challenge/models/hint.model";
 
 describe("hint resolver", () => {
   it("can resolve a hint", async () => {
