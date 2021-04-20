@@ -32,6 +32,7 @@ resource "heroku_formation" "api" {
 
     depends_on = [
       herokux_app_container_release.api_app_container_release,
+      herokux_app_container_release.api_release_container_release,
     ]
 }
 
@@ -125,7 +126,26 @@ resource "herokux_app_container_release" "api_app_container_release" {
     process_type = "web"
 
     depends_on = [
+    null_resource.push_api_release_image_to_heroku,
+  ]
+}
+
+data "herokux_registry_image" "api_release" {
+  app_id = heroku_app.api.uuid
+  process_type = "release"
+  docker_tag = "latest"
+
+  depends_on = [
+    null_resource.push_api_release_image_to_heroku
+  ]
+}
+
+resource "herokux_app_container_release" "api_release_container_release" {
+    app_id = heroku_app.api.uuid
+    image_id = data.herokux_registry_image.api_release.digest
+    process_type = "release"
+
+    depends_on = [
       null_resource.push_api_release_image_to_heroku,
-      null_resource.push_api_app_image_to_heroku,
   ]
 }
