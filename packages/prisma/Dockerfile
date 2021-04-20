@@ -4,6 +4,7 @@ WORKDIR /packages/prisma
 
 COPY packages/eslint-config/package.json /packages/eslint-config/package.json
 COPY packages/eslint-config/*.js  /packages/eslint-config/
+COPY packages/prisma/scripts/download-engine.js ./scripts/download-engine.js
 
 COPY packages/prisma/package* ./
 
