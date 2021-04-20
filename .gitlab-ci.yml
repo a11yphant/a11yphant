@@ -37,83 +37,6 @@ stages:
 #----------------------------------------------------------------------
 
 #-----------------------------------
-# Prisma Client
-#-----------------------------------
-
-lint:prisma:
-  extends:
-    - .lint
-    - .run_on_prisma_change
-  script:
-    - npm run prisma:generate --prefix $PROJECT_PATH
-    - npm run lint --prefix $PROJECT_PATH
-  variables:
-    PROJECT_PATH: packages/prisma
-
-test:prisma:
-  extends:
-    - .test
-  services:
-    - postgres
-  script:
-    - npm run prisma:generate --prefix $PROJECT_PATH
-    - npm run test:coverage --prefix $PROJECT_PATH
-  variables:
-    POSTGRES_DB: a11yphant
-    POSTGRES_USER: a11yphant
-    POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
-    PROJECT_PATH: packages/prisma
-  only:
-    - master
-    - develop
-    - merge_request
-
-build:prisma:
-  tags:
-    - docker
-  stage: build-packages
-  image: docker:20
-  variables:
-    PROJECT_PATH: packages/prisma
-    IMAGE_NAME: a11yphant/a11yphant/prisma-package
-    IMAGE: $CI_REGISTRY/$IMAGE_NAME:review-$CI_MERGE_REQUEST_IID
-  cache: {}
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE
-    - docker push $IMAGE
-    # extract artifacts for compatability with the existing pipeline
-    - CONTAINER_ID=$(docker create $IMAGE "")
-    - docker cp $CONTAINER_ID:dist - > $PROJECT_PATH/dist.tar
-    - docker cp $CONTAINER_ID:client - > $PROJECT_PATH/client.tar
-    - cd $PROJECT_PATH
-    - tar -xvf dist.tar
-    - tar -xvf client.tar
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - $PROJECT_PATH/dist
-      - $PROJECT_PATH/client
-  only:
-    - develop
-    - master
-    - merge_request
-
-production-dependencies:prisma:
-  extends:
-    - .production-dependencies
-  variables:
-    PROJECT_PATH: packages/prisma
-  only:
-    - develop
-    - master
-    - merge_request
-
-
-#-----------------------------------
 # NestJS AWS Messaging
 #-----------------------------------
 
@@ -273,8 +196,6 @@ lint:api:
 test:api:
   extends:
     - .test
-  needs:
-   - build:prisma
   services:
     - postgres
   variables:
@@ -283,10 +204,6 @@ test:api:
     POSTGRES_PASSWORD: secret
     DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/api
-  before_script:
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/prisma --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -309,11 +226,11 @@ build:api:
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg PRISMA_PACKAGE_IMAGE=$CI_REGISTRY/a11yphant/a11yphant/prisma-package --build-arg VERSION=review-$CI_MERGE_REQUEST_IID
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP
     - docker push $IMAGE_APP
     # api release container
     - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg PRISMA_PACKAGE_IMAGE=$CI_REGISTRY/a11yphant/a11yphant/prisma-package --build-arg VERSION=review-$CI_MERGE_REQUEST_IID --target release
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE
     - docker push $IMAGE_RELEASE
   only:
     - master
