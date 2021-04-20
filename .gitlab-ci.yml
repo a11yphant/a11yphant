@@ -17,6 +17,7 @@ variables:
   DOCKER_CLI_EXPERIMENTAL: enabled
 
 default:
+  needs: []
   before_script:
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
