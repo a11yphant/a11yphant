@@ -12,11 +12,6 @@ variable "postgres_cluster_database_name" {
   default = "a11ychallenges"
 }
 
-variable "heroku_team_id" {
-  type = string
-  default = "a11yphant"
-}
-
 variable "gitlab_ci_registery_user" {
   type = string
 }
@@ -40,6 +35,11 @@ variable "route53_zone_id" {
 
 variable "domain" {
   type    = string
+}
+
+variable "api_dyno_size" {
+  type    = string
+  default = "free"
 }
 
 # copied from: https://github.com/hashicorp/terraform-template-dir/blob/556bd64989e7099fabb90c6b883b5d4d92da3ae8/variables.tf

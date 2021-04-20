@@ -17,10 +17,6 @@ resource "heroku_app" "api" {
     API_GRAPHQL_PLAYGROUND = 1
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
   }
-
-  organization {
-    name = var.heroku_team_id
-  }
 }
 
 resource "heroku_addon" "api_database" {
@@ -31,8 +27,8 @@ resource "heroku_addon" "api_database" {
 resource "heroku_formation" "api" {
     app = heroku_app.api.name
     type = "web"
-    quantity = 0
-    size = "hobby"
+    quantity = 1
+    size = var.api_dyno_size
 
     depends_on = [
       herokux_app_container_release.api_app_container_release,
