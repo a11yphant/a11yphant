@@ -46,6 +46,9 @@ provider "docker" {
     username = var.heroku_registry_user
     password = var.heroku_registry_password
   }
+provider "aws" {
+  alias = "us_east_1"
+  region = "us-east-1"
 }
 
 module "messaging" {
