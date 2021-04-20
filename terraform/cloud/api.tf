@@ -1,7 +1,7 @@
 locals {
-  gitlab_ci_app_image = "gitlab.mediacube.at:5050/a11y-challenges/a11y-challenges/api:${terraform.workspace}"
+  gitlab_ci_app_image = "gitlab.mediacube.at:5050/a11yphant/a11yphant/api:${terraform.workspace}"
   heroku_app_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web:latest"
-  gitlab_ci_release_image = "gitlab.mediacube.at:5050/a11y-challenges/a11y-challenges/api-release:${terraform.workspace}"
+  gitlab_ci_release_image = "gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:${terraform.workspace}"
   heroku_release_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/release:latest"
 }
 

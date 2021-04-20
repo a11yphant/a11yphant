@@ -16,7 +16,7 @@
   cache: {} # disable cache
   variables:
     TF_IN_AUTOMATION: 1
-    API_GITLAB_IMAGE_NAME: $CI_REGISTRY/a11y-challenges/a11y-challenges/api:review-$CI_MERGE_REQUEST_IID
+    API_GITLAB_IMAGE_NAME: $CI_REGISTRY/a11yphant/a11yphant/api:review-$CI_MERGE_REQUEST_IID
     API_HEROKU_IMAGE_NAME: registry.heroku.com/review-$CI_MERGE_REQUEST_IID-a11yphant-api/web
   before_script:
     - apk update

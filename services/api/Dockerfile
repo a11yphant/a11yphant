@@ -1,5 +1,5 @@
 ARG VERSION=latest
-ARG PRISMA_PACKAGE_IMAGE=a11y-challenges/a11y-challenges/prisma-package
+ARG PRISMA_PACKAGE_IMAGE=a11yphant/a11yphant/prisma-package
 
 FROM $PRISMA_PACKAGE_IMAGE:$VERSION AS prisma-package
 
@@ -22,7 +22,7 @@ WORKDIR /services/api
 RUN npm ci --prefix /
 RUN npm ci
 
-COPY --from=prisma-package / ./node_modules/@a11y-challenges/prisma/
+COPY --from=prisma-package / ./node_modules/@a11yphant/prisma/
 COPY services/api/tsconfig.json ./
 COPY services/api/tsconfig.build.json ./
 COPY services/api/nest-cli.json ./
@@ -34,9 +34,9 @@ FROM package-files as production-dependencies
 
 WORKDIR /services/api
 
-RUN npm ci --production && rm node_modules/@a11y-challenges/prisma/
-COPY --from=prisma-package / ./node_modules/@a11y-challenges/prisma/
-RUN node node_modules/@a11y-challenges/prisma/scripts/download-engine.js
+RUN npm ci --production && rm node_modules/@a11yphant/prisma/
+COPY --from=prisma-package / ./node_modules/@a11yphant/prisma/
+RUN node node_modules/@a11yphant/prisma/scripts/download-engine.js
 
 FROM node:14-alpine AS release
 
