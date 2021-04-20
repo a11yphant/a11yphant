@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
-    "aws-sdk": "2.888.0",
+    "aws-sdk": "2.889.0",
     "eslint": "7.24.0",
     "eslint-config-prettier": "8.2.0",
     "eslint-plugin-import": "2.22.1",
