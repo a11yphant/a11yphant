@@ -121,11 +121,11 @@ data "herokux_registry_image" "api_app" {
 }
 
 resource "herokux_app_container_release" "api_app_container_release" {
-    app_id = heroku_app.api.uuid
-    image_id = data.herokux_registry_image.api_app.digest
-    process_type = "web"
+  app_id = heroku_app.api.uuid
+  image_id = data.herokux_registry_image.api_app.digest
+  process_type = "web"
 
-    depends_on = [
+  depends_on = [
     null_resource.push_api_release_image_to_heroku,
   ]
 }
@@ -141,11 +141,11 @@ data "herokux_registry_image" "api_release" {
 }
 
 resource "herokux_app_container_release" "api_release_container_release" {
-    app_id = heroku_app.api.uuid
-    image_id = data.herokux_registry_image.api_release.digest
-    process_type = "release"
+  app_id = heroku_app.api.uuid
+  image_id = data.herokux_registry_image.api_release.digest
+  process_type = "release"
 
-    depends_on = [
-      null_resource.push_api_release_image_to_heroku,
+  depends_on = [
+    null_resource.push_api_release_image_to_heroku,
   ]
 }
