@@ -507,7 +507,7 @@ deploy-review:
    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     on_stop: stop-environment
   only:
     - merge_request
@@ -520,7 +520,7 @@ deploy-staging:
     DOMAIN: beta.a11yphant.com
   environment:
     name: staging
-    url: beta.a11yphant.com
+    url: https://beta.a11yphant.com
   only:
     - develop
 
@@ -532,7 +532,7 @@ deploy-production:
     DOMAIN: a11yphant.com
   environment:
     name: production
-    url: a11yphant.com
+    url: https://a11yphant.com
   only:
     - master
 
