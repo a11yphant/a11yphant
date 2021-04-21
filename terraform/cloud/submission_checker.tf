@@ -111,5 +111,7 @@ resource "aws_iam_role_policy_attachment" "submission_checker_submission_topic_p
 }
 
 resource "aws_devicefarm_project" "submission_checks" {
+  provider = aws.us_west_2
+
   name = "${terraform.workspace}-submission-checks"
 }
