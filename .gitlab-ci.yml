@@ -53,10 +53,10 @@ test:prisma:
     - npm run prisma:generate --prefix $PROJECT_PATH
     - npm run test:coverage --prefix $PROJECT_PATH
   variables:
-    POSTGRES_DB: a11y-challenges
-    POSTGRES_USER: a11y-challenges
+    POSTGRES_DB: a11yphant
+    POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: packages/prisma
   only:
     - master
@@ -280,10 +280,10 @@ test:api:
   services:
     - postgres
   variables:
-    POSTGRES_DB: a11y-challenges
-    POSTGRES_USER: a11y-challenges
+    POSTGRES_DB: a11yphant
+    POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/api
   before_script:
     - npm ci --ignore-scripts --cache .npm-alpine
@@ -406,10 +406,10 @@ test:import-challenges:
   needs:
    - build:prisma
   variables:
-    POSTGRES_DB: a11y-challenges
-    POSTGRES_USER: a11y-challenges
+    POSTGRES_DB: a11yphant
+    POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11y-challenges:secret@postgres:5432/a11y-challenges
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/import-challenges
   services:
     - postgres
@@ -519,7 +519,7 @@ deploy-review:
    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     on_stop: stop-environment
   only:
     - merge_request
@@ -532,7 +532,7 @@ deploy-staging:
     DOMAIN: beta.a11yphant.com
   environment:
     name: staging
-    url: beta.a11yphant.com
+    url: https://beta.a11yphant.com
   only:
     - develop
 
@@ -544,7 +544,7 @@ deploy-production:
     DOMAIN: a11yphant.com
   environment:
     name: production
-    url: a11yphant.com
+    url: https://a11yphant.com
   only:
     - master
 
@@ -554,13 +554,14 @@ stop-environment:
   stage: deploy
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -auto-approve
+    - terraform -chdir=terraform/cloud destroy -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -auto-approve
     - terraform -chdir=terraform/cloud workspace select default
     - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
   when: manual

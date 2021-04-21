@@ -1,4 +1,4 @@
-import { parseTopics } from "@a11y-challenges/nestjs-aws-messaging";
+import { parseTopics } from "@a11yphant/nestjs-aws-messaging";
 import { registerAs } from "@nestjs/config";
 
 export default registerAs("messaging", () => ({

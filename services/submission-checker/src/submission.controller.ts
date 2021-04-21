@@ -1,4 +1,4 @@
-import { AwsMessagingClient } from "@a11y-challenges/nestjs-aws-messaging";
+import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
 import { Controller, Inject, Logger } from "@nestjs/common";
 import { ClientProxy, EventPattern } from "@nestjs/microservices";
 

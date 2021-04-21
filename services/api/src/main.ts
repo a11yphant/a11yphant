@@ -1,4 +1,4 @@
-import { AwsTransportStrategy } from "@a11y-challenges/nestjs-aws-messaging";
+import { AwsTransportStrategy } from "@a11yphant/nestjs-aws-messaging";
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";

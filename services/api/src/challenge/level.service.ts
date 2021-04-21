@@ -1,4 +1,4 @@
-import { Level as LevelRecord, PrismaService } from "@a11y-challenges/prisma";
+import { Level as LevelRecord, PrismaService } from "@a11yphant/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Code } from "./models/code.model";

@@ -1,4 +1,4 @@
-import { AwsMessagingModule } from "@a11y-challenges/nestjs-aws-messaging";
+import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
