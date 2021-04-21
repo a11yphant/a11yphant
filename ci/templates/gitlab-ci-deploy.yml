@@ -5,6 +5,7 @@
   needs:
     - build:prisma
     - production-dependencies:prisma
+    - build:nestjs-aws-messaging
     - build:api
     - production-dependencies:api
     - production-dependencies:database-migration
@@ -27,4 +28,4 @@
   script:
     - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud apply -auto-approve -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD"
+    - terraform -chdir=terraform/cloud apply -auto-approve -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID"

@@ -12,6 +12,13 @@ variable "postgres_cluster_database_name" {
   default = "a11ychallenges"
 }
 
+variable "route53_zone_id" {
+  type    = string
+}
+
+variable "domain" {
+  type    = string
+}
 
 # copied from: https://github.com/hashicorp/terraform-template-dir/blob/556bd64989e7099fabb90c6b883b5d4d92da3ae8/variables.tf
 variable "file_types" {
