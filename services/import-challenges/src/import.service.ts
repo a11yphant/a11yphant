@@ -1,4 +1,4 @@
-import { PrismaService } from '@a11y-challenges/prisma';
+import { PrismaService } from '@a11yphant/prisma';
 import { Injectable, Logger } from '@nestjs/common';
 import { readdir as readdirCallback } from 'fs';
 import { join, resolve } from 'path';

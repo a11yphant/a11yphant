@@ -1,4 +1,4 @@
-import { PrismaService, Requirement as RequirementRecord, Rule as RuleRecord } from "@a11y-challenges/prisma";
+import { PrismaService, Requirement as RequirementRecord, Rule as RuleRecord } from "@a11yphant/prisma";
 import { Injectable } from "@nestjs/common";
 
 import { Requirement } from "./models/requirement.model";

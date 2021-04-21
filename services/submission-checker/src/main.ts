@@ -1,4 +1,4 @@
-import { AwsTransportStrategy } from "@a11y-challenges/nestjs-aws-messaging";
+import { AwsTransportStrategy } from "@a11y-a11yphant/nestjs-aws-messaging";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions } from "@nestjs/microservices";

@@ -1,5 +1,5 @@
 {
-  "name": "@a11y-challenges/api",
+  "name": "@a11yphant/api",
   "version": "0.0.1",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
@@ -24,13 +24,13 @@
     "generate-schema": "ts-node src/generate-schema.ts"
   },
   "dependencies": {
-    "@a11y-challenges/nestjs-aws-messaging": "file:../../packages/nestjs-aws-messaging",
-    "@a11y-challenges/prisma": "file:../../packages/prisma",
+    "@a11yphant/nestjs-aws-messaging": "file:../../packages/nestjs-aws-messaging",
+    "@a11yphant/prisma": "file:../../packages/prisma",
     "@nestjs/common": "7.6.15",
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.15",
     "@nestjs/graphql": "7.10.3",
-    "@nestjs/microservices": "^7.6.15",
+    "@nestjs/microservices": "7.6.15",
     "@nestjs/platform-express": "7.6.15",
     "@vendia/serverless-express": "4.3.4",
     "apollo-server-express": "2.23.0",
@@ -44,7 +44,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
     "@golevelup/ts-jest": "0.3.1",
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",

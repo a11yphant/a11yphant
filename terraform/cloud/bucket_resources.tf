@@ -1,4 +1,4 @@
 resource "aws_s3_bucket" "resources" {
-  bucket = "${terraform.workspace}-a11y-challenges-resources-bucket"
+  bucket = "${terraform.workspace}-a11yphant-resources-bucket"
   acl    = "private"
 }

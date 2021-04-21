@@ -2,7 +2,7 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  "extends": ["@a11y-challenges/eslint-config"],
+  "extends": ["@a11yphant/eslint-config"],
   "root": true,
   "env": {
     "node": true,

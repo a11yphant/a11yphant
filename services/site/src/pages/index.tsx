@@ -15,8 +15,8 @@ const Home: React.FunctionComponent = () => {
       <Legend className="mx-24" />
       <Card heading={<h1>A11y Challenges</h1>}>
         <p>
-          Welcome to a11y-challenges.cool! This is a project created by Michael Brandstätter, Thomas Dax, Daniela Kubesch and Luca Pircher during
-          their MMT Master degree program at FH Salzburg
+          Welcome to a11yphant.cool! This is a project created by Michael Brandstätter, Thomas Dax, Daniela Kubesch and Luca Pircher during their MMT
+          Master degree program at FH Salzburg
         </p>
         <p>{loading ? "Loading" : data?.helloWorld[0].message}</p>
       </Card>

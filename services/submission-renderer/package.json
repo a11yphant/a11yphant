@@ -1,5 +1,5 @@
 {
-  "name": "@a11y-challenges/submission-renderer",
+  "name": "@a11yphant/submission-renderer",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -33,7 +33,7 @@
     "rxjs": "6.6.7"
   },
   "devDependencies": {
-    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
     "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",

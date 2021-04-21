@@ -1,5 +1,5 @@
 {
-  "name": "@a11y-challenges/database-migration",
+  "name": "@a11yphant/database-migration",
   "version": "1.0.0",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
@@ -17,7 +17,7 @@
     "unzipper": "0.10.11"
   },
   "devDependencies": {
-    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
     "aws-sdk": "2.889.0",
     "eslint": "7.24.0",
     "eslint-config-prettier": "8.2.0",

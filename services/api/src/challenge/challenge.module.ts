@@ -1,4 +1,4 @@
-import { PrismaModule } from "@a11y-challenges/prisma";
+import { PrismaModule } from "@a11yphant/prisma";
 import { Module } from "@nestjs/common";
 
 import { ChallengeResolver } from "./challenge.resolver";

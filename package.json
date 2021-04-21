@@ -1,5 +1,5 @@
 {
-  "name": "a11y-challenges",
+  "name": "a11yphant",
   "version": "0.0.1",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
@@ -33,17 +33,17 @@
     "predev": "npm run build-packages &&  npm run tf:clear-state && npm run tf:apply && npm run db:migrate",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
-    "stop": "pm2 stop a11y-challenges && pm2 del a11y-challenges",
+    "stop": "pm2 stop a11yphant && pm2 del a11yphant",
     "dev:api": "npm run package-dependencies:api && npm --prefix services/api run start:dev",
     "dev:site": "npm run package-dependencies:site && wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",
     "dev:submission-checker": "npm run package-dependencies:submission-checker && npm --prefix services/submission-checker run start:dev",
     "dev:submission-renderer": "npm run package-dependencies:submission-renderer && npm --prefix services/submission-renderer run start:dev",
     "dev:import-challenges": "npm run package-dependencies:import-challenges && npm --prefix services/import-challenges run start:dev",
-    "debug:api": "pm2 logs a11y-challenges-api",
-    "debug:site": "pm2 logs a11y-challenges-site",
-    "debug:submission-checker": "pm2 logs a11y-challenges-submission-checker",
-    "debug:submission-renderer": "pm2 logs a11y-challenges-submission-renderer",
-    "debug:import-challenges": "pm2 logs a11y-challenges-import-challenges",
+    "debug:api": "pm2 logs a11yphant-api",
+    "debug:site": "pm2 logs a11yphant-site",
+    "debug:submission-checker": "pm2 logs a11yphant-submission-checker",
+    "debug:submission-renderer": "pm2 logs a11yphant-submission-renderer",
+    "debug:import-challenges": "pm2 logs a11yphant-import-challenges",
     "tf": "docker-compose run --rm terraform -chdir=terraform/local",
     "tf:init": "npm run tf init",
     "tf:apply": "npm run tf apply -- -auto-approve",
@@ -53,7 +53,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.mediacube.at/a11y-challenges/a11y-challenges.git"
+    "url": "https://gitlab.mediacube.at/a11yphant/a11yphant.git"
   },
   "keywords": [],
   "devDependencies": {
