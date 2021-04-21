@@ -516,9 +516,10 @@ deploy-review:
     - .deploy
   variables:
    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+   DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    # url: https://$CI_ENVIRONMENT_SLUG.example.com
+    url: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     on_stop: stop-environment
   only:
     - merge_request
@@ -528,9 +529,10 @@ deploy-staging:
     - .deploy
   variables:
     WORKSPACE: staging
+    DOMAIN: beta.a11yphant.com
   environment:
     name: staging
-    # url: https://staging.example.com
+    url: beta.a11yphant.com
   only:
     - develop
 
@@ -539,9 +541,10 @@ deploy-production:
     - .deploy
   variables:
     WORKSPACE: production
+    DOMAIN: a11yphant.com
   environment:
     name: production
-    # url: https://example.com
+    url: a11yphant.com
   only:
     - master
 
