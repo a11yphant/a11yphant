@@ -24,6 +24,12 @@ resource "heroku_addon" "api_database" {
   plan = "heroku-postgresql:hobby-dev"
 }
 
+resource "heroku_collaborator" "api_collaborators" {
+    count = length(var.heroku_collaborators)
+    app   = heroku_app.api.name
+    email = var.heroku_collaborators[count.index]
+}
+
 resource "heroku_formation" "api" {
     app = heroku_app.api.name
     type = "web"
