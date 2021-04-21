@@ -35,6 +35,8 @@ resource "aws_lambda_function" "submission_checker" {
       SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES = 0
       SUBMISSION_CHECKER_MESSAGING_REGION = "eu-central-1"
       SUBMISSION_CHECKER_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
+      SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "aws-device-farm"
+      SUBMISSION_CHECKER_AWS_DEVICE_FARM_PROJECT = aws_devicefarm_project.submission_checks.arn
     }
   }
 
@@ -106,4 +108,8 @@ resource "aws_iam_role_policy_attachment" "submission_checker_submission_checker
 resource "aws_iam_role_policy_attachment" "submission_checker_submission_topic_publishing" {
   role       = aws_iam_role.submission_checker_role.name
   policy_arn = aws_iam_policy.submission_topic_publishing.arn
+}
+
+resource "aws_devicefarm_project" "submission_checks" {
+  name = "${terraform.workspace}-submission-checks"
 }
