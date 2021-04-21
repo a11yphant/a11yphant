@@ -5,6 +5,7 @@
   needs:
     - build:prisma
     - production-dependencies:prisma
+    - build:nestjs-aws-messaging
     - build:api
     - production-dependencies:api
     - production-dependencies:database-migration

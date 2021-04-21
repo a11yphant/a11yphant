@@ -20,3 +20,19 @@ resource "aws_vpc_endpoint" "s3" {
   vpc_id       = aws_vpc.main_network.id
   service_name = "com.amazonaws.eu-central-1.s3"
 }
+
+resource "aws_vpc_endpoint" "sns" {
+  vpc_id            = aws_vpc.main_network.id
+  service_name      = "com.amazonaws.eu-central-1.sns"
+  vpc_endpoint_type = "Interface"
+
+  subnet_ids = [
+    aws_subnet.postgres_cluster_network_zone_a.id,
+    aws_subnet.postgres_cluster_network_zone_b.id,
+    aws_subnet.postgres_cluster_network_zone_c.id
+  ]
+
+  security_group_ids = [
+    aws_security_group.allow_https_ingress.id
+  ]
+}
