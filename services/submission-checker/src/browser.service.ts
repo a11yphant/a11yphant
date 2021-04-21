@@ -10,7 +10,7 @@ export class BrowserService {
 
   // TODO adapt return value type
   async runAxeChecks(url: string, options: unknown): Promise<AxeResults> {
-    const driver = this.factory.create();
+    const driver = await this.factory.create();
     await driver.get(url);
     const axe = new AxeBuilder(driver).options(options);
     const result = (await axe.analyze()) as AxeResults;
