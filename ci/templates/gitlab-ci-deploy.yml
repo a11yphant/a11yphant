@@ -25,4 +25,4 @@
   script:
     - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud apply -auto-approve -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD" -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID"
+    - terraform -chdir=terraform/cloud apply -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID"
