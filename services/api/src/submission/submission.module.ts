@@ -1,5 +1,5 @@
-import { AwsMessagingModule } from "@a11y-challenges/nestjs-aws-messaging";
-import { PrismaModule } from "@a11y-challenges/prisma";
+import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
+import { PrismaModule } from "@a11yphant/prisma";
 import { Module } from "@nestjs/common";
 
 import { ChallengeModule } from "../challenge/challenge.module";

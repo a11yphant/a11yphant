@@ -1,5 +1,5 @@
-import { AwsMessagingClient } from "@a11y-challenges/nestjs-aws-messaging";
-import { PrismaService, Submission as SubmissionRecord } from "@a11y-challenges/prisma";
+import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
+import { PrismaService, Submission as SubmissionRecord } from "@a11yphant/prisma";
 import { Inject } from "@nestjs/common";
 import { Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";

@@ -1,4 +1,4 @@
-import { setupDatabase } from '@a11y-challenges/prisma';
+import { setupDatabase } from '@a11yphant/prisma';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 

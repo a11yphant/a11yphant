@@ -1,5 +1,5 @@
 {
-  "name": "@a11y-challenges/site",
+  "name": "@a11yphant/site",
   "version": "0.0.1",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
@@ -43,7 +43,7 @@
     "sanitize-html": "2.3.3"
   },
   "devDependencies": {
-    "@a11y-challenges/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
     "@graphql-codegen/cli": "1.21.4",
     "@graphql-codegen/fragment-matcher": "2.0.1",
     "@graphql-codegen/typescript": "1.22.0",

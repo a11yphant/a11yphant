@@ -13,9 +13,9 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: a11y-challenges
+      POSTGRES_USER: a11yphant
       POSTGRES_PASSWORD: secret
-      POSTGRES_DB: a11y-challenges
+      POSTGRES_DB: a11yphant
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
