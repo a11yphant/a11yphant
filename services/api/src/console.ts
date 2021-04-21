@@ -6,6 +6,9 @@ async function bootstrap(): Promise<void> {
   const consoleBootstrapper = new BootstrapConsole({
     module: AppModule,
     useDecorators: true,
+    contextOptions: {
+      logger: ["debug", "error", "log", "verbose", "warn"],
+    },
   });
 
   try {
