@@ -229,8 +229,8 @@ build:api:
     - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP
     - docker push $IMAGE_APP
     # api release container
-    - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE
+    - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --target release
     - docker push $IMAGE_RELEASE
   only:
     - master
