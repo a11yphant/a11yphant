@@ -13,12 +13,13 @@ resource "heroku_app" "api" {
   config_vars = {
     NODE_ENV = "production"
     NO_COLOR = 1
+    AWS_ACCESS_KEY_ID = aws_iam_access_key.api_user_access_key.id
+    AWS_SECRET_ACCESS_KEY = aws_iam_access_key.api_user_access_key.secret
     API_GRAPHQL_DEBUG = 1
     API_GRAPHQL_PLAYGROUND = 1
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
     API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
     API_MESSAGING_REGION = "eu-central-1"
-    API_MESSAGING_ENDPOINT = "https://${aws_vpc_endpoint.sns.dns_entry[0]["dns_name"]}"
   }
 }
 
@@ -149,4 +150,17 @@ resource "herokux_app_container_release" "api_release_container_release" {
   app_id = heroku_app.api.uuid
   image_id = data.herokux_registry_image.api_release.digest
   process_type = "release"
+}
+
+resource "aws_iam_user" "api_user" {
+  name = "${terraform.workspace}-api-user"
+}
+
+resource "aws_iam_user_policy_attachment" "api_submission_topic_publishing" {
+  user       = aws_iam_user.api_user.name
+  policy_arn = aws_iam_policy.submission_topic_publishing.arn
+}
+
+resource "aws_iam_access_key" "api_user_access_key" {
+  user    = aws_iam_user.api_user.name
 }
