@@ -74,7 +74,7 @@ build:nestjs-aws-messaging:
     - docker push $IMAGE
     # extract artifacts for compatibility with the existing pipeline
     - CONTAINER_ID=$(docker create $IMAGE "")
-    - docker cp $CONTAINER_ID:client - > $PROJECT_PATH/client.tar
+    - docker cp $CONTAINER_ID:dist - > $PROJECT_PATH/dist.tar
     - cd $PROJECT_PATH
     - tar -xvf dist.tar
   artifacts:
