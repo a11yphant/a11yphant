@@ -1,12 +1,3 @@
-variable "postgres_cluster_root_user" {
-  type    = string
-  default = "root"
-}
-
-variable "postgres_cluster_root_password" {
-  type = string
-}
-
 variable "postgres_cluster_database_name" {
   type    = string
   default = "a11ychallenges"
