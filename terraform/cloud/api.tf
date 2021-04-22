@@ -134,6 +134,10 @@ resource "herokux_app_container_release" "api_app_container_release" {
   app_id = heroku_app.api.uuid
   image_id = data.herokux_registry_image.api_app.digest
   process_type = "web"
+
+  depends_on = [
+    herokux_app_container_release.api_release_container_release,
+  ]
 }
 
 data "herokux_registry_image" "api_release" {
