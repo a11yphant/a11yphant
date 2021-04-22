@@ -61,11 +61,22 @@ build:nestjs-aws-messaging:
   tags:
     - docker
   stage: build-packages
-  image: node:14-alpine
+  image: docker:20
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
+    IMAGE_NAME: a11yphant/a11yphant/nestjs-aws-messaging
+    IMAGE: $CI_REGISTRY/$IMAGE_NAME:review-$CI_MERGE_REQUEST_IID
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - npm run build --prefix $PROJECT_PATH
+    - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE
+    - docker push $IMAGE
+    # extract artifacts for compatibility with the existing pipeline
+    - CONTAINER_ID=$(docker create $IMAGE "")
+    - docker cp $CONTAINER_ID:client - > $PROJECT_PATH/client.tar
+    - cd $PROJECT_PATH
+    - tar -xvf dist.tar
   artifacts:
     expire_in: 1 day
     paths:
@@ -240,11 +251,11 @@ build:api:
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=review-$CI_MERGE_REQUEST_IID
     - docker push $IMAGE_APP
     # api release container
     - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --target release
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=review-$CI_MERGE_REQUEST_IID --target release
     - docker push $IMAGE_RELEASE
   only:
     - master
