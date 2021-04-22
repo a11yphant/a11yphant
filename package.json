@@ -24,7 +24,7 @@
     "lint:submission-renderer": "npm --prefix services/submission-renderer run lint",
     "lint-staged": "lint-staged",
     "start": "npm run dev",
-    "predev": "npm run build-packages && npm run tf:apply && npm run db:migrate",
+    "predev": "npm run build-packages &&  npm run tf:clear-state && npm run tf:apply && npm run db:migrate",
     "dev": "pm2 start pm2-ecosystem.config.js",
     "dev:no-daemon": "node pm2-start-no-daemon.js",
     "stop": "pm2 stop a11yphant && pm2 del a11yphant",

@@ -16,6 +16,9 @@ resource "heroku_app" "api" {
     API_GRAPHQL_DEBUG = 1
     API_GRAPHQL_PLAYGROUND = 1
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
+    API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
+    API_MESSAGING_REGION = "eu-central-1"
+    API_MESSAGING_ENDPOINT = "https://${aws_vpc_endpoint.sns.dns_entry[0]["dns_name"]}"
   }
 }
 

@@ -1,6 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 
+import { PrismaService } from "../../src/prisma/prisma.service";
 import { SubmissionService } from "../../src/submission/submission.service";
 import { useDatabase } from "../helpers";
 
@@ -11,7 +13,10 @@ describe("submission service", () => {
     const html = "<div>good morning :)</div>";
 
     const prisma = getPrismaService();
-    const service = new SubmissionService(prisma);
+    const service = new SubmissionService(
+      prisma,
+      createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
+    );
 
     const { id: challengeId } = await prisma.challenge.create({
       data: {
@@ -52,7 +57,10 @@ describe("submission service", () => {
     const html = "<div>hello</div>";
 
     const prisma = getPrismaService();
-    const service = new SubmissionService(prisma);
+    const service = new SubmissionService(
+      prisma,
+      createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
+    );
 
     const { id: challengeId } = await prisma.challenge.create({
       data: {
@@ -86,12 +94,35 @@ describe("submission service", () => {
 
   it("throws error if no level is found for id", () => {
     const prisma = getPrismaService();
-    const service = new SubmissionService(prisma);
+    const service = new SubmissionService(
+      prisma,
+      createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
+    );
 
     expect(async () =>
       service.save({
         levelId: "badId",
       }),
     ).rejects.toBeTruthy();
+  });
+
+  it("emits a submission.created event when a new submission is created", async () => {
+    const emit = jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) }));
+    const submission = { id: "uuid", html: "html", css: "css", js: "js" };
+    const service = new SubmissionService(
+      createMock<PrismaService>({
+        submission: { create: jest.fn().mockResolvedValue(submission) },
+      }),
+      createMock<ClientProxy>({ emit }),
+    );
+
+    await service.save({ levelId: "uuid", html: "html", css: "css", js: "js" });
+
+    expect(emit).toHaveBeenCalledWith(
+      "submission.created",
+      expect.objectContaining({
+        submission,
+      }),
+    );
   });
 });

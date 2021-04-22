@@ -1,4 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
+import { Inject, Injectable } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
 import { Submission as SubmissionRecord } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,7 +10,7 @@ import { SubmissionInput } from "./submission.input";
 
 @Injectable()
 export class SubmissionService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, @Inject(AwsMessagingClient) private clientProxy: ClientProxy) {}
 
   public async findOne(id: string): Promise<Submission> {
     const submission = await this.prisma.submission.findUnique({
@@ -25,6 +27,24 @@ export class SubmissionService {
         ...input,
       },
     });
+
+    await this.clientProxy
+      .emit("submission.created", {
+        submission: {
+          id: submission.id,
+          html: submission.html,
+          css: submission.css,
+          js: submission.js,
+        },
+        rules: [
+          {
+            id: "3d90d8e6-5dce-4684-9aec-f05b6551aa43",
+            key: "axe-link-name",
+            options: {},
+          },
+        ],
+      })
+      .toPromise();
 
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
