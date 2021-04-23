@@ -115,3 +115,29 @@ resource "aws_devicefarm_project" "submission_checks" {
 
   name = "${terraform.workspace}-submission-checks"
 }
+
+resource "aws_iam_policy" "execute_checks_on_aws_device_farm" {
+  name        = "${terraform.workspace}-execute-checks-on-aws-device-farm"
+  path        = "/"
+  description = "IAM policy for allowing the lambda to execute the checks using Device Farm"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "devicefarm:CreateTestGridUrl",
+      ],
+      "Resource": "${aws_devicefarm_project.submission_checks}"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "submission_checker_checks_on_device_farm" {
+  role       = aws_iam_role.submission_checker_role.name
+  policy_arn = aws_iam_policy.execute_checks_on_aws_device_farm.arn
+}
