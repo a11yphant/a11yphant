@@ -26,6 +26,7 @@ variable "route53_zone_id" {
 
 variable "domain" {
   type    = string
+  default = ""
 }
 
 variable "use_custom_domain" {

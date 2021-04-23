@@ -7,7 +7,7 @@ locals {
 resource "aws_cloudfront_distribution" "site" {
   comment = "${terraform.workspace}-site-distribution"
 
-  aliases = [ var.domain ]
+  aliases = var.use_custom_domain ? [ var.domain ] : []
 
   origin {
     domain_name = replace(aws_apigatewayv2_api.site_http_api.api_endpoint, "/^https?://([^/]*).*/", "$1")

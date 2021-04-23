@@ -351,6 +351,7 @@ deploy-review:
   variables:
    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+   USE_CUSTOM_DOMAIN: 1
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
@@ -364,6 +365,7 @@ deploy-staging:
   variables:
     WORKSPACE: staging
     DOMAIN: beta.a11yphant.com
+    USE_CUSTOM_DOMAIN: 1
   environment:
     name: staging
     url: https://beta.a11yphant.com
@@ -376,6 +378,7 @@ deploy-production:
   variables:
     WORKSPACE: production
     DOMAIN: a11yphant.com
+    USE_CUSTOM_DOMAIN: 1
   environment:
     name: production
     url: https://a11yphant.com
@@ -389,13 +392,14 @@ stop-environment:
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    USE_CUSTOM_DOMAIN: 1
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -auto-approve
+    - terraform -chdir=terraform/cloud destroy -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -auto-approve
     - terraform -chdir=terraform/cloud workspace select default
     - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
   when: manual
