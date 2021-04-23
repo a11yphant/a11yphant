@@ -20,6 +20,10 @@ variable "heroku_registry_password" {
   type    = string
 }
 
+variable "docker_tag" {
+  type    = string
+}
+
 variable "route53_zone_id" {
   type    = string
 }
