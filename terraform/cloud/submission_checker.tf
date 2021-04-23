@@ -128,7 +128,7 @@ resource "aws_iam_policy" "execute_checks_on_aws_device_farm" {
     {
       "Effect": "Allow",
       "Action": [
-        "devicefarm:CreateTestGridUrl"
+        "devicefarm:*"
       ],
       "Resource": "${aws_devicefarm_project.submission_checks.arn}"
     }
