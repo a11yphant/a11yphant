@@ -22,7 +22,7 @@ export class CheckFactory {
       return this.moduleRef.get<Check>(className);
     } catch {
       const error = new CheckProviderNotFoundException(checkName);
-      this.logger.error(error.message);
+      this.logger.error(error.message, error.stack, CheckFactory.name);
       throw error;
     }
   }

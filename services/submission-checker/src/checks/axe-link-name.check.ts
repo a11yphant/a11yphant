@@ -23,7 +23,7 @@ export class AxeLinkNameCheck implements Check {
         runOnly: [CHECK_NAME],
       });
     } catch (error) {
-      this.logger.error(`Executing check ${rule.key} on submission ${submission.id} failed: ${error.message}`, AxeLinkNameCheck.name);
+      this.logger.error(`Executing check ${rule.key} on submission ${submission.id} failed: ${error.message}`, error.stack, AxeLinkNameCheck.name);
 
       return {
         id: rule.id,

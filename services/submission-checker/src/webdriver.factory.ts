@@ -34,7 +34,7 @@ export class WebdriverFactory {
     const { url } = await devicefarm
       .createTestGridUrl({
         projectArn: this.config.get<string>("submission-checker.webdriver-aws-device-farm-project"),
-        expiresInSeconds: 30,
+        expiresInSeconds: 60,
       })
       .promise();
 
