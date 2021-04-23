@@ -1,3 +1,5 @@
+import { createMock } from "@golevelup/nestjs-testing";
+import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import AWS from "aws-sdk-mock";
 
@@ -14,7 +16,7 @@ describe("webdriver factory", () => {
       "submission-checker.webdriver-driver": "local",
       "submission-checker.webdriver-endpoint": "https://webdriver.url/hub",
     });
-    const factory = new WebdriverFactory(configService);
+    const factory = new WebdriverFactory(createMock<Logger>(), configService);
 
     const driver = await factory.create();
 
@@ -25,7 +27,7 @@ describe("webdriver factory", () => {
     const configService = new ConfigService({
       "submission-checker.webdriver-driver": "this-one-is-not-supported",
     });
-    const factory = new WebdriverFactory(configService);
+    const factory = new WebdriverFactory(createMock<Logger>(), configService);
 
     expect(factory.create()).rejects.toBeInstanceOf(WebdriverDriverNotSupportedException);
   });
@@ -41,7 +43,7 @@ describe("webdriver factory", () => {
       "submission-checker.webdriver-driver": "aws-device-farm",
       "submission-checker.webdriver-aws-device-farm-project": "arn:project:id",
     });
-    const factory = new WebdriverFactory(configService);
+    const factory = new WebdriverFactory(createMock<Logger>(), configService);
 
     const driver = await factory.create();
 
