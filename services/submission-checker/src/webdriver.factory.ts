@@ -37,6 +37,8 @@ export class WebdriverFactory {
       })
       .promise();
 
+    this.logger.log("DeviceFarm created", WebdriverFactory.name);
+
     return await new Builder().usingServer(url).withCapabilities({ browserName: "chrome" }).build();
   }
 }
