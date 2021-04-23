@@ -10,7 +10,9 @@ export class BrowserService {
 
   // TODO adapt return value type
   async runAxeChecks(url: string, options: unknown): Promise<AxeResults> {
+    this.logger.log(`Creating a webdriver`, BrowserService.name);
     const driver = await this.factory.create();
+    this.logger.log(`Webdriver created`, BrowserService.name);
     try {
       this.logger.log(`Opening ${url}`, BrowserService.name);
       await driver.get(url);
