@@ -1,8 +1,8 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
-import { PrismaModule } from "@a11yphant/prisma";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+import { ConsoleModule } from "nestjs-console";
 
 import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
@@ -11,6 +11,8 @@ import gqlConfig from "./config/gql.config";
 import messaging from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import { HelloWorldModule } from "./hello-world/hello-world.module";
+import { ImporterModule } from "./importer/importer.module";
+import { PrismaModule } from "./prisma/prisma.module";
 import { SubmissionModule } from "./submission/submission.module";
 
 @Module({
@@ -40,6 +42,7 @@ import { SubmissionModule } from "./submission/submission.module";
       }),
       inject: [ConfigService],
     }),
+    ConsoleModule,
     AwsMessagingModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
@@ -52,6 +55,7 @@ import { SubmissionModule } from "./submission/submission.module";
     HelloWorldModule,
     ChallengeModule,
     SubmissionModule,
+    ImporterModule,
   ],
 })
 export class AppModule {}

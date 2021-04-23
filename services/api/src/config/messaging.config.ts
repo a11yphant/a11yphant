@@ -7,5 +7,4 @@ export default registerAs("messaging", () => ({
   "sns-endpoint": process.env.API_MESSAGING_SNS_ENDPOINT,
   region: process.env.API_MESSAGING_REGION || "us-east-1",
   topics: parseTopics(process.env.API_MESSAGING_TOPICS || ""),
-  "delete-handled-messages": +process.env.API_MESSAGING_DELETE_HANDLED_MESSAGES ? true : false,
 }));

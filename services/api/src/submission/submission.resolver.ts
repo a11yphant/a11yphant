@@ -4,8 +4,8 @@ import { UserInputError } from "apollo-server-express";
 import { LevelService } from "../challenge/level.service";
 import { Level } from "../challenge/models/level.model";
 import { Submission } from "./models/submission.model";
+import { SubmissionInput } from "./submission.input";
 import { SubmissionService } from "./submission.service";
-import { SubmissionInput } from "./SubmissionInput";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {

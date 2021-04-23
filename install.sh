@@ -29,10 +29,6 @@ ln -s ./../../.env ./services/submission-checker/.env
 rm -f ./services/submission-renderer/.env
 ln -s ./../../.env ./services/submission-renderer/.env
 
-# create import-challenges symlinks
-rm -f ./services/import-challenges/.env
-ln -s ./../../.env ./services/import-challenges/.env
-
 # create nestjs-aws-messaging symlinks
 rm -f ./packages/nestjs-aws-messaging/.env
 ln -s ./../../.env ./packages/nestjs-aws-messaging/.env

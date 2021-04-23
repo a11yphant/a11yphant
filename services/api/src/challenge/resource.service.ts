@@ -1,6 +1,7 @@
-import { PrismaService, Resource as ResourceRecord } from "@a11yphant/prisma";
 import { Injectable } from "@nestjs/common";
+import { Resource as ResourceRecord } from "@prisma/client";
 
+import { PrismaService } from "../prisma/prisma.service";
 import { Resource } from "./models/resource.model";
 
 @Injectable()
