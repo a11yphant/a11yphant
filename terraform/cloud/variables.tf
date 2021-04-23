@@ -28,6 +28,10 @@ variable "domain" {
   type    = string
 }
 
+variable "use_custom_domain" {
+  default = true
+}
+
 variable "api_dyno_size" {
   type    = string
   default = "free"
