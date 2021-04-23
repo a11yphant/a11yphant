@@ -7,7 +7,7 @@ locals {
 resource "aws_cloudfront_distribution" "site" {
   comment = "${terraform.workspace}-site-distribution"
 
-  aliases = [ var.domain ]
+  aliases = var.use_custom_domain ? [ var.domain ] : []
 
   origin {
     domain_name = replace(aws_apigatewayv2_api.site_http_api.api_endpoint, "/^https?://([^/]*).*/", "$1")
@@ -22,7 +22,7 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   origin {
-    domain_name = replace(aws_apigatewayv2_api.api_http_api.api_endpoint, "/^https?://([^/]*).*/", "$1")
+    domain_name = replace(heroku_app.api.web_url, "/^https?://([^/]*).*/", "$1")
     origin_id   = local.origin_id_api_http_api
     
     custom_origin_config {
@@ -123,7 +123,8 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.certificate.arn
+    cloudfront_default_certificate = var.use_custom_domain ? false : true
+    acm_certificate_arn = var.use_custom_domain ? aws_acm_certificate.certificate[0].arn : null
     ssl_support_method  = "sni-only"
   }
 }
@@ -133,6 +134,8 @@ resource "aws_cloudfront_origin_access_identity" "site_access_identity" {
 }
 
 resource "aws_acm_certificate" "certificate" {
+  count = var.use_custom_domain ? 1 : 0
+
   provider = aws.us_east_1
 
   domain_name       = var.domain
@@ -144,6 +147,8 @@ resource "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_route53_record" "cdn_domain" {
+  count = var.use_custom_domain ? 1 : 0
+
   zone_id = var.route53_zone_id
   name = var.domain
   type = "A"
@@ -157,7 +162,7 @@ resource "aws_route53_record" "cdn_domain" {
 
 resource "aws_route53_record" "validation_records" {
   for_each = {
-    for dvo in aws_acm_certificate.certificate.domain_validation_options : dvo.domain_name => {
+    for dvo in var.use_custom_domain ? aws_acm_certificate.certificate[0].domain_validation_options : [] : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -173,8 +178,10 @@ resource "aws_route53_record" "validation_records" {
 }
 
 resource "aws_acm_certificate_validation" "domain" {
+  count = var.use_custom_domain ? 1 : 0
+
   provider = aws.us_east_1
 
-  certificate_arn         = aws_acm_certificate.certificate.arn
+  certificate_arn         = aws_acm_certificate.certificate[0].arn
   validation_record_fqdns = [for record in aws_route53_record.validation_records : record.fqdn]
 }

@@ -1,15 +1,27 @@
-variable "postgres_cluster_root_user" {
-  type    = string
-  default = "root"
-}
-
-variable "postgres_cluster_root_password" {
-  type = string
-}
-
 variable "postgres_cluster_database_name" {
   type    = string
   default = "a11ychallenges"
+}
+
+variable "gitlab_ci_registery_user" {
+  type = string
+}
+
+variable "gitlab_ci_registry_password" {
+  type = string
+}
+
+variable "heroku_registry_user" {
+  type    = string
+  default = "_"
+}
+
+variable "heroku_registry_password" {
+  type    = string
+}
+
+variable "docker_tag" {
+  type    = string
 }
 
 variable "route53_zone_id" {
@@ -18,6 +30,23 @@ variable "route53_zone_id" {
 
 variable "domain" {
   type    = string
+  default = ""
+}
+
+variable "use_custom_domain" {
+  default = true
+}
+
+variable "api_dyno_size" {
+  type    = string
+  default = "free"
+}
+
+variable "heroku_collaborators" {
+  type    = list(string)
+  default = [
+    "brandstaetter.michael@hotmail.com",
+  ]
 }
 
 # copied from: https://github.com/hashicorp/terraform-template-dir/blob/556bd64989e7099fabb90c6b883b5d4d92da3ae8/variables.tf
