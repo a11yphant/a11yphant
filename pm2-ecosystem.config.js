@@ -13,12 +13,6 @@ module.exports = {
       autorestart: true,
     },
     {
-      name: "a11yphant-import-challenges",
-      script: "npm run dotenv -- npm run dev:import-challenges",
-      namespace: "a11yphant",
-      autorestart: true,
-    },
-    {
       name: "a11yphant-submission-checker",
       script: "npm run dotenv -- npm run dev:submission-checker",
       namespace: "a11yphant",

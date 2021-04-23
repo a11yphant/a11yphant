@@ -1,113 +1,172 @@
-data "external" "api_code_zip" {
-  program = [ "${path.module}/../../services/api/package.sh" ]
+locals {
+  gitlab_ci_app_image = "gitlab.mediacube.at:5050/a11yphant/a11yphant/api:${var.docker_tag}"
+  heroku_app_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/web:latest"
+  gitlab_ci_release_image = "gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:${var.docker_tag}"
+  heroku_release_image = "registry.heroku.com/${terraform.workspace}-a11yphant-api/release:latest"
 }
 
-resource "aws_s3_bucket_object" "api_code_zip" {
-  bucket = aws_s3_bucket.resources.id
-  key    = "code/lambdas/api.zip"
-  source = "${path.module}/../../services/api/lambda.zip"
-  etag = data.external.api_code_zip.result.hash
+resource "heroku_app" "api" {
+  name    = "${terraform.workspace}-a11yphant-api"
+  region  = "eu"
+  stack   = "container"
 
-  depends_on = [
-    data.external.api_code_zip,
-    aws_s3_bucket.resources
-  ]
-}
-
-resource "aws_lambda_function" "api" {
-   function_name = "${terraform.workspace}-api"
-
-   s3_bucket = aws_s3_bucket.resources.id
-   s3_key    = aws_s3_bucket_object.api_code_zip.id
-   source_code_hash = data.external.api_code_zip.result.hash
-
-   handler = "dist/src/main.handle"
-   runtime = "nodejs14.x"
-   timeout = 30
-   memory_size = 256
-
-   role = aws_iam_role.api_role.arn
-
-   environment {
-    variables = {
-      NODE_ENV = "production"
-      NO_COLOR = 1
-      API_LAMBDA = 1
-      API_GRAPHQL_DEBUG = 1
-      API_GRAPHQL_PLAYGROUND = 1
-      API_GRAPHQL_SCHEMA_INTROSPECTION = 1
-      DB_URL = "postgresql://${var.postgres_cluster_root_user}:${var.postgres_cluster_root_password}@${aws_rds_cluster.postgres.endpoint}:${aws_rds_cluster.postgres.port}/${var.postgres_cluster_database_name}?connect_timeout=30&pool_timeout=30"
-      API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
-      API_MESSAGING_REGION = "eu-central-1"
-      API_MESSAGING_ENDPOINT = "https://${aws_vpc_endpoint.sns.dns_entry[0]["dns_name"]}"
-    }
+  config_vars = {
+    NODE_ENV = "production"
+    NO_COLOR = 1
+    AWS_ACCESS_KEY_ID = aws_iam_access_key.api_user_access_key.id
+    AWS_SECRET_ACCESS_KEY = aws_iam_access_key.api_user_access_key.secret
+    API_GRAPHQL_DEBUG = 1
+    API_GRAPHQL_PLAYGROUND = 1
+    API_GRAPHQL_SCHEMA_INTROSPECTION = 1
+    API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
+    API_MESSAGING_REGION = "eu-central-1"
   }
+}
 
-  vpc_config {
-    subnet_ids         = [ 
-        aws_subnet.postgres_cluster_network_zone_a.id,
-        aws_subnet.postgres_cluster_network_zone_b.id,
-        aws_subnet.postgres_cluster_network_zone_c.id
+resource "heroku_addon" "api_database" {
+  app  = heroku_app.api.name
+  plan = "heroku-postgresql:hobby-dev"
+}
+
+resource "heroku_collaborator" "api_collaborators" {
+    count = length(var.heroku_collaborators)
+    app   = heroku_app.api.name
+    email = var.heroku_collaborators[count.index]
+}
+
+resource "heroku_formation" "api" {
+    app = heroku_app.api.name
+    type = "web"
+    quantity = 1
+    size = var.api_dyno_size
+
+    depends_on = [
+      herokux_app_container_release.api_app_container_release,
+      herokux_app_container_release.api_release_container_release,
     ]
-    security_group_ids = [ aws_security_group.allow_all_egress.id ]
+}
+
+data "docker_registry_image" "gitlab_ci_api_app_image" {
+  name = local.gitlab_ci_app_image
+}
+
+resource "docker_image" "gitlab_ci_api_app_image" {
+  name  = local.gitlab_ci_app_image
+  pull_triggers = [data.docker_registry_image.gitlab_ci_api_app_image.sha256_digest]
+}
+
+resource "null_resource" "tag_api_app_image_for_heroku" {
+  provisioner "local-exec" {
+    command = "docker image tag ${local.gitlab_ci_app_image} ${local.heroku_app_image}"
+  }
+
+  triggers = {
+    always_run = timestamp()
   }
 
   depends_on = [
-    aws_subnet.postgres_cluster_network_zone_a,
-    aws_subnet.postgres_cluster_network_zone_b,
-    aws_subnet.postgres_cluster_network_zone_c,
-    aws_security_group.allow_all_egress
+    docker_image.gitlab_ci_api_app_image
   ]
 }
 
-resource "aws_iam_role" "api_role" {
-   name = "${terraform.workspace}-api-role"
-   description = "IAM Role for executing a Lambda"
+resource "null_resource" "push_api_app_image_to_heroku" {
+  provisioner "local-exec" {
+    command = "docker push ${local.heroku_app_image}"
+  }
 
-   assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [
+    null_resource.tag_api_app_image_for_heroku,
+    heroku_app.api,
   ]
 }
-EOF
+
+data "docker_registry_image" "gitlab_ci_api_release_image" {
+  name = local.gitlab_ci_release_image
 }
 
-resource "aws_iam_role_policy_attachment" "api_lambda_logs" {
-  role       = aws_iam_role.api_role.name
-  policy_arn = aws_iam_policy.lambda_logging.arn
+resource "docker_image" "gitlab_ci_api_release_image" {
+  name  = local.gitlab_ci_release_image
+  pull_triggers = [data.docker_registry_image.gitlab_ci_api_release_image.sha256_digest]
 }
 
-resource "aws_iam_role_policy_attachment" "api_vpc_access" {
-  role       = aws_iam_role.api_role.name
-  policy_arn = aws_iam_policy.vpc_access.arn
+resource "null_resource" "tag_api_release_image_for_heroku" {
+  provisioner "local-exec" {
+    command = "docker image tag ${local.gitlab_ci_release_image} ${local.heroku_release_image}"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [
+    docker_image.gitlab_ci_api_release_image
+  ]
 }
 
-resource "aws_iam_role_policy_attachment" "api_submission_topic_publishing" {
-  role       = aws_iam_role.api_role.name
+resource "null_resource" "push_api_release_image_to_heroku" {
+  provisioner "local-exec" {
+    command = "docker push ${local.heroku_release_image}"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [
+    null_resource.tag_api_release_image_for_heroku,
+    heroku_app.api,
+  ]
+}
+
+data "herokux_registry_image" "api_app" {
+  app_id = heroku_app.api.uuid
+  process_type = "web"
+  docker_tag = "latest"
+
+  depends_on = [
+    null_resource.push_api_app_image_to_heroku
+  ]
+}
+
+resource "herokux_app_container_release" "api_app_container_release" {
+  app_id = heroku_app.api.uuid
+  image_id = data.herokux_registry_image.api_app.digest
+  process_type = "web"
+
+  depends_on = [
+    herokux_app_container_release.api_release_container_release,
+  ]
+}
+
+data "herokux_registry_image" "api_release" {
+  app_id = heroku_app.api.uuid
+  process_type = "release"
+  docker_tag = "latest"
+
+  depends_on = [
+    null_resource.push_api_release_image_to_heroku
+  ]
+}
+
+resource "herokux_app_container_release" "api_release_container_release" {
+  app_id = heroku_app.api.uuid
+  image_id = data.herokux_registry_image.api_release.digest
+  process_type = "release"
+}
+
+resource "aws_iam_user" "api_user" {
+  name = "${terraform.workspace}-api-user"
+}
+
+resource "aws_iam_user_policy_attachment" "api_submission_topic_publishing" {
+  user       = aws_iam_user.api_user.name
   policy_arn = aws_iam_policy.submission_topic_publishing.arn
 }
 
-
-resource "aws_lambda_permission" "api_gateway_api" {
-   statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-api"
-   action        = "lambda:InvokeFunction"
-   function_name = aws_lambda_function.api.function_name
-   principal     = "apigateway.amazonaws.com"
-
-   source_arn = "${aws_apigatewayv2_api.api_http_api.execution_arn}/*/*"
-}
-
-resource "aws_apigatewayv2_api" "api_http_api" {
-  name          = "${terraform.workspace}-api-http-api"
-  protocol_type = "HTTP"
-  target        = aws_lambda_function.api.invoke_arn
+resource "aws_iam_access_key" "api_user_access_key" {
+  user    = aws_iam_user.api_user.name
 }

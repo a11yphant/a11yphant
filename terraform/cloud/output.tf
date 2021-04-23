@@ -1,5 +1,5 @@
 output "api_gateway_url" {
-  value = aws_apigatewayv2_api.api_http_api.api_endpoint
+  value = heroku_app.api.web_url
 }
 
 output "site_gateway_url" {

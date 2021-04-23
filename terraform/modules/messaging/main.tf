@@ -4,12 +4,8 @@ resource "aws_sns_topic" "submission" {
 
 resource "aws_sqs_queue" "submission_checker_queue" {
   name                      = "${terraform.workspace}-submission-checker-queue"
-  receive_wait_time_seconds = 10
-  /*
-    if the timeout is set to zero, deleting the message from the queue fails because the event is handled to fast
-    (at least locally)
-  */
-  visibility_timeout_seconds = 1
+  receive_wait_time_seconds = 20
+  visibility_timeout_seconds = 10
 }
 
 resource "aws_sns_topic_subscription" "submission_subscription_for_submission_checker_queue" {
@@ -24,12 +20,8 @@ resource "aws_sns_topic_subscription" "submission_subscription_for_submission_ch
 
 resource "aws_sqs_queue" "api_queue" {
   name                      = "${terraform.workspace}-api-queue"
-  receive_wait_time_seconds = 10
-  /*
-    if the timeout is set to zero, deleting the message from the queue fails because the event is handled to fast
-    (at least locally)
-  */
-  visibility_timeout_seconds = 1
+  receive_wait_time_seconds = 20
+  visibility_timeout_seconds = 5
 }
 
 resource "aws_sns_topic_subscription" "submission_subscription_for_api_queue" {

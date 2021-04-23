@@ -1,9 +1,10 @@
-import { PrismaService, useDatabase } from "@a11yphant/prisma";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 
+import { PrismaService } from "../../src/prisma/prisma.service";
 import { SubmissionService } from "../../src/submission/submission.service";
+import { useDatabase } from "../helpers";
 
 describe("submission service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
