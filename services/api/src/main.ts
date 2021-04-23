@@ -17,7 +17,7 @@ async function bootstrap(): Promise<NestExpressApplication | void> {
   const logger = app.get<Logger>(Logger);
 
   transportStrategy = new AwsTransportStrategy({
-    polling: configService.get<boolean>("messaging.poll-queue"),
+    polling: true,
     queueUrl: configService.get<string>("messaging.queue-url"),
     region: configService.get<string>("messaging.region"),
     deleteHandled: true,

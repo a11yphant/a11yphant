@@ -20,7 +20,6 @@ resource "heroku_app" "api" {
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
     API_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
     API_MESSAGING_REGION = "eu-central-1"
-    API_MESSAGING_POLL_QUEUE = 1
     API_MESSAGING_QUEUE_URL = module.messaging.api_queue_url
   }
 }
