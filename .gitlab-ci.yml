@@ -351,10 +351,10 @@ deploy-review:
   variables:
    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-   USE_CUSTOM_DOMAIN: 1
+   USE_CUSTOM_DOMAIN: 0
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    # url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     on_stop: stop-environment
   only:
     - merge_request
@@ -392,7 +392,7 @@ stop-environment:
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
+    USE_CUSTOM_DOMAIN: 0
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
