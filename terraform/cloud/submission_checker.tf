@@ -36,7 +36,7 @@ resource "aws_lambda_function" "submission_checker" {
       SUBMISSION_CHECKER_MESSAGING_REGION = "eu-central-1"
       SUBMISSION_CHECKER_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
       SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "aws-device-farm"
-      SUBMISSION_CHECKER_AWS_DEVICE_FARM_PROJECT = aws_devicefarm_project.submission_checks.arn
+      SUBMISSION_CHECKER_AWS_DEVICE_FARM_PROJECT = var.devicefarm_project
     }
   }
 
@@ -110,12 +110,6 @@ resource "aws_iam_role_policy_attachment" "submission_checker_submission_topic_p
   policy_arn = aws_iam_policy.submission_topic_publishing.arn
 }
 
-resource "aws_devicefarm_project" "submission_checks" {
-  provider = aws.us_west_2
-
-  name = "${terraform.workspace}-submission-checks"
-}
-
 resource "aws_iam_policy" "execute_checks_on_aws_device_farm" {
   name        = "${terraform.workspace}-execute-checks-on-aws-device-farm"
   path        = "/"
@@ -130,7 +124,7 @@ resource "aws_iam_policy" "execute_checks_on_aws_device_farm" {
       "Action": [
         "devicefarm:*"
       ],
-      "Resource": "*"
+      "Resource": "${var.devicefarm_project}"
     }
   ]
 }
