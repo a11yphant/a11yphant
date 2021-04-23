@@ -130,7 +130,7 @@ resource "aws_iam_policy" "execute_checks_on_aws_device_farm" {
       "Action": [
         "devicefarm:CreateTestGridUrl"
       ],
-      "Resource": "${aws_devicefarm_project.submission_checks}"
+      "Resource": "${aws_devicefarm_project.submission_checks.arn}"
     }
   ]
 }
