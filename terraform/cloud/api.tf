@@ -81,7 +81,8 @@ resource "null_resource" "push_api_app_image_to_heroku" {
   }
 
   depends_on = [
-    null_resource.tag_api_app_image_for_heroku
+    null_resource.tag_api_app_image_for_heroku,
+    heroku_app.api,
   ]
 }
 
@@ -118,7 +119,8 @@ resource "null_resource" "push_api_release_image_to_heroku" {
   }
 
   depends_on = [
-    null_resource.tag_api_release_image_for_heroku
+    null_resource.tag_api_release_image_for_heroku,
+    heroku_app.api,
   ]
 }
 
