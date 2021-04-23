@@ -65,7 +65,7 @@ build:nestjs-aws-messaging:
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
     IMAGE_NAME: a11yphant/a11yphant/nestjs-aws-messaging
-    IMAGE: $CI_REGISTRY/$IMAGE_NAME:review-$CI_MERGE_REQUEST_IID
+    IMAGE: $CI_REGISTRY/$IMAGE_NAME:$CI_COMMIT_REF_SLUG
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
@@ -242,20 +242,20 @@ build:api:
   variables:
     PROJECT_PATH: services/api
     IMAGE_NAME_APP: a11yphant/a11yphant/api
-    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:review-$CI_MERGE_REQUEST_IID
+    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
     IMAGE_NAME_RELEASE: a11yphant/a11yphant/api-release
-    IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:review-$CI_MERGE_REQUEST_IID
+    IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:$CI_COMMIT_REF_SLUG
   cache: {}
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=review-$CI_MERGE_REQUEST_IID
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG
     - docker push $IMAGE_APP
     # api release container
     - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=review-$CI_MERGE_REQUEST_IID --target release
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --target release
     - docker push $IMAGE_RELEASE
   only:
     - master
