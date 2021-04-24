@@ -45,7 +45,8 @@ export class AwsMessagingClient extends ClientProxy {
     };
 
     try {
-      await this.sns.publish(message).promise();
+      const result = await this.sns.publish(message).promise();
+      console.log(result.$response.data, result.$response.error);
     } catch (error) {
       const errorMessage = `Could not publish message: ${error.message}`;
       this.logger.error(errorMessage);
