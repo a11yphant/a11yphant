@@ -23,7 +23,7 @@ resource "aws_lambda_function" "submission_checker" {
 
    handler = "dist/src/main.handle"
    runtime = "nodejs14.x"
-   timeout = 30
+   timeout = 300
 
    role = aws_iam_role.submission_checker_role.arn
 
