@@ -23,7 +23,7 @@ export class SubmissionController {
       submissionId: submission.id,
       result,
     };
-
+    console.log("hi");
     await this.clientProxy.emit("submission.check-completed", submissionCheckedEvent);
   }
 }
