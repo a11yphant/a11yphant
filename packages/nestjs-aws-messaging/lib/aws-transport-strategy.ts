@@ -40,6 +40,7 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
         await this.pollSQS();
       } catch (e) {
         this.logger.error(e.message, null, AwsTransportStrategy.name);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
   }
