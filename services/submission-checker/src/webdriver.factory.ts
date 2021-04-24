@@ -23,7 +23,9 @@ export class WebdriverFactory {
   }
 
   private async createLocalWebdriver(): Promise<ThenableWebDriver> {
-    return await new Builder().forBrowser("chrome").usingServer(this.config.get<string>("submission-checker.webdriver-endpoint")).build();
+    const seleniumEndpoint = this.config.get<string>("submission-checker.webdriver-endpoint");
+    this.logger.log(`Starting webdriver session on ${seleniumEndpoint}`, WebdriverFactory.name);
+    return await new Builder().forBrowser("chrome").usingServer(seleniumEndpoint).build();
   }
 
   private async createAwsDeviceFarmWebdriver(): Promise<ThenableWebDriver> {
@@ -37,7 +39,7 @@ export class WebdriverFactory {
       })
       .promise();
 
-    this.logger.log("DeviceFarm created", WebdriverFactory.name);
+    this.logger.log("Starting webdriver session on DeviceFarm", WebdriverFactory.name);
 
     return await new Builder().usingServer(url).withCapabilities({ browserName: "chrome" }).build();
   }
