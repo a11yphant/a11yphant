@@ -5,7 +5,7 @@ resource "aws_sns_topic" "submission" {
 resource "aws_sqs_queue" "submission_checker_queue" {
   name                      = "${terraform.workspace}-submission-checker-queue"
   receive_wait_time_seconds = 20
-  visibility_timeout_seconds = 30
+  visibility_timeout_seconds = 300
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.dead_letter.arn
     maxReceiveCount     = 4
