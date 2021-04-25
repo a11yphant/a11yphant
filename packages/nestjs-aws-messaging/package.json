@@ -22,7 +22,7 @@
     "@nestjs/common": "7.6.15",
     "@nestjs/core": "7.6.15",
     "@nestjs/microservices": "7.6.15",
-    "aws-sdk": "2.891.0",
+    "aws-sdk": "2.892.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7"
   },
@@ -39,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "4.22.0",
     "@typescript-eslint/parser": "4.22.0",
     "aws-lambda": "1.0.6",
-    "aws-sdk": "2.890.0",
+    "aws-sdk": "2.892.0",
     "aws-sdk-mock": "5.1.0",
     "dotenv": "8.2.0",
     "dotenv-cli": "4.0.0",
