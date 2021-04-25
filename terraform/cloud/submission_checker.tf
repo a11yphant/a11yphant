@@ -1,12 +1,12 @@
 data "external" "submission_checker_code_zip" {
-  program = [ "${path.module}/../../services/submission-checker/package.sh" ]
+  program = ["${path.module}/../../services/submission-checker/package.sh"]
 }
 
 resource "aws_s3_bucket_object" "submission_checker_code_zip" {
   bucket = aws_s3_bucket.resources.id
   key    = "code/lambdas/submission-checker.zip"
   source = "${path.module}/../../services/submission-checker/lambda.zip"
-  etag = data.external.submission_checker_code_zip.result.hash
+  etag   = data.external.submission_checker_code_zip.result.hash
 
   depends_on = [
     data.external.submission_checker_code_zip,
@@ -15,22 +15,22 @@ resource "aws_s3_bucket_object" "submission_checker_code_zip" {
 }
 
 resource "aws_lambda_function" "submission_checker" {
-   function_name = "${terraform.workspace}-submission-checker"
+  function_name = "${terraform.workspace}-submission-checker"
 
-   s3_bucket = aws_s3_bucket.resources.id
-   s3_key    = aws_s3_bucket_object.submission_checker_code_zip.id
-   source_code_hash = data.external.submission_checker_code_zip.result.hash
+  s3_bucket        = aws_s3_bucket.resources.id
+  s3_key           = aws_s3_bucket_object.submission_checker_code_zip.id
+  source_code_hash = data.external.submission_checker_code_zip.result.hash
 
-   handler = "dist/src/main.handle"
-   runtime = "nodejs14.x"
-   timeout = 10
+  handler = "dist/src/main.handle"
+  runtime = "nodejs14.x"
+  timeout = 10
 
-   role = aws_iam_role.submission_checker_role.arn
+  role = aws_iam_role.submission_checker_role.arn
 
-   environment {
+  environment {
     variables = {
-      NODE_ENV = "production"
-      NO_COLOR = 1
+      NODE_ENV                             = "production"
+      NO_COLOR                             = 1
       SUBMISSION_CHECKER_RENDERER_BASE_URL = "${aws_apigatewayv2_api.submission_renderer_http_api.api_endpoint}/render/"
     }
   }
@@ -42,10 +42,10 @@ resource "aws_lambda_function" "submission_checker" {
 }
 
 resource "aws_iam_role" "submission_checker_role" {
-   name = "${terraform.workspace}-submission-checker-role"
-   description = "IAM Role for executing a Lambda"
+  name        = "${terraform.workspace}-submission-checker-role"
+  description = "IAM Role for executing a Lambda"
 
-   assume_role_policy = <<EOF
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [

@@ -25,7 +25,7 @@ terraform {
 }
 
 provider "aws" {
-   region = "eu-central-1"
+  region = "eu-central-1"
 }
 
 provider "heroku" {}
@@ -49,7 +49,7 @@ provider "docker" {
 }
 
 provider "aws" {
-  alias = "us_east_1"
+  alias  = "us_east_1"
   region = "us-east-1"
 }
 
