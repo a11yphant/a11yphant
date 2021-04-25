@@ -22,6 +22,7 @@
     "@nestjs/common": "7.6.15",
     "@nestjs/core": "7.6.15",
     "@nestjs/microservices": "7.6.15",
+    "aws-sdk": "2.891.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7"
   },
@@ -43,7 +44,7 @@
     "dotenv": "8.2.0",
     "dotenv-cli": "4.0.0",
     "eslint": "7.24.0",
-    "eslint-config-prettier": "8.2.0",
+    "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-simple-import-sort": "7.0.0",

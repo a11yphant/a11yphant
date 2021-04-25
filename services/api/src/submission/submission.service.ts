@@ -1,12 +1,12 @@
 import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
-import { PrismaService, Submission as SubmissionRecord } from "@a11yphant/prisma";
-import { Inject } from "@nestjs/common";
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
+import { Submission as SubmissionRecord } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
+import { PrismaService } from "../prisma/prisma.service";
 import { Submission } from "./models/submission.model";
-import { SubmissionInput } from "./SubmissionInput";
+import { SubmissionInput } from "./submission.input";
 
 @Injectable()
 export class SubmissionService {
