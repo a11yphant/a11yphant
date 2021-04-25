@@ -323,8 +323,10 @@ terraform:cloud:validate:
     - docker
   stage: analyze
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {}
+  dependencies: []
   before_script:
-    - terraform -chdir=terraform/cloud init
+    - # do nothing
   script:
     - terraform -chdir=terraform/cloud validate
 
