@@ -326,7 +326,7 @@ terraform:cloud:validate:
   cache: {}
   dependencies: []
   before_script:
-    - # do nothing
+    - '' # do nothing
   script:
     - terraform -chdir=terraform/cloud validate
 
