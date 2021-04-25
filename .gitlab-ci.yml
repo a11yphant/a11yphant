@@ -323,6 +323,10 @@ terraform:check-format:
     - docker
   stage: analyze
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {}
+  dependencies: []
+  before_script:
+    - '' # do nothing
   script:
     - terraform -chdir=terraform fmt -recursive -check
 
