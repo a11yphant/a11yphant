@@ -28,6 +28,8 @@ provider "aws" {
    region = "eu-central-1"
 }
 
+provider "archive" {}
+
 provider "heroku" {}
 
 provider "herokux" {}
