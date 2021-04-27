@@ -60,7 +60,7 @@
     "@prisma/generator-helper": "2.21.2",
     "@prisma/migrate": "2.21.2",
     "@prisma/sdk": "2.21.2",
-    "@types/aws-lambda": "8.10.75",
+    "@types/aws-lambda": "8.10.76",
     "@types/jest": "26.0.23",
     "@types/mock-fs": "4.13.0",
     "@types/node": "14.14.41",
