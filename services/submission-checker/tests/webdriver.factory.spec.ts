@@ -11,9 +11,9 @@ describe("webdriver factory", () => {
     AWS.restore();
   });
 
-  it("creates a webdriver for local selenium", async () => {
+  it("creates a webdriver for remote selenium", async () => {
     const configService = new ConfigService({
-      "submission-checker.webdriver-driver": "local",
+      "submission-checker.webdriver-driver": "remote",
       "submission-checker.webdriver-endpoint": "https://webdriver.url/hub",
     });
     const factory = new WebdriverFactory(createMock<Logger>(), configService);
@@ -42,6 +42,17 @@ describe("webdriver factory", () => {
     const configService = new ConfigService({
       "submission-checker.webdriver-driver": "aws-device-farm",
       "submission-checker.webdriver-aws-device-farm-project": "arn:project:id",
+    });
+    const factory = new WebdriverFactory(createMock<Logger>(), configService);
+
+    const driver = await factory.create();
+
+    expect(driver).toBeTruthy();
+  });
+
+  it("creates a webdriver for local webdriver", async () => {
+    const configService = new ConfigService({
+      "submission-checker.webdriver-driver": "local",
     });
     const factory = new WebdriverFactory(createMock<Logger>(), configService);
 

@@ -1,29 +1,16 @@
-data "external" "submission_checker_code_zip" {
-  program = [ "${path.module}/../../services/submission-checker/package.sh" ]
-}
-
-resource "aws_s3_bucket_object" "submission_checker_code_zip" {
-  bucket = aws_s3_bucket.resources.id
-  key    = "code/lambdas/submission-checker.zip"
-  source = "${path.module}/../../services/submission-checker/lambda.zip"
-  etag = data.external.submission_checker_code_zip.result.hash
-
-  depends_on = [
-    data.external.submission_checker_code_zip,
-    aws_s3_bucket.resources
-  ]
+locals {
+  image_name                         = "submission-checker"
+  ecr_submission_checker_image       = format("%v/%v:%v", local.ecr_address, aws_ecr_repository.repository_submission_checker.id, "latest")
+  gitlab_ci_submission_checker_image = "gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:${var.docker_tag}"
 }
 
 resource "aws_lambda_function" "submission_checker" {
    function_name = "${terraform.workspace}-submission-checker"
 
-   s3_bucket = aws_s3_bucket.resources.id
-   s3_key    = aws_s3_bucket_object.submission_checker_code_zip.id
-   source_code_hash = data.external.submission_checker_code_zip.result.hash
-
-   handler = "dist/src/main.handle"
-   runtime = "nodejs14.x"
-   timeout = 300
+   package_type = "Image"
+   image_uri = local.ecr_submission_checker_image
+   timeout = 30
+   memory_size = 512
 
    role = aws_iam_role.submission_checker_role.arn
 
@@ -35,13 +22,12 @@ resource "aws_lambda_function" "submission_checker" {
       SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES = 0
       SUBMISSION_CHECKER_MESSAGING_REGION = "eu-central-1"
       SUBMISSION_CHECKER_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
-      SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "aws-device-farm"
-      SUBMISSION_CHECKER_AWS_DEVICE_FARM_PROJECT = var.devicefarm_project
+      SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "local"
     }
   }
 
   depends_on = [
-    aws_s3_bucket_object.submission_checker_code_zip,
+    null_resource.push_submssion_checker_image_to_ecr,
     aws_iam_role_policy_attachment.submission_checker_lambda_logs,
   ]
 }
@@ -110,28 +96,44 @@ resource "aws_iam_role_policy_attachment" "submission_checker_submission_topic_p
   policy_arn = aws_iam_policy.submission_topic_publishing.arn
 }
 
-resource "aws_iam_policy" "execute_checks_on_aws_device_farm" {
-  name        = "${terraform.workspace}-execute-checks-on-aws-device-farm"
-  path        = "/"
-  description = "IAM policy for allowing the lambda to execute the checks using Device Farm"
+resource "aws_ecr_repository" "repository_submission_checker" {
+  name                 = "${terraform.workspace}-submission-checker"
+  image_tag_mutability = "MUTABLE"
+}
 
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "devicefarm:*"
-      ],
-      "Resource": "${var.devicefarm_project}"
-    }
+data "docker_registry_image" "gitlab_ci_submission_checker_image" {
+  name = local.gitlab_ci_release_image
+}
+
+resource "docker_image" "gitlab_ci_submission_checker_image" {
+  name  = local.gitlab_ci_submission_checker_image
+  pull_triggers = [data.docker_registry_image.gitlab_ci_submission_checker_image.sha256_digest]
+}
+
+resource "null_resource" "tag_submission_checker_image_for_ecr" {
+  provisioner "local-exec" {
+    command = "docker image tag ${local.gitlab_ci_submission_checker_image} ${local.ecr_submission_checker_image}"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [
+    docker_image.gitlab_ci_submission_checker_image
   ]
 }
-EOF
-}
 
-resource "aws_iam_role_policy_attachment" "submission_checker_checks_on_device_farm" {
-  role       = aws_iam_role.submission_checker_role.name
-  policy_arn = aws_iam_policy.execute_checks_on_aws_device_farm.arn
+resource "null_resource" "push_submssion_checker_image_to_ecr" {
+  provisioner "local-exec" {
+    command = "docker push ${local.ecr_submission_checker_image}"
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [
+    null_resource.tag_submission_checker_image_for_ecr,
+  ]
 }
