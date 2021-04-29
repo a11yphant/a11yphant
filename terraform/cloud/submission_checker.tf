@@ -22,7 +22,8 @@ resource "aws_lambda_function" "submission_checker" {
       SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES = 0
       SUBMISSION_CHECKER_MESSAGING_REGION = "eu-central-1"
       SUBMISSION_CHECKER_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
-      SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "local"
+      SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "remote"
+      SUBMISSION_CHECKER_WEBDRIVER_ENDPOINT = "https://selenium.mibra.io/wd/hub"
     }
   }
 
