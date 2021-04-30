@@ -7,10 +7,11 @@ import { SubmissionController } from "../src/submission.controller";
 import { SubmissionCreatedEvent } from "../src/submission-created-event.interface";
 
 describe("submission controller", () => {
-  it("it handles submission.created events", () => {
+  it("it handles submission.created events", async () => {
+    const emit = jest.fn().mockReturnValue({ toPromise: jest.fn().mockResolvedValue(null) });
     const controller = new SubmissionController(
       createMock<Logger>(),
-      createMock<ClientProxy>({ emit: jest.fn().mockResolvedValue(null) }),
+      createMock<ClientProxy>({ emit }),
       createMock<CheckSubmissionService>({ check: jest.fn().mockResolvedValue({}) }),
     );
     const submissionCreatedEvent: SubmissionCreatedEvent = {
@@ -23,6 +24,8 @@ describe("submission controller", () => {
       rules: [{ id: "rule-uuid", key: "test-key", options: {} }],
     };
 
-    expect(() => controller.handleSubmissionEvent(submissionCreatedEvent)).not.toThrow();
+    await controller.handleSubmissionEvent(submissionCreatedEvent);
+
+    expect(emit).toHaveBeenCalledWith("submission.check-completed", expect.anything());
   });
 });

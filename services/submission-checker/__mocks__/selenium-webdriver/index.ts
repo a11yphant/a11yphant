@@ -10,6 +10,10 @@ export class Builder extends SeleniumBuilder {
     return this;
   }
 
+  setChromeOptions(options: unknown): Builder {
+    return this;
+  }
+
   build(): ThenableWebDriver {
     return createMock<ThenableWebDriver>();
   }
