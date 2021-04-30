@@ -4,16 +4,13 @@ import { AxeResults } from "axe-core";
 
 import { BrowserService } from "./browser.service";
 import { CheckedRequirement, CheckedRule, CheckResult, Requirement, RuleAssignment } from "./check-result.interface";
-import { SubmissionService } from "./submission.service";
+import { Submission } from "./submission.interface";
 
 @Injectable()
 export class CheckSubmissionService {
-  constructor(private config: ConfigService, private submissionService: SubmissionService, private browser: BrowserService) {}
+  constructor(private config: ConfigService, private browser: BrowserService) {}
 
-  public async check(id: number): Promise<CheckResult> {
-    // get rules for level of submission from database
-    const submission = this.submissionService.find(id);
-
+  public async check(submission: Submission): Promise<CheckResult> {
     // get axe rules from rules and extract axe checks to perform
     const options = {
       runOnly: submission.level.requirements
@@ -25,7 +22,7 @@ export class CheckSubmissionService {
     };
 
     // run axe
-    const url = `${this.config.get<string>("submission-checker.renderer-base-url")}${id}`;
+    const url = `${this.config.get<string>("submission-checker.renderer-base-url")}${submission.id}`;
     const result = await this.browser.runAxeChecks(url, options);
 
     // map result of axe checks back into check result

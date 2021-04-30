@@ -95,12 +95,20 @@ lint:submission-checker:
     - .run_on_submission-checker_change
   variables:
     PROJECT_PATH: services/submission-checker
+  before_script:
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
 test:submission-checker:
   extends:
     - .test
   variables:
     PROJECT_PATH: services/submission-checker
+  before_script:
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -121,6 +129,10 @@ build:submission-checker:
     - .build
   variables:
     PROJECT_PATH: services/submission-checker
+  before_script:
+    - npm ci --ignore-scripts --cache .npm-alpine
+    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   artifacts:
     paths:
       - $PROJECT_PATH/dist

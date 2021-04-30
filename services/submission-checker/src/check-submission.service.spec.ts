@@ -3,8 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { BrowserService } from "./browser.service";
 import { CheckSubmissionService } from "./check-submission.service";
-import { Submission } from "./submission.model";
-import { SubmissionService } from "./submission.service";
+import { Submission } from "./submission.interface";
 
 const axeMockResult = {
   violations: [
@@ -70,9 +69,10 @@ const axeMockResult = {
 };
 
 const mockSubmission: Submission = {
+  id: "1234",
   html: `<h1>This is submission</h1>`,
   css: "body { color: deepseagreen }",
-  javascript: `document.querySelector('h1').style.opacity = 0.5`,
+  js: `document.querySelector('h1').style.opacity = 0.5`,
   level: {
     submissions: [],
     requirements: [
@@ -128,9 +128,6 @@ const factory = ({
       get: jest.fn().mockReturnValue(""),
       ...configService,
     }),
-    createMock<SubmissionService>({
-      find: jest.fn().mockReturnValue(mockSubmission),
-    }),
     createMock<BrowserService>({
       runAxeChecks: jest.fn().mockResolvedValue(axeMockResult),
       ...browserService,
@@ -141,12 +138,11 @@ const factory = ({
 describe("check submission service", () => {
   it("can check a submission", async () => {
     const service = factory();
-    const result = await service.check(1);
+    const result = await service.check(mockSubmission);
     expect(result).toBeTruthy();
   });
 
   it("opens and runs axe checks in a browser", async () => {
-    const testId = 1;
     const submissionRendererUrl = "http://target-url.test/";
     const runAxeChecks = jest.fn().mockResolvedValue(axeMockResult);
     const service = factory({
@@ -154,14 +150,14 @@ describe("check submission service", () => {
       browserService: { runAxeChecks },
     });
 
-    await service.check(testId);
+    await service.check(mockSubmission);
 
-    expect(runAxeChecks).toHaveBeenCalledWith(`${submissionRendererUrl}${testId}`, expect.any(Object));
+    expect(runAxeChecks).toHaveBeenCalledWith(`${submissionRendererUrl}${mockSubmission.id}`, expect.any(Object));
   });
 
   it("returns a formatted test result", async () => {
     const service = factory();
-    const result = await service.check(1);
+    const result = await service.check(mockSubmission);
 
     expect(result.checkedRequirements.length).toEqual(3);
     expect(result.checkedRequirements[0].checkedRules.length).toEqual(1);
