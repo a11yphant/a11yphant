@@ -20,6 +20,7 @@ resource "heroku_app" "api" {
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
     API_MESSAGING_TOPICS             = "submission=${module.messaging.submission_topic_arn}"
     API_MESSAGING_REGION             = "eu-central-1"
+    API_MESSAGING_QUEUE_URL          = module.messaging.api_queue_url
   }
 }
 
@@ -165,6 +166,34 @@ resource "aws_iam_user" "api_user" {
 resource "aws_iam_user_policy_attachment" "api_submission_topic_publishing" {
   user       = aws_iam_user.api_user.name
   policy_arn = aws_iam_policy.submission_topic_publishing.arn
+}
+
+resource "aws_iam_policy" "access_api_queue" {
+  name        = "${terraform.workspace}-access-api-queue"
+  path        = "/"
+  description = "IAM policy for allowing the lambda to work on jobs from the api queue"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${module.messaging.api_queue_arn}"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_user_policy_attachment" "api_api_queue_access" {
+  user       = aws_iam_user.api_user.name
+  policy_arn = aws_iam_policy.access_api_queue.arn
 }
 
 resource "aws_iam_access_key" "api_user_access_key" {

@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
-  # forward graphql to grpahql api gateway
+ # forward graphql to api api gateway
   ordered_cache_behavior {
     path_pattern     = "/graphql*"
     allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
@@ -87,6 +87,29 @@ resource "aws_cloudfront_distribution" "site" {
     forwarded_values {
       query_string = true
       headers      = ["Accept", "Referer", "Authorization", "Content-Type"]
+
+      cookies {
+        forward = "all"
+      }
+    }
+
+    min_ttl                = 0
+    default_ttl            = 0
+    max_ttl                = 0
+    compress               = true
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
+  # forward render to api api gateway
+  ordered_cache_behavior {
+    path_pattern     = "/render*"
+    allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.origin_id_api_http_api
+
+    forwarded_values {
+       query_string = true
+       headers = ["Accept", "Referer", "Authorization", "Content-Type"]
 
       cookies {
         forward = "all"

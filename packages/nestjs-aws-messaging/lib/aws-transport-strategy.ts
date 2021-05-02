@@ -40,6 +40,7 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
         await this.pollSQS();
       } catch (e) {
         this.logger.error(e.message, null, AwsTransportStrategy.name);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
   }
@@ -57,15 +58,19 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
             return;
           }
 
+          this.logger.log(`Received ${data.Messages?.length || 0} messages`, AwsTransportStrategy.name);
+
           if (!data.Messages) {
             resolve();
             return;
           }
 
-          this.logger.log(`Received ${data.Messages.length} messages`, AwsTransportStrategy.name);
-
           for (const message of data.Messages) {
-            await this.processMessage(message);
+            try {
+              await this.processMessage(message);
+            } catch (error) {
+              this.logger.error(error.message, null, AwsTransportStrategy.name);
+            }
           }
 
           resolve();
@@ -87,7 +92,10 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
     try {
       await handler(event.body);
     } catch (error) {
-      this.logger.error(`Could not process event ${event.messageId}: ${error.message}`, null, AwsTransportStrategy.name);
+      throw new Error(`Could not process event ${event.messageId}: ${error.message}`);
+    }
+
+    if (!this.options.deleteHandled) {
       return;
     }
 
