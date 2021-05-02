@@ -19,12 +19,6 @@ module.exports = {
       autorestart: true,
     },
     {
-      name: "a11yphant-submission-renderer",
-      script: "npm run dotenv -- npm run dev:submission-renderer",
-      namespace: "a11yphant",
-      autorestart: true,
-    },
-    {
       name: "docker-compose",
       script: "docker-compose up",
       namespace: "a11yphant",

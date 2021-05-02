@@ -59,7 +59,7 @@ describe("AWS Messaging Client", () => {
   });
 
   it("can dispatch an event", async () => {
-    const publish = jest.fn((params, cb) => cb(null));
+    const publish = jest.fn((params, cb) => cb(null, { $response: {} }));
     AWSMock.mock("SNS", "publish", publish);
 
     const data = {

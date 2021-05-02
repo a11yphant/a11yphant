@@ -40,6 +40,7 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
         await this.pollSQS();
       } catch (e) {
         this.logger.error(e.message, null, AwsTransportStrategy.name);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
   }
@@ -57,12 +58,12 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
             return;
           }
 
+          this.logger.log(`Received ${data.Messages?.length || 0} messages`, AwsTransportStrategy.name);
+
           if (!data.Messages) {
             resolve();
             return;
           }
-
-          this.logger.log(`Received ${data.Messages.length} messages`, AwsTransportStrategy.name);
 
           for (const message of data.Messages) {
             try {

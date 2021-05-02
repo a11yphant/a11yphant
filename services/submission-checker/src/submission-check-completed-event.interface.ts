@@ -1,9 +1,6 @@
-export interface SubmissionCheckCompleted {
-  submissionId: string;
-  ruleCheckResults: RuleCheckResult[];
-}
+import { SubmissionCheckResult } from "./submission-check-result.interface";
 
-interface RuleCheckResult {
-  id: string;
-  status: "success" | "failed" | "error";
+export interface SubmissionCheckCompletedEvent {
+  submissionId: string;
+  result: SubmissionCheckResult;
 }

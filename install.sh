@@ -30,12 +30,6 @@ ln -s ./../../.env ./services/submission-checker/.env
 rm -f ./services/submission-checker/.npmrc
 ln -s ./../../.npmrc ./services/submission-checker/.npmrc
 
-# create submission-renderer symlinks
-rm -f ./services/submission-renderer/.env
-ln -s ./../../.env ./services/submission-renderer/.env
-rm -f ./services/submission-renderer/.npmrc
-ln -s ./../../.npmrc ./services/submission-renderer/.npmrc
-
 # create nestjs-aws-messaging symlinks
 rm -f ./packages/nestjs-aws-messaging/.env
 ln -s ./../../.env ./packages/nestjs-aws-messaging/.env
