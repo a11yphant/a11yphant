@@ -35,7 +35,7 @@
     "selenium-webdriver": "^4.0.0-beta"
   },
   "devDependencies": {
-    "@a11yphant/eslint-config": "file:../../packages/eslint-config",
+    "@a11yphant/eslint-config": "0.0.4",
     "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
