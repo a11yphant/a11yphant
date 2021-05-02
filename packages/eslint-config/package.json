@@ -1,9 +1,8 @@
 {
   "name": "@a11yphant/eslint-config",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "main": "index.js",
-  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./**/*.js",
@@ -11,6 +10,9 @@
   },
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "license": "UNLICENSED",
+  "publishConfig": {
+    "@a11yphant:registry":"https://gitlab.mediacube.at/api/v4/projects/5907/packages/npm/"
+  },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
