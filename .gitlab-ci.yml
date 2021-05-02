@@ -311,10 +311,10 @@ deploy-review:
   variables:
    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-   USE_CUSTOM_DOMAIN: 0
+   USE_CUSTOM_DOMAIN: 1
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    # url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     on_stop: stop-environment
   only:
     - merge_request
