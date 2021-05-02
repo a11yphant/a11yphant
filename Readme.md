@@ -7,11 +7,18 @@
 You must have Node installed via `nvm` for this project to work correctly 
 ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating))
 
+
+## Prerequisites
+
+- Create an access token for the GitLab API. This will be required to install our private NPM packages.  
+Link to the GitLab settings: [Manage GitLab Access Tokens](https://gitlab.mediacube.at/-/profile/personal_access_tokens)
+
 ## Setup
 
-One command setup:
-
 ```sh
+# log in to the GitLab NPM registry
+npm run gitlab-registry:login YOUR_GITLAB_ACCESS_TOKEN
+
 # Install correct node version, install packages, create symlinks
 ./install.sh
 ```
