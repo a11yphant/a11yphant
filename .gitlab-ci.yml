@@ -66,10 +66,11 @@ build:nestjs-aws-messaging:
     IMAGE_NAME: a11yphant/a11yphant/nestjs-aws-messaging
     IMAGE: $CI_REGISTRY/$IMAGE_NAME:$CI_COMMIT_REF_SLUG
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE  --secret id=npmrc,src=.npmrc
     - docker push $IMAGE
     # extract artifacts for compatibility with the existing pipeline
     - CONTAINER_ID=$(docker create $IMAGE "")
