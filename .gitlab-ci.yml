@@ -131,6 +131,7 @@ lint:submission-checker:
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -143,6 +144,7 @@ test:submission-checker:
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -188,6 +190,7 @@ generate-graphql-schema:api:
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -208,6 +211,7 @@ lint:api:
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -230,6 +234,7 @@ test:api:
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
