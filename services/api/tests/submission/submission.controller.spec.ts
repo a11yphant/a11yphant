@@ -10,7 +10,9 @@ describe("submission controller", () => {
 
     const event: SubmissionCheckCompletedEvent = {
       submissionId: "submission-id",
-      ruleCheckResults: [],
+      result: {
+        ruleCheckResults: [],
+      },
     };
 
     expect(controller.handleSubmissionEvent(event)).resolves.toBeFalsy();
