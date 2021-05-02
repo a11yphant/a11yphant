@@ -18,7 +18,7 @@ FROM package-files as builder
 
 WORKDIR /services/submission-checker
 
-RUN --mount=type=secret,id=npmrc,dst=/packages/nestjs-aws-messaging/.npmrc npm ci && rm node_modules/@a11yphant/nestjs-aws-messaging
+RUN --mount=type=secret,id=npmrc,dst=/services/submission-checker/.npmrc npm ci && rm node_modules/@a11yphant/nestjs-aws-messaging
 COPY --from=nestjs-aws-messaging-package / node_modules/@a11yphant/nestjs-aws-messaging/
 
 COPY services/submission-checker/tsconfig.json ./
@@ -32,7 +32,7 @@ FROM package-files as production-dependencies
 
 WORKDIR /services/submission-checker
 
-RUN --mount=type=secret,id=npmrc,dst=/packages/nestjs-aws-messaging/.npmrc npm ci --production && rm node_modules/@a11yphant/nestjs-aws-messaging
+RUN --mount=type=secret,id=npmrc,dst=/services/submission-checker/.npmrc npm ci --production && rm node_modules/@a11yphant/nestjs-aws-messaging
 COPY --from=nestjs-aws-messaging-package / node_modules/@a11yphant/nestjs-aws-messaging/
 
 FROM public.ecr.aws/lambda/nodejs:14
