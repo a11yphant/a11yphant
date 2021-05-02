@@ -114,74 +114,23 @@ test:submission-checker:
     - develop
     - merge_request
 
-production-dependencies:submission-checker:
-  extends:
-    - .production-dependencies
-  variables:
-    PROJECT_PATH: services/submission-checker
-  only:
-    - master
-    - develop
-    - merge_request
-
 build:submission-checker:
-  extends:
-    - .build
+  tags:
+    - docker
+  stage: build
+  image: docker:20
   variables:
     PROJECT_PATH: services/submission-checker
+    IMAGE_NAME_APP: a11yphant/a11yphant/submission-checker
+    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
+  cache: {}
   before_script:
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
-  artifacts:
-    paths:
-      - $PROJECT_PATH/dist
-    expire_in: 1 day
-  only:
-    - master
-    - develop
-    - merge_request
-
-#-----------------------------------
-# Submission Renderer
-#-----------------------------------
-
-lint:submission-renderer:
-  extends:
-    - .lint
-    - .run_on_submission_renderer_change
-  variables:
-    PROJECT_PATH: services/submission-renderer
-
-test:submission-renderer:
-  extends:
-    - .test
-  variables:
-    PROJECT_PATH: services/submission-renderer
-  only:
-    - master
-    - develop
-    - merge_request
-
-production-dependencies:submission-renderer:
-  extends:
-    - .production-dependencies
-  variables:
-    PROJECT_PATH: services/submission-renderer
-  only:
-    - master
-    - develop
-    - merge_request
-
-build:submission-renderer:
-  extends:
-    - .build
-  variables:
-    PROJECT_PATH: services/submission-renderer
-  artifacts:
-    paths:
-      - $PROJECT_PATH/dist
-    expire_in: 1 day
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    # api app container
+    - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG
+    - docker push $IMAGE_APP
   only:
     - master
     - develop
@@ -410,7 +359,7 @@ stop-environment:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG" -auto-approve
+    - terraform -chdir=terraform/cloud destroy -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG"
     - terraform -chdir=terraform/cloud workspace select default
     - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
   when: manual
