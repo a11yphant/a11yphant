@@ -37,7 +37,7 @@ const Home: React.FunctionComponent = () => {
           </div>
         </Card>
 
-        <Card className="mr-24" heading="Semantic HTML" easy>
+        <Card className="mr-24" heading="Semantic HTML" hard>
           <div className="flex justify-between">
             <p className="m-0">8 Levels</p>
             <div className="flex">

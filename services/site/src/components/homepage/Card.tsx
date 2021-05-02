@@ -13,16 +13,16 @@ const Card: React.FunctionComponent<ICardProps> = ({ className, heading, childre
   let gradient;
 
   if (easy) {
-    gradient = "/images/01_easy.jpg";
+    gradient = <Image src="/images/01_easy.jpg" alt="" width="500" height="500" />;
   } else if (medium) {
-    gradient = "/images/02_medium.jpg";
+    gradient = <Image src="/images/02_medium.jpg" alt="" width="500" height="500" />;
   } else if (hard) {
-    gradient = "/images/03_hard.jpg";
+    gradient = <Image src="/images/03_hard.jpg" alt="" width="500" height="500" />;
   }
 
   return (
     <div className={`${className} w-64 h-64 border-2 border-primary rounded-xl flex flex-col justify-end overflow-hidden`}>
-      <Image src={gradient} alt="" width="500" height="500" />
+      {gradient}
       <div className="p-4 bg-white">
         <h4 className="w-full text-primary font-bold">{heading}</h4>
         <div className="w-full mt-2 text-primary">{children}</div>
