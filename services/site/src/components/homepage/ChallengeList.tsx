@@ -9,7 +9,7 @@ interface ChallengeListProps {
 
 const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, completedLevel, openLevel }) => {
   return (
-    <div className={`${className} flex flex-row justify-between items-center box-border my-8 w-full `}>
+    <div className={`${className} flex flex-row my-8`}>
       <div className="flex flex-row justify-center items-baseline">
         <h3 className="flex items-center text-primary font-bold leading-10 mb-2">{heading}</h3>
         <p className="text-primary h3 ml-4">
