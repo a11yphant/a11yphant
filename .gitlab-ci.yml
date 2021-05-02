@@ -85,6 +85,36 @@ build:nestjs-aws-messaging:
     - master
     - merge_request
 
+
+#-----------------------------------
+# ESLint Config
+#-----------------------------------
+
+lint:eslint-config:
+  extends:
+    - .lint
+    - .run_on_eslint_config_change
+  variables:
+    PROJECT_PATH: packages/eslint-config
+
+release:eslint-config:
+  tags:
+    - docker
+  stage: deploy
+  image: node:14-alpine
+  variables:
+    PROJECT_PATH: packages/eslint-config
+  before_script:
+    - echo "//gitlab.example.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+  script:
+    # --prefix behaves strangely when used with publish
+    - cd $PROJECT_PATH && npm publish
+  only:
+    - /^eslint-config-v.*$/
+  except:
+    - branches
+    - triggers
+
 #-----------------------------------
 # Submission Checker
 #-----------------------------------
