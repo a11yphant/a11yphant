@@ -3,15 +3,10 @@
     - docker
   stage: deploy
   needs:
-    - build:prisma
-    - production-dependencies:prisma
+    - build:nestjs-aws-messaging
     - build:api
-    - production-dependencies:api
-    - production-dependencies:database-migration
     - build:site
     - production-dependencies:site
-    - build:import-challenges
-    - production-dependencies:import-challenges
     - build:submission-checker
     - production-dependencies:submission-checker
     - build:submission-renderer
@@ -20,11 +15,15 @@
   cache: {} # disable cache
   variables:
     TF_IN_AUTOMATION: 1
+    API_GITLAB_IMAGE_NAME: $CI_REGISTRY/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG
+    API_HEROKU_IMAGE_NAME: registry.heroku.com/$WORKSPACE-a11yphant-api/web
   before_script:
     - apk update
-    - apk add zip
+    - apk add zip docker-cli
     - terraform -chdir=terraform/cloud init
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u _ -p $HEROKU_AUTH_TOKEN registry.heroku.com
   script:
     - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud apply -auto-approve -var="postgres_cluster_root_password=$TF_PROD_POSTGRES_CLUSTER_ROOT_PASSWORD"
+    - terraform -chdir=terraform/cloud apply -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG"

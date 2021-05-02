@@ -1,6 +1,7 @@
-import { Hint as HintRecord, PrismaService } from "@a11y-challenges/prisma";
 import { Injectable } from "@nestjs/common";
+import { Hint as HintRecord } from "@prisma/client";
 
+import { PrismaService } from "../prisma/prisma.service";
 import { Hint } from "./models/hint.model";
 
 @Injectable()

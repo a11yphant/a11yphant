@@ -1,6 +1,7 @@
-import { Challenge as ChallengeRecord, PrismaService } from "@a11y-challenges/prisma";
 import { Injectable } from "@nestjs/common";
+import { Challenge as ChallengeRecord } from "@prisma/client";
 
+import { PrismaService } from "../prisma/prisma.service";
 import { Challenge } from "./models/challenge.model";
 
 @Injectable()

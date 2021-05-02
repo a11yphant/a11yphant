@@ -1,3 +1,5 @@
+import Button from "app/components/buttons/Button";
+import Trash from "app/components/icons/Trash";
 import { parse } from "node-html-parser";
 import React, { useState } from "react";
 
@@ -26,6 +28,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
 
   const [renderCountdown, setRenderCountdown] = useState<NodeJS.Timeout>();
+  const [forceUpdateState, setForceUpdateState] = useState<boolean>();
 
   const startRenderCountdown = (): NodeJS.Timeout =>
     setTimeout(() => {
@@ -42,13 +45,27 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
     setRenderCountdown(startRenderCountdown());
   }, [htmlCode, cssCode, javascriptCode]);
 
+  const forceUpdate = React.useCallback(() => setForceUpdateState((prev) => !prev), []);
+
   return (
     <div className={`${classes} box-border relative border-2 rounded-lg border-primary py-2 px-4 overflow-hidden`}>
-      <h3 className="text-primary mb-4">{heading}</h3>
+      <div className="flex flex-row justify-between items-center mb-2">
+        <h3 className="text-primary">{heading}</h3>
+        <Button
+          onClick={() => {
+            forceUpdate();
+          }}
+          className="flex items-center tracking-wide text-primary font-bold group hover:text-primaryDark group-hover:text-primaryDark"
+          overrideClassname
+        >
+          <Trash />
+          Reset
+        </Button>
+      </div>
       <iframe
         title="Preview"
         className="w-full h-18/20 pb-8"
-        srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
+        srcDoc={`<style>${innerCssCode}</style><meta name="forceUpdate" content="${forceUpdateState}"><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />
     </div>
   );

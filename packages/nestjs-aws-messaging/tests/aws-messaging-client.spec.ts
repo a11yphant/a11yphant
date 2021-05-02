@@ -59,9 +59,7 @@ describe("AWS Messaging Client", () => {
   });
 
   it("can dispatch an event", async () => {
-    const publish = jest.fn((message, cb) => {
-      cb(null);
-    });
+    const publish = jest.fn((params, cb) => cb(null));
     AWSMock.mock("SNS", "publish", publish);
 
     const data = {
@@ -94,9 +92,7 @@ describe("AWS Messaging Client", () => {
   });
 
   it("throws an exception if the topic does not exist", async () => {
-    const publish = jest.fn((message, cb) => {
-      cb(null);
-    });
+    const publish = jest.fn((params, cb) => cb(null));
     AWSMock.mock("SNS", "publish", publish);
 
     const data = {
@@ -116,9 +112,7 @@ describe("AWS Messaging Client", () => {
   });
 
   it("throws an exception if publishing the message to SNS failed", () => {
-    const publish = jest.fn((message, cb) => {
-      cb(new Error("don't know whats wrong"));
-    });
+    const publish = jest.fn((params, cb) => cb(new Error("Something went wrong.")));
     AWSMock.mock("SNS", "publish", publish);
 
     const data = {

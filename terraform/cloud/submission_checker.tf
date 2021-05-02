@@ -23,7 +23,7 @@ resource "aws_lambda_function" "submission_checker" {
 
    handler = "dist/src/main.handle"
    runtime = "nodejs14.x"
-   timeout = 10
+   timeout = 30
 
    role = aws_iam_role.submission_checker_role.arn
 
@@ -32,6 +32,9 @@ resource "aws_lambda_function" "submission_checker" {
       NODE_ENV = "production"
       NO_COLOR = 1
       SUBMISSION_CHECKER_RENDERER_BASE_URL = "${aws_apigatewayv2_api.submission_renderer_http_api.api_endpoint}/render/"
+      SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES = 0
+      SUBMISSION_CHECKER_MESSAGING_REGION = "eu-central-1"
+      SUBMISSION_CHECKER_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
     }
   }
 
@@ -39,6 +42,11 @@ resource "aws_lambda_function" "submission_checker" {
     aws_s3_bucket_object.submission_checker_code_zip,
     aws_iam_role_policy_attachment.submission_checker_lambda_logs,
   ]
+}
+
+resource "aws_lambda_event_source_mapping" "trigger_submission_checker_from_queue" {
+  event_source_arn = module.messaging.submission_checker_queue_arn
+  function_name    = aws_lambda_function.submission_checker.arn
 }
 
 resource "aws_iam_role" "submission_checker_role" {
@@ -65,4 +73,37 @@ EOF
 resource "aws_iam_role_policy_attachment" "submission_checker_lambda_logs" {
   role       = aws_iam_role.submission_checker_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
+}
+
+resource "aws_iam_policy" "access_submission_checker_queue" {
+  name        = "${terraform.workspace}-access-submission-checker-queue"
+  path        = "/"
+  description = "IAM policy for allowing the lambda to work on jobs from the submission checker queue"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${module.messaging.submission_checker_queue_arn}"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "submission_checker_submission_checker_queue_access" {
+  role       = aws_iam_role.submission_checker_role.name
+  policy_arn = aws_iam_policy.access_submission_checker_queue.arn
+}
+
+resource "aws_iam_role_policy_attachment" "submission_checker_submission_topic_publishing" {
+  role       = aws_iam_role.submission_checker_role.name
+  policy_arn = aws_iam_policy.submission_topic_publishing.arn
 }
