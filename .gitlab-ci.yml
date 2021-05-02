@@ -113,6 +113,10 @@ release:eslint-config:
   script:
     # --prefix behaves strangely when used with publish
     - cd $PROJECT_PATH && npm publish
+  artifacts:
+    paths:
+      - $PROJECT_PATH/.npmrc
+    expire_in: 1 day
   only:
     - /^eslint-config-v.*$/
   except:
