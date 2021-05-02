@@ -72,7 +72,7 @@ build:nestjs-aws-messaging:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE  --secret id=npmrc,src=.npmrc
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE --secret id=npmrc,src=.npmrc
     - docker push $IMAGE
     # extract artifacts for compatibility with the existing pipeline
     - CONTAINER_ID=$(docker create $IMAGE "")
@@ -169,7 +169,7 @@ build:submission-checker:
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP
   only:
     - master
@@ -261,11 +261,11 @@ build:api:
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP
     # api release container
     - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --target release
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc --target release
     - docker push $IMAGE_RELEASE
   only:
     - master
