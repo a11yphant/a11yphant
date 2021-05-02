@@ -111,12 +111,11 @@ release:eslint-config:
     - echo "//gitlab.example.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
   script:
+    - echo $CI_PROJECT_ID
+    - echo $CI_JOB_TOKEN
+    - cat .npmrc
     # --prefix behaves strangely when used with publish
     - cd $PROJECT_PATH && npm publish
-  artifacts:
-    paths:
-      - .npmrc
-    expire_in: 1 day
   only:
     - /^eslint-config-v.*$/
   except:
