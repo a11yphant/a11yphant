@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
- # forward graphql to api api gateway
+  # forward graphql to api api gateway
   ordered_cache_behavior {
     path_pattern     = "/graphql*"
     allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
@@ -108,8 +108,8 @@ resource "aws_cloudfront_distribution" "site" {
     target_origin_id = local.origin_id_api_http_api
 
     forwarded_values {
-       query_string = true
-       headers = ["Accept", "Referer", "Authorization", "Content-Type"]
+      query_string = true
+      headers      = ["Accept", "Referer", "Authorization", "Content-Type"]
 
       cookies {
         forward = "all"

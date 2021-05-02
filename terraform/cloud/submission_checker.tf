@@ -7,23 +7,23 @@ locals {
 resource "aws_lambda_function" "submission_checker" {
   function_name = "${terraform.workspace}-submission-checker"
 
-   package_type = "Image"
-   image_uri = local.ecr_submission_checker_image
-   timeout = 30
-   memory_size = 512
+  package_type = "Image"
+  image_uri    = local.ecr_submission_checker_image
+  timeout      = 30
+  memory_size  = 512
 
   role = aws_iam_role.submission_checker_role.arn
 
   environment {
     variables = {
-      NODE_ENV = "production"
-      NO_COLOR = 1
-      SUBMISSION_CHECKER_RENDERER_BASE_URL = "${heroku_app.api.web_url}render/"
+      NODE_ENV                                             = "production"
+      NO_COLOR                                             = 1
+      SUBMISSION_CHECKER_RENDERER_BASE_URL                 = "${heroku_app.api.web_url}render/"
       SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES = 0
-      SUBMISSION_CHECKER_MESSAGING_REGION = "eu-central-1"
-      SUBMISSION_CHECKER_MESSAGING_TOPICS = "submission=${module.messaging.submission_topic_arn}"
-      SUBMISSION_CHECKER_WEBDRIVER_DRIVER = "remote"
-      SUBMISSION_CHECKER_WEBDRIVER_ENDPOINT = "https://selenium.mibra.io/wd/hub"
+      SUBMISSION_CHECKER_MESSAGING_REGION                  = "eu-central-1"
+      SUBMISSION_CHECKER_MESSAGING_TOPICS                  = "submission=${module.messaging.submission_topic_arn}"
+      SUBMISSION_CHECKER_WEBDRIVER_DRIVER                  = "remote"
+      SUBMISSION_CHECKER_WEBDRIVER_ENDPOINT                = "https://selenium.mibra.io/wd/hub"
     }
   }
 
@@ -107,7 +107,7 @@ data "docker_registry_image" "gitlab_ci_submission_checker_image" {
 }
 
 resource "docker_image" "gitlab_ci_submission_checker_image" {
-  name  = local.gitlab_ci_submission_checker_image
+  name          = local.gitlab_ci_submission_checker_image
   pull_triggers = [data.docker_registry_image.gitlab_ci_submission_checker_image.sha256_digest]
 }
 

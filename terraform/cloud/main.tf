@@ -70,7 +70,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "us_west_2"
+  alias  = "us_west_2"
   region = "us-west-2"
 }
 
