@@ -115,7 +115,7 @@ release:eslint-config:
     - cd $PROJECT_PATH && npm publish
   artifacts:
     paths:
-      - $PROJECT_PATH/.npmrc
+      - .npmrc
     expire_in: 1 day
   only:
     - /^eslint-config-v.*$/
