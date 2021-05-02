@@ -13,7 +13,7 @@ const Home: React.FunctionComponent = () => {
       <ChallengeHeader className="mx-24" />
       <Legend className="mx-24" />
       <ChallengeList
-        className="mx-24"
+        className="mx-28"
         heading={
           <>
             Easy
@@ -23,18 +23,31 @@ const Home: React.FunctionComponent = () => {
           </>
         }
         completedLevel={0}
-        openLevel={1}
+        openLevel={2}
       />
-      <Card className="mx-24" heading="Accessible Links">
-        <div className="flex justify-between">
-          <p className="m-0">2 Levels</p>
-          <div className="flex">
-            <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
-            <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-            <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+      <div className="flex mx-24">
+        <Card className="mr-24" heading="HTML Basics" easy>
+          <div className="flex justify-between">
+            <p className="m-0">12 Levels</p>
+            <div className="flex">
+              <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
+              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+
+        <Card className="mr-24" heading="Semantic HTML" easy>
+          <div className="flex justify-between">
+            <p className="m-0">8 Levels</p>
+            <div className="flex">
+              <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
+              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+            </div>
+          </div>
+        </Card>
+      </div>
     </main>
   );
 };
