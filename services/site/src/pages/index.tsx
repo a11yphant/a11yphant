@@ -1,4 +1,5 @@
 import Card from "app/components/homepage/Card";
+import { DifficultyLevel } from "app/components/homepage/Card";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
@@ -26,27 +27,8 @@ const Home: React.FunctionComponent = () => {
         openLevel={2}
       />
       <div className="flex mx-24">
-        <Card className="mr-24" heading="HTML Basics" easy>
-          <div className="flex justify-between">
-            <p className="m-0">12 Levels</p>
-            <div className="flex">
-              <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
-              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-            </div>
-          </div>
-        </Card>
-
-        <Card className="mr-24" heading="Semantic HTML" hard>
-          <div className="flex justify-between">
-            <p className="m-0">8 Levels</p>
-            <div className="flex">
-              <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
-              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-              <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-            </div>
-          </div>
-        </Card>
+        <Card className="mr-24" heading="HTML Basics" levels={12} difficulty={DifficultyLevel.easy} />
+        <Card className="mr-24" heading="Semantic HTML" levels={8} difficulty={DifficultyLevel.hard} />
       </div>
     </main>
   );
