@@ -11,12 +11,10 @@ const levelAmount = 12;
 
 describe("Card", () => {
   it("renders correctly", () => {
-    render(<Card className="mr-24" heading={headingText} levels={levelAmount} difficulty={DifficultyLevel.easy} />);
+    const { container } = render(<Card className="mr-24" heading={headingText} levels={levelAmount} difficulty={DifficultyLevel.easy} />);
 
     expect(screen.getByText(headingText, { selector: "h4" })).toBeTruthy();
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeTruthy();
-
-    // TODO: check if image is present (easy is set)
-    // expect(container.querySelectorAll("Image")).toHaveProperty("width", 1);
+    expect(container.querySelectorAll("img").length).toBeGreaterThan(0);
   });
 });
