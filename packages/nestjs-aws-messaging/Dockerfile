@@ -9,7 +9,7 @@ COPY packages/nestjs-aws-messaging/tsconfig.build.json ./
 
 COPY packages/nestjs-aws-messaging/package* ./
 
-RUN npm ci
+RUN --mount=type=secret,id=npmrc,dst=/packages/nestjs-aws-messaging/.npmrc npm ci
 
 COPY packages/nestjs-aws-messaging/lib ./lib
 
