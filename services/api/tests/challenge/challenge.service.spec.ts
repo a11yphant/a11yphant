@@ -15,6 +15,7 @@ describe("challenge service", () => {
         data: {
           name: "test",
           slug: "test-slug",
+          difficulty: 0,
         },
       });
 
@@ -40,6 +41,7 @@ describe("challenge service", () => {
         data: {
           name: "test",
           slug: "test-slug",
+          difficulty: 0,
         },
       });
 
@@ -70,6 +72,7 @@ describe("challenge service", () => {
             data: {
               name: "hello",
               slug: challengeSlug,
+              difficulty: 0,
             },
           }),
         ),

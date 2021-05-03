@@ -90,12 +90,22 @@ export class ImportService {
         id: challenge.id,
         name: challenge.name,
         slug: challenge.slug,
+        difficulty: this.mapDifficulty(challenge.difficulty),
       },
       update: {
         name: challenge.name,
         slug: challenge.slug,
       },
     });
+  }
+
+  private mapDifficulty(difficulty: string): number {
+    const difficultyMap = {
+      easy: 0,
+      medium: 1,
+      hard: 2,
+    };
+    return difficultyMap[difficulty];
   }
 
   private async upsertLevelsForChallenge(levels: Level[], challengeId: string): Promise<void> {

@@ -13,7 +13,7 @@ describe("resource service", () => {
       data: {
         instructions: "",
         tldr: "",
-        challenge: { create: { name: "level", slug: "level" } },
+        challenge: { create: { name: "level", slug: "level", difficulty: 0 } },
         resources: {
           create: [
             { title: "1", link: "http://1.com" },

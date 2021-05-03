@@ -14,6 +14,7 @@ describe("level service", () => {
         data: {
           name: "test",
           slug: "test",
+          difficulty: 0,
           levels: {
             create: {
               instructions: "instructions",
@@ -38,6 +39,7 @@ describe("level service", () => {
         data: {
           name: "test",
           slug: "test",
+          difficulty: 0,
           levels: {
             create: [
               {

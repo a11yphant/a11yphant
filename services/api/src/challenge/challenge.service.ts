@@ -30,7 +30,12 @@ export class ChallengeService {
   }
 
   static createModelFromDatabaseRecord(record: ChallengeRecord): Challenge {
-    const challenge = new Challenge({ id: record.id, name: record.name, slug: record.slug });
+    const challenge = new Challenge({
+      id: record.id,
+      name: record.name,
+      slug: record.slug,
+      difficulty: record.difficulty,
+    });
 
     return challenge;
   }
