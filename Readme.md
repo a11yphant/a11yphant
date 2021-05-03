@@ -10,7 +10,7 @@ You must have Node installed via `nvm` for this project to work correctly
 
 ## Prerequisites
 
-- Create an access token for the GitLab API. This will be required to install our private NPM packages.  
+- Create an access token for the GitLab API. This will be required to install our private NPM packages. The token has to have API scope.  
 Link to the GitLab settings: [Manage GitLab Access Tokens](https://gitlab.mediacube.at/-/profile/personal_access_tokens)
 
 ## Setup
