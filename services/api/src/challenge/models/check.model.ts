@@ -3,7 +3,7 @@
 
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { RuleStatus } from "./rule-status.enum";
+import { RuleStatus } from "../enums/rule-status.enum";
 
 @ObjectType()
 export class Check {

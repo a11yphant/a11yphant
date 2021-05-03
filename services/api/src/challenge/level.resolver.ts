@@ -1,8 +1,8 @@
 import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
+import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
 import { HintService } from "./hint.service";
 import { LevelService } from "./level.service";
-import { LevelByChallengeSlugAndIndexArgs } from "./level-by-challenge-slug-and-index.args";
 import { Hint } from "./models/hint.model";
 import { Level } from "./models/level.model";
 import { Requirement } from "./models/requirement.model";
