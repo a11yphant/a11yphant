@@ -28,16 +28,27 @@ const Breadcrumbs: React.FunctionComponent = () => {
 
       return routeInfoList;
     }, Promise.resolve([]));
-  }, [apolloClient, router.pathname, router.query, routes]);
+  }, [router.pathname]);
 
   React.useEffect(() => {
-    const asyncGetRouteList = async (): Promise<void> => {
-      const routeList = await getRouteList();
-      setRouteList(routeList);
+    // Workaround for `Warning: Can't perform a React state update on an unmounted component.`
+    // as seen here: https://stackoverflow.com/a/60907638
+    let isMounted = true;
+
+    const asyncGetRouteList = async (): Promise<BreadcrumbInfo[]> => {
+      return getRouteList();
     };
 
-    asyncGetRouteList();
-  }, [getRouteList, router.pathname]);
+    asyncGetRouteList().then((routeList) => {
+      if (isMounted) {
+        setRouteList(routeList);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [getRouteList]);
 
   return (
     <nav className="flex" aria-label="Breadcrumb">
