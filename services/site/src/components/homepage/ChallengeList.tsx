@@ -8,7 +8,7 @@ interface ChallengeListProps {
   heading: React.ReactNode;
   completedLevel: number;
   openLevel: number;
-  challenges?: ChallengeOverviewFragment[];
+  challenges: ChallengeOverviewFragment[];
 }
 
 const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, completedLevel, openLevel, challenges }) => {
@@ -17,7 +17,16 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
     () =>
       challenges.map((challenge, idx) => {
         // TODO: load difficulty from API
-        return <Card className="mr-24" heading={challenge.name} levels={challenge.levels.length} difficulty={DifficultyLevel.easy} />;
+        return (
+          <Card
+            key={challenge.id}
+            className="mr-24"
+            challengeSlug={challenge.slug}
+            heading={challenge.name}
+            levels={challenge.levels.length}
+            difficulty={DifficultyLevel.easy}
+          />
+        );
       }),
     [challenges],
   );
@@ -30,7 +39,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
           ({completedLevel}/{openLevel})
         </p>
       </div>
-      <div className="flex">{getChallenges}</div>
+      <ul className="flex">{getChallenges}</ul>
     </div>
   );
 };
