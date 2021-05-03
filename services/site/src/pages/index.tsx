@@ -1,5 +1,3 @@
-import Card from "app/components/homepage/Card";
-import { DifficultyLevel } from "app/components/homepage/Card";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
@@ -14,7 +12,7 @@ const Home: React.FunctionComponent = () => {
       <ChallengeHeader className="mx-24" />
       <Legend className="mx-24" />
       <ChallengeList
-        className="mx-28"
+        className="mx-24"
         heading={
           <>
             Easy
@@ -26,10 +24,6 @@ const Home: React.FunctionComponent = () => {
         completedLevel={0}
         openLevel={2}
       />
-      <div className="flex mx-24">
-        <Card className="mr-24" heading="HTML Basics" levels={12} difficulty={DifficultyLevel.easy} />
-        <Card className="mr-24" heading="Semantic HTML" levels={8} difficulty={DifficultyLevel.hard} />
-      </div>
     </main>
   );
 };
