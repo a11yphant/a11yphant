@@ -3,14 +3,14 @@ import { createMock } from "@golevelup/ts-jest";
 import { ChallengeResolver } from "../../src/challenge/challenge.resolver";
 import { ChallengeService } from "../../src/challenge/challenge.service";
 import { LevelService } from "../../src/challenge/level.service";
-import { Challenge, challengeDifficulty } from "../../src/challenge/models/challenge.model";
+import { Challenge } from "../../src/challenge/models/challenge.model";
 import { Level } from "../../src/challenge/models/level.model";
 
 describe("challenge resolver", () => {
   it("can resolve a challenge", async () => {
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
-        findOne: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "test-slug", difficulty: challengeDifficulty.EASY })),
+        findOne: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "test-slug", difficulty: 0 })),
       }),
       createMock<LevelService>(),
     );
@@ -21,7 +21,7 @@ describe("challenge resolver", () => {
   });
 
   it("resolves the levels for a challenge", async () => {
-    const challenge = new Challenge({ id: "uuid", name: "test", slug: "test-slug", difficulty: challengeDifficulty.EASY });
+    const challenge = new Challenge({ id: "uuid", name: "test", slug: "test-slug", difficulty: 0 });
     const levels: Level[] = [
       { id: "uuid", hints: [], instructions: "please read the instructions", requirements: [], resources: [], tldr: "don't want to read" },
     ];
@@ -41,7 +41,7 @@ describe("challenge resolver", () => {
   it("can resolve a challenge by slug", async () => {
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
-        findOneBySlug: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "slug", difficulty: challengeDifficulty.EASY })),
+        findOneBySlug: jest.fn().mockResolvedValue(new Challenge({ id: "uuid", name: "test", slug: "slug", difficulty: 0 })),
       }),
       createMock<LevelService>(),
     );
@@ -56,9 +56,7 @@ describe("challenge resolver", () => {
 
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
-        findAll: jest
-          .fn()
-          .mockResolvedValue(slugs.map((slug) => new Challenge({ id: "uuid", name: "test", slug, difficulty: challengeDifficulty.EASY }))),
+        findAll: jest.fn().mockResolvedValue(slugs.map((slug) => new Challenge({ id: "uuid", name: "test", slug, difficulty: 0 }))),
       }),
       createMock<LevelService>(),
     );

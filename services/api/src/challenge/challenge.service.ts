@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { Challenge as ChallengeRecord } from "@prisma/client";
+import { Challenge as ChallengeRecord, Prisma } from "@prisma/client";
 
 import { PrismaService } from "../prisma/prisma.service";
+import { ChallengesFilter } from "./arg-types/challenges.args";
 import { Challenge } from "./models/challenge.model";
 
 @Injectable()
@@ -16,8 +17,16 @@ export class ChallengeService {
     return challenge ? ChallengeService.createModelFromDatabaseRecord(challenge) : null;
   }
 
-  public async findAll(): Promise<Challenge[]> {
-    const challenges = await this.prisma.challenge.findMany();
+  public async findAll(filter?: ChallengesFilter): Promise<Challenge[]> {
+    const filterObject: Prisma.ChallengeFindManyArgs = { where: {} };
+
+    if (filter) {
+      filterObject.where = { ...filter };
+    }
+
+    console.log(filterObject);
+
+    const challenges = await this.prisma.challenge.findMany(filterObject);
     return challenges.map((challenge) => ChallengeService.createModelFromDatabaseRecord(challenge));
   }
 
