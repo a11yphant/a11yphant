@@ -14,34 +14,29 @@ export class RequirementService {
       where: { levelId },
       // TODO remove when refactoring the resultForSubmission endpoint
       include: {
-        rules: true,
+        rule: true,
       },
     });
 
     return requirements.map((requirement) => RequirementService.createModelFromDatabaseRecord(requirement));
   }
 
-  static createModelFromDatabaseRecord(record: RequirementRecord & { rules: RuleRecord[] }): Requirement {
+  static createModelFromDatabaseRecord(record: RequirementRecord & { rule: RuleRecord }): Requirement {
     const requirement = new Requirement({
       id: record.id,
       title: record.title,
+      description: record.description,
     });
 
     // TODO remove when refactoring
-    if (!record.rules) {
+    if (!record.rule) {
       return requirement;
     }
 
-    requirement.rules = record.rules.map(
-      (rule) =>
-        new Rule({
-          id: rule.id,
-          key: rule.key,
-          title: rule.title,
-          shortDescription: rule.shortDescription,
-          additionalDescription: rule.additionalDescription,
-        }),
-    );
+    requirement.rule = new Rule({
+      id: record.rule.id,
+      key: record.rule.key,
+    });
 
     return requirement;
   }

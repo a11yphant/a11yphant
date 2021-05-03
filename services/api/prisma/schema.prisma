@@ -38,22 +38,21 @@ model Level {
 }
 
 model Rule {
-  id                    String        @id @default(uuid())
-  key                   String        @unique
-  title                 String
-  shortDescription      String
-  additionalDescription String?
-  requirements          Requirement[]
+  id           String        @id @default(uuid())
+  key          String        @unique
+  requirements Requirement[]
 
   @@map(name: "rules")
 }
 
 model Requirement {
-  id      String @id @default(uuid())
-  title   String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
-  rules   Rule[]
+  id          String  @id @default(uuid())
+  title       String
+  description String  @default("")
+  level       Level   @relation(fields: [levelId], references: [id])
+  levelId     String
+  rule        Rule?   @relation(fields: [ruleId], references: [id])
+  ruleId      String?
 
   @@map(name: "requirements")
 }
