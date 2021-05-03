@@ -1,18 +1,18 @@
 locals {
-  origin_id_site_http_api = "${terraform.workspace}-site-http-api-origin"
+  origin_id_site_http_api  = "${terraform.workspace}-site-http-api-origin"
   origin_id_site_s3_static = "${terraform.workspace}-site-s3-static"
-  origin_id_api_http_api = "${terraform.workspace}-api-http-api"
+  origin_id_api_http_api   = "${terraform.workspace}-api-http-api"
 }
 
 resource "aws_cloudfront_distribution" "site" {
   comment = "${terraform.workspace}-site-distribution"
 
-  aliases = var.use_custom_domain ? [ var.domain ] : []
+  aliases = var.use_custom_domain ? [var.domain] : []
 
   origin {
     domain_name = replace(aws_apigatewayv2_api.site_http_api.api_endpoint, "/^https?://([^/]*).*/", "$1")
     origin_id   = local.origin_id_site_http_api
-    
+
     custom_origin_config {
       http_port              = "80"
       https_port             = "443"
@@ -24,7 +24,7 @@ resource "aws_cloudfront_distribution" "site" {
   origin {
     domain_name = replace(heroku_app.api.web_url, "/^https?://([^/]*).*/", "$1")
     origin_id   = local.origin_id_api_http_api
-    
+
     custom_origin_config {
       http_port              = "80"
       https_port             = "443"
@@ -42,8 +42,8 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
-  enabled             = true
-  is_ipv6_enabled     = true
+  enabled         = true
+  is_ipv6_enabled = true
 
   restrictions {
     geo_restriction {
@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
- # forward graphql to api api gateway
+  # forward graphql to api api gateway
   ordered_cache_behavior {
     path_pattern     = "/graphql*"
     allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
@@ -85,8 +85,8 @@ resource "aws_cloudfront_distribution" "site" {
     target_origin_id = local.origin_id_api_http_api
 
     forwarded_values {
-       query_string = true
-       headers = ["Accept", "Referer", "Authorization", "Content-Type"]
+      query_string = true
+      headers      = ["Accept", "Referer", "Authorization", "Content-Type"]
 
       cookies {
         forward = "all"
@@ -108,8 +108,8 @@ resource "aws_cloudfront_distribution" "site" {
     target_origin_id = local.origin_id_api_http_api
 
     forwarded_values {
-       query_string = true
-       headers = ["Accept", "Referer", "Authorization", "Content-Type"]
+      query_string = true
+      headers      = ["Accept", "Referer", "Authorization", "Content-Type"]
 
       cookies {
         forward = "all"
@@ -127,11 +127,11 @@ resource "aws_cloudfront_distribution" "site" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id =  local.origin_id_site_http_api
+    target_origin_id = local.origin_id_site_http_api
 
     forwarded_values {
       query_string = true
-      headers = ["Accept", "Referer", "Authorization", "Content-Type"]
+      headers      = ["Accept", "Referer", "Authorization", "Content-Type"]
 
       cookies {
         forward = "all"
@@ -147,8 +147,8 @@ resource "aws_cloudfront_distribution" "site" {
 
   viewer_certificate {
     cloudfront_default_certificate = var.use_custom_domain ? false : true
-    acm_certificate_arn = var.use_custom_domain ? aws_acm_certificate.certificate[0].arn : null
-    ssl_support_method  = "sni-only"
+    acm_certificate_arn            = var.use_custom_domain ? aws_acm_certificate.certificate[0].arn : null
+    ssl_support_method             = "sni-only"
   }
 }
 
@@ -173,12 +173,12 @@ resource "aws_route53_record" "cdn_domain" {
   count = var.use_custom_domain ? 1 : 0
 
   zone_id = var.route53_zone_id
-  name = var.domain
-  type = "A"
+  name    = var.domain
+  type    = "A"
 
   alias {
-    name = aws_cloudfront_distribution.site.domain_name
-    zone_id = aws_cloudfront_distribution.site.hosted_zone_id
+    name                   = aws_cloudfront_distribution.site.domain_name
+    zone_id                = aws_cloudfront_distribution.site.hosted_zone_id
     evaluate_target_health = false
   }
 }

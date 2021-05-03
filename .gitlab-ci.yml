@@ -18,6 +18,8 @@ variables:
 
 default:
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
@@ -66,10 +68,11 @@ build:nestjs-aws-messaging:
     IMAGE_NAME: a11yphant/a11yphant/nestjs-aws-messaging
     IMAGE: $CI_REGISTRY/$IMAGE_NAME:$CI_COMMIT_REF_SLUG
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE --secret id=npmrc,src=.npmrc
     - docker push $IMAGE
     # extract artifacts for compatibility with the existing pipeline
     - CONTAINER_ID=$(docker create $IMAGE "")
@@ -85,6 +88,40 @@ build:nestjs-aws-messaging:
     - master
     - merge_request
 
+
+#-----------------------------------
+# ESLint Config
+#-----------------------------------
+
+lint:eslint-config:
+  extends:
+    - .lint
+    - .run_on_eslint_config_change
+  variables:
+    PROJECT_PATH: packages/eslint-config
+
+release:eslint-config:
+  tags:
+    - docker
+  stage: deploy
+  image: node:14-alpine
+  variables:
+    PROJECT_PATH: packages/eslint-config
+  before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+  script:
+    - echo $CI_PROJECT_ID
+    - echo $CI_JOB_TOKEN
+    - cat .npmrc
+    # --prefix behaves strangely when used with publish
+    - cd $PROJECT_PATH && npm publish
+  only:
+    - /^eslint-config-v.*$/
+  except:
+    - branches
+    - triggers
+
 #-----------------------------------
 # Submission Checker
 #-----------------------------------
@@ -96,6 +133,9 @@ lint:submission-checker:
   variables:
     PROJECT_PATH: services/submission-checker
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -106,6 +146,9 @@ test:submission-checker:
   variables:
     PROJECT_PATH: services/submission-checker
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -125,11 +168,12 @@ build:submission-checker:
     IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
   cache: {}
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP
   only:
     - master
@@ -148,6 +192,9 @@ generate-graphql-schema:api:
   variables:
     PROJECT_PATH: services/api
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -166,6 +213,9 @@ lint:api:
     - .lint
     - .run_on_api_change
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -186,6 +236,9 @@ test:api:
     DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/api
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -207,15 +260,16 @@ build:api:
     IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:$CI_COMMIT_REF_SLUG
   cache: {}
   before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     # api app container
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP
     # api release container
     - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --target release
+    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc --target release
     - docker push $IMAGE_RELEASE
   only:
     - master
@@ -276,6 +330,20 @@ production-dependencies:site:
 #-----------------------------------
 # Terraform
 #-----------------------------------
+
+terraform:check-format:
+  extends:
+    - .run_on_terraform_change
+  tags:
+    - docker
+  stage: analyze
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {}
+  dependencies: []
+  before_script:
+    - '' # do nothing
+  script:
+    - terraform -chdir=terraform fmt -recursive -check
 
 terraform:cloud:validate:
   extends:

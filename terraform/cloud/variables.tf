@@ -17,15 +17,15 @@ variable "heroku_registry_user" {
 }
 
 variable "heroku_registry_password" {
-  type    = string
+  type = string
 }
 
 variable "docker_tag" {
-  type    = string
+  type = string
 }
 
 variable "route53_zone_id" {
-  type    = string
+  type = string
 }
 
 variable "domain" {
@@ -43,7 +43,7 @@ variable "api_dyno_size" {
 }
 
 variable "heroku_collaborators" {
-  type    = list(string)
+  type = list(string)
   default = [
     "brandstaetter.michael@hotmail.com",
   ]

@@ -19,7 +19,7 @@ FROM package-files as builder
 
 WORKDIR /services/api
 
-RUN npm ci && rm node_modules/@a11yphant/nestjs-aws-messaging
+RUN --mount=type=secret,id=npmrc,dst=/services/api/.npmrc npm ci && rm node_modules/@a11yphant/nestjs-aws-messaging
 COPY --from=nestjs-aws-messaging-package / node_modules/@a11yphant/nestjs-aws-messaging/
 
 COPY services/api/tsconfig.json ./
@@ -33,7 +33,7 @@ FROM package-files as production-dependencies
 
 WORKDIR /services/api
 
-RUN npm ci --production && rm node_modules/@a11yphant/nestjs-aws-messaging
+RUN --mount=type=secret,id=npmrc,dst=/services/api/.npmrc npm ci --production && rm node_modules/@a11yphant/nestjs-aws-messaging
 COPY --from=nestjs-aws-messaging-package / node_modules/@a11yphant/nestjs-aws-messaging/
 
 FROM node:14-alpine AS release
