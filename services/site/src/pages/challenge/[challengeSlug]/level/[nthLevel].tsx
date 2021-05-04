@@ -112,8 +112,8 @@ const Level: React.FunctionComponent = () => {
           }}
         />
         <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
-        <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
-          <Button full onClick={submitLevel} className="px-10 tracking-wider">
+        <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
+          <Button full onClick={submitLevel} className="px-10">
             Submit
           </Button>
         </div>
