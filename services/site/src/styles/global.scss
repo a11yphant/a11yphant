@@ -87,4 +87,24 @@
     .logo {
         @apply text-2xl;
     }
+
+    // make whole card focusable when a-tag is only inside
+    .card {
+        a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        &:focus-within {
+            box-shadow: 0 0 0 0.25rem #7331ff;
+        }
+
+        &:focus-within a:focus {
+            outline: none;
+        }
+    }
 }

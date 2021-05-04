@@ -1,5 +1,6 @@
 import Card from "app/components/homepage/Card";
 import { DifficultyLevel } from "app/components/homepage/Card";
+import { ChallengeOverviewFragment } from "app/generated/graphql";
 import React from "react";
 
 interface ChallengeListProps {
@@ -7,9 +8,29 @@ interface ChallengeListProps {
   heading: React.ReactNode;
   completedLevel: number;
   openLevel: number;
+  challenges: ChallengeOverviewFragment[];
 }
 
-const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, completedLevel, openLevel }) => {
+const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, completedLevel, openLevel, challenges }) => {
+  // render challenges
+  const getChallenges = React.useMemo(
+    () =>
+      challenges.map((challenge, idx) => {
+        // TODO: load difficulty from API
+        return (
+          <Card
+            key={challenge.id}
+            className="mr-24"
+            challengeSlug={challenge.slug}
+            heading={challenge.name}
+            levels={challenge.levels.length}
+            difficulty={DifficultyLevel.easy}
+          />
+        );
+      }),
+    [challenges],
+  );
+
   return (
     <div className={`${className} flex flex-col items-start my-5`}>
       <div className="flex flex-row justify-center items-baseline mx-4 mb-6">
@@ -18,10 +39,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
           ({completedLevel}/{openLevel})
         </p>
       </div>
-      <div className="flex">
-        <Card className="mr-24" heading="HTML Basics" levels={12} difficulty={DifficultyLevel.easy} />
-        <Card className="mr-24" heading="Semantic HTML" levels={8} difficulty={DifficultyLevel.hard} />
-      </div>
+      <ul className="flex">{getChallenges}</ul>
     </div>
   );
 };
