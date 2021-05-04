@@ -20,6 +20,7 @@ module.exports = {
         primaryDark: "#6657C5",
         error: "#E75A7C",
         background: "#121212",
+        backgroundMiddle: "#1C1C1C",
         grey: "#EDEDED",
         greyLight: "#EFEFEF",
         greyMiddle: "#B4B8B8",
