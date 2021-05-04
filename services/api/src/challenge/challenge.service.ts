@@ -24,8 +24,6 @@ export class ChallengeService {
       filterObject.where = { ...filter };
     }
 
-    console.log(filterObject);
-
     const challenges = await this.prisma.challenge.findMany(filterObject);
     return challenges.map((challenge) => ChallengeService.createModelFromDatabaseRecord(challenge));
   }
