@@ -105,7 +105,7 @@ export class ImportService {
       medium: 1,
       hard: 2,
     };
-    return difficultyMap[difficulty];
+    return difficultyMap[difficulty] || 0;
   }
 
   private async upsertLevelsForChallenge(levels: Level[], challengeId: string): Promise<void> {

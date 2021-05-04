@@ -37,6 +37,23 @@ describe("import service", () => {
     expect(storedChallenge.slug).toEqual(challenge.slug);
   });
 
+  it("defaults to easy if the difficulty is not recognized", async () => {
+    const prisma = getPrismaService();
+    const challenge: Challenge = {
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "slug",
+      name: "test",
+      difficulty: "easy-peasy-lemon-squeezy",
+      levels: [],
+    };
+
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+    await importer.importChallenge(challenge);
+
+    const storedChallenge = await prisma.challenge.findFirst();
+    expect(storedChallenge.difficulty).toBe(0);
+  });
+
   it("can import a rule into the db", async () => {
     const prisma = getPrismaService();
     const rule: Rule = {
