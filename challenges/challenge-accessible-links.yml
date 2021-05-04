@@ -2,7 +2,7 @@ challenge:
   id: 242003d6-402e-49b7-9ec2-702445b37c8e
   name: Accessible Links
   slug: accessible-links
-  difficulty: easy
+  difficulty: medium
   levels:
     - id: 5557e647-7a14-47b7-b51c-142f25cc998c
       order: 1
