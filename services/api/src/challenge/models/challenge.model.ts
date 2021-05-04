@@ -11,6 +11,7 @@ export class Challenge {
     this.id = properties.id;
     this.slug = properties.slug;
     this.name = properties.name;
+    this.difficulty = properties.difficulty;
   }
 
   @Field(() => ID)
