@@ -6,14 +6,14 @@ import React from "react";
 afterEach(cleanup);
 
 // expected breadcrumbs
-const challengeSlug = "challenge-1";
+const challengeSlug = "mock-challenge-1";
 const expectedBreadcrumbHome = {
   href: "/",
-  breadcrumb: "Home",
+  breadcrumb: "Mock Home",
 };
 const expectedBreadcrumbChallenge = {
   href: `/challenge/${challengeSlug}`,
-  breadcrumb: "First Challenge",
+  breadcrumb: "Mock First Challenge",
 };
 
 jest.mock("next/router", () => ({

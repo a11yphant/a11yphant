@@ -6,14 +6,14 @@ import router from "next/router";
 
 afterEach(cleanup);
 
-const challengeSlug = "challenge-1";
+const challengeSlug = "mock-challenge-1";
 const expectedBreadcrumbHome = {
   href: "/",
-  breadcrumb: "Home",
+  breadcrumb: "Mock Home",
 };
 const expectedBreadcrumbChallenge = {
   href: `/challenge/${challengeSlug}`,
-  breadcrumb: "First Challenge",
+  breadcrumb: "Mock First Challenge",
 };
 
 jest.mock("app/components/breadcrumbs/routes");
@@ -26,8 +26,8 @@ beforeEach(() => {
     {
       challenge: {
         id: "242003d6-402e-49b7-9ec2-702445b37c8e",
-        name: "First Challenge",
-        levels: [{ id: "5557e647-7a14-47b7-b51c-142f25cc998c" }, { id: "0682b540-67cb-45b6-bdf3-692fb78e871d" }],
+        name: expectedBreadcrumbChallenge.breadcrumb,
+        levels: [{ id: "5557e647-7a14-47b7-b51c-142f25cc998c" }],
       },
     },
     ChallengeBySlugDocument,

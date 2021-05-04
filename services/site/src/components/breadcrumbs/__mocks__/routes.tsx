@@ -7,7 +7,7 @@ export const routes: Routes = {
     getBreadcrumbInfo: async () => {
       return {
         href: "/",
-        breadcrumb: "Home",
+        breadcrumb: "Mock Home",
       };
     },
   },
