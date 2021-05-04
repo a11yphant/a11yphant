@@ -1,0 +1,25 @@
+challenge:
+  id: xxuuid
+  name: xxname
+  slug: xxslug
+  introduction: >
+    xxintro
+  levels:
+    - id: xxuuid
+      order: 1
+      instructions: >
+        xxinstructions
+      requirements:
+        - key: xxrulekey
+          options:
+            selector: htmltag
+      hints:
+        - id: xxuuid
+          content: xxcontent
+      code:
+        html: >
+          xxhtmlcode
+        css: >
+          xxcsscode
+        js: >
+          xxjscode
