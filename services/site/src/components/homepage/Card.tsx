@@ -51,6 +51,7 @@ const Card: React.FunctionComponent<ICardProps> = ({ className, heading, levels,
           <p className={clsx("m-0 text-greyMiddle transition duration-300", "group-hover:text-greyDark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
           </p>
+          <p className="sr-only">{`Difficulty ${difficulty}`}</p>
           <div className="flex">
             <div
               className={clsx(

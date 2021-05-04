@@ -7,7 +7,7 @@ interface LegendProps {
 
 const Legend: React.FunctionComponent<LegendProps> = ({ className }) => {
   return (
-    <div className={clsx("flex flex-row mt-16 mb-8", className)}>
+    <div className={clsx("flex flex-row mt-16 mb-8", className)} aria-hidden="true">
       <ul className="flex flex-row">
         <li className="text-grey pr-1 mr-2 flex items-center">
           <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-1" />
