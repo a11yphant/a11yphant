@@ -1,11 +1,10 @@
 import { useApolloClient } from "@apollo/client";
+import { getRouteList } from "app/components/breadcrumbs/getRouteList";
 import { BreadcrumbInfo } from "app/components/breadcrumbs/routes";
 import Slash from "app/components/icons/Slash";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-
-import { getRouteList } from "./getRouteList";
 
 const Breadcrumbs: React.FunctionComponent = () => {
   const router = useRouter();
@@ -28,10 +27,6 @@ const Breadcrumbs: React.FunctionComponent = () => {
       isMounted = false;
     };
   }, [router.pathname]);
-
-  React.useEffect(() => {
-    console.log(routeList);
-  }, [routeList]);
 
   return (
     <nav className="flex" aria-label="Breadcrumb">

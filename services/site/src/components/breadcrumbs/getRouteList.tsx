@@ -2,7 +2,7 @@ import { ApolloClient } from "@apollo/client";
 import { BreadcrumbInfo, routes } from "app/components/breadcrumbs/routes";
 import { NextRouter } from "next/router";
 
-export const getRouteList = async (router: NextRouter, apolloClient: ApolloClient<object>) => {
+export const getRouteList = async (router: NextRouter, apolloClient: ApolloClient<object>): Promise<BreadcrumbInfo[]> => {
   const urlParams = router.query;
   const pathnameArr = router.pathname.split("/");
 
@@ -16,8 +16,6 @@ export const getRouteList = async (router: NextRouter, apolloClient: ApolloClien
       breadcrumbInfoList.push(breadcrumbInfo);
     }
   }
-
-  console.log(breadcrumbInfoList);
 
   return breadcrumbInfoList;
 };
