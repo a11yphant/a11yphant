@@ -34,8 +34,8 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
       className={clsx(
         "relative overflow-hidden w-64 h-64 border-2 border-background bg-backgroundMiddle rounded-xl flex flex-col justify-end",
         "group transition duration-300 hover:bg-grey",
-        className,
         "card box-shadow",
+        className,
       )}
     >
       {displayGradient}
@@ -65,14 +65,14 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1 transition duration-300",
                 "group-hover:border-greyDark",
-                difficulty != DifficultyLevel.easy && "bg-grey group-hover:bg-greyDark",
+                difficulty !== DifficultyLevel.easy && "bg-grey group-hover:bg-greyDark",
               )}
             />
             <div
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1 transition duration-300",
                 "group-hover:border-greyDark",
-                difficulty == DifficultyLevel.hard && "bg-grey group-hover:bg-greyDark",
+                difficulty === DifficultyLevel.hard && "bg-grey group-hover:bg-greyDark",
               )}
             />
           </div>
