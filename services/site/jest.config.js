@@ -13,4 +13,5 @@ module.exports = {
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s(x)"],
   coverageReporters: ["text", "text-summary", "cobertura"],
   coverageDirectory: "<rootDir>",
+  setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
 };

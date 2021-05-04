@@ -1,5 +1,4 @@
 import { ApolloClient } from "@apollo/client";
-import Home from "app/components/icons/Home";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery, ChallengeBySlugQueryVariables } from "app/generated/graphql";
 import { ParsedUrlQuery } from "querystring";
 import React from "react";
@@ -17,21 +16,12 @@ export interface BreadcrumbInfo {
   breadcrumb: React.ReactNode;
 }
 
-export const useRoutes = (): Routes => {
-  return routes;
-};
-
-const routes: Routes = {
+export const routes: Routes = {
   "/": {
     getBreadcrumbInfo: async () => {
       return {
         href: "/",
-        breadcrumb: (
-          <>
-            <span className="sr-only">Home</span>
-            <Home />
-          </>
-        ),
+        breadcrumb: "Challenges",
       };
     },
   },
@@ -62,7 +52,13 @@ const routes: Routes = {
 
       return {
         href: `/challenge/${challengeSlug}/level/${nthLevel}`,
-        breadcrumb: `Level ${nthLevel} / 0${totalLevels}`,
+        breadcrumb: `Level ${Number(nthLevel).toLocaleString("de-AT", {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })} / ${totalLevels.toLocaleString("de-AT", {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })}`,
       };
     },
   },
