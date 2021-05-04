@@ -16,11 +16,7 @@ export interface BreadcrumbInfo {
   breadcrumb: React.ReactNode;
 }
 
-export const useRoutes = (): Routes => {
-  return routes;
-};
-
-const routes: Routes = {
+export const routes: Routes = {
   "/": {
     getBreadcrumbInfo: async () => {
       return {

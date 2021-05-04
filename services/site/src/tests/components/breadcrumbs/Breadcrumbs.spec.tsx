@@ -74,20 +74,8 @@ jest.mock("next/router", () => ({
   },
 }));
 
-jest.mock("app/components/breadcrumbs/routes", () => ({
-  useRoutes() {
-    return {
-      "/": {
-        getBreadcrumbInfo: async () => {
-          return {
-            href: "/",
-            breadcrumb: "Challenges",
-          };
-        },
-      },
-    };
-  },
-}));
+jest.mock("app/components/breadcrumbs/routes");
+jest.mock("app/components/breadcrumbs/getRouteList");
 
 describe("Breadcrumbs", () => {
   it("renders correctly", async () => {
