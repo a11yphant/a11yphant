@@ -19,9 +19,9 @@ const Home: React.FunctionComponent = () => {
         heading={
           <>
             Easy
-            <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
-            <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-            <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+            <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+            <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+            <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
           </>
         }
         completedLevel={0}
