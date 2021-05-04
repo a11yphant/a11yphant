@@ -11,7 +11,7 @@ const levelAmount = 12;
 
 describe("Card", () => {
   it("renders correctly", () => {
-    const { container } = render(
+    render(
       <Card
         key={1}
         className="mr-24"
@@ -25,6 +25,7 @@ describe("Card", () => {
 
     expect(screen.getByText(headingText, { selector: "a" })).toBeTruthy();
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeTruthy();
-    expect(container.querySelectorAll("img").length).toBeGreaterThan(0);
+    // image is temporarily replaced with an background image
+    // expect(container.querySelectorAll("img").length).toBeGreaterThan(0);
   });
 });
