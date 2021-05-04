@@ -73,4 +73,37 @@ describe("level service", () => {
       expect(level).toBeNull();
     });
   });
+
+  describe("getNumberOfLevelsForChallenge", () => {
+    it("returns the number of levels a challenge has", async () => {
+      const prisma = getPrismaService();
+
+      const levels = [
+        {
+          order: 1,
+          instructions: "instructions 1",
+          tldr: "tldr",
+        },
+        {
+          order: 2,
+          instructions: "instructions 2",
+          tldr: "tldr",
+        },
+      ];
+
+      const challenge = await prisma.challenge.create({
+        data: {
+          name: "test",
+          slug: "test",
+          difficulty: 0,
+          levels: {
+            create: levels,
+          },
+        },
+      });
+      const service = new LevelService(prisma);
+      const count = await service.getNumberOfLevelsForChallenge(challenge.id);
+      expect(count).toBe(levels.length);
+    });
+  });
 });
