@@ -78,12 +78,13 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
   return (
     <div className={clsx("w-inherit h-full", "editor-container")}>
       <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark")}>
-        <h3 ref={headingRef} className={clsx("mb-2", "h6")}>
+        <h3 ref={headingRef} className={clsx("mb-5", "h6")}>
           {config.heading}
         </h3>
         <div className="absolute" style={{ top: editorTop }}>
           <Editor
             {...props}
+            theme="vs-dark"
             language={config.language}
             value={config.code}
             onChange={(value) => {
