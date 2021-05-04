@@ -4,7 +4,7 @@ import { NextRouter } from "next/router";
 
 export const getRouteList = async (router: NextRouter, apolloClient: ApolloClient<object>): Promise<BreadcrumbInfo[]> => {
   const urlParams = router.query;
-  const pathnameArr = router.pathname.split("/");
+  const pathnameArr = router.pathname === "/" ? [""] : router.pathname.split("/");
 
   const breadcrumbInfoList: BreadcrumbInfo[] = [];
 
