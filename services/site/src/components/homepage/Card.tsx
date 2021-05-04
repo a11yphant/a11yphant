@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface ICardProps {
+interface CardProps {
   className?: string;
   heading: string;
   difficulty: DifficultyLevel;
   levels: number;
   challengeSlug: string;
+  challengeNumber: number;
 }
 
 export enum DifficultyLevel {
@@ -17,7 +18,7 @@ export enum DifficultyLevel {
   hard = "hard",
 }
 
-const Card: React.FunctionComponent<ICardProps> = ({ className, heading, levels, difficulty, challengeSlug }) => {
+const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
   const displayGradient = React.useMemo(() => {
     if (difficulty == DifficultyLevel.easy) {
       return <Image src="/images/01_easy.jpg" alt="" width="500" height="500" />;
@@ -40,6 +41,7 @@ const Card: React.FunctionComponent<ICardProps> = ({ className, heading, levels,
       {displayGradient}
       <div className="p-4">
         <h4 className="w-full">
+          <span className="sr-only">{`Challenge ${challengeNumber}`}</span>
           {/* TODO: Link to Info Pop-Up when implemented */}
           <Link href={`/challenge/${challengeSlug}/level/01`}>
             <a className={clsx("h6", "border-transparent transition duration-300", "group-hover:text-greyDark group-hover:border-transparent")}>
