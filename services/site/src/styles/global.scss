@@ -143,6 +143,15 @@
         @apply bg-light;
     }
 
+    .container-dark {
+        @apply overflow-hidden;
+        @apply relative;
+        @apply border-2;
+        @apply rounded-xl;
+        @apply border-backgroundMiddle;
+        @apply bg-backgroundMiddle;
+    }
+
     .editor-container {
         padding: 0 0.5rem;
 

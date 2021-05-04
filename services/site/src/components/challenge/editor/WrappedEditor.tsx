@@ -1,8 +1,9 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
-import Trash from "app/components/icons/Trash";
+import Trash from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
+import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
@@ -75,9 +76,9 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
   });
 
   return (
-    <div className="editor-container w-inherit h-full box-border">
-      <div ref={wrapperRef} className="relative border-2 rounded-lg border-primary py-2 px-4 w-inherit h-full">
-        <h3 ref={headingRef} className="text-primary mb-4">
+    <div className={clsx("w-inherit h-full", "editor-container")}>
+      <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark")}>
+        <h3 ref={headingRef} className={clsx("mb-2", "h6")}>
           {config.heading}
         </h3>
         <div className="absolute" style={{ top: editorTop }}>
@@ -96,7 +97,10 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           onClick={() => {
             setModalOpen(true);
           }}
-          className="absolute bottom-2 flex items-center tracking-wide transition duration-300 text-primary font-bold group hover:text-primaryDark group-hover:text-primaryDark"
+          className={clsx(
+            "absolute bottom-2 flex items-center transition duration-300 text-grey",
+            "group hover:text-primaryDark group-hover:text-primaryDark",
+          )}
           ref={buttonRef}
         >
           <Trash />
