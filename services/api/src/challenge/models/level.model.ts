@@ -7,10 +7,11 @@ import { Resource } from "./resource.model";
 
 @ObjectType()
 export class Level {
-  constructor(properties: { id: string; tldr: string; instructions: string }) {
+  constructor(properties: { id: string; tldr: string; instructions: string; order: number }) {
     this.id = properties.id;
     this.tldr = properties.tldr;
     this.instructions = properties.instructions;
+    this.order = properties.order;
   }
 
   @Field(() => ID)
@@ -25,6 +26,9 @@ export class Level {
     description: "Instructions use HTML to provide basic formatting.",
   })
   instructions: string;
+
+  @Field(() => Number)
+  order: number;
 
   @Field(() => [Requirement])
   requirements: Requirement[];

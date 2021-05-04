@@ -43,7 +43,7 @@ export class LevelService {
   }
 
   public static createModelFromDatabaseRecord(record: LevelRecord): Level {
-    const level = new Level({ id: record.id, tldr: record.tldr, instructions: record.instructions });
+    const level = new Level({ id: record.id, tldr: record.tldr, instructions: record.instructions, order: record.order });
 
     if (!record.html && !record.css && !record.js) {
       return level;

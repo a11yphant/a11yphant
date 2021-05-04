@@ -30,6 +30,7 @@ describe("submission resolver", () => {
       id: "id",
       tldr: "halloo",
       instructions: "hallo aus den tests",
+      order: 0,
     });
 
     const resolver = new SubmissionResolver(
