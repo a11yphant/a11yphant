@@ -134,6 +134,15 @@
         box-shadow: 0 0 1rem 0.5rem #000;
     }
 
+    .container-light {
+        @apply overflow-hidden;
+        @apply relative;
+        @apply border-2;
+        @apply rounded-xl;
+        @apply border-light;
+        @apply bg-light;
+    }
+
     .editor-container {
         padding: 0 0.5rem;
 
