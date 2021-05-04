@@ -25,7 +25,6 @@ jest.mock("next/router", () => ({
   },
 }));
 
-jest.mock("app/components/breadcrumbs/routes");
 jest.mock("app/components/breadcrumbs/getRouteList", () => ({
   getRouteList: async () => {
     return [
@@ -40,7 +39,7 @@ jest.mock("app/components/breadcrumbs/getRouteList", () => ({
 }));
 
 describe("Breadcrumbs", () => {
-  it("renders correctly", async () => {
+  it("render correctly", async () => {
     let container;
     await act(async () => {
       const component = render(
