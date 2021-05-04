@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -19,27 +18,20 @@ export enum DifficultyLevel {
 }
 
 const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
-  const displayGradient = React.useMemo(() => {
-    if (difficulty == DifficultyLevel.easy) {
-      return <Image src="/images/01_easy.jpg" alt="" width="500" height="500" />;
-    } else if (difficulty == DifficultyLevel.medium) {
-      return <Image src="/images/02_medium.jpg" alt="" width="500" height="500" />;
-    } else if (difficulty == DifficultyLevel.hard) {
-      return <Image src="/images/03_hard.jpg" alt="" width="500" height="500" />;
-    }
-  }, [difficulty]);
-
   return (
     <li
       className={clsx(
         "relative overflow-hidden w-64 h-64 border-2 border-background bg-backgroundMiddle rounded-xl flex flex-col justify-end",
         "group transition duration-300 hover:bg-grey",
         "card box-shadow",
+        difficulty == DifficultyLevel.easy && "bg-gradient-easy",
+        difficulty == DifficultyLevel.medium && "bg-gradient-medium",
+        difficulty == DifficultyLevel.hard && "bg-gradient-hard",
+        "bg-no-repeat	bg-contain bg-top",
         className,
       )}
     >
-      {displayGradient}
-      <div className="p-4">
+      <div className={clsx("p-4 pt-2 bg-backgroundMiddle transition duration-300", "group-hover:bg-grey")}>
         <h4 className="w-full">
           <span className="sr-only">{`Challenge ${challengeNumber}`}</span>
           {/* TODO: Link to Info Pop-Up when implemented */}

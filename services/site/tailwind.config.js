@@ -35,6 +35,11 @@ module.exports = {
         width: "width",
         display: "display",
       },
+      backgroundImage: (theme) => ({
+        "gradient-easy": "url('/images/01_easy.jpg')",
+        "gradient-medium": "url('/images/02_medium.jpg')",
+        "gradient-hard": "url('/images/03_hard.jpg')",
+      }),
     },
   },
   variants: {
