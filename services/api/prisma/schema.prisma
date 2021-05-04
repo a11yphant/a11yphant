@@ -14,7 +14,7 @@ model Challenge {
   id         String  @id @default(uuid())
   slug       String  @unique
   name       String
-  difficulty Int
+  difficulty Int     @default(0)
   levels     Level[]
 
   @@map(name: "challenges")
