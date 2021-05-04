@@ -1,5 +1,6 @@
 import { Args, ID, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
+import { ChallengesArgs } from "./arg-types/challenges.args";
 import { ChallengeService } from "./challenge.service";
 import { LevelService } from "./level.service";
 import { Challenge } from "./models/challenge.model";
@@ -20,8 +21,8 @@ export class ChallengeResolver {
   }
 
   @Query(() => [Challenge], { description: "Get all existing challenges." })
-  async challenges(): Promise<Challenge[]> {
-    return this.challengeService.findAll();
+  async challenges(@Args({ nullable: true }) { filter }: ChallengesArgs = {}): Promise<Challenge[]> {
+    return this.challengeService.findAll(filter);
   }
 
   @ResolveField()

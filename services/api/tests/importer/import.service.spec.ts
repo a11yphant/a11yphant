@@ -22,6 +22,7 @@ describe("import service", () => {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "slug",
       name: "test",
+      difficulty: "easy",
       levels: [],
     };
 
@@ -34,6 +35,23 @@ describe("import service", () => {
     expect(storedChallenge.id).toEqual(challenge.id);
     expect(storedChallenge.name).toEqual(challenge.name);
     expect(storedChallenge.slug).toEqual(challenge.slug);
+  });
+
+  it("defaults to easy if the difficulty is not recognized", async () => {
+    const prisma = getPrismaService();
+    const challenge: Challenge = {
+      id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+      slug: "slug",
+      name: "test",
+      difficulty: "easy-peasy-lemon-squeezy",
+      levels: [],
+    };
+
+    const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+    await importer.importChallenge(challenge);
+
+    const storedChallenge = await prisma.challenge.findFirst();
+    expect(storedChallenge.difficulty).toBe(0);
   });
 
   it("can import a rule into the db", async () => {
@@ -60,6 +78,7 @@ describe("import service", () => {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "test-slug",
       name: "test",
+      difficulty: "easy",
       levels: [
         {
           id: "a",
@@ -93,6 +112,7 @@ describe("import service", () => {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "test-slug",
       name: "test",
+      difficulty: "easy",
       levels: [
         {
           id: "a",
@@ -129,6 +149,7 @@ describe("import service", () => {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "test-slug",
       name: "test",
+      difficulty: "easy",
       levels: [
         {
           id: "a",
@@ -160,6 +181,7 @@ describe("import service", () => {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "test-slug",
       name: "test",
+      difficulty: "easy",
       levels: [
         {
           id: "a",
@@ -191,6 +213,7 @@ describe("import service", () => {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "test-slug",
       name: "test",
+      difficulty: "easy",
       levels: [
         {
           id: "a",
@@ -281,6 +304,7 @@ describe("import service", () => {
       id: "8d42d73f-e566-4575-8250-2c1532feb856",
       slug: "super-challenge",
       name: "best challenge ever",
+      difficulty: "easy",
       levels: [
         {
           id: "f3b74759-59b7-4e42-83de-f68886b30a61",

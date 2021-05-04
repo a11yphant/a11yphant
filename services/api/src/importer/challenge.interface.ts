@@ -3,6 +3,7 @@ export interface Challenge {
   slug: string;
   name: string;
   levels: Level[];
+  difficulty: string;
 }
 
 export interface Level {

@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
+import { RuleStatus } from "../enums/rule-status.enum";
 import { Requirement } from "./requirement.model";
-import { RuleStatus } from "./rule-status.enum";
 
 @ObjectType()
 export class Rule {

@@ -1,8 +1,8 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 import { v4 as uuidv4 } from "uuid";
 
+import { RuleStatus } from "../challenge/enums/rule-status.enum";
 import { Check } from "../challenge/models/check.model";
-import { RuleStatus } from "../challenge/models/rule-status.enum";
 import { RequirementService } from "../challenge/requirement.service";
 import { Result } from "./models/result.model";
 import { ResultStatus } from "./models/result-status.enum";

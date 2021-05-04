@@ -11,10 +11,11 @@ generator client {
 }
 
 model Challenge {
-  id     String  @id @default(uuid())
-  slug   String  @unique
-  name   String
-  levels Level[]
+  id         String  @id @default(uuid())
+  slug       String  @unique
+  name       String
+  difficulty Int     @default(0)
+  levels     Level[]
 
   @@map(name: "challenges")
 }

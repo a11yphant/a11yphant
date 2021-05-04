@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
 import { ChallengeService } from "../../src/challenge/challenge.service";
+import { ChallengeDifficulty } from "../../src/challenge/enums/challenge-difficulty.enum";
 import { useDatabase } from "../helpers";
 
 describe("challenge service", () => {
@@ -15,6 +16,7 @@ describe("challenge service", () => {
         data: {
           name: "test",
           slug: "test-slug",
+          difficulty: ChallengeDifficulty.EASY,
         },
       });
 
@@ -40,6 +42,7 @@ describe("challenge service", () => {
         data: {
           name: "test",
           slug: "test-slug",
+          difficulty: ChallengeDifficulty.EASY,
         },
       });
 
@@ -70,6 +73,7 @@ describe("challenge service", () => {
             data: {
               name: "hello",
               slug: challengeSlug,
+              difficulty: ChallengeDifficulty.EASY,
             },
           }),
         ),
@@ -87,6 +91,70 @@ describe("challenge service", () => {
 
       const emptyChallenges = await service.findAll();
       expect(emptyChallenges.length).toBe(0);
+    });
+
+    describe("difficulty filter", () => {
+      it("finds all challenges when no filter is set", async () => {
+        const prisma = getPrismaService();
+        const service = new ChallengeService(prisma);
+
+        const challenges = [
+          {
+            name: "test1",
+            slug: "test1",
+            difficulty: ChallengeDifficulty.EASY,
+          },
+          {
+            name: "test2",
+            slug: "test2",
+            difficulty: ChallengeDifficulty.MEDIUM,
+          },
+          {
+            name: "test3",
+            slug: "test3",
+            difficulty: ChallengeDifficulty.HARD,
+          },
+        ];
+
+        await Promise.all(challenges.map((data) => prisma.challenge.create({ data })));
+
+        const foundChallenges = await service.findAll();
+
+        expect(foundChallenges.length).toBe(challenges.length);
+      });
+
+      it("finds only filtered challenges", async () => {
+        const prisma = getPrismaService();
+        const service = new ChallengeService(prisma);
+
+        const challenges = [
+          {
+            name: "test1",
+            slug: "test1",
+            difficulty: ChallengeDifficulty.EASY,
+          },
+          {
+            name: "test2",
+            slug: "test2",
+            difficulty: ChallengeDifficulty.MEDIUM,
+          },
+          {
+            name: "test3",
+            slug: "test3",
+            difficulty: ChallengeDifficulty.MEDIUM,
+          },
+          {
+            name: "test4",
+            slug: "test4",
+            difficulty: ChallengeDifficulty.HARD,
+          },
+        ];
+
+        await Promise.all(challenges.map((data) => prisma.challenge.create({ data })));
+
+        const foundChallenges = await service.findAll({ difficulty: ChallengeDifficulty.MEDIUM });
+        expect(foundChallenges.length).toBe(challenges.filter((c) => c.difficulty === ChallengeDifficulty.MEDIUM).length);
+      });
     });
   });
 });
