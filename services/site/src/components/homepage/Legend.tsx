@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 interface LegendProps {
@@ -6,24 +7,24 @@ interface LegendProps {
 
 const Legend: React.FunctionComponent<LegendProps> = ({ className }) => {
   return (
-    <div className={`${className} flex flex-row justify-between items-center box-border mt-2 mb-8 w-full `}>
+    <div className={clsx("flex flex-row mt-16 mb-8", className)} aria-hidden="true">
       <ul className="flex flex-row">
-        <li className="text-primary pr-1 mr-2 flex items-center">
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-primary mr-1" />
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-white mr-1" />
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-white mr-2" />
+        <li className="text-grey pr-1 mr-2 flex items-center">
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-1" />
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-transparent mr-1" />
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-transparent mr-2" />
           Easy
         </li>
-        <li className="text-primary px-1 mx-2 flex items-center">
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-primary mr-1" />
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-primary mr-1" />
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-white mr-2" />
+        <li className="text-grey px-1 mx-2 flex items-center">
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-1" />
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-1" />
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-transparent mr-2" />
           Medium
         </li>
-        <li className="text-primary px-1 mx-2 flex items-center">
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-primary mr-1" />
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-primary mr-1" />
-          <div className="w-3.5 h-4/5 border-2 rounded border-primary bg-primary mr-2" />
+        <li className="text-grey px-1 mx-2 flex items-center">
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-1" />
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-1" />
+          <div className="w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey mr-2" />
           Hard
         </li>
       </ul>

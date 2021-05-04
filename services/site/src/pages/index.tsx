@@ -1,25 +1,33 @@
-import Card from "app/components/Card";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
+import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
-import { HelloWorldDocument, useHelloWorldQuery } from "app/generated/graphql";
+import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apolloClient";
 import { GetServerSideProps } from "next";
 import React from "react";
-
 const Home: React.FunctionComponent = () => {
-  const { loading, data } = useHelloWorldQuery();
+  const {
+    data: { challenges },
+  } = useChallengesQuery();
 
   return (
     <main className="flex flex-col h-19/20 box-border p-4">
       <ChallengeHeader className="mx-24" />
       <Legend className="mx-24" />
-      <Card heading={<h1>A11y Challenges</h1>}>
-        <p>
-          Welcome to a11yphant.cool! This is a project created by Michael Brandstätter, Thomas Dax, Daniela Kubesch and Luca Pircher during their MMT
-          Master degree program at FH Salzburg
-        </p>
-        <p>{loading ? "Loading" : data?.helloWorld[0].message}</p>
-      </Card>
+      <ChallengeList
+        className="mx-24"
+        heading={
+          <>
+            Easy
+            <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+            <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+            <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+          </>
+        }
+        completedLevel={0}
+        openLevel={2}
+        challenges={challenges}
+      />
     </main>
   );
 };
@@ -28,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
-    query: HelloWorldDocument,
+    query: ChallengesDocument,
   });
 
   return {

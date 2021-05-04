@@ -1,7 +1,7 @@
 import { Controller, Logger } from "@nestjs/common";
 import { EventPattern } from "@nestjs/microservices";
 
-import { RuleStatus } from "../challenge/models/rule-status.enum";
+import { RuleStatus } from "../challenge/enums/rule-status.enum";
 import { RequirementResultService } from "./requirement-result.service";
 import { ResultService } from "./result.service";
 import { SubmissionCheckCompletedEvent } from "./submission-check-completed-event.interface";

@@ -1,6 +1,6 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
-import { RequirementResult } from "../submission/models/requirement-result.model";
+import { RequirementResult } from "./models/requirement-result.model";
 import { Result } from "./models/result.model";
 import { RequirementResultService } from "./requirement-result.service";
 import { ResultService } from "./result.service";

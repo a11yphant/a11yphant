@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CheckResult, Requirement } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { RuleStatus } from "../challenge/models/rule-status.enum";
+import { RuleStatus } from "../challenge/enums/rule-status.enum";
 import { PrismaService } from "../prisma/prisma.service";
 import { RequirementResult } from "../submission/models/requirement-result.model";
 

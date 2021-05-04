@@ -1,0 +1,14 @@
+fragment ChallengeOverview on Challenge {
+    id
+    slug
+    name
+    levels {
+        id
+    }
+}
+
+query challenges {
+  challenges {
+    ...ChallengeOverview
+  }
+}

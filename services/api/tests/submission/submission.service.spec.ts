@@ -22,6 +22,7 @@ describe("submission service", () => {
       data: {
         name: "submission service test",
         slug: "sub-serv-test",
+        difficulty: 0,
       },
     });
 
@@ -68,6 +69,7 @@ describe("submission service", () => {
       data: {
         name: "submission service test",
         slug: "sub-serv-test",
+        difficulty: 0,
       },
     });
 

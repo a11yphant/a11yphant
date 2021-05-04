@@ -1,7 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
+import { RuleStatus } from "../../challenge/enums/rule-status.enum";
 import { Requirement } from "../../challenge/models/requirement.model";
-import { RuleStatus } from "../../challenge/models/rule-status.enum";
 
 @ObjectType()
 export class RequirementResult extends Requirement {

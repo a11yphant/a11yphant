@@ -13,7 +13,7 @@ describe("requirement service", () => {
       data: {
         instructions: "",
         tldr: "",
-        challenge: { create: { name: "level", slug: "level" } },
+        challenge: { create: { name: "level", slug: "level", difficulty: 0 } },
         requirements: { create: [{ title: "1" }, { title: "2" }] },
       },
     });
