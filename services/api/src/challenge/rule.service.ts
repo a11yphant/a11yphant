@@ -7,8 +7,8 @@ import { Rule } from "./models/rule.model";
 export class RuleService {
   constructor(private prisma: PrismaService) {}
   async findOneForRequirement(requirementId: string): Promise<Rule> {
-    const record = await this.prisma.rule.findFirst({ where: { requirements: { every: { id: requirementId } } } });
+    const record = await this.prisma.requirement.findFirst({ where: { id: requirementId }, select: { rule: true } });
 
-    return record ? new Rule({ id: record.id, key: record.key }) : null;
+    return record?.rule ? new Rule({ id: record.rule.id, key: record.rule.key }) : null;
   }
 }

@@ -1,8 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
-import { RequirementFactory } from "tests/factories/models/requirement.factory";
 
 import { RequirementResolver } from "../../src/challenge/requirement.resolver";
 import { RuleService } from "../../src/challenge/rule.service";
+import { RequirementFactory } from "../factories/models/requirement.factory";
 import { RuleFactory } from "../factories/models/rule.factory";
 
 describe("requirement resolver", () => {
