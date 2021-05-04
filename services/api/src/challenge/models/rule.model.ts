@@ -8,7 +8,6 @@ export class Rule {
   constructor(properties: { id: string; key: string; result?: RuleStatus }) {
     this.id = properties.id;
     this.key = properties.key;
-    this.result = properties.result;
   }
 
   @Field(() => ID)
@@ -19,7 +18,4 @@ export class Rule {
 
   @Field(() => [Requirement], { description: "All requirements this rule is a part of." })
   requirements: Requirement[];
-
-  @Field(() => RuleStatus, { nullable: true, description: "The result of an submission check. Only applicable in context of an result." })
-  result?: RuleStatus;
 }

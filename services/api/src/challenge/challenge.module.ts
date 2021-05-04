@@ -10,6 +10,7 @@ import { LevelService } from "./level.service";
 import { LevelByChallengeSlugAndIndexArgs } from "./level-by-challenge-slug-and-index.args";
 import { RequirementService } from "./requirement.service";
 import { ResourceService } from "./resource.service";
+import { RuleService } from "./rule.service";
 
 @Module({
   imports: [PrismaModule],
@@ -23,7 +24,8 @@ import { ResourceService } from "./resource.service";
     HintResolver,
     HintService,
     ResourceService,
+    RuleService,
   ],
-  exports: [LevelService, RequirementService],
+  exports: [LevelService, RequirementService, RuleService],
 })
 export class ChallengeModule {}
