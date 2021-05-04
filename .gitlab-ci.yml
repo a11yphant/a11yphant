@@ -99,6 +99,9 @@ lint:content:
     - docker
   stage: analyze
   image: node:14-alpine
+  before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - npm ci --ignore-scripts --cache .npm-alpine
   script:
     - npm run lint:content
 
