@@ -3,6 +3,7 @@ import { RequirementResultService } from "src/submission/requirement-result.serv
 
 import { ResultResolver } from "../../src/submission/result.resolver";
 import { ResultService } from "../../src/submission/result.service";
+import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
 import { ResultFactory } from "../factories/models/result.factory";
 
 describe("result resolver", () => {
@@ -14,5 +15,18 @@ describe("result resolver", () => {
     );
 
     expect(await resolver.resultForSubmission(result.id)).toBeTruthy();
+  });
+
+  it("returns the requirement check results", async () => {
+    const result = ResultFactory.build();
+    const requirementResults = RequirementResultFactory.buildList(3);
+    const resolver = new ResultResolver(
+      createMock<ResultService>(),
+      createMock<RequirementResultService>({
+        findManyForResult: jest.fn().mockResolvedValue(requirementResults),
+      }),
+    );
+
+    expect(await resolver.requirements(result)).toHaveLength(requirementResults.length);
   });
 });
