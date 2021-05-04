@@ -13,6 +13,6 @@ describe("requirement result resolver", () => {
       createMock<RuleService>({ findOneForRequirement: jest.fn().mockResolvedValue(rule) }),
     );
 
-    expect(await resolver.rule(requirementResult));
+    expect(await resolver.rule(requirementResult)).toHaveProperty("id", rule.id);
   });
 });
