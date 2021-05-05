@@ -14,14 +14,14 @@ export class ResultResolver {
     return this.resultService.findOneForSubmission(submissionId);
   }
 
-  @ResolveField(() => Int, { description: "The amount of all checked rules." })
-  numberOfRules(@Parent() result: Result): number {
-    return 0;
+  @ResolveField(() => Int, { description: "The amount of all checked requirements." })
+  numberOfCheckedRequirements(@Parent() result: Result): Promise<number> {
+    return this.resultService.countNumberOfCheckedRequirements(result.id);
   }
 
-  @ResolveField(() => Int, { description: "The amount of all failed rules." })
-  numberOfFailedRules(@Parent() result: Result): number {
-    return 0;
+  @ResolveField(() => Int, { description: "The amount of all failed requirements checks." })
+  numberOfFailedRequirementChecks(@Parent() result: Result): Promise<number> {
+    return this.resultService.countNumberOfFailedRequirementChecks(result.id);
   }
 
   @ResolveField(() => [RequirementResult])

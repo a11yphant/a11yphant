@@ -29,4 +29,28 @@ describe("result resolver", () => {
 
     expect(await resolver.requirements(result)).toHaveLength(requirementResults.length);
   });
+
+  it("returns the number of requirements for the result", async () => {
+    const result = ResultFactory.build();
+    const resolver = new ResultResolver(
+      createMock<ResultService>({
+        countNumberOfCheckedRequirements: jest.fn().mockResolvedValue(3),
+      }),
+      createMock<RequirementResultService>(),
+    );
+
+    expect(await resolver.numberOfCheckedRequirements(result)).toBe(3);
+  });
+
+  it("returns the number of failed requirement checks for the result", async () => {
+    const result = ResultFactory.build();
+    const resolver = new ResultResolver(
+      createMock<ResultService>({
+        countNumberOfFailedRequirementChecks: jest.fn().mockResolvedValue(2),
+      }),
+      createMock<RequirementResultService>(),
+    );
+
+    expect(await resolver.numberOfFailedRequirementChecks(result)).toBe(2);
+  });
 });
