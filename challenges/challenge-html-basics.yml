@@ -16,7 +16,7 @@ challenge:
           text: Add the doctype declaration for HTML5 to the <code>&lt;!DOCTYPE&gt;</code> Element in the editor.
           hints:
             - id: e3b455de-6165-44d9-92cd-06bd5da0929b
-              content: The declaration for HTML5 is <code>&lt;!DOCTYPE html&gt;</code>.
+              text: The declaration for HTML5 is <code>&lt;!DOCTYPE html&gt;</code>.
       code:
         html: |-
           <!DOCTYPE >
@@ -45,7 +45,7 @@ challenge:
           text: Add the languge of the website to the <code>&lt;html&gt;</code> tag.
           hints:
             - id: 10dd0ef4-3c1b-4d1d-ac5b-cede9314becb
-              content: |-
+              text: |-
                 The language of the website is English: <code>&lt;html lang="en"&gt;</code>.
       code:
         html: |-
@@ -71,7 +71,7 @@ challenge:
           text: Choose a side and change the text inside the <code>&lt;title&gt;</code> tag according to your choice.
           hints:
             - id: 9b03bedc-7b1c-4038-b3a6-966834ef83d2
-              content: |-
+              text: |-
                 If you prefer dogs over cats change the <code>&lt;title&gt;</code> tag to: <code>&lt;title&gt;Doggos!&lt;/title&gt;</code>
       code:
         html: |-
@@ -102,7 +102,7 @@ challenge:
           text: Replace the given <code>&lt;p&gt;</code> tag with a level 1 heading.
           hints:
             - id: db224702-01e8-45ba-955e-a59dca7b6a72
-              content: The tag for a level 1 heading is <code>&lt;h1&gt;</code>.
+              text: The tag for a level 1 heading is <code>&lt;h1&gt;</code>.
       code:
         html: |-
           <!DOCTYPE html>
@@ -130,7 +130,7 @@ challenge:
           text: Add a short description on why you love dogs or cats below the heading.
           hints:
             - id: f9459a3f-d2e9-4a7f-9bc6-072b0846e87d
-              content: Wrap your text inside a <code>&lt;p&gt;</code> tag.
+              text: Wrap your text inside a <code>&lt;p&gt;</code> tag.
       code:
         html: |-
           <!DOCTYPE html>
@@ -156,24 +156,24 @@ challenge:
         Since this is an unordered list, the order of the items in the list is not important.
         Here is an example:
         <code>
-        \&lt;ul&gt;
-          \&lt;li&gt;Cat&lt;/li&gt;
-          \&lt;li&gt;Dog&lt;/li&gt;
-        \&lt;/ul&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Cat&lt;/li&gt;
+          &lt;li&gt;Dog&lt;/li&gt;
+        &lt;/ul&gt;
         </code>
       tasks:
         - id: f3100cab-3462-4270-b6cc-889487d9780d
           text: Create an unordered list containing the things you like most about cats or dogs.
           hints:
             - id: afd36697-24a9-4bb7-9ccb-b1e44e847ba8
-              content: |-
+              text: |-
                 Your list could look something like this:
                 <code>
-                \&lt;ul&gt;
-                  \&lt;li&gt;Dogs are always happy&lt;/li&gt;
-                  \&lt;li&gt;Dogs are like a best friend&lt;/li&gt;
-                  \&lt;li&gt;Dogs are very loyal&lt;/li&gt;
-                \&lt;/ul&gt;
+                &lt;ul&gt;
+                  &lt;li&gt;Dogs are always happy&lt;/li&gt;
+                  &lt;li&gt;Dogs are like a best friend&lt;/li&gt;
+                  &lt;li&gt;Dogs are very loyal&lt;/li&gt;
+                &lt;/ul&gt;
                 </code>
       code:
         html: |-
@@ -182,53 +182,119 @@ challenge:
     - id: 36905991-5fed-4b9b-b07e-3f5d56d90753
       order: 9
       requirements:
-        - key: xxrulekey
+        - key: html-is-valid
+        - key: element-exists
           options:
-            selector: htmltag
+            selector: ol > li
       instructions: |-
-        xxinstructions
+        You can create an ordered list of items using the <code>&lt;ol&gt;</code> tag. It has to be used in conjunction with list items wich can be created using the <code>&lt;li&gt;</code> tag. The <code>&lt;ol&gt;</code> tag only allows <code>&lt;li&gt;</code> tags as direct children.
+        Since this is an ordered list, the order of the items in the list is important.
+        Here is an example:
+        <code>
+        &lt;ol&gt;
+          &lt;li&gt;prepare the cat food&lt;/li&gt;
+          &lt;li&gt;put it in a bowl&lt;/li&gt;
+          &lt;li&gt;watch your cat enjoying it&lt;/li&gt;
+        &lt;/ol&gt;
+        </code>
       tasks:
         - id: d077f29b-7237-4fd3-8b9f-fcc7d6455cd0
-          text: xxtext
+          text: Replace the unordered list with an ordered list and rank its content according to your preference.
           hints:
             - id: 60d64296-47ba-4240-a606-b56fbf35e72f
-              content: xxcontent
+              text: |-
+                Your list could look something like this:
+                <code>
+                &lt;ol&gt;
+                  &lt;li&gt;Cats are low maintenance&lt;/li&gt;
+                  &lt;li&gt;Cats have long life spans&lt;/li&gt;
+                  &lt;li&gt;Cats are independent&lt;/li&gt;
+                &lt;/ol&gt;
+                </code>
       code:
         html: |-
-          xxhtmlcode
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>My three favourite things about cats</h1>
+              <ol>
+                <li>Cats are low maintenance</li>
+                <li>Cats have long life spans</li>
+                <li>Cats are independent</li>
+              </ol>
+            </body>
+          </html>
 
     - id: 2da3dffc-9985-410e-9165-6e70b0091acb
       order: 10
       requirements:
-        - key: xxrulekey
+        - key: html-is-valid
+        - key: axe-link-name
+        - key: element-exists
           options:
-            selector: htmltag
+            selector: a
       instructions: |-
-        xxinstructions
+        To link to other resources, for example a website, you can use the <code>&lt;a&gt;</code> tag. You can specify the target for your link using the <code>href</code> attribute. You should always add descriptive text for the link.
+        Use links only for linking to other resources and not to trigger other actions on click. Use a <code>&lt;button&gt;</code> for that instead.
       tasks:
         - id: 1fe6c180-fcb1-4364-9bd5-62975c48e055
-          text: xxtext
+          text: Create a link to one of your favourite dog or cat resources.
           hints:
             - id: 261e7abf-f582-46e1-9a09-2e88ab87ea49
-              content: xxcontent
+              text: |-
+                Your list could look something like this:
+                <code>
+                  &lt;a href=&quot;https://openpuppies.com/&quot;&gt;Amazing dog clips&lt;/a&gt;
+                </code>
       code:
         html: |-
-          xxhtmlcode
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>Dogs are better than cats!</h1>
+              <!-- insert your link tag here -->
+            </body>
+          </html>
 
     - id: e24fa105-c185-4eab-b5f0-85b551444437
       order: 11
       requirements:
-        - key: xxrulekey
+        - key: html-is-valid
+        - key: element-exists
           options:
-            selector: htmltag
+            selector: button
       instructions: |-
-        xxinstructions
+        If you want to trigger an action or interaction with an element, you can use a button. The <code>&lt;button&gt;</code> element could for example be used to open a pop-up, a modal or submit a form. It should not trigger navigation to a different page, use a link (<code>&lt;a&gt;</code>) for that instead.
+        Like with links, it is important to provide descriptive text within the button to allow users and assistive technologies to identify the purpose of the button.
+        You can specify the action by using JavaScript in the <code>onclick</code> attribute of the button, for example <code>onclick=&quot;alert('Hi!')&quot;</code>.
       tasks:
         - id: 023a5b8c-a76a-4370-bb5b-d87d8a27978d
-          text: xxtext
+          text: Add a button to the code snippet. The button could for example show an alert with a cat/dog fact or change the background color of the button.
           hints:
             - id: 54718d56-e6f8-40a9-be7d-11643e662cba
-              content: xxcontent
+              text: |-
+                Your button could look something like this:
+                <code>
+                  &lt;button onclick=&quot;alert('Cats spend 70% of their lives sleeping')&quot;&gt;Show me a cat fact&lt;/button&gt;
+                </code>
       code:
         html: |-
-          xxhtmlcode
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>Cats are better than dogs!</h1>
+              <!-- insert your button tag here -->
+            </body>
+          </html>
