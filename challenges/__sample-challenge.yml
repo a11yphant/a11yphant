@@ -18,7 +18,7 @@ challenge:
           text: xxtext
           hints:
             - id: xxuuid
-              content: xxcontent
+              text: xxcontent
       code:
         html: |-
           xxhtmlcode
