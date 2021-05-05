@@ -22,7 +22,7 @@ challenge:
       code:
         html: |-
           xxhtmlcode
-        css: >
+        css: |-
           xxcsscode
-        js: >
+        js: |-
           xxjscode
