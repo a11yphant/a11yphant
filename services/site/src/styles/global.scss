@@ -56,6 +56,10 @@
         }
     }
 
+    *:focus {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+    }
     *:focus-visible {
         // focus styles for keyboard only
         outline: 0.15rem solid #fff;
@@ -63,7 +67,31 @@
     *:focus:not(:focus-visible) {
         // focus styles for mouse & touch
         outline: none;
-        box-shadow: 0 0 0 0.15rem #fff;
+        // box-shadow: 0 0 0 0.15rem #fff;
+        // TODO: add polyfill for browsers that do not support focus-within
+    }
+    .focus-visible-outline {
+        gap: 2ch;
+
+        &:focus-visible {
+            outline: 0.15rem solid #fff;
+        }
+
+        &:focus-visible a:focus {
+            outline: none;
+        }
+    }
+    .focus-visible-boxShadow {
+        gap: 2ch;
+
+        &:focus-visible {
+            box-shadow: 0 0 0 0.25rem #fff;
+        }
+
+        &:focus-visible a:focus,
+        &:focus {
+            outline: none;
+        }
     }
 
     h1,
@@ -152,6 +180,15 @@
         @apply bg-backgroundMiddle;
     }
 
+    .container-ultradark {
+        @apply overflow-hidden;
+        @apply relative;
+        @apply border-2;
+        @apply rounded-xl;
+        @apply border-background;
+        @apply bg-background;
+    }
+
     .editor-container {
         padding: 0 0.5rem;
 
@@ -201,6 +238,26 @@
 
         &:focus-within {
             box-shadow: 0 0 0 0.25rem #fff;
+        }
+
+        &:focus-within a:focus {
+            outline: none;
+        }
+    }
+    .card-smaller {
+        gap: 2ch;
+
+        a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        &:focus-within {
+            box-shadow: 0 0 0 0.15rem #fff;
         }
 
         &:focus-within a:focus {
