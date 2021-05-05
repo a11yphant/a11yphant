@@ -18,3 +18,5 @@ export class Builder extends SeleniumBuilder {
     return createMock<ThenableWebDriver>();
   }
 }
+
+export { By } from "selenium-webdriver";
