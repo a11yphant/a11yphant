@@ -27,7 +27,9 @@ export class Level {
   })
   instructions: string;
 
-  @Field(() => Number)
+  @Field(() => Number, {
+    description: "The order of the level in the challenge.",
+  })
   order: number;
 
   @Field(() => [Requirement])
