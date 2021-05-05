@@ -8,10 +8,11 @@ interface TaskListProps {
 }
 
 const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
+  console.log(tasks.length);
   if (tasks.length === 1) {
     return (
       <>
-        <p className="font-bold my-6">{tasks[0]}</p>;
+        <p className="font-bold my-6">{tasks[0].title}</p>
         <HintBox hints={tasks[0].hints} />
       </>
     );

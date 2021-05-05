@@ -38,7 +38,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           className={clsx(
             "w-full p-4 flex flex-row items-center justify-between group font-normal text-left transition duration-300 m-0",
             "hover:text-primaryLight",
-            "focus-visible:outline-none, focus:outline-none",
+            "focus-visible:outline-none focus:outline-none",
             "h6",
           )}
           overrideClassname
