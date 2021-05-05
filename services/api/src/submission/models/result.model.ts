@@ -1,26 +1,30 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { Requirement } from "../../challenge/models/requirement.model";
+import { RequirementResult } from "../../submission/models/requirement-result.model";
 import { ResultStatus } from "./result-status.enum";
-import { Submission } from "./submission.model";
 
 @ObjectType({
-  description: "The Result to a submission.",
+  description: "The result for the checks related to a submission.",
 })
 export class Result {
+  constructor(properties: { id: string; submissionId: string; status: ResultStatus }) {
+    this.id = properties.id;
+    this.submissionId = properties.submissionId;
+    this.status = properties.status;
+  }
+
   @Field(() => ID)
   id: string;
-
-  @Field(() => Submission)
-  submission: Submission;
 
   @Field(() => ResultStatus, {
     description: "The current status of the result.",
   })
   status: ResultStatus;
 
-  @Field(() => [Requirement], {
-    description: "The individual requirements with the respective results.",
+  @Field(() => [RequirementResult], {
+    description: "The results for the requirements.",
   })
-  requirements: Requirement[];
+  requirements: RequirementResult[];
+
+  submissionId: string;
 }

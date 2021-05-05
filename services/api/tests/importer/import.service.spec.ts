@@ -59,8 +59,6 @@ describe("import service", () => {
     const rule: Rule = {
       id: "e9bf90c3-61fb-4d2f-99b0-33d380a8aa40",
       key: "a-test-rule",
-      title: "test",
-      shortDescription: "testing is awesome!",
     };
 
     const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
@@ -143,8 +141,15 @@ describe("import service", () => {
     expect(storedLevel.js).toEqual(level.code.js);
   });
 
-  it("can import the requirements for a level", async () => {
+  it("can import the requirement for a level", async () => {
     const prisma = getPrismaService();
+    await prisma.rule.create({
+      data: {
+        id: "372b3ffe-7e38-456d-b7d7-46cb29945c6a",
+        key: "test-rule",
+      },
+    });
+
     const challenge: Challenge = {
       id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
       slug: "test-slug",
@@ -157,7 +162,7 @@ describe("import service", () => {
           tldr: "hi",
           instructions: "hi",
           hints: [],
-          requirements: [{ id: "asdf", title: "lala", rules: [] }],
+          requirements: [{ id: "asdf", title: "lala", description: "asdf", rule: "test-rule" }],
           resources: [],
         },
       ],
@@ -296,8 +301,6 @@ describe("import service", () => {
     const rule: Rule = {
       id: "e9bf90c3-61fb-4d2f-99b0-33d380a8aa40",
       key: ruleKey,
-      title: "test",
-      shortDescription: "testing is awesome!",
     };
 
     const challenge: Challenge = {
@@ -317,7 +320,8 @@ describe("import service", () => {
             {
               id: "3d4c5f81-dad5-4c1b-b732-71d789506b4c",
               title: "teeeeest",
-              rules: [ruleKey],
+              description: "asdf",
+              rule: ruleKey,
             },
           ],
         },
@@ -330,10 +334,10 @@ describe("import service", () => {
     await importer.importChallenge(challenge);
 
     const storedRequirement = await prisma.requirement.findFirst({
-      include: { rules: true },
+      include: { rule: true },
     });
 
-    expect(storedRequirement.rules).toBeTruthy();
-    expect(storedRequirement.rules[0].key).toBe(ruleKey);
+    expect(storedRequirement.rule).toBeTruthy();
+    expect(storedRequirement.rule.key).toBe(ruleKey);
   });
 });
