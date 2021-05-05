@@ -15,9 +15,18 @@ module.exports = {
         "80ch": "80ch",
       },
       colors: {
-        primaryLight: "#9262FA",
         primary: "#7331FF",
-        primaryDark: "#5000B7",
+        primaryLight: "#714EFF",
+        primaryDark: "#6657C5",
+        error: "#E75A7C",
+        background: "#121212",
+        backgroundMiddle: "#1C1C1C",
+        grey: "#EDEDED",
+        greyLight: "#EFEFEF",
+        greyMiddle: "#B4B8B8",
+        greyDark: "#4F4F4F",
+        light: "#FFFFFF",
+        dark: "#121212",
       },
       fontFamily: {
         ibmPlex: ["IBM Plex Sans", "sans-serif"],
@@ -26,6 +35,11 @@ module.exports = {
         width: "width",
         display: "display",
       },
+      backgroundImage: (theme) => ({
+        "gradient-easy": "url('/images/01_easy.jpg')",
+        "gradient-medium": "url('/images/02_medium.jpg')",
+        "gradient-hard": "url('/images/03_hard.jpg')",
+      }),
     },
   },
   variants: {

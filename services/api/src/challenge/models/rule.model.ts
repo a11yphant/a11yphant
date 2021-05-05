@@ -1,17 +1,13 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { RuleStatus } from "../enums/rule-status.enum";
+import { RequirementStatus } from "../enums/requirement-status.enum";
 import { Requirement } from "./requirement.model";
 
 @ObjectType()
 export class Rule {
-  constructor(properties: { id: string; key: string; title: string; shortDescription: string; additionalDescription?: string; result?: RuleStatus }) {
+  constructor(properties: { id: string; key: string; result?: RequirementStatus }) {
     this.id = properties.id;
-    this.title = properties.title;
-    this.shortDescription = properties.shortDescription;
-    this.additionalDescription = properties.additionalDescription;
     this.key = properties.key;
-    this.result = properties.result;
   }
 
   @Field(() => ID)
@@ -20,18 +16,6 @@ export class Rule {
   @Field(() => String, { description: "The internal key to address this check in the backend infrastructure." })
   key: string;
 
-  @Field(() => String)
-  title: string;
-
-  @Field(() => String)
-  shortDescription: string;
-
-  @Field(() => String)
-  additionalDescription?: string;
-
   @Field(() => [Requirement], { description: "All requirements this rule is a part of." })
   requirements: Requirement[];
-
-  @Field(() => RuleStatus, { nullable: true, description: "The result of an submission check. Only applicable in context of an result." })
-  result?: RuleStatus;
 }

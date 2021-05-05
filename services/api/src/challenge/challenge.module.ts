@@ -9,8 +9,10 @@ import { HintResolver } from "./hint.resolver";
 import { HintService } from "./hint.service";
 import { LevelResolver } from "./level.resolver";
 import { LevelService } from "./level.service";
+import { RequirementResolver } from "./requirement.resolver";
 import { RequirementService } from "./requirement.service";
 import { ResourceService } from "./resource.service";
+import { RuleService } from "./rule.service";
 
 @Module({
   imports: [PrismaModule],
@@ -21,11 +23,13 @@ import { ResourceService } from "./resource.service";
     LevelResolver,
     LevelService,
     LevelByChallengeSlugAndIndexArgs,
+    RequirementResolver,
     RequirementService,
     HintResolver,
     HintService,
     ResourceService,
+    RuleService,
   ],
-  exports: [LevelService, RequirementService],
+  exports: [LevelService, RequirementService, RuleService],
 })
 export class ChallengeModule {}

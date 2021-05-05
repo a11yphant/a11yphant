@@ -58,15 +58,9 @@ export class ImportService {
       create: {
         id: rule.id,
         key: rule.key,
-        title: rule.title,
-        shortDescription: rule.shortDescription,
-        additionalDescription: rule.additionalDescription,
       },
       update: {
         key: rule.key,
-        title: rule.title,
-        shortDescription: rule.shortDescription,
-        additionalDescription: rule.additionalDescription,
       },
     });
   }
@@ -145,27 +139,33 @@ export class ImportService {
           create: {
             id: requirement.id,
             title: requirement.title,
+            description: requirement.description,
             levelId,
           },
-          update: { title: requirement.title, levelId },
+          update: { title: requirement.title, description: requirement.description, levelId },
         });
 
-        await Promise.all(
-          requirement.rules?.map(async (ruleKey) => {
-            await this.prisma.requirement.update({
-              where: { id: requirement.id },
-              data: {
-                rules: {
-                  connect: {
-                    key: ruleKey,
-                  },
-                },
+        await this.prisma.requirement.update({
+          where: { id: requirement.id },
+          data: {
+            rule: {
+              connect: {
+                key: requirement.rule,
               },
-            });
-          }),
-        );
+            },
+          },
+        });
       }),
     );
+
+    await this.prisma.requirement.deleteMany({
+      where: {
+        AND: {
+          id: { notIn: requirements.map((r) => r.id) },
+          levelId,
+        },
+      },
+    });
   }
 
   private async upsertResourcesForLevel(resources: Resource[], levelId: string): Promise<void> {

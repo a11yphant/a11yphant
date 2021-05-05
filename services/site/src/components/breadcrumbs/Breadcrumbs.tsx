@@ -1,5 +1,6 @@
 import { useApolloClient } from "@apollo/client";
-import { BreadcrumbInfo, useRoutes } from "app/components/breadcrumbs/routes";
+import { getRouteList } from "app/components/breadcrumbs/getRouteList";
+import { BreadcrumbInfo } from "app/components/breadcrumbs/routes";
 import Slash from "app/components/icons/Slash";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,37 +8,25 @@ import React from "react";
 
 const Breadcrumbs: React.FunctionComponent = () => {
   const router = useRouter();
-  const routes = useRoutes();
   const apolloClient = useApolloClient();
 
   const [routeList, setRouteList] = React.useState<BreadcrumbInfo[]>([]);
 
-  const getRouteList = React.useCallback(async (): Promise<BreadcrumbInfo[]> => {
-    const urlParams = router.query;
-    const pathname = router.pathname;
-    const pathnameArr = pathname.split("/");
-
-    return pathnameArr.reduce<Promise<BreadcrumbInfo[]>>(async (routeInfoList, pathSegment, idx) => {
-      const pathname = pathnameArr.slice(0, idx + 1).join("/") || "/";
-
-      if (routes[pathname]) {
-        const routeInfo = await routes[pathname].getBreadcrumbInfo(urlParams, apolloClient);
-        const existingRouteInfoList = await routeInfoList;
-        return [...existingRouteInfoList, routeInfo];
-      }
-
-      return routeInfoList;
-    }, Promise.resolve([]));
-  }, [apolloClient, router.pathname, router.query, routes]);
-
   React.useEffect(() => {
-    const asyncGetRouteList = async (): Promise<void> => {
-      const routeList = await getRouteList();
-      setRouteList(routeList);
-    };
+    // Workaround for `Warning: Can't perform a React state update on an unmounted component.`
+    // as seen here: https://stackoverflow.com/a/60907638
+    let isMounted = true;
 
-    asyncGetRouteList();
-  }, [getRouteList, router.pathname]);
+    getRouteList(router, apolloClient).then((routeList) => {
+      if (isMounted) {
+        setRouteList(routeList);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [router.pathname]);
 
   return (
     <nav className="flex" aria-label="Breadcrumb">

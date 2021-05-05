@@ -3,11 +3,11 @@
 
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { RuleStatus } from "../enums/rule-status.enum";
+import { RequirementStatus } from "../enums/requirement-status.enum";
 
 @ObjectType()
 export class Check {
-  constructor(properties: { id: string; title: string; description: string; key: string; result?: RuleStatus }) {
+  constructor(properties: { id: string; title: string; description: string; key: string; result?: RequirementStatus }) {
     this.id = properties.id;
     this.title = properties.title;
     this.description = properties.description;
@@ -27,6 +27,6 @@ export class Check {
   @Field(() => String)
   description: string;
 
-  @Field(() => RuleStatus, { nullable: true, description: "The result of an submission check. Only applicable in context of an result." })
-  result: RuleStatus;
+  @Field(() => RequirementStatus, { nullable: true, description: "The result of an submission check. Only applicable in context of an result." })
+  result: RequirementStatus;
 }

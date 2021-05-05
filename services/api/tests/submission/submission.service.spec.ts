@@ -48,10 +48,12 @@ describe("submission service", () => {
       where: {
         id: createdSubmission.id,
       },
+      include: { result: true },
     });
 
     expect(queriedSubmission).toBeTruthy();
     expect(queriedSubmission.html).toBe(html);
+    expect(queriedSubmission.result).toBeTruthy();
   });
 
   it("finds a submission to a given id", async () => {
@@ -110,7 +112,7 @@ describe("submission service", () => {
 
   it("emits a submission.created event when a new submission is created", async () => {
     const emit = jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) }));
-    const submission = { id: "uuid", html: "html", css: "css", js: "js" };
+    const submission = { id: "uuid", html: "html", css: "css", js: "js", level: { requirements: [{ id: "some-uuid", rule: { key: "test-key" } }] } };
     const service = new SubmissionService(
       createMock<PrismaService>({
         submission: { create: jest.fn().mockResolvedValue(submission) },
@@ -123,7 +125,18 @@ describe("submission service", () => {
     expect(emit).toHaveBeenCalledWith(
       "submission.created",
       expect.objectContaining({
-        submission,
+        submission: {
+          id: submission.id,
+          html: submission.html,
+          css: submission.css,
+          js: submission.js,
+        },
+        rules: expect.arrayContaining([
+          expect.objectContaining({
+            id: submission.level.requirements[0].id,
+            key: submission.level.requirements[0].rule.key,
+          }),
+        ]),
       }),
     );
   });
