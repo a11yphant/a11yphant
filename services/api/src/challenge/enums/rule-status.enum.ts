@@ -1,13 +1,13 @@
 import { registerEnumType } from "@nestjs/graphql";
 
-export enum RuleStatus {
+export enum RequirementStatus {
   SUCCESS,
   FAIL,
   ERROR,
 }
 
-registerEnumType(RuleStatus, {
-  name: "RuleStatus",
+registerEnumType(RequirementStatus, {
+  name: "RequirementStatus",
   valuesMap: {
     SUCCESS: {
       description: "The user fulfilled the check/requirement.",

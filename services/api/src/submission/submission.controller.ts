@@ -1,7 +1,7 @@
 import { Controller, Logger } from "@nestjs/common";
 import { EventPattern } from "@nestjs/microservices";
 
-import { RuleStatus } from "../challenge/enums/rule-status.enum";
+import { RequirementStatus } from "../challenge/enums/rule-status.enum";
 import { ResultStatus } from "./models/result-status.enum";
 import { RequirementResultService } from "./requirement-result.service";
 import { ResultService } from "./result.service";
@@ -20,30 +20,30 @@ export class SubmissionController {
     });
 
     for (const checkResult of event.result.ruleCheckResults) {
-      await this.requirementResultService.create(result.id, checkResult.id, this.getRuleStatus(checkResult.status));
+      await this.requirementResultService.create(result.id, checkResult.id, this.getRequirementStatus(checkResult.status));
     }
   }
 
-  private getRuleStatus(status: string): RuleStatus {
+  private getRequirementStatus(status: string): RequirementStatus {
     switch (status) {
       case "success":
-        return RuleStatus.SUCCESS;
+        return RequirementStatus.SUCCESS;
       case "failed":
-        return RuleStatus.FAIL;
+        return RequirementStatus.FAIL;
       case "error":
-        return RuleStatus.ERROR;
+        return RequirementStatus.ERROR;
       default:
         this.logger.error(`The result contained the unknown status ${status}`);
-        return RuleStatus.ERROR;
+        return RequirementStatus.ERROR;
     }
   }
 
   private getSubmissionStatus(event: SubmissionCheckCompletedEvent): ResultStatus {
-    if (event.result.ruleCheckResults.filter((result) => this.getRuleStatus(result.status) === RuleStatus.FAIL).length > 0) {
+    if (event.result.ruleCheckResults.filter((result) => this.getRequirementStatus(result.status) === RequirementStatus.FAIL).length > 0) {
       return ResultStatus.FAIL;
     }
 
-    if (event.result.ruleCheckResults.filter((result) => this.getRuleStatus(result.status) === RuleStatus.ERROR).length > 0) {
+    if (event.result.ruleCheckResults.filter((result) => this.getRequirementStatus(result.status) === RequirementStatus.ERROR).length > 0) {
       return ResultStatus.ERROR;
     }
 

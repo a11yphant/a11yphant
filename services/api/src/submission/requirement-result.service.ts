@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CheckResult, Requirement } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { RuleStatus } from "../challenge/enums/rule-status.enum";
+import { RequirementStatus } from "../challenge/enums/rule-status.enum";
 import { PrismaService } from "../prisma/prisma.service";
 import { RequirementResult } from "../submission/models/requirement-result.model";
 
@@ -19,7 +19,7 @@ export class RequirementResultService {
     return records.map((record) => this.createRequirementFromRecord(record));
   }
 
-  async create(resultId: string, requirementId: string, status: RuleStatus): Promise<RequirementResult> {
+  async create(resultId: string, requirementId: string, status: RequirementStatus): Promise<RequirementResult> {
     const record = await this.prisma.checkResult.create({
       data: {
         id: uuidv4(),

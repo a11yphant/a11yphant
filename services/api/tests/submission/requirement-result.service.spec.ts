@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { RuleStatus } from "../../src/challenge/enums/rule-status.enum";
+import { RequirementStatus } from "../../src/challenge/enums/rule-status.enum";
 import { ResultStatus } from "../../src/submission/models/result-status.enum";
 import { RequirementResultService } from "../../src/submission/requirement-result.service";
 import { ChallengeFactory } from "../factories/database/challenge.factory";
@@ -48,10 +48,10 @@ describe("requirement result service", () => {
     const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission.id }) });
 
     const service = new RequirementResultService(prisma);
-    const requirementResult = await service.create(result.id, requirement.id, RuleStatus.SUCCESS);
+    const requirementResult = await service.create(result.id, requirement.id, RequirementStatus.SUCCESS);
 
     expect(requirementResult).toBeTruthy();
-    expect(requirementResult.result).toBe(RuleStatus.SUCCESS);
+    expect(requirementResult.result).toBe(RequirementStatus.SUCCESS);
     expect(requirementResult.requirementId).toBe(requirement.id);
   });
 });

@@ -1,11 +1,11 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { RuleStatus } from "../enums/rule-status.enum";
+import { RequirementStatus } from "../enums/rule-status.enum";
 import { Requirement } from "./requirement.model";
 
 @ObjectType()
 export class Rule {
-  constructor(properties: { id: string; key: string; result?: RuleStatus }) {
+  constructor(properties: { id: string; key: string; result?: RequirementStatus }) {
     this.id = properties.id;
     this.key = properties.key;
   }

@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { RuleStatus } from "../../src/challenge/enums/rule-status.enum";
+import { RequirementStatus } from "../../src/challenge/enums/rule-status.enum";
 import { ResultStatus } from "../../src/submission/models/result-status.enum";
 import { ResultService } from "../../src/submission/result.service";
 import { ChallengeFactory } from "../factories/database/challenge.factory";
@@ -44,10 +44,10 @@ describe("result service", () => {
     const result2 = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission2.id }) });
     const requirement = await prisma.requirement.create({ data: RequirementFactory.build({ ruleId: rule.id, levelId: level.id }) });
     await prisma.checkResult.create({
-      data: CheckResultFactory.build({ resultId: result.id, requirementId: requirement.id, status: RuleStatus.FAIL }),
+      data: CheckResultFactory.build({ resultId: result.id, requirementId: requirement.id, status: RequirementStatus.FAIL }),
     });
     await prisma.checkResult.create({
-      data: CheckResultFactory.build({ resultId: result2.id, requirementId: requirement.id, status: RuleStatus.SUCCESS }),
+      data: CheckResultFactory.build({ resultId: result2.id, requirementId: requirement.id, status: RequirementStatus.SUCCESS }),
     });
 
     const resultService = new ResultService(prisma);
@@ -66,10 +66,10 @@ describe("result service", () => {
     const result2 = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission2.id }) });
     const requirement = await prisma.requirement.create({ data: RequirementFactory.build({ ruleId: rule.id, levelId: level.id }) });
     await prisma.checkResult.create({
-      data: CheckResultFactory.build({ resultId: result.id, requirementId: requirement.id, status: RuleStatus.SUCCESS }),
+      data: CheckResultFactory.build({ resultId: result.id, requirementId: requirement.id, status: RequirementStatus.SUCCESS }),
     });
     await prisma.checkResult.create({
-      data: CheckResultFactory.build({ resultId: result2.id, requirementId: requirement.id, status: RuleStatus.SUCCESS }),
+      data: CheckResultFactory.build({ resultId: result2.id, requirementId: requirement.id, status: RequirementStatus.SUCCESS }),
     });
 
     const resultService = new ResultService(prisma);
