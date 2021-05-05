@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
-import { RequirementStatus } from "../../challenge/enums/rule-status.enum";
+import { RequirementStatus } from "../../challenge/enums/requirement-status.enum";
 import { Requirement } from "../../challenge/models/requirement.model";
 
 @ObjectType()

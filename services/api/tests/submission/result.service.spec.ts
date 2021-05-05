@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { RequirementStatus } from "../../src/challenge/enums/rule-status.enum";
+import { RequirementStatus } from "../../src/challenge/enums/requirement-status.enum";
 import { ResultStatus } from "../../src/submission/models/result-status.enum";
 import { ResultService } from "../../src/submission/result.service";
 import { ChallengeFactory } from "../factories/database/challenge.factory";
