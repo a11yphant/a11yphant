@@ -78,7 +78,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
   return (
     <div className={clsx("w-inherit h-full", "editor-container")}>
       <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark")}>
-        <h3 ref={headingRef} className={clsx("mb-5", "h6")}>
+        <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
           {config.heading}
         </h3>
         <div className="absolute" style={{ top: editorTop }}>
@@ -99,7 +99,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
             setModalOpen(true);
           }}
           className={clsx(
-            "absolute bottom-2 flex items-center transition duration-300 text-grey",
+            "absolute bottom-2 flex items-center transition duration-300 text-grey mx-3",
             "group hover:text-primaryDark group-hover:text-primaryDark",
           )}
           ref={buttonRef}
