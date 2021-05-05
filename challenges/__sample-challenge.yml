@@ -6,18 +6,21 @@ challenge:
     xxintro
   levels:
     - id: xxuuid
-      order: 1
-      instructions: >
-        xxinstructions
+      order: 11
       requirements:
         - key: xxrulekey
           options:
             selector: htmltag
-      hints:
+      instructions: |-
+        xxinstructions
+      tasks:
         - id: xxuuid
-          content: xxcontent
+          text: xxtext
+          hints:
+            - id: xxuuid
+              content: xxcontent
       code:
-        html: >
+        html: |-
           xxhtmlcode
         css: >
           xxcsscode
