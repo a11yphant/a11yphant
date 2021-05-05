@@ -23,7 +23,15 @@ describe("challenge resolver", () => {
   it("resolves the levels for a challenge", async () => {
     const challenge = new Challenge({ id: "uuid", name: "test", slug: "test-slug", difficulty: 0 });
     const levels: Level[] = [
-      { id: "uuid", hints: [], instructions: "please read the instructions", requirements: [], resources: [], tldr: "don't want to read" },
+      {
+        id: "uuid",
+        hints: [],
+        instructions: "please read the instructions",
+        requirements: [],
+        resources: [],
+        tldr: "don't want to read",
+        order: 1,
+      },
     ];
 
     const resolver = new ChallengeResolver(

@@ -12,7 +12,7 @@ import { ResourceService } from "../../src/challenge/resource.service";
 
 describe("level resolver", () => {
   it("resolves a level by challenge slug and index", async () => {
-    const findOneForChallengeAtIndex = jest.fn().mockResolvedValue(new Level({ id: "second-id", tldr: "hi", instructions: "difficult" }));
+    const findOneForChallengeAtIndex = jest.fn().mockResolvedValue(new Level({ id: "second-id", tldr: "hi", instructions: "difficult", order: 0 }));
     const resolver = new LevelResolver(
       createMock<LevelService>({
         findOneForChallengeAtIndex,
@@ -38,7 +38,7 @@ describe("level resolver", () => {
       createMock<ResourceService>(),
     );
 
-    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr" });
+    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr", order: 0 });
 
     expect((await resolver.requirements(level)).length).toEqual(2);
   });
@@ -52,7 +52,7 @@ describe("level resolver", () => {
       }),
       createMock<ResourceService>(),
     );
-    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr" });
+    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr", order: 0 });
     level.id = "uuid";
 
     expect((await resolver.hints(level)).length).toEqual(2);
@@ -72,7 +72,7 @@ describe("level resolver", () => {
           ]),
       }),
     );
-    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr" });
+    const level = new Level({ id: "uuid", instructions: "instructions", tldr: "tldr", order: 0 });
     level.id = "uuid";
 
     expect((await resolver.resources(level)).length).toEqual(2);

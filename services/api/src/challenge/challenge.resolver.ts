@@ -29,4 +29,9 @@ export class ChallengeResolver {
   async levels(@Parent() challenge: Challenge): Promise<Level[]> {
     return this.levelService.findForChallenge(challenge.id);
   }
+
+  @ResolveField(() => Number, { description: "How many levels the challenge has." })
+  async numberOfLevels(@Parent() challenge: Challenge): Promise<number> {
+    return this.levelService.getNumberOfLevelsForChallenge(challenge.id);
+  }
 }
