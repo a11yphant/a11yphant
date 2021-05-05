@@ -14,8 +14,9 @@ import { SubmissionFactory } from "../factories/database/submission.factory";
 import { useDatabase } from "../helpers";
 
 describe("requirement result service", () => {
+  const { getPrismaService } = useDatabase(createMock<Logger>());
+
   it("can find requirement results for a result", async () => {
-    const { getPrismaService } = useDatabase(createMock<Logger>());
     const prisma = getPrismaService();
     const rule = await prisma.rule.create({ data: RuleFactory.build() });
     const challenge = await prisma.challenge.create({ data: ChallengeFactory.build() });
@@ -38,7 +39,6 @@ describe("requirement result service", () => {
   });
 
   it("can create an requirement result", async () => {
-    const { getPrismaService } = useDatabase(createMock<Logger>());
     const prisma = getPrismaService();
     const rule = await prisma.rule.create({ data: RuleFactory.build() });
     const challenge = await prisma.challenge.create({ data: ChallengeFactory.build() });

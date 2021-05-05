@@ -9,8 +9,9 @@ import { SubmissionFactory } from "../factories/database/submission.factory";
 import { useDatabase } from "../helpers";
 
 describe("result service", () => {
+  const { getPrismaService } = useDatabase(createMock<Logger>());
+
   it("returns the result for a submission", async () => {
-    const { getPrismaService } = useDatabase(createMock<Logger>());
     const prisma = getPrismaService();
 
     const challenge = await prisma.challenge.create({ data: ChallengeFactory.build() });

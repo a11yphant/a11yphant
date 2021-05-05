@@ -9,8 +9,9 @@ import { RuleFactory } from "../factories/database/rule.factory";
 import { useDatabase } from "../helpers";
 
 describe("rule service", () => {
+  const { getPrismaService } = useDatabase(createMock<Logger>());
+
   it("returns rule for a requirement", async () => {
-    const { getPrismaService } = useDatabase(createMock<Logger>());
     const prisma = getPrismaService();
     const rule = await prisma.rule.create({ data: RuleFactory.build() });
     const challenge = await prisma.challenge.create({ data: ChallengeFactory.build() });
@@ -23,7 +24,6 @@ describe("rule service", () => {
   });
 
   it("returns null for a requirement if it is not found", async () => {
-    const { getPrismaService } = useDatabase(createMock<Logger>());
     const prisma = getPrismaService();
     await prisma.rule.create({ data: RuleFactory.build() });
 
