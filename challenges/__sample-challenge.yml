@@ -2,6 +2,7 @@ challenge:
   id: xxuuid
   name: xxname
   slug: xxslug
+  difficulty: easy
   introduction: >
     xxintro
   levels:

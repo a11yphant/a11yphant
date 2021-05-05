@@ -2,6 +2,7 @@ challenge:
   id: a3db1fc5-7183-42ad-8ba7-fff2922a1927
   name: HTML Basics
   slug: html-basics
+  difficulty: easy
   introduction: |-
     To get familiar with the interface of a11yphant we are going to start with a recap on some of the more common HTML tags and what they can and should be used for. HTML tags label the content inside the tag and tell the browser how to properly display it. As an example, the <code>&lt;p&gt;</code> tag indicates that content inside is a paragraph of text. Let's get started!
   levels:
