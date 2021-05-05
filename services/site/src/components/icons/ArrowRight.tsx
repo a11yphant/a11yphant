@@ -7,7 +7,6 @@ const ArrowRight: React.FunctionComponent = () => {
         fill-rule="evenodd"
         clip-rule="evenodd"
         d="M11 20.332h16.264L19.8 12.866 21.665 11 32.33 21.665 21.665 32.33l-1.866-1.866 7.465-7.466H11v-2.666z"
-        fill="#EDEDED"
       />
     </svg>
   );
