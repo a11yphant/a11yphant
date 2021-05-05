@@ -3,10 +3,14 @@ import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import {
+  ChallengeBySlugDocument,
+  ChallengeBySlugQuery,
+  ChallengeBySlugQueryVariables,
   Code,
   LevelByChallengeSlugDocument,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
+  useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apolloClient";
@@ -25,6 +29,11 @@ const Level: React.FunctionComponent = () => {
     loading,
     data: { level },
   } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
+
+  const {
+    loading: loadingChallenge,
+    data: { challenge },
+  } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
   const [submitLevelMutation] = useSubmitMutation();
 
@@ -71,22 +80,13 @@ const Level: React.FunctionComponent = () => {
     router.push(`${router.asPath}/evaluation`);
   };
 
-  if (loading) {
+  if (loading || loadingChallenge) {
     return <div>Loading ...</div>;
   }
 
   return (
     <main className="flex justify-between h-19/20 box-border p-4">
-      <Sidebar
-        classes="h-full"
-        instructions={{
-          instructions: level.instructions,
-          tldr: level.tldr,
-          requirements: level.requirements,
-        }}
-        hints={level.hints}
-        resources={level.resources}
-      />
+      <Sidebar classes="h-full" challengeName={challenge.name} instructions={level.instructions} />
       <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
         <Editors
           reset={resetToInitialCode}
@@ -134,6 +134,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     variables: {
       challengeSlug: challengeSlug as string,
       nth: Number(nthLevel),
+    },
+  });
+
+  await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+    query: ChallengeBySlugDocument,
+    variables: {
+      slug: challengeSlug as string,
     },
   });
 
