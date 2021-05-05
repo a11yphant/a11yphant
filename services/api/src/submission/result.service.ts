@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { Prisma, Result as ResultRecord } from "@prisma/client";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { Result } from "./models/result.model";
@@ -15,7 +16,7 @@ export class ResultService {
       },
     });
 
-    return record ? new Result({ id: record.id, status: record.status, submissionId: record.submissionId }) : null;
+    return record ? this.createModelFromRecord(record) : null;
   }
 
   async countNumberOfCheckedRequirements(id: string): Promise<number> {
@@ -24,5 +25,20 @@ export class ResultService {
 
   async countNumberOfFailedRequirementChecks(id: string): Promise<number> {
     return this.prisma.checkResult.count({ where: { resultId: id, status: ResultStatus.FAIL } });
+  }
+
+  async update(id: string, data: Pick<Prisma.ResultUpdateInput, "status">): Promise<Result> {
+    const record = await this.prisma.result.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return record ? this.createModelFromRecord(record) : null;
+  }
+
+  private createModelFromRecord(record: ResultRecord): Result {
+    return new Result({ id: record.id, status: record.status, submissionId: record.submissionId });
   }
 }

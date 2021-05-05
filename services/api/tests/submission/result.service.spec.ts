@@ -76,4 +76,20 @@ describe("result service", () => {
 
     expect(await resultService.countNumberOfCheckedRequirements(result.id)).toBe(1);
   });
+
+  it("can update the status of a result", async () => {
+    const prisma = getPrismaService();
+    const challenge = await prisma.challenge.create({ data: ChallengeFactory.build() });
+    const level = await prisma.level.create({ data: LevelFactory.build({ challengeId: challenge.id }) });
+    const submission = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
+    const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission.id }) });
+
+    const resultService = new ResultService(prisma);
+
+    expect(
+      await resultService.update(result.id, {
+        status: ResultStatus.SUCCESS,
+      }),
+    ).toHaveProperty("status", ResultStatus.SUCCESS);
+  });
 });
