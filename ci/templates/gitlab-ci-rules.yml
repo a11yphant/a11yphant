@@ -1,0 +1,66 @@
+.run_on_root_change: &run_on_root_change
+  "*"
+
+.run_on_ci_change: &run_on_ci_change
+  ci/**/*
+
+.run_on_terraform_change:
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - terraform/**/*
+
+.run_on_api_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - services/../*
+        - services/api/**/*
+
+.run_on_site_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - services/../*
+        - services/site/**/*
+
+.run_on_submission-checker_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - services/../*
+        - services/submission-checker/**/*
+
+.run_on_prisma_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - packages/../*
+        - packages/prisma/**/*
+
+.run_on_nestjs_aws_messaging_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - packages/../*
+        - packages/nestjs-aws-messaging/**/*
+
+.run_on_eslint_config_change:
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
+      changes:
+        - *run_on_root_change
+        - *run_on_ci_change
+        - packages/../*
+        - packages/eslint-config/**/*

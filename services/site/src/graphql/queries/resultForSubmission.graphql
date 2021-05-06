@@ -1,0 +1,21 @@
+
+# Write your query or mutation here
+
+query resultForSubmission ($id: String!) {
+  resultForSubmission(submissionId: $id) {
+    id
+    status
+    numberOfCheckedRequirements
+    numberOfFailedRequirementChecks
+    requirements {
+      id
+      title
+      description
+      rule {
+        id
+        key
+      }
+      result
+    }
+  }
+}

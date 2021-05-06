@@ -1,0 +1,35 @@
+{
+  "name": "@a11yphant/eslint-config",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./**/*.js",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "license": "UNLICENSED",
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0 || ^8.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^1.1.0",
+    "prettier": "^2.2.1"
+  },
+  "devDependencies": {
+    "eslint": "7.25.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint-plugin-unused-imports": "1.1.1",
+    "prettier": "2.2.1"
+  }
+}

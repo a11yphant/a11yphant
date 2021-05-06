@@ -1,0 +1,7 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "npmrc": "@a11yphant:registry=https://gitlab.mediacube.at/api/v4/projects/5907/packages/npm/"
+}

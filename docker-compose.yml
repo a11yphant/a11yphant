@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201202
+    restart: always
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - 4444:4444
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: a11yphant
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: a11yphant
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  localstack:
+    image: localstack/localstack
+    restart: always
+    environment:
+      SERVICES: sns,sqs
+    ports:
+      - 4566:4566
+      - 4571:4571
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  terraform:
+    image: hashicorp/terraform
+    restart: 'no'
+    volumes:
+     - ./terraform:/terraform
+    depends_on:
+     - localstack
+
+volumes:
+  postgres_data:

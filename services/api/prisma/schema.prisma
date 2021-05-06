@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Challenge {
+  id         String  @id @default(uuid())
+  slug       String  @unique
+  name       String
+  difficulty Int     @default(0)
+  levels     Level[]
+
+  @@map(name: "challenges")
+}
+
+model Level {
+  id           String        @id @default(uuid())
+  order        Int           @default(0)
+  tldr         String
+  instructions String
+  challenge    Challenge     @relation(fields: [challengeId], references: [id])
+  challengeId  String
+  requirements Requirement[]
+  hints        Hint[]
+  resources    Resource[]
+  submissions  Submission[]
+  html         String?
+  css          String?
+  js           String?
+
+  @@map(name: "levels")
+}
+
+model Rule {
+  id           String        @id @default(uuid())
+  key          String        @unique
+  requirements Requirement[]
+
+  @@map(name: "rules")
+}
+
+model Requirement {
+  id          String        @id @default(uuid())
+  title       String
+  description String        @default("")
+  level       Level         @relation(fields: [levelId], references: [id])
+  levelId     String
+  rule        Rule?         @relation(fields: [ruleId], references: [id])
+  ruleId      String?
+  CheckResult CheckResult[]
+
+  @@map(name: "requirements")
+}
+
+model Hint {
+  id      String @id @default(uuid())
+  content String
+  level   Level  @relation(fields: [levelId], references: [id])
+  levelId String
+
+  @@map(name: "hints")
+}
+
+model Resource {
+  id      String @id @default(uuid())
+  title   String
+  link    String
+  level   Level  @relation(fields: [levelId], references: [id])
+  levelId String
+
+  @@map(name: "resources")
+}
+
+model Submission {
+  id      String  @id @default(uuid())
+  html    String?
+  css     String?
+  js      String?
+  level   Level   @relation(fields: [levelId], references: [id])
+  levelId String
+  result  Result?
+
+  @@map(name: "submissions")
+}
+
+model Result {
+  id           String        @id @default(uuid())
+  status       Int           @default(0)
+  checkResults CheckResult[]
+  Submission   Submission    @relation(fields: [submissionId], references: [id])
+  submissionId String
+
+  @@map(name: "results")
+}
+
+model CheckResult {
+  id            String      @id @default(uuid())
+  result        Result      @relation(fields: [resultId], references: [id])
+  resultId      String
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+  requirementId String
+  status        Int
+
+  @@map(name: "check_results")
+}

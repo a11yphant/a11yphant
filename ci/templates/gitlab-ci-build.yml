@@ -1,0 +1,7 @@
+.build:
+  tags:
+    - docker
+  stage: build
+  image: node:14-alpine
+  script:
+    - npm run build --prefix $PROJECT_PATH

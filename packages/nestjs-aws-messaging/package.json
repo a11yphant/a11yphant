@@ -1,0 +1,89 @@
+{
+  "name": "@a11yphant/nestjs-aws-messaging",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc --project tsconfig.build.json",
+    "lint": "npm run lint:eslint && npm run lint:tsc",
+    "lint:tsc": "tsc --project ./tsconfig.lint.json",
+    "lint:eslint": "eslint \"**/*.ts\"",
+    "lint:eslint:fix": "npm run lint:eslint -- --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --reporter=default",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "7.6.15",
+    "@nestjs/core": "7.6.15",
+    "@nestjs/microservices": "7.6.15",
+    "aws-sdk": "2.893.0",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "6.6.7"
+  },
+  "devDependencies": {
+    "@a11yphant/eslint-config": "0.0.3",
+    "@golevelup/ts-jest": "0.3.1",
+    "@nestjs/common": "7.6.15",
+    "@nestjs/core": "7.6.15",
+    "@nestjs/microservices": "7.6.15",
+    "@nestjs/testing": "7.6.15",
+    "@types/aws-lambda": "8.10.76",
+    "@types/jest": "26.0.23",
+    "@types/node": "14.14.42",
+    "@typescript-eslint/eslint-plugin": "4.22.0",
+    "@typescript-eslint/parser": "4.22.0",
+    "aws-lambda": "1.0.6",
+    "aws-sdk": "2.893.0",
+    "aws-sdk-mock": "5.1.0",
+    "dotenv": "8.2.0",
+    "dotenv-cli": "4.0.0",
+    "eslint": "7.25.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint-plugin-unused-imports": "1.1.1",
+    "jest": "26.6.3",
+    "jest-junit": "12.0.0",
+    "prettier": "2.2.1",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "6.6.7",
+    "ts-jest": "26.5.5",
+    "ts-node": "9.1.1",
+    "tsconfig-paths": "3.9.0",
+    "typescript": "4.2.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "./",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "cobertura"
+    ],
+    "coverageDirectory": "<rootDir>"
+  }
+}
