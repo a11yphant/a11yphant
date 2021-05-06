@@ -9,11 +9,14 @@ challenge:
     - id: 2851ade8-5b45-4c66-9a51-bcaec580eaff
       order: 1
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: 4cc9bc09-1c74-4547-bb8b-6f08efce284c
+          key: html-is-valid
+        - id: a14b41ed-8c83-4760-b58e-b36bd478ee03
+          key: element-exists
           options:
             selector: article
-        - key: element-exists
+        - id: 64180f8e-912c-42a0-add1-e1ecbdf5e8fb
+          key: element-exists
           options:
             selector: section
       instructions: |-
@@ -67,8 +70,10 @@ challenge:
     - id: d2b5f580-16be-4ebd-82e5-b5a3de4fec9d
       order: 2
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: 0b9a4640-e49b-4042-8c4a-b718431b0d57
+          key: html-is-valid
+        - id: 39d905ac-1726-4f8e-ac86-7a6c3ab3a345
+          key: element-exists
           options:
             selector: header
       instructions: |-
@@ -114,11 +119,14 @@ challenge:
     - id: 22356b69-f422-49b4-8713-6ac01327a5bf
       order: 3
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: d73a14ec-8b72-42df-839d-d3a41a6755d2
+          key: html-is-valid
+        - id: b081ab79-c5e0-4eea-a316-b532756db987
+          key: element-exists
           options:
             selector: nav > a
-        - key: element-not-exists
+        - id: 270d6184-0420-4f9a-ac9a-e78420d8edf0
+          key: element-not-exists
           options:
             selector: main > nav
       instructions: |-
@@ -163,17 +171,22 @@ challenge:
     - id: 402a1950-16e6-41dc-9cf3-437d461c4e6d
       order: 4
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: 8cf34f54-72cd-41c1-a267-6b2fd722705c
+          key: html-is-valid
+        - id: 64c9858b-fe1d-49d2-8298-41fc41e277e6
+          key: element-exists
           options:
             selector: header
-        - key: element-not-exists
+        - id: a950a571-33db-49e2-92ea-a8678741e787
+          key: element-not-exists
           options:
             selector: main > header
-        - key: element-exists
+        - id: 45a21504-06c1-4f07-ad21-7951d5eb559d
+          key: element-exists
           options:
             selector: footer
-        - key: element-not-exists
+        - id: bc2d8c9c-1008-45f1-a129-d15037023161
+          key: element-not-exists
           options:
             selector: main > footer
       instructions: |-

@@ -9,7 +9,8 @@ challenge:
     - id: 628e7fa6-b0f1-4a19-85b2-ec6a3613ceff
       order: 1
       requirements:
-        - key: html-is-valid
+        - id: 2ac21c0c-1fea-40e9-b908-def211910d9a
+          key: html-is-valid
       instructions: |-
         Each website requires a bit of boilerplate code that tells the browser key information about the page. The first required element is the doctype. The doctype tells the browser which version of HTML is used for this page. A doctype should look like this  <code>&lt;!DOCTYPE {HTML_VERSION}&gt;</code>. For example, if <code>html</code> is specified as the version, browsers will use HTML5 (the latest version) for rendering.
       tasks:
@@ -34,8 +35,10 @@ challenge:
     - id: 1b1efb0e-6d5b-4640-b86f-4c2b6f8e71d2
       order: 2
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: 07b24075-94b6-4670-9b51-fffd8c12f352
+          key: html-is-valid
+        - id: 03e4babb-7e5a-48da-8561-7e36a6771675
+          key: element-exists
           options:
             selector: html[lang="en"]
       instructions: |-
@@ -64,7 +67,8 @@ challenge:
     - id: 2f391435-98d6-4297-a7e8-f176b8e3d261
       order: 4
       requirements:
-        - key: html-is-valid
+        - id: c4f37058-ab15-4f02-a37c-a587d2438baa
+          key: html-is-valid
       instructions: |-
         The <code>&lt;title&gt;</code> tag inside the <code>&lt;head&gt;</code> defines the title of a web page. The browser uses the content of this tag to name the window or tab in which the page is displayed.
       tasks:
@@ -90,8 +94,10 @@ challenge:
     - id: c97c3828-88ec-47d9-b2db-46bea8c5f294
       order: 6
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: a5a9a862-8171-45a2-bcdf-23c403b574ed
+          key: html-is-valid
+        - id: 1e98b201-2db0-4681-bf7a-dd7f4f34e2ad
+          key: element-exists
           options:
             selector: h1
       instructions: |-
@@ -120,8 +126,10 @@ challenge:
     - id: bfe8cb82-2d80-4f9b-bb60-6cc6febfac66
       order: 7
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: b7f3fd48-d18a-4930-a6f4-ed6d72d70597
+          key: html-is-valid
+        - id: ff63fa49-47ef-474c-a094-fe857d04a6b7
+          key: element-exists
           options:
             selector: p
       instructions: |-
@@ -148,8 +156,10 @@ challenge:
     - id: 3c2508d0-9de3-4bff-9406-26f05652e37a
       order: 8
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: 21568a3b-4fb2-40f3-abe5-0de01f8a02ce
+          key: html-is-valid
+        - id: f8e487e8-9feb-43dc-bded-0ad0e34f3142
+          key: element-exists
           options:
             selector: ul > li
       instructions: |-
@@ -183,8 +193,10 @@ challenge:
     - id: 36905991-5fed-4b9b-b07e-3f5d56d90753
       order: 9
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: f3530946-0512-4506-b38b-047a978a9081
+          key: html-is-valid
+        - id: da5c027a-44be-4a2e-9d25-4260642c825b
+          key: element-exists
           options:
             selector: ol > li
       instructions: |-
@@ -233,9 +245,12 @@ challenge:
     - id: 2da3dffc-9985-410e-9165-6e70b0091acb
       order: 10
       requirements:
-        - key: html-is-valid
-        - key: axe-link-name
-        - key: element-exists
+        - id: 18084eb9-c821-4c20-a656-6c6a54812abe
+          key: html-is-valid
+        - id: 94860046-d788-4c4a-b469-4241cfc830b7
+          key: axe-link-name
+        - id: bc9461d3-98ad-4ad0-bd2e-c1121e1e1196
+          key: element-exists
           options:
             selector: a
       instructions: |-
@@ -268,8 +283,10 @@ challenge:
     - id: e24fa105-c185-4eab-b5f0-85b551444437
       order: 11
       requirements:
-        - key: html-is-valid
-        - key: element-exists
+        - id: 2ae4f506-c31c-4e8f-a0ff-f4ea7c708af4
+          key: html-is-valid
+        - id: a442cc76-58ad-49b4-a65d-c62d55dc0a47
+          key: element-exists
           options:
             selector: button
       instructions: |-
