@@ -9,8 +9,10 @@ challenge:
     - id: 5557e647-7a14-47b7-b51c-142f25cc998c
       order: 1
       requirements:
-        - key: html-is-valid
-        - key: axe-link-name
+        - id: da787b67-30bd-490e-8913-4d7d2a7fd2d0
+          key: html-is-valid
+        - id: c5013ba3-678d-446c-a681-6651486f87f7
+          key: axe-link-name
       instructions: |-
         Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.
       tasks:
@@ -51,8 +53,10 @@ challenge:
     - id: 0682b540-67cb-45b6-bdf3-692fb78e871d
       order: 2
       requirements:
-        - key: html-is-valid
-        - key: axe-link-name
+        - id: 3d69d723-44db-48ac-9d50-6a47f132cc9d
+          key: html-is-valid
+        - id: 43a46cf6-69a2-444b-bad3-53092cf72e52
+          key: axe-link-name
       instructions: |-
         Your friend Charles has reached out for your help again. He wants to link to additional resources in his blog post, but he is not sure how to structure the additional resources section. Can you write the markup for him (you don't have to style it for now)?
         Charles wants to add links to the following pages:
