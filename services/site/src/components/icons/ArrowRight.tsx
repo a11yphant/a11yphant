@@ -1,8 +1,9 @@
+import clsx from "clsx";
 import React from "react";
 
 const ArrowRight: React.FunctionComponent = () => {
   return (
-    <svg viewBox="0 0 44 44" fill="currentColor" className="text-white h-7 w-7 pl-2" aria-hidden="true" focusable="false">
+    <svg viewBox="0 0 44 44" fill="currentColor" className={clsx("text-white h-7 w-7 pl-2")} aria-hidden="true" focusable="false">
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"

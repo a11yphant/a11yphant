@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 const DifficultyMedium: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
@@ -6,7 +7,7 @@ const DifficultyMedium: React.FunctionComponent<React.SVGProps<SVGSVGElement>> =
       viewBox="0 0 25 15"
       fill="currentColor"
       stroke="currentColor"
-      className={`${className} text-primary`}
+      className={clsx("text-primary", className)}
       aria-hidden="true"
       focusable="false"
       {...props}

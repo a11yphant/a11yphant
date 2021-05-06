@@ -1,13 +1,14 @@
+import clsx from "clsx";
 import React from "react";
 
 interface SlashProps {
-  classes?: string;
+  className?: string;
 }
 
-const Slash: React.FunctionComponent<SlashProps> = ({ classes = "text-gray-300" }) => {
+const Slash: React.FunctionComponent<SlashProps> = ({ className }) => {
   return (
     <svg
-      className={`${classes} flex-shrink-0 h-5 w-5`}
+      className={clsx("text-gray-300 flex-shrink-0 h-5 w-5", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
       viewBox="0 0 20 20"
