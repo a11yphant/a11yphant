@@ -1,6 +1,6 @@
+import { Task } from "app/generated/graphql";
 import React from "react";
 
-import { Task } from "../Sidebar";
 import HintBox from "./Sections/HintBox";
 
 interface TaskListProps {
@@ -11,7 +11,7 @@ const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
   if (tasks.length === 1) {
     return (
       <>
-        <p className="font-bold my-6">{tasks[0].title}</p>
+        <p className="font-bold my-6">{tasks[0].text}</p>
         <HintBox hints={tasks[0].hints} />
       </>
     );
@@ -20,7 +20,7 @@ const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
       <ol>
         {tasks.map((task, idx) => (
           <li key={task.id} className="font-bold my-6">
-            <p>{`${idx + 1}. ${task.title}`}</p>
+            <p>{`${idx + 1}. ${task.text}`}</p>
             <HintBox hints={task.hints} />
           </li>
         ))}
