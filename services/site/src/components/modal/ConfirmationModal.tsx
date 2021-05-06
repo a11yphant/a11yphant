@@ -3,7 +3,7 @@ import X from "app/components/icons/X";
 import clsx from "clsx";
 import React from "react";
 
-interface ConfirmationModalProps {
+export interface ConfirmationModalProps {
   open?: boolean;
   title: string;
   cancelButtonLabel?: string;
