@@ -3,8 +3,8 @@ import "@testing-library/jest-dom/extend-expect";
 import { cleanup } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
-import Avatar from "app/components/icons/Avatar";
 import Save from "app/components/icons/Save";
+import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation from "app/components/Navigation";
 import { shallow } from "enzyme";
 import React from "react";
@@ -29,7 +29,7 @@ describe("Navigation", () => {
     expect(wrapper.exists(Save)).toBeFalsy();
 
     // User Avatar exists
-    expect(wrapper.contains(<Avatar />)).toBeTruthy();
+    expect(wrapper.contains(<UserAvatar />)).toBeTruthy();
 
     // SignUp/Login Buttons do not exist
     expect(wrapper.exists(Button)).toBeFalsy();

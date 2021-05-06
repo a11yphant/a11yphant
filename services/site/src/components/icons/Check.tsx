@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 const Check: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
@@ -7,7 +8,7 @@ const Check: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ classNa
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className={`${className} h-6 w-6`}
+      className={clsx("h-6 w-6", className)}
       aria-hidden="true"
       focusable="false"
       {...props}
