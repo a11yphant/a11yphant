@@ -31,7 +31,7 @@ export abstract class SeleniumCheck implements Check {
       };
     } finally {
       this.logger.log("WebDriver session closing", SeleniumCheck.name);
-      await driver.close();
+      await driver.quit();
       this.logger.log("WebDriver session closed", SeleniumCheck.name);
     }
   }
