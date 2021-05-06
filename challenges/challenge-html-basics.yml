@@ -11,6 +11,8 @@ challenge:
       requirements:
         - id: 2ac21c0c-1fea-40e9-b908-def211910d9a
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
       instructions: |-
         Each website requires a bit of boilerplate code that tells the browser key information about the page. The first required element is the doctype. The doctype tells the browser which version of HTML is used for this page. A doctype should look like this  <code>&lt;!DOCTYPE {HTML_VERSION}&gt;</code>. For example, if <code>html</code> is specified as the version, browsers will use HTML5 (the latest version) for rendering.
       tasks:
@@ -37,8 +39,12 @@ challenge:
       requirements:
         - id: 07b24075-94b6-4670-9b51-fffd8c12f352
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: 03e4babb-7e5a-48da-8561-7e36a6771675
           key: element-exists
+          title: The language for the page is specified.
+          description: Specifying the language allows screen readers to properly pronounce the content and allows browsers to offer translations.
           options:
             selector: html[lang="en"]
       instructions: |-
@@ -69,6 +75,8 @@ challenge:
       requirements:
         - id: c4f37058-ab15-4f02-a37c-a587d2438baa
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
       instructions: |-
         The <code>&lt;title&gt;</code> tag inside the <code>&lt;head&gt;</code> defines the title of a web page. The browser uses the content of this tag to name the window or tab in which the page is displayed.
       tasks:
@@ -96,7 +104,11 @@ challenge:
       requirements:
         - id: a5a9a862-8171-45a2-bcdf-23c403b574ed
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: 1e98b201-2db0-4681-bf7a-dd7f4f34e2ad
+          title: Page contains an heading with the level 1
+          description: We could not find an h1 your page. Make sure that the page contains a level 1 heading.
           key: element-exists
           options:
             selector: h1
@@ -128,8 +140,12 @@ challenge:
       requirements:
         - id: b7f3fd48-d18a-4930-a6f4-ed6d72d70597
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: ff63fa49-47ef-474c-a094-fe857d04a6b7
           key: element-exists
+          title: Page contains a text paragraph.
+          description: We could not find a text paragraph. Make sure to add the text inside a p tag.
           options:
             selector: p
       instructions: |-
@@ -158,8 +174,18 @@ challenge:
       requirements:
         - id: 21568a3b-4fb2-40f3-abe5-0de01f8a02ce
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 744a2534-727a-447d-82f7-d3a145195bea
+          key: element-exists
+          title: The page contains an unordered list.
+          description: We could not find an unordered list. Make sure you include an <ul>.
+          options:
+            selector: ul
         - id: f8e487e8-9feb-43dc-bded-0ad0e34f3142
           key: element-exists
+          title: The unordered list contains items.
+          description: We could not find items in your list. Make sure that there is at least one list item (<li>) in your list. The list item has to be a direct child of the list.
           options:
             selector: ul > li
       instructions: |-
@@ -195,8 +221,18 @@ challenge:
       requirements:
         - id: f3530946-0512-4506-b38b-047a978a9081
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: da5c027a-44be-4a2e-9d25-4260642c825b
           key: element-exists
+          title: The page contains an ordered list.
+          description: We could not find an ordered list. Make sure you include an <ol>.
+          options:
+            selector: ol
+        - id: da5c027a-44be-4a2e-9d25-4260642c825b
+          key: element-exists
+          title: The ordered list contains items.
+          description: We could not find items in your list. Make sure that there is at least one list item (<li>) in your list. The list item has to be a direct child of the list.
           options:
             selector: ol > li
       instructions: |-
@@ -247,10 +283,16 @@ challenge:
       requirements:
         - id: 18084eb9-c821-4c20-a656-6c6a54812abe
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: 94860046-d788-4c4a-b469-4241cfc830b7
+          title: Links are detectable by assistive technologies
+          description: Make sure that links can be identified by assistive technologies. Using an <a> tag with an valid href is all you need to make this requirement pass.
           key: axe-link-name
         - id: bc9461d3-98ad-4ad0-bd2e-c1121e1e1196
           key: element-exists
+          title: The page contains a link.
+          description: Make sure that your page contains a link (<a>)
           options:
             selector: a
       instructions: |-
@@ -285,8 +327,12 @@ challenge:
       requirements:
         - id: 2ae4f506-c31c-4e8f-a0ff-f4ea7c708af4
           key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: a442cc76-58ad-49b4-a65d-c62d55dc0a47
           key: element-exists
+          title: The page contains a button.
+          description: Make sure that you have included a button in your page (<button>).
           options:
             selector: button
       instructions: |-
