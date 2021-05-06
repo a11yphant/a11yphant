@@ -4,14 +4,18 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
+import { SessionInterceptor } from "./authentication/session.interceptor";
 
 let transportStrategy: AwsTransportStrategy;
 
 async function bootstrap(): Promise<NestExpressApplication | void> {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new SessionInterceptor());
 
   const configService = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);

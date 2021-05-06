@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ConsoleModule } from "nestjs-console";
 
+import { AuthenticationModule } from "./authentication/authentication.module";
 import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
 import databaseConfig from "./config/database.config";
@@ -24,10 +25,16 @@ import { SubmissionModule } from "./submission/submission.module";
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>("gql.debug"),
-        playground: configService.get<boolean>("gql.playground"),
+        playground: configService.get<boolean>("gql.playground")
+          ? {
+              settings: {
+                "request.credentials": "include",
+              },
+            }
+          : false,
         introspection: configService.get<boolean>("gql.schemaIntrospection"),
         autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
-        context: ({ req }) => ({ ...req }),
+        context: ({ req, res }) => ({ req, res }),
         cors: {
           credentials: true,
           origin: true,
@@ -52,6 +59,7 @@ import { SubmissionModule } from "./submission/submission.module";
       }),
       inject: [ConfigService],
     }),
+    AuthenticationModule,
     HelloWorldModule,
     ChallengeModule,
     SubmissionModule,
