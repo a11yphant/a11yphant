@@ -121,6 +121,9 @@ export class ImportService {
             html: level.code?.html,
             css: level.code?.css,
             js: level.code?.js,
+            hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
+            hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
+            hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
           },
           update: {
             order: level.order,
@@ -129,6 +132,9 @@ export class ImportService {
             html: level.code?.html,
             css: level.code?.css,
             js: level.code?.js,
+            hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
+            hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
+            hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
           },
         });
       }),

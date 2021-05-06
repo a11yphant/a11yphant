@@ -193,6 +193,44 @@ describe("import service", () => {
       expect(storedLevel.css).toEqual(level.code.css);
       expect(storedLevel.js).toEqual(level.code.js);
     });
+
+    it("sets the correct editor configuration for the level", async () => {
+      const prisma = getPrismaService();
+      const challenge: Challenge = {
+        id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+        slug: "test-slug",
+        name: "test",
+        introduction: "hello",
+        difficulty: "easy",
+        levels: [
+          {
+            id: "a",
+            order: 1,
+            instructions: "hi",
+            requirements: [],
+            tasks: [],
+            code: {
+              html: '<a href="/">hi</a>',
+              css: "a { color: blue }",
+              js: 'alert("hi")',
+            },
+            has_editor: {
+              js: false,
+            },
+          },
+        ],
+      };
+
+      const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+      await importer.importChallenge(challenge);
+
+      expect(await prisma.level.count()).toEqual(1);
+      const storedLevel = await prisma.level.findFirst();
+
+      expect(storedLevel.hasHtmlEditor).toEqual(true);
+      expect(storedLevel.hasCssEditor).toEqual(true);
+      expect(storedLevel.hasJsEditor).toEqual(false);
+    });
   });
 
   describe("requirement", () => {

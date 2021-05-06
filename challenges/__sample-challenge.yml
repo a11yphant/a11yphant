@@ -27,3 +27,7 @@ challenge:
           xxcsscode
         js: |-
           xxjscode
+      has_editor:
+        html: true
+        css: false
+        js: false

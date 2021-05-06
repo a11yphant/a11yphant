@@ -14,6 +14,7 @@ export interface Level {
   instructions: string;
   tasks: Task[];
   code?: Code;
+  has_editor?: HasEditor;
 }
 
 export interface Requirement {
@@ -39,4 +40,10 @@ interface Code {
   html?: string;
   css?: string;
   js?: string;
+}
+
+interface HasEditor {
+  html?: boolean;
+  css?: boolean;
+  js?: boolean;
 }

@@ -22,17 +22,20 @@ model Challenge {
 }
 
 model Level {
-  id           String        @id @default(uuid())
-  order        Int           @default(0)
-  instructions String
-  challenge    Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId  String
-  requirements Requirement[]
-  submissions  Submission[]
-  tasks        Task[]
-  html         String?
-  css          String?
-  js           String?
+  id            String        @id @default(uuid())
+  order         Int           @default(0)
+  instructions  String
+  challenge     Challenge     @relation(fields: [challengeId], references: [id])
+  challengeId   String
+  requirements  Requirement[]
+  submissions   Submission[]
+  tasks         Task[]
+  html          String?
+  css           String?
+  js            String?
+  hasHtmlEditor Boolean       @default(true)
+  hasCssEditor  Boolean       @default(false)
+  hasJsEditor   Boolean       @default(false)
 
   @@map(name: "levels")
 }
