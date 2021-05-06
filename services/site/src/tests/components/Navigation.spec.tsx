@@ -11,8 +11,6 @@ import React from "react";
 
 afterEach(cleanup);
 
-// TODO: add test when breadcrumb-test is done
-
 describe("Navigation", () => {
   it("renders correctly", () => {
     const wrapper = shallow(<Navigation />);
