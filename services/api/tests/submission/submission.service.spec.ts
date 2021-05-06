@@ -4,6 +4,8 @@ import { ClientProxy } from "@nestjs/microservices";
 
 import { PrismaService } from "../../src/prisma/prisma.service";
 import { SubmissionService } from "../../src/submission/submission.service";
+import { ChallengeFactory } from "../factories/database/challenge.factory";
+import { LevelFactory } from "../factories/database/level.factory";
 import { useDatabase } from "../helpers";
 
 describe("submission service", () => {
@@ -19,19 +21,11 @@ describe("submission service", () => {
     );
 
     const { id: challengeId } = await prisma.challenge.create({
-      data: {
-        name: "submission service test",
-        slug: "sub-serv-test",
-        difficulty: 0,
-      },
+      data: ChallengeFactory.build(),
     });
 
     const { id: levelId } = await prisma.level.create({
-      data: {
-        instructions: "testing the submission service",
-        tldr: "testing stuff",
-        challengeId,
-      },
+      data: LevelFactory.build({ challengeId }),
     });
 
     const createdSubmission = await service.save({
@@ -66,19 +60,11 @@ describe("submission service", () => {
     );
 
     const { id: challengeId } = await prisma.challenge.create({
-      data: {
-        name: "submission service test",
-        slug: "sub-serv-test",
-        difficulty: 0,
-      },
+      data: ChallengeFactory.build(),
     });
 
     const { id: levelId } = await prisma.level.create({
-      data: {
-        instructions: "testing the submission service",
-        tldr: "testing stuff",
-        challengeId,
-      },
+      data: LevelFactory.build({ challengeId }),
     });
 
     const { id: submissionId } = await prisma.submission.create({

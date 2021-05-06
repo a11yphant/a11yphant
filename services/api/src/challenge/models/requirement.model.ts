@@ -19,6 +19,8 @@ export class Requirement {
   @Field(() => String)
   description: string;
 
+  options: { [key: string]: string };
+
   @Field(() => Rule, {
     description: "The rule this requirement is based on.",
   })

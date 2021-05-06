@@ -42,6 +42,7 @@ export class ChallengeService {
       name: record.name,
       slug: record.slug,
       difficulty: record.difficulty,
+      introduction: record.introduction,
     });
 
     return challenge;

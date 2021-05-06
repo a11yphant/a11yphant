@@ -1,42 +1,42 @@
 export interface Challenge {
   id: string;
-  slug: string;
   name: string;
-  levels: Level[];
+  slug: string;
   difficulty: string;
+  introduction: string;
+  levels: Level[];
 }
 
 export interface Level {
   id: string;
   order: number;
-  tldr: string;
-  instructions: string;
   requirements: Requirement[];
-  hints: Hint[];
-  resources: Resource[];
+  instructions: string;
+  tasks: Task[];
   code?: Code;
-}
-
-interface Code {
-  html?: string;
-  css?: string;
-  js?: string;
 }
 
 export interface Requirement {
   id: string;
   title: string;
   description: string;
-  rule: string;
+  key: string;
+  options?: { [key: string]: string };
+}
+
+export interface Task {
+  id: string;
+  text: string;
+  hints: Hint[];
 }
 
 export interface Hint {
   id: string;
-  content: string;
+  text: string;
 }
 
-export interface Resource {
-  id: string;
-  title: string;
-  link: string;
+interface Code {
+  html?: string;
+  css?: string;
+  js?: string;
 }
