@@ -1,7 +1,7 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
-import Trash from "app/components/icons/Reset";
+import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
@@ -104,7 +104,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           )}
           ref={buttonRef}
         >
-          <Trash />
+          <Reset />
           Reset
         </button>
         <ConfirmationModal
