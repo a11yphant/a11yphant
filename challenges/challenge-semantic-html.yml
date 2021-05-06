@@ -208,7 +208,7 @@ challenge:
           key: element-not-exists
           title: The header is not inside the main landmark.
           # TODO: Proper description
-          description:
+          description: ""
           options:
             selector: main > header
         - id: 45a21504-06c1-4f07-ad21-7951d5eb559d
@@ -221,7 +221,7 @@ challenge:
           key: element-not-exists
           title: The footer is not inside the main landmark.
           # TODO: Proper description
-          description:
+          description: ""
           options:
             selector: main > footer
       instructions: |-
