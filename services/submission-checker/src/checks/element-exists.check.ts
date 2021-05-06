@@ -1,5 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { By, WebDriver } from "selenium-webdriver";
+import { BrowserService } from "src/browser.service";
 
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
@@ -8,6 +10,10 @@ import { SeleniumCheck } from "./selenium-check";
 
 @Injectable()
 export class ElementExists extends SeleniumCheck {
+  constructor(logger: Logger, config: ConfigService, browser: BrowserService) {
+    super(logger, config, browser);
+  }
+
   public async evaluateRule(driver: WebDriver, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.selector) {
       this.logger.error(
