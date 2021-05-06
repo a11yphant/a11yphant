@@ -39,22 +39,22 @@ model Level {
 }
 
 model Rule {
-  id                    String        @id @default(uuid())
-  key                   String        @unique
-  title                 String
-  shortDescription      String
-  additionalDescription String?
-  requirements          Requirement[]
+  id           String        @id @default(uuid())
+  key          String        @unique
+  requirements Requirement[]
 
   @@map(name: "rules")
 }
 
 model Requirement {
-  id      String @id @default(uuid())
-  title   String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
-  rules   Rule[]
+  id          String        @id @default(uuid())
+  title       String
+  description String        @default("")
+  level       Level         @relation(fields: [levelId], references: [id])
+  levelId     String
+  rule        Rule?         @relation(fields: [ruleId], references: [id])
+  ruleId      String?
+  CheckResult CheckResult[]
 
   @@map(name: "requirements")
 }
@@ -85,6 +85,28 @@ model Submission {
   js      String?
   level   Level   @relation(fields: [levelId], references: [id])
   levelId String
+  result  Result?
 
   @@map(name: "submissions")
+}
+
+model Result {
+  id           String        @id @default(uuid())
+  status       Int           @default(0)
+  checkResults CheckResult[]
+  Submission   Submission    @relation(fields: [submissionId], references: [id])
+  submissionId String
+
+  @@map(name: "results")
+}
+
+model CheckResult {
+  id            String      @id @default(uuid())
+  result        Result      @relation(fields: [resultId], references: [id])
+  resultId      String
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+  requirementId String
+  status        Int
+
+  @@map(name: "check_results")
 }

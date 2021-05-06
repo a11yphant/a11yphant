@@ -1,6 +1,7 @@
 import AxeBuilder from "@axe-core/webdriverjs";
 import { Injectable, Logger } from "@nestjs/common";
 import { AxeResults } from "axe-core";
+import { ThenableWebDriver } from "selenium-webdriver";
 
 import { WebdriverFactory } from "./webdriver.factory";
 
@@ -8,11 +9,17 @@ import { WebdriverFactory } from "./webdriver.factory";
 export class BrowserService {
   constructor(private logger: Logger, private factory: WebdriverFactory) {}
 
-  // TODO adapt return value type
-  async runAxeChecks(url: string, options: unknown): Promise<AxeResults> {
+  async startSession(): Promise<ThenableWebDriver> {
     this.logger.log(`Creating a webdriver`, BrowserService.name);
     const driver = await this.factory.create();
     this.logger.log(`Webdriver created`, BrowserService.name);
+
+    return driver;
+  }
+
+  async runAxeChecks(url: string, options: unknown): Promise<AxeResults> {
+    const driver = await this.startSession();
+
     try {
       this.logger.log(`Opening ${url}`, BrowserService.name);
       await driver.get(url);

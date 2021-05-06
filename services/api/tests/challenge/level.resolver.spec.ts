@@ -32,7 +32,10 @@ describe("level resolver", () => {
       createMock<RequirementService>({
         findForLevel: jest
           .fn()
-          .mockResolvedValue([new Requirement({ id: "uuid-1", title: "Requirement 1" }), new Requirement({ id: "uuid-2", title: "Requirement 2" })]),
+          .mockResolvedValue([
+            new Requirement({ id: "uuid-1", title: "Requirement 1", description: "A helpful message" }),
+            new Requirement({ id: "uuid-2", title: "Requirement 2", description: "A helpful message" }),
+          ]),
       }),
       createMock<HintService>(),
       createMock<ResourceService>(),

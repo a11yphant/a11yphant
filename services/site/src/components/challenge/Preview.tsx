@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import debounce from "lodash.debounce";
 import { parse } from "node-html-parser";
 import React, { useState } from "react";
 
@@ -29,27 +30,23 @@ const addBaseFont = (css: string): string => {
   return font + css;
 };
 
+const debouncedUpdate = debounce((update: () => void) => {
+  update();
+}, 1000);
+
 const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, javascriptCode, heading }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
 
-  const [renderCountdown, setRenderCountdown] = useState<NodeJS.Timeout>();
   const [forceUpdateState, setForceUpdateState] = useState<boolean>();
 
-  const startRenderCountdown = (): NodeJS.Timeout =>
-    setTimeout(() => {
+  React.useEffect(() => {
+    debouncedUpdate(() => {
       setInnerHtmlCode(addTargetBlank(htmlCode));
       setInnerCssCode(addBaseFont(cssCode));
       setInnerJavascriptCode(javascriptCode);
-    }, 1000);
-
-  React.useEffect(() => {
-    if (renderCountdown) {
-      clearTimeout(renderCountdown);
-    }
-
-    setRenderCountdown(startRenderCountdown());
+    });
   }, [htmlCode, cssCode, javascriptCode]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

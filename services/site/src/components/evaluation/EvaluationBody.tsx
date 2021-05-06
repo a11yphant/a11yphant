@@ -1,4 +1,4 @@
-import { Check } from "app/generated/graphql";
+import { RequirementStatus } from "app/generated/graphql";
 import React from "react";
 
 import CollapsableSection from "./CollapsableSection";
@@ -6,25 +6,14 @@ import CollapsableSection from "./CollapsableSection";
 interface EvaluationBodyProps {
   className?: string;
   requirementTitle: string;
-  checks: Check[];
-  requirementIdx: number;
+  description: string;
+  result: RequirementStatus;
 }
 
-const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirementTitle, checks, requirementIdx }) => {
-  // render checks
-  const getChecks = React.useMemo(() => {
-    return checks.map((check, idx) => {
-      const checkTitle = `${requirementIdx}.${idx + 1} ${check.title}`;
-      return (
-        <CollapsableSection key={check.id} passed={check.result === "SUCCESS" ? true : false} title={checkTitle} description={check.description} />
-      );
-    });
-  }, [checks, requirementIdx]);
-
+const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirementTitle, result, description }) => {
   return (
     <div className={`${className} flex flex-col items-left w-full box-border h-full m-auto mb-8`}>
-      <h3 className="text-white font-bold h2 mb-2"> {requirementTitle}</h3>
-      {getChecks}
+      <CollapsableSection passed={result === RequirementStatus.Success ? true : false} title={requirementTitle} description={description} />
     </div>
   );
 };

@@ -32,8 +32,8 @@ const Evaluation: React.FunctionComponent = () => {
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
   const status = data?.resultForSubmission?.status;
-  const failedChecks = data?.resultForSubmission?.numberOfFailedChecks;
-  const totalChecks = data?.resultForSubmission?.numberOfChecks;
+  const failedChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
+  const totalChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
   const requirements = data?.resultForSubmission?.requirements || [];
 
   // fetch every 3 seconds
@@ -69,7 +69,14 @@ const Evaluation: React.FunctionComponent = () => {
     () =>
       requirements.map((requirement, idx) => {
         const requirementTitle = `${idx + 1}. ${requirement.title}`;
-        return <EvaluationBody key={requirement.id} requirementTitle={requirementTitle} checks={requirement.checks} requirementIdx={idx + 1} />;
+        return (
+          <EvaluationBody
+            key={requirement.id}
+            requirementTitle={requirementTitle}
+            description={requirement.description}
+            result={requirement.result}
+          />
+        );
       }),
     [requirements],
   );
