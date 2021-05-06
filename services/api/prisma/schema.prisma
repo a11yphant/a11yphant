@@ -11,71 +11,74 @@ generator client {
 }
 
 model Challenge {
-  id         String  @id @default(uuid())
-  slug       String  @unique
-  name       String
-  difficulty Int     @default(0)
-  levels     Level[]
+  id           String  @id @default(uuid())
+  slug         String  @unique
+  name         String
+  introduction String  @default("")
+  difficulty   Int     @default(0)
+  levels       Level[]
 
   @@map(name: "challenges")
 }
 
 model Level {
-  id           String        @id @default(uuid())
-  order        Int           @default(0)
-  tldr         String
-  instructions String
-  challenge    Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId  String
-  requirements Requirement[]
-  hints        Hint[]
-  resources    Resource[]
-  submissions  Submission[]
-  html         String?
-  css          String?
-  js           String?
+  id            String        @id @default(uuid())
+  order         Int           @default(0)
+  instructions  String
+  challenge     Challenge     @relation(fields: [challengeId], references: [id])
+  challengeId   String
+  requirements  Requirement[]
+  submissions   Submission[]
+  tasks         Task[]
+  html          String?
+  css           String?
+  js            String?
+  hasHtmlEditor Boolean       @default(true)
+  hasCssEditor  Boolean       @default(false)
+  hasJsEditor   Boolean       @default(false)
 
   @@map(name: "levels")
 }
 
+model Task {
+  id      String  @id @default(uuid())
+  text    String
+  hints   Hint[]
+  Level   Level?  @relation(fields: [levelId], references: [id])
+  levelId String?
+
+  @@map("tasks")
+}
+
 model Rule {
-  id                    String        @id @default(uuid())
-  key                   String        @unique
-  title                 String
-  shortDescription      String
-  additionalDescription String?
-  requirements          Requirement[]
+  id           String        @id @default(uuid())
+  key          String        @unique
+  requirements Requirement[]
 
   @@map(name: "rules")
 }
 
 model Requirement {
-  id      String @id @default(uuid())
-  title   String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
-  rules   Rule[]
+  id          String        @id @default(uuid())
+  title       String        @default("")
+  description String        @default("")
+  level       Level         @relation(fields: [levelId], references: [id])
+  levelId     String
+  rule        Rule?         @relation(fields: [ruleId], references: [id])
+  ruleId      String?
+  options     Json?
+  CheckResult CheckResult[]
 
   @@map(name: "requirements")
 }
 
 model Hint {
-  id      String @id @default(uuid())
-  content String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
+  id     String  @id @default(uuid())
+  text   String  @default("")
+  Task   Task?   @relation(fields: [taskId], references: [id])
+  taskId String?
 
   @@map(name: "hints")
-}
-
-model Resource {
-  id      String @id @default(uuid())
-  title   String
-  link    String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
-
-  @@map(name: "resources")
 }
 
 model Submission {
@@ -85,6 +88,28 @@ model Submission {
   js      String?
   level   Level   @relation(fields: [levelId], references: [id])
   levelId String
+  result  Result?
 
   @@map(name: "submissions")
+}
+
+model Result {
+  id           String        @id @default(uuid())
+  status       Int           @default(0)
+  checkResults CheckResult[]
+  Submission   Submission    @relation(fields: [submissionId], references: [id])
+  submissionId String
+
+  @@map(name: "results")
+}
+
+model CheckResult {
+  id            String      @id @default(uuid())
+  result        Result      @relation(fields: [resultId], references: [id])
+  resultId      String
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+  requirementId String
+  status        Int
+
+  @@map(name: "check_results")
 }

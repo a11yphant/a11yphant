@@ -4,7 +4,7 @@ import { join, resolve } from "path";
 import { promisify } from "util";
 
 import { PrismaService } from "../prisma/prisma.service";
-import { Challenge, Hint, Level, Requirement, Resource } from "./challenge.interface";
+import { Challenge, Hint, Level, Requirement, Task } from "./challenge.interface";
 import { Rule } from "./rule.interface";
 import { YamlReaderService } from "./yaml-reader.service";
 
@@ -58,15 +58,9 @@ export class ImportService {
       create: {
         id: rule.id,
         key: rule.key,
-        title: rule.title,
-        shortDescription: rule.shortDescription,
-        additionalDescription: rule.additionalDescription,
       },
       update: {
         key: rule.key,
-        title: rule.title,
-        shortDescription: rule.shortDescription,
-        additionalDescription: rule.additionalDescription,
       },
     });
   }
@@ -78,8 +72,11 @@ export class ImportService {
 
     for (const level of challenge.levels) {
       await this.upsertRequirementsForLevel(level.requirements, level.id);
-      await this.upsertResourcesForLevel(level.resources, level.id);
-      await this.upsertHintsForLevel(level.hints, level.id);
+      await this.upsertTasksForLevel(level.tasks, level.id);
+
+      for (const task of level.tasks) {
+        await this.upsertHintsForTask(task.hints, task.id);
+      }
     }
   }
 
@@ -91,10 +88,13 @@ export class ImportService {
         name: challenge.name,
         slug: challenge.slug,
         difficulty: this.mapDifficulty(challenge.difficulty),
+        introduction: challenge.introduction,
       },
       update: {
         name: challenge.name,
         slug: challenge.slug,
+        difficulty: this.mapDifficulty(challenge.difficulty),
+        introduction: challenge.introduction,
       },
     });
   }
@@ -116,21 +116,25 @@ export class ImportService {
           create: {
             id: level.id,
             order: level.order,
-            tldr: level.tldr,
             instructions: level.instructions,
             challengeId,
             html: level.code?.html,
             css: level.code?.css,
             js: level.code?.js,
+            hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
+            hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
+            hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
           },
           update: {
-            tldr: level.tldr,
             order: level.order,
             instructions: level.instructions,
             challengeId,
             html: level.code?.html,
             css: level.code?.css,
             js: level.code?.js,
+            hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
+            hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
+            hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
           },
         });
       }),
@@ -145,63 +149,91 @@ export class ImportService {
           create: {
             id: requirement.id,
             title: requirement.title,
-            levelId,
-          },
-          update: { title: requirement.title, levelId },
-        });
-
-        await Promise.all(
-          requirement.rules?.map(async (ruleKey) => {
-            await this.prisma.requirement.update({
-              where: { id: requirement.id },
-              data: {
-                rules: {
-                  connect: {
-                    key: ruleKey,
-                  },
-                },
-              },
-            });
-          }),
-        );
-      }),
-    );
-  }
-
-  private async upsertResourcesForLevel(resources: Resource[], levelId: string): Promise<void> {
-    await Promise.all(
-      resources.map(async (resource) => {
-        await this.prisma.resource.upsert({
-          where: { id: resource.id },
-          create: {
-            id: resource.id,
-            title: resource.title,
-            link: resource.link,
+            description: requirement.description,
+            options: requirement.options,
             levelId,
           },
           update: {
-            title: resource.title,
-            link: resource.link,
+            title: requirement.title,
+            description: requirement.description,
+            options: requirement.options,
+            levelId,
+          },
+        });
+
+        await this.prisma.requirement.update({
+          where: { id: requirement.id },
+          data: {
+            rule: {
+              connect: {
+                key: requirement.key,
+              },
+            },
+          },
+        });
+      }),
+    );
+
+    await this.prisma.requirement.deleteMany({
+      where: {
+        AND: {
+          id: { notIn: requirements.map((r) => r.id) },
+          levelId,
+        },
+      },
+    });
+  }
+
+  private async upsertTasksForLevel(tasks: Task[], levelId: string): Promise<void> {
+    await Promise.all(
+      tasks.map(async (task) => {
+        await this.prisma.task.upsert({
+          where: { id: task.id },
+          create: {
+            id: task.id,
+            text: task.text,
+            levelId,
+          },
+          update: {
+            text: task.text,
             levelId,
           },
         });
       }),
     );
+
+    await this.prisma.task.deleteMany({
+      where: {
+        AND: {
+          id: { notIn: tasks.map((t) => t.id) },
+          levelId,
+        },
+      },
+    });
   }
 
-  private async upsertHintsForLevel(hints: Hint[], levelId: string): Promise<void> {
+  private async upsertHintsForTask(hints: Hint[], taskId: string): Promise<void> {
     await Promise.all(
       hints.map(async (hint) => {
         await this.prisma.hint.upsert({
           where: { id: hint.id },
           create: {
             id: hint.id,
-            content: hint.content,
-            levelId,
+            text: hint.text,
+            taskId,
           },
-          update: { content: hint.content, levelId },
+          update: { text: hint.text, taskId },
         });
       }),
     );
+
+    await this.prisma.hint.deleteMany({
+      where: {
+        AND: {
+          id: { notIn: hints.map((h) => h.id) },
+          taskId,
+        },
+      },
+    });
   }
 }

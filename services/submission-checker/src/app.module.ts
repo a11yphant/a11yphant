@@ -1,12 +1,16 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import fetch from "node-fetch";
 
 import { BrowserService } from "./browser.service";
 import { CheckFactory } from "./check.factory";
 import { CheckSubmissionService } from "./check-submission.service";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./check-to-class-map";
 import { AxeLinkNameCheck } from "./checks/axe-link-name.check";
+import { ElementExists } from "./checks/element-exists.check";
+import { ElementNotExists } from "./checks/element-not-exists.check";
+import { HtmlIsValidCheck } from "./checks/html-is-valid.check";
 import messagingConfig from "./config/messaging.config";
 import submissionRenderer from "./config/submission-checker.config";
 import { SubmissionController } from "./submission.controller";
@@ -36,6 +40,10 @@ import { WebdriverFactory } from "./webdriver.factory";
     { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
     CheckFactory,
     AxeLinkNameCheck,
+    HtmlIsValidCheck,
+    { provide: "fetch", useValue: fetch },
+    ElementExists,
+    ElementNotExists,
   ],
 })
 export class AppModule {}

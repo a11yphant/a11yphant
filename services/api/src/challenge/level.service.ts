@@ -22,6 +22,9 @@ export class LevelService {
       where: {
         challengeId,
       },
+      orderBy: {
+        order: "asc",
+      },
     });
     return levels.map((level) => LevelService.createModelFromDatabaseRecord(level));
   }
@@ -42,8 +45,12 @@ export class LevelService {
     return record ? LevelService.createModelFromDatabaseRecord(record) : null;
   }
 
+  async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
+    return this.prisma.level.count({ where: { challengeId } });
+  }
+
   public static createModelFromDatabaseRecord(record: LevelRecord): Level {
-    const level = new Level({ id: record.id, tldr: record.tldr, instructions: record.instructions });
+    const level = new Level({ ...record });
 
     if (!record.html && !record.css && !record.js) {
       return level;

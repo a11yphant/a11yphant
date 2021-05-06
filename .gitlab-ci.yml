@@ -19,7 +19,7 @@ variables:
 default:
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
@@ -88,6 +88,22 @@ build:nestjs-aws-messaging:
     - master
     - merge_request
 
+#-----------------------------------
+# content yml Linting
+#-----------------------------------
+
+lint:content:
+  extends:
+    - .run_on_content_change
+  tags:
+    - docker
+  stage: analyze
+  image: node:14-alpine
+  before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - npm ci --ignore-scripts --cache .npm-alpine
+  script:
+    - npm run lint:content
 
 #-----------------------------------
 # ESLint Config
@@ -109,7 +125,7 @@ release:eslint-config:
     PROJECT_PATH: packages/eslint-config
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
   script:
     - echo $CI_PROJECT_ID
     - echo $CI_JOB_TOKEN
@@ -134,8 +150,8 @@ lint:submission-checker:
     PROJECT_PATH: services/submission-checker
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
-    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -147,8 +163,8 @@ test:submission-checker:
     PROJECT_PATH: services/submission-checker
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
-    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -193,8 +209,8 @@ generate-graphql-schema:api:
     PROJECT_PATH: services/api
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
-    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -214,8 +230,8 @@ lint:api:
     - .run_on_api_change
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
-    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -226,7 +242,7 @@ test:api:
   extends:
     - .test
   needs:
-   - build:nestjs-aws-messaging
+    - build:nestjs-aws-messaging
   services:
     - postgres
   variables:
@@ -237,8 +253,8 @@ test:api:
     PROJECT_PATH: services/api
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
-    - ln -s ./../../.npmrc packages/nestjs-aws-messaging/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -341,7 +357,7 @@ terraform:check-format:
   cache: {}
   dependencies: []
   before_script:
-    - '' # do nothing
+    - "" # do nothing
   script:
     - terraform -chdir=terraform fmt -recursive -check
 
@@ -377,9 +393,9 @@ deploy-review:
   extends:
     - .deploy
   variables:
-   WORKSPACE: review-${CI_MERGE_REQUEST_IID}
-   DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-   USE_CUSTOM_DOMAIN: 1
+    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    USE_CUSTOM_DOMAIN: 1
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com

@@ -1,0 +1,364 @@
+challenge:
+  id: a3db1fc5-7183-42ad-8ba7-fff2922a1927
+  name: HTML Basics
+  slug: html-basics
+  difficulty: easy
+  introduction: |-
+    To get familiar with the interface of a11yphant we are going to start with a recap on some of the more common HTML tags and what they can and should be used for. HTML tags label the content inside the tag and tell the browser how to properly display it. As an example, the <code>&lt;p&gt;</code> tag indicates that content inside is a paragraph of text. Let's get started!
+  levels:
+    - id: 628e7fa6-b0f1-4a19-85b2-ec6a3613ceff
+      order: 1
+      requirements:
+        - id: 2ac21c0c-1fea-40e9-b908-def211910d9a
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+      instructions: |-
+        Each website requires a bit of boilerplate code that tells the browser key information about the page. The first required element is the doctype. The doctype tells the browser which version of HTML is used for this page. A doctype should look like this  <code>&lt;!DOCTYPE {HTML_VERSION}&gt;</code>. For example, if <code>html</code> is specified as the version, browsers will use HTML5 (the latest version) for rendering.
+      tasks:
+        - id: 158d0b51-dd31-422a-9c52-f6f9e2a74c24
+          text: Add the doctype declaration for HTML5 to the <code>&lt;!DOCTYPE&gt;</code> Element in the editor.
+          hints:
+            - id: e3b455de-6165-44d9-92cd-06bd5da0929b
+              text: The declaration for HTML5 is <code>&lt;!DOCTYPE html&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE >
+          <html>
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <p>Cats are better than dogs!</p>
+            </body>
+          </html>
+
+    - id: 1b1efb0e-6d5b-4640-b86f-4c2b6f8e71d2
+      order: 2
+      requirements:
+        - id: 07b24075-94b6-4670-9b51-fffd8c12f352
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 03e4babb-7e5a-48da-8561-7e36a6771675
+          key: element-exists
+          title: The language for the page is specified.
+          description: Specifying the language allows screen readers to properly pronounce the content and allows browsers to offer translations.
+          options:
+            selector: html[lang="en"]
+      instructions: |-
+        Websites exist in various languages. To help assistive devices, the language of a page should be declared on the <code>&lt;html&gt;</code> tag by using the <code>lang</code> attribute. The value of the attribute should be the abbreviation of the document language. For example <code>en</code> for english, <code>de/code> for german. Browsers use this information to offer translations and correctly pronounce words when converting text to speech.
+        The <code>lang</code> attribute should always be set on the <code>&lt;html&gt;</code> element, as it is inherited by all other elements of the website. This means that the declared default language for the text will be set for all following elements inside the <code>&lt;html&gt;</code> tag.
+      tasks:
+        - id: 18a7247e-8eb3-40de-b82b-48e4104229e3
+          text: Add the languge of the website to the <code>&lt;html&gt;</code> tag.
+          hints:
+            - id: 10dd0ef4-3c1b-4d1d-ac5b-cede9314becb
+              text: |-
+                The language of the website is English: <code>&lt;html lang="en"&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <p>Dogs are better than cats!</p>
+            </body>
+          </html>
+
+    - id: 2f391435-98d6-4297-a7e8-f176b8e3d261
+      order: 4
+      requirements:
+        - id: c4f37058-ab15-4f02-a37c-a587d2438baa
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+      instructions: |-
+        The <code>&lt;title&gt;</code> tag inside the <code>&lt;head&gt;</code> defines the title of a web page. The browser uses the content of this tag to name the window or tab in which the page is displayed.
+      tasks:
+        - id: 618845c1-6d0e-4f4f-b04b-7e94dd709ab9
+          text: Choose a side and change the text inside the <code>&lt;title&gt;</code> tag according to your choice.
+          hints:
+            - id: 9b03bedc-7b1c-4038-b3a6-966834ef83d2
+              text: |-
+                If you prefer dogs over cats change the <code>&lt;title&gt;</code> tag to: <code>&lt;title&gt;Doggos!&lt;/title&gt;</code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <p>Cats are better than dogs!</p>
+            </body>
+          </html>
+
+    - id: c97c3828-88ec-47d9-b2db-46bea8c5f294
+      order: 6
+      requirements:
+        - id: a5a9a862-8171-45a2-bcdf-23c403b574ed
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 1e98b201-2db0-4681-bf7a-dd7f4f34e2ad
+          title: Page contains an heading with the level 1
+          description: We could not find an h1 your page. Make sure that the page contains a level 1 heading.
+          key: element-exists
+          options:
+            selector: h1
+      instructions: |-
+        You should use headings to structure the content on your page. There are six heading levels available. These are represented as the tags <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>.
+        The current best practice is to use a single <code>&lt;h1&gt;</code> element on your page. It should be the heading that best describes the content on the page. For example, if the page contains a blog post, the <code>&lt;h1&gt;</code> could be the headline of the post.
+        The <code>&lt;h1&gt;</code> does not have to be first heading on your page. You can use other headings before your main heading appears. For example for the website title or the navigation.
+      tasks:
+        - id: 1f06e39e-e2d2-4eae-9ff7-783c8f788473
+          text: Replace the given <code>&lt;p&gt;</code> tag with a level 1 heading.
+          hints:
+            - id: db224702-01e8-45ba-955e-a59dca7b6a72
+              text: The tag for a level 1 heading is <code>&lt;h1&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <p>Dogs are better than cats!</p>
+            </body>
+          </html>
+
+    - id: bfe8cb82-2d80-4f9b-bb60-6cc6febfac66
+      order: 7
+      requirements:
+        - id: b7f3fd48-d18a-4930-a6f4-ed6d72d70597
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: ff63fa49-47ef-474c-a094-fe857d04a6b7
+          key: element-exists
+          title: Page contains a text paragraph.
+          description: We could not find a text paragraph. Make sure to add the text inside a p tag.
+          options:
+            selector: p
+      instructions: |-
+        The <code>&lt;p&gt;</code> tag should be used to wrap a paragraph of text. As screen readers may announce the presence of the <code>&lt;p&gt;</code> tag, it should never be empty. Otherwise users could be confused and frustrated. If you want to add spacing between paragraphs you should use CSS.
+      tasks:
+        - id: e49f0621-ce82-46c6-83a7-386cbeb2866f
+          text: Add a short description on why you love dogs or cats below the heading.
+          hints:
+            - id: f9459a3f-d2e9-4a7f-9bc6-072b0846e87d
+              text: Wrap your text inside a <code>&lt;p&gt;</code> tag.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>Cats are better than dogs!</h1>
+            </body>
+          </html>
+
+    - id: 3c2508d0-9de3-4bff-9406-26f05652e37a
+      order: 8
+      requirements:
+        - id: 21568a3b-4fb2-40f3-abe5-0de01f8a02ce
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 744a2534-727a-447d-82f7-d3a145195bea
+          key: element-exists
+          title: The page contains an unordered list.
+          description: We could not find an unordered list. Make sure you include an <ul>.
+          options:
+            selector: ul
+        - id: f8e487e8-9feb-43dc-bded-0ad0e34f3142
+          key: element-exists
+          title: The unordered list contains items.
+          description: We could not find items in your list. Make sure that there is at least one list item (<li>) in your list. The list item has to be a direct child of the list.
+          options:
+            selector: ul > li
+      instructions: |-
+        You can create an unordered list of items using the <code>&lt;ul&gt;</code> tag. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> tag. The <code>&lt;ul&gt;</code> tag only allows <code>&lt;li&gt;</code> tags as direct children.
+        Since this is an unordered list, the order of the items in the list is not important.
+        Here is an example:
+        <code>
+        &lt;ul&gt;
+          &lt;li&gt;Cat&lt;/li&gt;
+          &lt;li&gt;Dog&lt;/li&gt;
+        &lt;/ul&gt;
+        </code>
+      tasks:
+        - id: f3100cab-3462-4270-b6cc-889487d9780d
+          text: Create an unordered list containing the things you like most about cats or dogs.
+          hints:
+            - id: afd36697-24a9-4bb7-9ccb-b1e44e847ba8
+              text: |-
+                Your list could look something like this:
+                <code>
+                &lt;ul&gt;
+                  &lt;li&gt;Dogs are always happy&lt;/li&gt;
+                  &lt;li&gt;Dogs are like a best friend&lt;/li&gt;
+                  &lt;li&gt;Dogs are very loyal&lt;/li&gt;
+                &lt;/ul&gt;
+                </code>
+      code:
+        html: |-
+          xxhtmlcode
+
+    - id: 36905991-5fed-4b9b-b07e-3f5d56d90753
+      order: 9
+      requirements:
+        - id: f3530946-0512-4506-b38b-047a978a9081
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: da5c027a-44be-4a2e-9d25-4260642c825b
+          key: element-exists
+          title: The page contains an ordered list.
+          description: We could not find an ordered list. Make sure you include an <ol>.
+          options:
+            selector: ol
+        - id: da5c027a-44be-4a2e-9d25-4260642c825b
+          key: element-exists
+          title: The ordered list contains items.
+          description: We could not find items in your list. Make sure that there is at least one list item (<li>) in your list. The list item has to be a direct child of the list.
+          options:
+            selector: ol > li
+      instructions: |-
+        You can create an ordered list of items using the <code>&lt;ol&gt;</code> tag. It has to be used in conjunction with list items wich can be created using the <code>&lt;li&gt;</code> tag. The <code>&lt;ol&gt;</code> tag only allows <code>&lt;li&gt;</code> tags as direct children.
+        Since this is an ordered list, the order of the items in the list is important.
+        Here is an example:
+        <code>
+        &lt;ol&gt;
+          &lt;li&gt;prepare the cat food&lt;/li&gt;
+          &lt;li&gt;put it in a bowl&lt;/li&gt;
+          &lt;li&gt;watch your cat enjoying it&lt;/li&gt;
+        &lt;/ol&gt;
+        </code>
+      tasks:
+        - id: d077f29b-7237-4fd3-8b9f-fcc7d6455cd0
+          text: Replace the unordered list with an ordered list and rank its content according to your preference.
+          hints:
+            - id: 60d64296-47ba-4240-a606-b56fbf35e72f
+              text: |-
+                Your list could look something like this:
+                <code>
+                &lt;ol&gt;
+                  &lt;li&gt;Cats are low maintenance&lt;/li&gt;
+                  &lt;li&gt;Cats have long life spans&lt;/li&gt;
+                  &lt;li&gt;Cats are independent&lt;/li&gt;
+                &lt;/ol&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>My three favourite things about cats</h1>
+              <ol>
+                <li>Cats are low maintenance</li>
+                <li>Cats have long life spans</li>
+                <li>Cats are independent</li>
+              </ol>
+            </body>
+          </html>
+
+    - id: 2da3dffc-9985-410e-9165-6e70b0091acb
+      order: 10
+      requirements:
+        - id: 18084eb9-c821-4c20-a656-6c6a54812abe
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 94860046-d788-4c4a-b469-4241cfc830b7
+          title: Links are detectable by assistive technologies
+          description: Make sure that links can be identified by assistive technologies. Using an <a> tag with an valid href is all you need to make this requirement pass.
+          key: axe-link-name
+        - id: bc9461d3-98ad-4ad0-bd2e-c1121e1e1196
+          key: element-exists
+          title: The page contains a link.
+          description: Make sure that your page contains a link (<a>)
+          options:
+            selector: a
+      instructions: |-
+        To link to other resources, for example a website, you can use the <code>&lt;a&gt;</code> tag. You can specify the target for your link using the <code>href</code> attribute. You should always add descriptive text for the link.
+        Use links only for linking to other resources and not to trigger other actions on click. Use a <code>&lt;button&gt;</code> for that instead.
+      tasks:
+        - id: 1fe6c180-fcb1-4364-9bd5-62975c48e055
+          text: Create a link to one of your favourite dog or cat resources.
+          hints:
+            - id: 261e7abf-f582-46e1-9a09-2e88ab87ea49
+              text: |-
+                Your list could look something like this:
+                <code>
+                  &lt;a href=&quot;https://openpuppies.com/&quot;&gt;Amazing dog clips&lt;/a&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>Dogs are better than cats!</h1>
+              <!-- insert your link tag here -->
+            </body>
+          </html>
+
+    - id: e24fa105-c185-4eab-b5f0-85b551444437
+      order: 11
+      requirements:
+        - id: 2ae4f506-c31c-4e8f-a0ff-f4ea7c708af4
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: a442cc76-58ad-49b4-a65d-c62d55dc0a47
+          key: element-exists
+          title: The page contains a button.
+          description: Make sure that you have included a button in your page (<button>).
+          options:
+            selector: button
+      instructions: |-
+        If you want to trigger an action or interaction with an element, you can use a button. The <code>&lt;button&gt;</code> element could for example be used to open a pop-up, a modal or submit a form. It should not trigger navigation to a different page, use a link (<code>&lt;a&gt;</code>) for that instead.
+        Like with links, it is important to provide descriptive text within the button to allow users and assistive technologies to identify the purpose of the button.
+        You can specify the action by using JavaScript in the <code>onclick</code> attribute of the button, for example <code>onclick=&quot;alert('Hi!')&quot;</code>.
+      tasks:
+        - id: 023a5b8c-a76a-4370-bb5b-d87d8a27978d
+          text: Add a button to the code snippet. The button could for example show an alert with a cat/dog fact or change the background color of the button.
+          hints:
+            - id: 54718d56-e6f8-40a9-be7d-11643e662cba
+              text: |-
+                Your button could look something like this:
+                <code>
+                  &lt;button onclick=&quot;alert('Cats spend 70% of their lives sleeping')&quot;&gt;Show me a cat fact&lt;/button&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>Cats are better than dogs!</h1>
+              <!-- insert your button tag here -->
+            </body>
+          </html>

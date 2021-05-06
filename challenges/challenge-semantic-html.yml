@@ -1,0 +1,268 @@
+challenge:
+  id: 07233347-fd4d-43d5-a123-36b1d4df8f70
+  name: Semantic HTML
+  slug: semantic-html
+  difficulty: easy
+  introduction: >
+    The foundation to building accessible websites is using semantically meaningful markup. Semantic HTML tags communicate more information about their content to the browser. They can be used to structure the page into common sections, like headers, navigations and a footer. Let's find out more!
+  levels:
+    - id: 2851ade8-5b45-4c66-9a51-bcaec580eaff
+      order: 1
+      requirements:
+        - id: 4cc9bc09-1c74-4547-bb8b-6f08efce284c
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: a14b41ed-8c83-4760-b58e-b36bd478ee03
+          key: element-exists
+          title: The page contains an article.
+          description: Make sure to use an article on you page.
+          options:
+            selector: article
+        - id: 64180f8e-912c-42a0-add1-e1ecbdf5e8fb
+          key: element-exists
+          title: The page contains a section.
+          description: Make sure to use a section on you page.
+          options:
+            selector: section
+      instructions: |-
+        The <code>&lt;article&gt;</code> marks a section of content on a page that is self-contained and independently distributable. This means the content should also make sense in itself if it is taken from the website and published somewhere else. For example, a blog post or a newspaper article.
+        A <code>&lt;section&gt;</code> is a segment of content. It can contain any kind of content and can be used anywhere on a page. For example a <code>&lt;section&gt;</code> could be one chapter of an <code>&lt;article&gt;</code>. But it could also be used to structure the <code>&lt;footer&gt;</code> into multiple parts. The only requirement for a <code>&lt;section&gt;</code> is that it must contain a heading.
+      tasks:
+        - id: eda8f380-9739-43f0-a99f-2b48fbf2f47c
+          text: Use the <code>&lt;article&gt;</code> and <code>&lt;section&gt;</code> tags correctly inside the <code>&lt;main&gt;</code> tag.
+          hints:
+            - id: 001f4dce-9c1e-41fa-b8c0-2304bd180259
+              text: |-
+                You could implement the <code>&lt;article&gt;</code> and <code>&lt;section&gt;</code> like so:
+                <code>
+                &lt;main&gt;
+                  &lt;article&gt;
+                    &lt;h1&gt;Cats are not better than dogs!&lt;/h1&gt;
+
+                    &lt;section&gt;
+                      &lt;h2&gt;The unconditional love&lt;/h2&gt;
+                      &lt;p&gt;We never have to earn a dog's love, and we don't have to love them first.&lt;/p&gt;
+                    &lt;/section&gt;
+
+                    &lt;section&gt;
+                      &lt;h2&gt;The caretaker&lt;/h2&gt;
+                      &lt;p&gt;Dogs can protect us from danger.&lt;/p&gt;
+                    &lt;/section&gt;
+                  &lt;/article&gt;
+                &lt;/main&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Cats are not better than dogs!</h1>
+
+                <h2>The unconditional love</h2>
+                <p>We never have to earn a dog's love, and we don't have to love them first.</p>
+
+                <h2>The caretaker</h2>
+                <p>Dogs can protect us from danger.</p>
+              </main>
+            </body>
+          </html>
+
+    - id: d2b5f580-16be-4ebd-82e5-b5a3de4fec9d
+      order: 2
+      requirements:
+        - id: 0b9a4640-e49b-4042-8c4a-b718431b0d57
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 39d905ac-1726-4f8e-ac86-7a6c3ab3a345
+          key: element-exists
+          title: The page contains a header.
+          description: Make sure to use a header element on your page.
+          options:
+            selector: header
+      instructions: |-
+        The <code>&lt;aside&gt;</code> tag defines a part of the website that is indirectly related to the surrounding main content. It is typically displayed as a sidebar or call-out box. The <code>&lt;aside&gt;</code> tag is generally used to enhance content with additional information.
+      tasks:
+        - id: 1aee9448-32df-4515-a0c1-d2e55a8a25ca
+          text: Add an <code>&lt;aside&gt;</code> tag to the page, stating your personal opinion about dogs (or cats).
+          hints:
+            - id: bc472bb8-4a96-4c28-9424-71b559d88566
+              text: |-
+                You use the <code>&lt;aside&gt;</code> tag like so:
+                <code>
+                  &lt;aside&gt;Cats and dogs are both great!&lt;/aside&gt;
+                </code>
+            - id: 48dff707-b178-4cea-ba5e-ea6c9c6ab3ec
+              text: |-
+                You should place the <code>&lt;aside&gt;</code> tag somewhere inside the <code>&lt;main&gt;</code> tag.
+                <code>
+                &lt;main&gt;
+                  &lt;h1&gt;Cats are not better than dogs!&lt;/h1&gt;
+                  &lt;h2&gt;The unconditional love&lt;/h2&gt;
+                  &lt;p&gt;We never have to earn a dog's love, and we don't have to love them first.&lt;/p&gt;
+                  &lt;aside&gt;Cats and dogs are both great!&lt;/aside&gt;
+                &lt;/main&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Cats are not better than dogs!</h1>
+                <h2>The unconditional love</h2>
+                <p>We never have to earn a dog's love, and we don't have to love them first.</p>
+              </main>
+            </body>
+          </html>
+
+    - id: 22356b69-f422-49b4-8713-6ac01327a5bf
+      order: 3
+      requirements:
+        - id: d73a14ec-8b72-42df-839d-d3a41a6755d2
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: b081ab79-c5e0-4eea-a316-b532756db987
+          key: element-exists
+          title: The page contains a navigation landmark.
+          description: Make sure that the page contains a navigation. You can mark a part as of your page as a navigation by using the <nav> tag.
+          options:
+            selector: nav
+        - id: 051600cf-e303-4653-9330-b49a3d41c8d5
+          key: element-exists
+          title: The navigation includes links.
+          description: Make sure that at least one link is located inside the navigation.
+          options:
+            selector: nav > a
+        - id: 270d6184-0420-4f9a-ac9a-e78420d8edf0
+          key: element-not-exists
+          title: The navigation is outside of the main landmark.
+          # TODO: Properly explain why this is important.
+          description: The navigation should be located outside of the main landmark, because the main landmark should only contain content that is unique to that page. The navigation likely is included on all page, so it should be located outside the main landmark.
+          options:
+            selector: main > nav
+      instructions: |-
+        The <code>&lt;nav&gt;</code> tag represents an important block of navigational links like a main menu or footer menu.
+        Inside the <code>&lt;nav&gt;</code> tag, links should be organized in a list to emphasize the menu structure. If a menu has submenus (e.g. dropdowns), multiple lists should be used to convey the menu's hierarchy.
+      tasks:
+        - id: a345a4c5-da37-4334-8189-83fe7eacbd86
+          text: Create a <code>&lt;nav&gt;</code> element containing a list with two links. We intent to show this <code>nav</code> on each page of our website.
+          hints:
+            - id: 67de9148-60cb-4709-bda8-5c0f8eda39df
+              text: |-
+                You can wrap a list of links in a <code>&lt;nav&gt;</code> element like this:
+                <code>
+                &lt;nav&gt;
+                  &lt;ul&gt;
+                    &lt;li&gt;
+                      &lt;a href=&quot;https://randomcatgifs.com&quot;&gt;Cats&lt;/a&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                      &lt;a href=&quot;https://openpuppies.com&quot;&gt;Dogs&lt;/a&gt;
+                    &lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/nav&gt;
+                </code>
+            - id: 3abd1c7e-d179-4e62-a590-f760ec83d644
+              text: The <code>nav</code> element should not be located inside the <code>main</code> element, since it will be present on each page.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Cats are better than dogs!</h1>
+              </main>
+            </body>
+          </html>
+
+    - id: 402a1950-16e6-41dc-9cf3-437d461c4e6d
+      order: 4
+      requirements:
+        - id: 8cf34f54-72cd-41c1-a267-6b2fd722705c
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: 64c9858b-fe1d-49d2-8298-41fc41e277e6
+          key: element-exists
+          title: The page includes a header.
+          description: Make sure that there is a header landmark in your page. You can use the <header> tag to mark a region as a header.
+          options:
+            selector: header
+        - id: a950a571-33db-49e2-92ea-a8678741e787
+          key: element-not-exists
+          title: The header is not inside the main landmark.
+          # TODO: Proper description
+          description: ""
+          options:
+            selector: main > header
+        - id: 45a21504-06c1-4f07-ad21-7951d5eb559d
+          key: element-exists
+          title: The page has a footer.
+          description:  Make sure that there is a footer landmark in your page. You can use the <footer> tag to mark a region as a footer.
+          options:
+            selector: footer
+        - id: bc2d8c9c-1008-45f1-a129-d15037023161
+          key: element-not-exists
+          title: The footer is not inside the main landmark.
+          # TODO: Proper description
+          description: ""
+          options:
+            selector: main > footer
+      instructions: |-
+        The <code>&lt;header&gt;</code> tag can be used in two different cases.
+        Firstly, a <code>&lt;header&gt;</code> should be used to contain information like logo and page title on the very top of a page. The main navigation can also be inside this <code>&lt;header&gt;</code>.
+        Secondly, <code>&lt;header&gt;</code> can also be used at the top of an <code>&lt;article&gt;</code> tag. There it should hold information like the article heading, author and publishing date.
+        The <code>&lt;footer&gt;</code> tag represents the footer of a page. It can for example contain copyright notices or a footer navigation.
+        The <code>&lt;header&gt;</code> and <code>&lt;footer&gt;</code> should not be included inside the <code>&lt;main&gt;</code> element since they typically remain the same on all pages of a website.
+      tasks:
+        - id: ed688867-dfcc-4e23-87d3-14137f8ce7bd
+          text: Add a header and footer to your website.
+          hints:
+            - id: c2564f63-f341-478c-9ee8-49798a351b5e
+              text: Both tags need to be placed inside the <code>&lt;body&gt;</code> element.
+            - id: e78baa81-1263-44ef-8ba2-7dd0e93895ce
+              text: |-
+                An example for the <code>&lt;header&gt;</code> and <code>&lt;footer&gt;</code> could be:
+                <code>
+                &lt;header&gt;
+                  &lt;h2&gt;The dog Blog&lt;/h2&gt;
+                &lt;/header&gt;
+
+                &lt;main&gt;
+                  &lt;!-- some content --&gt;
+                &lt;/main&gt;
+
+                &lt;footer&gt;
+                  &lt;p&gt;Copyright 2021&lt;/p&gt;
+                &lt;/footer&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Dogs are better than cats!</h1>
+              </main>
+            </body>
+          </html>

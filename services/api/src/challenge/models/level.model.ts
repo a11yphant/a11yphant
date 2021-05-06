@@ -1,44 +1,60 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { Code } from "./code.model";
-import { Hint } from "./hint.model";
 import { Requirement } from "./requirement.model";
-import { Resource } from "./resource.model";
+import { Task } from "./task.model";
 
 @ObjectType()
 export class Level {
-  constructor(properties: { id: string; tldr: string; instructions: string }) {
+  constructor(properties: { id: string; instructions: string; order: number; hasHtmlEditor: boolean; hasCssEditor: boolean; hasJsEditor: boolean }) {
     this.id = properties.id;
-    this.tldr = properties.tldr;
     this.instructions = properties.instructions;
+    this.order = properties.order;
+
+    this.hasHtmlEditor = properties.hasHtmlEditor;
+    this.hasCssEditor = properties.hasCssEditor;
+    this.hasJsEditor = properties.hasJsEditor;
   }
 
   @Field(() => ID)
   id: string;
 
   @Field(() => String, {
-    description: "A shortened version of the instructions.",
-  })
-  tldr: string;
-
-  @Field(() => String, {
     description: "Instructions use HTML to provide basic formatting.",
   })
   instructions: string;
 
+  @Field(() => Number, {
+    description: "The order of the level in the challenge.",
+  })
+  order: number;
+
   @Field(() => [Requirement])
   requirements: Requirement[];
 
-  @Field(() => [Hint], {
-    description: "Hints are ordered by the information content of the hint; eg more general hints are first.",
+  @Field(() => [Task], {
+    description: "The tasks that need to be solved for this level.",
   })
-  hints: Hint[];
+  tasks: Task[];
 
-  @Field(() => [Resource], {
-    description: "Resources which provide more information on the topic of the current level.",
-  })
-  resources: Resource[];
-
-  @Field(() => Code, { nullable: true, description: "The initial code for the challenge." })
+  @Field(() => Code, { nullable: true, description: "The initial code for the level." })
   code?: Code;
+
+  @Field(() => Boolean, {
+    nullable: true,
+    description: "If the level has the HTML editor configured.",
+  })
+  hasHtmlEditor?: boolean;
+
+  @Field(() => Boolean, {
+    nullable: true,
+    description: "If the level has the CSS editor configured.",
+  })
+  hasCssEditor?: boolean;
+
+  @Field(() => Boolean, {
+    nullable: true,
+    description: "If the level has the JS editor configured.",
+  })
+  hasJsEditor?: boolean;
 }

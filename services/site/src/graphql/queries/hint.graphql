@@ -1,6 +1,0 @@
-query hint ($id: ID!) {
-    hint(id: $id) {
-        id
-        content
-    }
-}

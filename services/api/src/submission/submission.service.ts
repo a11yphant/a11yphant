@@ -5,6 +5,7 @@ import { Submission as SubmissionRecord } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
 import { PrismaService } from "../prisma/prisma.service";
+import { ResultStatus } from "./models/result-status.enum";
 import { Submission } from "./models/submission.model";
 import { SubmissionInput } from "./submission.input";
 
@@ -25,7 +26,9 @@ export class SubmissionService {
       data: {
         id: uuidv4(),
         ...input,
+        result: { create: { id: uuidv4(), status: ResultStatus.PENDING } },
       },
+      include: { level: { include: { requirements: { include: { rule: true } } } } },
     });
 
     await this.clientProxy
@@ -36,13 +39,11 @@ export class SubmissionService {
           css: submission.css,
           js: submission.js,
         },
-        rules: [
-          {
-            id: "3d90d8e6-5dce-4684-9aec-f05b6551aa43",
-            key: "axe-link-name",
-            options: {},
-          },
-        ],
+        rules: submission.level.requirements.map((requirement) => ({
+          id: requirement.id,
+          key: requirement.rule.key,
+          options: requirement.options,
+        })),
       })
       .toPromise();
 

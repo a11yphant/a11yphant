@@ -2,82 +2,40 @@ challenge:
   id: 242003d6-402e-49b7-9ec2-702445b37c8e
   name: Accessible Links
   slug: accessible-links
-  difficulty: easy
+  difficulty: medium
+  introduction: >
+    Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.
   levels:
     - id: 5557e647-7a14-47b7-b51c-142f25cc998c
       order: 1
-      tldr: >
-        Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)
-      instructions: >
-        Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.
-        Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.
       requirements:
-        - id: 3a344173-98bf-4a2b-a6ad-9790a557332b
-          title: The HTML code is valid.
-          rules:
-            - html-is-valid
-        - id: 036b54a7-62c3-4c3c-ab84-dcdc80888add
-          title: The link can be clicked using the mouse.
-          rules:
-            - element-is-clickable
-        - id: 4573b54f-cb36-46ee-9e23-34de0fa301a4
-          title: The link can be focused using the keyboard.
-          rules:
-            - element-is-focusable
-        - id: 4199dc41-c225-473d-aff0-45c6ada992a6
-          title: The link can be clicked using the keyboard.
-          rules:
-            - element-can-be-activated-by-keyboard
-        - id: 1f14ad50-3ce5-4c1a-8cad-9ca339bf70ca
-          title: The link can be detected as a link by screen readers.
-          rules:
-            - element-has-correct-role
-        - id: 5335dcb0-8029-4504-a70b-4974eda672c4
-          title: Screen readers can detect the text of the link.
-          rules:
-            - axe-link-name
-      hints:
-        - id: 344c6772-2948-4a2d-838e-1b4e79f6fee9
-          content: The browser has a native way of handling hyperlinks. You don’t need any JavaScript for that.
-        - id: 08ee3773-d9ba-4c5e-ba8c-2c653d3199de
-          content: The span element is certainly not the right choice here.
-        - id: 9e8249de-fce9-4e9d-96b1-77a5667daec9
-          content: You should try using the anchor element (<a>) for solving this task.
-      resources:
-        - id: c584b8a5-1d62-45bc-a442-9aa662b7aa02
-          title: Creating valid and accessible links
-          link: https://www.a11yproject.com/posts/2019-02-15-creating-valid-and-accessible-links/
-        - id: bb1968e4-ece5-4708-8aab-6325da81f46e
-          title: Markup Validation Service
-          link: https://validator.w3.org/
-        - id: 1a6a0f49-ac6b-4937-978b-62761e889d6a
-          title: The Anchor element <a>
-          link: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
-        - id: 8aeed20e-c810-40c5-9b6c-4a717155b86a
-          title: Purpose of a link
-          link: https://www.w3.org/TR/WCAG20/#navigation-mechanisms-refs
-        - id: 3dc4d2d9-1b23-461e-b551-bdef8f5dc904
-          title: Links and Hypertext
-          link: https://webaim.org/techniques/hypertext/
-        - id: d5b908df-440c-42b4-bcfc-7d27d0e85154
-          title: Keyboard Accessibility
-          link: https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Keyboard
-        - id: 28ca3509-38a7-4ca4-af0f-7e63f5f6b2da
-          title: Evaluation with the VoiceOver screen reader
-          link: https://webaim.org/articles/voiceover/
-        - id: dc0dbea1-c473-4d91-9cd8-99a5afd067a3
-          title: Element roles for assistive technologies
-          link: https://www.w3.org/TR/wai-aria-1.1/#role_definitions
-        - id: 5cc9611a-54d9-4195-91b7-39a0eaf7798c
-          title: A11y Checklist
-          link: https://www.a11yproject.com/checklist/
+        - id: da787b67-30bd-490e-8913-4d7d2a7fd2d0
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
+        - id: c5013ba3-678d-446c-a681-6651486f87f7
+          title: Links are detectable by assistive technologies
+          description: Make sure that links can be identified by assistive technologies. Using an <a> tag with an valid href is all you need to make this requirement pass.
+          key: axe-link-name
+      instructions: |-
+        Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.
+      tasks:
+        - id: 7ade4975-2981-473b-a762-4883ddc25397
+          text: Refactor the given code so that the link is navigable using input devices other than a mouse (e.g. keyboard or screen reader)
+          hints:
+            - id: 344c6772-2948-4a2d-838e-1b4e79f6fee9
+              text: The browser has a native way of handling hyperlinks. You don’t need any JavaScript for that.
+            - id: 08ee3773-d9ba-4c5e-ba8c-2c653d3199de
+              text: The span element is certainly not the right choice here.
+            - id: 9e8249de-fce9-4e9d-96b1-77a5667daec9
+              text: You should try using the anchor element <code>&lt;a&gt;</code> for solving this task.
       code:
-        html: >
+        html: |-
           <h1>The Device Vibration API </h1>
           <p> Today I learned about the device vibration API. This API allows you to control the vibration hardware of a phone from a website. There are some really good 
             <span onlick="window.location = https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API" class="link">vibration API examples in the MDN docs</span>.
           </p>
-        css: >
+        css: |-
           html, body {
             font-family: Arial, sans-serif;
             font-size: 1rem;
@@ -95,44 +53,35 @@ challenge:
             color: green;
             border-color: green;
           }
+
     - id: 0682b540-67cb-45b6-bdf3-692fb78e871d
       order: 2
-      tldr: ""
-      instructions: >
+      requirements:
+        - id: 3d69d723-44db-48ac-9d50-6a47f132cc9d
+          key: html-is-valid
+          title: The HTML is valid.
+          description: Valid HTML is important.
+        - id: 43a46cf6-69a2-444b-bad3-53092cf72e52
+          key: axe-link-name
+          title: Links are detectable by assistive technologies
+          description: Make sure that links can be detected by assistive technologies. An using an <a> tag with an valid href should make this requirement pass.
+      instructions: |-
         Your friend Charles has reached out for your help again. He wants to link to additional resources in his blog post, but he is not sure how to structure the additional resources section. Can you write the markup for him (you don't have to style it for now)?
-
         Charles wants to add links to the following pages:
           - Introduction to web APIs https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
           - Vibrationssss https://www.amorelie.at/sexspielzeug/vibratoren/mit-fernbedienung/
           - Can I use https://caniuse.com/vibration
-      requirements:
-        - id: 37ecfa42-2365-4447-84be-050a966cd1e2
-          title: The links have to be in the same order as in the instructions.
-          rules: []
-        - id: d7847b28-acde-49aa-b569-5aac195b9719
-          title: All three links can be activated using the mouse and keyboard.
-          rules:
-            - element-is-clickable
-            - element-is-focusable
-            - element-can-be-activated-by-keyboard
-        - id: b7685cf5-5ff2-492d-99dc-ad4806d69036
-          title: A screenereader can determine how many items are in the additional resources.
-          rules:
-            - element-has-correct-role
-      hints:
-        - id: 7cd5af2b-3fb8-4fac-912f-39951b19c868
-          content: Use what you have learned in level 1.
-        - id: 1b74d751-625f-4911-b3d8-f8778be33b38
-          content: The links should be grouped by a certain element.
-        - id: 032a911c-0723-4ad5-9d9c-b167bcc2ec64
-          content: The additional resources are a list of links.
-      resources:
-        - id: 05ee510a-d716-4b54-9324-04fc251ecd78
-          title: ""
-          link: https://webaim.org/techniques/hypertext/
-        - id: d74ca26c-bb0b-49de-968d-60a3fad85836
-          title: ""
-          link: https://www.dummies.com/web-design-development/html5-and-css3/how-to-make-lists-of-links-for-html5-and-css3-programming/
-        - id: 98d54060-bedd-409e-9096-fc6830978ac6
-          title: ""
-          link: https://www.w3.org/TR/wai-aria-1.1/#list
+      tasks:
+        - id: 47bca597-cfa5-4df3-bc3e-6201868597ee
+          text: |-
+            Charles wants to add links to the following pages:
+            - Introduction to web APIs https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
+            - Vibrationssss https://www.amorelie.at/sexspielzeug/vibratoren/mit-fernbedienung/
+            - Can I use https://caniuse.com/vibration
+          hints:
+            - id: 7cd5af2b-3fb8-4fac-912f-39951b19c868
+              content: Use what you have learned in level 1.
+            - id: 1b74d751-625f-4911-b3d8-f8778be33b38
+              content: The links should be grouped by a certain element.
+            - id: 032a911c-0723-4ad5-9d9c-b167bcc2ec64
+              content: The additional resources are a list of links.
