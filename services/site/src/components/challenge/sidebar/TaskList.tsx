@@ -8,7 +8,6 @@ interface TaskListProps {
 }
 
 const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
-  console.log(tasks.length);
   if (tasks.length === 1) {
     return (
       <>
