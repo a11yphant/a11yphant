@@ -2,6 +2,9 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
 import { RequirementService } from "../../src/challenge/requirement.service";
+import { ChallengeFactory } from "../factories/database/challenge.factory";
+import { LevelFactory } from "../factories/database/level.factory";
+import { RequirementFactory } from "../factories/database/requirement.factory";
 import { useDatabase } from "../helpers";
 
 describe("requirement service", () => {
@@ -9,15 +12,20 @@ describe("requirement service", () => {
   it("can get requirements for a level", async () => {
     const prisma = getPrismaService();
     const service = new RequirementService(prisma);
-    const level = await prisma.level.create({
-      data: {
-        instructions: "",
-        tldr: "",
-        challenge: { create: { name: "level", slug: "level", difficulty: 0 } },
-        requirements: { create: [{ title: "1" }, { title: "2" }] },
-      },
+
+    const { id: challengeId } = await prisma.challenge.create({
+      data: ChallengeFactory.build(),
     });
 
-    expect((await service.findForLevel(level.id)).length).toEqual(2);
+    const { id: levelId } = await prisma.level.create({
+      data: LevelFactory.build({ challengeId }),
+    });
+
+    const requirements = [
+      await prisma.requirement.create({ data: RequirementFactory.build({ levelId }) }),
+      await prisma.requirement.create({ data: RequirementFactory.build({ levelId }) }),
+    ];
+
+    expect((await service.findForLevel(levelId)).length).toEqual(requirements.length);
   });
 });

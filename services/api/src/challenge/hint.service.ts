@@ -14,16 +14,16 @@ export class HintService {
     return record ? HintService.createModelFromDatabaseRecord(record) : null;
   }
 
-  async findForLevel(levelId: string): Promise<Hint[]> {
+  async findForTask(taskId: string): Promise<Hint[]> {
     const hints = await this.prisma.hint.findMany({
-      where: { levelId },
+      where: { taskId },
     });
 
     return hints.map((hint) => HintService.createModelFromDatabaseRecord(hint));
   }
 
   static createModelFromDatabaseRecord(record: HintRecord): Hint {
-    const hint = new Hint({ id: record.id, content: record.content });
+    const hint = new Hint({ id: record.id, text: record.text });
 
     return hint;
   }
