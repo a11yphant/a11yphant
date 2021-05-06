@@ -18,7 +18,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, challengeName
         <h2 className={clsx("text-greyMiddle", "h6")}>{challengeName}</h2>
         <h3 className={clsx("my-8", "h4")}>Instructions</h3>
         {/* TODO: check how text comes from backend and in which tag it has to be wrapped */}
-        <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
+        <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
         <TaskList tasks={level.tasks} />
       </div>
     </aside>
