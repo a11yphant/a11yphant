@@ -6,9 +6,10 @@ import { initializeApollo } from "app/lib/apolloClient";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
+
 const Home: React.FunctionComponent = () => {
   const {
-    data: { challenges },
+    data: { easyChallenges, mediumChallenges, hardChallenges },
   } = useChallengesQuery();
 
   return (
@@ -30,8 +31,38 @@ const Home: React.FunctionComponent = () => {
             </>
           }
           completedLevel={0}
-          openLevel={2}
-          challenges={challenges}
+          openLevel={easyChallenges.length}
+          challenges={easyChallenges}
+        />
+
+        <ChallengeList
+          className="mx-24"
+          heading={
+            <>
+              Medium
+              <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+              <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
+              <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+            </>
+          }
+          completedLevel={0}
+          openLevel={mediumChallenges.length}
+          challenges={mediumChallenges}
+        />
+
+        <ChallengeList
+          className="mx-24"
+          heading={
+            <>
+              Hard
+              <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+              <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
+              <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
+            </>
+          }
+          completedLevel={0}
+          openLevel={hardChallenges.length}
+          challenges={hardChallenges}
         />
       </main>
     </>
