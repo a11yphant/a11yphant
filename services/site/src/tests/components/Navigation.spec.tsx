@@ -22,7 +22,7 @@ describe("Navigation", () => {
 
     // Logo and Link exist
     expect(wrapper.find(".logo")).toHaveProperty("length", 1);
-    expect(wrapper.find("a").text()).toBe("A11y Challenges");
+    expect(wrapper.find("a").text()).toBe("A11yphant");
 
     // Breadcrumbs exist
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
