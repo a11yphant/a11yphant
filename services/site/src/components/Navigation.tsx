@@ -35,13 +35,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       )}
       <div className="flex justify-center items-center">
         {displaySave && <Save />}
-        {displayUserProfile && (
-          <>
-            <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100 ml-8">
-              <UserAvatar />
-            </span>
-          </>
-        )}
+        {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>
             <Button full className="mx-4">
