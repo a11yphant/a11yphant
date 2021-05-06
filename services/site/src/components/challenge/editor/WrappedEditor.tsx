@@ -1,5 +1,4 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
-import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
@@ -113,28 +112,11 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           onCancel={() => {
             setModalOpen(false);
           }}
-          overrideButtons={
-            <>
-              <Button
-                className="mr-4"
-                onClick={() => {
-                  reset();
-                  setModalOpen(false);
-                }}
-              >
-                Reset All
-              </Button>
-              <Button
-                full
-                onClick={() => {
-                  reset(config.language);
-                  setModalOpen(false);
-                }}
-              >
-                Reset <span className="ml-1">{config.languageLabel}</span>
-              </Button>
-            </>
-          }
+          confirmButtonLabel={`Reset ${config.languageLabel}`}
+          onConfirm={() => {
+            setModalOpen(false);
+            reset(config.language);
+          }}
         />
       </div>
     </div>
