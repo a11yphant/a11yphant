@@ -13,7 +13,7 @@ describe("element-exists check", () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       findElements: jest.fn().mockResolvedValue(new Array(2)),
-      close: jest.fn().mockResolvedValue(null),
+      quit: jest.fn().mockResolvedValue(null),
     });
 
     const check = new ElementExists(
@@ -47,7 +47,7 @@ describe("element-exists check", () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       findElements: jest.fn().mockResolvedValue(new Array(0)),
-      close: jest.fn().mockResolvedValue(null),
+      quit: jest.fn().mockResolvedValue(null),
     });
 
     const check = new ElementExists(
@@ -81,7 +81,7 @@ describe("element-exists check", () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       findElements: jest.fn().mockRejectedValue(new Array(0)),
-      close: jest.fn().mockResolvedValue(null),
+      quit: jest.fn().mockResolvedValue(null),
     });
 
     const check = new ElementExists(
@@ -115,7 +115,7 @@ describe("element-exists check", () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       findElements: jest.fn().mockRejectedValue(new Array(0)),
-      close: jest.fn().mockResolvedValue(null),
+      quit: jest.fn().mockResolvedValue(null),
     });
 
     const check = new ElementExists(

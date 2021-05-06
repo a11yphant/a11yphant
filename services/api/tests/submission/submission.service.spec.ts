@@ -98,7 +98,13 @@ describe("submission service", () => {
 
   it("emits a submission.created event when a new submission is created", async () => {
     const emit = jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) }));
-    const submission = { id: "uuid", html: "html", css: "css", js: "js", level: { requirements: [{ id: "some-uuid", rule: { key: "test-key" } }] } };
+    const submission = {
+      id: "uuid",
+      html: "html",
+      css: "css",
+      js: "js",
+      level: { requirements: [{ id: "some-uuid", rule: { key: "test-key" }, options: { selector: "ul > li" } }] },
+    };
     const service = new SubmissionService(
       createMock<PrismaService>({
         submission: { create: jest.fn().mockResolvedValue(submission) },
@@ -121,6 +127,7 @@ describe("submission service", () => {
           expect.objectContaining({
             id: submission.level.requirements[0].id,
             key: submission.level.requirements[0].rule.key,
+            options: submission.level.requirements[0].options,
           }),
         ]),
       }),
