@@ -20,9 +20,27 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
   confirmButtonLabel,
   onConfirm,
 }) => {
+  const handleEscapeClick = (event: KeyboardEvent): void => {
+    if (event.key === "Escape") {
+      onCancel();
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleEscapeClick);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeClick);
+    };
+  }, []);
+
   return (
-    <div className={clsx("z-10 inset-0 overflow-y-auto", "flex justify-center items-center", open ? "fixed" : "hidden")}>
-      <div className={clsx("relative", "w-1/2 h-64 bg-backgroundMiddle rounded-lg shadow-xl", "px-12 py-14")}>
+    <div
+      onClick={onCancel}
+      className={clsx("z-10 inset-0 overflow-y-auto", "bg-greyDark bg-opacity-50", "flex justify-center items-center", open ? "fixed" : "hidden")}
+      aria-hidden
+    >
+      <div className={clsx("relative", "w-1/2 h-64 bg-backgroundMiddle rounded-lg shadow-modal", "px-12 py-14")}>
         <Button onClick={onCancel} overrideClassname className="absolute top-6 right-6">
           <span className="sr-only">Close</span>
           <X />
