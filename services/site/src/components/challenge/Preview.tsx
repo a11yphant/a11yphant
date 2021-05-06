@@ -39,8 +39,6 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
 
-  const [forceUpdateState, setForceUpdateState] = useState<boolean>();
-
   React.useEffect(() => {
     debouncedUpdate(() => {
       setInnerHtmlCode(addTargetBlank(htmlCode));
@@ -49,16 +47,13 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
     });
   }, [htmlCode, cssCode, javascriptCode]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const forceUpdate = React.useCallback(() => setForceUpdateState((prev) => !prev), []);
-
   return (
     <div className={clsx("p-4", "container-light", classes)}>
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>{heading}</h3>
       <iframe
         title="Preview"
         className="w-full h-18/20 pb-8"
-        srcDoc={`<style>${innerCssCode}</style><meta name="forceUpdate" content="${forceUpdateState}"><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
+        srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />
     </div>
   );
