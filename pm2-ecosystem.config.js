@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "a11yphant-api",
-      script: "npm run dotenv -- npm run dev:api",
+      script: "npm run dev:api",
       namespace: "a11yphant",
       autorestart: true,
     },
@@ -14,7 +14,7 @@ module.exports = {
     },
     {
       name: "a11yphant-submission-checker",
-      script: "npm run dotenv -- npm run dev:submission-checker",
+      script: "npm run dev:submission-checker",
       namespace: "a11yphant",
       autorestart: true,
     },

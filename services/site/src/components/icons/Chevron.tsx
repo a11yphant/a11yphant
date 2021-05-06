@@ -12,7 +12,7 @@ const Chevron: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ class
       focusable="false"
       {...props}
     >
-      <path d="M11 28l11-11 11 11" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M11 28l11-11 11 11" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };
