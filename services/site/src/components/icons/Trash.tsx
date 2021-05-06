@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import React from "react";
 
-const Reset: React.FunctionComponent = () => {
+const Trash: React.FunctionComponent = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className={clsx("mr-2 ml-1 h-5 w-5 text-grey", "transition duration-300", "group group-hover:text-primaryDark group-focus:text-primaryDark")}
+      className={clsx("h-5 w-5 m-1 text-primary", "transition duration-300", "group group-hover:text-primaryDark group-focus:text-primaryDark")}
       aria-hidden="true"
       focusable="false"
     >
@@ -22,4 +22,4 @@ const Reset: React.FunctionComponent = () => {
   );
 };
 
-export default Reset;
+export default Trash;

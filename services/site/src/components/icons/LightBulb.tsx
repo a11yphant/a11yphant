@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 const LightBulb: React.FunctionComponent = () => {
@@ -7,7 +8,7 @@ const LightBulb: React.FunctionComponent = () => {
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className="text-white h-7 w-7 pl-2"
+      className={clsx("text-white h-7 w-7 pl-2")}
       aria-hidden="true"
       focusable="false"
     >
