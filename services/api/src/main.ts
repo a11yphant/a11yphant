@@ -13,12 +13,14 @@ let transportStrategy: AwsTransportStrategy;
 
 async function bootstrap(): Promise<NestExpressApplication | void> {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new SessionInterceptor());
 
   const configService = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);
+  const sessionInterceptor = app.get<SessionInterceptor>(SessionInterceptor);
+
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(sessionInterceptor);
 
   transportStrategy = new AwsTransportStrategy({
     polling: true,
