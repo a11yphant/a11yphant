@@ -30,7 +30,7 @@
     "@nestjs/core": "7.6.15",
     "@nestjs/microservices": "^7.6.15",
     "aws-lambda": "1.0.6",
-    "aws-sdk": "2.893.0",
+    "aws-sdk": "2.902.0",
     "node-fetch": "^2.6.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
