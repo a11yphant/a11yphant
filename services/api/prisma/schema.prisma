@@ -57,7 +57,7 @@ model Rule {
 
 model Requirement {
   id          String        @id @default(uuid())
-  title       String
+  title       String        @default("")
   description String        @default("")
   level       Level         @relation(fields: [levelId], references: [id])
   levelId     String
