@@ -16,7 +16,7 @@ const Home: React.FunctionComponent = () => {
       <Head>
         <title>A11yphant</title>
       </Head>
-      <main className="flex flex-col h-19/20 box-border p-4">
+      <main className="flex flex-col h-18/20 box-border p-4">
         <ChallengeHeader className="mx-24" />
         <Legend className="mx-24" />
         <ChallengeList

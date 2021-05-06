@@ -7,9 +7,10 @@ module.exports = {
         inherit: "inherit",
         screenHalf: "50vh",
         "1/20": "5%",
+        "2/20": "10%",
         sidebar: "28%",
         "19/20": "95%",
-        "18/20": "92.5%",
+        "18/20": "90%",
         fitContent: "fit-content",
       },
       maxWidth: {

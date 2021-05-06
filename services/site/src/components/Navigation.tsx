@@ -1,4 +1,5 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
+import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Link from "next/link";
 import React from "react";
 
@@ -17,10 +18,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const displayRegistration = false;
 
   return (
-    <header className="flex justify-between items-center p-6 h-1/20">
+    <header className="flex justify-between items-center p-6 h-2/20">
       <h1 className="logo">
         <Link href="/">
-          <a className="hover:text-primary">A11yphant</a>
+          <a className="hover:text-primary">
+            <A11yphantLogo className={"w-36 text-white"} />
+          </a>
         </Link>
       </h1>
       {displayBreadcrumbs && (
