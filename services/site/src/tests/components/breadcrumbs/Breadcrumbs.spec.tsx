@@ -1,6 +1,9 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
+import Slash from "app/components/icons/Slash";
+import { mount, ReactWrapper } from "enzyme";
+import router, { NextRouter } from "next/router";
 import React from "react";
 
 afterEach(cleanup);
@@ -16,51 +19,89 @@ const expectedBreadcrumbChallenge = {
   breadcrumb: "Mock First Challenge",
 };
 
-jest.mock("next/router", () => ({
-  useRouter() {
-    return {
-      pathname: `/challenge/[challengeSlug]`,
-      query: { challengeSlug: challengeSlug },
-    };
+jest.mock("app/components/breadcrumbs/getRouteList", () => ({
+  getRouteList: async (router: NextRouter) => {
+    // Otherwise: ReferenceError: Cannot access 'challengeSlug' before initialization
+    // because of hoisting
+    // eslint-disable-next-line
+    const dummy = challengeSlug;
+
+    if (router.pathname === "/") {
+      return [
+        {
+          ...expectedBreadcrumbHome,
+        },
+      ];
+    } else {
+      return [
+        {
+          ...expectedBreadcrumbHome,
+        },
+        {
+          ...expectedBreadcrumbChallenge,
+        },
+      ];
+    }
   },
 }));
 
-jest.mock("app/components/breadcrumbs/getRouteList", () => ({
-  getRouteList: async () => {
-    return [
-      {
-        ...expectedBreadcrumbHome,
-      },
-      {
-        ...expectedBreadcrumbChallenge,
-      },
-    ];
-  },
-}));
+jest.mock("next/router", () => require("next-router-mock"));
+
+const renderBreadcrumbs = async (): Promise<ReactWrapper> => {
+  const wrapper = mount(
+    <MockedProvider>
+      <Breadcrumbs />
+    </MockedProvider>,
+  );
+
+  await act(async () => {
+    await wrapper;
+    wrapper.update();
+  });
+
+  return wrapper;
+};
 
 describe("Breadcrumbs", () => {
-  it("render correctly", async () => {
-    let container;
+  it("one breadcrumb", async () => {
     await act(async () => {
-      const component = render(
-        <MockedProvider>
-          <Breadcrumbs />
-        </MockedProvider>,
-      );
-      container = component.container;
+      router.push("/");
     });
 
-    expect(screen.queryByRole("navigation")).toBeTruthy();
-    expect(screen.queryByRole("list")).toBeTruthy();
-    expect(container.querySelectorAll("li")).toHaveProperty("length", 2);
+    const wrapper = await renderBreadcrumbs();
 
-    // Slash is rendered
-    expect(container.querySelectorAll("svg")).toHaveProperty("length", 1);
+    expect(wrapper.exists("nav")).toBeTruthy();
+    expect(wrapper.exists("ol")).toBeTruthy();
 
     // Breadcrumb Home is rendered
-    expect(screen.getByText(expectedBreadcrumbHome.breadcrumb).closest("a")).toHaveAttribute("href", expectedBreadcrumbHome.href);
+    expect(wrapper.find("li a").first().text()).toBe(expectedBreadcrumbHome.breadcrumb);
+
+    // No Slash is rendered
+    expect(wrapper.exists(Slash)).toBeFalsy();
+  });
+
+  it("two breadcrumbs", async () => {
+    await act(async () => {
+      router.push({
+        pathname: "/challenge/[challengeSlug]",
+        query: { challengeSlug: challengeSlug },
+      });
+    });
+
+    const wrapper = await renderBreadcrumbs();
+
+    expect(wrapper.exists("nav")).toBeTruthy();
+    expect(wrapper.exists("ol")).toBeTruthy();
+
+    expect(wrapper.find("li").length).toBe(2);
+
+    // Breadcrumb Home is rendered
+    expect(wrapper.find("li a").first().text()).toBe(expectedBreadcrumbHome.breadcrumb);
+
+    // Dividing Slash is rendered
+    expect(wrapper.exists(Slash)).toBeTruthy();
 
     // Breadcrumb Challenge is rendered
-    expect(screen.getByText(expectedBreadcrumbChallenge.breadcrumb).closest("a")).toHaveAttribute("href", expectedBreadcrumbChallenge.href);
+    expect(wrapper.find("li a").at(1).text()).toBe(expectedBreadcrumbChallenge.breadcrumb);
   });
 });

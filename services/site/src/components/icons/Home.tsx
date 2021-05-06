@@ -1,9 +1,10 @@
+import clsx from "clsx";
 import React from "react";
 
 const Home: React.FunctionComponent = () => {
   return (
     <svg
-      className="flex-shrink-0 h-5 w-5"
+      className={clsx("flex-shrink-0 h-5 w-5")}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"

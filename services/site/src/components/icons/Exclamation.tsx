@@ -1,21 +1,10 @@
+import clsx from "clsx";
 import React from "react";
 
 const Exclamation: React.FunctionComponent = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    className="h-6 w-6 text-primary"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-    />
+  <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" className={clsx("h-6 w-6 text-primary")} aria-hidden="true" focusable="false">
+    <path d="M10 32.16L22 12l12 20.16" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M21.515 26.162l-.76-4.992v-3.41h2.523v3.41l-.744 4.992h-1.02zM22 30.24c-.518 0-.89-.129-1.116-.387-.216-.258-.324-.574-.324-.949v-.422c0-.375.108-.691.324-.949.226-.258.598-.387 1.116-.387.518 0 .884.13 1.1.387.227.258.34.574.34.95v.421c0 .375-.113.692-.34.95-.216.257-.582.386-1.1.386z" />
   </svg>
 );
 

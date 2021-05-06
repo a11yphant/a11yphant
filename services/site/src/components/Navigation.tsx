@@ -3,8 +3,8 @@ import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
-import Avatar from "./icons/Avatar";
 import Save from "./icons/Save";
+import UserAvatar from "./icons/UserAvatar";
 
 interface NavigationProps {
   displayBreadcrumbs?: boolean;
@@ -20,7 +20,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
     <header className="flex justify-between items-center p-6 h-1/20">
       <h1 className="logo">
         <Link href="/">
-          <a className="hover:text-primary">A11y Challenges</a>
+          <a className="hover:text-primary">A11yphant</a>
         </Link>
       </h1>
       {displayBreadcrumbs && (
@@ -35,7 +35,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {displayUserProfile && (
           <>
             <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100 ml-8">
-              <Avatar />
+              <UserAvatar />
             </span>
           </>
         )}
