@@ -1,8 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { By, WebDriver } from "selenium-webdriver";
-import { BrowserService } from "src/browser.service";
 
+import { BrowserService } from "../browser.service";
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
 import { Submission } from "../submission.interface";
