@@ -1,0 +1,6 @@
+rule:
+  id: 966458c5-2d26-4fdb-88b7-ead5efe8174f
+  key: element-not-exists
+  title: Element does not exist
+  shortDescription: >
+    The element with [attribute]=[value] must not exist on the page.

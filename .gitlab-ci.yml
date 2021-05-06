@@ -88,6 +88,22 @@ build:nestjs-aws-messaging:
     - master
     - merge_request
 
+#-----------------------------------
+# content yml Linting
+#-----------------------------------
+
+lint:content:
+  extends:
+    - .run_on_content_change
+  tags:
+    - docker
+  stage: analyze
+  image: node:14-alpine
+  before_script:
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+    - npm ci --ignore-scripts --cache .npm-alpine
+  script:
+    - npm run lint:content
 
 #-----------------------------------
 # ESLint Config
@@ -226,7 +242,7 @@ test:api:
   extends:
     - .test
   needs:
-   - build:nestjs-aws-messaging
+    - build:nestjs-aws-messaging
   services:
     - postgres
   variables:
@@ -341,7 +357,7 @@ terraform:check-format:
   cache: {}
   dependencies: []
   before_script:
-    - '' # do nothing
+    - "" # do nothing
   script:
     - terraform -chdir=terraform fmt -recursive -check
 
@@ -377,9 +393,9 @@ deploy-review:
   extends:
     - .deploy
   variables:
-   WORKSPACE: review-${CI_MERGE_REQUEST_IID}
-   DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-   USE_CUSTOM_DOMAIN: 1
+    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+    USE_CUSTOM_DOMAIN: 1
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com

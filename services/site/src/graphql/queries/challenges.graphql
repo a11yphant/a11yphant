@@ -2,13 +2,22 @@ fragment ChallengeOverview on Challenge {
     id
     slug
     name
+    difficulty
     levels {
         id
     }
 }
 
 query challenges {
-  challenges {
+  easyChallenges: challenges(filter: { difficulty: EASY }) {
+    ...ChallengeOverview
+  }
+  
+  mediumChallenges: challenges(filter: { difficulty: MEDIUM }) {
+    ...ChallengeOverview
+  }
+  
+  hardChallenges: challenges(filter: { difficulty: HARD }) {
     ...ChallengeOverview
   }
 }

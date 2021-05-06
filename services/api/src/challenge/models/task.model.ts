@@ -1,6 +1,9 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
+
+import { Hint } from "./hint.model";
+
 @ObjectType()
-export class Hint {
+export class Task {
   constructor(properties: { id: string; text: string }) {
     this.id = properties.id;
     this.text = properties.text;
@@ -11,4 +14,7 @@ export class Hint {
 
   @Field(() => String)
   text: string;
+
+  @Field(() => [Hint], { description: "All hints available for this task." })
+  hints: Hint[];
 }

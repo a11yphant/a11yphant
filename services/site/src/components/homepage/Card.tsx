@@ -1,3 +1,4 @@
+import { ChallengeDifficulty } from "app/generated/graphql";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
@@ -5,16 +6,10 @@ import React from "react";
 interface CardProps {
   className?: string;
   heading: string;
-  difficulty: DifficultyLevel;
+  difficulty: ChallengeDifficulty;
   levels: number;
   challengeSlug: string;
   challengeNumber: number;
-}
-
-export enum DifficultyLevel {
-  easy = "easy",
-  medium = "medium",
-  hard = "hard",
 }
 
 const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
@@ -24,9 +19,9 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
         "relative overflow-hidden w-64 h-64 border-2 border-background bg-backgroundMiddle rounded-xl flex flex-col justify-end",
         "group transition duration-300 hover:bg-grey",
         "card box-shadow",
-        difficulty == DifficultyLevel.easy && "bg-gradient-easy",
-        difficulty == DifficultyLevel.medium && "bg-gradient-medium",
-        difficulty == DifficultyLevel.hard && "bg-gradient-hard",
+        difficulty === ChallengeDifficulty.Easy && "bg-gradient-easy",
+        difficulty === ChallengeDifficulty.Medium && "bg-gradient-medium",
+        difficulty === ChallengeDifficulty.Hard && "bg-gradient-hard",
         "bg-no-repeat	bg-contain bg-top",
         className,
       )}
@@ -57,14 +52,14 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1 transition duration-300",
                 "group-hover:border-greyDark",
-                difficulty !== DifficultyLevel.easy && "bg-grey group-hover:bg-greyDark",
+                difficulty !== ChallengeDifficulty.Easy && "bg-grey group-hover:bg-greyDark",
               )}
             />
             <div
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1 transition duration-300",
                 "group-hover:border-greyDark",
-                difficulty === DifficultyLevel.hard && "bg-grey group-hover:bg-greyDark",
+                difficulty === ChallengeDifficulty.Hard && "bg-grey group-hover:bg-greyDark",
               )}
             />
           </div>

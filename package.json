@@ -20,6 +20,7 @@
     "lint:api": "npm --prefix services/api run lint",
     "lint:site": "npm --prefix services/site run lint",
     "lint:submission-checker": "npm --prefix services/submission-checker run lint",
+    "lint:content": "yamllint challenges/*.yml",
     "lint-staged": "lint-staged",
     "start": "npm run dev",
     "predev": "npm run build-packages &&  npm run tf:clear-state && npm run tf:apply && npm run db:migrate",
@@ -57,7 +58,8 @@
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7",
     "typescript": "4.2.4",
-    "wait-on": "5.3.0"
+    "wait-on": "5.3.0",
+    "yaml-lint": "^1.2.4"
   },
   "dependencies": {}
 }
