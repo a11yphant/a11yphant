@@ -1,10 +1,10 @@
 import Button from "app/components/buttons/Button";
 import Chevron from "app/components/icons/Chevron";
+import { Hint } from "app/generated/graphql";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
-
-import { Hint } from "../../Sidebar";
+import sanitizeHtml from "sanitize-html";
 
 interface HintBoxProps {
   hints: Hint[];
@@ -51,9 +51,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
       <div hidden={!showHint} className="px-4">
         <ol className="list-decimal list-inside font-normal">
           {hints.slice(0, usedHints).map((hint) => (
-            <li key={hint.id} className="mt-2 mb-4">
-              {hint.title}
-            </li>
+            <li key={hint.id} className="mt-2 mb-4 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }} />
           ))}
         </ol>
         {usedHints < totalHints && (
