@@ -16,7 +16,6 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { isNumeric } from "rxjs/internal-compatibility";
 
 const Evaluation: React.FunctionComponent = () => {
   const challengeContext = useChallenge();
@@ -62,7 +61,7 @@ const Evaluation: React.FunctionComponent = () => {
 
   // // level is completed when all checks passed
   let failedLevel = true;
-  if (isNumeric(failedChecks) && failedChecks === 0) {
+  if (Number.isInteger(failedChecks) && failedChecks === 0) {
     failedLevel = false;
   }
 
