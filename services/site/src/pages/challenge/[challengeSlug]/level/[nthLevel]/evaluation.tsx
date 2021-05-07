@@ -16,6 +16,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { isNumeric } from "rxjs/internal-compatibility";
 
 const Evaluation: React.FunctionComponent = () => {
   const challengeContext = useChallenge();
@@ -36,6 +37,8 @@ const Evaluation: React.FunctionComponent = () => {
   const failedChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
   const totalChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
   const requirements = data?.resultForSubmission?.requirements || [];
+
+  console.log(failedChecks);
 
   // fetch every 3 seconds
   React.useEffect(() => {
@@ -60,10 +63,10 @@ const Evaluation: React.FunctionComponent = () => {
   }, [failedChecks, totalChecks]);
 
   // // level is completed when all checks passed
-  // let levelCompleted = false;
-  // if (failedChecks && failedChecks == 0) {
-  //   levelCompleted = true;
-  // }
+  let failedLevel = true;
+  if (isNumeric(failedChecks) && failedChecks === 0) {
+    failedLevel = false;
+  }
 
   // render requirements
   const getRequirements = React.useMemo(
@@ -99,20 +102,35 @@ const Evaluation: React.FunctionComponent = () => {
               {getRequirements}
             </div>
             <div className="absolute bottom-8 right-8">
-              <Button
-                onClick={() => {
-                  const nextLevel = parseInt(nthLevel as string) + 1;
-                  if (nextLevel <= challenge.levels.length) {
-                    router.push(`/challenge/${challengeSlug}/level/0${parseInt(nthLevel as string) + 1}`);
-                  } else {
+              {failedLevel ? (
+                <Button
+                  onClick={() => {
+                    router.back();
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  Retry
+                </Button>
+              ) : parseInt(nthLevel as string) + 1 <= challenge.levels.length ? (
+                <Button
+                  onClick={() => {
+                    const nextLevel = parseInt(nthLevel as string) + 1;
+                    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  Next Level
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
                     router.push("/");
-                  }
-                }}
-                className="bg-white text-primary px-10"
-              >
-                {/*{levelCompleted ? "Next Level" : "Retry"}*/}
-                {parseInt(nthLevel as string) + 1 <= challenge.levels.length ? "Next Level" : "To Homescreen"}
-              </Button>
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  To Homescreen
+                </Button>
+              )}
             </div>
           </>
         )}
