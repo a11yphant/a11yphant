@@ -60,10 +60,12 @@ const Evaluation: React.FunctionComponent = () => {
   }, [failedChecks, totalChecks]);
 
   // // level is completed when all checks passed
-  // let levelCompleted = false;
-  // if (failedChecks && failedChecks == 0) {
-  //   levelCompleted = true;
-  // }
+  let failedLevel = true;
+  if (Number.isInteger(failedChecks) && failedChecks === 0) {
+    failedLevel = false;
+  }
+
+  const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
   // render requirements
   const getRequirements = React.useMemo(
@@ -99,20 +101,35 @@ const Evaluation: React.FunctionComponent = () => {
               {getRequirements}
             </div>
             <div className="absolute bottom-8 right-8">
-              <Button
-                onClick={() => {
-                  const nextLevel = parseInt(nthLevel as string) + 1;
-                  if (nextLevel <= challenge.levels.length) {
-                    router.push(`/challenge/${challengeSlug}/level/0${parseInt(nthLevel as string) + 1}`);
-                  } else {
+              {failedLevel ? (
+                <Button
+                  onClick={() => {
+                    router.back();
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  Retry
+                </Button>
+              ) : isLastLevel ? (
+                <Button
+                  onClick={() => {
                     router.push("/");
-                  }
-                }}
-                className="bg-white text-primary px-10"
-              >
-                {/*{levelCompleted ? "Next Level" : "Retry"}*/}
-                {parseInt(nthLevel as string) + 1 <= challenge.levels.length ? "Next Level" : "To Homescreen"}
-              </Button>
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  To Homescreen
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    const nextLevel = parseInt(nthLevel as string) + 1;
+                    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  Next Level
+                </Button>
+              )}
             </div>
           </>
         )}
