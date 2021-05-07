@@ -89,12 +89,14 @@ export class ImportService {
         slug: challenge.slug,
         difficulty: this.mapDifficulty(challenge.difficulty),
         introduction: challenge.introduction,
+        order: challenge.order,
       },
       update: {
         name: challenge.name,
         slug: challenge.slug,
         difficulty: this.mapDifficulty(challenge.difficulty),
         introduction: challenge.introduction,
+        order: challenge.order,
       },
     });
   }
