@@ -331,7 +331,7 @@ challenge:
           hints:
             - id: 261e7abf-f582-46e1-9a09-2e88ab87ea49
               text: |-
-                Your list could look something like this:
+                Your link could look something like this:
                 <code>
                   &lt;a href=&quot;https://openpuppies.com/&quot;&gt;Amazing dog clips&lt;/a&gt;
                 </code>
