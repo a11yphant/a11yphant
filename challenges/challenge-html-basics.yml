@@ -51,7 +51,7 @@ challenge:
           options:
             selector: html[lang="en"]
       instructions: |-
-        Websites exist in various languages. To help assistive devices, the language of a page should be declared on the <code>&lt;html&gt;</code> tag by using the <code>lang</code> attribute. The value of the attribute should be the abbreviation of the document language. For example <code>en</code> for english, <code>de/code> for german. Browsers use this information to offer translations and correctly pronounce words when converting text to speech.
+        Websites exist in various languages. To help assistive devices, the language of a page should be declared on the <code>&lt;html&gt;</code> tag by using the <code>lang</code> attribute. The value of the attribute should be the abbreviation of the document language. For example <code>en</code> for english, <code>de</code> for german. Browsers use this information to offer translations and correctly pronounce words when converting text to speech.
         The <code>lang</code> attribute should always be set on the <code>&lt;html&gt;</code> element, as it is inherited by all other elements of the website. This means that the declared default language for the text will be set for all following elements inside the <code>&lt;html&gt;</code> tag.
       tasks:
         - id: 18a7247e-8eb3-40de-b82b-48e4104229e3
@@ -225,7 +225,16 @@ challenge:
                 </code>
       code:
         html: |-
-          xxhtmlcode
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            <body>
+              <h1>My favourite things about dogs</h1>
+              <!-- insert your list here -->
+            </body>
+          </html>
 
     - id: 36905991-5fed-4b9b-b07e-3f5d56d90753
       order: 9
@@ -284,11 +293,11 @@ challenge:
 
             <body>
               <h1>My three favourite things about cats</h1>
-              <ol>
+              <ul>
                 <li>Cats are low maintenance</li>
                 <li>Cats have long life spans</li>
                 <li>Cats are independent</li>
-              </ol>
+              </ul>
             </body>
           </html>
 

@@ -87,10 +87,10 @@ challenge:
         - id: 39d905ac-1726-4f8e-ac86-7a6c3ab3a345
           key: element-exists
           order: 1
-          title: The page contains a header.
-          description: Make sure to use a header element on your page.
+          title: The page contains an aside element.
+          description: Make sure to use an aside element on your page.
           options:
-            selector: header
+            selector: aside
       instructions: |-
         The <code>&lt;aside&gt;</code> tag defines a part of the website that is indirectly related to the surrounding main content. It is typically displayed as a sidebar or call-out box. The <code>&lt;aside&gt;</code> tag is generally used to enhance content with additional information.
       tasks:
@@ -152,7 +152,7 @@ challenge:
           title: The navigation includes links.
           description: Make sure that at least one link is located inside the navigation.
           options:
-            selector: nav > a
+            selector: nav a
         - id: 270d6184-0420-4f9a-ac9a-e78420d8edf0
           key: element-not-exists
           order: 3
