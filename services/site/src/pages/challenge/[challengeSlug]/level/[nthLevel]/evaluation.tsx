@@ -89,7 +89,7 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
+      <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
         <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />

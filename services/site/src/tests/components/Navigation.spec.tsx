@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { cleanup } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
+import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Save from "app/components/icons/Save";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation from "app/components/Navigation";
@@ -20,7 +21,7 @@ describe("Navigation", () => {
 
     // Logo and Link exist
     expect(wrapper.find(".logo")).toHaveProperty("length", 1);
-    expect(wrapper.find("a").text()).toBe("A11yphant");
+    expect(wrapper.exists(A11yphantLogo)).toBeTruthy();
 
     // Breadcrumbs exist
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
@@ -29,7 +30,7 @@ describe("Navigation", () => {
     expect(wrapper.exists(Save)).toBeFalsy();
 
     // User Avatar exists
-    expect(wrapper.contains(<UserAvatar />)).toBeTruthy();
+    expect(wrapper.exists(UserAvatar)).toBeTruthy();
 
     // SignUp/Login Buttons do not exist
     expect(wrapper.exists(Button)).toBeFalsy();

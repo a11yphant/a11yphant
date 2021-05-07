@@ -41,21 +41,12 @@ export const routes: Routes = {
     },
   },
   "/challenge/[challengeSlug]/level/[nthLevel]": {
-    getBreadcrumbInfo: async (urlParams, apolloClient) => {
+    getBreadcrumbInfo: async (urlParams) => {
       const { challengeSlug, nthLevel } = urlParams;
-
-      const { data } = await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
-        query: ChallengeBySlugDocument,
-        variables: { slug: challengeSlug as string },
-      });
-      const totalLevels = data.challenge.levels.length;
 
       return {
         href: `/challenge/${challengeSlug}/level/${nthLevel}`,
         breadcrumb: `Level ${Number(nthLevel).toLocaleString("de-AT", {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        })} / ${totalLevels.toLocaleString("de-AT", {
           minimumIntegerDigits: 2,
           useGrouping: false,
         })}`,

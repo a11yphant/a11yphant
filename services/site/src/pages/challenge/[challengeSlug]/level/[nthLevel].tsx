@@ -92,7 +92,7 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="flex justify-between h-19/20 box-border p-4">
+      <main className="flex justify-between h-main box-border p-4">
         <Sidebar classes="h-full" challengeName={challenge.name} level={level} />
         <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
           <Editors

@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
+import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import ArrowLeft from "app/components/icons/ArrowLeft";
 import ArrowRight from "app/components/icons/ArrowRight";
 import Check from "app/components/icons/Check";
@@ -12,6 +13,7 @@ import Exclamation from "app/components/icons/Exclamation";
 import Github from "app/components/icons/Github";
 import Home from "app/components/icons/Home";
 import LightBulb from "app/components/icons/LightBulb";
+import Reset from "app/components/icons/Reset";
 import Save from "app/components/icons/Save";
 import Trash from "app/components/icons/Trash";
 import Twitter from "app/components/icons/Twitter";
@@ -23,6 +25,12 @@ import React from "react";
 afterEach(cleanup);
 
 describe("Icons", () => {
+  it("A11yphant Logo exists", () => {
+    const wrapper = shallow(<A11yphantLogo />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
   it("ArrowLeft exists", () => {
     const wrapper = shallow(<ArrowLeft />);
 
@@ -85,6 +93,12 @@ describe("Icons", () => {
 
   it("LightBulb exists", () => {
     const wrapper = shallow(<LightBulb />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("Reset exists", () => {
+    const wrapper = shallow(<Reset />);
 
     expect(wrapper.type()).toBe("svg");
   });
