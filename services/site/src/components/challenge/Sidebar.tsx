@@ -13,8 +13,8 @@ interface SidebarProps {
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ classes, challengeName, level }) => {
   return (
-    <aside className={clsx("w-sidebar py-4 px-7", "container-dark", classes)}>
-      <div className="flex flex-col w-full h-full">
+    <aside className={clsx("w-sidebar py-4 px-7", "container-dark overflow-auto", classes)}>
+      <div className="flex flex-col w-full min-h-full">
         <h2 className={clsx("text-greyMiddle", "h6")}>{challengeName}</h2>
         <h3 className={clsx("my-8", "h4")}>Instructions</h3>
         <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
