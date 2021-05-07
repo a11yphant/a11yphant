@@ -14,6 +14,7 @@ export class RequirementResultService {
     const records = await this.prisma.checkResult.findMany({
       where: { resultId },
       include: { requirement: true },
+      orderBy: { requirement: { order: "asc" } },
     });
 
     return records.map((record) => this.createRequirementFromRecord(record));
