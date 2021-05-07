@@ -151,12 +151,14 @@ export class ImportService {
             title: requirement.title,
             description: requirement.description,
             options: requirement.options,
+            order: requirement.order,
             levelId,
           },
           update: {
             title: requirement.title,
             description: requirement.description,
             options: requirement.options,
+            order: requirement.order,
             levelId,
           },
         });
