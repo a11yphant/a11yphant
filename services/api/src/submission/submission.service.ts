@@ -42,7 +42,7 @@ export class SubmissionService {
         rules: submission.level.requirements.map((requirement) => ({
           id: requirement.id,
           key: requirement.rule.key,
-          options: {},
+          options: requirement.options,
         })),
       })
       .toPromise();
