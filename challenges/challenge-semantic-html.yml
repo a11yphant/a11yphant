@@ -155,6 +155,7 @@ challenge:
             selector: nav > a
         - id: 270d6184-0420-4f9a-ac9a-e78420d8edf0
           key: element-not-exists
+          order: 3
           title: The navigation is outside of the main landmark.
           # TODO: Properly explain why this is important.
           description: The navigation should be located outside of the main landmark, because the main landmark should only contain content that is unique to that page. The navigation likely is included on all page, so it should be located outside the main landmark.
