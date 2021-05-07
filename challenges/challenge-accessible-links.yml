@@ -3,6 +3,7 @@ challenge:
   name: Accessible Links
   slug: accessible-links
   difficulty: medium
+  order: 0
   introduction: >
     Your friend Charles spent the last few weeks building a new website for his tech blog. But since he launched it, he keeps getting emails from frustrated readers reporting that they can’t access any links using their keyboard or screen readers.
   levels:

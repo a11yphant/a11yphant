@@ -18,7 +18,7 @@ export class ChallengeService {
   }
 
   public async findAll(filter?: ChallengesFilter): Promise<Challenge[]> {
-    const filterObject: Prisma.ChallengeFindManyArgs = { where: {} };
+    const filterObject: Prisma.ChallengeFindManyArgs = { where: {}, orderBy: { order: "asc" } };
 
     if (filter) {
       filterObject.where = { ...filter };

@@ -3,6 +3,7 @@ challenge:
   name: xxname
   slug: xxslug
   difficulty: easy
+  order: 1
   introduction: >
     xxintro
   levels:

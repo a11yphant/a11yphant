@@ -4,6 +4,7 @@ export interface Challenge {
   slug: string;
   difficulty: string;
   introduction: string;
+  order?: number;
   levels: Level[];
 }
 
