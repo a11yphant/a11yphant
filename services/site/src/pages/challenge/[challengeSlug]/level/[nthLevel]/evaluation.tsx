@@ -66,6 +66,8 @@ const Evaluation: React.FunctionComponent = () => {
     failedLevel = false;
   }
 
+  const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
+
   // render requirements
   const getRequirements = React.useMemo(
     () =>
@@ -109,7 +111,16 @@ const Evaluation: React.FunctionComponent = () => {
                 >
                   Retry
                 </Button>
-              ) : parseInt(nthLevel as string) + 1 <= challenge.levels.length ? (
+              ) : isLastLevel ? (
+                <Button
+                  onClick={() => {
+                    router.push("/");
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  To Homescreen
+                </Button>
+              ) : (
                 <Button
                   onClick={() => {
                     const nextLevel = parseInt(nthLevel as string) + 1;
@@ -118,15 +129,6 @@ const Evaluation: React.FunctionComponent = () => {
                   className="bg-white text-primary px-10"
                 >
                   Next Level
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                  className="bg-white text-primary px-10"
-                >
-                  To Homescreen
                 </Button>
               )}
             </div>
