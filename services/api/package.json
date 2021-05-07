@@ -61,7 +61,7 @@
     "@prisma/migrate": "2.22.0",
     "@prisma/sdk": "2.22.0",
     "@types/aws-lambda": "8.10.76",
-    "@types/faker": "5.5.3",
+    "@types/faker": "5.5.4",
     "@types/jest": "26.0.23",
     "@types/mock-fs": "4.13.0",
     "@types/node": "14.14.44",
