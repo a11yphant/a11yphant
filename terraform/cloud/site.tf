@@ -29,6 +29,7 @@ resource "aws_lambda_function" "site" {
   handler = "entrypoint.handler"
   runtime = "nodejs14.x"
   timeout = 30
+  memory_size = 256
 
   role = aws_iam_role.site_role.arn
 
