@@ -48,7 +48,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
-    <div className={clsx("p-4", "container-light", classes)}>
+    <div className={clsx("p-4", "container-light overflow-hidden", classes)}>
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>{heading}</h3>
       <iframe
         title="Preview"

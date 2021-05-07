@@ -163,7 +163,6 @@
     }
 
     .container-light {
-        @apply overflow-hidden;
         @apply relative;
         @apply border-2;
         @apply rounded-xl;
@@ -172,7 +171,6 @@
     }
 
     .container-dark {
-        @apply overflow-hidden;
         @apply relative;
         @apply border-2;
         @apply rounded-xl;
@@ -181,7 +179,6 @@
     }
 
     .container-ultradark {
-        @apply overflow-hidden;
         @apply relative;
         @apply border-2;
         @apply rounded-xl;
