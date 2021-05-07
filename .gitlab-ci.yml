@@ -410,7 +410,7 @@ deploy-staging:
     WORKSPACE: staging
     DOMAIN: beta.a11yphant.com
     USE_CUSTOM_DOMAIN: 1
-    API_DYNO_SIZE: hobby
+    API_DYNO_SIZE: free
   environment:
     name: staging
     url: https://beta.a11yphant.com
