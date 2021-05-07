@@ -20,7 +20,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
-    transform: showHint ? "rotate(180deg)" : "rotate(0deg)",
+    transform: showHint ? "rotate(0deg)" : "rotate(180deg)",
     config: {
       tension: 0,
       delay: 0,
