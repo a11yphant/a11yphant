@@ -62,6 +62,7 @@ model Requirement {
   id          String        @id @default(uuid())
   title       String        @default("")
   description String        @default("")
+  order       Int           @default(0)
   level       Level         @relation(fields: [levelId], references: [id])
   levelId     String
   rule        Rule?         @relation(fields: [ruleId], references: [id])

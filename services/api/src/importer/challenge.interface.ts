@@ -21,6 +21,7 @@ export interface Requirement {
   id: string;
   title: string;
   description: string;
+  order?: number;
   key: string;
   options?: { [key: string]: string };
 }
