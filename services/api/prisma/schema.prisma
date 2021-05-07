@@ -16,6 +16,7 @@ model Challenge {
   name         String
   introduction String  @default("")
   difficulty   Int     @default(0)
+  order        Int     @default(0)
   levels       Level[]
 
   @@map(name: "challenges")
