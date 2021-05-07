@@ -111,6 +111,7 @@ const Level: React.FunctionComponent = () => {
             ]}
             theme="light"
             options={{
+              lineHeight: 24,
               fontSize: 12,
               wordWrap: "on",
               minimap: {
