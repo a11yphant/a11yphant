@@ -11,12 +11,14 @@ challenge:
       requirements:
         - id: da787b67-30bd-490e-8913-4d7d2a7fd2d0
           key: html-is-valid
+          order: 0
           title: The HTML is valid.
           description: Valid HTML is the basis for allowing assistive technologies to interact with your website.
         - id: c5013ba3-678d-446c-a681-6651486f87f7
           title: Links are detectable by assistive technologies
           description: Make sure that links can be identified by assistive technologies. Using an <a> tag with an valid href is all you need to make this requirement pass.
           key: axe-link-name
+          order: 1
       instructions: |-
         Charles hasn’t been able to figure out the problem himself. Therefore, he asked you for help in this matter. He sent you a code snippet from his website, that you can find in the editor to the right.
       tasks:
@@ -59,10 +61,12 @@ challenge:
       requirements:
         - id: 3d69d723-44db-48ac-9d50-6a47f132cc9d
           key: html-is-valid
+          order: 0
           title: The HTML is valid.
           description: Valid HTML is important.
         - id: 43a46cf6-69a2-444b-bad3-53092cf72e52
           key: axe-link-name
+          order: 1
           title: Links are detectable by assistive technologies
           description: Make sure that links can be detected by assistive technologies. An using an <a> tag with an valid href should make this requirement pass.
       instructions: |-

@@ -12,6 +12,7 @@ challenge:
         - key: xxrulekey
           title:
           description:
+          order: 1
           options:
             selector: htmltag
       instructions: |-
