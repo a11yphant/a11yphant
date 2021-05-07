@@ -38,8 +38,6 @@ const Evaluation: React.FunctionComponent = () => {
   const totalChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
   const requirements = data?.resultForSubmission?.requirements || [];
 
-  console.log(failedChecks);
-
   // fetch every 3 seconds
   React.useEffect(() => {
     const interval = setInterval(() => {
