@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -10,6 +11,14 @@ const Challenge: React.FunctionComponent = () => {
   }, []);
 
   return <div />;
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      displayBreadcrumbs: false,
+    },
+  };
 };
 
 export default Challenge;
