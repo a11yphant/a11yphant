@@ -45,7 +45,7 @@
     "sanitize-html": "2.3.3"
   },
   "devDependencies": {
-    "@a11yphant/eslint-config": "0.0.4",
+    "@a11yphant/eslint-config": "0.1.1",
     "@graphql-codegen/cli": "1.21.4",
     "@graphql-codegen/fragment-matcher": "2.0.1",
     "@graphql-codegen/typescript": "1.22.0",

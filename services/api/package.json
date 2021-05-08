@@ -52,7 +52,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@a11yphant/eslint-config": "0.0.4",
+    "@a11yphant/eslint-config": "0.1.1",
     "@golevelup/ts-jest": "0.3.1",
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
