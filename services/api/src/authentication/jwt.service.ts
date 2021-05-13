@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import jwt from "jsonwebtoken";
 
-import { MissingApplicationKeyException } from "./excpetions/missing-application-key.exception";
+import { MissingApplicationKeyException } from "./exceptions/missing-application-key.exception";
 import { JwtOptions } from "./jwt-options.interface";
 
 @Injectable()
