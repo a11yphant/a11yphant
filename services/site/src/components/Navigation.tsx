@@ -1,10 +1,11 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
+import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
-import Avatar from "./icons/Avatar";
 import Save from "./icons/Save";
+import UserAvatar from "./icons/UserAvatar";
 
 interface NavigationProps {
   displayBreadcrumbs?: boolean;
@@ -17,10 +18,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const displayRegistration = false;
 
   return (
-    <header className="flex justify-between items-center p-6 h-1/20">
+    <header className="flex justify-between items-center pt-8 pb-6 px-11 h-navigation">
       <h1 className="logo">
         <Link href="/">
-          <a className="hover:text-primary">A11y Challenges</a>
+          <a className="hover:text-primary">
+            <A11yphantLogo className={"w-36 text-white"} />
+          </a>
         </Link>
       </h1>
       {displayBreadcrumbs && (
@@ -32,13 +35,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       )}
       <div className="flex justify-center items-center">
         {displaySave && <Save />}
-        {displayUserProfile && (
-          <>
-            <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100 ml-8">
-              <Avatar />
-            </span>
-          </>
-        )}
+        {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>
             <Button full className="mx-4">

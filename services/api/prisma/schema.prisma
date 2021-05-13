@@ -7,35 +7,49 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["orderByRelation"]
 }
 
 model Challenge {
-  id         String  @id @default(uuid())
-  slug       String  @unique
-  name       String
-  difficulty Int     @default(0)
-  levels     Level[]
+  id           String  @id @default(uuid())
+  slug         String  @unique
+  name         String
+  introduction String  @default("")
+  difficulty   Int     @default(0)
+  order        Int     @default(0)
+  levels       Level[]
 
   @@map(name: "challenges")
 }
 
 model Level {
-  id           String        @id @default(uuid())
-  order        Int           @default(0)
-  tldr         String
-  instructions String
-  challenge    Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId  String
-  requirements Requirement[]
-  hints        Hint[]
-  resources    Resource[]
-  submissions  Submission[]
-  html         String?
-  css          String?
-  js           String?
+  id            String        @id @default(uuid())
+  order         Int           @default(0)
+  instructions  String
+  challenge     Challenge     @relation(fields: [challengeId], references: [id])
+  challengeId   String
+  requirements  Requirement[]
+  submissions   Submission[]
+  tasks         Task[]
+  html          String?
+  css           String?
+  js            String?
+  hasHtmlEditor Boolean       @default(true)
+  hasCssEditor  Boolean       @default(false)
+  hasJsEditor   Boolean       @default(false)
 
   @@map(name: "levels")
+}
+
+model Task {
+  id      String  @id @default(uuid())
+  text    String
+  hints   Hint[]
+  Level   Level?  @relation(fields: [levelId], references: [id])
+  levelId String?
+
+  @@map("tasks")
 }
 
 model Rule {
@@ -48,34 +62,26 @@ model Rule {
 
 model Requirement {
   id          String        @id @default(uuid())
-  title       String
+  title       String        @default("")
   description String        @default("")
+  order       Int           @default(0)
   level       Level         @relation(fields: [levelId], references: [id])
   levelId     String
   rule        Rule?         @relation(fields: [ruleId], references: [id])
   ruleId      String?
+  options     Json?
   CheckResult CheckResult[]
 
   @@map(name: "requirements")
 }
 
 model Hint {
-  id      String @id @default(uuid())
-  content String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
+  id     String  @id @default(uuid())
+  text   String  @default("")
+  Task   Task?   @relation(fields: [taskId], references: [id])
+  taskId String?
 
   @@map(name: "hints")
-}
-
-model Resource {
-  id      String @id @default(uuid())
-  title   String
-  link    String
-  level   Level  @relation(fields: [levelId], references: [id])
-  levelId String
-
-  @@map(name: "resources")
 }
 
 model Submission {

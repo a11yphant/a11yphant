@@ -3,12 +3,16 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      boxShadow: {
+        modal: "0px 24px 38px rgba(0, 0, 0, 0.14), 0px 0px 46px rgba(0, 0, 0, 0.12), 0px 0px 15px rgba(0, 0, 0, 0.2)",
+      },
       spacing: {
         inherit: "inherit",
         screenHalf: "50vh",
-        "1/20": "5%",
-        "19/20": "95%",
-        "18/20": "92.5%",
+        navigation: "8%",
+        main: "92%",
+        sidebar: "28%",
+        "18/20": "90%",
         fitContent: "fit-content",
       },
       maxWidth: {
@@ -16,7 +20,7 @@ module.exports = {
       },
       colors: {
         primary: "#7331FF",
-        primaryLight: "#714EFF",
+        primaryLight: "#B795FF",
         primaryDark: "#6657C5",
         error: "#E75A7C",
         background: "#121212",

@@ -1,28 +1,19 @@
-fragment HintId on Hint {
+query levelByChallengeSlug($challengeSlug: String!, $nth: Int!) {
+  level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
     id
-}
-
-query levelByChallengeSlug ($challengeSlug: String!, $nth: Int!) {
-    level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
+    instructions
+    tasks {
+      id
+      text
+      hints {
         id
-        tldr
-        instructions
-        requirements {
-            id
-            title
-        }
-        hints {
-            ...HintId
-        }
-        resources {
-            id
-            title
-            link
-        }
-        code {
-            html
-            css
-            js
-        }
+        text
+      }
     }
+    code {
+      html
+      css
+      js
+    }
+  }
 }

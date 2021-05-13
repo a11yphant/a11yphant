@@ -26,9 +26,10 @@ resource "aws_lambda_function" "site" {
   s3_key           = aws_s3_bucket_object.site_code_zip.id
   source_code_hash = data.external.site_code_zip.result.hash
 
-  handler = "entrypoint.handler"
-  runtime = "nodejs14.x"
-  timeout = 30
+  handler     = "entrypoint.handler"
+  runtime     = "nodejs14.x"
+  timeout     = 30
+  memory_size = 256
 
   role = aws_iam_role.site_role.arn
 

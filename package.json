@@ -20,6 +20,7 @@
     "lint:api": "npm --prefix services/api run lint",
     "lint:site": "npm --prefix services/site run lint",
     "lint:submission-checker": "npm --prefix services/submission-checker run lint",
+    "lint:content": "yamllint challenges/*.yml",
     "lint-staged": "lint-staged",
     "start": "npm run dev",
     "predev": "npm run build-packages &&  npm run tf:clear-state && npm run tf:apply && npm run db:migrate",
@@ -48,16 +49,17 @@
   "devDependencies": {
     "@nestjs/common": "7.6.15",
     "@nestjs/core": "7.6.15",
-    "@typescript-eslint/parser": "4.22.0",
+    "@typescript-eslint/parser": "4.22.1",
     "dotenv-cli": "4.0.0",
     "husky": "6.0.0",
-    "lint-staged": "10.5.4",
+    "lint-staged": "11.0.0",
     "npm-run-all": "4.1.5",
     "pm2": "4.5.6",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7",
     "typescript": "4.2.4",
-    "wait-on": "5.3.0"
+    "wait-on": "5.3.0",
+    "yaml-lint": "1.2.4"
   },
   "dependencies": {}
 }

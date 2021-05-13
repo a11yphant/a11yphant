@@ -18,7 +18,7 @@ export class ChallengeService {
   }
 
   public async findAll(filter?: ChallengesFilter): Promise<Challenge[]> {
-    const filterObject: Prisma.ChallengeFindManyArgs = { where: {} };
+    const filterObject: Prisma.ChallengeFindManyArgs = { where: {}, orderBy: { order: "asc" } };
 
     if (filter) {
       filterObject.where = { ...filter };
@@ -42,6 +42,7 @@ export class ChallengeService {
       name: record.name,
       slug: record.slug,
       difficulty: record.difficulty,
+      introduction: record.introduction,
     });
 
     return challenge;

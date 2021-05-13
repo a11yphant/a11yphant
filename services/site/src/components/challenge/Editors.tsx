@@ -16,7 +16,7 @@ interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "on
 
 const Editors: React.FunctionComponent<CustomEditorProps> = ({ classes, editors, reset, ...props }) => {
   return (
-    <div className={`${classes} flex flex-row justify-between box-border pb-2`}>
+    <div className={`${classes} flex flex-row justify-between box-border pb-4`}>
       {editors.map((config) => (
         <WrappedEditor reset={reset} key={config.heading} config={config} {...props} />
       ))}

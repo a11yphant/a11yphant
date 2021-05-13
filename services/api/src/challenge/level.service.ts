@@ -22,6 +22,9 @@ export class LevelService {
       where: {
         challengeId,
       },
+      orderBy: {
+        order: "asc",
+      },
     });
     return levels.map((level) => LevelService.createModelFromDatabaseRecord(level));
   }
@@ -47,7 +50,7 @@ export class LevelService {
   }
 
   public static createModelFromDatabaseRecord(record: LevelRecord): Level {
-    const level = new Level({ id: record.id, tldr: record.tldr, instructions: record.instructions, order: record.order });
+    const level = new Level({ ...record });
 
     if (!record.html && !record.css && !record.js) {
       return level;
