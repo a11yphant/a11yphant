@@ -1,3 +1,5 @@
+import "module-alias/register";
+
 import { NestFactory } from "@nestjs/core";
 import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphql";
 import { writeFileSync } from "fs";

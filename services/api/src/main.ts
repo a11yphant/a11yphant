@@ -1,3 +1,5 @@
+import "module-alias/register";
+
 import { AwsTransportStrategy } from "@a11yphant/nestjs-aws-messaging";
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
