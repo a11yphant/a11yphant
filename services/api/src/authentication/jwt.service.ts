@@ -25,6 +25,10 @@ export class JwtService {
     });
   }
 
+  decodeToken<T extends Record<string, any>>(token: string): T {
+    return jwt.decode(token) as T;
+  }
+
   validateToken(token: string): Promise<boolean> {
     const secret = this.config.get<string>("api.key");
     return new Promise((resolve) => {

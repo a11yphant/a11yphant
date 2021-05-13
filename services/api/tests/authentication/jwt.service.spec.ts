@@ -22,7 +22,7 @@ describe("jwt service", () => {
     });
   });
 
-  describe("validate jwt", () => {
+  describe("validate token", () => {
     it("returns true for a valid jwt", async () => {
       const secret = "secret";
       const service = new JwtService(
@@ -40,6 +40,20 @@ describe("jwt service", () => {
 
       const token = jwt.sign({ payload: "something" }, "asdf");
       expect(await service.validateToken(token)).toBeFalsy();
+    });
+  });
+
+  describe("decode token", () => {
+    it("returns the token content", async () => {
+      const secret = "secret";
+      const service = new JwtService(
+        createMock<ConfigService>({ get: jest.fn().mockReturnValue(secret) }),
+      );
+
+      const payload = { payload: "something" };
+
+      const token = jwt.sign(payload, secret);
+      expect(await service.decodeToken(token)).toEqual(expect.objectContaining(payload));
     });
   });
 });
