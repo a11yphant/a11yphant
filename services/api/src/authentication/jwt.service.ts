@@ -24,4 +24,17 @@ export class JwtService {
       });
     });
   }
+
+  validateToken(token: string): Promise<boolean> {
+    const secret = this.config.get<string>("api.key");
+    return new Promise((resolve) => {
+      jwt.verify(token, secret, (error) => {
+        if (error) {
+          return resolve(false);
+        }
+
+        return resolve(true);
+      });
+    });
+  }
 }

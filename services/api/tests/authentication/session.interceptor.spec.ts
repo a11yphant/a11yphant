@@ -8,7 +8,7 @@ import { JwtService } from "@/authentication/jwt.service";
 import { SessionInterceptor } from "@/authentication/session.interceptor";
 
 describe("session interceptor", () => {
-  it("handles request", () => {
+  it("handles requests", () => {
     const executionContext = createMock<ExecutionContext>();
     const handle = jest.fn();
 
@@ -41,6 +41,7 @@ describe("session interceptor", () => {
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
+        validateToken: jest.fn().mockResolvedValue(false),
       }),
     );
 
@@ -83,6 +84,7 @@ describe("session interceptor", () => {
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken,
+        validateToken: jest.fn().mockResolvedValue(false),
       }),
     );
 
@@ -95,6 +97,88 @@ describe("session interceptor", () => {
         observable.subscribe({
           next() {
             expect(cookie).toHaveBeenCalledWith(expect.any(String), token, expect.anything());
+          },
+          complete() {
+            done();
+          },
+        }),
+      );
+  });
+
+  it("does not set a new cookie if a cookie already exists", (done) => {
+    const cookie = jest.fn();
+    const context: Context = {
+      req: createMock<Request>({
+        originalUrl: "/graphql",
+        cookies: { a11yphant_session: "cookie" as any },
+      }),
+      res: createMock<Response>({
+        cookie,
+      }),
+    };
+    const executionContext = createMock<ExecutionContext>({
+      getArgs: jest.fn().mockReturnValue([null, null, context]),
+    });
+
+    const handle = jest.fn(() => of("something"));
+
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>({
+        createSignedToken: jest.fn().mockResolvedValue("token"),
+        validateToken: jest.fn().mockResolvedValue(true),
+      }),
+    );
+
+    interceptor
+      .intercept(
+        executionContext,
+        createMock<CallHandler>({ handle }),
+      )
+      .then((observable) =>
+        observable.subscribe({
+          next() {
+            expect(cookie).not.toHaveBeenCalled();
+          },
+          complete() {
+            done();
+          },
+        }),
+      );
+  });
+
+  it("overwrites the session cookie if it is invalid", (done) => {
+    const cookie = jest.fn();
+    const context: Context = {
+      req: createMock<Request>({
+        originalUrl: "/graphql",
+        cookies: { a11yphant_session: "cookie" as any },
+      }),
+      res: createMock<Response>({
+        cookie,
+      }),
+    };
+    const executionContext = createMock<ExecutionContext>({
+      getArgs: jest.fn().mockReturnValue([null, null, context]),
+    });
+
+    const handle = jest.fn(() => of("something"));
+
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>({
+        createSignedToken: jest.fn().mockResolvedValue("token"),
+        validateToken: jest.fn().mockResolvedValue(false),
+      }),
+    );
+
+    interceptor
+      .intercept(
+        executionContext,
+        createMock<CallHandler>({ handle }),
+      )
+      .then((observable) =>
+        observable.subscribe({
+          next() {
+            expect(cookie).toHaveBeenCalled();
           },
           complete() {
             done();

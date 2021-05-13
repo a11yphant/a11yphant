@@ -17,6 +17,11 @@ export class SessionInterceptor implements NestInterceptor {
       return next.handle();
     }
 
+    const sessionCookie = req.cookies["a11yphant_session"];
+    if (await this.jwtService.validateToken(sessionCookie)) {
+      return next.handle();
+    }
+
     const token = await this.jwtService.createSignedToken({}, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
     return next.handle().pipe(
       tap(() => {
