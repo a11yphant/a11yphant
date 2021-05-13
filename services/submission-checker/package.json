@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@a11yphant/nestjs-aws-messaging": "file:../../packages/nestjs-aws-messaging",
-    "@axe-core/webdriverjs": "4.1.1",
+    "@axe-core/webdriverjs": "4.2.0",
     "@nestjs/common": "7.6.15",
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.15",
