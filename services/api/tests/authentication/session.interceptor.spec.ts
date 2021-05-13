@@ -9,6 +9,36 @@ import { JwtService } from "@/authentication/jwt.service";
 import { SessionInterceptor } from "@/authentication/session.interceptor";
 import { UserService } from "@/user/user.service";
 
+const doNothing = (): void => {
+  // do nothing
+};
+
+function runInterceptor(
+  interceptor: SessionInterceptor,
+  executionContext: ExecutionContext,
+  nextCallback: () => void,
+  completeCallback: () => void,
+  done: any,
+): void {
+  const handle = jest.fn(() => of("something"));
+  interceptor
+    .intercept(
+      executionContext,
+      createMock<CallHandler>({ handle }),
+    )
+    .then((observable) =>
+      observable.subscribe({
+        next() {
+          nextCallback();
+        },
+        complete() {
+          completeCallback();
+          done();
+        },
+      }),
+    );
+}
+
 describe("session interceptor", () => {
   it("handles requests", () => {
     const executionContext = createMock<ExecutionContext>();
@@ -44,8 +74,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
@@ -56,22 +84,15 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            expect(cookie).toHaveBeenCalledWith("a11yphant_session", expect.anything(), expect.anything());
-          },
-          complete() {
-            expect(cookie).toHaveBeenCalledTimes(1);
-            done();
-          },
-        }),
-      );
+    const nextCallback = (): void => {
+      expect(cookie).toHaveBeenCalledWith("a11yphant_session", expect.anything(), expect.anything());
+    };
+
+    const completeCallback = (): void => {
+      expect(cookie).toHaveBeenCalledTimes(1);
+    };
+
+    runInterceptor(interceptor, executionContext, nextCallback, completeCallback, done);
   });
 
   it("the session cookie contains a signed jwt", (done) => {
@@ -89,8 +110,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const token = "signed-token";
     const createSignedToken = jest.fn().mockResolvedValue(token);
     const interceptor = new SessionInterceptor(
@@ -103,21 +122,11 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            expect(cookie).toHaveBeenCalledWith(expect.any(String), token, expect.anything());
-          },
-          complete() {
-            done();
-          },
-        }),
-      );
+    const nextCallback = (): void => {
+      expect(cookie).toHaveBeenCalledWith(expect.any(String), token, expect.anything());
+    };
+
+    runInterceptor(interceptor, executionContext, nextCallback, doNothing, done);
   });
 
   it("does not set a new cookie if a cookie already exists", (done) => {
@@ -181,8 +190,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
@@ -193,21 +200,11 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            expect(cookie).toHaveBeenCalled();
-          },
-          complete() {
-            done();
-          },
-        }),
-      );
+    const nextCallback = (): void => {
+      expect(cookie).toHaveBeenCalled();
+    };
+
+    runInterceptor(interceptor, executionContext, nextCallback, doNothing, done);
   });
 
   it("adds the decoded session token to the context", (done) => {
@@ -225,8 +222,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
@@ -238,22 +233,11 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            // not needed here
-          },
-          complete() {
-            expect(context.sessionToken).toBeTruthy();
-            done();
-          },
-        }),
-      );
+    const completeCallback = (): void => {
+      expect(context.sessionToken).toBeTruthy();
+    };
+
+    runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);
   });
 
   it("adds the session token to the context when creating a new session", (done) => {
@@ -271,8 +255,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
@@ -283,22 +265,11 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            // not needed here
-          },
-          complete() {
-            expect(context.sessionToken).toBeTruthy();
-            done();
-          },
-        }),
-      );
+    const completeCallback = (): void => {
+      expect(context.sessionToken).toBeTruthy();
+    };
+
+    runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);
   });
 
   it("creates a new user for new sessions", (done) => {
@@ -316,8 +287,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
@@ -328,21 +297,10 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            // not needed here
-          },
-          complete() {
-            expect(context.sessionToken.userId).toBeTruthy();
-            done();
-          },
-        }),
-      );
+    const completeCallback = (): void => {
+      expect(context.sessionToken.userId).toBeTruthy();
+    };
+
+    runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);
   });
 });
