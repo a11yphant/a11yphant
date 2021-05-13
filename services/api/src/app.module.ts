@@ -26,6 +26,7 @@ import { UserModule } from "./user/user.module";
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>("gql.debug"),
+        tracing: configService.get<boolean>("gql.debug"),
         playground: configService.get<boolean>("gql.playground")
           ? {
               settings: {

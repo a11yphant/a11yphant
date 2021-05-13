@@ -4,13 +4,15 @@ import { Request } from "express";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
+import { UserService } from "@/user/user.service";
+
 import { Context } from "./context.interface";
 import { JwtService } from "./jwt.service";
 import { SessionToken } from "./session-token.interface";
 
 @Injectable()
 export class SessionInterceptor implements NestInterceptor {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService, private userService: UserService) {}
   async intercept(executionContext: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
     const context = GqlExecutionContext.create(executionContext).getContext<Context>();
 
@@ -24,8 +26,10 @@ export class SessionInterceptor implements NestInterceptor {
       return next.handle();
     }
 
+    const user = await this.userService.create();
+
     const sessionToken: SessionToken = {
-      userId: null,
+      userId: user.id,
     };
 
     context.sessionToken = sessionToken;

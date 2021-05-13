@@ -1,18 +1,25 @@
 import { createMock } from "@golevelup/ts-jest";
 import { CallHandler, ExecutionContext } from "@nestjs/common";
+import { UserFactory } from "@tests/factories/models/user.factory";
 import { Request, Response } from "express";
 import { of } from "rxjs";
 
 import { Context } from "@/authentication/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { SessionInterceptor } from "@/authentication/session.interceptor";
+import { UserService } from "@/user/user.service";
 
 describe("session interceptor", () => {
   it("handles requests", () => {
     const executionContext = createMock<ExecutionContext>();
     const handle = jest.fn();
 
-    const interceptor = new SessionInterceptor(createMock<JwtService>());
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>(),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
+      }),
+    );
 
     interceptor.intercept(
       executionContext,
@@ -43,6 +50,9 @@ describe("session interceptor", () => {
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
         validateToken: jest.fn().mockResolvedValue(false),
+      }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
     );
 
@@ -88,6 +98,9 @@ describe("session interceptor", () => {
         createSignedToken,
         validateToken: jest.fn().mockResolvedValue(false),
       }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
+      }),
     );
 
     interceptor
@@ -129,6 +142,9 @@ describe("session interceptor", () => {
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
         validateToken: jest.fn().mockResolvedValue(true),
+      }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
     );
 
@@ -172,6 +188,9 @@ describe("session interceptor", () => {
         createSignedToken: jest.fn().mockResolvedValue("token"),
         validateToken: jest.fn().mockResolvedValue(false),
       }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
+      }),
     );
 
     interceptor
@@ -213,6 +232,9 @@ describe("session interceptor", () => {
         createSignedToken: jest.fn().mockResolvedValue("token"),
         validateToken: jest.fn().mockResolvedValue(true),
         decodeToken: jest.fn().mockReturnValue({ payload: "something" }),
+      }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
     );
 
@@ -256,6 +278,9 @@ describe("session interceptor", () => {
         createSignedToken: jest.fn().mockResolvedValue("token"),
         validateToken: jest.fn().mockResolvedValue(false),
       }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
+      }),
     );
 
     interceptor
@@ -270,6 +295,51 @@ describe("session interceptor", () => {
           },
           complete() {
             expect(context.sessionToken).toBeTruthy();
+            done();
+          },
+        }),
+      );
+  });
+
+  it("creates a new user for new sessions", (done) => {
+    const cookie = jest.fn();
+    const context: Context = {
+      req: createMock<Request>({
+        originalUrl: "/graphql",
+      }),
+      res: createMock<Response>({
+        cookie,
+      }),
+      sessionToken: null,
+    };
+    const executionContext = createMock<ExecutionContext>({
+      getArgs: jest.fn().mockReturnValue([null, null, context]),
+    });
+
+    const handle = jest.fn(() => of("something"));
+
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>({
+        createSignedToken: jest.fn().mockResolvedValue("token"),
+        validateToken: jest.fn().mockResolvedValue(false),
+      }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
+      }),
+    );
+
+    interceptor
+      .intercept(
+        executionContext,
+        createMock<CallHandler>({ handle }),
+      )
+      .then((observable) =>
+        observable.subscribe({
+          next() {
+            // not needed here
+          },
+          complete() {
+            expect(context.sessionToken.userId).toBeTruthy();
             done();
           },
         }),
