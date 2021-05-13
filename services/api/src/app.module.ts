@@ -15,6 +15,7 @@ import { HelloWorldModule } from "./hello-world/hello-world.module";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SubmissionModule } from "./submission/submission.module";
+import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { SubmissionModule } from "./submission/submission.module";
     ChallengeModule,
     SubmissionModule,
     ImporterModule,
+    UserModule,
   ],
 })
 export class AppModule {}
