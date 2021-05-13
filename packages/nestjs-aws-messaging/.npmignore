@@ -1,0 +1,5 @@
+node_modules/
+tests/
+lib/
+package-lock.json
+tsconfig*
