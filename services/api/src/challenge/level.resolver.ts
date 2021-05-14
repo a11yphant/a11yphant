@@ -1,23 +1,16 @@
 import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
-import { HintService } from "./hint.service";
 import { LevelService } from "./level.service";
-import { Hint } from "./models/hint.model";
 import { Level } from "./models/level.model";
 import { Requirement } from "./models/requirement.model";
-import { Resource } from "./models/resource.model";
+import { Task } from "./models/task.model";
 import { RequirementService } from "./requirement.service";
-import { ResourceService } from "./resource.service";
+import { TaskService } from "./task.service";
 
 @Resolver(() => Level)
 export class LevelResolver {
-  constructor(
-    private levelService: LevelService,
-    private requirementService: RequirementService,
-    private hintService: HintService,
-    private resourceService: ResourceService,
-  ) {}
+  constructor(private levelService: LevelService, private requirementService: RequirementService, private taskService: TaskService) {}
 
   @Query(() => Level, { nullable: true })
   async levelByChallengeSlug(@Args() { challengeSlug, nth }: LevelByChallengeSlugAndIndexArgs): Promise<Level> {
@@ -30,12 +23,7 @@ export class LevelResolver {
   }
 
   @ResolveField()
-  async hints(@Parent() level: Level): Promise<Hint[]> {
-    return this.hintService.findForLevel(level.id);
-  }
-
-  @ResolveField()
-  async resources(@Parent() level: Level): Promise<Resource[]> {
-    return this.resourceService.findForLevel(level.id);
+  async tasks(@Parent() level: Level): Promise<Task[]> {
+    return this.taskService.findForLevel(level.id);
   }
 }

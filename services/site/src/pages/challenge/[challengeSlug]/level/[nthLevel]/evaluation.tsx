@@ -13,6 +13,7 @@ import {
 import { initializeApollo } from "app/lib/apolloClient";
 import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -59,10 +60,12 @@ const Evaluation: React.FunctionComponent = () => {
   }, [failedChecks, totalChecks]);
 
   // // level is completed when all checks passed
-  // let levelCompleted = false;
-  // if (failedChecks && failedChecks == 0) {
-  //   levelCompleted = true;
-  // }
+  let failedLevel = true;
+  if (Number.isInteger(failedChecks) && failedChecks === 0) {
+    failedLevel = false;
+  }
+
+  const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
   // render requirements
   const getRequirements = React.useMemo(
@@ -82,32 +85,56 @@ const Evaluation: React.FunctionComponent = () => {
   );
 
   return (
-    <main className="flex flex-col justify-between h-18/20 box-border p-8 bg-primary m-4 rounded-lg">
-      <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
-      {!status || status === ResultStatus.Pending ? (
-        <LoadingScreen />
-      ) : (
-        <>
-          <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">{getRequirements}</div>
-          <div className="absolute bottom-8 right-8">
-            <Button
-              onClick={() => {
-                const nextLevel = parseInt(nthLevel as string) + 1;
-                if (nextLevel <= challenge.levels.length) {
-                  router.push(`/challenge/${challengeSlug}/level/0${parseInt(nthLevel as string) + 1}`);
-                } else {
-                  router.push("/");
-                }
-              }}
-              className="bg-white text-primary px-10"
-            >
-              {/*{levelCompleted ? "Next Level" : "Retry"}*/}
-              {parseInt(nthLevel as string) + 1 <= challenge.levels.length ? "Next Level" : "To Homescreen"}
-            </Button>
-          </div>
-        </>
-      )}
-    </main>
+    <>
+      <Head>
+        <title>
+          Evaluation - {challenge.name} - Level {nthLevel}
+        </title>
+      </Head>
+      <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
+        <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
+        {!status || status === ResultStatus.Pending ? (
+          <LoadingScreen />
+        ) : (
+          <>
+            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
+              {getRequirements}
+            </div>
+            <div className="absolute bottom-8 right-8">
+              {failedLevel ? (
+                <Button
+                  onClick={() => {
+                    router.back();
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  Retry
+                </Button>
+              ) : isLastLevel ? (
+                <Button
+                  onClick={() => {
+                    router.push("/");
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  To Homescreen
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    const nextLevel = parseInt(nthLevel as string) + 1;
+                    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
+                  }}
+                  className="bg-white text-primary px-10"
+                >
+                  Next Level
+                </Button>
+              )}
+            </div>
+          </>
+        )}
+      </main>
+    </>
   );
 };
 

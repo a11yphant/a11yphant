@@ -7,7 +7,7 @@
     entrypoint: [""]
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - ln -s ./../../.npmrc $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
   cache:
     key: ${CI_COMMIT_REF_SLUG}-cent-os
     paths:

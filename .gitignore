@@ -9,8 +9,6 @@ terraform.tfstate*
 junit.xml
 cobertura-coverage.xml
 challenges.zip
-.npmrc
-!/.npmrc
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,linux,windows,visualstudiocode,phpstorm+all,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,windows,visualstudiocode,phpstorm+all,node

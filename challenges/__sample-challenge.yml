@@ -1,0 +1,37 @@
+challenge:
+  id: xxuuid
+  name: xxname
+  slug: xxslug
+  difficulty: easy
+  order: 1
+  introduction: >
+    xxintro
+  levels:
+    - id: xxuuid
+      order: 1
+      requirements:
+        - key: xxrulekey
+          title:
+          description:
+          order: 1
+          options:
+            selector: htmltag
+      instructions: |-
+        xxinstructions
+      tasks:
+        - id: xxuuid
+          text: xxtext
+          hints:
+            - id: xxuuid
+              text: xxcontent
+      code:
+        html: |-
+          xxhtmlcode
+        css: |-
+          xxcsscode
+        js: |-
+          xxjscode
+      has_editor:
+        html: true
+        css: false
+        js: false

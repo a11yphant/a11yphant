@@ -1,5 +1,4 @@
 import Card from "app/components/homepage/Card";
-import { DifficultyLevel } from "app/components/homepage/Card";
 import { ChallengeOverviewFragment } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";
@@ -13,26 +12,6 @@ interface ChallengeListProps {
 }
 
 const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, completedLevel, openLevel, challenges }) => {
-  // render challenges
-  const getChallenges = React.useMemo(
-    () =>
-      challenges.map((challenge, idx) => {
-        // TODO: load difficulty from API
-        return (
-          <Card
-            key={challenge.id}
-            className="mr-24"
-            challengeSlug={challenge.slug}
-            heading={challenge.name}
-            levels={challenge.levels.length}
-            difficulty={DifficultyLevel.easy}
-            challengeNumber={challenges.length}
-          />
-        );
-      }),
-    [challenges],
-  );
-
   return (
     <div className={clsx("flex flex-col items-start mt-2 mb-6", className)}>
       <div className="flex flex-row items-center mx-4 mb-6">
@@ -45,7 +24,19 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
         </p>
         <p className="sr-only">{`${completedLevel} of ${openLevel} challenges completed`}</p>
       </div>
-      <ul className="flex">{getChallenges}</ul>
+      <ul className="flex">
+        {challenges.map((challenge) => (
+          <Card
+            key={challenge.id}
+            className="mr-24"
+            challengeSlug={challenge.slug}
+            heading={challenge.name}
+            levels={challenge.levels.length}
+            difficulty={challenge.difficulty}
+            challengeNumber={challenges.length}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

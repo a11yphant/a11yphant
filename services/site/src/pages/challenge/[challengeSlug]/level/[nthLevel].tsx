@@ -3,15 +3,20 @@ import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import {
+  ChallengeBySlugDocument,
+  ChallengeBySlugQuery,
+  ChallengeBySlugQueryVariables,
   Code,
   LevelByChallengeSlugDocument,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
+  useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apolloClient";
 import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -25,6 +30,11 @@ const Level: React.FunctionComponent = () => {
     loading,
     data: { level },
   } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
+
+  const {
+    loading: loadingChallenge,
+    data: { challenge },
+  } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
   const [submitLevelMutation] = useSubmitMutation();
 
@@ -71,54 +81,53 @@ const Level: React.FunctionComponent = () => {
     router.push(`${router.asPath}/evaluation`);
   };
 
-  if (loading) {
+  if (loading || loadingChallenge) {
     return <div>Loading ...</div>;
   }
 
   return (
-    <main className="flex justify-between h-19/20 box-border p-4">
-      <Sidebar
-        classes="h-full"
-        instructions={{
-          instructions: level.instructions,
-          tldr: level.tldr,
-          requirements: level.requirements,
-        }}
-        hints={level.hints}
-        resources={level.resources}
-      />
-      <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
-        <Editors
-          reset={resetToInitialCode}
-          classes="w-full h-3/5"
-          editors={[
-            { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
-            { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
-            // {
-            //   languageLabel: "JavaScript",
-            //   language: EditorLanguage.javascript,
-            //   code: currJavascriptCode,
-            //   updateCode: setCurrJavascriptCode,
-            //   heading: "index.js",
-            // },
-          ]}
-          theme="light"
-          options={{
-            fontSize: 12,
-            wordWrap: "on",
-            minimap: {
-              enabled: false,
-            },
-          }}
-        />
-        <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
-        <div className="absolute right-0 bottom-0 pt-4 pl-4 pr-2 pb-2 bg-white border-primary border-t-2 border-l-2 rounded-tl-lg">
-          <Button full onClick={submitLevel} className="px-10 tracking-wider">
-            Submit
-          </Button>
+    <>
+      <Head>
+        <title>
+          {challenge.name} - Level {nthLevel}
+        </title>
+      </Head>
+      <main className="flex justify-between h-main box-border p-4">
+        <Sidebar classes="h-full" challengeName={challenge.name} level={level} />
+        <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
+          <Editors
+            reset={resetToInitialCode}
+            classes="w-full h-3/5"
+            editors={[
+              { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
+              { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
+              // {
+              //   languageLabel: "JavaScript",
+              //   language: EditorLanguage.javascript,
+              //   code: currJavascriptCode,
+              //   updateCode: setCurrJavascriptCode,
+              //   heading: "index.js",
+              // },
+            ]}
+            theme="light"
+            options={{
+              lineHeight: 24,
+              fontSize: 12,
+              wordWrap: "on",
+              minimap: {
+                enabled: false,
+              },
+            }}
+          />
+          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
+          <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
+            <Button full onClick={submitLevel} className="px-10">
+              Submit
+            </Button>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 
@@ -134,6 +143,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     variables: {
       challengeSlug: challengeSlug as string,
       nth: Number(nthLevel),
+    },
+  });
+
+  await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+    query: ChallengeBySlugDocument,
+    variables: {
+      slug: challengeSlug as string,
     },
   });
 

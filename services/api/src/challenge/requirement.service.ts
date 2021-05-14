@@ -11,6 +11,9 @@ export class RequirementService {
   async findForLevel(levelId: string): Promise<Requirement[]> {
     const requirements = await this.prisma.requirement.findMany({
       where: { levelId },
+      orderBy: {
+        order: "asc",
+      },
     });
 
     return requirements.map((requirement) => RequirementService.createModelFromDatabaseRecord(requirement));
