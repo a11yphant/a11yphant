@@ -20,7 +20,7 @@ resource "heroku_app" "api" {
     NO_COLOR                         = 1
     AWS_ACCESS_KEY_ID                = aws_iam_access_key.api_user_access_key.id
     AWS_SECRET_ACCESS_KEY            = aws_iam_access_key.api_user_access_key.secret
-    API_KEY                          = random_password.api_secret_key
+    API_KEY                          = random_password.api_secret_key.result
     API_GRAPHQL_DEBUG                = 1
     API_GRAPHQL_PLAYGROUND           = 1
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
@@ -61,7 +61,6 @@ resource "docker_image" "gitlab_ci_api_app_image" {
   name          = local.gitlab_ci_app_image
   pull_triggers = [data.docker_registry_image.gitlab_ci_api_app_image.sha256_digest]
 }
-
 resource "null_resource" "tag_api_app_image_for_heroku" {
   provisioner "local-exec" {
     command = "docker image tag ${local.gitlab_ci_app_image} ${local.heroku_app_image}"
