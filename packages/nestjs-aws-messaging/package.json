@@ -1,9 +1,8 @@
 {
   "name": "@a11yphant/nestjs-aws-messaging",
-  "version": "0.0.1",
+  "version": "0.1.0-prerelease-2",
   "description": "",
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
-  "private": true,
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "scripts": {
