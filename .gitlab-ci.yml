@@ -18,13 +18,10 @@ variables:
 
 default:
   before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - npm ci --ignore-scripts --cache .npm-alpine
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
 stages:
-  - build-packages
   - generate
   - analyze
   - test
@@ -58,35 +55,19 @@ test:nestjs-aws-messaging:
     - develop
     - merge_request
 
-build:nestjs-aws-messaging:
+publish:nestjs-aws-messaging:
   tags:
     - docker
-  stage: build-packages
-  image: docker:20
+  stage: deploy
+  image: node:14-alpine
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
-    IMAGE_NAME: a11yphant/a11yphant/nestjs-aws-messaging
-    IMAGE: $CI_REGISTRY/$IMAGE_NAME:$CI_COMMIT_REF_SLUG
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $IMAGE || (docker pull $CI_REGISTRY/$IMAGE_NAME && docker tag $CI_REGISTRY/$IMAGE_NAME $IMAGE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE --cache-from $IMAGE --secret id=npmrc,src=.npmrc
-    - docker push $IMAGE
-    # extract artifacts for compatibility with the existing pipeline
-    - CONTAINER_ID=$(docker create $IMAGE "")
-    - docker cp $CONTAINER_ID:dist - > $PROJECT_PATH/dist.tar
+    - npm run build --prefix $PROJECT_PATH
     - cd $PROJECT_PATH
-    - tar -xvf dist.tar
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - $PROJECT_PATH/dist
+    - npm publish
   only:
-    - develop
-    - master
-    - merge_request
+    - /^nestjs-aws-messaging-v.*$/
 
 #-----------------------------------
 # content yml Linting
@@ -148,26 +129,12 @@ lint:submission-checker:
     - .run_on_submission-checker_change
   variables:
     PROJECT_PATH: services/submission-checker
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
 
 test:submission-checker:
   extends:
     - .test
   variables:
     PROJECT_PATH: services/submission-checker
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -207,13 +174,6 @@ generate-graphql-schema:api:
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   script: npm run generate-schema --prefix $PROJECT_PATH
   artifacts:
     paths:
@@ -228,21 +188,12 @@ lint:api:
   extends:
     - .lint
     - .run_on_api_change
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   variables:
     PROJECT_PATH: services/api
 
 test:api:
   extends:
     - .test
-  needs:
-    - build:nestjs-aws-messaging
   services:
     - postgres
   variables:
@@ -251,13 +202,6 @@ test:api:
     POSTGRES_PASSWORD: secret
     DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
     PROJECT_PATH: services/api
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> packages/nestjs-aws-messaging/.npmrc
-    - npm ci --ignore-scripts --cache .npm-alpine
-    - npm ci --prefix packages/nestjs-aws-messaging --cache .npm-alpine --prefer-offline
-    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
