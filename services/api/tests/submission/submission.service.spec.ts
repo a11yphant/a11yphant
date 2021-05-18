@@ -1,12 +1,13 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
+import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
+import { LevelFactory } from "@tests/factories/database/level.factory";
+import { UserFactory } from "@tests/factories/models/user.factory";
+import { useDatabase } from "@tests/helpers";
 
-import { PrismaService } from "../../src/prisma/prisma.service";
-import { SubmissionService } from "../../src/submission/submission.service";
-import { ChallengeFactory } from "../factories/database/challenge.factory";
-import { LevelFactory } from "../factories/database/level.factory";
-import { useDatabase } from "../helpers";
+import { PrismaService } from "@/prisma/prisma.service";
+import { SubmissionService } from "@/submission/submission.service";
 
 describe("submission service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -20,6 +21,10 @@ describe("submission service", () => {
       createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
     );
 
+    const { id: userId } = await prisma.user.create({
+      data: UserFactory.build(),
+    });
+
     const { id: challengeId } = await prisma.challenge.create({
       data: ChallengeFactory.build(),
     });
@@ -30,6 +35,7 @@ describe("submission service", () => {
 
     const createdSubmission = await service.save({
       levelId,
+      userId,
       html,
       css: null,
       js: null,
@@ -82,22 +88,28 @@ describe("submission service", () => {
     expect(submission.html).toBe(html);
   });
 
-  it("throws error if no level is found for id", () => {
+  it("throws error if no level is found for id", async () => {
     const prisma = getPrismaService();
     const service = new SubmissionService(
       prisma,
       createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
     );
 
+    const { id: userId } = await prisma.user.create({
+      data: UserFactory.build(),
+    });
+
     expect(async () =>
       service.save({
         levelId: "badId",
+        userId,
       }),
     ).rejects.toBeTruthy();
   });
 
   it("emits a submission.created event when a new submission is created", async () => {
     const emit = jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) }));
+
     const submission = {
       id: "uuid",
       html: "html",
@@ -112,7 +124,7 @@ describe("submission service", () => {
       createMock<ClientProxy>({ emit }),
     );
 
-    await service.save({ levelId: "uuid", html: "html", css: "css", js: "js" });
+    await service.save({ levelId: "uuid", html: "html", css: "css", js: "js", userId: "uuid" });
 
     expect(emit).toHaveBeenCalledWith(
       "submission.created",

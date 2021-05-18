@@ -1,10 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
+import { LevelFactory } from "@tests/factories/models/level.factory";
 
-import { LevelService } from "../../src/challenge/level.service";
-import { Submission } from "../../src/submission/models/submission.model";
-import { SubmissionResolver } from "../../src/submission/submission.resolver";
-import { SubmissionService } from "../../src/submission/submission.service";
-import { LevelFactory } from "../factories/models/level.factory";
+import { LevelService } from "@/challenge/level.service";
+import { Submission } from "@/submission/models/submission.model";
+import { SubmissionResolver } from "@/submission/submission.resolver";
+import { SubmissionService } from "@/submission/submission.service";
 
 describe("submission resolver", () => {
   it("can submit a challenge", async () => {
@@ -20,7 +20,7 @@ describe("submission resolver", () => {
       createMock<LevelService>(),
     );
 
-    const submission = await resolver.submit({ levelId: "hallo luca" });
+    const submission = await resolver.submit({ levelId: "hallo luca" }, { userId: "uuid" });
 
     expect(submission).toBeTruthy();
   });
