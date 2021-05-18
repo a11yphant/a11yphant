@@ -18,9 +18,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "peerDependencies": {
-    "@nestjs/common": "7.6.15",
-    "@nestjs/core": "7.6.15",
-    "@nestjs/microservices": "7.6.15",
+    "@nestjs/common": "7.6.17",
+    "@nestjs/core": "7.6.17",
+    "@nestjs/microservices": "7.6.17",
     "aws-sdk": "2.908.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7"
@@ -28,10 +28,10 @@
   "devDependencies": {
     "@a11yphant/eslint-config": "0.1.1",
     "@golevelup/ts-jest": "0.3.1",
-    "@nestjs/common": "7.6.15",
-    "@nestjs/core": "7.6.15",
-    "@nestjs/microservices": "7.6.15",
-    "@nestjs/testing": "7.6.15",
+    "@nestjs/common": "7.6.17",
+    "@nestjs/core": "7.6.17",
+    "@nestjs/microservices": "7.6.17",
+    "@nestjs/testing": "7.6.17",
     "@types/aws-lambda": "8.10.76",
     "@types/jest": "26.0.23",
     "@types/node": "14.14.45",
