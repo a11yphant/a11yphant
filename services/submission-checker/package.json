@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@a11yphant/nestjs-aws-messaging": "0.1.0-prerelease-2",
+    "@a11yphant/nestjs-aws-messaging": "0.1.1",
     "@axe-core/webdriverjs": "4.2.0",
     "@nestjs/common": "7.6.15",
     "@nestjs/config": "0.6.3",
