@@ -6,6 +6,7 @@ import { Context } from "@/authentication/context.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
 import { SessionToken as SessionTokenInterface } from "@/authentication/session-token.interface";
 
+// source: https://github.com/nestjs/nest/issues/1020
 function getParamDecoratorFactory(decorator: Function): any {
   class Test {
     public test(@decorator() value): any {
