@@ -3,7 +3,6 @@
     - docker
   stage: deploy
   needs:
-    - build:nestjs-aws-messaging
     - build:api
     - build:site
     - production-dependencies:site
