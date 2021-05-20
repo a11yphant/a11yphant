@@ -110,7 +110,7 @@ module "publish_submission_checker_image_to_aws_ecr" {
 }
 
 data "aws_ecr_image" "submission_checker_image" {
-  repository_name = local.ecr_submission_checker_image
+  repository_name = aws_ecr_repository.repository_submission_checker.id
   image_tag       = "latest"
 
   depends_on = [
