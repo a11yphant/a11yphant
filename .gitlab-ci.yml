@@ -17,7 +17,6 @@ variables:
   DOCKER_CLI_EXPERIMENTAL: enabled
 
 default:
-  needs: []
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
@@ -43,12 +42,14 @@ lint:nestjs-aws-messaging:
   extends:
     - .lint
     - .run_on_nestjs_aws_messaging_change
+  needs: []
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
 
 test:nestjs-aws-messaging:
   extends:
     - .test
+  needs: []
   variables:
     PROJECT_PATH: packages/nestjs-aws-messaging
   only:
@@ -81,6 +82,7 @@ lint:content:
     - docker
   stage: analyze
   image: node:14-alpine
+  needs: []
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     - npm ci --ignore-scripts --cache .npm-alpine
@@ -95,6 +97,7 @@ lint:eslint-config:
   extends:
     - .lint
     - .run_on_eslint_config_change
+  needs: []
   variables:
     PROJECT_PATH: packages/eslint-config
 
@@ -128,12 +131,14 @@ lint:submission-checker:
   extends:
     - .lint
     - .run_on_submission-checker_change
+  needs: []
   variables:
     PROJECT_PATH: services/submission-checker
 
 test:submission-checker:
   extends:
     - .test
+  needs: []
   variables:
     PROJECT_PATH: services/submission-checker
   only:
@@ -146,6 +151,7 @@ build:submission-checker:
     - docker
   stage: build
   image: docker:20
+  needs: []
   variables:
     PROJECT_PATH: services/submission-checker
     IMAGE_NAME_APP: a11yphant/a11yphant/submission-checker
@@ -172,6 +178,7 @@ generate-graphql-schema:api:
   tags:
     - docker
   stage: generate
+  needs: []
   image: node:14-alpine
   variables:
     PROJECT_PATH: services/api
@@ -189,6 +196,7 @@ lint:api:
   extends:
     - .lint
     - .run_on_api_change
+  needs: []
   variables:
     PROJECT_PATH: services/api
 
@@ -197,6 +205,7 @@ test:api:
     - .test
   services:
     - postgres
+  needs: []
   variables:
     POSTGRES_DB: a11yphant
     POSTGRES_USER: a11yphant
@@ -213,6 +222,7 @@ build:api:
     - docker
   stage: build
   image: docker:20
+  needs: []
   variables:
     PROJECT_PATH: services/api
     IMAGE_NAME_APP: a11yphant/a11yphant/api
@@ -298,9 +308,9 @@ terraform:check-format:
   tags:
     - docker
   stage: analyze
+  needs: []
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {}
-  dependencies: []
   before_script:
     - "" # do nothing
   script:
@@ -312,7 +322,9 @@ terraform:cloud:validate:
   tags:
     - docker
   stage: analyze
+  needs: []
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {}
   before_script:
     - terraform -chdir=terraform/cloud init
   script:
@@ -324,7 +336,9 @@ terraform:local:validate:
   tags:
     - docker
   stage: analyze
+  needs: []
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  cache: {}
   before_script:
     - terraform -chdir=terraform/local init
   script:
@@ -383,6 +397,7 @@ stop-environment:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     USE_CUSTOM_DOMAIN: 0
+  needs: []
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
   before_script:
