@@ -291,6 +291,7 @@ build:site:
 production-dependencies:site:
   extends:
     - .production-dependencies
+  needs: []
   variables:
     PROJECT_PATH: services/site
   only:
