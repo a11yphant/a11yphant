@@ -17,6 +17,7 @@ variables:
   DOCKER_CLI_EXPERIMENTAL: enabled
 
 default:
+  needs: []
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
     - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
