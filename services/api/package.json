@@ -44,7 +44,7 @@
     "commander": "7.2.0",
     "graphql": "15.5.0",
     "js-yaml": "4.1.0",
-    "nestjs-console": "4.0.0",
+    "nestjs-console": "5.0.1",
     "prisma": "2.23.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
