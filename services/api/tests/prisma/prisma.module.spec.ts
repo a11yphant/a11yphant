@@ -22,11 +22,11 @@ describe("prisma module", () => {
 
   it("provides the database url with forRootAsync", async () => {
     const module = await PrismaModule.forRootAsync({
-      imports: [("module" as unknown) as DynamicModule],
+      imports: ["module" as unknown as DynamicModule],
       useFactory: (value) => ({ databaseUrl: value }),
       inject: ["service"],
     });
-    const url = (module.providers?.find((provider: any) => provider.provide === PRISMA_MODULE_CONFIG) as unknown) as any;
+    const url = module.providers?.find((provider: any) => provider.provide === PRISMA_MODULE_CONFIG) as unknown as any;
 
     expect(module.imports).toContain("module");
     expect(url).toBeTruthy();

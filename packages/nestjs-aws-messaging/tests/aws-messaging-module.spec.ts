@@ -29,11 +29,11 @@ describe("AWS Messaging Module", () => {
 
   it("provides the injected values with forRootAsync", async () => {
     const module = await AwsMessagingModule.forRootAsync({
-      imports: [("module" as unknown) as DynamicModule],
+      imports: ["module" as unknown as DynamicModule],
       useFactory: (region: string, arn: string) => ({ region, topics: { test: arn } }),
       inject: ["eu-central-1", "some:arn"],
     });
-    const moduleConfig = (module.providers?.find((provider: any) => provider.provide === AWS_MESSAGING_MODULE_CONFIG) as unknown) as any;
+    const moduleConfig = module.providers?.find((provider: any) => provider.provide === AWS_MESSAGING_MODULE_CONFIG) as unknown as any;
 
     expect(module.imports).toContain("module");
     expect(moduleConfig).toBeTruthy();

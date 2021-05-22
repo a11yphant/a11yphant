@@ -116,3 +116,9 @@ model CheckResult {
 
   @@map(name: "check_results")
 }
+
+model User {
+  id String @id @default(uuid())
+
+  @@map("users")
+}
