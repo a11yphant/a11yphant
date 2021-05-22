@@ -92,6 +92,8 @@ model Submission {
   level   Level   @relation(fields: [levelId], references: [id])
   levelId String
   result  Result?
+  user    User?   @relation(fields: [userId], references: [id])
+  userId  String?
 
   @@map(name: "submissions")
 }
@@ -118,7 +120,8 @@ model CheckResult {
 }
 
 model User {
-  id String @id @default(uuid())
+  id          String       @id @default(uuid())
+  submissions Submission[]
 
   @@map("users")
 }

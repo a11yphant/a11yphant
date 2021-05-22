@@ -4,10 +4,11 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Submission as SubmissionRecord } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
-import { PrismaService } from "../prisma/prisma.service";
+import { PrismaService } from "@/prisma/prisma.service";
+
 import { ResultStatus } from "./models/result-status.enum";
 import { Submission } from "./models/submission.model";
-import { SubmissionInput } from "./submission.input";
+import { SubmissionCreateData } from "./submission-create-data.interface";
 
 @Injectable()
 export class SubmissionService {
@@ -21,7 +22,7 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async save(input: SubmissionInput): Promise<Submission> {
+  public async save(input: SubmissionCreateData): Promise<Submission> {
     const submission = await this.prisma.submission.create({
       data: {
         id: uuidv4(),
