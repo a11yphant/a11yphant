@@ -40,37 +40,32 @@ function runInterceptor(
 }
 
 describe("session interceptor", () => {
-  it("handles requests", () => {
+  it("handles normal requests", (done) => {
+    expect.assertions(1);
     const executionContext = createMock<ExecutionContext>();
-    const handle = jest.fn();
 
-    const interceptor = new SessionInterceptor(
-      createMock<JwtService>(),
-      createMock<UserService>({
-        create: jest.fn().mockResolvedValue(UserFactory.build()),
-      }),
-    );
+    const interceptor = new SessionInterceptor(createMock<JwtService>(), createMock<UserService>());
 
-    interceptor.intercept(
-      executionContext,
-      createMock<CallHandler>({ handle }),
-    );
+    const completeCallback = (): void => {
+      // check if this callback has been executed
+      expect(true).toBeTruthy();
+    };
 
-    expect(handle).toHaveBeenCalledTimes(1);
+    runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);
   });
 
   it("adds a session cookie to graphql requests", (done) => {
+    expect.assertions(2);
     const cookie = jest.fn();
     const context: Context = {
-      req: createMock<Request>({
-        originalUrl: "/graphql",
-      }),
+      req: createMock<Request>(),
       res: createMock<Response>({
         cookie,
       }),
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -96,17 +91,17 @@ describe("session interceptor", () => {
   });
 
   it("the session cookie contains a signed jwt", (done) => {
+    expect.assertions(1);
     const cookie = jest.fn();
     const context: Context = {
-      req: createMock<Request>({
-        originalUrl: "/graphql",
-      }),
+      req: createMock<Request>(),
       res: createMock<Response>({
         cookie,
       }),
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -130,10 +125,10 @@ describe("session interceptor", () => {
   });
 
   it("does not set a new cookie if a cookie already exists", (done) => {
+    expect.assertions(1);
     const cookie = jest.fn();
     const context: Context = {
       req: createMock<Request>({
-        originalUrl: "/graphql",
         cookies: { a11yphant_session: "cookie" as any },
       }),
       res: createMock<Response>({
@@ -142,6 +137,7 @@ describe("session interceptor", () => {
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -175,10 +171,10 @@ describe("session interceptor", () => {
   });
 
   it("overwrites the session cookie if it is invalid", (done) => {
+    expect.assertions(1);
     const cookie = jest.fn();
     const context: Context = {
       req: createMock<Request>({
-        originalUrl: "/graphql",
         cookies: { a11yphant_session: "cookie" as any },
       }),
       res: createMock<Response>({
@@ -187,6 +183,7 @@ describe("session interceptor", () => {
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -208,17 +205,17 @@ describe("session interceptor", () => {
   });
 
   it("adds the decoded session token to the context", (done) => {
+    expect.assertions(1);
     const cookie = jest.fn();
     const context: Context = {
-      req: createMock<Request>({
-        originalUrl: "/graphql",
-      }),
+      req: createMock<Request>(),
       res: createMock<Response>({
         cookie,
       }),
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -241,17 +238,17 @@ describe("session interceptor", () => {
   });
 
   it("adds the session token to the context when creating a new session", (done) => {
+    expect.assertions(1);
     const cookie = jest.fn();
     const context: Context = {
-      req: createMock<Request>({
-        originalUrl: "/graphql",
-      }),
+      req: createMock<Request>(),
       res: createMock<Response>({
         cookie,
       }),
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -273,17 +270,17 @@ describe("session interceptor", () => {
   });
 
   it("creates a new user for new sessions", (done) => {
+    expect.assertions(1);
     const cookie = jest.fn();
     const context: Context = {
-      req: createMock<Request>({
-        originalUrl: "/graphql",
-      }),
+      req: createMock<Request>(),
       res: createMock<Response>({
         cookie,
       }),
       sessionToken: null,
     };
     const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
@@ -298,7 +295,7 @@ describe("session interceptor", () => {
     );
 
     const completeCallback = (): void => {
-      expect(context.sessionToken.userId).toBeTruthy();
+      expect(context.sessionToken?.userId).toBeTruthy();
     };
 
     runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);

@@ -1,6 +1,5 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
-import { GqlExecutionContext } from "@nestjs/graphql";
-import { Request } from "express";
+import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
@@ -14,11 +13,11 @@ import { SessionToken } from "./session-token.interface";
 export class SessionInterceptor implements NestInterceptor {
   constructor(private jwtService: JwtService, private userService: UserService) {}
   async intercept(executionContext: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
-    const context = GqlExecutionContext.create(executionContext).getContext<Context>();
-
-    if (!this.isGraphqlRequest(context.req)) {
+    if (executionContext.getType<GqlContextType>() !== "graphql") {
       return next.handle();
     }
+
+    const context = GqlExecutionContext.create(executionContext).getContext<Context>();
 
     const sessionCookie = context.req.cookies["a11yphant_session"];
     if (await this.jwtService.validateToken(sessionCookie)) {
@@ -39,9 +38,5 @@ export class SessionInterceptor implements NestInterceptor {
         context.res.cookie("a11yphant_session", token, { sameSite: true, secure: true, httpOnly: true });
       }),
     );
-  }
-
-  private isGraphqlRequest(req: Request): boolean {
-    return req && req.originalUrl.startsWith("/graphql");
   }
 }
