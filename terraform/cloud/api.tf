@@ -53,78 +53,23 @@ resource "heroku_formation" "api" {
   ]
 }
 
-data "docker_registry_image" "gitlab_ci_api_app_image" {
-  name = local.gitlab_ci_app_image
-}
-
-resource "docker_image" "gitlab_ci_api_app_image" {
-  name          = local.gitlab_ci_app_image
-  pull_triggers = [data.docker_registry_image.gitlab_ci_api_app_image.sha256_digest]
-}
-resource "null_resource" "tag_api_app_image_for_heroku" {
-  provisioner "local-exec" {
-    command = "docker image tag ${local.gitlab_ci_app_image} ${local.heroku_app_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
+module "publish_api_app_image_to_heroku" {
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_app_image
+  target_image = local.heroku_app_image
 
   depends_on = [
-    docker_image.gitlab_ci_api_app_image
+    heroku_app.api
   ]
 }
 
-resource "null_resource" "push_api_app_image_to_heroku" {
-  provisioner "local-exec" {
-    command = "docker push ${local.heroku_app_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
+module "publish_api_release_image_to_heroku" {
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_release_image
+  target_image = local.heroku_release_image
 
   depends_on = [
-    null_resource.tag_api_app_image_for_heroku,
-    heroku_app.api,
-  ]
-}
-
-data "docker_registry_image" "gitlab_ci_api_release_image" {
-  name = local.gitlab_ci_release_image
-}
-
-resource "docker_image" "gitlab_ci_api_release_image" {
-  name          = local.gitlab_ci_release_image
-  pull_triggers = [data.docker_registry_image.gitlab_ci_api_release_image.sha256_digest]
-}
-
-resource "null_resource" "tag_api_release_image_for_heroku" {
-  provisioner "local-exec" {
-    command = "docker image tag ${local.gitlab_ci_release_image} ${local.heroku_release_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
-
-  depends_on = [
-    docker_image.gitlab_ci_api_release_image
-  ]
-}
-
-resource "null_resource" "push_api_release_image_to_heroku" {
-  provisioner "local-exec" {
-    command = "docker push ${local.heroku_release_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
-
-  depends_on = [
-    null_resource.tag_api_release_image_for_heroku,
-    heroku_app.api,
+    heroku_app.api
   ]
 }
 
@@ -134,7 +79,7 @@ data "herokux_registry_image" "api_app" {
   docker_tag   = "latest"
 
   depends_on = [
-    null_resource.push_api_app_image_to_heroku
+    module.publish_api_app_image_to_heroku
   ]
 }
 
@@ -154,7 +99,7 @@ data "herokux_registry_image" "api_release" {
   docker_tag   = "latest"
 
   depends_on = [
-    null_resource.push_api_release_image_to_heroku
+    module.publish_api_release_image_to_heroku
   ]
 }
 

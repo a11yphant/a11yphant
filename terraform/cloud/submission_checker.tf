@@ -1,14 +1,15 @@
 locals {
-  image_name                         = "submission-checker"
-  ecr_submission_checker_image       = format("%v/%v:%v", local.ecr_address, aws_ecr_repository.repository_submission_checker.id, "latest")
-  gitlab_ci_submission_checker_image = "gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:${var.docker_tag}"
+  image_name                          = "submission-checker"
+  ecr_submission_checker_image        = format("%v/%v", local.ecr_address, aws_ecr_repository.repository_submission_checker.id)
+  ecr_submission_checker_image_latest = format("%v:%v", local.ecr_submission_checker_image, "latest")
+  gitlab_ci_submission_checker_image  = "gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:${var.docker_tag}"
 }
 
 resource "aws_lambda_function" "submission_checker" {
   function_name = "${terraform.workspace}-submission-checker"
 
   package_type = "Image"
-  image_uri    = local.ecr_submission_checker_image
+  image_uri    = "${local.ecr_submission_checker_image}@${data.aws_ecr_image.submission_checker_image.id}"
   timeout      = 30
   memory_size  = 512
 
@@ -28,7 +29,7 @@ resource "aws_lambda_function" "submission_checker" {
   }
 
   depends_on = [
-    null_resource.push_submssion_checker_image_to_ecr,
+    module.publish_submission_checker_image_to_aws_ecr,
     aws_iam_role_policy_attachment.submission_checker_lambda_logs,
   ]
 }
@@ -102,39 +103,17 @@ resource "aws_ecr_repository" "repository_submission_checker" {
   image_tag_mutability = "MUTABLE"
 }
 
-data "docker_registry_image" "gitlab_ci_submission_checker_image" {
-  name = local.gitlab_ci_release_image
+module "publish_submission_checker_image_to_aws_ecr" {
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_submission_checker_image
+  target_image = local.ecr_submission_checker_image_latest
 }
 
-resource "docker_image" "gitlab_ci_submission_checker_image" {
-  name          = local.gitlab_ci_submission_checker_image
-  pull_triggers = [data.docker_registry_image.gitlab_ci_submission_checker_image.sha256_digest]
-}
-
-resource "null_resource" "tag_submission_checker_image_for_ecr" {
-  provisioner "local-exec" {
-    command = "docker image tag ${local.gitlab_ci_submission_checker_image} ${local.ecr_submission_checker_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
+data "aws_ecr_image" "submission_checker_image" {
+  repository_name = aws_ecr_repository.repository_submission_checker.id
+  image_tag       = "latest"
 
   depends_on = [
-    docker_image.gitlab_ci_submission_checker_image
-  ]
-}
-
-resource "null_resource" "push_submssion_checker_image_to_ecr" {
-  provisioner "local-exec" {
-    command = "docker push ${local.ecr_submission_checker_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
-
-  depends_on = [
-    null_resource.tag_submission_checker_image_for_ecr,
+    module.publish_submission_checker_image_to_aws_ecr
   ]
 }
