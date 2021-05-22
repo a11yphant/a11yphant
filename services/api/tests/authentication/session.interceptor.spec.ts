@@ -21,22 +21,17 @@ function runInterceptor(
   done: any,
 ): void {
   const handle = jest.fn(() => of("something"));
-  interceptor
-    .intercept(
-      executionContext,
-      createMock<CallHandler>({ handle }),
-    )
-    .then((observable) =>
-      observable.subscribe({
-        next() {
-          nextCallback();
-        },
-        complete() {
-          completeCallback();
-          done();
-        },
-      }),
-    );
+  interceptor.intercept(executionContext, createMock<CallHandler>({ handle })).then((observable) =>
+    observable.subscribe({
+      next() {
+        nextCallback();
+      },
+      complete() {
+        completeCallback();
+        done();
+      },
+    }),
+  );
 }
 
 describe("session interceptor", () => {
