@@ -141,8 +141,6 @@ describe("session interceptor", () => {
       getArgs: jest.fn().mockReturnValue([null, null, context]),
     });
 
-    const handle = jest.fn(() => of("something"));
-
     const interceptor = new SessionInterceptor(
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
@@ -153,21 +151,11 @@ describe("session interceptor", () => {
       }),
     );
 
-    interceptor
-      .intercept(
-        executionContext,
-        createMock<CallHandler>({ handle }),
-      )
-      .then((observable) =>
-        observable.subscribe({
-          next() {
-            expect(cookie).not.toHaveBeenCalled();
-          },
-          complete() {
-            done();
-          },
-        }),
-      );
+    const nextCallback = (): void => {
+      expect(cookie).not.toHaveBeenCalled();
+    };
+
+    runInterceptor(interceptor, executionContext, nextCallback, doNothing, done);
   });
 
   it("overwrites the session cookie if it is invalid", (done) => {
