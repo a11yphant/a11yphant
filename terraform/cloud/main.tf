@@ -21,6 +21,10 @@ terraform {
     docker = {
       source = "kreuzwerker/docker"
     }
+
+    random = {
+      source = "hashicorp/random"
+    }
   }
 }
 
