@@ -28,7 +28,7 @@ const Evaluation: React.FunctionComponent = () => {
 
   // state
   const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
-  const [totalScore, setTotalScore] = useState<number | undefined>(0);
+  const [totalScore, setTotalScore] = useState<number>(0);
 
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
@@ -54,7 +54,7 @@ const Evaluation: React.FunctionComponent = () => {
   }, [status, queryInterval]);
 
   React.useEffect(() => {
-    if (failedChecks && totalChecks) {
+    if (failedChecks !== undefined && totalChecks !== undefined) {
       setTotalScore(100 - (failedChecks / totalChecks) * 100);
     }
   }, [failedChecks, totalChecks]);
@@ -92,7 +92,12 @@ const Evaluation: React.FunctionComponent = () => {
         </title>
       </Head>
       <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
-        <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
+        <EvaluationHeader
+          challengeName={challenge.name}
+          levelIdx={nthLevel as string}
+          score={totalScore}
+          showScore={status === ResultStatus.Success || status === ResultStatus.Fail}
+        />
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
