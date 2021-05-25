@@ -1,4 +1,5 @@
 import { Task } from "app/generated/graphql";
+import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
 
@@ -12,7 +13,7 @@ const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
   if (tasks.length === 1) {
     return (
       <>
-        <p className="font-bold my-6 prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(tasks[0].text) }} />
+        <p className={clsx("font-bold my-6", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(tasks[0].text) }} />
         <HintBox hints={tasks[0].hints} />
       </>
     );
