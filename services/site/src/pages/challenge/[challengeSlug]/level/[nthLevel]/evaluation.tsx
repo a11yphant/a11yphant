@@ -102,7 +102,7 @@ const Evaluation: React.FunctionComponent = () => {
           <LoadingScreen />
         ) : (
           <>
-            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
+            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-auto overscroll-none">
               <ul className="h-full">{getRequirements}</ul>
             </div>
             <div className="absolute bottom-8 right-8">
