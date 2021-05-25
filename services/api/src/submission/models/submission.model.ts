@@ -6,8 +6,11 @@ import { Level } from "../../challenge/models/level.model";
   description: "A submission of an user.",
 })
 export class Submission {
-  constructor(properties: { id: string; html?: string; css?: string; js?: string; levelId: string }) {
+  constructor(properties: { id: string; html?: string; css?: string; js?: string; levelId: string; createdAt: Date; updatedAt: Date }) {
     this.id = properties.id;
+    this.createdAt = properties.createdAt;
+    this.updatedAt = properties.updatedAt;
+
     this.levelId = properties.levelId;
 
     this.html = properties.html;
@@ -17,6 +20,12 @@ export class Submission {
 
   @Field(() => ID)
   id: string;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
 
   @Field(() => Level, {
     description: "The level this submission is for.",

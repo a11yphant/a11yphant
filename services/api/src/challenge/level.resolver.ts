@@ -39,6 +39,6 @@ export class LevelResolver {
 
   @ResolveField()
   lastSubmission(@Parent() level: Level, @SessionToken() sessionToken: SessionTokenInterface): Promise<Submission> {
-    return this.submissionService.findLastForUser(sessionToken.userId);
+    return this.submissionService.findLastForUserAndLevel(sessionToken.userId, level.id);
   }
 }
