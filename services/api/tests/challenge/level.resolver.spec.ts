@@ -1,6 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { LevelFactory } from "@tests/factories/models/level.factory";
 import { RequirementFactory } from "@tests/factories/models/requirement.factory";
+import { SubmissionFactory } from "@tests/factories/models/submission.factory";
 import { TaskFactory } from "@tests/factories/models/task.factory";
 
 import { LevelResolver } from "@/challenge/level.resolver";
@@ -72,5 +73,22 @@ describe("level resolver", () => {
     );
 
     expect((await resolver.requirements(LevelFactory.build())).length).toEqual(requirements.length);
+  });
+
+  it("resolves the last submission for a level", async () => {
+    const submission = SubmissionFactory.build();
+
+    const resolver = new LevelResolver(
+      createMock<LevelService>(),
+      createMock<RequirementService>(),
+      createMock<TaskService>(),
+      createMock<SubmissionService>({
+        findLastForUserAndLevel: jest.fn().mockResolvedValue(submission),
+      }),
+    );
+
+    const fetchedSubmission = await resolver.lastSubmission(LevelFactory.build(), { userId: "userid" });
+
+    expect(fetchedSubmission.id).toBe(submission.id);
   });
 });
