@@ -37,7 +37,7 @@ export class LevelResolver {
     return this.taskService.findForLevel(level.id);
   }
 
-  @ResolveField()
+  @ResolveField(() => Submission, { nullable: true, description: "The last submission of the current user for this level" })
   lastSubmission(@Parent() level: Level, @SessionToken() sessionToken: SessionTokenInterface): Promise<Submission> {
     return this.submissionService.findLastForUserAndLevel(sessionToken.userId, level.id);
   }

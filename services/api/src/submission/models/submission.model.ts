@@ -21,10 +21,14 @@ export class Submission {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Date)
+  @Field(() => Date, {
+    description: "The timestamp when the submission was created.",
+  })
   createdAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, {
+    description: "The timestamp when the submission has been last updated",
+  })
   updatedAt: Date;
 
   @Field(() => Level, {
