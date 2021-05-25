@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
+        card: "0 0 1.25rem 0.25rem rgba(0, 0, 0, 0.8)",
         modal: "0px 24px 38px rgba(0, 0, 0, 0.14), 0px 0px 46px rgba(0, 0, 0, 0.12), 0px 0px 15px rgba(0, 0, 0, 0.2)",
       },
       spacing: {
@@ -24,7 +25,7 @@ module.exports = {
         primaryDark: "#6657C5",
         error: "#E75A7C",
         background: "#121212",
-        backgroundMiddle: "#1C1C1C",
+        backgroundMiddle: "#202226",
         grey: "#EDEDED",
         greyLight: "#EFEFEF",
         greyMiddle: "#B4B8B8",
