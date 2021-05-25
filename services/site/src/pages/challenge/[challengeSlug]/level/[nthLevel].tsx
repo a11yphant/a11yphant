@@ -1,4 +1,5 @@
 import Button from "app/components/buttons/Button";
+import ButtonAnimated from "app/components/buttons/ButtonAnimated";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
@@ -146,6 +147,7 @@ const Level: React.FunctionComponent = () => {
             <Button full onClick={submitLevel} className="px-10">
               Submit
             </Button>
+            <ButtonAnimated>Submit</ButtonAnimated>
           </div>
         </div>
       </main>

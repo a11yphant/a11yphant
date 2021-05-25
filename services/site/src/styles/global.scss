@@ -295,4 +295,18 @@
             outline: none;
         }
     }
+
+    .animated-button {
+        path {
+            stroke-dashoffset: 25px;
+            stroke-dasharray: 25px;
+            animation: path 500ms cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        }
+
+        @keyframes path {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    }
 }
