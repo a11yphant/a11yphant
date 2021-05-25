@@ -24,6 +24,7 @@ module.exports = {
         primaryLight: "#B795FF",
         primaryDark: "#6657C5",
         error: "#E75A7C",
+        success: "#9ADB66",
         background: "#121212",
         backgroundMiddle: "#202226",
         grey: "#EDEDED",
@@ -35,6 +36,7 @@ module.exports = {
       },
       fontFamily: {
         ibmPlex: ["IBM Plex Sans", "sans-serif"],
+        ibmPlexMono: ["IBM Plex Mono", "sans-serif"],
       },
       transitionProperty: {
         width: "width",
