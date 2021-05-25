@@ -22,6 +22,14 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
+  public async findLastForUser(userId: string): Promise<Submission> {
+    const submission = await this.prisma.submission.findFirst({
+      where: { userId },
+    });
+
+    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+  }
+
   public async save(input: SubmissionCreateData): Promise<Submission> {
     const submission = await this.prisma.submission.create({
       data: {
