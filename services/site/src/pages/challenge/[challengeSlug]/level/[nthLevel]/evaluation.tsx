@@ -119,7 +119,7 @@ const Evaluation: React.FunctionComponent = () => {
                   }}
                   className="bg-white text-primary px-10"
                 >
-                  To Homescreen
+                  Finish Challenge
                 </Button>
               ) : (
                 <Button
