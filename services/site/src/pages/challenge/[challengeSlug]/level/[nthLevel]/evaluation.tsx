@@ -91,7 +91,7 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
+      <main className="flex flex-col justify-between h-main p-12">
         <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
@@ -106,7 +106,8 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.back();
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Retry
                 </Button>
@@ -115,7 +116,8 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.push("/");
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   To Homescreen
                 </Button>
@@ -125,7 +127,8 @@ const Evaluation: React.FunctionComponent = () => {
                     const nextLevel = parseInt(nthLevel as string) + 1;
                     router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Next Level
                 </Button>
