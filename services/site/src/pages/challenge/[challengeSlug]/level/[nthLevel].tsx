@@ -125,11 +125,11 @@ const Level: React.FunctionComponent = () => {
         </title>
       </Head>
       <main className="flex justify-between h-main box-border p-4">
-        <Sidebar classes="h-full" challengeName={challenge.name} level={level} />
+        <Sidebar className="h-full" challengeName={challenge.name} level={level} />
         <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
           <Editors
             reset={resetToInitialCode}
-            classes="w-full h-3/5"
+            className="w-full h-3/5"
             editors={editorConfiguration}
             theme="light"
             options={{
@@ -141,7 +141,7 @@ const Level: React.FunctionComponent = () => {
               },
             }}
           />
-          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
+          <Preview className="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
           <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
             <Button full onClick={submitLevel} className="px-10">
               Submit

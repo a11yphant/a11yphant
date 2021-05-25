@@ -9,14 +9,14 @@ export enum EditorLanguage {
 }
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
-  classes: string;
+  className: string;
   editors: EditorConfig[];
   reset: (language?: EditorLanguage) => void;
 }
 
-const Editors: React.FunctionComponent<CustomEditorProps> = ({ classes, editors, reset, ...props }) => {
+const Editors: React.FunctionComponent<CustomEditorProps> = ({ className, editors, reset, ...props }) => {
   return (
-    <div className={`${classes} flex flex-row justify-between box-border pb-4`}>
+    <div className={`${className} flex flex-row justify-between box-border pb-4`}>
       {editors.map((config) => (
         <WrappedEditor reset={reset} key={config.heading} config={config} {...props} />
       ))}

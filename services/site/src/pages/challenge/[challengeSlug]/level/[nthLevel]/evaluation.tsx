@@ -93,7 +93,7 @@ const Evaluation: React.FunctionComponent = () => {
         </title>
       </Head>
       {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
-      <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
+      <main className="flex flex-col justify-between h-main p-12">
         <EvaluationHeader
           challengeName={challenge.name}
           levelIdx={nthLevel as string}
@@ -104,8 +104,8 @@ const Evaluation: React.FunctionComponent = () => {
           <LoadingScreen />
         ) : (
           <>
-            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
-              {getRequirements}
+            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-auto overscroll-none">
+              <ul className="h-full">{getRequirements}</ul>
             </div>
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
@@ -113,7 +113,8 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.back();
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Retry
                 </Button>
@@ -122,7 +123,8 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.push("/");
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Finish Challenge
                 </Button>
@@ -132,7 +134,8 @@ const Evaluation: React.FunctionComponent = () => {
                     const nextLevel = parseInt(nthLevel as string) + 1;
                     router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Next Level
                 </Button>
