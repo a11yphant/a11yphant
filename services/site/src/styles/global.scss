@@ -33,6 +33,9 @@
     }
 
     // Base Styles --------------------------
+    html {
+        scroll-behavior: smooth;
+    }
 
     html body {
         @apply font-ibmPlex;
