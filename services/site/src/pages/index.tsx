@@ -15,7 +15,7 @@ const Home: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>A11yphant</title>
+        <title>a11yphant</title>
       </Head>
       <main className="flex flex-col h-main box-border p-4">
         <ChallengeHeader className="mx-24" />
