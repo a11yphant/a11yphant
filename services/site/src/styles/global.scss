@@ -126,30 +126,35 @@
         @apply text-7xl;
         @apply font-bold;
         @apply text-grey;
+        @apply max-w-80ch;
     }
     h2,
     .h2 {
         @apply text-5xl;
         @apply font-bold;
         @apply text-grey;
+        @apply max-w-80ch;
     }
     h3,
     .h3 {
         @apply text-4xl;
         @apply font-bold;
         @apply text-grey;
+        @apply max-w-80ch;
     }
     h4,
     .h4 {
         @apply text-2xl;
         @apply font-bold;
         @apply text-grey;
+        @apply max-w-80ch;
     }
     h5,
     .h5 {
         @apply text-xl;
         @apply font-bold;
         @apply text-grey;
+        @apply max-w-80ch;
     }
 
     h6,
@@ -161,6 +166,7 @@
         @apply text-base;
         @apply text-grey;
         @apply mb-4;
+        @apply max-w-80ch;
     }
 
     a {
@@ -170,6 +176,7 @@
         @apply border-b-2;
         @apply border-transparent;
         @apply transition-colors;
+        @apply max-w-80ch;
 
         &:hover {
             @apply text-light;
