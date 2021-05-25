@@ -17,7 +17,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
       <div className="flex flex-col w-full min-h-full">
         <h2 className={clsx("text-greyMiddle", "h6")}>{challengeName}</h2>
         <h3 className={clsx("my-8", "h4")}>Instructions</h3>
-        <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
+        <p className="whitespace-pre-wrap prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
         <TaskList tasks={level.tasks} />
       </div>
     </aside>

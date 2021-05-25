@@ -12,7 +12,7 @@ const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
   if (tasks.length === 1) {
     return (
       <>
-        <p className="font-bold my-6" dangerouslySetInnerHTML={{ __html: sanitizeHtml(tasks[0].text) }} />
+        <p className="font-bold my-6 prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(tasks[0].text) }} />
         <HintBox hints={tasks[0].hints} />
       </>
     );

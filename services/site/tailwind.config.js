@@ -33,8 +33,8 @@ module.exports = {
         dark: "#121212",
       },
       fontFamily: {
-        ibmPlex: ["IBM Plex Sans", "sans-serif"],
-        ibmPlexMono: ["IBM Plex Mono", "sans-serif"],
+        ibmPlex: ['"IBM Plex Sans"', "sans-serif"],
+        ibmPlexMono: ['"IBM Plex Mono"', "monospace"],
       },
       transitionProperty: {
         width: "width",
@@ -45,6 +45,25 @@ module.exports = {
         "gradient-medium": "url('/images/02_medium.jpg')",
         "gradient-hard": "url('/images/03_hard.jpg')",
       }),
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.light"),
+            code: {
+              color: theme("colors.primaryLight"),
+              fontFamily: theme("fontFamily.ibmPlexMono").join(" "),
+              fontSize: "1em",
+              "&::before": {
+                // cannot overwrite the content without important...
+                content: "none !important",
+              },
+              "&::after": {
+                content: "none !important",
+              },
+            },
+          },
+        },
+      }),
     },
   },
   variants: {
@@ -52,5 +71,5 @@ module.exports = {
       textColor: ["group-focus"],
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
