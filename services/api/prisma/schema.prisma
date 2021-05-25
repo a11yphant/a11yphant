@@ -85,15 +85,17 @@ model Hint {
 }
 
 model Submission {
-  id      String  @id @default(uuid())
-  html    String?
-  css     String?
-  js      String?
-  level   Level   @relation(fields: [levelId], references: [id])
-  levelId String
-  result  Result?
-  user    User?   @relation(fields: [userId], references: [id])
-  userId  String?
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  html      String?
+  css       String?
+  js        String?
+  level     Level    @relation(fields: [levelId], references: [id])
+  levelId   String
+  result    Result?
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 
   @@map(name: "submissions")
 }
