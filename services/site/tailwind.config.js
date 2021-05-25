@@ -34,6 +34,7 @@ module.exports = {
       },
       fontFamily: {
         ibmPlex: ["IBM Plex Sans", "sans-serif"],
+        ibmPlexMono: ["IBM Plex Mono", "sans-serif"],
       },
       transitionProperty: {
         width: "width",
