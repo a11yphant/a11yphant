@@ -39,6 +39,7 @@
     "next": "10.2.2",
     "node-html-parser": "3.3.4",
     "react": "17.0.2",
+    "react-confetti": "^6.0.1",
     "react-dom": "17.0.2",
     "react-resize-detector": "6.7.2",
     "react-spring": "9.1.2",

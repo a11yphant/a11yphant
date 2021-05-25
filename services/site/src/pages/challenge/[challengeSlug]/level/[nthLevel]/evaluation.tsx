@@ -16,6 +16,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import ReactConfetti from "react-confetti";
 
 const Evaluation: React.FunctionComponent = () => {
   const challengeContext = useChallenge();
@@ -91,6 +92,7 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {challenge.name} - Level {nthLevel}
         </title>
       </Head>
+      {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
       <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
         <EvaluationHeader
           challengeName={challenge.name}
@@ -122,7 +124,7 @@ const Evaluation: React.FunctionComponent = () => {
                   }}
                   className="bg-white text-primary px-10"
                 >
-                  To Homescreen
+                  Finish Challenge
                 </Button>
               ) : (
                 <Button
