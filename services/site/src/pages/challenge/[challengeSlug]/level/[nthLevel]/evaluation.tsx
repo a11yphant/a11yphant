@@ -28,13 +28,13 @@ const Evaluation: React.FunctionComponent = () => {
 
   // state
   const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
-  const [totalScore, setTotalScore] = useState<number | undefined>();
+  const [totalScore, setTotalScore] = useState<number | undefined>(0);
 
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
   const status = data?.resultForSubmission?.status;
   const failedChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
-  const totalChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
+  const totalChecks = data?.resultForSubmission?.numberOfCheckedRequirements;
   const requirements = data?.resultForSubmission?.requirements || [];
 
   // fetch every 3 seconds
