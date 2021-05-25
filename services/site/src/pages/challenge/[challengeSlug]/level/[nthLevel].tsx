@@ -44,7 +44,7 @@ const Level: React.FunctionComponent = () => {
 
   const [currHtmlCode, setCurrHtmlCode] = useState<string>(level?.code?.html);
   const [currCssCode, setCurrCssCode] = useState<string>(level?.code?.css);
-  // const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
+  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     // if language === undefined => reset all
@@ -53,7 +53,7 @@ const Level: React.FunctionComponent = () => {
       : {
           html: currHtmlCode,
           css: currCssCode,
-          // js: currJavascriptCode,
+          js: currJavascriptCode,
         };
 
     if (language) {
@@ -62,7 +62,7 @@ const Level: React.FunctionComponent = () => {
 
     setCurrHtmlCode(newCode.html);
     setCurrCssCode(newCode.css);
-    // setCurrJavascriptCode(newCode.js);
+    setCurrJavascriptCode(newCode.js);
   };
 
   const submitLevel = async (): Promise<void> => {
@@ -72,7 +72,7 @@ const Level: React.FunctionComponent = () => {
           levelId: level.id,
           html: currHtmlCode,
           css: currCssCode,
-          // js: currJavascriptCode,
+          js: currJavascriptCode,
         },
       },
     });
@@ -83,6 +83,38 @@ const Level: React.FunctionComponent = () => {
 
   if (loading || loadingChallenge) {
     return <div>Loading ...</div>;
+  }
+
+  const editorConfiguration = [];
+
+  if (level.hasHtmlEditor) {
+    editorConfiguration.push({
+      languageLabel: "HTML",
+      language: EditorLanguage.html,
+      code: currHtmlCode,
+      updateCode: setCurrHtmlCode,
+      heading: "index.html",
+    });
+  }
+
+  if (level.hasCssEditor) {
+    editorConfiguration.push({
+      languageLabel: "CSS",
+      language: EditorLanguage.css,
+      code: currCssCode,
+      updateCode: setCurrCssCode,
+      heading: "index.css",
+    });
+  }
+
+  if (level.hasJsEditor) {
+    editorConfiguration.push({
+      languageLabel: "JavaScript",
+      language: EditorLanguage.javascript,
+      code: currJavascriptCode,
+      updateCode: setCurrJavascriptCode,
+      heading: "index.js",
+    });
   }
 
   return (
@@ -98,17 +130,7 @@ const Level: React.FunctionComponent = () => {
           <Editors
             reset={resetToInitialCode}
             classes="w-full h-3/5"
-            editors={[
-              { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
-              { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
-              // {
-              //   languageLabel: "JavaScript",
-              //   language: EditorLanguage.javascript,
-              //   code: currJavascriptCode,
-              //   updateCode: setCurrJavascriptCode,
-              //   heading: "index.js",
-              // },
-            ]}
+            editors={editorConfiguration}
             theme="light"
             options={{
               lineHeight: 24,
