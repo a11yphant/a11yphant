@@ -23,6 +23,7 @@ module.exports = {
         primaryLight: "#B795FF",
         primaryDark: "#6657C5",
         error: "#E75A7C",
+        success: "#9ADB66",
         background: "#121212",
         backgroundMiddle: "#1C1C1C",
         grey: "#EDEDED",
