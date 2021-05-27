@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
+        card: "0 0 1.25rem 0.25rem rgba(0, 0, 0, 0.8)",
         modal: "0px 24px 38px rgba(0, 0, 0, 0.14), 0px 0px 46px rgba(0, 0, 0, 0.12), 0px 0px 15px rgba(0, 0, 0, 0.2)",
       },
       spacing: {
@@ -23,8 +24,9 @@ module.exports = {
         primaryLight: "#B795FF",
         primaryDark: "#6657C5",
         error: "#E75A7C",
+        success: "#9ADB66",
         background: "#121212",
-        backgroundMiddle: "#1C1C1C",
+        backgroundMiddle: "#202226",
         grey: "#EDEDED",
         greyLight: "#EFEFEF",
         greyMiddle: "#B4B8B8",
@@ -33,7 +35,8 @@ module.exports = {
         dark: "#121212",
       },
       fontFamily: {
-        ibmPlex: ["IBM Plex Sans", "sans-serif"],
+        ibmPlex: ['"IBM Plex Sans"', "sans-serif"],
+        ibmPlexMono: ['"IBM Plex Mono"', "monospace"],
       },
       transitionProperty: {
         width: "width",
@@ -44,6 +47,25 @@ module.exports = {
         "gradient-medium": "url('/images/02_medium.jpg')",
         "gradient-hard": "url('/images/03_hard.jpg')",
       }),
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.light"),
+            code: {
+              color: theme("colors.primaryLight"),
+              fontFamily: theme("fontFamily.ibmPlexMono").join(" "),
+              fontSize: "1em",
+              "&::before": {
+                // cannot overwrite the content without important...
+                content: "none !important",
+              },
+              "&::after": {
+                content: "none !important",
+              },
+            },
+          },
+        },
+      }),
     },
   },
   variants: {
@@ -51,5 +73,5 @@ module.exports = {
       textColor: ["group-focus"],
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

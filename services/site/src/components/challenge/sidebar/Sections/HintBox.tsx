@@ -51,7 +51,11 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
       <div hidden={!showHint} className="px-4">
         <ol className="list-decimal list-inside font-normal">
           {hints.slice(0, usedHints).map((hint) => (
-            <li key={hint.id} className="mt-2 mb-4 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }} />
+            <li
+              key={hint.id}
+              className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose")}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }}
+            />
           ))}
         </ol>
         {usedHints < totalHints && (

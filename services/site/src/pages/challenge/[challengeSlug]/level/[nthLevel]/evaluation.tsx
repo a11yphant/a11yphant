@@ -16,6 +16,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import ReactConfetti from "react-confetti";
 
 const Evaluation: React.FunctionComponent = () => {
   const challengeContext = useChallenge();
@@ -28,13 +29,13 @@ const Evaluation: React.FunctionComponent = () => {
 
   // state
   const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
-  const [totalScore, setTotalScore] = useState<number | undefined>();
+  const [totalScore, setTotalScore] = useState<number>(0);
 
   // query data with lazy query
   const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
   const status = data?.resultForSubmission?.status;
   const failedChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
-  const totalChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
+  const totalChecks = data?.resultForSubmission?.numberOfCheckedRequirements;
   const requirements = data?.resultForSubmission?.requirements || [];
 
   // fetch every 3 seconds
@@ -54,7 +55,7 @@ const Evaluation: React.FunctionComponent = () => {
   }, [status, queryInterval]);
 
   React.useEffect(() => {
-    if (failedChecks && totalChecks) {
+    if (failedChecks !== undefined && totalChecks !== undefined) {
       setTotalScore(100 - (failedChecks / totalChecks) * 100);
     }
   }, [failedChecks, totalChecks]);
@@ -91,14 +92,20 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="flex flex-col justify-between h-main box-border p-8 bg-primary m-4 rounded-lg">
-        <EvaluationHeader challengeName={challenge.name} levelIdx={nthLevel as string} score={totalScore} />
+      {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
+      <main className="flex flex-col justify-between h-main p-12">
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
           <>
-            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-scroll">
-              {getRequirements}
+            <EvaluationHeader
+              challengeName={challenge.name}
+              levelIdx={nthLevel as string}
+              score={totalScore}
+              showScore={status === ResultStatus.Success || status === ResultStatus.Fail}
+            />
+            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-auto overscroll-none">
+              <ul className="h-full">{getRequirements}</ul>
             </div>
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
@@ -106,7 +113,8 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.back();
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Retry
                 </Button>
@@ -115,9 +123,10 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.push("/");
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
-                  To Homescreen
+                  Finish Challenge
                 </Button>
               ) : (
                 <Button
@@ -125,7 +134,8 @@ const Evaluation: React.FunctionComponent = () => {
                     const nextLevel = parseInt(nthLevel as string) + 1;
                     router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
                   }}
-                  className="bg-white text-primary px-10"
+                  full
+                  className="px-10"
                 >
                   Next Level
                 </Button>

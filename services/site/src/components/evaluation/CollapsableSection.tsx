@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
@@ -19,7 +20,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
-    transform: showDescription ? "rotate(180deg)" : "rotate(0deg)",
+    transform: showDescription ? "rotate(0deg)" : "rotate(180deg)",
     config: {
       tension: 0,
       delay: 0,
@@ -27,31 +28,34 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
   });
 
   return (
-    <div className={`${className} flex flex-row items-start w-full box-border py-2`}>
+    <div className={clsx("flex flex-row items-start w-full box-border my-2 mx-8", className)}>
+      {passed ? <Check className="h-14 w-14 text-success mr-20" /> : <X className="h-14 w-14 text-error mr-20" />}
+      {passed ? (
+        <p className="sr-only">The following requirement is fulfilled:</p>
+      ) : (
+        <p className="sr-only">The following requirement is not fulfilled:</p>
+      )}
+
       <div className="flex flex-col w-full">
-        <h4>
+        <h3>
           <Button
             onClick={() => {
               setShowDescription((prevShowDescription) => !prevShowDescription);
             }}
-            className="h3 flex flex-row-reverse m-0 py-4 pr-4 group text-white font-bold transition duration-300 hover:text-primaryDark focus:text-primaryDark"
+            className={clsx("h4 flex flex-row-reverse py-3 pl-4 group", "transition duration-300 hover:text-primaryLight", className)}
             overrideClassname
             aria-expanded={showDescription}
             icon={
-              <AnimatedChevron
-                style={{ transform: transform }}
-                className="text-white mr-8 group-hover:text-primaryDark group-focus:text-primaryDark"
-              />
+              <AnimatedChevron style={{ transform: transform }} className={clsx("text-light mr-8", "group-hover:text-primaryLight", className)} />
             }
           >
             {title}
           </Button>
-        </h4>
+        </h3>
         <div hidden={!showDescription}>
-          <p className="text-white ml-16 my-4">{description}</p>
+          <p className="ml-20 my-4">{description}</p>
         </div>
       </div>
-      {passed ? <Check className="h-20 w-20 text-white ml-10" /> : <X className="h-20 w-20 text-white ml-10" />}
     </div>
   );
 };

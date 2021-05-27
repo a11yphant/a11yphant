@@ -4,7 +4,7 @@ import { parse } from "node-html-parser";
 import React, { useState } from "react";
 
 interface PreviewProps {
-  classes: string;
+  className: string;
   cssCode: string;
   htmlCode: string;
   javascriptCode: string;
@@ -34,7 +34,7 @@ const debouncedUpdate = debounce((update: () => void) => {
   update();
 }, 1000);
 
-const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, htmlCode, javascriptCode, heading }) => {
+const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, htmlCode, javascriptCode, heading }) => {
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
@@ -48,7 +48,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ classes, cssCode, html
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
-    <div className={clsx("p-4", "container-light overflow-hidden", classes)}>
+    <div className={clsx("p-4", "container-light overflow-hidden", className)}>
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>{heading}</h3>
       <iframe
         title="Preview"
