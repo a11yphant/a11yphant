@@ -6,14 +6,13 @@ const Check: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ classNa
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+      viewBox="0 0 60 46"
       className={clsx("h-6 w-6", className)}
       aria-hidden="true"
       focusable="false"
       {...props}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      <path d="M4 21.622l17.297 16.756L56 4" stroke="currentColor" stroke-width="10.16" />
     </svg>
   );
 };
