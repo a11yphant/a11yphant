@@ -13,7 +13,7 @@ import {
   useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
-import { initializeApollo } from "app/lib/apolloClient";
+import { initializeApollo } from "app/lib/apollo-client";
 import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import Head from "next/head";

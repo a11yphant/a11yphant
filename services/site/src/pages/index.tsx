@@ -4,7 +4,7 @@ import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
 import IllustrationCoding from "app/components/icons/IllustrationCoding";
 import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
-import { initializeApollo } from "app/lib/apolloClient";
+import { initializeApollo } from "app/lib/apollo-client";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -96,8 +96,8 @@ const Home: React.FunctionComponent = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const apolloClient = initializeApollo();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const apolloClient = initializeApollo(null, context);
 
   await apolloClient.query({
     query: ChallengesDocument,

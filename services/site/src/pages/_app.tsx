@@ -3,7 +3,7 @@ import "app/styles/nprogress.scss";
 
 import { ApolloProvider } from "@apollo/client";
 import Navigation from "app/components/Navigation";
-import { useApollo } from "app/lib/apolloClient";
+import { useApollo } from "app/lib/apollo-client";
 import ChallengeContextProvider from "app/lib/ChallengeContext";
 import Router from "next/router";
 import NProgress from "nprogress";
