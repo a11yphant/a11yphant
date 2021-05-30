@@ -18,5 +18,11 @@ query levelByChallengeSlug($challengeSlug: String!, $nth: Int!) {
     hasHtmlEditor
     hasCssEditor
     hasJsEditor
+    lastSubmission {
+      id
+      html
+      css
+      js
+    }
   }
 }

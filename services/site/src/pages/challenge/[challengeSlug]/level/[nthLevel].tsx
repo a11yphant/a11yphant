@@ -42,9 +42,9 @@ const Level: React.FunctionComponent = () => {
 
   const [initialCode] = useState<Code>(level?.code);
 
-  const [currHtmlCode, setCurrHtmlCode] = useState<string>(level?.code?.html);
-  const [currCssCode, setCurrCssCode] = useState<string>(level?.code?.css);
-  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
+  const [currHtmlCode, setCurrHtmlCode] = useState<string>(level.lastSubmission?.html || level?.code?.html);
+  const [currCssCode, setCurrCssCode] = useState<string>(level.lastSubmission?.css || level?.code?.css);
+  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level.lastSubmission?.js || level?.code?.js);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     // if language === undefined => reset all
@@ -156,7 +156,7 @@ const Level: React.FunctionComponent = () => {
 export default Level;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo();
+  const apolloClient = initializeApollo(null, context);
 
   const { challengeSlug, nthLevel } = context.params;
 
