@@ -12,7 +12,7 @@ module.exports = {
   reporters: ["default", "jest-junit"],
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s?(x)"],
   coverageReporters: ["text", "text-summary", "cobertura"],
-  coveragePathIgnorePatterns: ["<rootDir>/src/generated"],
+  coveragePathIgnorePatterns: ["<rootDir>/src/generated", "<rootDir>/tests"],
   coverageDirectory: "<rootDir>",
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
 };
