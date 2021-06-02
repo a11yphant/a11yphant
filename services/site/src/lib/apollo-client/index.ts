@@ -1,4 +1,4 @@
-import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
+import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import crossFetch from "cross-fetch";
 import { GetServerSidePropsContext } from "next";
 import { useMemo } from "react";
@@ -15,7 +15,7 @@ function createApolloClient(context: GetServerSidePropsContext = null): ApolloCl
   });
 
   // the http link has to be at the end because it is a terminating link
-  const link = createForwardCookiesToClientLink(context).concat(createForwardCookiesToServerLink(context)).concat(httpLink);
+  const link = from([createForwardCookiesToClientLink(context), createForwardCookiesToServerLink(context), httpLink]);
 
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
