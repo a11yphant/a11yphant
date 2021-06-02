@@ -41,7 +41,7 @@ describe("apollo client", () => {
         client.readQuery({
           query,
         }),
-      ).toBeTruthy();
+      ).toEqual(queryResult);
     });
   });
 });
