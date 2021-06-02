@@ -14,12 +14,10 @@ function createApolloClient(context: GetServerSidePropsContext = null): ApolloCl
     fetch: crossFetch,
   });
 
-  // the http link has to be at the end because it is a terminating link
-  const link = from([createForwardCookiesToClientLink(context), createForwardCookiesToServerLink(context), httpLink]);
-
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
-    link,
+    // the http link has to be at the end because it is a terminating link
+    link: from([createForwardCookiesToClientLink(context), createForwardCookiesToServerLink(context), httpLink]),
     cache: new InMemoryCache(),
     credentials: "same-site",
   });
