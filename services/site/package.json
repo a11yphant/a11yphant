@@ -85,7 +85,7 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-unused-imports": "1.1.1",
     "gray-matter": "4.0.3",
-    "jest": "27.0.3",
+    "jest": "27.0.4",
     "jest-dom": "4.0.0",
     "jest-fetch-mock": "3.0.3",
     "jest-junit": "12.1.0",
