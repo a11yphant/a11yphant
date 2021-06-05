@@ -172,6 +172,10 @@
         @apply max-w-80ch;
     }
 
+    span {
+        @apply m-0;
+    }
+
     a {
         @apply text-base;
         @apply font-bold;
@@ -295,16 +299,19 @@
         }
     }
 
+    // loading button animation
     .animated-button {
-        path {
-            stroke-dashoffset: 25px;
-            stroke-dasharray: 25px;
-            animation: path 500ms cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        g {
+            animation: spin 1s linear infinite;
+            transform-origin: center center;
         }
 
-        @keyframes path {
+        @keyframes spin {
+            from {
+                transform: rotate(0);
+            }
             to {
-                stroke-dashoffset: 0;
+                transform: rotate(360deg);
             }
         }
     }

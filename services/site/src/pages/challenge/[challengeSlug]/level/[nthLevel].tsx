@@ -1,4 +1,3 @@
-import Button from "app/components/buttons/Button";
 import ButtonAnimated from "app/components/buttons/ButtonAnimated";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
@@ -66,7 +65,13 @@ const Level: React.FunctionComponent = () => {
     setCurrJavascriptCode(newCode.js);
   };
 
+  // button with loading spinner
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
+
   const submitLevel = async (): Promise<void> => {
+    // display loading spinner
+    setLoadingAnimation(true);
+
     const { data } = await submitLevelMutation({
       variables: {
         submissionInput: {
@@ -144,10 +149,9 @@ const Level: React.FunctionComponent = () => {
           />
           <Preview className="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
           <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
-            <Button full onClick={submitLevel} className="px-10">
+            <ButtonAnimated full onClick={submitLevel} className="px-10" loading={loadingAnimation}>
               Submit
-            </Button>
-            <ButtonAnimated>Submit</ButtonAnimated>
+            </ButtonAnimated>
           </div>
         </div>
       </main>
