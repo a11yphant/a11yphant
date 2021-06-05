@@ -42,15 +42,6 @@ const Home: React.FunctionComponent = () => {
                 Start Coding
               </a>
             </Link>
-            {/* <Link
-              full
-              onClick={() => {
-                router.push(`#challenges`);
-              }}
-              className="px-10 w-max mt-8"
-            >
-              Start Coding
-            </Link> */}
           </div>
           <IllustrationCoding className="max-w-md mx-8 col-span-1" />
         </section>
