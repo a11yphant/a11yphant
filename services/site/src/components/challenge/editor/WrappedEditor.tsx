@@ -1,10 +1,12 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
+import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { animated, useSpring } from "react-spring";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -33,6 +35,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
   const [editorTop, setEditorTop] = useState<number>(0);
+
+  const [animateIcon, setAnimateIcon] = useState<boolean>(false);
 
   const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
@@ -74,6 +78,19 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
     onResize: updateEditorSize,
   });
 
+  // animation of reset button
+  const AnimatedReset = animated(Reset);
+
+  // any is necessary here because the types of react-spring are somehow messed up
+  const { transform }: any = useSpring({
+    transform: animateIcon ? "rotate(100deg)" : "rotate(360deg)",
+    config: {
+      tension: 0,
+      duration: 300,
+      delay: 0,
+    },
+  });
+
   return (
     <div className={clsx("w-inherit h-full", "editor-container")}>
       <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark overflow-hidden")}>
@@ -93,19 +110,24 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
             height={editorHeight}
           />
         </div>
-        <button
+        <Button
           onClick={() => {
             setModalOpen(true);
           }}
-          className={clsx(
-            "absolute bottom-2 flex items-center transition duration-300 text-grey mx-3",
-            "group hover:text-primaryDark group-hover:text-primaryDark",
-          )}
+          onMouseEnter={() => {
+            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
+          }}
+          onMouseLeave={() => {
+            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
+          }}
+          className={clsx("absolute bottom-2 flex items-center text-grey mx-3", "group transition duration-300 hover:text-primaryLight")}
+          overrideClassname
           ref={buttonRef}
+          iconLeft={<AnimatedReset style={{ transform: transform }} />}
         >
-          <Reset />
           Reset
-        </button>
+        </Button>
+
         <ConfirmationModal
           open={modalOpen}
           title="Do you really want to reset the code?"
