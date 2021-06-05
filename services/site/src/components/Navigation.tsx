@@ -14,7 +14,7 @@ interface NavigationProps {
 
 const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, displaySave = false }) => {
   // TODO: replace when login is implemented
-  const displayUserProfile = true;
+  const displayUserProfile = false;
   const displayRegistration = false;
 
   return (
