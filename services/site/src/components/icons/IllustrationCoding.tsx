@@ -8,6 +8,8 @@ const IllustrationCoding: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 971.0518 628.38145"
       className={className}
+      aria-hidden="true"
+      focusable="false"
     >
       <path
         d="M847.93141,636.215h0a249.62642,249.62642,0,0,1-2.09461-54.11121l2.09461-29.88879h0c-11.54175,22.96552-8.93335,53.1922,0,83.99994Z"
