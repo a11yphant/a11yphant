@@ -2,6 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import { getRouteList } from "app/components/breadcrumbs/getRouteList";
 import { BreadcrumbInfo } from "app/components/breadcrumbs/routes";
 import Slash from "app/components/icons/Slash";
+import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -37,7 +38,14 @@ const Breadcrumbs: React.FunctionComponent = () => {
               <div className="flex items-center">
                 {idx > 0 && <Slash />}
                 <Link href={route.href}>
-                  <a className={`${idx === routeList.length - 1 ? "text-white" : "text-greyMiddle"} ml-1 font-medium hover:text-primaryDark`}>
+                  <a
+                    className={clsx(
+                      "ml-1 font-medium",
+                      "transition-colors duration-300",
+                      "hover:text-primaryLight hover:border-primaryLight",
+                      idx === routeList.length - 1 ? "text-white font-bold" : "text-greyMiddle",
+                    )}
+                  >
                     {route.breadcrumb}
                   </a>
                 </Link>
