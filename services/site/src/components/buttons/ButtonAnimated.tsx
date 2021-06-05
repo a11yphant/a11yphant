@@ -39,6 +39,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       <span className={clsx("absolute inset-0 flex justify-center items-center", loading ? "" : "hidden", buttonInChallenge ? "submit-button" : "")}>
         <LoadingIndicator />
       </span>
+      {loading && <span className="sr-only">The submission is being processed.</span>}
     </button>
   );
 };
