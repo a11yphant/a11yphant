@@ -43,7 +43,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           )}
           overrideClassname
           aria-expanded={usedHints > 0}
-          icon={<AnimatedChevron style={{ transform: transform }} className={clsx("text-greyMiddle ml-4", "group-hover:text-primaryLight")} />}
+          iconRight={<AnimatedChevron style={{ transform: transform }} className={clsx("text-greyMiddle ml-4", "group-hover:text-primaryLight")} />}
         >
           {showHint ? "Hint" : "Stuck? Click to reveal a hint"}
         </Button>

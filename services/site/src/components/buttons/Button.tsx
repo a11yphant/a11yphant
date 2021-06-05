@@ -2,12 +2,22 @@ import React from "react";
 
 interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   full?: boolean;
-  icon?: React.ReactNode;
+  iconLeft?: React.ReactNode;
+  iconRight?: React.ReactNode;
   srText?: string;
   overrideClassname?: boolean;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({ full = false, icon, srText, className, overrideClassname = false, children, ...props }) => {
+const Button: React.FunctionComponent<ButtonProps> = ({
+  full = false,
+  iconLeft,
+  iconRight,
+  srText,
+  className,
+  overrideClassname = false,
+  children,
+  ...props
+}) => {
   return (
     <button
       className={`
@@ -19,8 +29,9 @@ const Button: React.FunctionComponent<ButtonProps> = ({ full = false, icon, srTe
       }`}
       {...props}
     >
+      {iconLeft}
       {children}
-      {icon}
+      {iconRight}
       {srText && <span className="sr-only">{srText}</span>}
     </button>
   );

@@ -44,12 +44,10 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             onClick={() => {
               setShowDescription((prevShowDescription) => !prevShowDescription);
             }}
-            className={clsx("h4 flex flex-row-reverse py-3 pl-4 group", "transition duration-300 hover:text-primaryLight", className)}
+            className={clsx("h4 flex flex-row py-3 pl-4 group", "transition duration-300 hover:text-primaryLight")}
             overrideClassname
             aria-expanded={showDescription}
-            icon={
-              <AnimatedChevron style={{ transform: transform }} className={clsx("text-light mr-8", "group-hover:text-primaryLight", className)} />
-            }
+            iconLeft={<AnimatedChevron style={{ transform: transform }} className={clsx("text-light mr-8", "group-hover:text-primaryLight")} />}
           >
             {title}
           </Button>

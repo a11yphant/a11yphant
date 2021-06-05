@@ -41,7 +41,7 @@ describe("Button", () => {
     const srText = "Screen Reader Text";
 
     const { container } = render(
-      <Button icon={icon} srText={srText}>
+      <Button iconLeft={icon} srText={srText}>
         {buttonText}
       </Button>,
     );
