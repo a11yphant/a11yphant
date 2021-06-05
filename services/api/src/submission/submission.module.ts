@@ -1,5 +1,5 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
-import { Logger, Module } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 
 import { ChallengeModule } from "../challenge/challenge.module";
 import { PrismaModule } from "../prisma/prisma.module";
@@ -13,8 +13,9 @@ import { SubmissionResolver } from "./submission.resolver";
 import { SubmissionService } from "./submission.service";
 
 @Module({
-  imports: [PrismaModule, AwsMessagingModule, ChallengeModule],
+  imports: [PrismaModule, AwsMessagingModule, forwardRef(() => ChallengeModule)],
   controllers: [SubmissionController, RendererController],
   providers: [SubmissionResolver, SubmissionService, ResultResolver, ResultService, RequirementResultResolver, RequirementResultService, Logger],
+  exports: [SubmissionService],
 })
 export class SubmissionModule {}

@@ -53,7 +53,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           {hints.slice(0, usedHints).map((hint) => (
             <li
               key={hint.id}
-              className="font-ibmPlexMono mt-2 mb-4 whitespace-pre-wrap"
+              className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose")}
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }}
             />
           ))}

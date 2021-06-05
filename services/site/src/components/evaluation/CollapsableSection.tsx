@@ -29,14 +29,16 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
 
   return (
     <div className={clsx("flex flex-row items-start w-full box-border my-2 mx-8", className)}>
-      {passed ? <Check className="h-14 w-14 text-success mr-20" /> : <X className="h-14 w-14 text-error mr-20" />}
-      {passed ? (
-        <p className="sr-only">The following requirement is fulfilled:</p>
-      ) : (
-        <p className="sr-only">The following requirement is not fulfilled:</p>
-      )}
+      <div className="h-14 w-14 flex justify-center items-center mr-20">
+        {passed ? <Check className="h-9 w-14 text-success" /> : <X className="h-10 w-10 text-error" />}
+        {passed ? (
+          <p className="sr-only">The following requirement is fulfilled:</p>
+        ) : (
+          <p className="sr-only">The following requirement is not fulfilled:</p>
+        )}
+      </div>
 
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col">
         <h3>
           <Button
             onClick={() => {

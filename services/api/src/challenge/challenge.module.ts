@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 
+import { SubmissionModule } from "@/submission/submission.module";
+
 import { PrismaModule } from "../prisma/prisma.module";
 import { ChallengesArgs } from "./arg-types/challenges.args";
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
@@ -15,7 +17,7 @@ import { TaskResolver } from "./task.resolver";
 import { TaskService } from "./task.service";
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, SubmissionModule],
   providers: [
     ChallengeResolver,
     ChallengesArgs,

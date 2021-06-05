@@ -11,7 +11,7 @@ import {
   useChallengeBySlugQuery,
   useResultForSubmissionLazyQuery,
 } from "app/generated/graphql";
-import { initializeApollo } from "app/lib/apolloClient";
+import { initializeApollo } from "app/lib/apollo-client";
 import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -98,16 +98,16 @@ const Evaluation: React.FunctionComponent = () => {
       </Head>
       {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
       <main className="flex flex-col justify-between h-main p-12">
-        <EvaluationHeader
-          challengeName={challenge.name}
-          levelIdx={nthLevel as string}
-          score={totalScore}
-          showScore={status === ResultStatus.Success || status === ResultStatus.Fail}
-        />
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
           <>
+            <EvaluationHeader
+              challengeName={challenge.name}
+              levelIdx={nthLevel as string}
+              score={totalScore}
+              showScore={status === ResultStatus.Success || status === ResultStatus.Fail}
+            />
             <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-auto overscroll-none">
               <ul className="h-full">{getRequirements}</ul>
             </div>
@@ -157,7 +157,7 @@ const Evaluation: React.FunctionComponent = () => {
 export default Evaluation;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo();
+  const apolloClient = initializeApollo(null, context);
 
   const { challengeSlug } = context.params;
 

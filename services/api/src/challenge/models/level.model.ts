@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
+import { Submission } from "@/submission/models/submission.model";
+
 import { Code } from "./code.model";
 import { Requirement } from "./requirement.model";
 import { Task } from "./task.model";
@@ -36,6 +38,9 @@ export class Level {
     description: "The tasks that need to be solved for this level.",
   })
   tasks: Task[];
+
+  @Field(() => Submission)
+  lastSubmission?: Submission;
 
   @Field(() => Code, { nullable: true, description: "The initial code for the level." })
   code?: Code;
