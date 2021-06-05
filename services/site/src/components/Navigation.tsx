@@ -23,6 +23,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         <Link href="/">
           <a className="hover:text-primary">
             <A11yphantLogo className={"w-36 text-white"} />
+            <span className="sr-only">Allyphant Homepage</span>
           </a>
         </Link>
       </h1>
