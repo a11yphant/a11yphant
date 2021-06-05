@@ -16,7 +16,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
   return (
     <li
       className={clsx(
-        "relative overflow-hidden w-64 h-64 border-2 border-background bg-backgroundMiddle rounded-xl flex flex-col justify-end",
+        "relative overflow-hidden w-64 h-64 border-0 border-backgroundMiddle bg-backgroundMiddle rounded-xl flex flex-col justify-end",
         "group transition duration-300 hover:bg-grey",
         "card shadow-card",
         difficulty === ChallengeDifficulty.Easy && "bg-gradient-easy",
