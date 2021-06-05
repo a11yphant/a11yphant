@@ -122,7 +122,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           }}
           className={clsx("absolute bottom-2 flex items-center text-grey mx-3", "group transition duration-300 hover:text-primaryLight")}
           overrideClassname
-          ref={buttonRef}
+          innerRef={buttonRef}
           iconLeft={<AnimatedReset style={{ transform: transform }} />}
         >
           Reset
