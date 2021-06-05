@@ -8,6 +8,7 @@ interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes
   srText?: string;
   overrideClassname?: boolean;
   loading: boolean;
+  buttonInChallenge?: boolean;
 }
 
 const Button: React.FunctionComponent<ButtonProps> = ({
@@ -18,6 +19,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   children,
   disabled,
   loading,
+  buttonInChallenge,
   ...props
 }) => {
   return (
@@ -34,7 +36,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     >
       {srText && <span className="sr-only">{srText}</span>}
       <span className={clsx(loading ? "invisible" : "")}>{children}</span>
-      <span className={clsx("absolute inset-0 pt-2 pl-2 flex justify-center items-center", loading ? "" : "hidden")}>
+      <span className={clsx("absolute inset-0 flex justify-center items-center", loading ? "" : "hidden", buttonInChallenge ? "submit-button" : "")}>
         <LoadingIndicator />
       </span>
     </button>
