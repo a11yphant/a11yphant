@@ -8,7 +8,7 @@ const buttonText = "Button Text";
 
 afterEach(cleanup);
 
-describe("Animated Button", () => {
+describe("Button Animated", () => {
   it("renders text", () => {
     const { container } = render(<ButtonAnimated loading={false}>{buttonText}</ButtonAnimated>);
 
