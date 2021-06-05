@@ -1,4 +1,5 @@
 import Button from "app/components/buttons/Button";
+import ButtonAnimated from "app/components/buttons/ButtonAnimated";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
@@ -60,7 +61,7 @@ const Evaluation: React.FunctionComponent = () => {
     }
   }, [failedChecks, totalChecks]);
 
-  // // level is completed when all checks passed
+  // level is completed when all checks passed
   let failedLevel = true;
   if (Number.isInteger(failedChecks) && failedChecks === 0) {
     failedLevel = false;
@@ -84,6 +85,9 @@ const Evaluation: React.FunctionComponent = () => {
       }),
     [requirements],
   );
+
+  // button with loading spinner
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   return (
     <>
@@ -109,15 +113,17 @@ const Evaluation: React.FunctionComponent = () => {
             </div>
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
-                <Button
+                <ButtonAnimated
+                  full
                   onClick={() => {
+                    setLoadingAnimation(true);
                     router.back();
                   }}
-                  full
                   className="px-10"
+                  loading={loadingAnimation}
                 >
                   Retry
-                </Button>
+                </ButtonAnimated>
               ) : isLastLevel ? (
                 <Button
                   onClick={() => {
