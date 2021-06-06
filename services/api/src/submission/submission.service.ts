@@ -2,7 +2,6 @@ import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { Submission as SubmissionRecord } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -25,9 +24,8 @@ export class SubmissionService {
   public async save(input: SubmissionCreateData): Promise<Submission> {
     const submission = await this.prisma.submission.create({
       data: {
-        id: uuidv4(),
         ...input,
-        result: { create: { id: uuidv4(), status: ResultStatus.PENDING } },
+        result: { create: { status: ResultStatus.PENDING } },
       },
       include: { level: { include: { requirements: { include: { rule: true } } } } },
     });
