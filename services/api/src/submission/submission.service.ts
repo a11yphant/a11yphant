@@ -21,6 +21,17 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
+  public async findLastForUserAndLevel(userId: string, levelId: string): Promise<Submission> {
+    const submission = await this.prisma.submission.findFirst({
+      where: { userId, levelId },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+  }
+
   public async save(input: SubmissionCreateData): Promise<Submission> {
     const submission = await this.prisma.submission.create({
       data: {
@@ -50,7 +61,7 @@ export class SubmissionService {
   }
 
   static createModelFromDatabaseRecord(record: SubmissionRecord): Submission {
-    const submission = new Submission({ id: record.id, html: record.html, css: record.css, js: record.js, levelId: record.levelId });
+    const submission = new Submission({ ...record });
 
     return submission;
   }

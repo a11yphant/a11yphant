@@ -14,6 +14,8 @@ describe("submission resolver", () => {
           new Submission({
             id: "identifier",
             levelId: "best level ever",
+            createdAt: new Date(),
+            updatedAt: new Date(),
           }),
         ),
       }),
@@ -35,7 +37,7 @@ describe("submission resolver", () => {
       }),
     );
 
-    const level = await resolver.level(new Submission({ id: "bla", levelId: "blu" }));
+    const level = await resolver.level(new Submission({ id: "bla", levelId: "blu", createdAt: new Date(), updatedAt: new Date() }));
 
     expect(level).toBeTruthy();
     expect(level.id).toBe(mockLevel.id);
