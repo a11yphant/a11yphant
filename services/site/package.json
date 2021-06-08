@@ -63,7 +63,7 @@
     "@testing-library/user-event": "13.1.9",
     "@types/enzyme": "3.10.8",
     "@types/lodash.debounce": "4.0.6",
-    "@types/node": "14.17.2",
+    "@types/node": "14.17.3",
     "@types/nprogress": "0.2.0",
     "@types/react": "17.0.9",
     "@types/react-lottie": "1.2.5",
