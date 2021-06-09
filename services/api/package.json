@@ -38,7 +38,7 @@
     "@nestjs/platform-express": "7.6.17",
     "@prisma/client": "2.24.1",
     "apollo-server-express": "2.25.0",
-    "aws-sdk": "2.922.0",
+    "aws-sdk": "2.924.0",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "commander": "7.2.0",
