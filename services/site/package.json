@@ -39,7 +39,7 @@
     "lodash.debounce": "4.0.8",
     "monaco-editor": "0.24.0",
     "next": "10.2.3",
-    "node-html-parser": "3.3.4",
+    "node-html-parser": "3.3.5",
     "nprogress": "0.2.0",
     "react": "17.0.2",
     "react-confetti": "6.0.1",
