@@ -18,12 +18,12 @@ async function init() {
 
   /**
    * We have to prevent NextJS from handling the requests for the
-   * builtin image optimizer, to be able to adjust its tmp dir.
-   * NextJs not intend to allow configuring the cache dir
+   * built-in image optimizer, to be able to adjust its cache dir.
+   * NextJs does not intend to allow configuring the cache dir
    * anytime soon: https://github.com/vercel/next.js/issues/10111
    *
    * Inside AWS Lambdas the tmp directory is the only location where we
-   * have write access. We will loose the cached image stored there,
+   * have write access. We will loose the cached images stored there,
    * but that should not matter since they will be cached by
    * CloudFront anyway.
    */
