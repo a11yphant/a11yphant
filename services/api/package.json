@@ -51,8 +51,7 @@
     "prisma": "2.24.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "6.6.7",
-    "uuid": "8.3.2"
+    "rxjs": "6.6.7"
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.1.1",
