@@ -38,6 +38,7 @@ resource "aws_lambda_function" "site" {
       NODE_ENV                          = "production"
       NO_COLOR                          = 1
       NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT = "${heroku_app.api.web_url}graphql"
+      NEXT_PUBLIC_SITE_ASSET_BASE_URL   = "https://${aws_cloudfront_distribution.site.domain_name}"
     }
   }
 
