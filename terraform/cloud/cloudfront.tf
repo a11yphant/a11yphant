@@ -53,7 +53,7 @@ resource "aws_cloudfront_distribution" "site" {
 
   # s3
   dynamic "ordered_cache_behavior" {
-    for_each = ["/fonts/*", "/_next/static/*", "favicon.ico", "images/*"]
+    for_each = ["/fonts/*", "/_next/static/*", "/_next/image*", "favicon.ico", "images/*"]
 
     content {
       path_pattern     = ordered_cache_behavior.value
