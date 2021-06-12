@@ -2,9 +2,11 @@
 const configure = require("@vendia/serverless-express");
 const express = require("express");
 const next = require("next");
-const { default: getNextJsConfig } = require("next/config");
 const { imageOptimizer } = require("next/dist/next-server/server/image-optimizer");
+const { default: loadConfig } = require("next/dist/next-server/server/config");
 const url = require("url");
+const { PHASE_PRODUCTION_SERVER } = require("next/dist/next-server/lib/constants");
+const { resolve } = require("path");
 
 const nextServer = next({ dev: false });
 const handle = nextServer.getRequestHandler();
@@ -26,8 +28,9 @@ async function init() {
    * but that should not matter since they will be cached by
    * CloudFront anyway.
    */
+  const nextConfig = await loadNextJsConfig();
   app.get("/_next/image", (req, res) => {
-    return imageOptimizer(nextServer, req, res, url.parse(req.url, true), getNextJsConfig(), "/tmp/next-image");
+    return imageOptimizer(nextServer, req, res, url.parse(req.url, true), nextConfig, "/tmp/next-image");
   });
 
   app.get("*", (req, res) => {
@@ -42,3 +45,9 @@ exports.handler = async (...args) => {
 
   return serverless.handler(...args);
 };
+
+async function loadNextJsConfig() {
+  const dir = resolve(".");
+  const conf = await loadConfig(PHASE_PRODUCTION_SERVER, dir);
+  return conf;
+}
