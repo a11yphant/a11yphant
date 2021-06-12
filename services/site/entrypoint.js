@@ -29,7 +29,6 @@ async function init() {
    * CloudFront anyway.
    */
   const nextConfig = await loadNextJsConfig();
-  console.log(nextConfig);
   app.get("/_next/image", (req, res) => {
     return imageOptimizer(nextServer, req, res, url.parse(req.url, true), nextConfig, "/tmp/next-image");
   });
