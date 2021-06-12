@@ -4,7 +4,6 @@ const express = require("express");
 const next = require("next");
 const { default: getNextJsConfig } = require("next/config");
 const { imageOptimizer } = require("next/dist/next-server/server/image-optimizer");
-const { defaultImageConfig } = require("next/dist/next-server/server/image-config");
 const url = require("url");
 
 const nextServer = next({ dev: false });
@@ -27,7 +26,7 @@ async function init() {
    * but that should not matter since they will be cached by
    * CloudFront anyway.
    */
-  app.get(defaultImageConfig.path, (req, res) => {
+  app.get("/_next/image", (req, res) => {
     return imageOptimizer(nextServer, req, res, url.parse(req.url, true), getNextJsConfig(), "/tmp/next-image");
   });
 
