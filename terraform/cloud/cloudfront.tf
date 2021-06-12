@@ -71,8 +71,8 @@ resource "aws_cloudfront_distribution" "site" {
 
       min_ttl                = 86400
       default_ttl            = 86400
-      max_ttl                = 86400
-      compress               = 31536000
+      max_ttl                = 31536000
+      compress               = true
       viewer_protocol_policy = "redirect-to-https"
     }
   }
@@ -93,8 +93,8 @@ resource "aws_cloudfront_distribution" "site" {
 
     min_ttl                = 86400
     default_ttl            = 86400
-    max_ttl                = 86400
-    compress               = 31536000
+    max_ttl                = 31536000
+    compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }
 
