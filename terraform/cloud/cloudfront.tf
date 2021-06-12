@@ -53,7 +53,7 @@ resource "aws_cloudfront_distribution" "site" {
 
   # s3
   dynamic "ordered_cache_behavior" {
-    for_each = ["/fonts/*", "/_next/static/*", "/_next/image*", "favicon.ico", "images/*"]
+    for_each = ["/fonts/*", "/_next/static/*", "favicon.ico", "images/*"]
 
     content {
       path_pattern     = ordered_cache_behavior.value
@@ -69,12 +69,33 @@ resource "aws_cloudfront_distribution" "site" {
         }
       }
 
-      min_ttl                = 0
-      default_ttl            = 3600
+      min_ttl                = 86400
+      default_ttl            = 86400
       max_ttl                = 86400
-      compress               = true
+      compress               = 31536000
       viewer_protocol_policy = "redirect-to-https"
     }
+  }
+
+  ordered_cache_behavior {
+    path_pattern     = "/_next/image*"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.origin_id_site_http_api
+
+    forwarded_values {
+      query_string = true
+
+      cookies {
+        forward = "none"
+      }
+    }
+
+    min_ttl                = 86400
+    default_ttl            = 86400
+    max_ttl                = 86400
+    compress               = 31536000
+    viewer_protocol_policy = "redirect-to-https"
   }
 
   # forward graphql to api api gateway
