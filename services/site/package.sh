@@ -11,6 +11,7 @@ SOURCE_DIR=$(dirname $0)
 cd $SOURCE_DIR
 zip -rqX lambda.zip \
     .next \
+    next.config.js \
     node_modules \
     entrypoint.js \
     package.json
