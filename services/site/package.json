@@ -37,7 +37,7 @@
     "express": "4.17.1",
     "graphql": "15.5.0",
     "lodash.debounce": "4.0.8",
-    "monaco-editor": "0.25.1",
+    "monaco-editor": "0.25.2",
     "next": "10.2.3",
     "node-html-parser": "3.3.5",
     "nprogress": "0.2.0",
