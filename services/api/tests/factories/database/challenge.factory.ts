@@ -1,8 +1,19 @@
-import { Challenge } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import faker from "faker";
 import { Factory } from "rosie";
 
-export const ChallengeFactory = Factory.define<Challenge>("challenge-record")
-  .attr("id", () => faker.datatype.uuid())
+import { LevelFactory } from "./level.factory";
+
+export const ChallengeFactory = Factory.define<Prisma.ChallengeUncheckedCreateInput>("challenge-record")
   .attr("slug", () => faker.lorem.slug())
-  .attr("name", () => faker.lorem.words(3));
+  .attr("name", () => faker.lorem.words(3))
+  .option("numberOfLevels", 0)
+  .attr("levels", ["numberOfLevels"], (numberOfLevels = 0) => {
+    const levels: Prisma.LevelCreateNestedManyWithoutChallengeInput = {
+      createMany: {
+        data: LevelFactory.buildList(numberOfLevels),
+      },
+    };
+
+    return levels;
+  });

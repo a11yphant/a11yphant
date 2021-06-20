@@ -14,10 +14,8 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: ChallengeFactory.build({}, { numberOfLevels: 1 }),
       });
-
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id }) });
 
       const service = new LevelService(prisma);
 
@@ -66,7 +64,7 @@ describe("level service", () => {
       expect(level).toHaveProperty("id", secondLevelId);
     });
 
-    it("returns null for an unkown level", async () => {
+    it("returns null for an unknown level", async () => {
       const prisma = getPrismaService();
       const service = new LevelService(prisma);
 
@@ -77,21 +75,16 @@ describe("level service", () => {
   });
 
   describe("getNumberOfLevelsForChallenge", () => {
-    it("returns the number of levels a challenge has", async () => {
+    it("returns the number of levels assigned to the challenge", async () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: ChallengeFactory.build({}, { numberOfLevels: 2 }),
       });
-
-      const levels = [
-        await prisma.level.create({ data: LevelFactory.build({ challengeId: id }) }),
-        await prisma.level.create({ data: LevelFactory.build({ challengeId: id }) }),
-      ];
 
       const service = new LevelService(prisma);
       const count = await service.getNumberOfLevelsForChallenge(id);
-      expect(count).toBe(levels.length);
+      expect(count).toBe(2);
     });
   });
 });
