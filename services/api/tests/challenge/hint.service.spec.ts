@@ -1,5 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import faker from "faker";
 
 import { HintService } from "../../src/challenge/hint.service";
 import { HintFactory } from "../factories/database/hint.factory";
@@ -40,6 +41,6 @@ describe("hint service", () => {
     const prisma = getPrismaService();
     const service = new HintService(prisma);
 
-    expect(await service.findOneById("asdf")).toBeFalsy();
+    expect(await service.findOneById(faker.datatype.uuid())).toBeFalsy();
   });
 });

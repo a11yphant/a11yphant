@@ -1,5 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import faker from "faker";
 
 import { RuleService } from "../../src/challenge/rule.service";
 import { ChallengeFactory } from "../factories/database/challenge.factory";
@@ -29,6 +30,6 @@ describe("rule service", () => {
 
     const ruleService = new RuleService(prisma);
 
-    expect(await ruleService.findOneForRequirement("not-existing-uuid")).toBeNull();
+    expect(await ruleService.findOneForRequirement(faker.datatype.uuid())).toBeNull();
   });
 });

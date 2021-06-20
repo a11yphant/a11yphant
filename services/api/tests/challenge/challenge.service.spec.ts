@@ -1,5 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import faker from "faker";
 
 import { ChallengeService } from "../../src/challenge/challenge.service";
 import { ChallengeDifficulty } from "../../src/challenge/enums/challenge-difficulty.enum";
@@ -29,7 +30,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const challenge = await service.findOne("uuid");
+      const challenge = await service.findOne(faker.datatype.uuid());
       expect(challenge).toBeFalsy();
     });
   });

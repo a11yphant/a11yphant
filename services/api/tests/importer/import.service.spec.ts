@@ -1,5 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import faker from "faker";
 import mock from "mock-fs";
 import { join } from "path";
 
@@ -136,7 +137,7 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
             instructions: "hi",
             requirements: [],
@@ -168,7 +169,7 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
             instructions: "hi",
             requirements: [],
@@ -204,7 +205,7 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
             instructions: "hi",
             requirements: [],
@@ -251,11 +252,11 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
             instructions: "hi",
             tasks: [],
-            requirements: [{ id: "asdf", title: "lala", description: "asdf", key: "test-rule" }],
+            requirements: [{ id: faker.datatype.uuid(), title: "lala", description: "asdf", key: "test-rule" }],
           },
         ],
       };
@@ -330,7 +331,7 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
             instructions: "hi",
             requirements: [],
@@ -367,7 +368,7 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
             instructions: "hi",
             requirements: [],
