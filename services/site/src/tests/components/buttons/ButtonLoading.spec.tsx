@@ -34,6 +34,7 @@ describe("Button Animated", () => {
       </ButtonLoading>,
     );
 
+    // expected value is {"0": "undefined", "1": "false"}
     expect(container.querySelector("button").classList.length).toBeLessThanOrEqual(2);
   });
 
