@@ -11,7 +11,7 @@ interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes
   buttonInChallenge?: boolean;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({
+const ButtonLoading: React.FunctionComponent<ButtonProps> = ({
   full = false,
   srText,
   className,
@@ -26,17 +26,17 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     <button
       className={clsx(
         className,
-        full ? "bg-primary text-white" : "",
+        full && "bg-primary text-white",
         !overrideClassname &&
           "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
-        disabled || loading ? "cursor-not-allowed" : "",
+        (disabled || loading) && "cursor-not-allowed",
       )}
       disabled={disabled || loading}
       {...props}
     >
       {srText && <span className="sr-only">{srText}</span>}
-      <span className={clsx(loading ? "invisible" : "")}>{children}</span>
-      <span className={clsx("absolute inset-0 flex justify-center items-center", loading ? "" : "hidden", buttonInChallenge ? "submit-button" : "")}>
+      <span className={clsx(loading && "invisible")}>{children}</span>
+      <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", buttonInChallenge && "submit-button")}>
         <LoadingIndicator />
       </span>
       {loading && <span className="sr-only">The submission is being processed.</span>}
@@ -44,4 +44,4 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default ButtonLoading;

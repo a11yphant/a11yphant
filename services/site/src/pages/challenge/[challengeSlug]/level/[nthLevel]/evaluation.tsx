@@ -1,5 +1,5 @@
 import Button from "app/components/buttons/Button";
-import ButtonAnimated from "app/components/buttons/ButtonAnimated";
+import ButtonLoading from "app/components/buttons/ButtonLoading";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
@@ -113,7 +113,7 @@ const Evaluation: React.FunctionComponent = () => {
             </div>
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
-                <ButtonAnimated
+                <ButtonLoading
                   full
                   onClick={() => {
                     setLoadingAnimation(true);
@@ -123,7 +123,7 @@ const Evaluation: React.FunctionComponent = () => {
                   loading={loadingAnimation}
                 >
                   Retry
-                </ButtonAnimated>
+                </ButtonLoading>
               ) : isLastLevel ? (
                 <Button
                   onClick={() => {

@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup, render, screen } from "@testing-library/react";
-import ButtonAnimated from "app/components/buttons/ButtonAnimated";
+import ButtonLoading from "app/components/buttons/ButtonLoading";
 import React from "react";
 
 const buttonText = "Button Text";
@@ -10,7 +10,7 @@ afterEach(cleanup);
 
 describe("Button Animated", () => {
   it("renders text", () => {
-    const { container } = render(<ButtonAnimated loading={false}>{buttonText}</ButtonAnimated>);
+    const { container } = render(<ButtonLoading loading={false}>{buttonText}</ButtonLoading>);
 
     expect(screen.getByText(buttonText, { selector: "button span" })).toBeTruthy();
     expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
@@ -19,9 +19,9 @@ describe("Button Animated", () => {
   it("className is added", () => {
     const cl = "test-class";
     const { container } = render(
-      <ButtonAnimated className={cl} loading={false}>
+      <ButtonLoading className={cl} loading={false}>
         {buttonText}
-      </ButtonAnimated>,
+      </ButtonLoading>,
     );
 
     expect(container.querySelector("button").classList.contains(cl)).toBeTruthy();
@@ -29,9 +29,9 @@ describe("Button Animated", () => {
 
   it("override className", () => {
     const { container } = render(
-      <ButtonAnimated overrideClassname loading={false}>
+      <ButtonLoading overrideClassname loading={false}>
         {buttonText}
-      </ButtonAnimated>,
+      </ButtonLoading>,
     );
 
     expect(container.querySelector("button").classList.length).toBeLessThanOrEqual(2);
@@ -39,9 +39,9 @@ describe("Button Animated", () => {
 
   it("full attribute works", () => {
     const { container } = render(
-      <ButtonAnimated full loading={false}>
+      <ButtonLoading full loading={false}>
         {buttonText}
-      </ButtonAnimated>,
+      </ButtonLoading>,
     );
 
     expect(container.querySelector("button.bg-primary")).toBeTruthy();
@@ -52,16 +52,16 @@ describe("Button Animated", () => {
     const srText = "Screen Reader Text";
 
     render(
-      <ButtonAnimated srText={srText} loading={false}>
+      <ButtonLoading srText={srText} loading={false}>
         {buttonText}
-      </ButtonAnimated>,
+      </ButtonLoading>,
     );
 
     expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
   });
 
   it("loading svg is displayed", () => {
-    const { container } = render(<ButtonAnimated loading={true}>{buttonText}</ButtonAnimated>);
+    const { container } = render(<ButtonLoading loading={true}>{buttonText}</ButtonLoading>);
 
     expect(container.querySelectorAll("svg")).toHaveProperty("length", 1);
   });
