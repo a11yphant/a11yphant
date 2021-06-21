@@ -69,7 +69,6 @@ const Level: React.FunctionComponent = () => {
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   const submitLevel = async (): Promise<void> => {
-    // display loading spinner
     setLoadingAnimation(true);
 
     const { data } = await submitLevelMutation({
