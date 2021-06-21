@@ -15,6 +15,7 @@ module.exports = {
         sidebar: "28%",
         "18/20": "90%",
         fitContent: "fit-content",
+        3.8: "0.94rem",
       },
       maxWidth: {
         "80ch": "80ch",

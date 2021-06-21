@@ -4,13 +4,11 @@ import React from "react";
 const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
     <svg
-      width="0.94em"
-      height="0.94em"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       focusable="false"
-      className={clsx("animated-button", className)}
+      className={clsx("animated-button h-3.8 w-3.8", className)}
       {...props}
     >
       <g>
