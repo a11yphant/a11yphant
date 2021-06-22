@@ -1,12 +1,13 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
+import { LevelFactory } from "@tests/factories/database/level.factory";
+import { RequirementFactory } from "@tests/factories/database/requirement.factory";
+import { RuleFactory } from "@tests/factories/database/rule.factory";
+import { useDatabase } from "@tests/helpers";
+import faker from "faker";
 
-import { RuleService } from "../../src/challenge/rule.service";
-import { ChallengeFactory } from "../factories/database/challenge.factory";
-import { LevelFactory } from "../factories/database/level.factory";
-import { RequirementFactory } from "../factories/database/requirement.factory";
-import { RuleFactory } from "../factories/database/rule.factory";
-import { useDatabase } from "../helpers";
+import { RuleService } from "@/challenge/rule.service";
 
 describe("rule service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -29,6 +30,6 @@ describe("rule service", () => {
 
     const ruleService = new RuleService(prisma);
 
-    expect(await ruleService.findOneForRequirement("not-existing-uuid")).toBeNull();
+    expect(await ruleService.findOneForRequirement(faker.datatype.uuid())).toBeNull();
   });
 });
