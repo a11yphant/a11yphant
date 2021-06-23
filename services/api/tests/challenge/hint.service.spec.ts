@@ -1,11 +1,11 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { HintFactory } from "@tests/factories/database/hint.factory";
+import { TaskFactory } from "@tests/factories/database/task.factory";
+import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
-import { HintService } from "../../src/challenge/hint.service";
-import { HintFactory } from "../factories/database/hint.factory";
-import { TaskFactory } from "../factories/database/task.factory";
-import { useDatabase } from "../helpers";
+import { HintService } from "@/challenge/hint.service";
 
 describe("hint service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());

@@ -4,6 +4,7 @@ import { Factory } from "rosie";
 
 import { ChallengeFactory } from "./challenge.factory";
 import { RequirementFactory } from "./requirement.factory";
+import { TaskFactory } from "./task.factory";
 
 export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("level-record")
   .attr("instructions", () => faker.lorem.paragraph())
@@ -32,6 +33,20 @@ export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("leve
     const levels: Prisma.RequirementCreateNestedManyWithoutLevelInput = {
       createMany: {
         data: RequirementFactory.buildList(numberOfRequirements),
+      },
+    };
+
+    return levels;
+  })
+  .option("numberOfTasks", 0)
+  .attr("tasks", ["numberOfTasks"], (numberOfTasks: number) => {
+    if (numberOfTasks === 0) {
+      return undefined;
+    }
+
+    const levels: Prisma.TaskCreateNestedManyWithoutLevelInput = {
+      createMany: {
+        data: TaskFactory.buildList(numberOfTasks),
       },
     };
 
