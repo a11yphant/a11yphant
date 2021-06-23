@@ -3,7 +3,6 @@ import { Logger } from "@nestjs/common";
 
 import { RequirementService } from "../../src/challenge/requirement.service";
 import { LevelFactory } from "../factories/database/level.factory";
-import { RequirementFactory } from "../factories/database/requirement.factory";
 import { useDatabase } from "../helpers";
 
 describe("requirement service", () => {
@@ -13,14 +12,9 @@ describe("requirement service", () => {
     const service = new RequirementService(prisma);
 
     const { id: levelId } = await prisma.level.create({
-      data: LevelFactory.build({}, { withChallenge: true }),
+      data: LevelFactory.build({}, { withChallenge: true, numberOfRequirements: 2 }),
     });
 
-    const requirements = [
-      await prisma.requirement.create({ data: RequirementFactory.build({ levelId }) }),
-      await prisma.requirement.create({ data: RequirementFactory.build({ levelId }) }),
-    ];
-
-    expect((await service.findForLevel(levelId)).length).toEqual(requirements.length);
+    expect((await service.findForLevel(levelId)).length).toEqual(2);
   });
 });

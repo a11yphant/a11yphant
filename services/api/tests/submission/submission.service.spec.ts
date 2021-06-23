@@ -3,6 +3,7 @@ import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
 import { LevelFactory } from "@tests/factories/database/level.factory";
+import { SubmissionFactory } from "@tests/factories/database/submission.factory";
 import { UserFactory } from "@tests/factories/database/user.factory";
 import { useDatabase } from "@tests/helpers";
 
@@ -60,22 +61,16 @@ describe("submission service", () => {
         data: UserFactory.build(),
       });
 
-      const { id: challengeId } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
-      });
-
       const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({ challengeId }),
+        data: LevelFactory.build({}, { withChallenge: true }),
       });
 
       const { id: submissionId } = await prisma.submission.create({
-        data: {
+        data: SubmissionFactory.build({
           userId,
           levelId,
           html,
-          css: null,
-          js: null,
-        },
+        }),
       });
 
       const submission = await service.findLastForUserAndLevel(userId, levelId);
@@ -100,12 +95,8 @@ describe("submission service", () => {
         data: UserFactory.build(),
       });
 
-      const { id: challengeId } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
-      });
-
       const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({ challengeId }),
+        data: LevelFactory.build({}, { withChallenge: true }),
       });
 
       const createdSubmission = await service.save({

@@ -3,12 +3,14 @@ import faker from "faker";
 import { Factory } from "rosie";
 
 import { ChallengeFactory } from "./challenge.factory";
+import { RequirementFactory } from "./requirement.factory";
 
 export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("level-record")
   .attr("instructions", () => faker.lorem.paragraph())
   .attr("html", "<p>hi</p>")
   .attr("css", "body { color: blue }")
   .attr("js", "console.log('hi')")
+  .attr("order", faker.datatype.number())
   .option("withChallenge", false)
   .attr("challenge", ["withChallenge"], (withChallenge = false) => {
     if (!withChallenge) {
@@ -20,4 +22,18 @@ export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("leve
     };
 
     return challenge;
+  })
+  .option("numberOfRequirements", 0)
+  .attr("requirements", ["numberOfRequirements"], (numberOfRequirements: number) => {
+    if (numberOfRequirements === 0) {
+      return undefined;
+    }
+
+    const levels: Prisma.RequirementCreateNestedManyWithoutLevelInput = {
+      createMany: {
+        data: RequirementFactory.buildList(numberOfRequirements),
+      },
+    };
+
+    return levels;
   });
