@@ -2,7 +2,6 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
 import { RequirementService } from "../../src/challenge/requirement.service";
-import { ChallengeFactory } from "../factories/database/challenge.factory";
 import { LevelFactory } from "../factories/database/level.factory";
 import { RequirementFactory } from "../factories/database/requirement.factory";
 import { useDatabase } from "../helpers";
@@ -13,12 +12,8 @@ describe("requirement service", () => {
     const prisma = getPrismaService();
     const service = new RequirementService(prisma);
 
-    const { id: challengeId } = await prisma.challenge.create({
-      data: ChallengeFactory.build(),
-    });
-
     const { id: levelId } = await prisma.level.create({
-      data: LevelFactory.build({ challengeId }),
+      data: LevelFactory.build({}, { withChallenge: true }),
     });
 
     const requirements = [
