@@ -12,9 +12,10 @@ export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("leve
   .attr("css", "body { color: blue }")
   .attr("js", "console.log('hi')")
   .attr("order", faker.datatype.number())
-  .option("withChallenge", false)
-  .attr("challenge", ["withChallenge"], (withChallenge = false) => {
-    if (!withChallenge) {
+  .attr("challengeId", undefined)
+  .option("createChallengeIfMissing", true)
+  .attr("challenge", ["challengeId", "createChallengeIfMissing"], (challengeId: string, createChallengeIfMissing: boolean) => {
+    if (challengeId || (!createChallengeIfMissing && !challengeId)) {
       return undefined;
     }
 

@@ -62,7 +62,7 @@ describe("submission service", () => {
       });
 
       const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({}, { withChallenge: true }),
+        data: LevelFactory.build(),
       });
 
       const { id: submissionId } = await prisma.submission.create({
@@ -96,7 +96,7 @@ describe("submission service", () => {
       });
 
       const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({}, { withChallenge: true }),
+        data: LevelFactory.build(),
       });
 
       const createdSubmission = await service.save({

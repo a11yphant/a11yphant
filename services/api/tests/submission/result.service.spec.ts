@@ -18,7 +18,7 @@ describe("result service", () => {
   it("returns the result for a submission", async () => {
     const prisma = getPrismaService();
 
-    const level = await prisma.level.create({ data: LevelFactory.build({}, { withChallenge: true }) });
+    const level = await prisma.level.create({ data: LevelFactory.build() });
     const submission = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
     const expectedResult = await prisma.result.create({ data: ResultFactory.build({ submissionId: submission.id }) });
 
@@ -34,7 +34,7 @@ describe("result service", () => {
     const prisma = getPrismaService();
 
     const rule = await prisma.rule.create({ data: RuleFactory.build() });
-    const level = await prisma.level.create({ data: LevelFactory.build({}, { withChallenge: true }) });
+    const level = await prisma.level.create({ data: LevelFactory.build() });
     const submission = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
     const submission2 = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
     const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission.id }) });
@@ -55,7 +55,7 @@ describe("result service", () => {
   it("returns the number of requirement checks for the result", async () => {
     const prisma = getPrismaService();
     const rule = await prisma.rule.create({ data: RuleFactory.build() });
-    const level = await prisma.level.create({ data: LevelFactory.build({}, { withChallenge: true }) });
+    const level = await prisma.level.create({ data: LevelFactory.build() });
     const submission = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
     const submission2 = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
     const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission.id }) });
@@ -75,7 +75,7 @@ describe("result service", () => {
 
   it("can update the status of a result", async () => {
     const prisma = getPrismaService();
-    const level = await prisma.level.create({ data: LevelFactory.build({}, { withChallenge: true }) });
+    const level = await prisma.level.create({ data: LevelFactory.build() });
     const submission = await prisma.submission.create({ data: SubmissionFactory.build({ levelId: level.id }) });
     const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS, submissionId: submission.id }) });
 

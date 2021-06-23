@@ -15,7 +15,7 @@ export const ChallengeFactory = Factory.define<Prisma.ChallengeCreateArgs["data"
 
     const levels: Prisma.LevelCreateNestedManyWithoutChallengeInput = {
       createMany: {
-        data: LevelFactory.buildList(numberOfLevels),
+        data: LevelFactory.buildList(numberOfLevels, {}, { createChallengeIfMissing: false }),
       },
     };
 

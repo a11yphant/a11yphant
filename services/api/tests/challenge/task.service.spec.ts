@@ -13,7 +13,7 @@ describe("task service", () => {
     it("returns the tasks for the given level id", async () => {
       const prisma = getPrismaService();
 
-      const { id: levelId } = await prisma.level.create({ data: LevelFactory.build({}, { withChallenge: true }) });
+      const { id: levelId } = await prisma.level.create({ data: LevelFactory.build() });
 
       await prisma.task.create({
         data: TaskFactory.build({ levelId }),

@@ -12,7 +12,7 @@ describe("requirement service", () => {
     const service = new RequirementService(prisma);
 
     const { id: levelId } = await prisma.level.create({
-      data: LevelFactory.build({}, { withChallenge: true, numberOfRequirements: 2 }),
+      data: LevelFactory.build({}, { numberOfRequirements: 2 }),
     });
 
     expect((await service.findForLevel(levelId)).length).toEqual(2);

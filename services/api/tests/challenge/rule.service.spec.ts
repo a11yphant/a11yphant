@@ -14,7 +14,7 @@ describe("rule service", () => {
   it("returns rule for a requirement", async () => {
     const prisma = getPrismaService();
     const rule = await prisma.rule.create({ data: RuleFactory.build() });
-    const level = await prisma.level.create({ data: LevelFactory.build({}, { withChallenge: true }) });
+    const level = await prisma.level.create({ data: LevelFactory.build() });
     const requirement = await prisma.requirement.create({ data: RequirementFactory.build({ ruleId: rule.id, levelId: level.id }) });
 
     const ruleService = new RuleService(prisma);
