@@ -104,7 +104,7 @@ model Result {
   id           String        @id @default(uuid())
   status       Int           @default(0)
   checkResults CheckResult[]
-  Submission   Submission    @relation(fields: [submissionId], references: [id])
+  submission   Submission    @relation(fields: [submissionId], references: [id])
   submissionId String
 
   @@map(name: "results")
