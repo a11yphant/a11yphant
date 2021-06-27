@@ -32,9 +32,7 @@ export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("leve
     }
 
     const requirements: Prisma.RequirementCreateNestedManyWithoutLevelInput = {
-      createMany: {
-        data: RequirementFactory.buildList(numberOfRequirements, {}, { createLevelIfMissing: false }),
-      },
+      create: RequirementFactory.buildList(numberOfRequirements, {}, { createLevelIfMissing: false }),
     };
 
     return requirements;
@@ -46,9 +44,7 @@ export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("leve
     }
 
     const tasks: Prisma.TaskCreateNestedManyWithoutLevelInput = {
-      createMany: {
-        data: TaskFactory.buildList(numberOfTasks),
-      },
+      create: TaskFactory.buildList(numberOfTasks),
     };
 
     return tasks;
