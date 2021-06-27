@@ -1,10 +1,11 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
+import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
-import { ChallengeService } from "../../src/challenge/challenge.service";
-import { ChallengeDifficulty } from "../../src/challenge/enums/challenge-difficulty.enum";
-import { useDatabase } from "../helpers";
+import { ChallengeService } from "@/challenge/challenge.service";
+import { ChallengeDifficulty } from "@/challenge/enums/challenge-difficulty.enum";
 
 describe("challenge service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -14,11 +15,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
       const { id } = await prisma.challenge.create({
-        data: {
-          name: "test",
-          slug: "test-slug",
-          difficulty: ChallengeDifficulty.EASY,
-        },
+        data: ChallengeFactory.build(),
       });
 
       const challenge = await service.findOne(id);
@@ -40,11 +37,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
       const { slug } = await prisma.challenge.create({
-        data: {
-          name: "test",
-          slug: "test-slug",
-          difficulty: ChallengeDifficulty.EASY,
-        },
+        data: ChallengeFactory.build(),
       });
 
       const challenge = await service.findOneBySlug(slug);
@@ -66,24 +59,14 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const challenges = ["dani", "thomas", "luca", "michi"];
-
-      await Promise.all(
-        challenges.map((challengeSlug) =>
-          prisma.challenge.create({
-            data: {
-              name: "hello",
-              slug: challengeSlug,
-              difficulty: ChallengeDifficulty.EASY,
-            },
-          }),
-        ),
-      );
+      await prisma.challenge.createMany({
+        data: ChallengeFactory.buildList(3),
+      });
 
       const queriedChallenges = await service.findAll();
 
       expect(queriedChallenges).toBeTruthy();
-      expect(queriedChallenges.length).toBe(challenges.length);
+      expect(queriedChallenges).toHaveLength(3);
     });
 
     it("returns an empty array when no challenges are found", async () => {
@@ -99,62 +82,21 @@ describe("challenge service", () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const challenges = [
-          {
-            name: "test1",
-            slug: "test1",
-            difficulty: ChallengeDifficulty.EASY,
-          },
-          {
-            name: "test2",
-            slug: "test2",
-            difficulty: ChallengeDifficulty.MEDIUM,
-          },
-          {
-            name: "test3",
-            slug: "test3",
-            difficulty: ChallengeDifficulty.HARD,
-          },
-        ];
+        const challenges = ChallengeFactory.buildList(3);
+        await prisma.challenge.createMany({ data: challenges });
 
-        await Promise.all(challenges.map((data) => prisma.challenge.create({ data })));
-
-        const foundChallenges = await service.findAll();
-
-        expect(foundChallenges.length).toBe(challenges.length);
+        expect(await service.findAll()).toHaveLength(challenges.length);
       });
 
       it("finds only filtered challenges", async () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const challenges = [
-          {
-            name: "test1",
-            slug: "test1",
-            difficulty: ChallengeDifficulty.EASY,
-          },
-          {
-            name: "test2",
-            slug: "test2",
-            difficulty: ChallengeDifficulty.MEDIUM,
-          },
-          {
-            name: "test3",
-            slug: "test3",
-            difficulty: ChallengeDifficulty.MEDIUM,
-          },
-          {
-            name: "test4",
-            slug: "test4",
-            difficulty: ChallengeDifficulty.HARD,
-          },
-        ];
-
-        await Promise.all(challenges.map((data) => prisma.challenge.create({ data })));
+        await prisma.challenge.createMany({ data: ChallengeFactory.buildList(2, { difficulty: ChallengeDifficulty.EASY }) });
+        await prisma.challenge.createMany({ data: ChallengeFactory.buildList(2, { difficulty: ChallengeDifficulty.MEDIUM }) });
 
         const foundChallenges = await service.findAll({ difficulty: ChallengeDifficulty.MEDIUM });
-        expect(foundChallenges.length).toBe(challenges.filter((c) => c.difficulty === ChallengeDifficulty.MEDIUM).length);
+        expect(foundChallenges).toHaveLength(2);
       });
     });
   });
