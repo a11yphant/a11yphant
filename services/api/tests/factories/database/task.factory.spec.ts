@@ -16,4 +16,17 @@ describe("task factory", () => {
 
     expect(task).toBeTruthy();
   });
+
+  it("can create a task record with hints", async () => {
+    const prisma = getPrismaService();
+
+    const task = await prisma.task.create({
+      data: TaskFactory.build({}, { numberOfHints: 2 }),
+      select: {
+        hints: true,
+      },
+    });
+
+    expect(task.hints).toHaveLength(2);
+  });
 });
