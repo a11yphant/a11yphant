@@ -83,6 +83,6 @@
       "text-summary",
       "cobertura"
     ],
-    "coverageDirectory": "<rootDir>"
+    "coverageDirectory": "<rootDir>/coverage"
   }
 }

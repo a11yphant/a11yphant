@@ -11,7 +11,7 @@ module.exports = {
   reporters: ["default", "jest-junit"],
   coverageReporters: ["text", "text-summary", "cobertura"],
   globalSetup: "<rootDir>/tests/setup.ts",
-  coverageDirectory: "<rootDir>",
+  coverageDirectory: "<rootDir>/coverage",
   moduleNameMapper: {
     "@tests/(.*)$": "<rootDir>/tests/$1",
     "@/(.*)$": "<rootDir>/src/$1",
