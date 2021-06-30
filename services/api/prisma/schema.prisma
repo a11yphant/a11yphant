@@ -12,7 +12,7 @@ generator client {
 }
 
 model Challenge {
-  id           String  @id @default(uuid())
+  id           String  @id @default(uuid()) @db.Uuid
   slug         String  @unique
   name         String
   introduction String  @default("")
@@ -24,11 +24,11 @@ model Challenge {
 }
 
 model Level {
-  id            String        @id @default(uuid())
+  id            String        @id @default(uuid()) @db.Uuid
   order         Int           @default(0)
   instructions  String
   challenge     Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId   String
+  challengeId   String        @db.Uuid
   requirements  Requirement[]
   submissions   Submission[]
   tasks         Task[]
@@ -43,17 +43,17 @@ model Level {
 }
 
 model Task {
-  id      String  @id @default(uuid())
+  id      String  @id @default(uuid()) @db.Uuid
   text    String
   hints   Hint[]
   Level   Level?  @relation(fields: [levelId], references: [id])
-  levelId String?
+  levelId String? @db.Uuid
 
   @@map("tasks")
 }
 
 model Rule {
-  id           String        @id @default(uuid())
+  id           String        @id @default(uuid()) @db.Uuid
   key          String        @unique
   requirements Requirement[]
 
@@ -61,14 +61,14 @@ model Rule {
 }
 
 model Requirement {
-  id          String        @id @default(uuid())
+  id          String        @id @default(uuid()) @db.Uuid
   title       String        @default("")
   description String        @default("")
   order       Int           @default(0)
   level       Level         @relation(fields: [levelId], references: [id])
-  levelId     String
+  levelId     String        @db.Uuid
   rule        Rule?         @relation(fields: [ruleId], references: [id])
-  ruleId      String?
+  ruleId      String?       @db.Uuid
   options     Json?
   CheckResult CheckResult[]
 
@@ -76,53 +76,53 @@ model Requirement {
 }
 
 model Hint {
-  id     String  @id @default(uuid())
+  id     String  @id @default(uuid()) @db.Uuid
   text   String  @default("")
   Task   Task?   @relation(fields: [taskId], references: [id])
-  taskId String?
+  taskId String? @db.Uuid
 
   @@map(name: "hints")
 }
 
 model Submission {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
+  id        String    @id @default(uuid()) @db.Uuid
+  createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   html      String?
   css       String?
   js        String?
-  level     Level    @relation(fields: [levelId], references: [id])
-  levelId   String
+  level     Level     @relation(fields: [levelId], references: [id])
+  levelId   String    @db.Uuid
   result    Result?
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?   @db.Uuid
 
   @@map(name: "submissions")
 }
 
 model Result {
-  id           String        @id @default(uuid())
+  id           String        @id @default(uuid()) @db.Uuid
   status       Int           @default(0)
   checkResults CheckResult[]
   submission   Submission    @relation(fields: [submissionId], references: [id])
-  submissionId String
+  submissionId String        @db.Uuid
 
   @@map(name: "results")
 }
 
 model CheckResult {
-  id            String      @id @default(uuid())
+  id            String      @id @default(uuid()) @db.Uuid
   result        Result      @relation(fields: [resultId], references: [id])
-  resultId      String
+  resultId      String      @db.Uuid
   requirement   Requirement @relation(fields: [requirementId], references: [id])
-  requirementId String
+  requirementId String      @db.Uuid
   status        Int
 
   @@map(name: "check_results")
 }
 
 model User {
-  id          String       @id @default(uuid())
+  id          String       @id @default(uuid()) @db.Uuid
   submissions Submission[]
 
   @@map("users")

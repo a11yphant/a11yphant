@@ -21,7 +21,7 @@
     "@nestjs/common": "7.6.18",
     "@nestjs/core": "7.6.18",
     "@nestjs/microservices": "7.6.18",
-    "aws-sdk": "2.931.0",
+    "aws-sdk": "2.935.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7"
   },
@@ -34,13 +34,13 @@
     "@nestjs/testing": "7.6.18",
     "@types/aws-lambda": "8.10.77",
     "@types/jest": "26.0.23",
-    "@types/node": "14.17.3",
-    "@typescript-eslint/eslint-plugin": "4.27.0",
-    "@typescript-eslint/parser": "4.27.0",
+    "@types/node": "14.17.4",
+    "@typescript-eslint/eslint-plugin": "4.28.0",
+    "@typescript-eslint/parser": "4.28.0",
     "aws-lambda": "1.0.6",
-    "aws-sdk": "2.931.0",
-    "aws-sdk-mock": "5.2.0",
-    "dotenv": "8.2.0",
+    "aws-sdk": "2.935.0",
+    "aws-sdk-mock": "5.2.1",
+    "dotenv": "8.6.0",
     "dotenv-cli": "4.0.0",
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
@@ -48,9 +48,9 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-unused-imports": "1.1.1",
-    "jest": "27.0.4",
+    "jest": "27.0.5",
     "jest-junit": "12.2.0",
-    "prettier": "2.3.1",
+    "prettier": "2.3.2",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7",
     "ts-jest": "27.0.3",
@@ -83,6 +83,6 @@
       "text-summary",
       "cobertura"
     ],
-    "coverageDirectory": "<rootDir>"
+    "coverageDirectory": "<rootDir>/coverage"
   }
 }

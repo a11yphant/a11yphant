@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { CheckResult, Requirement } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
 
 import { RequirementStatus } from "../challenge/enums/requirement-status.enum";
 import { PrismaService } from "../prisma/prisma.service";
@@ -23,7 +22,6 @@ export class RequirementResultService {
   async create(resultId: string, requirementId: string, status: RequirementStatus): Promise<RequirementResult> {
     const record = await this.prisma.checkResult.create({
       data: {
-        id: uuidv4(),
         resultId,
         requirementId,
         status,
