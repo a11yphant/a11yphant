@@ -21,7 +21,7 @@ const ButtonLoading: React.FunctionComponent<ButtonProps> = ({
   overrideClassname,
   disabled,
   loading,
-  submitButton,
+  submitButton = false,
   children,
   ...props
 }) => {
