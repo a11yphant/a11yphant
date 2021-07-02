@@ -10,7 +10,7 @@ describe("AWS Transport Strategy", () => {
     AWSMock.mock(
       "SQS",
       "deleteMessage",
-      jest.fn((_, cb) => cb(null)),
+      jest.fn((_, cb) => cb(null, null)),
     );
   });
 
