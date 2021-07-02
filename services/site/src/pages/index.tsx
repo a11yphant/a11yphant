@@ -1,21 +1,19 @@
-import Button from "app/components/buttons/Button";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
 import IllustrationCoding from "app/components/icons/IllustrationCoding";
 import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React from "react";
 
 const Home: React.FunctionComponent = () => {
   const {
     data: { easyChallenges, mediumChallenges, hardChallenges },
   } = useChallengesQuery();
-
-  const router = useRouter();
 
   return (
     <>
@@ -31,15 +29,19 @@ const Home: React.FunctionComponent = () => {
               read large amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web
               accessibility challenge and improve your skills.
             </p>
-            <Button
-              full
-              onClick={() => {
-                router.push(`#challenges`);
-              }}
-              className="px-10 w-max mt-8"
-            >
-              Start Coding
-            </Button>
+            <Link href="/#challenges">
+              <a
+                className={clsx(
+                  "px-10 w-max mt-8 font-normal",
+                  "bg-primary text-white",
+                  "border-primary border-2 rounded px-4 py-2 tracking-wider inline-flex items-center",
+                  "transition duration-300",
+                  "hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
+                )}
+              >
+                Start Coding
+              </a>
+            </Link>
           </div>
           <IllustrationCoding className="max-w-md mx-8 col-span-1" />
         </section>

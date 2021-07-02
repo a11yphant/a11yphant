@@ -9,13 +9,11 @@ import { ChallengeResolver } from "./challenge/challenge.resolver";
 import { LevelResolver } from "./challenge/level.resolver";
 import { RequirementResolver } from "./challenge/requirement.resolver";
 import { TaskResolver } from "./challenge/task.resolver";
-import { HelloWorldResolver } from "./hello-world/hello-world.resolver";
 import { RequirementResultResolver } from "./submission/requirement-result.resolver";
 import { ResultResolver } from "./submission/result.resolver";
 import { SubmissionResolver } from "./submission/submission.resolver";
 
 const resolvers = [
-  HelloWorldResolver,
   ChallengeResolver,
   TaskResolver,
   LevelResolver,

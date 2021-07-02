@@ -11,7 +11,6 @@ import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import messaging from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
-import { HelloWorldModule } from "./hello-world/hello-world.module";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SubmissionModule } from "./submission/submission.module";
@@ -62,7 +61,6 @@ import { UserModule } from "./user/user.module";
       inject: [ConfigService],
     }),
     AuthenticationModule,
-    HelloWorldModule,
     ChallengeModule,
     SubmissionModule,
     ImporterModule,
