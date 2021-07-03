@@ -39,7 +39,8 @@
     "tf:destroy": "npm run tf destroy -- -auto-approve",
     "tf:clear-state": "rm -f terraform/local/terraform.tfstate*",
     "db:migrate": "docker-compose up -d postgres && npm --prefix services/api run prisma:migrate",
-    "gitlab-registry:login": "npm config set -- //gitlab.mediacube.at/api/v4/projects/5907/packages/npm/:_authToken"
+    "gitlab-registry:login": "npm config set -- //gitlab.mediacube.at/api/v4/projects/5907/packages/npm/:_authToken",
+    "import-challenges": "npm run console  import:challenges --prefix services/api"
   },
   "repository": {
     "type": "git",
