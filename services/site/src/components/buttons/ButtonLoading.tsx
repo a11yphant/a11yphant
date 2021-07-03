@@ -4,7 +4,7 @@ import React from "react";
 import LoadingIndicator from "../icons/LoadingIndicator";
 import Button from "./Button";
 
-interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface ButtonLoadingProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   full?: boolean;
   icon?: React.ReactNode;
   srText?: string;
@@ -13,7 +13,7 @@ interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes
   submitButton?: boolean;
 }
 
-const ButtonLoading: React.FunctionComponent<ButtonProps> = ({
+const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
   full,
   icon,
   srText,
