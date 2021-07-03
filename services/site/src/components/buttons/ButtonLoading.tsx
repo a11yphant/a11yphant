@@ -8,6 +8,7 @@ interface ButtonLoadingProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
   full?: boolean;
   icon?: React.ReactNode;
   srText?: string;
+  srTextLoading?: string;
   overrideClassname?: boolean;
   loading: boolean;
   submitButton?: boolean;
@@ -17,6 +18,7 @@ const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
   full,
   icon,
   srText,
+  srTextLoading,
   className,
   overrideClassname,
   disabled,
@@ -39,7 +41,7 @@ const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
       <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "submit-button")}>
         <LoadingIndicator />
       </span>
-      {loading && <span className="sr-only">The submission is being processed.</span>}
+      {loading && <span className="sr-only">{srTextLoading}</span>}
     </Button>
   );
 };

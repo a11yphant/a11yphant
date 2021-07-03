@@ -121,6 +121,7 @@ const Evaluation: React.FunctionComponent = () => {
                   }}
                   className="px-10"
                   loading={loadingAnimation}
+                  srTextLoading="The request is being processed."
                 >
                   Retry
                 </ButtonLoading>
