@@ -298,21 +298,4 @@
             outline: none;
         }
     }
-
-    // loading button animation
-    .animated-button {
-        g {
-            animation: spin 1s linear infinite;
-            transform-origin: center center;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    }
 }
