@@ -38,7 +38,7 @@ const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
       icon={icon}
     >
       <span className={clsx(loading && "invisible")}>{children}</span>
-      <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "submit-button")}>
+      <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "pt-2 pl-2")}>
         <LoadingIndicator />
       </span>
       {loading && <span className="sr-only">{srTextLoading}</span>}
