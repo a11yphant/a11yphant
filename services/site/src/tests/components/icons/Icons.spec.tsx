@@ -13,6 +13,7 @@ import Exclamation from "app/components/icons/Exclamation";
 import Github from "app/components/icons/Github";
 import Home from "app/components/icons/Home";
 import LightBulb from "app/components/icons/LightBulb";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import Save from "app/components/icons/Save";
 import Trash from "app/components/icons/Trash";
@@ -129,6 +130,12 @@ describe("Icons", () => {
 
   it("X exists", () => {
     const wrapper = shallow(<X />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("LoadingIndicator exists", () => {
+    const wrapper = shallow(<LoadingIndicator />);
 
     expect(wrapper.type()).toBe("svg");
   });

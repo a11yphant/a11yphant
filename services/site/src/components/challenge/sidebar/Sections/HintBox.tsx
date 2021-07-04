@@ -41,7 +41,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             "focus-visible:outline-none focus:outline-none",
             "h6",
           )}
-          overrideClassname
+          overrideClassName
           aria-expanded={usedHints > 0}
         >
           {showHint ? "Hint" : "Stuck? Click to reveal a hint"}
@@ -63,7 +63,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             onClick={() => {
               setUsedHints((usedHints) => (totalHints === usedHints ? usedHints : usedHints + 1));
             }}
-            overrideClassname
+            overrideClassName
             className={clsx(
               "font-normal border-b transition duration-300 mt-4 mb-4",
               "hover:text-primaryLight hover:border-primaryLight",

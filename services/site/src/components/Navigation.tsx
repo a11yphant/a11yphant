@@ -39,7 +39,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>
-            <Button full className="mx-4">
+            <Button primary className="mx-4">
               Sign Up
             </Button>{" "}
             <Button>Login</Button>

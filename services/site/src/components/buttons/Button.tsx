@@ -1,30 +1,32 @@
+import clsx from "clsx";
 import React from "react";
 
-interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  full?: boolean;
+export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  primary?: boolean;
+  icon?: React.ReactNode;
   srText?: string;
   innerRef?: React.MutableRefObject<HTMLButtonElement>;
-  overrideClassname?: boolean;
+  overrideClassName?: boolean;
 }
 
 const Button: React.FunctionComponent<ButtonProps> = ({
-  full = false,
+  primary = false,
+  icon,
   srText,
   className,
-  overrideClassname = false,
+  overrideClassName = false,
   children,
   innerRef,
   ...props
 }) => {
   return (
     <button
-      className={`
-      ${className}
-      ${full ? "bg-primary text-white" : ""} 
-      ${
-        !overrideClassname &&
-        "border-primary border-2 rounded px-4 py-2 tracking-wider inline-flex items-center transition duration-300 hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark"
-      }`}
+      className={clsx(
+        className,
+        primary && "bg-primary text-white",
+        !overrideClassName &&
+          "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
+      )}
       ref={innerRef}
       {...props}
     >

@@ -1,4 +1,5 @@
 import Button from "app/components/buttons/Button";
+import ButtonLoading from "app/components/buttons/ButtonLoading";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
@@ -60,7 +61,7 @@ const Evaluation: React.FunctionComponent = () => {
     }
   }, [failedChecks, totalChecks]);
 
-  // // level is completed when all checks passed
+  // level is completed when all checks passed
   let failedLevel = true;
   if (Number.isInteger(failedChecks) && failedChecks === 0) {
     failedLevel = false;
@@ -84,6 +85,9 @@ const Evaluation: React.FunctionComponent = () => {
       }),
     [requirements],
   );
+
+  // button with loading spinner
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   return (
     <>
@@ -109,21 +113,24 @@ const Evaluation: React.FunctionComponent = () => {
             </div>
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
-                <Button
+                <ButtonLoading
+                  primary
                   onClick={() => {
+                    setLoadingAnimation(true);
                     router.back();
                   }}
-                  full
                   className="px-10"
+                  loading={loadingAnimation}
+                  srTextLoading="The request is being processed."
                 >
                   Retry
-                </Button>
+                </ButtonLoading>
               ) : isLastLevel ? (
                 <Button
                   onClick={() => {
                     router.push("/");
                   }}
-                  full
+                  primary
                   className="px-10"
                 >
                   Finish Challenge
@@ -134,7 +141,7 @@ const Evaluation: React.FunctionComponent = () => {
                     const nextLevel = parseInt(nthLevel as string) + 1;
                     router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
                   }}
-                  full
+                  primary
                   className="px-10"
                 >
                   Next Level

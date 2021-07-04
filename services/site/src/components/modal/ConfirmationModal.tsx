@@ -41,7 +41,11 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
       aria-hidden
     >
       <div className={clsx("relative", "w-1/2 h-64 bg-backgroundMiddle rounded-lg shadow-modal", "px-12 py-14")}>
-        <Button onClick={onCancel} overrideClassname className="absolute top-6 right-6">
+        <Button
+          onClick={onCancel}
+          overrideClassName
+          className={clsx("absolute top-6 right-6", "transition-colors duration-300", "hover:text-primaryLight  focus:text-primaryLight")}
+        >
           <span className="sr-only">Close</span>
           <X />
         </Button>
@@ -49,10 +53,18 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
         <h2 className={clsx("text-2xl")}>{title}</h2>
 
         <div className="absolute bottom-7 right-7">
-          <Button onClick={onCancel} overrideClassname className="mr-16">
+          <Button
+            onClick={onCancel}
+            overrideClassName
+            className={clsx(
+              "mr-16 border-b-2 border-transparent",
+              "transition-colors duration-300",
+              "hover:text-primaryLight hover:border-primaryLight focus:text-primaryLight focus:border-primaryLight",
+            )}
+          >
             {cancelButtonLabel ?? "Cancel"}
           </Button>
-          <Button onClick={onConfirm} full className="leading-4 px-6 py-4">
+          <Button onClick={onConfirm} primary className="leading-4 px-6 py-4">
             {confirmButtonLabel ?? "Confirm"}
           </Button>
         </div>

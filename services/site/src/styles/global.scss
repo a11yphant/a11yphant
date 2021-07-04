@@ -187,6 +187,10 @@
         @apply max-w-80ch;
     }
 
+    span {
+        @apply m-0;
+    }
+
     a {
         @apply text-base;
         @apply font-bold;
@@ -308,5 +312,10 @@
         &:focus-within a:focus {
             outline: none;
         }
+    }
+
+    .loading-spinner {
+        width: 0.94rem;
+        height: 0.94rem;
     }
 }
