@@ -102,7 +102,7 @@ const Evaluation: React.FunctionComponent = () => {
               challengeName={challenge.name}
               levelIdx={nthLevel as string}
               score={totalScore}
-              showScore={status === ResultStatus.Success || status === ResultStatus.Fail}
+              passed={status === ResultStatus.Success}
             />
             <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-24 mt-0 mb-4 overflow-auto overscroll-none">
               <ul className="h-full">{getRequirements}</ul>

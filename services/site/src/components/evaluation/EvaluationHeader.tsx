@@ -1,3 +1,5 @@
+import Check from "app/components/icons/Check";
+import X from "app/components/icons/X";
 import clsx from "clsx";
 import React from "react";
 
@@ -6,16 +8,19 @@ interface EvaluationHeaderProps {
   challengeName: string;
   levelIdx: string;
   score: number;
-  showScore: boolean;
+  passed: boolean;
 }
 
-const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ className, levelIdx, challengeName, score, showScore }) => {
+const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ className, levelIdx, challengeName, score, passed }) => {
   return (
     <div className={clsx("flex flex-row justify-between items-center pb-6 h-fitContent w-full border-greyLight border-b", className)}>
       <h2 className="text-greyMiddle leading-tight font-normal">
         <strong className="text-light">Evaluation</strong> <br /> {challengeName} <br /> Level {levelIdx}
       </h2>
-      <p className="text-8xl text-white font-ibmPlexMono font-bold">{showScore && `${score.toFixed(0)}%`}</p>
+      <div className="flex flex-row justify-between items-center">
+        <span className="mr-10">{passed ? <Check className="h-20 w-28 text-success" /> : <X className="h-20 w-20 text-error" />}</span>
+        <p className="text-8xl text-white font-ibmPlexMono font-bold">{score.toFixed(0)}%</p>
+      </div>
     </div>
   );
 };
