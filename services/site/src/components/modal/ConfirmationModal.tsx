@@ -52,7 +52,7 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
           <Button onClick={onCancel} overrideClassName className="mr-16">
             {cancelButtonLabel ?? "Cancel"}
           </Button>
-          <Button onClick={onConfirm} full className="leading-4 px-6 py-4">
+          <Button onClick={onConfirm} primary className="leading-4 px-6 py-4">
             {confirmButtonLabel ?? "Confirm"}
           </Button>
         </div>

@@ -30,7 +30,7 @@ describe("Button", () => {
   });
 
   it("full attribute works", () => {
-    const { container } = render(<Button full>{buttonText}</Button>);
+    const { container } = render(<Button primary>{buttonText}</Button>);
 
     expect(container.querySelector("button.bg-primary")).toBeTruthy();
     expect(container.querySelector("button.text-white")).toBeTruthy();

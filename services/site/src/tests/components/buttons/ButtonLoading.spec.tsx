@@ -40,7 +40,7 @@ describe("Button Animated", () => {
 
   it("full attribute works", () => {
     const { container } = render(
-      <ButtonLoading full loading={false}>
+      <ButtonLoading primary loading={false}>
         {buttonText}
       </ButtonLoading>,
     );

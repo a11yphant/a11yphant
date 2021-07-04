@@ -114,7 +114,7 @@ const Evaluation: React.FunctionComponent = () => {
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
                 <ButtonLoading
-                  full
+                  primary
                   onClick={() => {
                     setLoadingAnimation(true);
                     router.back();
@@ -130,7 +130,7 @@ const Evaluation: React.FunctionComponent = () => {
                   onClick={() => {
                     router.push("/");
                   }}
-                  full
+                  primary
                   className="px-10"
                 >
                   Finish Challenge
@@ -141,7 +141,7 @@ const Evaluation: React.FunctionComponent = () => {
                     const nextLevel = parseInt(nthLevel as string) + 1;
                     router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
                   }}
-                  full
+                  primary
                   className="px-10"
                 >
                   Next Level
