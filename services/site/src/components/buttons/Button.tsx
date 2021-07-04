@@ -2,8 +2,6 @@ import React from "react";
 
 interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   full?: boolean;
-  iconLeft?: React.ReactNode;
-  iconRight?: React.ReactNode;
   srText?: string;
   innerRef?: React.MutableRefObject<HTMLButtonElement>;
   overrideClassname?: boolean;
@@ -11,8 +9,6 @@ interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes
 
 const Button: React.FunctionComponent<ButtonProps> = ({
   full = false,
-  iconLeft,
-  iconRight,
   srText,
   className,
   overrideClassname = false,
@@ -32,9 +28,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       ref={innerRef}
       {...props}
     >
-      {iconLeft}
       {children}
-      {iconRight}
       {srText && <span className="sr-only">{srText}</span>}
     </button>
   );
