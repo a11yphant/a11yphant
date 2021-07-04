@@ -78,8 +78,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
     onResize: updateEditorSize,
   });
 
-  // animation of reset button
-  const AnimatedReset = animated(Reset);
+  const AnimatedResetIcon = animated(Reset);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
@@ -123,7 +122,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           className={clsx("absolute bottom-2 flex items-center text-grey mx-3", "group transition duration-300 hover:text-primaryLight")}
           overrideClassname
           innerRef={buttonRef}
-          iconLeft={<AnimatedReset style={{ transform: transform }} />}
+          iconLeft={<AnimatedResetIcon style={{ transform: transform }} />}
         >
           Reset
         </Button>
