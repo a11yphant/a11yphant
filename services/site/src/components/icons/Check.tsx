@@ -12,7 +12,7 @@ const Check: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ classNa
       focusable="false"
       {...props}
     >
-      <path d="M4 21.622l17.297 16.756L56 4" stroke="currentColor" stroke-width="10.16" />
+      <path d="M4 21.622l17.297 16.756L56 4" stroke="currentColor" strokeWidth="10.16" />
     </svg>
   );
 };
