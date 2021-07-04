@@ -30,7 +30,7 @@ describe("Navigation", () => {
     expect(wrapper.exists(Save)).toBeFalsy();
 
     // User Avatar exists
-    expect(wrapper.exists(UserAvatar)).toBeTruthy();
+    expect(wrapper.exists(UserAvatar)).toBeFalsy();
 
     // SignUp/Login Buttons do not exist
     expect(wrapper.exists(Button)).toBeFalsy();

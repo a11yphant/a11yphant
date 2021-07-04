@@ -5,6 +5,7 @@ export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
   primary?: boolean;
   icon?: React.ReactNode;
   srText?: string;
+  innerRef?: React.MutableRefObject<HTMLButtonElement>;
   overrideClassName?: boolean;
 }
 
@@ -15,6 +16,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   className,
   overrideClassName = false,
   children,
+  innerRef,
   ...props
 }) => {
   return (
@@ -25,10 +27,10 @@ const Button: React.FunctionComponent<ButtonProps> = ({
         !overrideClassName &&
           "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
       )}
+      ref={innerRef}
       {...props}
     >
       {children}
-      {icon}
       {srText && <span className="sr-only">{srText}</span>}
     </button>
   );

@@ -1,4 +1,5 @@
 import loadingAnimation from "app/lotties/loading_lottie_eval.json";
+import clsx from "clsx";
 import React from "react";
 import Lottie from "react-lottie";
 
@@ -8,7 +9,7 @@ interface LoadingScreenProps {
 
 const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className }) => {
   return (
-    <div className={`${className} flex flex-col justify-center items-center box-border h-full w-full`}>
+    <div className={clsx("flex flex-col justify-center items-center box-border h-full w-full", "container-dark", className)}>
       <div>
         <Lottie
           options={{
