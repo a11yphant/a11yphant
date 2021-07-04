@@ -2,25 +2,17 @@ import clsx from "clsx";
 import React from "react";
 
 import LoadingIndicator from "../icons/LoadingIndicator";
-import Button from "./Button";
+import Button, { ButtonProps } from "./Button";
 
-interface ButtonLoadingProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-  full?: boolean;
-  icon?: React.ReactNode;
-  srText?: string;
+interface ButtonLoadingProps extends ButtonProps {
   srTextLoading?: string;
-  overrideClassname?: boolean;
   loading: boolean;
   submitButton?: boolean;
 }
 
 const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
-  full,
-  icon,
-  srText,
   srTextLoading,
   className,
-  overrideClassname,
   disabled,
   loading,
   submitButton = false,
@@ -28,15 +20,7 @@ const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
   ...props
 }) => {
   return (
-    <Button
-      full={full}
-      overrideClassname={overrideClassname}
-      className={clsx(className, (disabled || loading) && "cursor-not-allowed")}
-      disabled={disabled || loading}
-      {...props}
-      srText={srText}
-      icon={icon}
-    >
+    <Button className={clsx(className, (disabled || loading) && "cursor-not-allowed")} disabled={disabled || loading} {...props}>
       <span className={clsx(loading && "invisible")}>{children}</span>
       <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "pt-2 pl-2")}>
         <LoadingIndicator />
