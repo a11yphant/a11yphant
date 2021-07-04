@@ -15,7 +15,11 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
   return (
     <div className={clsx("flex flex-row justify-between items-center pb-6 h-fitContent w-full border-greyLight border-b", className)}>
       <h2 className="text-greyMiddle leading-tight font-normal">
-        <strong className="text-light">Evaluation</strong> <br /> {challengeName} <br /> Level {levelIdx}
+        <strong className="text-light">Evaluation</strong> <br /> {challengeName} <br /> Level{" "}
+        {levelIdx.toLocaleString("de-AT", {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })}
       </h2>
       <div className="flex flex-row justify-between items-center">
         <span className="mr-10">{passed ? <Check className="h-20 w-28 text-success" /> : <X className="h-20 w-20 text-error" />}</span>
