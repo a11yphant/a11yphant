@@ -6,7 +6,7 @@ import React from "react";
 interface EvaluationHeaderProps {
   className?: string;
   challengeName: string;
-  levelIdx: string;
+  levelIdx: number;
   score: number;
   passed: boolean;
 }

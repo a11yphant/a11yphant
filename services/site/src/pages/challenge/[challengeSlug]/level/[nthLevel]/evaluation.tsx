@@ -100,7 +100,7 @@ const Evaluation: React.FunctionComponent = () => {
           <>
             <EvaluationHeader
               challengeName={challenge.name}
-              levelIdx={nthLevel as string}
+              levelIdx={Number(nthLevel)}
               score={totalScore}
               passed={status === ResultStatus.Success}
             />
