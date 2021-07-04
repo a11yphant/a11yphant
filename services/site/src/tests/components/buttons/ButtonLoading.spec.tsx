@@ -29,7 +29,7 @@ describe("Button Animated", () => {
 
   it("override className", () => {
     const { container } = render(
-      <ButtonLoading overrideClassname loading={false}>
+      <ButtonLoading overrideClassName loading={false}>
         {buttonText}
       </ButtonLoading>,
     );

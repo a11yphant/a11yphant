@@ -5,16 +5,16 @@ export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
   full?: boolean;
   icon?: React.ReactNode;
   srText?: string;
-  overrideClassname?: boolean;
+  overrideClassName?: boolean;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({ full = false, icon, srText, className, overrideClassname = false, children, ...props }) => {
+const Button: React.FunctionComponent<ButtonProps> = ({ full = false, icon, srText, className, overrideClassName = false, children, ...props }) => {
   return (
     <button
       className={clsx(
         className,
         full && "bg-primary text-white",
-        !overrideClassname &&
+        !overrideClassName &&
           "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
       )}
       {...props}

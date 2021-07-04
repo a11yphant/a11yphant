@@ -23,7 +23,7 @@ describe("Button", () => {
   });
 
   it("override className", () => {
-    render(<Button overrideClassname>{buttonText}</Button>);
+    render(<Button overrideClassName>{buttonText}</Button>);
 
     // expected value is {"0": "undefined", "1": "false"}
     expect(screen.getByText(buttonText, { selector: "button" }).classList.length).toBeLessThanOrEqual(2);
