@@ -159,31 +159,32 @@
         @apply text-grey;
         @apply max-w-80ch;
     }
-
     h6,
-    .h6,
+    .h6 {
+        @apply text-base;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+    }
+
     p,
     span,
     ul,
     li {
         @apply text-base;
         @apply text-grey;
+    }
+
+    p,
+    ul,
+    li {
         @apply mb-4;
     }
 
-    h6,
-    .h6,
     p,
     span,
     li {
-        @apply text-base;
-        @apply text-grey;
-        @apply mb-4;
         @apply max-w-80ch;
-    }
-
-    span {
-        @apply m-0;
     }
 
     a {
@@ -307,27 +308,5 @@
         &:focus-within a:focus {
             outline: none;
         }
-    }
-
-    // loading button animation
-    .animated-button {
-        g {
-            animation: spin 1s linear infinite;
-            transform-origin: center center;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    }
-
-    .submit-button {
-        @apply pt-2;
-        @apply pl-2;
     }
 }
