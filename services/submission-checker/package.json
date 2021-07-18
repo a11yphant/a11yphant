@@ -26,7 +26,7 @@
     "@a11yphant/nestjs-aws-messaging": "0.1.1",
     "@axe-core/webdriverjs": "4.2.2",
     "@nestjs/common": "7.6.18",
-    "@nestjs/config": "0.6.3",
+    "@nestjs/config": "1.0.0",
     "@nestjs/core": "7.6.18",
     "@nestjs/microservices": "^7.6.15",
     "aws-lambda": "1.0.6",
