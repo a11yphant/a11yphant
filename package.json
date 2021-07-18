@@ -50,10 +50,10 @@
   "devDependencies": {
     "@nestjs/common": "7.6.18",
     "@nestjs/core": "7.6.18",
-    "@typescript-eslint/parser": "4.28.1",
+    "@typescript-eslint/parser": "4.28.3",
     "dotenv-cli": "4.0.0",
-    "husky": "7.0.0",
-    "lint-staged": "11.0.0",
+    "husky": "7.0.1",
+    "lint-staged": "11.0.1",
     "npm-run-all": "4.1.5",
     "pm2": "5.1.0",
     "reflect-metadata": "0.1.13",
