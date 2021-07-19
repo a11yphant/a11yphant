@@ -56,7 +56,7 @@
     "@graphql-codegen/typescript": "1.23.0",
     "@graphql-codegen/typescript-operations": "1.18.4",
     "@graphql-codegen/typescript-react-apollo": "2.3.1",
-    "@testing-library/dom": "7.31.2",
+    "@testing-library/dom": "8.1.0",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "12.0.0",
     "@testing-library/react-hooks": "7.0.1",
