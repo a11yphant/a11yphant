@@ -57,7 +57,7 @@
     "@a11yphant/eslint-config": "0.1.1",
     "@golevelup/ts-jest": "0.3.1",
     "@nestjs/cli": "7.6.0",
-    "@nestjs/schematics": "7.3.1",
+    "@nestjs/schematics": "8.0.2",
     "@nestjs/testing": "7.6.18",
     "@prisma/generator-helper": "2.27.0",
     "@prisma/migrate": "2.27.0",
