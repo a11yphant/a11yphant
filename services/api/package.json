@@ -47,7 +47,7 @@
     "js-yaml": "4.1.0",
     "jsonwebtoken": "8.5.1",
     "module-alias": "2.2.2",
-    "nestjs-console": "5.0.1",
+    "nestjs-console": "7.0.0",
     "prisma": "2.28.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
