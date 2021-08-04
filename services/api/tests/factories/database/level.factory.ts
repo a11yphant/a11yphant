@@ -3,6 +3,7 @@ import faker from "faker";
 import { Factory } from "rosie";
 
 import { ChallengeFactory } from "./challenge.factory";
+import { buildMultipleOf, buildOneOf } from "./helpers";
 import { RequirementFactory } from "./requirement.factory";
 import { TaskFactory } from "./task.factory";
 
@@ -14,38 +15,12 @@ export const LevelFactory = Factory.define<Prisma.LevelCreateArgs["data"]>("leve
   .attr("order", faker.datatype.number())
   .attr("challengeId", undefined)
   .option("createChallengeIfMissing", true)
-  .attr("challenge", ["challengeId", "createChallengeIfMissing"], (challengeId: string, createChallengeIfMissing: boolean) => {
-    if (challengeId || (!createChallengeIfMissing && !challengeId)) {
-      return undefined;
-    }
-
-    const challenge: Prisma.ChallengeCreateNestedOneWithoutLevelsInput = {
-      create: ChallengeFactory.build(),
-    };
-
-    return challenge;
-  })
+  .attr(
+    "challenge",
+    ["challengeId", "createChallengeIfMissing"],
+    buildOneOf<typeof ChallengeFactory>(ChallengeFactory, {}, { createLevelIfMissing: false }),
+  )
   .option("numberOfRequirements", 0)
-  .attr("requirements", ["numberOfRequirements"], (numberOfRequirements: number) => {
-    if (numberOfRequirements === 0) {
-      return undefined;
-    }
-
-    const requirements: Prisma.RequirementCreateNestedManyWithoutLevelInput = {
-      create: RequirementFactory.buildList(numberOfRequirements, {}, { createLevelIfMissing: false }),
-    };
-
-    return requirements;
-  })
+  .attr("requirements", ["numberOfRequirements"], buildMultipleOf<typeof RequirementFactory>(RequirementFactory, {}, { createLevelIfMissing: false }))
   .option("numberOfTasks", 0)
-  .attr("tasks", ["numberOfTasks"], (numberOfTasks: number) => {
-    if (numberOfTasks === 0) {
-      return undefined;
-    }
-
-    const tasks: Prisma.TaskCreateNestedManyWithoutLevelInput = {
-      create: TaskFactory.buildList(numberOfTasks),
-    };
-
-    return tasks;
-  });
+  .attr("tasks", ["numberOfTasks"], buildMultipleOf<typeof TaskFactory>(TaskFactory));

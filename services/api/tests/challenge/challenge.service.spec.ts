@@ -20,7 +20,7 @@ describe("challenge service", () => {
 
       const challenge = await service.findOne(id);
       expect(challenge).toBeTruthy();
-      expect(challenge.name).toBe("test");
+      expect(challenge.id).toBe(id);
     });
 
     it("returns null if no entry was found in the database", async () => {
@@ -36,13 +36,13 @@ describe("challenge service", () => {
     it("can get a challenge for a given slug", async () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
-      const { slug } = await prisma.challenge.create({
+      const { slug, id } = await prisma.challenge.create({
         data: ChallengeFactory.build(),
       });
 
       const challenge = await service.findOneBySlug(slug);
       expect(challenge).toBeTruthy();
-      expect(challenge.name).toBe("test");
+      expect(challenge.id).toBe(id);
     });
 
     it("returns null if no entry was found in the database", async () => {

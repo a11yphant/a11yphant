@@ -14,15 +14,7 @@ describe("hint service", () => {
     const service = new HintService(prisma);
     const count = 2;
 
-    const task = await prisma.task.create({ data: TaskFactory.build() });
-
-    await Promise.all(
-      [...Array(count).keys()].map(() => {
-        return prisma.hint.create({
-          data: { ...HintFactory.build(), taskId: task.id },
-        });
-      }),
-    );
+    const task = await prisma.task.create({ data: TaskFactory.build({}, { numberOfHints: count }) });
 
     expect((await service.findForTask(task.id)).length).toEqual(count);
   });

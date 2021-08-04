@@ -4,6 +4,8 @@ import { Factory } from "rosie";
 
 import { ResultStatus } from "@/submission/models/result-status.enum";
 
+import { CheckResultFactory } from "./check-result.factory";
+import { buildMultipleOf, buildOneOf } from "./helpers";
 import { SubmissionFactory } from "./submission.factory";
 
 export const ResultFactory = Factory.define<Prisma.ResultCreateArgs["data"]>("result-record")
@@ -11,14 +13,14 @@ export const ResultFactory = Factory.define<Prisma.ResultCreateArgs["data"]>("re
   .attr("status", ResultStatus.SUCCESS)
   .attr("submissionId", undefined)
   .option("createSubmissionIfMissing", true)
-  .attr("submission", ["submissionId", "createSubmissionIfMissing"], (submissionId: string, createSubmissionIfMissing: boolean) => {
-    if (submissionId || (!createSubmissionIfMissing && !submissionId)) {
-      return undefined;
-    }
-
-    const submission: Prisma.SubmissionCreateNestedOneWithoutResultInput = {
-      create: SubmissionFactory.build(),
-    };
-
-    return submission;
-  });
+  .attr(
+    "submission",
+    ["submissionId", "createSubmissionIfMissing"],
+    buildOneOf<typeof SubmissionFactory>(SubmissionFactory, {}, { createResultIfMissing: false }),
+  )
+  .option("numberOfCheckResults", 2)
+  .attr(
+    "checkResults",
+    ["numberOfCheckResults"],
+    buildMultipleOf<typeof CheckResultFactory>(CheckResultFactory, {}, { createResultIfMissing: false }),
+  );

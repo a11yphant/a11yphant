@@ -12,7 +12,7 @@ describe("level database factory", () => {
     const prisma = getPrismaService();
 
     const level = await prisma.level.create({
-      data: LevelFactory.build({}),
+      data: LevelFactory.build(),
     });
 
     expect(level).toBeTruthy();

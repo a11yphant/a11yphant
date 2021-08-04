@@ -1,7 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
 import { LevelFactory } from "@tests/factories/database/level.factory";
 import { SubmissionFactory } from "@tests/factories/database/submission.factory";
 import { UserFactory } from "@tests/factories/database/user.factory";
@@ -23,24 +22,11 @@ describe("submission service", () => {
         createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
       );
 
-      const { id: challengeId } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+      const { id } = await prisma.submission.create({
+        data: SubmissionFactory.build({ html }),
       });
 
-      const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({ challengeId }),
-      });
-
-      const { id: submissionId } = await prisma.submission.create({
-        data: {
-          levelId,
-          html,
-          css: null,
-          js: null,
-        },
-      });
-
-      const submission = await service.findOne(submissionId);
+      const submission = await service.findOne(id);
 
       expect(submission).toBeTruthy();
       expect(submission.html).toBe(html);
@@ -57,20 +43,15 @@ describe("submission service", () => {
         createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
       );
 
-      const { id: userId } = await prisma.user.create({
-        data: UserFactory.build(),
-      });
-
-      const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build(),
-      });
-
-      const { id: submissionId } = await prisma.submission.create({
-        data: SubmissionFactory.build({
-          userId,
-          levelId,
-          html,
-        }),
+      const {
+        id: submissionId,
+        userId,
+        levelId,
+      } = await prisma.submission.create({
+        data: SubmissionFactory.build({ html }),
+        include: {
+          level: true,
+        },
       });
 
       const submission = await service.findLastForUserAndLevel(userId, levelId);

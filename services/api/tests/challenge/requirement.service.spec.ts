@@ -1,9 +1,9 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { LevelFactory } from "@tests/factories/database/level.factory";
+import { useDatabase } from "@tests/helpers";
 
-import { RequirementService } from "../../src/challenge/requirement.service";
-import { LevelFactory } from "../factories/database/level.factory";
-import { useDatabase } from "../helpers";
+import { RequirementService } from "@/challenge/requirement.service";
 
 describe("requirement service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
