@@ -23,7 +23,7 @@
     "@nestjs/microservices": "8.0.5",
     "aws-sdk": "2.958.0",
     "reflect-metadata": "0.1.13",
-    "rxjs": "6.6.7"
+    "rxjs": "7.3.0"
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.1.1",
@@ -52,7 +52,7 @@
     "jest-junit": "12.2.0",
     "prettier": "2.3.2",
     "reflect-metadata": "0.1.13",
-    "rxjs": "6.6.7",
+    "rxjs": "7.3.0",
     "ts-jest": "27.0.4",
     "ts-node": "10.1.0",
     "tsconfig-paths": "3.10.1",
