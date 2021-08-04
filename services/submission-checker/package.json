@@ -41,7 +41,7 @@
     "@a11yphant/eslint-config": "0.1.1",
     "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "8.1.1",
-    "@nestjs/schematics": "7.3.1",
+    "@nestjs/schematics": "8.0.2",
     "@nestjs/testing": "8.0.5",
     "@types/aws-lambda": "8.10.81",
     "@types/express": "4.17.13",
