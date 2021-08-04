@@ -29,7 +29,7 @@
     "console:prod": "node dist/console.js"
   },
   "dependencies": {
-    "@a11yphant/nestjs-aws-messaging": "0.1.1",
+    "@a11yphant/nestjs-aws-messaging": "0.2.0",
     "@nestjs/common": "8.0.5",
     "@nestjs/config": "1.0.1",
     "@nestjs/core": "8.0.5",
@@ -51,7 +51,7 @@
     "prisma": "2.28.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "6.6.7"
+    "rxjs": "7.3.0"
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.1.1",
