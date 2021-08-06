@@ -11,7 +11,7 @@ export const RequirementFactory = Factory.define<Prisma.RequirementCreateArgs["d
   .attr("title", () => faker.lorem.words(3))
   .attr("levelId", undefined)
   .option("createLevelIfMissing", true)
-  .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<typeof LevelFactory>(LevelFactory))
+  .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<typeof LevelFactory>(LevelFactory, {}, { numberOfRequirements: 0 }))
   .attr("ruleId", undefined)
   .option("createRuleIfMissing", true)
   .attr("rule", ["ruleId", "createRuleIfMissing"], buildOneOf<typeof RuleFactory>(RuleFactory, {}, { createRequirementIfMissing: false }));
