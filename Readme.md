@@ -32,6 +32,12 @@ These scripts originate directly from the nvm documentation:
 - bash: [https://github.com/nvm-sh/nvm#bash](https://github.com/nvm-sh/nvm#bash)
 - zsh: [https://github.com/nvm-sh/nvm#zsh](https://github.com/nvm-sh/nvm#zsh)
 
+## DB Data Import
+To load dummy data for challenges into the empty database, run the following command:
+```sh
+npm run import-challenges
+```
+
 ## Start
 
 ### All Services:

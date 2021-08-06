@@ -13,7 +13,7 @@ interface EvaluationBodyProps {
 
 const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirementTitle, result, description }) => {
   return (
-    <li className={clsx("flex flex-col items-left w-full box-border m-auto mb-8", className)}>
+    <li className={clsx("grid grid-cols-6 gap-2 w-full box-border m-4 ml-8 mb-8", className)}>
       <CollapsableSection passed={result === RequirementStatus.Success ? true : false} title={requirementTitle} description={description} />
     </li>
   );

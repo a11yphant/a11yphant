@@ -14,7 +14,7 @@ interface NavigationProps {
 
 const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, displaySave = false }) => {
   // TODO: replace when login is implemented
-  const displayUserProfile = true;
+  const displayUserProfile = false;
   const displayRegistration = false;
 
   return (
@@ -23,6 +23,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         <Link href="/">
           <a className="hover:text-primary">
             <A11yphantLogo className={"w-36 text-white"} />
+            <span className="sr-only">Allyphant Homepage</span>
           </a>
         </Link>
       </h1>
@@ -38,7 +39,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>
-            <Button full className="mx-4">
+            <Button primary className="mx-4">
               Sign Up
             </Button>{" "}
             <Button>Login</Button>

@@ -39,7 +39,8 @@
     "tf:destroy": "npm run tf destroy -- -auto-approve",
     "tf:clear-state": "rm -f terraform/local/terraform.tfstate*",
     "db:migrate": "docker-compose up -d postgres && npm --prefix services/api run prisma:migrate",
-    "gitlab-registry:login": "npm config set -- //gitlab.mediacube.at/api/v4/projects/5907/packages/npm/:_authToken"
+    "gitlab-registry:login": "npm config set -- //gitlab.mediacube.at/api/v4/projects/5907/packages/npm/:_authToken",
+    "import-challenges": "npm run console  import:challenges --prefix services/api"
   },
   "repository": {
     "type": "git",
@@ -47,18 +48,18 @@
   },
   "keywords": [],
   "devDependencies": {
-    "@nestjs/common": "7.6.18",
-    "@nestjs/core": "7.6.18",
-    "@typescript-eslint/parser": "4.28.0",
+    "@nestjs/common": "8.0.5",
+    "@nestjs/core": "8.0.5",
+    "@typescript-eslint/parser": "4.28.5",
     "dotenv-cli": "4.0.0",
-    "husky": "6.0.0",
-    "lint-staged": "11.0.0",
+    "husky": "7.0.1",
+    "lint-staged": "11.1.1",
     "npm-run-all": "4.1.5",
     "pm2": "5.1.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7",
-    "typescript": "4.3.4",
-    "wait-on": "5.3.0",
+    "typescript": "4.3.5",
+    "wait-on": "6.0.0",
     "yaml-lint": "1.2.4"
   },
   "dependencies": {}

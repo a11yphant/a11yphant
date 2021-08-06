@@ -48,50 +48,56 @@ const Home: React.FunctionComponent = () => {
         <section id="challenges">
           <ChallengeHeader className="mx-24" />
           <Legend className="mx-24" />
-          <ChallengeList
-            className="mx-24"
-            heading={
-              <>
-                Easy
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
-              </>
-            }
-            completedLevel={0}
-            openLevel={easyChallenges.length}
-            challenges={easyChallenges}
-          />
+          {easyChallenges.length !== 0 && (
+            <ChallengeList
+              className="mx-24"
+              heading={
+                <>
+                  Easy
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+                </>
+              }
+              completedLevel={0}
+              openLevel={easyChallenges.length}
+              challenges={easyChallenges}
+            />
+          )}
 
-          <ChallengeList
-            className="mx-24"
-            heading={
-              <>
-                Medium
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
-              </>
-            }
-            completedLevel={0}
-            openLevel={mediumChallenges.length}
-            challenges={mediumChallenges}
-          />
+          {mediumChallenges.length !== 0 && (
+            <ChallengeList
+              className="mx-24"
+              heading={
+                <>
+                  Medium
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent ml-1" />
+                </>
+              }
+              completedLevel={0}
+              openLevel={mediumChallenges.length}
+              challenges={mediumChallenges}
+            />
+          )}
 
-          <ChallengeList
-            className="mx-24"
-            heading={
-              <>
-                Hard
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
-                <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
-              </>
-            }
-            completedLevel={0}
-            openLevel={hardChallenges.length}
-            challenges={hardChallenges}
-          />
+          {hardChallenges.length !== 0 && (
+            <ChallengeList
+              className="mx-24"
+              heading={
+                <>
+                  Hard
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-4" />
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
+                  <div className="w-2.5 h-5 border-2 rounded-sm border-grey bg-grey ml-1" />
+                </>
+              }
+              completedLevel={0}
+              openLevel={hardChallenges.length}
+              challenges={hardChallenges}
+            />
+          )}
         </section>
       </main>
     </>
