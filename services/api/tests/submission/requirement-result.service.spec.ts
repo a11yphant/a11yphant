@@ -1,7 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { RequirementFactory } from "@tests/factories/database/requirement.factory";
-import { ResultFactory } from "@tests/factories/database/result.factory";
+import { Factory, REQUIREMENT, RequirementData, RESULT, ResultData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
@@ -15,7 +14,7 @@ describe("requirement result service", () => {
     const prisma = getPrismaService();
 
     const result = await prisma.result.create({
-      data: ResultFactory.build({}, { numberOfCheckResults: 3 }),
+      data: Factory.build<ResultData>(RESULT, {}, { numberOfCheckResults: 3 }),
       include: { checkResults: true },
     });
 
@@ -28,8 +27,8 @@ describe("requirement result service", () => {
   it("can create an requirement result", async () => {
     const prisma = getPrismaService();
 
-    const requirement = await prisma.requirement.create({ data: RequirementFactory.build() });
-    const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS }) });
+    const requirement = await prisma.requirement.create({ data: Factory.build<RequirementData>(REQUIREMENT) });
+    const result = await prisma.result.create({ data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }) });
 
     const service = new RequirementResultService(prisma);
     const requirementResult = await service.create(result.id, requirement.id, RequirementStatus.SUCCESS);

@@ -1,17 +1,19 @@
-import { Prisma } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
+import { LEVEL, REQUIREMENT, RULE } from "./constants";
 import { buildOneOf } from "./helpers";
-import { LevelFactory } from "./level.factory";
-import { RuleFactory } from "./rule.factory";
+import { LevelData, RequirementData, RuleData } from "./types";
 
-export const RequirementFactory = Factory.define<Prisma.RequirementCreateArgs["data"]>("requirement-record")
-  .attr("description", () => faker.lorem.sentence())
-  .attr("title", () => faker.lorem.words(3))
-  .attr("levelId", undefined)
-  .option("createLevelIfMissing", true)
-  .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<typeof LevelFactory>(LevelFactory, {}, { numberOfRequirements: 0 }))
-  .attr("ruleId", undefined)
-  .option("createRuleIfMissing", true)
-  .attr("rule", ["ruleId", "createRuleIfMissing"], buildOneOf<typeof RuleFactory>(RuleFactory, {}, { createRequirementIfMissing: false }));
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<RequirementData>(REQUIREMENT)
+    .attr("description", () => faker.lorem.sentence())
+    .attr("title", () => faker.lorem.words(3))
+    .attr("levelId", undefined)
+    .option("createLevelIfMissing", true)
+    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<LevelData>(LEVEL, {}, { numberOfRequirements: 0 }))
+    .attr("ruleId", undefined)
+    .option("createRuleIfMissing", true)
+    .attr("rule", ["ruleId", "createRuleIfMissing"], buildOneOf<RuleData>(RULE, {}, { createRequirementIfMissing: false }));
+}

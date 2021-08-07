@@ -1,12 +1,15 @@
-import { Prisma } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
+import { HINT, TASK } from "./constants";
 import { buildMultipleOf } from "./helpers";
-import { HintFactory } from "./hint.factory";
+import { HintData, TaskData } from "./types";
 
-export const TaskFactory = Factory.define<Prisma.TaskCreateArgs["data"]>("task-record")
-  .attr("id", () => faker.datatype.uuid())
-  .attr("text", () => faker.lorem.paragraph())
-  .option("numberOfHints", 2)
-  .attr("hints", ["numberOfHints"], buildMultipleOf<typeof HintFactory>(HintFactory));
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<TaskData>(TASK)
+    .attr("id", () => faker.datatype.uuid())
+    .attr("text", () => faker.lorem.paragraph())
+    .option("numberOfHints", 2)
+    .attr("hints", ["numberOfHints"], buildMultipleOf<HintData>(HINT));
+}

@@ -1,13 +1,16 @@
-import { Prisma } from "@prisma/client";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
+import { LEVEL, SUBMISSION } from "./constants";
 import { buildOneOf } from "./helpers";
-import { LevelFactory } from "./level.factory";
+import { LevelData, SubmissionData } from "./types";
 
-export const SubmissionFactory = Factory.define<Prisma.SubmissionCreateArgs["data"]>("submission-record")
-  .attr("html", "<p>hi</p>")
-  .attr("css", "body { color: blue }")
-  .attr("js", "console.log('hi')")
-  .attr("levelId", undefined)
-  .option("createLevelIfMissing", true)
-  .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<typeof LevelFactory>(LevelFactory, {}, { createSubmissionIfMissing: false }));
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<SubmissionData>(SUBMISSION)
+    .attr("html", "<p>hi</p>")
+    .attr("css", "body { color: blue }")
+    .attr("js", "console.log('hi')")
+    .attr("levelId", undefined)
+    .option("createLevelIfMissing", true)
+    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<LevelData>(LEVEL, {}, { createSubmissionIfMissing: false }));
+}

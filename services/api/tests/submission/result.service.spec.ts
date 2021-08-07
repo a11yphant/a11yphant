@@ -1,7 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { CheckResultFactory } from "@tests/factories/database";
-import { ResultFactory } from "@tests/factories/database/result.factory";
+import { Prisma } from "@prisma/client";
+import { CHECK_RESULT, RESULT, ResultData } from "@tests/factories/database";
+import { Factory } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { ResultStatus } from "@/submission/models/result-status.enum";
@@ -13,7 +14,7 @@ describe("result service", () => {
   it("returns the result for a submission", async () => {
     const prisma = getPrismaService();
 
-    const expectedResult = await prisma.result.create({ data: ResultFactory.build(), include: { submission: true } });
+    const expectedResult = await prisma.result.create({ data: Factory.build<ResultData>(RESULT), include: { submission: true } });
 
     const resultService = new ResultService(prisma);
 
@@ -28,22 +29,28 @@ describe("result service", () => {
 
     const result = await prisma.result.create({
       data: {
-        ...ResultFactory.build({ status: ResultStatus.SUCCESS }),
+        ...Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }),
         checkResults: {
-          createMany: CheckResultFactory.buildList(2, { status: ResultStatus.FAIL }, { createResultIfMissing: false }),
+          create: Factory.buildList<Prisma.CheckResultCreateWithoutResultInput>(
+            CHECK_RESULT,
+            2,
+            { status: ResultStatus.FAIL },
+            { createResultIfMissing: false },
+          ),
         },
       },
     });
-
     const resultService = new ResultService(prisma);
 
-    expect(await resultService.countNumberOfFailedRequirementChecks(result.id)).toBe(1);
+    expect(await resultService.countNumberOfFailedRequirementChecks(result.id)).toBe(2);
   });
 
   it("returns the number of requirement checks for the result", async () => {
     const prisma = getPrismaService();
 
-    const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }) });
+    const result = await prisma.result.create({
+      data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
+    });
 
     const resultService = new ResultService(prisma);
 
@@ -52,7 +59,7 @@ describe("result service", () => {
 
   it("can update the status of a result", async () => {
     const prisma = getPrismaService();
-    const result = await prisma.result.create({ data: ResultFactory.build({ status: ResultStatus.SUCCESS }) });
+    const result = await prisma.result.create({ data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }) });
 
     const resultService = new ResultService(prisma);
 

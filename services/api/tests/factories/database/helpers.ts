@@ -1,35 +1,35 @@
-import { IFactory } from "rosie";
+import { Factory } from "rosie";
 
-export function buildMultipleOf<TFactory extends IFactory>(
-  factory: TFactory,
-  attributes: Parameters<TFactory["buildList"]>[1] = {},
-  options: Parameters<TFactory["buildList"]>[2] = {},
-): (size: number) => { create: ReturnType<TFactory["buildList"]> } {
+export function buildMultipleOf<T>(
+  factory: string,
+  attributes: { [k in keyof T]?: T[k] } = {},
+  options: Record<string, any> = {},
+): (size: number) => { create: T[] } {
   return (size = 0) => {
     if (size === 0) {
       return undefined;
     }
 
     const createMany = {
-      create: factory.buildList(size, attributes, options) as ReturnType<TFactory["buildList"]>,
+      create: Factory.buildList<T>(factory, size, attributes, options),
     };
 
     return createMany;
   };
 }
 
-export function buildOneOf<TFactory extends IFactory>(
-  factory: TFactory,
-  attributes: Parameters<TFactory["build"]>[0] = {},
-  options: Parameters<TFactory["build"]>[1] = {},
-): (recordId: string, createRecordIfMissing: boolean) => { create: ReturnType<TFactory["build"]> } {
+export function buildOneOf<T>(
+  factory: string,
+  attributes: { [k in keyof T]?: T[k] } = {},
+  options: Record<string, any> = {},
+): (recordId: string, createRecordIfMissing: boolean) => { create: T } {
   return (recordId: string, createRecordIfMissing: boolean) => {
     if (recordId || (!createRecordIfMissing && !recordId)) {
       return undefined;
     }
 
     const result = {
-      create: factory.build(attributes, options) as ReturnType<TFactory["build"]>,
+      create: Factory.build<T>(factory, attributes, options),
     };
 
     return result;

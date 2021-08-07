@@ -1,15 +1,18 @@
-import { Prisma } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
 import { ChallengeDifficulty } from "@/challenge/enums/challenge-difficulty.enum";
 
+import { CHALLENGE, LEVEL } from "./constants";
 import { buildMultipleOf } from "./helpers";
-import { LevelFactory } from "./level.factory";
+import { ChallengeData, LevelData } from "./types";
 
-export const ChallengeFactory = Factory.define<Prisma.ChallengeCreateArgs["data"]>("challenge-record")
-  .attr("slug", () => faker.lorem.slug())
-  .attr("name", () => faker.lorem.words(3))
-  .attr("difficulty", () => faker.random.arrayElement([ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD]))
-  .option("numberOfLevels", 0)
-  .attr("levels", ["numberOfLevels"], buildMultipleOf<typeof LevelFactory>(LevelFactory, {}, { createChallengeIfMissing: false }));
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<ChallengeData>(CHALLENGE)
+    .attr("slug", () => faker.lorem.slug())
+    .attr("name", () => faker.lorem.words(3))
+    .attr("difficulty", () => faker.random.arrayElement([ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD]))
+    .option("numberOfLevels", 0)
+    .attr("levels", ["numberOfLevels"], buildMultipleOf<LevelData>(LEVEL, {}, { createChallengeIfMissing: false }));
+}

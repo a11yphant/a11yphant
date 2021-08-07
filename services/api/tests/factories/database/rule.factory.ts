@@ -1,7 +1,12 @@
-import { Prisma } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-export const RuleFactory = Factory.define<Prisma.RuleCreateArgs["data"]>("rule-record")
-  .attr("id", () => faker.datatype.uuid())
-  .attr("key", () => faker.lorem.slug());
+import { RULE } from "./constants";
+import { RuleData } from "./types";
+
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<RuleData>(RULE)
+    .attr("id", () => faker.datatype.uuid())
+    .attr("key", () => faker.lorem.slug());
+}

@@ -2,7 +2,9 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { useDatabase } from "@tests/helpers";
 
-import { RequirementFactory } from "./requirement.factory";
+import { REQUIREMENT } from "./constants";
+import { Factory } from "./factory";
+import { RequirementData } from "./types";
 
 describe("requirement factory", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -11,7 +13,7 @@ describe("requirement factory", () => {
     const prisma = getPrismaService();
 
     const requirement = await prisma.requirement.create({
-      data: RequirementFactory.build(),
+      data: Factory.build<RequirementData>(REQUIREMENT),
     });
 
     expect(requirement).toBeTruthy();

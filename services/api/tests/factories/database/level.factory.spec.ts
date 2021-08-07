@@ -3,7 +3,9 @@ import { Logger } from "@nestjs/common";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
-import { LevelFactory } from "./level.factory";
+import { LEVEL } from "./constants";
+import { Factory } from "./factory";
+import { LevelData } from "./types";
 
 describe("level database factory", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -12,7 +14,7 @@ describe("level database factory", () => {
     const prisma = getPrismaService();
 
     const level = await prisma.level.create({
-      data: LevelFactory.build(),
+      data: Factory.build<LevelData>(LEVEL),
     });
 
     expect(level).toBeTruthy();
@@ -22,7 +24,7 @@ describe("level database factory", () => {
     const prisma = getPrismaService();
 
     const level = await prisma.level.create({
-      data: LevelFactory.build({}, { numberOfTasks: 2 }),
+      data: Factory.build<LevelData>(LEVEL, {}, { numberOfTasks: 2 }),
       include: {
         tasks: true,
       },
@@ -35,7 +37,7 @@ describe("level database factory", () => {
     const prisma = getPrismaService();
 
     const level = await prisma.level.create({
-      data: LevelFactory.build({}, { numberOfRequirements: 2 }),
+      data: Factory.build<LevelData>(LEVEL, {}, { numberOfRequirements: 2 }),
       include: {
         requirements: true,
       },
@@ -45,7 +47,7 @@ describe("level database factory", () => {
   });
 
   it("does not create a challenge when a challenge id is passed", () => {
-    const level = LevelFactory.build({ challengeId: faker.datatype.uuid() });
+    const level = Factory.build<LevelData>(LEVEL, { challengeId: faker.datatype.uuid() });
 
     expect(level.challenge).toBeUndefined();
   });

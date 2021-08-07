@@ -1,9 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { LevelFactory } from "@tests/factories/database/level.factory";
-import { SubmissionFactory } from "@tests/factories/database/submission.factory";
-import { UserFactory } from "@tests/factories/database/user.factory";
+import { Factory, LEVEL, LevelData, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { PrismaService } from "@/prisma/prisma.service";
@@ -23,7 +21,7 @@ describe("submission service", () => {
       );
 
       const { id } = await prisma.submission.create({
-        data: SubmissionFactory.build({ html }),
+        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
       });
 
       const submission = await service.findOne(id);
@@ -48,7 +46,7 @@ describe("submission service", () => {
         userId,
         levelId,
       } = await prisma.submission.create({
-        data: SubmissionFactory.build({ html }),
+        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
         include: {
           level: true,
         },
@@ -73,11 +71,11 @@ describe("submission service", () => {
       );
 
       const { id: userId } = await prisma.user.create({
-        data: UserFactory.build(),
+        data: Factory.build<UserData>(USER),
       });
 
       const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build(),
+        data: Factory.build<LevelData>(LEVEL),
       });
 
       const createdSubmission = await service.save({
@@ -111,7 +109,7 @@ describe("submission service", () => {
       );
 
       const { id: userId } = await prisma.user.create({
-        data: UserFactory.build(),
+        data: Factory.build<UserData>(USER),
       });
 
       expect(async () =>

@@ -2,7 +2,9 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { useDatabase } from "@tests/helpers";
 
-import { ResultFactory } from "./result.factory";
+import { RESULT } from "./constants";
+import { Factory } from "./factory";
+import { ResultData } from "./types";
 
 describe("result factory", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -11,7 +13,7 @@ describe("result factory", () => {
     const prisma = getPrismaService();
 
     const result = await prisma.result.create({
-      data: ResultFactory.build(),
+      data: Factory.build<ResultData>(RESULT),
     });
 
     expect(result).toBeTruthy();

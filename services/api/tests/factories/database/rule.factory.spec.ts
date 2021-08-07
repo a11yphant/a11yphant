@@ -2,7 +2,9 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { useDatabase } from "@tests/helpers";
 
-import { RuleFactory } from "./rule.factory";
+import { RULE } from "./constants";
+import { Factory } from "./factory";
+import { RuleData } from "./types";
 
 describe("rule factory", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -11,7 +13,7 @@ describe("rule factory", () => {
     const prisma = getPrismaService();
 
     const rule = await prisma.rule.create({
-      data: RuleFactory.build(),
+      data: Factory.build<RuleData>(RULE),
     });
 
     expect(rule).toBeTruthy();

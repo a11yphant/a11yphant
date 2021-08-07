@@ -2,7 +2,9 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { useDatabase } from "@tests/helpers";
 
-import { ChallengeFactory } from "./challenge.factory";
+import { CHALLENGE } from "./constants";
+import { Factory } from "./factory";
+import { ChallengeData } from "./types";
 
 describe("challenge database factory", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -11,7 +13,7 @@ describe("challenge database factory", () => {
     const prisma = getPrismaService();
 
     const challenge = await prisma.challenge.create({
-      data: ChallengeFactory.build(),
+      data: Factory.build<ChallengeData>(CHALLENGE),
     });
 
     expect(challenge).toBeTruthy();
@@ -21,7 +23,7 @@ describe("challenge database factory", () => {
     const prisma = getPrismaService();
 
     const challenge = await prisma.challenge.create({
-      data: ChallengeFactory.build({}, { numberOfLevels: 2 }),
+      data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 2 }),
       include: {
         levels: true,
       },

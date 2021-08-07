@@ -1,11 +1,12 @@
-import { Hint } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-export const HINT_RECORD_FACTORY = "hint-record";
+import { HINT } from "./constants";
+import { HintData } from "./types";
 
-export const HintFactory = Factory.define<Hint>(HINT_RECORD_FACTORY)
-  .attr("id", () => faker.datatype.uuid())
-  .attr("text", () => faker.lorem.paragraph());
-
-export type HintFactoryType = typeof HintFactory;
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<HintData>(HINT)
+    .attr("id", () => faker.datatype.uuid())
+    .attr("text", () => faker.lorem.paragraph());
+}

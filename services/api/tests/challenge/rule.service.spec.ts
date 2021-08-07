@@ -1,7 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { RequirementFactory } from "@tests/factories/database/requirement.factory";
-import { RuleFactory } from "@tests/factories/database/rule.factory";
+import { Factory, REQUIREMENT, RequirementData, RULE, RuleData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -12,7 +11,7 @@ describe("rule service", () => {
 
   it("returns rule for a requirement", async () => {
     const prisma = getPrismaService();
-    const requirement = await prisma.requirement.create({ data: RequirementFactory.build() });
+    const requirement = await prisma.requirement.create({ data: Factory.build<RequirementData>(REQUIREMENT) });
 
     const ruleService = new RuleService(prisma);
 
@@ -21,7 +20,7 @@ describe("rule service", () => {
 
   it("returns null for a requirement if it is not found", async () => {
     const prisma = getPrismaService();
-    await prisma.rule.create({ data: RuleFactory.build() });
+    await prisma.rule.create({ data: Factory.build<RuleData>(RULE) });
 
     const ruleService = new RuleService(prisma);
 

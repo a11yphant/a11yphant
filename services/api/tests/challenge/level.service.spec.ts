@@ -1,7 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
-import { LevelFactory } from "@tests/factories/database/level.factory";
+import { CHALLENGE, ChallengeData, Factory, LEVEL, LevelData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { LevelService } from "@/challenge/level.service";
@@ -14,7 +13,7 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build({}, { numberOfLevels: 1 }),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 1 }),
       });
 
       const service = new LevelService(prisma);
@@ -28,12 +27,12 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 3 }) });
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 2 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
 
       const service = new LevelService(prisma);
       const levels = await service.findForChallenge(id);
@@ -51,11 +50,11 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id, slug } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: LevelFactory.build({ id: secondLevelId, challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 0 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
 
       const service = new LevelService(prisma);
 
@@ -79,7 +78,7 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build({}, { numberOfLevels: 2 }),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 2 }),
       });
 
       const service = new LevelService(prisma);

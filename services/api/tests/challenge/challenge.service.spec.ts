@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
+import { CHALLENGE, ChallengeData, Factory } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -15,7 +15,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
       const challenge = await service.findOne(id);
@@ -37,7 +37,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
       const { slug, id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
       const challenge = await service.findOneBySlug(slug);
@@ -60,7 +60,7 @@ describe("challenge service", () => {
       const service = new ChallengeService(prisma);
 
       await prisma.challenge.createMany({
-        data: ChallengeFactory.buildList(3),
+        data: Factory.buildList<ChallengeData>(CHALLENGE, 3),
       });
 
       const queriedChallenges = await service.findAll();
@@ -82,7 +82,7 @@ describe("challenge service", () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const challenges = ChallengeFactory.buildList(3);
+        const challenges = Factory.buildList<ChallengeData>(CHALLENGE, 3);
         await prisma.challenge.createMany({ data: challenges });
 
         expect(await service.findAll()).toHaveLength(challenges.length);
@@ -92,8 +92,8 @@ describe("challenge service", () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        await prisma.challenge.createMany({ data: ChallengeFactory.buildList(2, { difficulty: ChallengeDifficulty.EASY }) });
-        await prisma.challenge.createMany({ data: ChallengeFactory.buildList(2, { difficulty: ChallengeDifficulty.MEDIUM }) });
+        await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.EASY }) });
+        await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.MEDIUM }) });
 
         const foundChallenges = await service.findAll({ difficulty: ChallengeDifficulty.MEDIUM });
         expect(foundChallenges).toHaveLength(2);
