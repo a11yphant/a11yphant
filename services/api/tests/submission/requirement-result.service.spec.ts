@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { Factory, REQUIREMENT, RequirementData, RESULT, ResultData } from "@tests/factories/database";
+import { CHECK_RESULT, CheckResultData, Factory, REQUIREMENT, RequirementData, RESULT, ResultData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
@@ -16,6 +16,10 @@ describe("requirement result service", () => {
     const result = await prisma.result.create({
       data: Factory.build<ResultData>(RESULT, {}, { numberOfCheckResults: 3 }),
       include: { checkResults: true },
+    });
+
+    await prisma.checkResult.create({
+      data: Factory.build<CheckResultData>(CHECK_RESULT),
     });
 
     const service = new RequirementResultService(prisma);

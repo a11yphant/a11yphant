@@ -40,6 +40,11 @@ describe("result service", () => {
         },
       },
     });
+
+    await prisma.result.create({
+      data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
+    });
+
     const resultService = new ResultService(prisma);
 
     expect(await resultService.countNumberOfFailedRequirementChecks(result.id)).toBe(2);
@@ -49,6 +54,9 @@ describe("result service", () => {
     const prisma = getPrismaService();
 
     const result = await prisma.result.create({
+      data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
+    });
+    await prisma.result.create({
       data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
     });
 
