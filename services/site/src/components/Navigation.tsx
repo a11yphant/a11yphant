@@ -21,8 +21,8 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
     <header className="flex justify-between items-center pt-8 pb-6 px-11 h-navigation">
       <h1 className="logo">
         <Link href="/">
-          <a className="hover:text-primary">
-            <A11yphantLogo className={"w-36 text-white"} />
+          <a className="block text-white hover:text-primary">
+            <A11yphantLogo className="w-36" />
             <span className="sr-only">Allyphant Homepage</span>
           </a>
         </Link>
