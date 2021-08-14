@@ -18,12 +18,12 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "peerDependencies": {
-    "@nestjs/common": "8.0.5",
-    "@nestjs/core": "8.0.5",
-    "@nestjs/microservices": "8.0.5",
-    "aws-sdk": "2.958.0",
-    "reflect-metadata": "0.1.13",
-    "rxjs": "7.3.0"
+    "@nestjs/common": "^8.0.5",
+    "@nestjs/core": "^8.0.5",
+    "@nestjs/microservices": "^8.0.5",
+    "aws-sdk": "^2.958.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.3.0"
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.1.1",
