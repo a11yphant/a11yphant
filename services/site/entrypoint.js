@@ -2,10 +2,10 @@
 const configure = require("@vendia/serverless-express");
 const express = require("express");
 const next = require("next");
-const { imageOptimizer } = require("next/dist/next-server/server/image-optimizer");
-const { default: loadConfig } = require("next/dist/next-server/server/config");
+const { imageOptimizer } = require("next/dist/server/image-optimizer");
+const { default: loadConfig } = require("next/dist/server/config");
 const url = require("url");
-const { PHASE_PRODUCTION_SERVER } = require("next/dist/next-server/lib/constants");
+const { PHASE_PRODUCTION_SERVER } = require("next/constants");
 const { resolve } = require("path");
 
 const nextServer = next({ dev: false });
