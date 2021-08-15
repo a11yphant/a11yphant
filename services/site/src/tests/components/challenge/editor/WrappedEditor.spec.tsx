@@ -54,7 +54,7 @@ describe("WrappedEditor", () => {
   });
 
   it("reset button opens modal", () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <WrappedEditor
         onReset={() => {
           return;
