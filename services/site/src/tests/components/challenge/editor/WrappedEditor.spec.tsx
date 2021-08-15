@@ -27,7 +27,7 @@ describe("WrappedEditor", () => {
   it("renders heading", () => {
     const wrapper = shallow(
       <WrappedEditor
-        reset={() => {
+        onReset={() => {
           return;
         }}
         config={editorConfig}
@@ -40,7 +40,7 @@ describe("WrappedEditor", () => {
   it("renders editor", () => {
     const wrapper = shallow(
       <WrappedEditor
-        reset={() => {
+        onReset={() => {
           return;
         }}
         config={editorConfig}
@@ -56,7 +56,7 @@ describe("WrappedEditor", () => {
   it("reset button opens modal", () => {
     const wrapper = shallow(
       <WrappedEditor
-        reset={() => {
+        onReset={() => {
           return;
         }}
         config={editorConfig}
@@ -70,7 +70,7 @@ describe("WrappedEditor", () => {
 
   it("reset is called", () => {
     const onReset = jest.fn();
-    const wrapper = mount(<WrappedEditor reset={onReset} config={editorConfig} />);
+    const wrapper = mount(<WrappedEditor onReset={onReset} config={editorConfig} />);
 
     wrapper.find(Reset).closest("button").simulate("click");
     wrapper

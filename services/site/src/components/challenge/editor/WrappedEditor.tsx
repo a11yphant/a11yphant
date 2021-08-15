@@ -10,7 +10,7 @@ import { animated, useSpring } from "react-spring";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
-  reset: (language?: EditorLanguage) => void;
+  onReset: (language?: EditorLanguage) => void;
 }
 
 export interface EditorConfig {
@@ -23,7 +23,7 @@ export interface EditorConfig {
 
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
-const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, config, ...props }) => {
+const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, ...props }) => {
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
   const headingRef = useRef<HTMLHeadingElement>();
@@ -131,7 +131,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           confirmButtonLabel={`Reset ${config.languageLabel}`}
           onConfirm={() => {
             setModalOpen(false);
-            reset(config.language);
+            onReset(config.language);
           }}
         />
       </div>
