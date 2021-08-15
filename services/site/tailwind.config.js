@@ -18,19 +18,25 @@ module.exports = {
         "80ch": "80ch",
       },
       colors: {
-        primary: "#7331FF",
-        primaryLight: "#B795FF",
-        primaryDark: "#6657C5",
-        error: "#E75A7C",
-        success: "#9ADB66",
-        background: "#121212",
-        backgroundMiddle: "#202226",
-        grey: "#EDEDED",
-        greyLight: "#EFEFEF",
-        greyMiddle: "#B4B8B8",
-        greyDark: "#4F4F4F",
         light: "#FFFFFF",
         dark: "#121212",
+        error: "#E75A7C",
+        success: "#9ADB66",
+        primary: {
+          DEFAULT: "#7331FF",
+          light: "#B795FF",
+          dark: "#6657C5",
+        },
+        background: {
+          DEFAULT: "#121212",
+          light: "#202226",
+        },
+        grey: {
+          DEFAULT: "#EDEDED",
+          light: "#EFEFEF",
+          middle: "#B4B8B8",
+          dark: "#4F4F4F",
+        },
       },
       fontFamily: {
         ibmPlex: ['"IBM Plex Sans"', "sans-serif"],
@@ -50,7 +56,7 @@ module.exports = {
           css: {
             color: theme("colors.light"),
             code: {
-              color: theme("colors.primaryLight"),
+              color: theme("colors.primary-light"),
               fontFamily: theme("fontFamily.ibmPlexMono").join(" "),
               fontSize: "1em",
               "&::before": {

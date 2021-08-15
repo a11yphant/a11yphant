@@ -16,7 +16,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
   return (
     <li
       className={clsx(
-        "relative overflow-hidden w-64 h-64 border-0 border-backgroundMiddle bg-backgroundMiddle rounded-xl flex flex-col justify-end",
+        "relative overflow-hidden w-64 h-64 border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
         "group transition duration-300 hover:bg-grey",
         "card shadow-card",
         difficulty === ChallengeDifficulty.Easy && "bg-gradient-easy",
@@ -26,18 +26,18 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
         className,
       )}
     >
-      <div className={clsx("p-4 pt-2 bg-backgroundMiddle transition duration-300", "group-hover:bg-grey")}>
+      <div className={clsx("p-4 pt-2 bg-background-light transition duration-300", "group-hover:bg-grey")}>
         <h4 className="w-full">
           <span className="sr-only">{`Challenge ${challengeNumber}`}</span>
           {/* TODO: Link to Info Pop-Up when implemented */}
           <Link href={`/challenge/${challengeSlug}/level/01`}>
-            <a className={clsx("h6", "border-transparent transition duration-300", "group-hover:text-greyDark group-hover:border-transparent")}>
+            <a className={clsx("h6", "border-transparent transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent")}>
               {heading}
             </a>
           </Link>
         </h4>
-        <div className="w-full mt-2 text-greyMiddle flex justify-between">
-          <p className={clsx("m-0 text-greyMiddle transition duration-300", "group-hover:text-greyDark")}>
+        <div className="w-full mt-2 text-grey-middle flex justify-between">
+          <p className={clsx("m-0 text-grey-middle transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
           </p>
           <p className="sr-only">{`Difficulty ${difficulty}`}</p>
@@ -45,21 +45,21 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
             <div
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey bg-grey ml-4 transition duration-300",
-                "group-hover:border-greyDark group-hover:bg-greyDark",
+                "group-hover:border-grey-dark group-hover:bg-grey-dark",
               )}
             />
             <div
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1 transition duration-300",
-                "group-hover:border-greyDark",
-                difficulty !== ChallengeDifficulty.Easy && "bg-grey group-hover:bg-greyDark",
+                "group-hover:border-grey-dark",
+                difficulty !== ChallengeDifficulty.Easy && "bg-grey group-hover:bg-grey-dark",
               )}
             />
             <div
               className={clsx(
                 "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1 transition duration-300",
-                "group-hover:border-greyDark",
-                difficulty === ChallengeDifficulty.Hard && "bg-grey group-hover:bg-greyDark",
+                "group-hover:border-grey-dark",
+                difficulty === ChallengeDifficulty.Hard && "bg-grey group-hover:bg-grey-dark",
               )}
             />
           </div>

@@ -42,8 +42,8 @@ const Breadcrumbs: React.FunctionComponent = () => {
                     className={clsx(
                       "ml-1 font-medium",
                       "transition-colors duration-300",
-                      "hover:text-primaryLight hover:border-primaryLight",
-                      idx === routeList.length - 1 ? "text-white font-bold" : "text-greyMiddle",
+                      "hover:text-primary-light hover:border-primary-light",
+                      idx === routeList.length - 1 ? "text-white font-bold" : "text-grey-middle",
                     )}
                   >
                     {route.breadcrumb}

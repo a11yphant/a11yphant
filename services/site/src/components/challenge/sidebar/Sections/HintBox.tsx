@@ -37,7 +37,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           }}
           className={clsx(
             "w-full p-4 flex flex-row items-center justify-between group font-normal text-left transition duration-300 m-0",
-            "hover:text-primaryLight",
+            "hover:text-primary-light",
             "focus-visible:outline-none focus:outline-none",
             "h6",
           )}
@@ -45,7 +45,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           aria-expanded={usedHints > 0}
         >
           {showHint ? "Hint" : "Stuck? Click to reveal a hint"}
-          <AnimatedChevron style={{ transform: transform }} className={clsx("text-greyMiddle ml-4", "group-hover:text-primaryLight")} />
+          <AnimatedChevron style={{ transform: transform }} className={clsx("text-grey-middle ml-4", "group-hover:text-primary-light")} />
         </Button>
       </h4>
       <div hidden={!showHint} className="px-4">
@@ -66,8 +66,8 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             overrideClassName
             className={clsx(
               "font-normal border-b transition duration-300 mt-4 mb-4",
-              "hover:text-primaryLight hover:border-primaryLight",
-              "focus:text-primaryLight focus:border-primaryLight focus-visible-outline",
+              "hover:text-primary-light hover:border-primary-light",
+              "focus:text-primary-light focus:border-primary-light focus-visible-outline",
             )}
           >
             Show me another hint.

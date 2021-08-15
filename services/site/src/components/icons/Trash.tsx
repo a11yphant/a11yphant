@@ -8,7 +8,7 @@ const Trash: React.FunctionComponent = () => {
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className={clsx("h-5 w-5 m-1 text-primary", "transition duration-300", "group group-hover:text-primaryDark group-focus:text-primaryDark")}
+      className={clsx("h-5 w-5 m-1 text-primary", "transition duration-300", "group group-hover:text-primary-dark group-focus:text-primary-dark")}
       aria-hidden="true"
       focusable="false"
     >

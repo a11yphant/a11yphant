@@ -10,7 +10,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
     <div className={clsx("flex flex-row my-8", className)}>
       <div className="flex flex-col">
         <h2 className="text-grey pb-2.5">Challenges</h2>
-        <p className="text-greyMiddle">Pick a challenge from below</p>
+        <p className="text-grey-middle">Pick a challenge from below</p>
       </div>
     </div>
   );

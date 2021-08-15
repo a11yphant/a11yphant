@@ -24,7 +24,7 @@ const Home: React.FunctionComponent = () => {
         <section className="mx-24 my-64 grid grid-cols-3">
           <div className="col-span-2 flex flex-col justify-center">
             <h2 className="font-bold font-ibmPlex text-5xl mb-6 max-w-2xl">Learning web accessibility made easy</h2>
-            <p className="text-greyMiddle text-lg">
+            <p className="text-grey-middle text-lg">
               a11yphant teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to
               read large amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web
               accessibility challenge and improve your skills.
@@ -36,7 +36,7 @@ const Home: React.FunctionComponent = () => {
                   "bg-primary text-white",
                   "border-primary border-2 rounded px-4 py-2 tracking-wider inline-flex items-center",
                   "transition duration-300",
-                  "hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
+                  "hover:text-white hover:bg-primary-dark hover:border-primary-dark focus:text-white focus:bg-primary-dark focus:border-primary-dark",
                 )}
               >
                 Start Coding
