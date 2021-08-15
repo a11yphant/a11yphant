@@ -9,10 +9,8 @@ module.exports = {
       },
       spacing: {
         inherit: "inherit",
-        screenHalf: "50vh",
         navigation: "8%",
         main: "92%",
-        sidebar: "28%",
         "18/20": "90%",
         fitContent: "fit-content",
       },
