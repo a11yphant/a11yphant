@@ -45,9 +45,9 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
       const buttonHeight = buttonRef.current.offsetHeight;
       const wrapperWidth = wrapperRef.current.clientWidth;
 
-      const marginHeading = getComputedStyle(headingRef.current);
-      const marginButton = getComputedStyle(buttonRef.current);
-      const paddingWrapper = getComputedStyle(wrapperRef.current);
+      const marginHeading = window.getComputedStyle(headingRef.current);
+      const marginButton = window.getComputedStyle(buttonRef.current);
+      const paddingWrapper = window.getComputedStyle(wrapperRef.current);
 
       // calculate real width
       setEditorWidth(wrapperWidth - parseInt(paddingWrapper.paddingLeft) - parseInt(paddingWrapper.paddingRight));
@@ -67,11 +67,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
       setEditorTop(parseInt(paddingWrapper.paddingTop) + headingHeight + parseInt(marginHeading.marginTop) + parseInt(marginHeading.marginBottom));
     }
   }, [wrapperRef, headingRef, buttonRef]);
-
-  // hook if dependency changed
-  React.useEffect(() => {
-    updateEditorSize();
-  }, [updateEditorSize]);
 
   useResizeDetector({
     targetRef: wrapperRef,
