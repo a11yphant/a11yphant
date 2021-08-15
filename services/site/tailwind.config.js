@@ -11,7 +11,7 @@ module.exports = {
         inherit: "inherit",
         navigation: "8%",
         main: "92%",
-        "18/20": "90%",
+        preview: "90%",
         fitContent: "fit-content",
       },
       maxWidth: {

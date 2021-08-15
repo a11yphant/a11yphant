@@ -52,7 +52,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>{heading}</h3>
       <iframe
         title="Preview"
-        className="w-full h-18/20 pb-8"
+        className="w-full h-preview pb-8"
         srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />
     </div>
