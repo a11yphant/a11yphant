@@ -13,7 +13,7 @@ interface EvaluationHeaderProps {
 
 const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ className, levelIdx, challengeName, score, passed }) => {
   return (
-    <div className={clsx("flex flex-row justify-between items-center pb-6 h-fitContent w-full border-greyLight border-b", className)}>
+    <div className={clsx("flex flex-row justify-between items-center pb-6 h-fit-content w-full border-greyLight border-b", className)}>
       <h2 className="text-greyMiddle leading-tight font-normal">
         <strong className="text-light">Evaluation</strong> <br /> {challengeName} <br /> Level{" "}
         {levelIdx.toLocaleString("de-AT", {

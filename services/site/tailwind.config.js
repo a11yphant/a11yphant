@@ -12,7 +12,7 @@ module.exports = {
         navigation: "8%",
         main: "92%",
         preview: "90%",
-        fitContent: "fit-content",
+        "fit-content": "fit-content",
       },
       maxWidth: {
         "80ch": "80ch",
