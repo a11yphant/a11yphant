@@ -23,7 +23,7 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
       </h2>
       <div className="flex flex-row justify-between items-center">
         <span className="mr-10">{passed ? <Check className="h-20 w-28 text-success" /> : <X className="h-20 w-20 text-error" />}</span>
-        <p className="text-8xl text-white font-ibmPlexMono font-bold">{score.toFixed(0)}%</p>
+        <p className="text-8xl text-white font-mono font-bold">{score.toFixed(0)}%</p>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ const Home: React.FunctionComponent = () => {
       <main className="flex flex-col h-main box-border p-4">
         <section className="mx-24 my-64 grid grid-cols-3">
           <div className="col-span-2 flex flex-col justify-center">
-            <h2 className="font-bold font-ibmPlex text-5xl mb-6 max-w-2xl">Learning web accessibility made easy</h2>
+            <h2 className="font-bold font-sans text-5xl mb-6 max-w-2xl">Learning web accessibility made easy</h2>
             <p className="text-grey-middle text-lg">
               a11yphant teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to
               read large amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web

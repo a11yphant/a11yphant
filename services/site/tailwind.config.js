@@ -39,8 +39,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        ibmPlex: ['"IBM Plex Sans"', "sans-serif"],
-        ibmPlexMono: ['"IBM Plex Mono"', "monospace"],
+        sans: ['"IBM Plex Sans"', "sans-serif"],
+        mono: ['"IBM Plex Mono"', "monospace"],
       },
       transitionProperty: {
         width: "width",
@@ -57,7 +57,7 @@ module.exports = {
             color: theme("colors.light"),
             code: {
               color: theme("colors.primary-light"),
-              fontFamily: theme("fontFamily.ibmPlexMono").join(" "),
+              fontFamily: theme("fontFamily.mono").join(" "),
               fontSize: "1em",
               "&::before": {
                 // cannot overwrite the content without important...
