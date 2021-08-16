@@ -1,8 +1,18 @@
-import { Challenge } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-export const ChallengeFactory = Factory.define<Challenge>("challenge-record")
-  .attr("id", () => faker.datatype.uuid())
-  .attr("slug", () => faker.lorem.slug())
-  .attr("name", () => faker.lorem.words(3));
+import { ChallengeDifficulty } from "@/challenge/enums/challenge-difficulty.enum";
+
+import { CHALLENGE, LEVEL } from "./constants";
+import { buildMultipleOf } from "./helpers";
+import { ChallengeData, LevelData } from "./types";
+
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<ChallengeData>(CHALLENGE)
+    .attr("slug", () => faker.lorem.slug())
+    .attr("name", () => faker.lorem.words(3))
+    .attr("difficulty", () => faker.random.arrayElement([ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD]))
+    .option("numberOfLevels", 0)
+    .attr("levels", ["numberOfLevels"], buildMultipleOf<LevelData>(LEVEL, {}, { createChallengeIfMissing: false }));
+}

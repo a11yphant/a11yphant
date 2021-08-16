@@ -1,7 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { HintFactory } from "@tests/factories/database/hint.factory";
-import { TaskFactory } from "@tests/factories/database/task.factory";
+import { Factory, HINT, HintData, TASK, TaskData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -14,15 +13,7 @@ describe("hint service", () => {
     const service = new HintService(prisma);
     const count = 2;
 
-    const task = await prisma.task.create({ data: TaskFactory.build() });
-
-    await Promise.all(
-      [...Array(count).keys()].map(() => {
-        return prisma.hint.create({
-          data: { ...HintFactory.build(), taskId: task.id },
-        });
-      }),
-    );
+    const task = await prisma.task.create({ data: Factory.build<TaskData>(TASK, {}, { numberOfHints: count }) });
 
     expect((await service.findForTask(task.id)).length).toEqual(count);
   });
@@ -31,7 +22,7 @@ describe("hint service", () => {
     const prisma = getPrismaService();
     const service = new HintService(prisma);
     const hint = await prisma.hint.create({
-      data: HintFactory.build(),
+      data: Factory.build<HintData>(HINT),
     });
 
     expect(await service.findOneById(hint.id)).toHaveProperty("id", hint.id);

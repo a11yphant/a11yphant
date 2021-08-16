@@ -1,7 +1,23 @@
-import { Result } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-export const ResultFactory = Factory.define<Result>("result-record")
-  .attr("id", () => faker.datatype.uuid())
-  .attr("submissionId", () => faker.datatype.uuid());
+import { ResultStatus } from "../../../src/submission/models/result-status.enum";
+import { CHECK_RESULT, RESULT, SUBMISSION } from "./constants";
+import { buildMultipleOf, buildOneOf } from "./helpers";
+import { CheckResultData, ResultData, SubmissionData } from "./types";
+
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<ResultData>(RESULT)
+    .attr("id", () => faker.datatype.uuid())
+    .attr("status", ResultStatus.SUCCESS)
+    .attr("submissionId", undefined)
+    .option("createSubmissionIfMissing", true)
+    .attr("submission", ["submissionId", "createSubmissionIfMissing"], buildOneOf<SubmissionData>(SUBMISSION, {}, { createResultIfMissing: false }))
+    .option("numberOfCheckResults", 2)
+    .attr(
+      "checkResults",
+      ["numberOfCheckResults"],
+      buildMultipleOf<CheckResultData>(CHECK_RESULT, {}, { createResultIfMissing: false }) as unknown as any,
+    );
+}

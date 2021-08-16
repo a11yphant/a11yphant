@@ -1,5 +1,9 @@
-import { User } from "@prisma/client";
 import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-export const UserFactory = Factory.define<User>("user-record").attr("id", () => faker.datatype.uuid());
+import { USER } from "./constants";
+import { UserData } from "./types";
+
+export function define(factory: IFactoryStatic): void {
+  factory.define<UserData>(USER).attr("id", () => faker.datatype.uuid());
+}

@@ -1,0 +1,10 @@
+export const CHECK_RESULT = "check-result";
+export const CHALLENGE = "challenge";
+export const HINT = "hint";
+export const LEVEL = "level";
+export const REQUIREMENT = "requirement";
+export const RESULT = "result";
+export const RULE = "rule";
+export const SUBMISSION = "submission";
+export const TASK = "task";
+export const USER = "user";
