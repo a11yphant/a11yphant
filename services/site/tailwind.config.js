@@ -56,7 +56,7 @@ module.exports = {
           css: {
             color: theme("colors.light"),
             code: {
-              color: theme("colors.primary-light"),
+              color: theme("colors.primary.light"),
               fontFamily: theme("fontFamily.mono").join(" "),
               fontSize: "1em",
               "&::before": {
