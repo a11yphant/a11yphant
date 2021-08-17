@@ -10,7 +10,7 @@ import { animated, useSpring } from "react-spring";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
-  reset: (language?: EditorLanguage) => void;
+  onReset: (language?: EditorLanguage) => void;
 }
 
 export interface EditorConfig {
@@ -23,7 +23,7 @@ export interface EditorConfig {
 
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
-const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, config, ...props }) => {
+const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, ...props }) => {
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
   const headingRef = useRef<HTMLHeadingElement>();
@@ -45,9 +45,9 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
       const buttonHeight = buttonRef.current.offsetHeight;
       const wrapperWidth = wrapperRef.current.clientWidth;
 
-      const marginHeading = getComputedStyle(headingRef.current);
-      const marginButton = getComputedStyle(buttonRef.current);
-      const paddingWrapper = getComputedStyle(wrapperRef.current);
+      const marginHeading = window.getComputedStyle(headingRef.current);
+      const marginButton = window.getComputedStyle(buttonRef.current);
+      const paddingWrapper = window.getComputedStyle(wrapperRef.current);
 
       // calculate real width
       setEditorWidth(wrapperWidth - parseInt(paddingWrapper.paddingLeft) - parseInt(paddingWrapper.paddingRight));
@@ -67,11 +67,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
       setEditorTop(parseInt(paddingWrapper.paddingTop) + headingHeight + parseInt(marginHeading.marginTop) + parseInt(marginHeading.marginBottom));
     }
   }, [wrapperRef, headingRef, buttonRef]);
-
-  // hook if dependency changed
-  React.useEffect(() => {
-    updateEditorSize();
-  }, [updateEditorSize]);
 
   useResizeDetector({
     targetRef: wrapperRef,
@@ -136,7 +131,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           confirmButtonLabel={`Reset ${config.languageLabel}`}
           onConfirm={() => {
             setModalOpen(false);
-            reset(config.language);
+            onReset(config.language);
           }}
         />
       </div>
