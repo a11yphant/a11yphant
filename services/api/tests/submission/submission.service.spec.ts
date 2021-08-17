@@ -1,9 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { ChallengeFactory } from "@tests/factories/database/challenge.factory";
-import { LevelFactory } from "@tests/factories/database/level.factory";
-import { UserFactory } from "@tests/factories/database/user.factory";
+import { Factory, LEVEL, LevelData, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { PrismaService } from "@/prisma/prisma.service";
@@ -22,24 +20,11 @@ describe("submission service", () => {
         createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
       );
 
-      const { id: challengeId } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+      const { id } = await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
       });
 
-      const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({ challengeId }),
-      });
-
-      const { id: submissionId } = await prisma.submission.create({
-        data: {
-          levelId,
-          html,
-          css: null,
-          js: null,
-        },
-      });
-
-      const submission = await service.findOne(submissionId);
+      const submission = await service.findOne(id);
 
       expect(submission).toBeTruthy();
       expect(submission.html).toBe(html);
@@ -56,25 +41,14 @@ describe("submission service", () => {
         createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
       );
 
-      const { id: userId } = await prisma.user.create({
-        data: UserFactory.build(),
-      });
-
-      const { id: challengeId } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
-      });
-
-      const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({ challengeId }),
-      });
-
-      const { id: submissionId } = await prisma.submission.create({
-        data: {
-          userId,
-          levelId,
-          html,
-          css: null,
-          js: null,
+      const {
+        id: submissionId,
+        userId,
+        levelId,
+      } = await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
+        include: {
+          level: true,
         },
       });
 
@@ -97,15 +71,11 @@ describe("submission service", () => {
       );
 
       const { id: userId } = await prisma.user.create({
-        data: UserFactory.build(),
-      });
-
-      const { id: challengeId } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<UserData>(USER),
       });
 
       const { id: levelId } = await prisma.level.create({
-        data: LevelFactory.build({ challengeId }),
+        data: Factory.build<LevelData>(LEVEL),
       });
 
       const createdSubmission = await service.save({
@@ -139,7 +109,7 @@ describe("submission service", () => {
       );
 
       const { id: userId } = await prisma.user.create({
-        data: UserFactory.build(),
+        data: Factory.build<UserData>(USER),
       });
 
       expect(async () =>

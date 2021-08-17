@@ -1,10 +1,9 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { CHALLENGE, ChallengeData, Factory, LEVEL, LevelData } from "@tests/factories/database";
+import { useDatabase } from "@tests/helpers";
 
-import { LevelService } from "../../src/challenge/level.service";
-import { ChallengeFactory } from "../factories/database/challenge.factory";
-import { LevelFactory } from "../factories/database/level.factory";
-import { useDatabase } from "../helpers";
+import { LevelService } from "@/challenge/level.service";
 
 describe("level service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -14,10 +13,8 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 1 }),
       });
-
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id }) });
 
       const service = new LevelService(prisma);
 
@@ -30,12 +27,12 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 3 }) });
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 2 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
 
       const service = new LevelService(prisma);
       const levels = await service.findForChallenge(id);
@@ -53,11 +50,11 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id, slug } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: LevelFactory.build({ id: secondLevelId, challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: LevelFactory.build({ challengeId: id, order: 0 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
+      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
 
       const service = new LevelService(prisma);
 
@@ -66,7 +63,7 @@ describe("level service", () => {
       expect(level).toHaveProperty("id", secondLevelId);
     });
 
-    it("returns null for an unkown level", async () => {
+    it("returns null for an unknown level", async () => {
       const prisma = getPrismaService();
       const service = new LevelService(prisma);
 
@@ -77,21 +74,16 @@ describe("level service", () => {
   });
 
   describe("getNumberOfLevelsForChallenge", () => {
-    it("returns the number of levels a challenge has", async () => {
+    it("returns the number of levels assigned to the challenge", async () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: ChallengeFactory.build(),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 2 }),
       });
-
-      const levels = [
-        await prisma.level.create({ data: LevelFactory.build({ challengeId: id }) }),
-        await prisma.level.create({ data: LevelFactory.build({ challengeId: id }) }),
-      ];
 
       const service = new LevelService(prisma);
       const count = await service.getNumberOfLevelsForChallenge(id);
-      expect(count).toBe(levels.length);
+      expect(count).toBe(2);
     });
   });
 });

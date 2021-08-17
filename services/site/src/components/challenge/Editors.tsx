@@ -18,7 +18,7 @@ const Editors: React.FunctionComponent<CustomEditorProps> = ({ className, editor
   return (
     <div className={`${className} flex flex-row justify-between box-border pb-4`}>
       {editors.map((config) => (
-        <WrappedEditor reset={reset} key={config.heading} config={config} {...props} />
+        <WrappedEditor onReset={reset} key={config.heading} config={config} {...props} />
       ))}
     </div>
   );
