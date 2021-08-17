@@ -1,5 +1,6 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
+import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
@@ -19,9 +20,15 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
 
   return (
     <header className="flex justify-between items-center pt-8 pb-6 px-11 h-navigation">
-      <h1 className="logo">
+      <h1>
         <Link href="/">
-          <a className="block text-white hover:text-primary">
+          <a
+            className={clsx(
+              "block text-light border-none",
+              "transform transition ease-in-out duration-300",
+              "motion-safe:hover:scale-110 motion-reduce:border-solid",
+            )}
+          >
             <A11yphantLogo className="w-36" />
             <span className="sr-only">Allyphant Homepage</span>
           </a>
