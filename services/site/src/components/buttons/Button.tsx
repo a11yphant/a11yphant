@@ -13,10 +13,10 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   primary = false,
   icon,
   srText,
-  className,
-  overrideClassName = false,
-  children,
   innerRef,
+  overrideClassName = false,
+  className,
+  children,
   ...props
 }) => {
   return (
