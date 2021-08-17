@@ -10,13 +10,13 @@ interface HintBoxProps {
   hints: Hint[];
 }
 
+const AnimatedChevron = animated(Chevron);
+
 const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
   const [usedHints, setUsedHints] = useState(0);
   const [showHint, setShowHint] = useState(false);
 
   const totalHints = hints.length;
-
-  const AnimatedChevron = animated(Chevron);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
@@ -48,32 +48,34 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           <AnimatedChevron style={{ transform: transform }} className={clsx("text-greyMiddle ml-4", "group-hover:text-primaryLight")} />
         </Button>
       </h4>
-      <div hidden={!showHint} className="px-4">
-        <ol className="list-decimal list-inside font-normal">
-          {hints.slice(0, usedHints).map((hint) => (
-            <li
-              key={hint.id}
-              className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose")}
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }}
-            />
-          ))}
-        </ol>
-        {usedHints < totalHints && (
-          <Button
-            onClick={() => {
-              setUsedHints((usedHints) => (totalHints === usedHints ? usedHints : usedHints + 1));
-            }}
-            overrideClassName
-            className={clsx(
-              "font-normal border-b transition duration-300 mt-4 mb-4",
-              "hover:text-primaryLight hover:border-primaryLight",
-              "focus:text-primaryLight focus:border-primaryLight focus-visible-outline",
-            )}
-          >
-            Show me another hint.
-          </Button>
-        )}
-      </div>
+      {showHint && (
+        <div className="px-4">
+          <ol className="list-decimal list-inside font-normal">
+            {hints.slice(0, usedHints).map((hint) => (
+              <li
+                key={hint.id}
+                className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose")}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }}
+              />
+            ))}
+          </ol>
+          {usedHints < totalHints && (
+            <Button
+              onClick={() => {
+                setUsedHints((usedHints) => (totalHints === usedHints ? usedHints : usedHints + 1));
+              }}
+              overrideClassName
+              className={clsx(
+                "font-normal border-b transition duration-300 mt-4 mb-4",
+                "hover:text-primaryLight hover:border-primaryLight",
+                "focus:text-primaryLight focus:border-primaryLight focus-visible-outline",
+              )}
+            >
+              Show me another hint.
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
