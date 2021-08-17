@@ -45,6 +45,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
                       "hover:text-primaryLight hover:border-primaryLight",
                       idx === routeList.length - 1 ? "text-white font-bold" : "text-greyMiddle",
                     )}
+                    aria-current={idx === routeList.length - 1 ? "page" : undefined}
                   >
                     {route.breadcrumb}
                   </a>
