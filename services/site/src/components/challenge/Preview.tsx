@@ -55,7 +55,13 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
   return (
     <div className={clsx("p-4", "container-light overflow-hidden", className)}>
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
-        {heading} {!previewUpdated && <LoadingIndicator className="inline" />}
+        {heading}{" "}
+        {!previewUpdated && (
+          <span>
+            <span className="sr-only">Updating the live preview is in progress...</span>
+            <LoadingIndicator className="inline" />
+          </span>
+        )}
       </h3>
       <iframe
         title="Preview"
