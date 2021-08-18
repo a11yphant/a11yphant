@@ -40,7 +40,7 @@
     "aws-lambda": "1.0.6",
     "aws-sdk": "2.968.0",
     "aws-sdk-mock": "5.2.1",
-    "dotenv": "8.6.0",
+    "dotenv": "10.0.0",
     "dotenv-cli": "4.0.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
