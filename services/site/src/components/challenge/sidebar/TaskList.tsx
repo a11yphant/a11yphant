@@ -3,7 +3,7 @@ import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
 
-import HintBox from "./Sections/HintBox";
+import HintBox from "./HintBox";
 
 interface TaskListProps {
   tasks: Task[];
