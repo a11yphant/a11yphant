@@ -57,7 +57,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
         {heading}{" "}
         {!previewUpdated && (
-          <span>
+          <span className="text-current">
             <span className="sr-only">Updating the live preview is in progress...</span>
             <LoadingIndicator className="inline" />
           </span>
