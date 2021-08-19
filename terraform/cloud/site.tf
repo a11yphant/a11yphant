@@ -72,7 +72,7 @@ resource "aws_apigatewayv2_api" "site_http_api" {
 }
 
 resource "aws_ecr_repository" "repository_site" {
-  name                 = "${terraform.workspace}-submission-checker"
+  name                 = "${terraform.workspace}-site"
   image_tag_mutability = "MUTABLE"
 }
 
