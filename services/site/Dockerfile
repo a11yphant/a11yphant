@@ -41,4 +41,4 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/entrypoint.js ./entrypoint.js
 
-CMD ["entrypoint"]
+CMD ["entrypoint.handler"]
