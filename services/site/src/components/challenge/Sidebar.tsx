@@ -3,7 +3,7 @@ import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
 
-import TaskList from "./sidebar/TaskList";
+import HintList from "./sidebar/HintList";
 
 interface SidebarProps {
   className: string;
@@ -18,7 +18,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
         <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
         <h3 className={clsx("my-8", "h4")}>Instructions</h3>
         <p className={clsx("whitespace-pre-wrap", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
-        <TaskList tasks={level.tasks} />
+        <HintList tasks={level.tasks} />
       </div>
     </aside>
   );
