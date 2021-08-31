@@ -1,5 +1,4 @@
 locals {
-  image_name                          = "submission-checker"
   ecr_submission_checker_image        = format("%v/%v", local.ecr_address, aws_ecr_repository.repository_submission_checker.id)
   ecr_submission_checker_image_latest = format("%v:%v", local.ecr_submission_checker_image, "latest")
   gitlab_ci_submission_checker_image  = "gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:${var.docker_tag}"

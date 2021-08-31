@@ -1,7 +1,6 @@
 locals {
-  origin_id_site_http_api  = "${terraform.workspace}-site-http-api-origin"
-  origin_id_site_s3_static = "${terraform.workspace}-site-s3-static"
-  origin_id_api_http_api   = "${terraform.workspace}-api-http-api"
+  origin_id_site_http_api = "${terraform.workspace}-site-http-api-origin"
+  origin_id_api_http_api  = "${terraform.workspace}-api-http-api"
 }
 
 resource "aws_cloudfront_distribution" "site" {
@@ -33,15 +32,6 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
-  origin {
-    domain_name = aws_s3_bucket.site_static_assets.bucket_regional_domain_name
-    origin_id   = local.origin_id_site_s3_static
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.site_access_identity.cloudfront_access_identity_path
-    }
-  }
-
   enabled         = true
   is_ipv6_enabled = true
 
@@ -53,13 +43,13 @@ resource "aws_cloudfront_distribution" "site" {
 
   # s3
   dynamic "ordered_cache_behavior" {
-    for_each = ["/fonts/*", "/_next/static/*", "favicon.ico", "images/*"]
+    for_each = ["/fonts/*", "/_next/static/*", "favicon.ico", "images/*", "/_next/image*"]
 
     content {
       path_pattern     = ordered_cache_behavior.value
       allowed_methods  = ["GET", "HEAD", "OPTIONS"]
       cached_methods   = ["GET", "HEAD"]
-      target_origin_id = local.origin_id_site_s3_static
+      target_origin_id = local.origin_id_site_http_api
 
       forwarded_values {
         query_string = false
@@ -75,27 +65,6 @@ resource "aws_cloudfront_distribution" "site" {
       compress               = true
       viewer_protocol_policy = "redirect-to-https"
     }
-  }
-
-  ordered_cache_behavior {
-    path_pattern     = "/_next/image*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.origin_id_site_http_api
-
-    forwarded_values {
-      query_string = true
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl                = 86400
-    default_ttl            = 86400
-    max_ttl                = 31536000
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
   }
 
   # forward graphql to api api gateway

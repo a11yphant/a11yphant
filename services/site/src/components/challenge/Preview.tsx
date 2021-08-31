@@ -4,7 +4,7 @@ import { parse } from "node-html-parser";
 import React, { useState } from "react";
 
 interface PreviewProps {
-  className: string;
+  className?: string;
   cssCode: string;
   htmlCode: string;
   javascriptCode: string;

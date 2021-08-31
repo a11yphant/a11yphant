@@ -43,7 +43,7 @@ describe("Icons", () => {
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("ArrowLeft exists", () => {
+  it("IllustrationCoding exists", () => {
     const wrapper = shallow(<IllustrationCoding />);
 
     expect(wrapper.type()).toBe("svg");
@@ -61,7 +61,7 @@ describe("Icons", () => {
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("ArrowRight exists", () => {
+  it("Slash exists", () => {
     const wrapper = shallow(<Slash />);
 
     expect(wrapper.type()).toBe("svg");
