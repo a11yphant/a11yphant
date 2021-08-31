@@ -12,6 +12,7 @@ import DifficultyMedium from "app/components/icons/DifficultyMedium";
 import Exclamation from "app/components/icons/Exclamation";
 import Github from "app/components/icons/Github";
 import Home from "app/components/icons/Home";
+import IllustrationCoding from "app/components/icons/IllustrationCoding";
 import LightBulb from "app/components/icons/LightBulb";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
@@ -88,6 +89,12 @@ describe("Icons", () => {
 
   it("Home exists", () => {
     const wrapper = shallow(<Home />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("IllustrationCoding exists", () => {
+    const wrapper = shallow(<IllustrationCoding />);
 
     expect(wrapper.type()).toBe("svg");
   });
