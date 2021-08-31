@@ -97,7 +97,7 @@ const Evaluation: React.FunctionComponent = () => {
         </title>
       </Head>
       {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
-      <main className="flex flex-col justify-between h-main p-12">
+      <main className="h-main p-12 flex flex-col justify-between">
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
@@ -108,7 +108,7 @@ const Evaluation: React.FunctionComponent = () => {
               score={totalScore}
               passed={status === ResultStatus.Success}
             />
-            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-20 mt-0 mb-4 overflow-auto overscroll-none">
+            <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
               <ul className="h-full">{getRequirements}</ul>
             </div>
             <div className="absolute bottom-8 right-8">

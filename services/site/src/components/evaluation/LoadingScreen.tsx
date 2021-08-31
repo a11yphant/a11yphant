@@ -9,7 +9,7 @@ interface LoadingScreenProps {
 
 const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className }) => {
   return (
-    <div className={clsx("flex flex-col justify-center items-center box-border h-full w-full", "container-dark", className)}>
+    <div className={clsx(" h-full w-full flex flex-col justify-center items-center box-border", "container-dark", className)}>
       <div>
         <Lottie
           options={{

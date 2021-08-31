@@ -19,7 +19,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const displayRegistration = false;
 
   return (
-    <header className="flex justify-between items-center pt-8 pb-6 px-11 h-navigation">
+    <header className="h-navigation pt-8 pb-6 px-11 flex justify-between items-center">
       <h1>
         <Link href="/">
           <a

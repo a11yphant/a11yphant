@@ -55,7 +55,7 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
             />
           )}
         </div>
-        <p className="p-2 pt-1 mt-2 mb-0 text-8xl text-white font-mono font-bold container-dark">{score.toFixed(0)}%</p>
+        <p className={clsx("p-2 pt-1 mt-2 mb-0 text-8xl text-white font-mono font-bold w-fit-content", "container-dark")}>{score.toFixed(0)}%</p>
       </div>
     </div>
   );
