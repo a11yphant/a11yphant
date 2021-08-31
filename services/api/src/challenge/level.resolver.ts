@@ -1,7 +1,7 @@
 import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
+import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
-import { SessionToken as SessionTokenInterface } from "@/authentication/session-token.interface";
 import { Submission } from "@/submission/models/submission.model";
 import { SubmissionService } from "@/submission/submission.service";
 

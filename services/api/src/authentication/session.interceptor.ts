@@ -5,9 +5,9 @@ import { tap } from "rxjs/operators";
 
 import { UserService } from "@/user/user.service";
 
-import { Context } from "./context.interface";
+import { Context } from "./interfaces/context.interface";
+import { SessionToken } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
-import { SessionToken } from "./session-token.interface";
 
 @Injectable()
 export class SessionInterceptor implements NestInterceptor {

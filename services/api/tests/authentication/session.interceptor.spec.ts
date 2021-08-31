@@ -4,7 +4,7 @@ import { UserFactory } from "@tests/factories/models/user.factory";
 import { Request, Response } from "express";
 import { of } from "rxjs";
 
-import { Context } from "@/authentication/context.interface";
+import { Context } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { SessionInterceptor } from "@/authentication/session.interceptor";
 import { UserService } from "@/user/user.service";
