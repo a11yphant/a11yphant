@@ -7,7 +7,7 @@ const Check: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ classNa
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 60 46"
-      className={clsx("h-6 w-6", className)}
+      className={clsx(className)}
       aria-hidden="true"
       focusable="false"
       {...props}

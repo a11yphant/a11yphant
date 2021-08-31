@@ -29,7 +29,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
 
   return (
     <>
-      <div className="h-14 w-14 flex justify-center items-center mr-20">
+      <div className="h-14 w-14 mr-20 ml-8 flex justify-center items-center">
         {passed ? <Check className="h-9 w-14 text-success" /> : <X className="h-10 w-10 text-error" />}
         {passed ? (
           <p className="sr-only">The following requirement is fulfilled:</p>
@@ -38,18 +38,28 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
         )}
       </div>
 
-      <div className="flex flex-col col-start-2 col-span-5">
+      <div className="flex flex-col col-start-2 col-span-9">
         <h3>
           <Button
             onClick={() => {
               setShowDescription((prevShowDescription) => !prevShowDescription);
             }}
-            className={clsx("h4 flex flex-row-reverse py-3 pl-4 group", "transition duration-300 hover:text-primary-light", className)}
+            className={clsx(
+              "py-3 pl-4 flex flex-row-reverse",
+              "group transition duration-300",
+              "hover:text-primary-light",
+              "focus:text-primary-light",
+              "h4",
+              className,
+            )}
             overrideClassName
             aria-expanded={showDescription}
           >
             {title}
-            <AnimatedChevron style={{ transform: transform }} className={clsx("text-light mr-8", "group-hover:text-primary-light", className)} />
+            <AnimatedChevron
+              style={{ transform: transform }}
+              className={clsx("mr-8 text-light", "group-hover:text-primary-light", "group-focus:text-primary-light", className)}
+            />
           </Button>
         </h3>
         <div hidden={!showDescription}>
