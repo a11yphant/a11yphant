@@ -133,7 +133,7 @@ const Level: React.FunctionComponent = () => {
         <Sidebar className="h-full" challengeName={challenge.name} level={level} />
         <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
           <Editors
-            reset={resetToInitialCode}
+            onReset={resetToInitialCode}
             className="w-full h-3/5"
             editors={editorConfiguration}
             theme="light"
