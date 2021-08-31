@@ -10,7 +10,10 @@ const Reset: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ classNa
       aria-hidden="true"
       focusable="false"
       className={clsx(
-        "mr-2 ml-1 h-5 w-5 text-grey transition duration-300 group group-hover:text-primary-light group-focus:text-primary-light",
+        "mr-2 ml-1 h-5 w-5 text-grey",
+        "group transition duration-300",
+        "group-hover:text-primary-light",
+        "group-focus:text-primary-light",
         className,
       )}
       {...props}
