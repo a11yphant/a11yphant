@@ -6,7 +6,11 @@ import correctAnimation from "app/lotties/correct_lottie.json";
 import failAnimation from "app/lotties/fail_lottie.json";
 import { shallow } from "enzyme";
 import React from "react";
-import Lottie from "react-lottie";
+import Lottie, { LottieProps } from "react-lottie";
+
+jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
+  return;
+});
 
 afterEach(cleanup);
 

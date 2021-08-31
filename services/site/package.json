@@ -72,7 +72,6 @@
     "@wojtekmaj/enzyme-adapter-react-17": "0.6.3",
     "autoprefixer": "10.3.3",
     "babel-jest": "27.1.0",
-    "canvas": "^2.8.0",
     "concurrently": "6.2.1",
     "dotenv": "10.0.0",
     "enzyme": "3.11.0",
