@@ -6,8 +6,8 @@ import React from "react";
 interface CardProps {
   className?: string;
   heading: string;
-  difficulty: ChallengeDifficulty;
   levels: number;
+  difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
 }

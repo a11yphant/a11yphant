@@ -12,7 +12,7 @@ interface EvaluationHeaderProps {
   passed: boolean;
 }
 
-const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ className, levelIdx, challengeName, score, passed }) => {
+const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ className, challengeName, levelIdx, score, passed }) => {
   return (
     <div className={clsx("pb-6 h-fit-content w-full flex flex-row justify-between items-center border-grey-light border-b", className)}>
       <h2 className="text-grey-middle leading-tight font-normal">

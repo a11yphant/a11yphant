@@ -7,8 +7,8 @@ import CollapsableSection from "./CollapsableSection";
 interface EvaluationBodyProps {
   className?: string;
   requirementTitle: string;
-  description: string;
   result: RequirementStatus;
+  description: string;
 }
 
 const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirementTitle, result, description }) => {
