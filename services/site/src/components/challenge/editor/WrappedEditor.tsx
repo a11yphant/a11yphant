@@ -100,7 +100,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
             loading={
               <span>
                 <span className="sr-only">The editor is loading...</span>
-                <LoadingIndicator />
+                <LoadingIndicator className="w-6 h-6" />
               </span>
             }
             value={config.code}
