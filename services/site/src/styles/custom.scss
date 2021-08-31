@@ -5,6 +5,7 @@
 @layer base {
     // Additional Styles --------------------------
 
+    // Container Styles -----
     .container-light {
         @apply relative;
         @apply border-2;
@@ -21,7 +22,7 @@
         @apply bg-background-light;
     }
 
-    .container-ultradark {
+    .container-ultra-dark {
         @apply relative;
         @apply border-2;
         @apply rounded-xl;
@@ -29,26 +30,9 @@
         @apply bg-background;
     }
 
-    .chevron-open {
-        @apply transform;
-        @apply rotate-180;
-        @apply border-none;
-    }
-
-    .disableBtn {
-        button {
-            cursor: auto;
-
-            &:hover,
-            &:focus {
-                @apply bg-white;
-                @apply text-primary;
-            }
-        }
-    }
-
+    // Card -----
     // make whole card focusable when a-tag is only inside
-    .card {
+    @mixin card {
         gap: 2ch;
 
         a::after {
@@ -68,27 +52,20 @@
             outline: none;
         }
     }
-    .card-smaller {
-        gap: 2ch;
 
-        a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-        }
+    .card-smaller {
+        @include card;
 
         &:focus-within {
             box-shadow: 0 0 0 0.15rem #fff;
         }
-
-        &:focus-within a:focus {
-            outline: none;
-        }
     }
 
+    .card {
+        @include card;
+    }
+
+    // Loading Indicator -----
     .loading-spinner {
         width: 0.94rem;
         height: 0.94rem;
