@@ -238,18 +238,6 @@
         @apply bg-background;
     }
 
-    .editor-container {
-        padding: 0 0.5rem;
-
-        &:first-of-type {
-            padding-left: 0;
-        }
-
-        &:last-of-type {
-            padding-right: 0;
-        }
-    }
-
     .chevron-open {
         @apply transform;
         @apply rotate-180;

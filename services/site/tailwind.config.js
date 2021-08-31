@@ -77,6 +77,7 @@ module.exports = {
     extend: {
       textColor: ["group-focus"],
       transitionProperty: ["hover", "motion-safe", "motion-reduce"],
+      borderWidth: ["first", "last"],
     },
   },
   plugins: [require("@tailwindcss/typography")],
