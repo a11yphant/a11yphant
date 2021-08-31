@@ -80,6 +80,9 @@ provider "aws" {
   region = "us-west-2"
 }
 
+provider "external" {
+}
+
 module "messaging" {
   source = "../modules/messaging"
 }
