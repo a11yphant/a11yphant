@@ -6,6 +6,7 @@ import { SessionToken as SessionTokenInterface } from "@/authentication/session-
 import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 
+import { CreateSubmissionResult } from "./create-submission.result";
 import { Submission } from "./models/submission.model";
 import { SubmissionInput } from "./submission.input";
 import { SubmissionService } from "./submission.service";
@@ -26,6 +27,18 @@ export class SubmissionResolver {
       ...submissionInput,
       userId: sessionToken.userId,
     });
+  }
+
+  @Mutation(() => CreateSubmissionResult)
+  async createSubmission(
+    @Args("submissionInput") submissionInput: SubmissionInput,
+    @SessionToken() sessionToken: SessionTokenInterface,
+  ): Promise<CreateSubmissionResult> {
+    const submission = await this.submissionService.save({ ...submissionInput, userId: sessionToken.userId });
+
+    return {
+      submission,
+    };
   }
 
   @ResolveField()

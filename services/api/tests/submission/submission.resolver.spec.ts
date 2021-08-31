@@ -1,8 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
 import { LevelFactory } from "@tests/factories/models/level.factory";
 
+import { SessionToken } from "@/authentication/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
 import { Submission } from "@/submission/models/submission.model";
+import { SubmissionInput } from "@/submission/submission.input";
 import { SubmissionResolver } from "@/submission/submission.resolver";
 import { SubmissionService } from "@/submission/submission.service";
 
@@ -41,5 +43,26 @@ describe("submission resolver", () => {
 
     expect(level).toBeTruthy();
     expect(level.id).toBe(mockLevel.id);
+  });
+
+  it("can create a submission", async () => {
+    const save = jest.fn().mockResolvedValue({});
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>({
+        save,
+      }),
+      createMock<LevelService>(),
+    );
+    const sessionToken: SessionToken = { userId: "uuid" };
+    const submission: SubmissionInput = {
+      levelId: "uuid",
+      html: "bla",
+      css: "blub",
+      js: "bli",
+    };
+
+    await resolver.createSubmission(submission, sessionToken);
+
+    expect(save).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
   });
 });
