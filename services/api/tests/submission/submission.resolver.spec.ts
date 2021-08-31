@@ -1,8 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
 import { LevelFactory } from "@tests/factories/models/level.factory";
+import { UserInputError } from "apollo-server-express";
 
 import { SessionToken } from "@/authentication/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
+import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
 import { Submission } from "@/submission/models/submission.model";
 import { SubmissionInput } from "@/submission/submission.input";
 import { SubmissionResolver } from "@/submission/submission.resolver";
@@ -46,10 +48,10 @@ describe("submission resolver", () => {
   });
 
   it("can create a submission", async () => {
-    const save = jest.fn().mockResolvedValue({});
+    const create = jest.fn().mockResolvedValue({});
     const resolver = new SubmissionResolver(
       createMock<SubmissionService>({
-        save,
+        create,
       }),
       createMock<LevelService>(),
     );
@@ -61,8 +63,26 @@ describe("submission resolver", () => {
       js: "bli",
     };
 
-    await resolver.createSubmission(submission, sessionToken);
+    const result = await resolver.createSubmission(submission, sessionToken);
 
-    expect(save).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
+    expect(result.submission).toBeTruthy();
+    expect(create).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
+  });
+
+  it("can request a check for submission", async () => {
+    const resolver = new SubmissionResolver(createMock<SubmissionService>(), createMock<LevelService>());
+
+    const result = await resolver.requestCheck({ submissionId: "bla" });
+
+    expect(result).toBeTruthy();
+  });
+
+  it("cannot request a check for the same submission multiple time", () => {
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>({ requestCheck: jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException()) }),
+      createMock<LevelService>(),
+    );
+
+    expect(resolver.requestCheck({ submissionId: "bla" })).rejects.toBeInstanceOf(UserInputError);
   });
 });

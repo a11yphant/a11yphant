@@ -5,8 +5,11 @@ import { Submission as SubmissionRecord } from "@prisma/client";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
+import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
+import { Result } from "./models/result.model";
 import { ResultStatus } from "./models/result-status.enum";
 import { Submission } from "./models/submission.model";
+import { ResultService } from "./result.service";
 import { SubmissionCreateData } from "./submission-create-data.interface";
 
 @Injectable()
@@ -32,32 +35,59 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async save(input: SubmissionCreateData): Promise<Submission> {
+  public async create(data: SubmissionCreateData): Promise<Submission> {
     const submission = await this.prisma.submission.create({
+      data,
+    });
+
+    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+  }
+
+  public async requestCheck(submissionId: string): Promise<Result> {
+    if ((await this.prisma.result.count({ where: { submissionId } })) === 1) {
+      throw new SubmissionAlreadyHasCheckResultException();
+    }
+
+    const { result } = await this.prisma.submission.update({
+      where: { id: submissionId },
       data: {
-        ...input,
-        result: { create: { status: ResultStatus.PENDING } },
+        result: {
+          create: { status: ResultStatus.PENDING },
+        },
       },
+      include: { result: true },
+    });
+
+    const submission = await this.prisma.submission.findUnique({
+      where: { id: submissionId },
       include: { level: { include: { requirements: { include: { rule: true } } } } },
     });
 
-    await this.clientProxy
-      .emit("submission.created", {
-        submission: {
-          id: submission.id,
-          html: submission.html,
-          css: submission.css,
-          js: submission.js,
-        },
-        rules: submission.level.requirements.map((requirement) => ({
-          id: requirement.id,
-          key: requirement.rule.key,
-          options: requirement.options,
-        })),
-      })
-      .toPromise();
+    this.clientProxy.emit("submission.created", {
+      submission: {
+        id: submission.id,
+        html: submission.html,
+        css: submission.css,
+        js: submission.js,
+      },
+      rules: submission.level.requirements.map((requirement) => ({
+        id: requirement.id,
+        key: requirement.rule.key,
+        options: requirement.options,
+      })),
+    });
 
-    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+    return result ? ResultService.createModelFromRecord(result) : null;
+  }
+
+  /**
+   * @deprecated
+   */
+  public async save(input: SubmissionCreateData): Promise<Submission> {
+    const submission = await this.create(input);
+    await this.requestCheck(submission.id);
+
+    return submission;
   }
 
   static createModelFromDatabaseRecord(record: SubmissionRecord): Submission {

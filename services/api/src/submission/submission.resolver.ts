@@ -7,7 +7,10 @@ import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 
 import { CreateSubmissionResult } from "./create-submission.result";
+import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
 import { Submission } from "./models/submission.model";
+import { RequestCheckInput } from "./request-check.input";
+import { RequestCheckResult } from "./request-check.result";
 import { SubmissionInput } from "./submission.input";
 import { SubmissionService } from "./submission.service";
 
@@ -34,11 +37,28 @@ export class SubmissionResolver {
     @Args("submissionInput") submissionInput: SubmissionInput,
     @SessionToken() sessionToken: SessionTokenInterface,
   ): Promise<CreateSubmissionResult> {
-    const submission = await this.submissionService.save({ ...submissionInput, userId: sessionToken.userId });
+    const submission = await this.submissionService.create({ ...submissionInput, userId: sessionToken.userId });
 
     return {
       submission,
     };
+  }
+
+  @Mutation(() => RequestCheckResult)
+  async requestCheck(@Args("requestCheckInput") requestCheckInput: RequestCheckInput): Promise<RequestCheckResult> {
+    try {
+      const result = await this.submissionService.requestCheck(requestCheckInput.submissionId);
+
+      return {
+        result,
+      };
+    } catch (error) {
+      if (error instanceof SubmissionAlreadyHasCheckResultException) {
+        throw new UserInputError("A check for this submission has already been requested");
+      }
+
+      throw error;
+    }
   }
 
   @ResolveField()
