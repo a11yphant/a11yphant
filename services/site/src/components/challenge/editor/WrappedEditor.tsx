@@ -86,7 +86,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
   });
 
   return (
-    <div className={clsx("w-inherit h-full", "editor-container")}>
+    <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
       <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark overflow-hidden")}>
         <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
           {config.heading}
@@ -114,7 +114,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           onMouseLeave={() => {
             setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
           }}
-          className={clsx("absolute bottom-2 flex items-center text-grey mx-3", "group transition duration-300 hover:text-primaryLight")}
+          className={clsx(
+            "absolute bottom-2 flex items-center text-grey mx-3",
+            "group transition duration-300",
+            "hover:text-primary-light",
+            "focus:text-primary-light",
+          )}
           overrideClassName
           innerRef={buttonRef}
         >

@@ -1,5 +1,7 @@
-import "app/styles/global.scss";
 import "app/styles/nprogress.scss";
+import "app/styles/global.scss";
+import "app/styles/fonts.scss";
+import "app/styles/custom.scss";
 
 import { ApolloProvider } from "@apollo/client";
 import Navigation from "app/components/Navigation";

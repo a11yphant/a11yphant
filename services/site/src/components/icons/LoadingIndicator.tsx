@@ -8,7 +8,7 @@ const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> =
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       focusable="false"
-      className={clsx("animate-spin", "loading-spinner", className)}
+      className={clsx("animate-spin", "loading-spinner w-[0.94rem] h-[0.94rem]", className)}
       {...props}
     >
       <g>

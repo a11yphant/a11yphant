@@ -1,9 +1,16 @@
 import clsx from "clsx";
 import React from "react";
 
-const Github: React.FunctionComponent = () => {
+const Github: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
-    <svg className={clsx("h-full w-full text-gray-300")} fill="currentColor" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+    <svg
+      className={clsx("h-full w-full text-gray-300", className)}
+      fill="currentColor"
+      viewBox="0 0 44 44"
+      aria-hidden="true"
+      focusable="false"
+      {...props}
+    >
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
