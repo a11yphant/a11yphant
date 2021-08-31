@@ -21,6 +21,7 @@ const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className 
             },
           }}
           height={300}
+          ariaRole={"progressbar"}
         />
       </div>
       <h2 className="text-5xl">Evaluation</h2>
