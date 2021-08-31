@@ -13,6 +13,7 @@ module.exports = {
         navigation: "8%",
         main: "92%",
         preview: "90%",
+        sidebar: "28%",
         "fit-content": "fit-content",
       },
       maxWidth: {
