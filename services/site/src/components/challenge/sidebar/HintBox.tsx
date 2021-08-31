@@ -36,7 +36,8 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             setUsedHints((usedHints) => (usedHints > 1 ? usedHints : 1));
           }}
           className={clsx(
-            "w-full p-4 flex flex-row items-center justify-between group font-normal text-left transition duration-300 m-0",
+            "w-full p-4 m-0 flex flex-row items-center justify-between font-normal text-left",
+            "group transition duration-300",
             "hover:text-primary-light",
             "focus-visible:outline-none focus:outline-none",
             "h6",
@@ -66,7 +67,8 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
               }}
               overrideClassName
               className={clsx(
-                "font-normal border-b transition duration-300 mt-4 mb-4",
+                "mt-4 mb-4 font-normal border-b",
+                "transition duration-300",
                 "hover:text-primary-light hover:border-primary-light",
                 "focus:text-primary-light focus:border-primary-light focus-visible-outline",
               )}

@@ -114,7 +114,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           onMouseLeave={() => {
             setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
           }}
-          className={clsx("absolute bottom-2 flex items-center text-grey mx-3", "group transition duration-300 hover:text-primary-light")}
+          className={clsx(
+            "absolute bottom-2 flex items-center text-grey mx-3",
+            "group transition duration-300",
+            "hover:text-primary-light",
+            "focus:text-primary-light",
+          )}
           overrideClassName
           innerRef={buttonRef}
         >
