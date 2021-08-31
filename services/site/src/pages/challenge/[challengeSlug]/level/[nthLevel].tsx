@@ -14,7 +14,6 @@ import {
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
-import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -37,8 +36,6 @@ const Level: React.FunctionComponent = () => {
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
   const [submitLevelMutation] = useSubmitMutation();
-
-  const challengeContext = useChallenge();
 
   const [initialCode] = useState<Code>(level?.code);
 
@@ -82,8 +79,7 @@ const Level: React.FunctionComponent = () => {
       },
     });
 
-    challengeContext.setSubmissionId(data.submit.id);
-    router.push(`${router.asPath}/evaluation`);
+    router.push(`${router.asPath}/evaluation/${data.submit.id}`);
   };
 
   if (loading || loadingChallenge) {

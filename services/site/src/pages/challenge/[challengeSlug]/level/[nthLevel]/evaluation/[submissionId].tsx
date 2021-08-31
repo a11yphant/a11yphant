@@ -12,7 +12,6 @@ import {
   useResultForSubmissionLazyQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
-import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -20,9 +19,8 @@ import React, { useState } from "react";
 import ReactConfetti from "react-confetti";
 
 const Evaluation: React.FunctionComponent = () => {
-  const challengeContext = useChallenge();
   const router = useRouter();
-  const { challengeSlug, nthLevel } = router.query;
+  const { challengeSlug, nthLevel, submissionId } = router.query;
 
   const {
     data: { challenge },
@@ -41,8 +39,10 @@ const Evaluation: React.FunctionComponent = () => {
 
   // fetch every 3 seconds
   React.useEffect(() => {
+    getResultForSubmission({ variables: { id: submissionId as string } });
+
     const interval = setInterval(() => {
-      getResultForSubmission({ variables: { id: challengeContext.submissionId } });
+      getResultForSubmission({ variables: { id: submissionId as string } });
     }, 3000);
 
     setQueryInterval(interval);
