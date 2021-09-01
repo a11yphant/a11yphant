@@ -3,7 +3,6 @@ include:
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
-  - /ci/templates/gitlab-ci-production-dependencies.yml
   - /ci/templates/gitlab-ci-deploy.yml
 
 cache:
@@ -147,24 +146,13 @@ test:submission-checker:
     - merge_request
 
 build:submission-checker:
-  tags:
-    - docker
-  stage: build
-  image: docker:20
+  extends:
+    - .build
   needs: []
   variables:
     PROJECT_PATH: services/submission-checker
     IMAGE_NAME_APP: a11yphant/a11yphant/submission-checker
     IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
-  cache: {}
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    # api app container
-    - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
-    - docker push $IMAGE_APP
   only:
     - master
     - develop
@@ -279,21 +267,8 @@ build:site:
     - generate-graphql-schema:api
   variables:
     PROJECT_PATH: services/site
-  artifacts:
-    paths:
-      - $PROJECT_PATH/.next
-    expire_in: 1 day
-  only:
-    - master
-    - develop
-    - merge_request
-
-production-dependencies:site:
-  extends:
-    - .production-dependencies
-  needs: []
-  variables:
-    PROJECT_PATH: services/site
+    IMAGE_NAME_APP: a11yphant/a11yphant/site
+    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
   only:
     - master
     - develop

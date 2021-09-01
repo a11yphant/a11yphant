@@ -20,6 +20,8 @@ terraform {
 
     docker = {
       source = "kreuzwerker/docker"
+      # lock version until this bug is resolved: https://github.com/kreuzwerker/terraform-provider-docker/issues/239
+      version = "2.11.0"
     }
 
     random = {
@@ -76,6 +78,9 @@ provider "aws" {
 provider "aws" {
   alias  = "us_west_2"
   region = "us-west-2"
+}
+
+provider "external" {
 }
 
 module "messaging" {

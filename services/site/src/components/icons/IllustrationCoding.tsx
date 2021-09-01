@@ -1,6 +1,6 @@
 import React from "react";
 
-const IllustrationCoding: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className }) => {
+const IllustrationCoding: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
     <svg
       id="ab47acfe-844d-4101-aa7b-df38aa50dbe4"
@@ -10,6 +10,7 @@ const IllustrationCoding: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
       className={className}
       aria-hidden="true"
       focusable="false"
+      {...props}
     >
       <path
         d="M847.93141,636.215h0a249.62642,249.62642,0,0,1-2.09461-54.11121l2.09461-29.88879h0c-11.54175,22.96552-8.93335,53.1922,0,83.99994Z"

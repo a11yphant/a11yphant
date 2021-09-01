@@ -2,10 +2,15 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
-import Check from "app/components/icons/Check";
-import X from "app/components/icons/X";
+import correctAnimation from "app/lotties/correct_lottie.json";
+import failAnimation from "app/lotties/fail_lottie.json";
 import { shallow } from "enzyme";
 import React from "react";
+import Lottie, { LottieProps } from "react-lottie";
+
+jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
+  return;
+});
 
 afterEach(cleanup);
 
@@ -38,15 +43,15 @@ describe("EvaluationHeader", () => {
       <EvaluationHeader challengeName={challengeName} levelIdx={Number(levelIdx)} score={success.score} passed={success.passed} />,
     );
 
-    expect(wrapper.exists(Check)).toBeTruthy();
-    expect(wrapper.exists(X)).toBeFalsy();
+    expect(wrapper.find(Lottie).length).toBe(1);
+    expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
   });
 
   it("renders X on fail", () => {
     const wrapper = shallow(<EvaluationHeader challengeName={challengeName} levelIdx={Number(levelIdx)} score={fail.score} passed={fail.passed} />);
 
-    expect(wrapper.exists(X)).toBeTruthy();
-    expect(wrapper.exists(Check)).toBeFalsy();
+    expect(wrapper.find(Lottie).length).toBe(1);
+    expect(wrapper.find(Lottie).props().options.animationData).toBe(failAnimation);
   });
 
   it("className is added", () => {

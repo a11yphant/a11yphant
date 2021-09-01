@@ -1,10 +1,11 @@
-import "app/styles/global.scss";
 import "app/styles/nprogress.scss";
+import "app/styles/global.scss";
+import "app/styles/fonts.scss";
+import "app/styles/custom.scss";
 
 import { ApolloProvider } from "@apollo/client";
 import Navigation from "app/components/Navigation";
 import { useApollo } from "app/lib/apollo-client";
-import ChallengeContextProvider from "app/lib/ChallengeContext";
 import Router from "next/router";
 import NProgress from "nprogress";
 import React from "react";
@@ -25,12 +26,10 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <ChallengeContextProvider>
-        <div className="w-full h-screen">
-          <Navigation displayBreadcrumbs={pageProps.displayBreadcrumbs} displaySave={pageProps.displaySave} />
-          <Component {...pageProps} />
-        </div>
-      </ChallengeContextProvider>
+      <div className="w-full h-screen">
+        <Navigation displayBreadcrumbs={pageProps.displayBreadcrumbs} displaySave={pageProps.displaySave} />
+        <Component {...pageProps} />
+      </div>
     </ApolloProvider>
   );
 };
