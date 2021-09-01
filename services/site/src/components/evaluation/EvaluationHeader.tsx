@@ -35,9 +35,11 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
                   preserveAspectRatio: "xMidYMid slice",
                 },
               }}
-              height={100}
+              height={70}
+              width={70}
               ariaRole={"img"}
               title={"A cross"}
+              style={{ marginTop: "-20px" }}
             />
           ) : (
             <Lottie
@@ -49,9 +51,11 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
                   preserveAspectRatio: "xMidYMid slice",
                 },
               }}
-              height={100}
+              height={50}
+              width={70}
               ariaRole={"img"}
               title={"A cross"}
+              style={{ marginTop: "-10px", marginLeft: "10px" }}
             />
           )}
         </div>
