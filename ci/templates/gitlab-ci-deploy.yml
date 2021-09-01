@@ -5,7 +5,6 @@
   needs:
     - build:api
     - build:site
-    - production-dependencies:site
     - build:submission-checker
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache

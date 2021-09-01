@@ -12,7 +12,6 @@ import {
   useResultForSubmissionLazyQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
-import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -20,9 +19,8 @@ import React, { useState } from "react";
 import ReactConfetti from "react-confetti";
 
 const Evaluation: React.FunctionComponent = () => {
-  const challengeContext = useChallenge();
   const router = useRouter();
-  const { challengeSlug, nthLevel } = router.query;
+  const { challengeSlug, nthLevel, submissionId } = router.query;
 
   const {
     data: { challenge },
@@ -41,8 +39,10 @@ const Evaluation: React.FunctionComponent = () => {
 
   // fetch every 3 seconds
   React.useEffect(() => {
+    getResultForSubmission({ variables: { id: submissionId as string } });
+
     const interval = setInterval(() => {
-      getResultForSubmission({ variables: { id: challengeContext.submissionId } });
+      getResultForSubmission({ variables: { id: submissionId as string } });
     }, 3000);
 
     setQueryInterval(interval);
@@ -97,7 +97,7 @@ const Evaluation: React.FunctionComponent = () => {
         </title>
       </Head>
       {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
-      <main className="flex flex-col justify-between h-main p-12">
+      <main className="h-main p-12 flex flex-col justify-between">
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
         ) : (
@@ -108,7 +108,7 @@ const Evaluation: React.FunctionComponent = () => {
               score={totalScore}
               passed={status === ResultStatus.Success}
             />
-            <div className="flex flex-col items-left w-full box-border h-full max-w-7xl m-auto pt-20 mt-0 mb-4 overflow-auto overscroll-none">
+            <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
               <ul className="h-full">{getRequirements}</ul>
             </div>
             <div className="absolute bottom-8 right-8">

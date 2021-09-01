@@ -14,7 +14,6 @@ import {
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
-import { useChallenge } from "app/lib/ChallengeContext";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -37,8 +36,6 @@ const Level: React.FunctionComponent = () => {
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
   const [submitLevelMutation] = useSubmitMutation();
-
-  const challengeContext = useChallenge();
 
   const [initialCode] = useState<Code>(level?.code);
 
@@ -82,8 +79,7 @@ const Level: React.FunctionComponent = () => {
       },
     });
 
-    challengeContext.setSubmissionId(data.submit.id);
-    router.push(`${router.asPath}/evaluation`);
+    router.push(`${router.asPath}/evaluation/${data.submit.id}`);
   };
 
   if (loading || loadingChallenge) {
@@ -129,11 +125,11 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="flex justify-between h-main box-border p-4">
+      <main className="h-main p-4 flex justify-between box-border">
         <Sidebar className="h-full" challengeName={challenge.name} level={level} />
-        <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
+        <div className="h-full pl-4 relative box-border flex justify-between flex-col flex-auto">
           <Editors
-            reset={resetToInitialCode}
+            onReset={resetToInitialCode}
             className="w-full h-3/5"
             editors={editorConfiguration}
             theme="light"

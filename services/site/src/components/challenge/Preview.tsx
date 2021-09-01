@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import LoadingIndicator from "../icons/LoadingIndicator";
 
 interface PreviewProps {
-  className: string;
+  className?: string;
   cssCode: string;
   htmlCode: string;
   javascriptCode: string;
@@ -65,7 +65,8 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
       </h3>
       <iframe
         title="Preview"
-        className="w-full h-18/20 pb-8"
+        className="w-full h-preview pb-8"
+        tabIndex={-1}
         srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />
     </div>

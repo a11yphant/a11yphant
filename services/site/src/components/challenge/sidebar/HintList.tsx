@@ -3,13 +3,13 @@ import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
 
-import HintBox from "./Sections/HintBox";
+import HintBox from "./HintBox";
 
-interface TaskListProps {
+interface HintListProps {
   tasks: Task[];
 }
 
-const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
+const HintList: React.FunctionComponent<HintListProps> = ({ tasks }) => {
   if (tasks.length === 1) {
     return (
       <>
@@ -31,4 +31,4 @@ const TaskList: React.FunctionComponent<TaskListProps> = ({ tasks }) => {
   }
 };
 
-export default TaskList;
+export default HintList;

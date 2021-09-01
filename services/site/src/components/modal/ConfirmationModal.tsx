@@ -37,14 +37,14 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
   return (
     <div
       onClick={onCancel}
-      className={clsx("z-10 inset-0 overflow-y-auto", "bg-greyDark bg-opacity-50", "flex justify-center items-center", open ? "fixed" : "hidden")}
+      className={clsx("z-10 inset-0 overflow-y-auto bg-grey-dark bg-opacity-50 flex justify-center items-center", open ? "fixed" : "hidden")}
       aria-hidden
     >
-      <div className={clsx("relative", "w-1/2 h-64 bg-backgroundMiddle rounded-lg shadow-modal", "px-12 py-14")}>
+      <div className={clsx("w-1/2 h-64 px-12 py-14 relative bg-background-light rounded-lg", " shadow-modal")}>
         <Button
           onClick={onCancel}
           overrideClassName
-          className={clsx("absolute top-6 right-6", "transition-colors duration-300", "hover:text-primaryLight  focus:text-primaryLight")}
+          className={clsx("absolute top-6 right-6", "transition-colors duration-300", "hover:text-primary-light", "focus:text-primary-light")}
         >
           <span className="sr-only">Close</span>
           <X />
@@ -59,12 +59,13 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
             className={clsx(
               "mr-16 border-b-2 border-transparent",
               "transition-colors duration-300",
-              "hover:text-primaryLight hover:border-primaryLight focus:text-primaryLight focus:border-primaryLight",
+              "hover:text-primary-light hover:border-primary-light",
+              "focus:text-primary-light focus:border-primary-light",
             )}
           >
             {cancelButtonLabel ?? "Cancel"}
           </Button>
-          <Button onClick={onConfirm} primary className="leading-4 px-6 py-4">
+          <Button onClick={onConfirm} primary className="px-6 py-4 leading-4">
             {confirmButtonLabel ?? "Confirm"}
           </Button>
         </div>

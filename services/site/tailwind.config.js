@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "jit",
   purge: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -9,34 +10,39 @@ module.exports = {
       },
       spacing: {
         inherit: "inherit",
-        screenHalf: "50vh",
         navigation: "8%",
         main: "92%",
+        preview: "90%",
         sidebar: "28%",
-        "18/20": "90%",
-        fitContent: "fit-content",
+        "fit-content": "fit-content",
       },
       maxWidth: {
         "80ch": "80ch",
       },
       colors: {
-        primary: "#7331FF",
-        primaryLight: "#B795FF",
-        primaryDark: "#6657C5",
-        error: "#E75A7C",
-        success: "#9ADB66",
-        background: "#121212",
-        backgroundMiddle: "#202226",
-        grey: "#EDEDED",
-        greyLight: "#EFEFEF",
-        greyMiddle: "#B4B8B8",
-        greyDark: "#4F4F4F",
         light: "#FFFFFF",
         dark: "#121212",
+        error: "#E75A7C",
+        success: "#9ADB66",
+        primary: {
+          DEFAULT: "#7331FF",
+          light: "#B795FF",
+          dark: "#6657C5",
+        },
+        background: {
+          DEFAULT: "#121212",
+          light: "#202226",
+        },
+        grey: {
+          DEFAULT: "#EDEDED",
+          light: "#EFEFEF",
+          middle: "#B4B8B8",
+          dark: "#4F4F4F",
+        },
       },
       fontFamily: {
-        ibmPlex: ['"IBM Plex Sans"', "sans-serif"],
-        ibmPlexMono: ['"IBM Plex Mono"', "monospace"],
+        sans: ['"IBM Plex Sans"', "sans-serif"],
+        mono: ['"IBM Plex Mono"', "monospace"],
       },
       transitionProperty: {
         width: "width",
@@ -52,8 +58,8 @@ module.exports = {
           css: {
             color: theme("colors.light"),
             code: {
-              color: theme("colors.primaryLight"),
-              fontFamily: theme("fontFamily.ibmPlexMono").join(" "),
+              color: theme("colors.primary.light"),
+              fontFamily: theme("fontFamily.mono").join(" "),
               fontSize: "1em",
               "&::before": {
                 // cannot overwrite the content without important...
@@ -71,6 +77,8 @@ module.exports = {
   variants: {
     extend: {
       textColor: ["group-focus"],
+      transitionProperty: ["hover", "motion-safe", "motion-reduce"],
+      borderWidth: ["first", "last"],
     },
   },
   plugins: [require("@tailwindcss/typography")],
