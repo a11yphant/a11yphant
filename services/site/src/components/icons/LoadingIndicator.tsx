@@ -13,7 +13,7 @@ const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> =
       {...props}
     >
       <g>
-        <mask id="a" fill="currentColor">
+        <mask id="a" fill="white">
           <path fillRule="evenodd" clipRule="evenodd" d="M0 7.5A7.5 7.5 0 107.5 0" />
         </mask>
         <path
