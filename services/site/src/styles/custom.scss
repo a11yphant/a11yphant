@@ -59,3 +59,14 @@
 .card {
     @include card;
 }
+
+// Fade Overlay -----
+.custom-overlay {
+    @apply fixed;
+    @apply bottom-0;
+    @apply left-2;
+    @apply border-0;
+    @apply rounded-xl;
+    @apply bg-gradient-to-t;
+    @apply from-background;
+}
