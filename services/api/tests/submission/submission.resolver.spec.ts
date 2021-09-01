@@ -70,11 +70,13 @@ describe("submission resolver", () => {
   });
 
   it("can request a check for submission", async () => {
-    const resolver = new SubmissionResolver(createMock<SubmissionService>(), createMock<LevelService>());
+    const requestCheck = jest.fn().mockResolvedValue({ id: "uuid" });
+    const resolver = new SubmissionResolver(createMock<SubmissionService>({ requestCheck }), createMock<LevelService>());
 
-    const result = await resolver.requestCheck({ submissionId: "bla" });
+    const mutationResult = await resolver.requestCheck({ submissionId: "bla" });
 
-    expect(result).toBeTruthy();
+    expect(mutationResult.result).toHaveProperty("id", "uuid");
+    expect(requestCheck).toHaveBeenCalledWith("bla");
   });
 
   it("cannot request a check for the same submission multiple time", () => {
