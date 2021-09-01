@@ -3,6 +3,8 @@ import debounce from "lodash.debounce";
 import { parse } from "node-html-parser";
 import React, { useState } from "react";
 
+import LoadingIndicator from "../icons/LoadingIndicator";
+
 interface PreviewProps {
   className?: string;
   cssCode: string;
@@ -38,18 +40,29 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
   const [innerHtmlCode, setInnerHtmlCode] = useState<string>("");
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
+  const [previewUpdated, setPreviewUpdated] = useState<boolean>(true);
 
   React.useEffect(() => {
+    setPreviewUpdated(false);
     debouncedUpdate(() => {
       setInnerHtmlCode(addTargetBlank(htmlCode));
       setInnerCssCode(addBaseFont(cssCode));
       setInnerJavascriptCode(javascriptCode);
+      setPreviewUpdated(true);
     });
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
     <div className={clsx("p-4", "container-light overflow-hidden", className)}>
-      <h3 className={clsx("mb-2 text-primary font-normal", "h6")}>{heading}</h3>
+      <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
+        {heading}
+        {!previewUpdated && (
+          <span className="text-current">
+            <span className="sr-only">Updating the live preview is in progress...</span>
+            <LoadingIndicator className="inline-block ml-2 mb-0.5" />
+          </span>
+        )}
+      </h3>
       <iframe
         title="Preview"
         className="w-full h-preview pb-8"

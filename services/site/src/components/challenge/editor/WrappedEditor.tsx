@@ -1,6 +1,7 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
@@ -96,6 +97,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
             {...props}
             theme="vs-dark"
             language={config.language}
+            loading={
+              <span>
+                <span className="sr-only">The editor is loading...</span>
+                <LoadingIndicator className="w-6 h-6" />
+              </span>
+            }
             value={config.code}
             onChange={(value) => {
               config.updateCode(value);
