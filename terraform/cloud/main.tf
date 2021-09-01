@@ -21,7 +21,7 @@ terraform {
     docker = {
       source = "kreuzwerker/docker"
       # lock version until this bug is resolved: https://github.com/kreuzwerker/terraform-provider-docker/issues/239
-      version = "2.15.0"
+      version = "2.11.0"
     }
 
     random = {
