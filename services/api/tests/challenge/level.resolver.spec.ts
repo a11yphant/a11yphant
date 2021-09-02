@@ -9,7 +9,7 @@ import { LevelService } from "@/challenge/level.service";
 import { Requirement } from "@/challenge/models/requirement.model";
 import { RequirementService } from "@/challenge/requirement.service";
 import { TaskService } from "@/challenge/task.service";
-import { SubmissionService } from "@/submission/submission.service";
+import { SubmissionService } from "@/submission/services/submission.service";
 
 describe("level resolver", () => {
   it("resolves a level by challenge slug and index", async () => {

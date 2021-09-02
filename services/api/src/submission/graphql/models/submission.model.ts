@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { Level } from "../../challenge/models/level.model";
+import { Level } from "../../../challenge/models/level.model";
 
 @ObjectType({
   description: "A submission of an user.",

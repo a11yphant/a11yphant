@@ -6,16 +6,16 @@ import { SessionToken as SessionTokenInterface } from "@/authentication/session-
 import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 
-import { CreateSubmissionInput } from "./create-submission.input";
-import { CreateSubmissionResult } from "./create-submission.result";
-import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exceptoin";
-import { Submission } from "./models/submission.model";
-import { RequestCheckInput } from "./request-check.input";
-import { RequestCheckResult } from "./request-check.result";
-import { SubmissionService } from "./submission.service";
-import { UpdateSubmissionInput } from "./update-submission.input";
-import { UpdateSubmissionResult } from "./update-submission.result";
+import { SubmissionAlreadyHasCheckResultException } from "../../exceptions/submission-already-has-check-result.exception";
+import { SubmissionNotFoundException } from "../../exceptions/submission-not-found.exceptoin";
+import { SubmissionService } from "../../services/submission.service";
+import { CreateSubmissionInput } from "../inputs/create-submission.input";
+import { RequestCheckInput } from "../inputs/request-check.input";
+import { UpdateSubmissionInput } from "../inputs/update-submission.input";
+import { Submission } from "../models/submission.model";
+import { CreateSubmissionResult } from "../results/create-submission.result";
+import { RequestCheckResult } from "../results/request-check.result";
+import { UpdateSubmissionResult } from "../results/update-submission.result";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {

@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma, Result as ResultRecord } from "@prisma/client";
 
-import { PrismaService } from "../prisma/prisma.service";
-import { Result } from "./models/result.model";
-import { ResultStatus } from "./models/result-status.enum";
+import { PrismaService } from "@/prisma/prisma.service";
+
+import { Result } from "../graphql/models/result.model";
+import { ResultStatus } from "../graphql/models/result-status.enum";
 
 @Injectable()
 export class ResultService {

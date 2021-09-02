@@ -1,8 +1,8 @@
 import faker from "faker";
 import { Factory } from "rosie";
 
-import { Result } from "../../../src/submission/models/result.model";
-import { ResultStatus } from "../../../src/submission/models/result-status.enum";
+import { Result } from "@/submission/graphql/models/result.model";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
 export const ResultFactory = Factory.define<Result>(Result.name, Result)
   .attr("id", () => faker.datatype.uuid())

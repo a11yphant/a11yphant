@@ -1,9 +1,9 @@
 import { createMock } from "@golevelup/ts-jest";
+import { RequirementResultFactory } from "@tests/factories/models/requirement-result.factory";
+import { RuleFactory } from "@tests/factories/models/rule.factory";
 
-import { RuleService } from "../../src/challenge/rule.service";
-import { RequirementResultResolver } from "../../src/submission/requirement-result.resolver";
-import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
-import { RuleFactory } from "../factories/models/rule.factory";
+import { RuleService } from "@/challenge/rule.service";
+import { RequirementResultResolver } from "@/submission/graphql/resolvers/requirement-result.resolver";
 
 describe("requirement result resolver", () => {
   it("resolves the rule for the requirement", async () => {

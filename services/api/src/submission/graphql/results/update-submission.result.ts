@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
-import { Submission } from "./models/submission.model";
+import { Submission } from "../models/submission.model";
 
 @ObjectType()
 export class UpdateSubmissionResult {

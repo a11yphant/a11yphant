@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { Submission } from "@/submission/models/submission.model";
+import { Submission } from "@/submission/graphql/models/submission.model";
 
 import { Code } from "./code.model";
 import { Requirement } from "./requirement.model";
