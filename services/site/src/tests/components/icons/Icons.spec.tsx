@@ -6,6 +6,8 @@ import Check from "app/components/icons/Check";
 import Chevron from "app/components/icons/Chevron";
 import Github from "app/components/icons/Github";
 import IllustrationCoding from "app/components/icons/IllustrationCoding";
+import IllustrationLost from "app/components/icons/IllustrationLost";
+import IllustrationLostSpace from "app/components/icons/IllustrationLost";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import Save from "app/components/icons/Save";
@@ -45,6 +47,18 @@ describe("Icons", () => {
 
   it("IllustrationCoding exists", () => {
     const wrapper = shallow(<IllustrationCoding />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("IllustrationLost exists", () => {
+    const wrapper = shallow(<IllustrationLost />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("IllustrationLostSpace exists", () => {
+    const wrapper = shallow(<IllustrationLostSpace />);
 
     expect(wrapper.type()).toBe("svg");
   });
