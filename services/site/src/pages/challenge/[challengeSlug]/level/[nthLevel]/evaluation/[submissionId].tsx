@@ -68,23 +68,6 @@ const Evaluation: React.FunctionComponent = () => {
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
-  // render requirements
-  const getRequirements = React.useMemo(
-    () =>
-      requirements.map((requirement, idx) => {
-        const requirementTitle = `${idx + 1}. ${requirement.title}`;
-        return (
-          <EvaluationBody
-            key={requirement.id}
-            requirementTitle={requirementTitle}
-            description={requirement.description}
-            result={requirement.result}
-          />
-        );
-      }),
-    [requirements],
-  );
-
   // button with loading spinner
   const [loadingAnimation, setLoadingAnimation] = useState(false);
 
@@ -107,7 +90,19 @@ const Evaluation: React.FunctionComponent = () => {
               passed={status === ResultStatus.Success}
             />
             <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
-              <ul className="h-full">{getRequirements}</ul>
+              <ul className="h-full">
+                {requirements.map((requirement, idx) => {
+                  const requirementTitle = `${idx + 1}. ${requirement.title}`;
+                  return (
+                    <EvaluationBody
+                      key={requirement.id}
+                      requirementTitle={requirementTitle}
+                      description={requirement.description}
+                      result={requirement.result}
+                    />
+                  );
+                })}
+              </ul>
             </div>
             <div className="absolute bottom-8 right-8">
               {failedLevel ? (
