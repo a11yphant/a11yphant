@@ -16,7 +16,6 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import ReactConfetti from "react-confetti";
 
 const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
@@ -96,7 +95,6 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
       <main className="h-main p-12 flex flex-col justify-between">
         {!status || status === ResultStatus.Pending ? (
           <LoadingScreen />
