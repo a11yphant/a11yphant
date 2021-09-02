@@ -15,4 +15,27 @@ export class UserService {
 
     return new User(record);
   }
+
+  async findUserFromOauth(userId: string, provider: string, providerAuthId: string): Promise<User> {
+    let userRecord = await this.prisma.user.findFirst({
+      where: {
+        authId: providerAuthId,
+        authProvider: provider,
+      },
+    });
+
+    if (userRecord) return new User(userRecord);
+
+    userRecord = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        authId: providerAuthId,
+        authProvider: provider,
+      },
+    });
+
+    return new User(userRecord);
+  }
 }
