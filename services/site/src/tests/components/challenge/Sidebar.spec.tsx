@@ -1,6 +1,7 @@
 import { cleanup } from "@testing-library/react";
 import Sidebar from "app/components/challenge/Sidebar";
 import HintList from "app/components/challenge/sidebar/HintList";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { Level } from "app/generated/graphql";
 import { shallow } from "enzyme";
 import React from "react";
@@ -30,7 +31,7 @@ describe("Sidebar", () => {
     const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
     expect(wrapper.find("aside").length).toBe(1);
-    expect(wrapper.find("div").length).toBe(1);
+    expect(wrapper.find(ScrollOverlayWrapper).length).toBe(1);
   });
 
   it("renders challenge name as heading", () => {
