@@ -12,13 +12,19 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeName, level }) => {
-  const [isVisibleBottom, setIsVisibleBottom] = useState(true);
+  const [isVisibleBottom, setIsVisibleBottom] = useState(false);
   const [isVisibleTop, setIsVisibleTop] = useState(false);
 
   const wrapperRef = React.useRef<HTMLDivElement>();
 
-  // remove gradient when scrolled to bottom
+  React.useEffect(() => {
+    if (wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight) {
+      setIsVisibleBottom(true);
+    }
+  }, []);
+
   const listenToScroll = (): void => {
+    // remove gradient when scrolled to bottom
     if (wrapperRef.current?.clientHeight === wrapperRef.current?.scrollHeight - Math.abs(wrapperRef.current?.scrollTop)) {
       isVisibleBottom && // to limit setting state only the first time
         setIsVisibleBottom(false);
@@ -26,6 +32,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
       setIsVisibleBottom(true);
     }
 
+    // add gradient when scrolled to bottom
     if (wrapperRef.current?.scrollTop > 0) {
       setIsVisibleTop(true);
     } else {
