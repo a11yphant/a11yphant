@@ -1,6 +1,7 @@
 import { Level } from "app/generated/graphql";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import sanitizeHtml from "sanitize-html";
 
 import HintList from "./sidebar/HintList";
@@ -17,13 +18,14 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
 
   const wrapperRef = React.useRef<HTMLDivElement>();
 
+  // show overlay when content is scroll-able
   React.useEffect(() => {
     if (wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight) {
       setIsVisibleBottom(true);
     }
   }, []);
 
-  const listenToScroll = (): void => {
+  const listenToScroll = useCallback(() => {
     // remove gradient when scrolled to bottom
     if (wrapperRef.current?.clientHeight === wrapperRef.current?.scrollHeight - Math.abs(wrapperRef.current?.scrollTop)) {
       isVisibleBottom && // to limit setting state only the first time
@@ -32,17 +34,22 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
       setIsVisibleBottom(true);
     }
 
-    // add gradient when scrolled to bottom
+    // add gradient on top when scrolled to bottom
     if (wrapperRef.current?.scrollTop > 0) {
       setIsVisibleTop(true);
     } else {
       setIsVisibleTop(false);
     }
-  };
+  }, [wrapperRef, isVisibleBottom]);
+
+  useResizeDetector({
+    targetRef: wrapperRef,
+    onResize: listenToScroll,
+  });
 
   return (
     <aside className={clsx("w-sidebar py-4", "container-dark", className)}>
-      <div onScroll={listenToScroll} ref={wrapperRef} className="w-full h-full px-7 flex flex-col overflow-auto">
+      <div onScroll={listenToScroll} ref={wrapperRef} className="w-full h-full px-7 pb-1 flex flex-col overflow-auto">
         {isVisibleTop && <div className={clsx("w-sidebar h-28 top-20 rotate-180", "custom-overlay")} />}
         <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
         <h3 className={clsx("my-8", "h4")}>Instructions</h3>
