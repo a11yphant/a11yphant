@@ -69,4 +69,5 @@
     @apply rounded-xl;
     @apply bg-gradient-to-t;
     @apply from-background;
+    @apply pointer-events-none;
 }
