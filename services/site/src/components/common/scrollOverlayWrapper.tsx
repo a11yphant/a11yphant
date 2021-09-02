@@ -32,8 +32,7 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
   const listenToScroll = useCallback(() => {
     // remove gradient when scrolled to bottom
     if (wrapperRef.current?.clientHeight === wrapperRef.current?.scrollHeight - Math.abs(wrapperRef.current?.scrollTop)) {
-      isVisibleBottom && // to limit setting state only the first time
-        setIsVisibleBottom(false);
+      setIsVisibleBottom(false);
     } else {
       setIsVisibleBottom(true);
     }
