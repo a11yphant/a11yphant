@@ -1,5 +1,4 @@
-import Button from "app/components/buttons/Button";
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
@@ -17,16 +16,13 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-interface EvaluationRouterParams {
+export interface EvaluationRouterParams {
   challengeSlug?: string;
   nthLevel?: string;
   submissionId?: string;
 }
 
 const Evaluation: React.FunctionComponent = () => {
-  // button with loading spinner
-  const [loadingAnimation, setLoadingAnimation] = React.useState(false);
-
   const router = useRouter();
   const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
 
@@ -60,56 +56,10 @@ const Evaluation: React.FunctionComponent = () => {
               passed={status === ResultStatus.Success}
             />
             <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
-              <ul className="h-full">
-                {requirements.map((requirement, idx) => {
-                  const requirementTitle = `${idx + 1}. ${requirement.title}`;
-                  return (
-                    <EvaluationBody
-                      key={requirement.id}
-                      requirementTitle={requirementTitle}
-                      description={requirement.description}
-                      result={requirement.result}
-                    />
-                  );
-                })}
-              </ul>
+              <EvaluationBody requirements={requirements} />
             </div>
             <div className="absolute bottom-8 right-8">
-              {status === ResultStatus.Fail ? (
-                <ButtonLoading
-                  primary
-                  onClick={() => {
-                    setLoadingAnimation(true);
-                    router.back();
-                  }}
-                  className="px-10"
-                  loading={loadingAnimation}
-                  srTextLoading="The request is being processed."
-                >
-                  Retry
-                </ButtonLoading>
-              ) : isLastLevel ? (
-                <Button
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                  primary
-                  className="px-10"
-                >
-                  Finish Challenge
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    const nextLevel = parseInt(nthLevel as string) + 1;
-                    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
-                  }}
-                  primary
-                  className="px-10"
-                >
-                  Next Level
-                </Button>
-              )}
+              <CompleteEvaluationButton status={status} isLastLevel={isLastLevel} />
             </div>
           </>
         }
