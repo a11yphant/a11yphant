@@ -6,7 +6,7 @@ import sanitizeHtml from "sanitize-html";
 import HintList from "./sidebar/HintList";
 
 interface SidebarProps {
-  className: string;
+  className?: string;
   challengeName: string;
   level: Pick<Level, "instructions" | "tasks">;
 }
