@@ -45,9 +45,7 @@ const Level: React.FunctionComponent = () => {
     variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
     fetchPolicy: "network-only",
     onCompleted: ({ level }) => {
-      console.log(level);
       if (level?.lastSubmission) {
-        console.log("using last submission");
         setCurrentSubmissionId(level.lastSubmission.id);
         setEditorCode({
           html: level.lastSubmission.html,
@@ -55,7 +53,6 @@ const Level: React.FunctionComponent = () => {
           css: level.lastSubmission.css,
         });
       } else {
-        console.log("using default code");
         setEditorCode({
           html: level.code?.html,
           js: level.code?.js,
@@ -85,13 +82,11 @@ const Level: React.FunctionComponent = () => {
           nth: Number(nthLevel),
         };
 
-        console.log(cache.extract());
-
         const entry = cache.readQuery<LevelByChallengeSlugQuery>({
           query: LevelByChallengeSlugDocument,
           variables,
         });
-        console.log(entry);
+
         const updatedEntry = {
           ...entry,
           level: {
@@ -102,7 +97,7 @@ const Level: React.FunctionComponent = () => {
             },
           },
         };
-        console.log(updatedEntry);
+
         cache.writeQuery({
           query: LevelByChallengeSlugDocument,
           variables,
@@ -130,7 +125,6 @@ const Level: React.FunctionComponent = () => {
       return;
     }
 
-    console.log("update submission");
     await updateSubmission({
       id: currentSubmissionId,
       ...editorCode,
