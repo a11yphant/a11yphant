@@ -6,13 +6,16 @@ import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
-  Code,
   LevelByChallengeSlugDocument,
+  LevelByChallengeSlugQuery,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
+  UpdateSubmissionInput,
   useChallengeBySlugQuery,
   useCreateSubmissionMutation,
   useLevelByChallengeSlugQuery,
+  useRequestCheckMutation,
+  useUpdateSubmissionMutation,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
 import debounce from "lodash.debounce";
@@ -21,7 +24,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-import { useSubmitMutation } from "../../../../generated/graphql";
+interface EditorCode {
+  html?: string;
+  js?: string;
+  css?: string;
+}
 
 const debounceOneSecond = debounce((update: () => void) => {
   update();
@@ -31,10 +38,32 @@ const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
 
-  const {
-    loading,
-    data: { level },
-  } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
+  const [currentSubmissionId, setCurrentSubmissionId] = useState<string | null>();
+  const [editorCode, setEditorCode] = useState<EditorCode>();
+
+  const { loading, data: levelData } = useLevelByChallengeSlugQuery({
+    variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
+    fetchPolicy: "network-only",
+    onCompleted: ({ level }) => {
+      console.log(level);
+      if (level?.lastSubmission) {
+        console.log("using last submission");
+        setCurrentSubmissionId(level.lastSubmission.id);
+        setEditorCode({
+          html: level.lastSubmission.html,
+          js: level.lastSubmission.js,
+          css: level.lastSubmission.css,
+        });
+      } else {
+        console.log("using default code");
+        setEditorCode({
+          html: level.code?.html,
+          js: level.code?.js,
+          css: level.code?.css,
+        });
+      }
+    },
+  });
 
   const {
     loading: loadingChallenge,
@@ -42,54 +71,91 @@ const Level: React.FunctionComponent = () => {
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
   const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateSubmissionMutation();
-  const [submitLevelMutation] = useSubmitMutation();
+  const [updateSubmissionMutation, { loading: updateSubmitMutationLoading }] = useUpdateSubmissionMutation();
+  const [requestCheckMutation] = useRequestCheckMutation();
 
-  const [initialCode] = useState<Code>(level?.code);
+  const updateSubmission = async (submissionInput: UpdateSubmissionInput): Promise<void> => {
+    await updateSubmissionMutation({
+      variables: {
+        submissionInput,
+      },
+      update: (cache, { data }) => {
+        const variables = {
+          challengeSlug: challengeSlug as string,
+          nth: Number(nthLevel),
+        };
 
-  const [currentSubmissionId, setCurrentSubmissionId] = useState<string | null>(level.lastSubmission?.id || null);
-  const [currHtmlCode, setCurrHtmlCode] = useState<string>(level.lastSubmission?.html || level?.code?.html);
-  const [currCssCode, setCurrCssCode] = useState<string>(level.lastSubmission?.css || level?.code?.css);
-  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level.lastSubmission?.js || level?.code?.js);
+        console.log(cache.extract());
 
-  const autoSaveCode = async (html: string, css: string, js: string): Promise<void> => {
+        const entry = cache.readQuery<LevelByChallengeSlugQuery>({
+          query: LevelByChallengeSlugDocument,
+          variables,
+        });
+        console.log(entry);
+        const updatedEntry = {
+          ...entry,
+          level: {
+            ...entry.level,
+            lastSubmission: {
+              ...entry.level.lastSubmission,
+              ...data?.updateSubmission.submission,
+            },
+          },
+        };
+        console.log(updatedEntry);
+        cache.writeQuery({
+          query: LevelByChallengeSlugDocument,
+          variables,
+          data: updatedEntry,
+        });
+      },
+    });
+  };
+
+  const autoSaveCode = async (editorCode: EditorCode): Promise<void> => {
     if (!currentSubmissionId && !createSubmissionLoading) {
       const { data } = await createSubmissionMutation({
         variables: {
           submissionInput: {
-            levelId: level.id,
-            html,
-            css,
-            js,
+            levelId: levelData.level.id,
+            ...editorCode,
           },
         },
       });
       setCurrentSubmissionId(data.createSubmission.submission.id);
+      return;
     }
+
+    if (updateSubmitMutationLoading) {
+      return;
+    }
+
+    console.log("update submission");
+    await updateSubmission({
+      id: currentSubmissionId,
+      ...editorCode,
+    });
   };
 
   useEffect(() => {
     debounceOneSecond(() => {
-      autoSaveCode(currHtmlCode, currCssCode, currJavascriptCode);
+      autoSaveCode(editorCode);
     });
-  }, [currHtmlCode, currCssCode, currJavascriptCode]);
+  }, [editorCode]);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
-    // if language === undefined => reset all
-    const newCode: Code = !language
-      ? initialCode
-      : {
-          html: currHtmlCode,
-          css: currCssCode,
-          js: currJavascriptCode,
-        };
-
     if (language) {
-      newCode[language] = initialCode[language];
+      setEditorCode({
+        ...editorCode,
+        [language]: levelData.level.code?.[language],
+      });
+    } else {
+      setEditorCode({
+        html: levelData.level.code?.html,
+        js: levelData.level.code?.js,
+        css: levelData.level.code?.css,
+      });
     }
-
-    setCurrHtmlCode(newCode.html);
-    setCurrCssCode(newCode.css);
-    setCurrJavascriptCode(newCode.js);
   };
 
   // button with loading spinner
@@ -98,18 +164,16 @@ const Level: React.FunctionComponent = () => {
   const submitLevel = async (): Promise<void> => {
     setLoadingAnimation(true);
 
-    const { data } = await submitLevelMutation({
-      variables: {
-        submissionInput: {
-          levelId: level.id,
-          html: currHtmlCode,
-          css: currCssCode,
-          js: currJavascriptCode,
-        },
-      },
+    await updateSubmission({
+      id: currentSubmissionId,
+      ...editorCode,
     });
 
-    router.push(`${router.asPath}/evaluation/${data.submit.id}`);
+    await requestCheckMutation({
+      variables: { requestCheckInput: { submissionId: currentSubmissionId } },
+    });
+
+    router.push(`${router.asPath}/evaluation/${currentSubmissionId}`);
   };
 
   if (loading || loadingChallenge) {
@@ -118,32 +182,38 @@ const Level: React.FunctionComponent = () => {
 
   const editorConfiguration = [];
 
-  if (level.hasHtmlEditor) {
+  if (levelData.level.hasHtmlEditor) {
     editorConfiguration.push({
       languageLabel: "HTML",
       language: EditorLanguage.html,
-      code: currHtmlCode,
-      updateCode: setCurrHtmlCode,
+      code: editorCode?.html,
+      updateCode: (html) => {
+        setEditorCode({ ...editorCode, html });
+      },
       heading: "index.html",
     });
   }
 
-  if (level.hasCssEditor) {
+  if (levelData.level.hasCssEditor) {
     editorConfiguration.push({
       languageLabel: "CSS",
       language: EditorLanguage.css,
-      code: currCssCode,
-      updateCode: setCurrCssCode,
+      code: editorCode?.css,
+      updateCode: (css) => {
+        setEditorCode({ ...editorCode, css });
+      },
       heading: "index.css",
     });
   }
 
-  if (level.hasJsEditor) {
+  if (levelData.level.hasJsEditor) {
     editorConfiguration.push({
       languageLabel: "JavaScript",
       language: EditorLanguage.javascript,
-      code: currJavascriptCode,
-      updateCode: setCurrJavascriptCode,
+      code: editorCode?.js,
+      updateCode: (js) => {
+        setEditorCode({ ...editorCode, js });
+      },
       heading: "index.js",
     });
   }
@@ -156,7 +226,7 @@ const Level: React.FunctionComponent = () => {
         </title>
       </Head>
       <main className="h-main p-4 flex justify-between box-border">
-        <Sidebar className="h-full" challengeName={challenge.name} level={level} />
+        <Sidebar className="h-full" challengeName={challenge.name} level={levelData.level} />
         <div className="h-full pl-4 relative box-border flex justify-between flex-col flex-auto">
           <Editors
             onReset={resetToInitialCode}
@@ -172,7 +242,7 @@ const Level: React.FunctionComponent = () => {
               },
             }}
           />
-          <Preview className="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
+          <Preview className="w-full h-2/5" heading="Preview" htmlCode={editorCode?.html} cssCode={editorCode?.css} javascriptCode={editorCode?.js} />
           <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
             <ButtonLoading
               primary
