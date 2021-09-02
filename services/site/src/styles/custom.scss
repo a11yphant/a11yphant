@@ -1,0 +1,73 @@
+// Additional Styles --------------------------
+
+// Container Styles -----
+.container-light {
+    @apply relative;
+    @apply border-2;
+    @apply rounded-xl;
+    @apply border-light;
+    @apply bg-light;
+}
+
+.container-dark {
+    @apply relative;
+    @apply border-2;
+    @apply rounded-xl;
+    @apply border-background-light;
+    @apply bg-background-light;
+}
+
+.container-ultra-dark {
+    @apply relative;
+    @apply border-2;
+    @apply rounded-xl;
+    @apply border-background;
+    @apply bg-background;
+}
+
+// Card -----
+// make whole card focusable when a-tag is only inside
+@mixin card {
+    gap: 2ch;
+
+    a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &:focus-within {
+        box-shadow: 0 0 0 0.25rem #fff;
+    }
+
+    &:focus-within a:focus {
+        outline: none;
+    }
+}
+
+.card-smaller {
+    @include card;
+
+    &:focus-within {
+        box-shadow: 0 0 0 0.15rem #fff;
+    }
+}
+
+.card {
+    @include card;
+}
+
+// Fade Overlay -----
+.scroll-overlay {
+    @apply fixed;
+    @apply bottom-0;
+    @apply left-2;
+    @apply border-0;
+    @apply rounded-xl;
+    @apply bg-gradient-to-t;
+    @apply from-background;
+    @apply pointer-events-none;
+}

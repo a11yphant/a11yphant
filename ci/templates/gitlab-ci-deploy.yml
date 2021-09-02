@@ -5,10 +5,11 @@
   needs:
     - build:api
     - build:site
-    - production-dependencies:site
     - build:submission-checker
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
+  # prevent concurrent deployment jobs for one workspace
+  resource_group: $WORKSPACE
   variables:
     TF_IN_AUTOMATION: 1
   before_script:

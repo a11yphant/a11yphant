@@ -28,7 +28,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
   });
 
   return (
-    <div className={clsx("flex flex-col", "container-ultradark card-smaller")}>
+    <div className={clsx("flex flex-col", "container-ultra-dark card-smaller")}>
       <h4 className="w-full">
         <Button
           onClick={() => {
@@ -36,8 +36,9 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             setUsedHints((usedHints) => (usedHints > 1 ? usedHints : 1));
           }}
           className={clsx(
-            "w-full p-4 flex flex-row items-center justify-between group font-normal text-left transition duration-300 m-0",
-            "hover:text-primaryLight",
+            "w-full p-4 m-0 flex flex-row items-center justify-between font-normal text-left",
+            "group transition duration-300",
+            "hover:text-primary-light",
             "focus-visible:outline-none focus:outline-none",
             "h6",
           )}
@@ -45,11 +46,11 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           aria-expanded={usedHints > 0}
         >
           {showHint ? "Hint" : "Stuck? Click to reveal a hint"}
-          <AnimatedChevron style={{ transform: transform }} className={clsx("text-greyMiddle ml-4", "group-hover:text-primaryLight")} />
+          <AnimatedChevron style={{ transform: transform }} className={clsx("text-grey-middle ml-4", "group-hover:text-primary-light")} />
         </Button>
       </h4>
       {showHint && (
-        <div className="px-4">
+        <div className={clsx("px-4", "select-none")}>
           <ol className="list-decimal list-inside font-normal">
             {hints.slice(0, usedHints).map((hint) => (
               <li
@@ -66,9 +67,10 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
               }}
               overrideClassName
               className={clsx(
-                "font-normal border-b transition duration-300 mt-4 mb-4",
-                "hover:text-primaryLight hover:border-primaryLight",
-                "focus:text-primaryLight focus:border-primaryLight focus-visible-outline",
+                "mt-4 mb-4 font-normal border-b",
+                "transition duration-300",
+                "hover:text-primary-light hover:border-primary-light",
+                "focus:text-primary-light focus:border-primary-light focus-visible-outline",
               )}
             >
               Show me another hint.

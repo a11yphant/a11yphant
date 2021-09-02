@@ -13,10 +13,10 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   primary = false,
   icon,
   srText,
-  className,
-  overrideClassName = false,
-  children,
   innerRef,
+  overrideClassName = false,
+  className,
+  children,
   ...props
 }) => {
   return (
@@ -25,7 +25,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
         className,
         primary && "bg-primary text-white",
         !overrideClassName &&
-          "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primaryDark hover:border-primaryDark focus:text-white focus:bg-primaryDark focus:border-primaryDark",
+          "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primary-dark hover:border-primary-dark focus:text-white focus:bg-primary-dark focus:border-primary-dark",
       )}
       ref={innerRef}
       {...props}

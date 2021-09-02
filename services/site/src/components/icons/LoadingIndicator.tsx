@@ -8,11 +8,12 @@ const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> =
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       focusable="false"
-      className={clsx("animate-spin", "loading-spinner", className)}
+      viewBox="0 0 15 15"
+      className={clsx("animate-spin", "loading-spinner w-[0.94rem] h-[0.94rem]", className)}
       {...props}
     >
       <g>
-        <mask id="a" fill="currentColor">
+        <mask id="a" fill="white">
           <path fillRule="evenodd" clipRule="evenodd" d="M0 7.5A7.5 7.5 0 107.5 0" />
         </mask>
         <path

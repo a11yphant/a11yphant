@@ -12,11 +12,11 @@ interface ButtonLoadingProps extends ButtonProps {
 
 const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
   srTextLoading,
-  className,
-  disabled,
   loading,
   submitButton = false,
+  className,
   children,
+  disabled,
   ...props
 }) => {
   return (

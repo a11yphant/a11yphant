@@ -1,6 +1,7 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
@@ -86,7 +87,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
   });
 
   return (
-    <div className={clsx("w-inherit h-full", "editor-container")}>
+    <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
       <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark overflow-hidden")}>
         <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
           {config.heading}
@@ -96,6 +97,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
             {...props}
             theme="vs-dark"
             language={config.language}
+            loading={
+              <span>
+                <span className="sr-only">The editor is loading...</span>
+                <LoadingIndicator className="w-6 h-6" />
+              </span>
+            }
             value={config.code}
             onChange={(value) => {
               config.updateCode(value);
@@ -114,7 +121,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           onMouseLeave={() => {
             setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
           }}
-          className={clsx("absolute bottom-2 flex items-center text-grey mx-3", "group transition duration-300 hover:text-primaryLight")}
+          className={clsx(
+            "absolute bottom-2 flex items-center text-grey mx-3",
+            "group transition duration-300",
+            "hover:text-primary-light",
+            "focus:text-primary-light",
+          )}
           overrideClassName
           innerRef={buttonRef}
         >
