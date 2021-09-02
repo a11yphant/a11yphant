@@ -1,5 +1,5 @@
 import { cleanup } from "@testing-library/react";
-import ScrollOverlayWrapper from "app/components/common/scrollOverlayWrapper";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { shallow } from "enzyme";
 import React from "react";
 

@@ -1,4 +1,4 @@
-import ScrollOverlayWrapper from "app/components/common/scrollOverlayWrapper";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { Level } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";

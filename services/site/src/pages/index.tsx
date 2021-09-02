@@ -1,4 +1,4 @@
-import ScrollOverlayWrapper from "app/components/common/scrollOverlayWrapper";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
