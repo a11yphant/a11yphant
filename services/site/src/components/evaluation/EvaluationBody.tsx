@@ -15,7 +15,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
       {requirements.map((requirement, idx) => {
         const requirementTitle = `${idx + 1}. ${requirement.title}`;
         return (
-          <li className="w-full m-4 ml-0 mb-8 grid grid-cols-10 gap-2 box-border max-w-none">
+          <li key={requirement.id} className="w-full m-4 ml-0 mb-8 grid grid-cols-10 gap-2 box-border max-w-none">
             <CollapsableSection
               passed={requirement.result === RequirementStatus.Success}
               title={requirementTitle}
