@@ -1,4 +1,4 @@
-mutation submit($submissionInput: SubmissionInput!) {
+mutation submit($submissionInput: CreateSubmissionInput!) {
   submit(submissionInput: $submissionInput) {
     id
   }
