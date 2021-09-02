@@ -21,12 +21,12 @@ describe("Scroll Overlay Wrapper", () => {
   //   TODO: write more tests when you know how to
   //   it("renders both overlays", () => {
   //     const wrapper = mount(<ScrollOverlayWrapper />);
-  //     expect(wrapper.find("div.custom-overlay").length).toBe(2);
+  //     expect(wrapper.find("div.scroll-overlay").length).toBe(2);
   //   });
 
   //   it("renders only top overlay", () => {
   //     const wrapper = shallow(<ScrollOverlayWrapper displayBottom={false} />);
-  //     expect(wrapper.find("div.custom-overlay").length).toBe(1);
+  //     expect(wrapper.find("div.scroll-overlay").length).toBe(1);
   //   });
 
   //   it("renders only bottom overlay", async () => {
@@ -39,11 +39,11 @@ describe("Scroll Overlay Wrapper", () => {
   //     });
   //     // wrapper.find("div").first().getDOMNode().scrollHeight = 100;
 
-  //     expect(wrapper.find(".custom-overlay").length).toBe(1);
+  //     expect(wrapper.find(".scroll-overlay").length).toBe(1);
   //   });
 
   it("renders no overlay", () => {
     const wrapper = shallow(<ScrollOverlayWrapper displayTop={false} displayBottom={false} />);
-    expect(wrapper.find("div.custom-overlay").length).toBe(0);
+    expect(wrapper.find("div.scroll-overlay").length).toBe(0);
   });
 });
