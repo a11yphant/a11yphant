@@ -1,0 +1,7 @@
+mutation createSubmission($submissionInput: SubmissionInput!) {
+  createSubmission(submissionInput: $submissionInput) {
+    submission {
+        id
+    }
+  }
+}

@@ -11,15 +11,21 @@ import {
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
   useChallengeBySlugQuery,
+  useCreateSubmissionMutation,
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import debounce from "lodash.debounce";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSubmitMutation } from "../../../../generated/graphql";
+
+const debounceOneSecond = debounce((update: () => void) => {
+  update();
+}, 1000);
 
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
@@ -35,13 +41,37 @@ const Level: React.FunctionComponent = () => {
     data: { challenge },
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
+  const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateSubmissionMutation();
   const [submitLevelMutation] = useSubmitMutation();
 
   const [initialCode] = useState<Code>(level?.code);
 
+  const [currentSubmissionId, setCurrentSubmissionId] = useState<string | null>(level.lastSubmission?.id || null);
   const [currHtmlCode, setCurrHtmlCode] = useState<string>(level.lastSubmission?.html || level?.code?.html);
   const [currCssCode, setCurrCssCode] = useState<string>(level.lastSubmission?.css || level?.code?.css);
   const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level.lastSubmission?.js || level?.code?.js);
+
+  const autoSaveCode = async (html: string, css: string, js: string): Promise<void> => {
+    if (!currentSubmissionId && !createSubmissionLoading) {
+      const { data } = await createSubmissionMutation({
+        variables: {
+          submissionInput: {
+            levelId: level.id,
+            html,
+            css,
+            js,
+          },
+        },
+      });
+      setCurrentSubmissionId(data.createSubmission.submission.id);
+    }
+  };
+
+  useEffect(() => {
+    debounceOneSecond(() => {
+      autoSaveCode(currHtmlCode, currCssCode, currJavascriptCode);
+    });
+  }, [currHtmlCode, currCssCode, currJavascriptCode]);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     // if language === undefined => reset all
