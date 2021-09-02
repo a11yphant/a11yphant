@@ -4,11 +4,13 @@ import { UserInputError } from "apollo-server-express";
 
 import { SessionToken } from "@/authentication/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
+import { CreateSubmissionInput } from "@/submission/create-submission.input";
 import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
+import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exceptoin";
 import { Submission } from "@/submission/models/submission.model";
-import { SubmissionInput } from "@/submission/submission.input";
 import { SubmissionResolver } from "@/submission/submission.resolver";
 import { SubmissionService } from "@/submission/submission.service";
+import { UpdateSubmissionInput } from "@/submission/update-submission.input";
 
 describe("submission resolver", () => {
   it("can submit a challenge", async () => {
@@ -56,7 +58,7 @@ describe("submission resolver", () => {
       createMock<LevelService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
-    const submission: SubmissionInput = {
+    const submission: CreateSubmissionInput = {
       levelId: "uuid",
       html: "bla",
       css: "blub",
@@ -67,6 +69,47 @@ describe("submission resolver", () => {
 
     expect(result.submission).toBeTruthy();
     expect(create).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
+  });
+
+  it("can update a submission", async () => {
+    const update = jest.fn().mockResolvedValue({});
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>({
+        update,
+      }),
+      createMock<LevelService>(),
+    );
+    const sessionToken: SessionToken = { userId: "uuid" };
+    const submission: UpdateSubmissionInput = {
+      id: "uuid",
+      html: "bla",
+      css: "blub",
+      js: "bli",
+    };
+
+    const result = await resolver.updateSubmission(submission, sessionToken);
+
+    expect(result.submission).toBeTruthy();
+    expect(update).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
+  });
+
+  it("returns an error if the submission to update was not found", () => {
+    const update = jest.fn().mockRejectedValue(new SubmissionNotFoundException());
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>({
+        update,
+      }),
+      createMock<LevelService>(),
+    );
+    const sessionToken: SessionToken = { userId: "uuid" };
+    const submission: UpdateSubmissionInput = {
+      id: "uuid",
+      html: "bla",
+      css: "blub",
+      js: "bli",
+    };
+
+    expect(resolver.updateSubmission(submission, sessionToken)).rejects.toBeInstanceOf(UserInputError);
   });
 
   it("can request a check for submission", async () => {
