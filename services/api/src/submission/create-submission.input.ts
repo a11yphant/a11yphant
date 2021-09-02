@@ -1,8 +1,8 @@
 import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
-export class SubmissionInput {
-  @Field()
+export class CreateSubmissionInput {
+  @Field({ description: "The id of the level that the submission belongs to." })
   levelId: string;
 
   @Field({ description: "HTML is formatted as a multi-line string with line breaks.", nullable: true })

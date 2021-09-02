@@ -3,8 +3,10 @@ import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { Factory, LEVEL, LevelData, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
+import faker from "faker";
 
 import { PrismaService } from "@/prisma/prisma.service";
+import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exceptoin";
 import { ResultStatus } from "@/submission/models/result-status.enum";
 import { SubmissionService } from "@/submission/submission.service";
 
@@ -205,10 +207,7 @@ describe("submission service", () => {
 
     it("throws error if no level is found for id", async () => {
       const prisma = getPrismaService();
-      const service = new SubmissionService(
-        prisma,
-        createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
-      );
+      const service = new SubmissionService(prisma, createMock<ClientProxy>());
 
       const { id: userId } = await prisma.user.create({
         data: Factory.build<UserData>(USER),
@@ -220,6 +219,68 @@ describe("submission service", () => {
           userId,
         }),
       ).rejects.toBeTruthy();
+    });
+  });
+
+  describe("update", () => {
+    it("can update a submission to a given level", async () => {
+      const html = "<div>good morning :)</div>";
+
+      const prisma = getPrismaService();
+      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+
+      const { id: userId } = await prisma.user.create({
+        data: Factory.build<UserData>(USER),
+      });
+
+      const { id: levelId } = await prisma.level.create({
+        data: Factory.build<LevelData>(LEVEL),
+      });
+
+      const { id: submissionId } = await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION),
+      });
+
+      const updatedSubmission = await service.update({
+        id: submissionId,
+        levelId,
+        userId,
+        html,
+        css: null,
+        js: null,
+      });
+
+      const queriedSubmission = await prisma.submission.findUnique({
+        where: {
+          id: updatedSubmission.id,
+        },
+      });
+
+      expect(updatedSubmission).toBeTruthy();
+      expect(updatedSubmission.html).toBe(html);
+      expect(queriedSubmission).toBeTruthy();
+      expect(queriedSubmission.html).toBe(html);
+    });
+
+    it("throws error if no level is found for id", async () => {
+      const prisma = getPrismaService();
+      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+
+      const { id: userId } = await prisma.user.create({
+        data: Factory.build<UserData>(USER),
+      });
+
+      const { id: levelId } = await prisma.level.create({
+        data: Factory.build<LevelData>(LEVEL),
+      });
+
+      expect(async () =>
+        service.update({
+          id: faker.datatype.uuid(),
+          levelId,
+          userId,
+        }),
+      ).rejects.toBeInstanceOf(SubmissionNotFoundException);
     });
   });
 

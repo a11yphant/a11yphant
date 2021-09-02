@@ -1,16 +1,18 @@
 import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { Submission as SubmissionRecord } from "@prisma/client";
+import { Prisma, Submission as SubmissionRecord } from "@prisma/client";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
 import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
+import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exceptoin";
 import { Result } from "./models/result.model";
 import { ResultStatus } from "./models/result-status.enum";
 import { Submission } from "./models/submission.model";
 import { ResultService } from "./result.service";
 import { SubmissionCreateData } from "./submission-create-data.interface";
+import { SubmissionUpdateData } from "./submission-update-data.interface";
 
 @Injectable()
 export class SubmissionService {
@@ -41,6 +43,24 @@ export class SubmissionService {
     });
 
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+  }
+
+  public async update(data: SubmissionUpdateData): Promise<Submission> {
+    try {
+      const submission = await this.prisma.submission.update({
+        where: { id: data.id },
+        data,
+      });
+
+      return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2025") {
+          throw new SubmissionNotFoundException();
+        }
+      }
+      throw error;
+    }
   }
 
   public async requestCheck(submissionId: string): Promise<Result> {

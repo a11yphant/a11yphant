@@ -6,20 +6,26 @@ import { SessionToken as SessionTokenInterface } from "@/authentication/session-
 import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 
+import { CreateSubmissionInput } from "./create-submission.input";
 import { CreateSubmissionResult } from "./create-submission.result";
 import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
+import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exceptoin";
 import { Submission } from "./models/submission.model";
 import { RequestCheckInput } from "./request-check.input";
 import { RequestCheckResult } from "./request-check.result";
-import { SubmissionInput } from "./submission.input";
 import { SubmissionService } from "./submission.service";
+import { UpdateSubmissionInput } from "./update-submission.input";
+import { UpdateSubmissionResult } from "./update-submission.result";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {
   constructor(private readonly submissionService: SubmissionService, private readonly levelService: LevelService) {}
 
   @Mutation(() => Submission)
-  async submit(@Args("submissionInput") submissionInput: SubmissionInput, @SessionToken() sessionToken: SessionTokenInterface): Promise<Submission> {
+  async submit(
+    @Args("submissionInput") submissionInput: CreateSubmissionInput,
+    @SessionToken() sessionToken: SessionTokenInterface,
+  ): Promise<Submission> {
     const level = await this.levelService.findOne(submissionInput.levelId);
 
     if (!level) {
@@ -34,10 +40,31 @@ export class SubmissionResolver {
 
   @Mutation(() => CreateSubmissionResult)
   async createSubmission(
-    @Args("submissionInput") submissionInput: SubmissionInput,
+    @Args("submissionInput") submissionInput: CreateSubmissionInput,
     @SessionToken() sessionToken: SessionTokenInterface,
   ): Promise<CreateSubmissionResult> {
     const submission = await this.submissionService.create({ ...submissionInput, userId: sessionToken.userId });
+
+    return {
+      submission,
+    };
+  }
+
+  @Mutation(() => UpdateSubmissionResult)
+  async updateSubmission(
+    @Args("submissionInput") submissionInput: UpdateSubmissionInput,
+    @SessionToken() sessionToken: SessionTokenInterface,
+  ): Promise<UpdateSubmissionResult> {
+    let submission;
+    try {
+      submission = await this.submissionService.update({ ...submissionInput, userId: sessionToken.userId });
+    } catch (error) {
+      if (error instanceof SubmissionNotFoundException) {
+        throw new UserInputError(`Submission with id ${submissionInput.id} not found.`);
+      }
+
+      throw error;
+    }
 
     return {
       submission,
