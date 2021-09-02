@@ -4,19 +4,19 @@ import { useResizeDetector } from "react-resize-detector";
 
 interface ScrollOverlayWrapperProps {
   className?: string;
-  classNameTop?: string;
-  classNameBottom?: string;
-  displayTop?: boolean;
-  displayBottom?: boolean;
+  classNameTopOverlay?: string;
+  classNameBottomOverlay?: string;
+  enableTopOverlay?: boolean;
+  enableBottomOverlay?: boolean;
 }
 
 const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> = ({
   children,
   className,
-  classNameTop,
-  classNameBottom,
-  displayTop = true,
-  displayBottom = true,
+  classNameTopOverlay,
+  classNameBottomOverlay,
+  enableTopOverlay = true,
+  enableBottomOverlay = true,
 }) => {
   const [isVisibleBottom, setIsVisibleBottom] = useState(false);
   const [isVisibleTop, setIsVisibleTop] = useState(false);
@@ -52,9 +52,9 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
 
   return (
     <div onScroll={listenToScroll} ref={wrapperRef} className={className}>
-      {displayTop && isVisibleTop && <div className={clsx("scroll-overlay", classNameTop)} />}
+      {enableTopOverlay && isVisibleTop && <div className={clsx("scroll-overlay", classNameTopOverlay)} />}
       {children}
-      {displayBottom && isVisibleBottom && <div className={clsx("scroll-overlay", classNameBottom)} />}
+      {enableBottomOverlay && isVisibleBottom && <div className={clsx("scroll-overlay", classNameBottomOverlay)} />}
     </div>
   );
 };

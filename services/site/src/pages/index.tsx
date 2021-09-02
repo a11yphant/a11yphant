@@ -22,7 +22,7 @@ const Home: React.FunctionComponent = () => {
         <title>a11yphant</title>
       </Head>
       <main className="h-main p-4 flex flex-col box-border">
-        <ScrollOverlayWrapper className={"w-full h-full overflow-auto"} displayTop={false} classNameBottom={"w-full h-52"}>
+        <ScrollOverlayWrapper className={"w-full h-full overflow-auto"} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
           <section className="mx-24 my-64 grid grid-cols-3">
             <div className="col-span-2 flex flex-col justify-center">
               <h2 className="mb-6 max-w-2xl font-bold font-sans text-5xl">Learning web accessibility made easy</h2>

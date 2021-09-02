@@ -25,12 +25,12 @@ describe("Scroll Overlay Wrapper", () => {
   //   });
 
   //   it("renders only top overlay", () => {
-  //     const wrapper = shallow(<ScrollOverlayWrapper displayBottom={false} />);
+  //     const wrapper = shallow(<ScrollOverlayWrapper enableBottomOverlay={false} />);
   //     expect(wrapper.find("div.scroll-overlay").length).toBe(1);
   //   });
 
   //   it("renders only bottom overlay", async () => {
-  //     const wrapper = mount(<ScrollOverlayWrapper displayTop={false} />);
+  //     const wrapper = mount(<ScrollOverlayWrapper enableTopOverlay={false} />);
 
   //     jest.spyOn(wrapper.getDOMNode(), "scrollHeight", "get").mockImplementation(() => 100);
 
@@ -43,7 +43,7 @@ describe("Scroll Overlay Wrapper", () => {
   //   });
 
   it("renders no overlay", () => {
-    const wrapper = shallow(<ScrollOverlayWrapper displayTop={false} displayBottom={false} />);
+    const wrapper = shallow(<ScrollOverlayWrapper enableTopOverlay={false} enableBottomOverlay={false} />);
     expect(wrapper.find("div.scroll-overlay").length).toBe(0);
   });
 });
