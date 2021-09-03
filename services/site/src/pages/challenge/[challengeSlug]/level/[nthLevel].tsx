@@ -2,6 +2,7 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
+import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
@@ -15,6 +16,7 @@ import {
 } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import { initializeApollo } from "app/lib/apollo-client";
+import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -137,9 +139,10 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="h-main p-4 flex justify-between box-border">
-        <Sidebar className="h-full" challengeName={challenge.name} level={levelData.level} />
-        <div className="h-full pl-4 relative box-border flex justify-between flex-col flex-auto">
+      <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
+        <SmallScreenNotification />
+        <Sidebar className={clsx("h-full hidden", "md:block")} challengeName={challenge.name} level={levelData.level} />
+        <div className={clsx("h-full pl-4 relative box-border hidden justify-between flex-col flex-auto", "md:flex")}>
           <Editors
             onReset={resetToInitialCode}
             className="w-full h-3/5"
