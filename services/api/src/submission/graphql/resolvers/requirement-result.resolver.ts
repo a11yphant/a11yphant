@@ -1,8 +1,9 @@
 import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
 
-import { Rule } from "../challenge/models/rule.model";
-import { RuleService } from "../challenge/rule.service";
-import { RequirementResult } from "./models/requirement-result.model";
+import { Rule } from "@/challenge/models/rule.model";
+import { RuleService } from "@/challenge/rule.service";
+
+import { RequirementResult } from "../models/requirement-result.model";
 
 @Resolver(() => RequirementResult)
 export class RequirementResultResolver {

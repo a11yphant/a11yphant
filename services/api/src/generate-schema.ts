@@ -9,9 +9,9 @@ import { ChallengeResolver } from "./challenge/challenge.resolver";
 import { LevelResolver } from "./challenge/level.resolver";
 import { RequirementResolver } from "./challenge/requirement.resolver";
 import { TaskResolver } from "./challenge/task.resolver";
-import { RequirementResultResolver } from "./submission/requirement-result.resolver";
-import { ResultResolver } from "./submission/result.resolver";
-import { SubmissionResolver } from "./submission/submission.resolver";
+import { RequirementResultResolver } from "./submission/graphql/resolvers/requirement-result.resolver";
+import { ResultResolver } from "./submission/graphql/resolvers/result.resolver";
+import { SubmissionResolver } from "./submission/graphql/resolvers/submission.resolver";
 
 const resolvers = [
   ChallengeResolver,

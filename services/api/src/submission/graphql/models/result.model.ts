@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { RequirementResult } from "../../submission/models/requirement-result.model";
+import { RequirementResult } from "./requirement-result.model";
 import { ResultStatus } from "./result-status.enum";
 
 @ObjectType({

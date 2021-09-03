@@ -7,8 +7,8 @@ import faker from "faker";
 
 import { PrismaService } from "@/prisma/prisma.service";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exceptoin";
-import { ResultStatus } from "@/submission/models/result-status.enum";
-import { SubmissionService } from "@/submission/submission.service";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
+import { SubmissionService } from "@/submission/services/submission.service";
 
 describe("submission service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
