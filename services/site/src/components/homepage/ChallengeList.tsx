@@ -24,11 +24,11 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
         </p>
         <p className="sr-only">{`${completedLevel} of ${openLevel} challenges completed`}</p>
       </div>
-      <ul className="flex">
+      <ul className={clsx("flex flex-row flex-wrap")}>
         {challenges.map((challenge) => (
           <Card
             key={challenge.id}
-            className="mr-24"
+            className={clsx("mb-12 mr-12 last:mr-0", "sm:mr-14", "md:mr-16", "lg:mr-24")}
             challengeSlug={challenge.slug}
             heading={challenge.name}
             levels={challenge.levels.length}

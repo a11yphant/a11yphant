@@ -6,11 +6,13 @@ import React from "react";
 const Custom404: React.FunctionComponent = () => {
   return (
     <>
-      <main className="h-main p-4 box-border">
-        <section className="mx-24 py-8 h-main flex justify-between items-center">
+      <main className="h-main box-border max-w-screen-3xl mx-auto">
+        <section
+          className={clsx("mx-8 py-8 h-main flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
+        >
           <div>
-            <h2 className={clsx("font-normal mb-4", "h4")}>Error 404</h2>
-            <p className="text-6xl max-w-lg font-bold leading-tight">seems like you got lost in space</p>
+            <h2 className={clsx("font-normal mb-4", "h5", "sm:h4")}>Error 404</h2>
+            <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>seems like you got lost in space</p>
             <Link href="/">
               <a
                 className={clsx(
@@ -24,7 +26,9 @@ const Custom404: React.FunctionComponent = () => {
               </a>
             </Link>
           </div>
-          <IllustrationLostSpace className="max-w-xl mx-8 col-span-1" />
+          <IllustrationLostSpace
+            className={clsx("max-w-xs mt-24 col-span-1 self-start", "md:mt-0 md:mx-8 md:self-center", "lg:max-w-xl", "2xl:max-w-4xl")}
+          />
         </section>
       </main>
     </>
