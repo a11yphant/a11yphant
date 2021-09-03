@@ -26,15 +26,14 @@ const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
 
-  const {
-    data: { challenge },
-  } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
+  const { data } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
   const submissionResult = usePollSubmissionResult(submissionId);
 
-  if (submissionResult === undefined || submissionResult.status === ResultStatus.Pending) {
+  if (data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending) {
     return <LoadingScreen />;
   }
+  const { challenge } = data;
 
   const { status, requirements, totalScore } = submissionResult;
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
@@ -47,22 +46,13 @@ const Evaluation: React.FunctionComponent = () => {
         </title>
       </Head>
       <main className="h-main p-12 flex flex-col justify-between">
-        {
-          <>
-            <EvaluationHeader
-              challengeName={challenge.name}
-              levelIdx={Number(nthLevel)}
-              score={totalScore}
-              passed={status === ResultStatus.Success}
-            />
-            <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
-              <EvaluationBody requirements={requirements} />
-            </div>
-            <div className="absolute bottom-8 right-8">
-              <CompleteEvaluationButton status={status} isLastLevel={isLastLevel} />
-            </div>
-          </>
-        }
+        <EvaluationHeader challengeName={challenge.name} levelIdx={Number(nthLevel)} score={totalScore} passed={status === ResultStatus.Success} />
+        <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
+          <EvaluationBody requirements={requirements} />
+        </div>
+        <div className="absolute bottom-8 right-8">
+          <CompleteEvaluationButton status={status} isLastLevel={isLastLevel} />
+        </div>
       </main>
     </>
   );
