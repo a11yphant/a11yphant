@@ -1,5 +1,6 @@
 import Button from "app/components/buttons/Button";
 import ButtonLoading from "app/components/buttons/ButtonLoading";
+import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
@@ -12,6 +13,7 @@ import {
   useResultForSubmissionLazyQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -97,21 +99,28 @@ const Evaluation: React.FunctionComponent = () => {
         </title>
       </Head>
       {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
-      <main className="h-main p-12 flex flex-col justify-between">
+      <main className={clsx("h-main", "md:p-12 md:flex md:flex-col md:justify-between")}>
+        <SmallScreenNotification />
         {!status || status === ResultStatus.Pending ? (
-          <LoadingScreen />
+          <LoadingScreen className="hidden md:flex" />
         ) : (
           <>
             <EvaluationHeader
+              className="hidden md:flex"
               challengeName={challenge.name}
               levelIdx={Number(nthLevel)}
               score={totalScore}
               passed={status === ResultStatus.Success}
             />
-            <div className="h-full max-w-7xl m-auto pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none">
+            <div
+              className={clsx(
+                "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
+                "md:flex",
+              )}
+            >
               <ul className="h-full">{getRequirements}</ul>
             </div>
-            <div className="absolute bottom-8 right-8">
+            <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
               {failedLevel ? (
                 <ButtonLoading
                   primary
