@@ -30,9 +30,9 @@ const Evaluation: React.FunctionComponent = () => {
     data: { challenge },
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
-  const submissionResult = usePollSubmissionResult({ submissionId });
+  const submissionResult = usePollSubmissionResult(submissionId);
 
-  if (submissionResult === null || submissionResult.status === ResultStatus.Pending) {
+  if (submissionResult === undefined || submissionResult.status === ResultStatus.Pending) {
     return <LoadingScreen />;
   }
 

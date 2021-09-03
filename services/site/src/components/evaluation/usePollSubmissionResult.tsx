@@ -1,17 +1,13 @@
 import { EvaluationRequirementResultFragment, ResultStatus, useResultForSubmissionLazyQuery } from "app/generated/graphql";
 import React from "react";
 
-interface UseSubmissionResultProps {
-  submissionId: string;
-}
-
-interface CustomSubmissionResult {
+export interface CustomSubmissionResult {
   status: ResultStatus;
   requirements: EvaluationRequirementResultFragment[];
   totalScore: number;
 }
 
-export const usePollSubmissionResult = ({ submissionId }: UseSubmissionResultProps): CustomSubmissionResult | null => {
+export const usePollSubmissionResult = (submissionId: string): CustomSubmissionResult | undefined => {
   const [queryInterval, setQueryInterval] = React.useState<NodeJS.Timeout | undefined>();
   const [totalScore, setTotalScore] = React.useState<number>(0);
 
@@ -47,7 +43,7 @@ export const usePollSubmissionResult = ({ submissionId }: UseSubmissionResultPro
   }, [failedChecks, totalChecks]);
 
   if (loading || data?.resultForSubmission === undefined || status === ResultStatus.Pending) {
-    return null;
+    return undefined;
   } else {
     return {
       status,
