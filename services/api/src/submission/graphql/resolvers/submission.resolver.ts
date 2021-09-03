@@ -8,10 +8,12 @@ import { Level } from "@/challenge/models/level.model";
 
 import { SubmissionAlreadyHasCheckResultException } from "../../exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "../../exceptions/submission-not-found.exceptoin";
+import { ResultService } from "../../services/result.service";
 import { SubmissionService } from "../../services/submission.service";
 import { CreateSubmissionInput } from "../inputs/create-submission.input";
 import { RequestCheckInput } from "../inputs/request-check.input";
 import { UpdateSubmissionInput } from "../inputs/update-submission.input";
+import { Result } from "../models/result.model";
 import { Submission } from "../models/submission.model";
 import { CreateSubmissionResult } from "../results/create-submission.result";
 import { RequestCheckResult } from "../results/request-check.result";
@@ -19,7 +21,11 @@ import { UpdateSubmissionResult } from "../results/update-submission.result";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {
-  constructor(private readonly submissionService: SubmissionService, private readonly levelService: LevelService) {}
+  constructor(
+    private readonly submissionService: SubmissionService,
+    private readonly levelService: LevelService,
+    private readonly resultService: ResultService,
+  ) {}
 
   @Mutation(() => Submission)
   async submit(
@@ -91,5 +97,10 @@ export class SubmissionResolver {
   @ResolveField()
   async level(@Parent() submission: Submission): Promise<Level> {
     return this.levelService.findOne(submission.levelId);
+  }
+
+  @ResolveField(() => Result, { nullable: true })
+  async result(@Parent() submission: Submission): Promise<Result> {
+    return this.resultService.findOneForSubmission(submission.id);
   }
 }

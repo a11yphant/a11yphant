@@ -35,14 +35,11 @@ describe("submission service", () => {
   });
 
   describe("findLastForUserAndLevel", () => {
-    it("finds submission for user and Level", async () => {
+    it("finds the last submission for user and level", async () => {
       const html = "<h1>a11yphant</h1>";
 
       const prisma = getPrismaService();
-      const service = new SubmissionService(
-        prisma,
-        createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
-      );
+      const service = new SubmissionService(prisma, createMock<ClientProxy>());
 
       const {
         id: submissionId,

@@ -50,7 +50,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
         </Button>
       </h4>
       {showHint && (
-        <div className="px-4">
+        <div className={clsx("px-4", "select-none")}>
           <ol className="list-decimal list-inside font-normal">
             {hints.slice(0, usedHints).map((hint) => (
               <li

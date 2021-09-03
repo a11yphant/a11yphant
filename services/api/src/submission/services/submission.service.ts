@@ -28,7 +28,10 @@ export class SubmissionService {
 
   public async findLastForUserAndLevel(userId: string, levelId: string): Promise<Submission> {
     const submission = await this.prisma.submission.findFirst({
-      where: { userId, levelId },
+      where: {
+        userId,
+        levelId,
+      },
       orderBy: {
         updatedAt: "desc",
       },

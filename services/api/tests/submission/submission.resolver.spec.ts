@@ -1,5 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { LevelFactory } from "@tests/factories/models/level.factory";
+import { SubmissionFactory } from "@tests/factories/models/submission.factory";
 import { UserInputError } from "apollo-server-express";
 
 import { SessionToken } from "@/authentication/session-token.interface";
@@ -10,6 +11,7 @@ import { CreateSubmissionInput } from "@/submission/graphql/inputs/create-submis
 import { UpdateSubmissionInput } from "@/submission/graphql/inputs/update-submission.input";
 import { Submission } from "@/submission/graphql/models/submission.model";
 import { SubmissionResolver } from "@/submission/graphql/resolvers/submission.resolver";
+import { ResultService } from "@/submission/services/result.service";
 import { SubmissionService } from "@/submission/services/submission.service";
 
 describe("submission resolver", () => {
@@ -26,6 +28,7 @@ describe("submission resolver", () => {
         ),
       }),
       createMock<LevelService>(),
+      createMock<ResultService>(),
     );
 
     const submission = await resolver.submit({ levelId: "hallo luca" }, { userId: "uuid" });
@@ -41,6 +44,7 @@ describe("submission resolver", () => {
       createMock<LevelService>({
         findOne: jest.fn().mockResolvedValue(mockLevel),
       }),
+      createMock<ResultService>(),
     );
 
     const level = await resolver.level(new Submission({ id: "bla", levelId: "blu", createdAt: new Date(), updatedAt: new Date() }));
@@ -56,6 +60,7 @@ describe("submission resolver", () => {
         create,
       }),
       createMock<LevelService>(),
+      createMock<ResultService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
     const submission: CreateSubmissionInput = {
@@ -78,6 +83,7 @@ describe("submission resolver", () => {
         update,
       }),
       createMock<LevelService>(),
+      createMock<ResultService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
     const submission: UpdateSubmissionInput = {
@@ -100,6 +106,7 @@ describe("submission resolver", () => {
         update,
       }),
       createMock<LevelService>(),
+      createMock<ResultService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
     const submission: UpdateSubmissionInput = {
@@ -114,7 +121,7 @@ describe("submission resolver", () => {
 
   it("can request a check for submission", async () => {
     const requestCheck = jest.fn().mockResolvedValue({ id: "uuid" });
-    const resolver = new SubmissionResolver(createMock<SubmissionService>({ requestCheck }), createMock<LevelService>());
+    const resolver = new SubmissionResolver(createMock<SubmissionService>({ requestCheck }), createMock<LevelService>(), createMock<ResultService>());
 
     const mutationResult = await resolver.requestCheck({ submissionId: "bla" });
 
@@ -126,8 +133,38 @@ describe("submission resolver", () => {
     const resolver = new SubmissionResolver(
       createMock<SubmissionService>({ requestCheck: jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException()) }),
       createMock<LevelService>(),
+      createMock<ResultService>(),
     );
 
     expect(resolver.requestCheck({ submissionId: "bla" })).rejects.toBeInstanceOf(UserInputError);
+  });
+
+  it("can find the result for a submission", async () => {
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>(),
+      createMock<LevelService>(),
+      createMock<ResultService>({
+        findOneForSubmission: jest.fn().mockResolvedValue({ id: "uuid" }),
+      }),
+    );
+
+    const submission = await resolver.result(SubmissionFactory.build({ id: "uuid" }));
+
+    expect(submission).toBeTruthy();
+    expect(submission).toHaveProperty("id", "uuid");
+  });
+
+  it("returns null if the submission does not have a result", async () => {
+    const resolver = new SubmissionResolver(
+      createMock<SubmissionService>(),
+      createMock<LevelService>(),
+      createMock<ResultService>({
+        findOneForSubmission: jest.fn().mockResolvedValue(null),
+      }),
+    );
+
+    const submission = await resolver.result(SubmissionFactory.build({ id: "uuid" }));
+
+    expect(submission).toBeNull();
   });
 });
