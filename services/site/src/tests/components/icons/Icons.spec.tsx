@@ -7,6 +7,8 @@ import Chevron from "app/components/icons/Chevron";
 import Github from "app/components/icons/Github";
 import IllustrationCodingMan from "app/components/icons/IllustrationCodingMan";
 import IllustrationCodingWoman from "app/components/icons/IllustrationCodingWoman";
+import IllustrationLost from "app/components/icons/IllustrationLost";
+import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import Save from "app/components/icons/Save";
@@ -52,6 +54,18 @@ describe("Icons", () => {
 
   it("IllustrationCodingMan exists", () => {
     const wrapper = shallow(<IllustrationCodingMan />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("IllustrationLost exists", () => {
+    const wrapper = shallow(<IllustrationLost />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("IllustrationLostSpace exists", () => {
+    const wrapper = shallow(<IllustrationLostSpace />);
 
     expect(wrapper.type()).toBe("svg");
   });
