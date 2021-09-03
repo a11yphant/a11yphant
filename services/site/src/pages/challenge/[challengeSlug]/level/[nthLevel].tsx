@@ -127,10 +127,10 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className={clsx("h-main md:p-4 md:flex md:justify-between md:box-border")}>
+      <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
-        <Sidebar className={clsx("h-full", "hidden md:block")} challengeName={challenge.name} level={level} />
-        <div className={clsx("h-full pl-4 relative box-border flex justify-between flex-col flex-auto", "hidden md:block")}>
+        <Sidebar className={clsx("h-full hidden", "md:block")} challengeName={challenge.name} level={level} />
+        <div className={clsx("h-full pl-4 relative box-border hidden justify-between flex-col flex-auto", "md:flex")}>
           <Editors
             onReset={resetToInitialCode}
             className="w-full h-3/5"
