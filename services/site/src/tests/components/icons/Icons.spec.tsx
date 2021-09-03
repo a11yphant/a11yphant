@@ -5,6 +5,7 @@ import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Check from "app/components/icons/Check";
 import Chevron from "app/components/icons/Chevron";
 import Github from "app/components/icons/Github";
+import IllustrationCodingMan from "app/components/icons/IllustrationCodingMan";
 import IllustrationCodingWoman from "app/components/icons/IllustrationCodingWoman";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
@@ -45,6 +46,12 @@ describe("Icons", () => {
 
   it("IllustrationCodingWoman exists", () => {
     const wrapper = shallow(<IllustrationCodingWoman />);
+
+    expect(wrapper.type()).toBe("svg");
+  });
+
+  it("IllustrationCodingMan exists", () => {
+    const wrapper = shallow(<IllustrationCodingMan />);
 
     expect(wrapper.type()).toBe("svg");
   });
