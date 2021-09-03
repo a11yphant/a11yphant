@@ -1,6 +1,6 @@
 import React from "react";
 
-const IllustrationCoding: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+const IllustrationCodingWoman: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
     <svg
       id="ab47acfe-844d-4101-aa7b-df38aa50dbe4"
@@ -107,4 +107,4 @@ const IllustrationCoding: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
   );
 };
 
-export default IllustrationCoding;
+export default IllustrationCodingWoman;
