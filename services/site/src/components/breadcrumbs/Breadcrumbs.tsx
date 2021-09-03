@@ -31,7 +31,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
 
   return (
     <>
-      {routeList.length !== 1 && (
+      {routeList.length > 1 && (
         <nav className="flex" aria-label="Breadcrumb">
           <ol className="flex items-center">
             {routeList.map((route, idx) => {
