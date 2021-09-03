@@ -18,6 +18,7 @@ module.exports = {
       },
       maxWidth: {
         "80ch": "80ch",
+        "screen-3xl": "1800px",
       },
       colors: {
         light: "#FFFFFF",
