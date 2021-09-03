@@ -1,7 +1,7 @@
 import { Controller, Logger } from "@nestjs/common";
 import { EventPattern } from "@nestjs/microservices";
 
-import { RequirementStatus } from "../../challenge/enums/requirement-status.enum";
+import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 import { SubmissionCheckCompletedEvent } from "../interfaces/submission-check-completed-event.interface";
 import { RequirementResultService } from "../services/requirement-result.service";
