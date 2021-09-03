@@ -1,95 +1,44 @@
-import Button from "app/components/buttons/Button";
-import ButtonLoading from "app/components/buttons/ButtonLoading";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
+import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
+import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
   ResultStatus,
   useChallengeBySlugQuery,
-  useResultForSubmissionLazyQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
-import ReactConfetti from "react-confetti";
+import React from "react";
+
+export interface EvaluationRouterParams {
+  challengeSlug?: string;
+  nthLevel?: string;
+  submissionId?: string;
+}
 
 const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
-  const { challengeSlug, nthLevel, submissionId } = router.query;
+  const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
 
-  const {
-    data: { challenge },
-  } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
+  const { data } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
-  // state
-  const [queryInterval, setQueryInterval] = useState<NodeJS.Timeout | undefined>();
-  const [totalScore, setTotalScore] = useState<number>(0);
+  const submissionResult = usePollSubmissionResult(submissionId);
 
-  // query data with lazy query
-  const [getResultForSubmission, { data }] = useResultForSubmissionLazyQuery({ fetchPolicy: "network-only" });
-  const status = data?.resultForSubmission?.status;
-  const failedChecks = data?.resultForSubmission?.numberOfFailedRequirementChecks;
-  const totalChecks = data?.resultForSubmission?.numberOfCheckedRequirements;
-  const requirements = data?.resultForSubmission?.requirements || [];
-
-  // fetch every 3 seconds
-  React.useEffect(() => {
-    getResultForSubmission({ variables: { id: submissionId as string } });
-
-    const interval = setInterval(() => {
-      getResultForSubmission({ variables: { id: submissionId as string } });
-    }, 3000);
-
-    setQueryInterval(interval);
-  }, []);
-
-  // stop fetch when status is not PENDING anymore
-  React.useEffect(() => {
-    if (status && status !== ResultStatus.Pending) {
-      clearInterval(queryInterval);
-    }
-  }, [status, queryInterval]);
-
-  React.useEffect(() => {
-    if (failedChecks !== undefined && totalChecks !== undefined) {
-      setTotalScore(100 - (failedChecks / totalChecks) * 100);
-    }
-  }, [failedChecks, totalChecks]);
-
-  // level is completed when all checks passed
-  let failedLevel = true;
-  if (Number.isInteger(failedChecks) && failedChecks === 0) {
-    failedLevel = false;
+  if (data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending) {
+    return <LoadingScreen className="hidden md:flex" />;
   }
+  const { challenge } = data;
 
+  const { status, requirements, totalScore } = submissionResult;
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
-
-  // render requirements
-  const getRequirements = React.useMemo(
-    () =>
-      requirements.map((requirement, idx) => {
-        const requirementTitle = `${idx + 1}. ${requirement.title}`;
-        return (
-          <EvaluationBody
-            key={requirement.id}
-            requirementTitle={requirementTitle}
-            description={requirement.description}
-            result={requirement.result}
-          />
-        );
-      }),
-    [requirements],
-  );
-
-  // button with loading spinner
-  const [loadingAnimation, setLoadingAnimation] = useState(false);
 
   return (
     <>
@@ -98,67 +47,26 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      {isLastLevel && status === ResultStatus.Success && <ReactConfetti numberOfPieces={1000} gravity={0.2} recycle={false} />}
       <main className={clsx("h-main", "md:p-12 md:flex md:flex-col md:justify-between")}>
         <SmallScreenNotification />
-        {!status || status === ResultStatus.Pending ? (
-          <LoadingScreen className="hidden md:flex" />
-        ) : (
-          <>
-            <EvaluationHeader
-              className="hidden md:flex"
-              challengeName={challenge.name}
-              levelIdx={Number(nthLevel)}
-              score={totalScore}
-              passed={status === ResultStatus.Success}
-            />
-            <div
-              className={clsx(
-                "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
-                "md:flex",
-              )}
-            >
-              <ul className="h-full">{getRequirements}</ul>
-            </div>
-            <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
-              {failedLevel ? (
-                <ButtonLoading
-                  primary
-                  onClick={() => {
-                    setLoadingAnimation(true);
-                    router.back();
-                  }}
-                  className="px-10"
-                  loading={loadingAnimation}
-                  srTextLoading="The request is being processed."
-                >
-                  Retry
-                </ButtonLoading>
-              ) : isLastLevel ? (
-                <Button
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                  primary
-                  className="px-10"
-                >
-                  Finish Challenge
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    const nextLevel = parseInt(nthLevel as string) + 1;
-                    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
-                  }}
-                  primary
-                  className="px-10"
-                >
-                  Next Level
-                </Button>
-              )}
-            </div>
-          </>
-        )}
+        <EvaluationHeader
+          className="hidden md:flex"
+          challengeName={challenge.name}
+          levelIdx={Number(nthLevel)}
+          score={totalScore}
+          passed={status === ResultStatus.Success}
+        />
+        <div
+          className={clsx(
+            "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
+            "md:flex",
+          )}
+        >
+          <EvaluationBody requirements={requirements} />
+        </div>
+        <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
+          <CompleteEvaluationButton status={status} isLastLevel={isLastLevel} />
+        </div>
       </main>
     </>
   );
