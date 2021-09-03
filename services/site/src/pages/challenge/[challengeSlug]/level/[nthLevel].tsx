@@ -7,59 +7,43 @@ import {
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
   LevelByChallengeSlugDocument,
-  LevelByChallengeSlugQuery,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
-  ResultStatus,
-  UpdateSubmissionInput,
   useChallengeBySlugQuery,
-  useCreateSubmissionMutation,
   useLevelByChallengeSlugQuery,
   useRequestCheckMutation,
-  useUpdateSubmissionMutation,
 } from "app/generated/graphql";
+import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import { initializeApollo } from "app/lib/apollo-client";
-import debounce from "lodash.debounce";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-
-interface EditorCode {
-  html?: string;
-  js?: string;
-  css?: string;
-}
-
-const debounceOneSecond = debounce((update: () => void) => {
-  update();
-}, 1000);
+import React, { useState } from "react";
 
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
 
-  const [currentSubmissionId, setCurrentSubmissionId] = useState<string | null>();
-  const [editorCode, setEditorCode] = useState<EditorCode>();
+  const { setLevelId, submissionId, setSubmissionId, setSubmissionCode, submissionCode, updateSubmission } = useSubmissionAutoSave();
 
   const { loading, data: levelData } = useLevelByChallengeSlugQuery({
     variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
-    fetchPolicy: "network-only",
     onCompleted: ({ level }) => {
+      setLevelId(level.id);
       if (level?.lastSubmission) {
-        setEditorCode({
+        setSubmissionCode({
           html: level.lastSubmission.html,
           js: level.lastSubmission.js,
           css: level.lastSubmission.css,
         });
 
-        if (level.lastSubmission.result?.status === ResultStatus.Fail) {
+        if (level.lastSubmission.result) {
           return;
         }
 
-        setCurrentSubmissionId(level.lastSubmission.id);
+        setSubmissionId(level.lastSubmission.id);
       } else {
-        setEditorCode({
+        setSubmissionCode({
           html: level.code?.html,
           js: level.code?.js,
           css: level.code?.css,
@@ -73,84 +57,16 @@ const Level: React.FunctionComponent = () => {
     data: { challenge },
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
-  const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateSubmissionMutation();
-  const [updateSubmissionMutation, { loading: updateSubmitMutationLoading }] = useUpdateSubmissionMutation();
   const [requestCheckMutation] = useRequestCheckMutation();
-
-  const updateSubmission = async (submissionInput: UpdateSubmissionInput): Promise<void> => {
-    await updateSubmissionMutation({
-      variables: {
-        submissionInput,
-      },
-      update: (cache, { data }) => {
-        const variables = {
-          challengeSlug: challengeSlug as string,
-          nth: Number(nthLevel),
-        };
-
-        const entry = cache.readQuery<LevelByChallengeSlugQuery>({
-          query: LevelByChallengeSlugDocument,
-          variables,
-        });
-
-        const updatedEntry = {
-          ...entry,
-          level: {
-            ...entry.level,
-            lastSubmission: {
-              ...entry.level.lastSubmission,
-              ...data?.updateSubmission.submission,
-            },
-          },
-        };
-
-        cache.writeQuery({
-          query: LevelByChallengeSlugDocument,
-          variables,
-          data: updatedEntry,
-        });
-      },
-    });
-  };
-
-  const autoSaveCode = async (editorCode: EditorCode): Promise<void> => {
-    if (!currentSubmissionId && !createSubmissionLoading) {
-      const { data } = await createSubmissionMutation({
-        variables: {
-          submissionInput: {
-            levelId: levelData.level.id,
-            ...editorCode,
-          },
-        },
-      });
-      setCurrentSubmissionId(data.createSubmission.submission.id);
-      return;
-    }
-
-    if (updateSubmitMutationLoading) {
-      return;
-    }
-
-    await updateSubmission({
-      id: currentSubmissionId,
-      ...editorCode,
-    });
-  };
-
-  useEffect(() => {
-    debounceOneSecond(() => {
-      autoSaveCode(editorCode);
-    });
-  }, [editorCode]);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     if (language) {
-      setEditorCode({
-        ...editorCode,
+      setSubmissionCode({
+        ...submissionCode,
         [language]: levelData.level.code?.[language],
       });
     } else {
-      setEditorCode({
+      setSubmissionCode({
         html: levelData.level.code?.html,
         js: levelData.level.code?.js,
         css: levelData.level.code?.css,
@@ -158,22 +74,18 @@ const Level: React.FunctionComponent = () => {
     }
   };
 
-  // button with loading spinner
-  const [loadingAnimation, setLoadingAnimation] = useState(false);
+  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 
   const submitLevel = async (): Promise<void> => {
-    setLoadingAnimation(true);
+    setShowSubmitLoadingAnimation(true);
 
-    await updateSubmission({
-      id: currentSubmissionId,
-      ...editorCode,
-    });
+    await updateSubmission();
 
     await requestCheckMutation({
-      variables: { requestCheckInput: { submissionId: currentSubmissionId } },
+      variables: { requestCheckInput: { submissionId } },
     });
 
-    router.push(`${router.asPath}/evaluation/${currentSubmissionId}`);
+    router.push(`${router.asPath}/evaluation/${submissionId}`);
   };
 
   if (loading || loadingChallenge) {
@@ -186,9 +98,9 @@ const Level: React.FunctionComponent = () => {
     editorConfiguration.push({
       languageLabel: "HTML",
       language: EditorLanguage.html,
-      code: editorCode?.html,
+      code: submissionCode?.html,
       updateCode: (html) => {
-        setEditorCode({ ...editorCode, html });
+        setSubmissionCode({ ...submissionCode, html });
       },
       heading: "index.html",
     });
@@ -198,9 +110,9 @@ const Level: React.FunctionComponent = () => {
     editorConfiguration.push({
       languageLabel: "CSS",
       language: EditorLanguage.css,
-      code: editorCode?.css,
+      code: submissionCode?.css,
       updateCode: (css) => {
-        setEditorCode({ ...editorCode, css });
+        setSubmissionCode({ ...submissionCode, css });
       },
       heading: "index.css",
     });
@@ -210,9 +122,9 @@ const Level: React.FunctionComponent = () => {
     editorConfiguration.push({
       languageLabel: "JavaScript",
       language: EditorLanguage.javascript,
-      code: editorCode?.js,
+      code: submissionCode?.js,
       updateCode: (js) => {
-        setEditorCode({ ...editorCode, js });
+        setSubmissionCode({ ...submissionCode, js });
       },
       heading: "index.js",
     });
@@ -242,13 +154,19 @@ const Level: React.FunctionComponent = () => {
               },
             }}
           />
-          <Preview className="w-full h-2/5" heading="Preview" htmlCode={editorCode?.html} cssCode={editorCode?.css} javascriptCode={editorCode?.js} />
+          <Preview
+            className="w-full h-2/5"
+            heading="Preview"
+            htmlCode={submissionCode?.html}
+            cssCode={submissionCode?.css}
+            javascriptCode={submissionCode?.js}
+          />
           <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
             <ButtonLoading
               primary
               onClick={submitLevel}
               className="px-10"
-              loading={loadingAnimation}
+              loading={showSubmitLoadingAnimation}
               submitButton
               srTextLoading="The submission is being processed."
             >
