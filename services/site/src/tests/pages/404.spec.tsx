@@ -13,7 +13,7 @@ const mockHeading = "Error 404";
 const mockText = "seems like you got lost in space";
 
 describe("404 Page", () => {
-  it("renders without crashing", () => {
+  it("renders wrapper elements", () => {
     const wrapper = shallow(<Custom404 />);
 
     expect(wrapper.find("main").length).toBe(1);

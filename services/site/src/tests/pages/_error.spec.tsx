@@ -13,7 +13,7 @@ const mockHeading = "Error 500";
 const mockText = "ooops, something went wrong";
 
 describe("Error Page", () => {
-  it("renders without crashing", () => {
+  it("renders wrapper elements", () => {
     const wrapper = shallow(<CustomError statusCode={500} />);
 
     expect(wrapper.find("main").length).toBe(1);
