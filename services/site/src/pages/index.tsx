@@ -2,7 +2,7 @@ import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Legend from "app/components/homepage/Legend";
-import IllustrationCoding from "app/components/icons/IllustrationCoding";
+import IllustrationCodingWoman from "app/components/icons/IllustrationCodingWoman";
 import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
@@ -44,7 +44,7 @@ const Home: React.FunctionComponent = () => {
                 </a>
               </Link>
             </div>
-            <IllustrationCoding className="max-w-md mx-8 col-span-1" />
+            <IllustrationCodingWoman className="max-w-md mx-8 col-span-1" />
           </section>
           <section id="challenges">
             <ChallengeHeader className="mx-24" />
