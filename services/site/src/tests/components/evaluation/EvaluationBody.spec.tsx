@@ -33,7 +33,7 @@ const mockRequirements = [
 ];
 
 describe("EvaluationBody", () => {
-  it("renders ul", () => {
+  it("renders list", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
     expect(wrapper.find("ul").length).toBe(1);
