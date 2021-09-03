@@ -99,7 +99,7 @@ export class SubmissionResolver {
     return this.levelService.findOne(submission.levelId);
   }
 
-  @ResolveField(() => Result)
+  @ResolveField(() => Result, { nullable: true })
   async result(@Parent() submission: Submission): Promise<Result> {
     return this.resultService.findOneForSubmission(submission.id);
   }
