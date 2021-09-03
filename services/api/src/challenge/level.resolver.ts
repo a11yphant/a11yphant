@@ -2,8 +2,8 @@ import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
-import { Submission } from "@/submission/models/submission.model";
-import { SubmissionService } from "@/submission/submission.service";
+import { Submission } from "@/submission/graphql/models/submission.model";
+import { SubmissionService } from "@/submission/services/submission.service";
 
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
 import { LevelService } from "./level.service";

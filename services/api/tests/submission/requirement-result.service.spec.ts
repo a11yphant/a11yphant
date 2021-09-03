@@ -4,8 +4,8 @@ import { CHECK_RESULT, CheckResultData, Factory, REQUIREMENT, RequirementData, R
 import { useDatabase } from "@tests/helpers";
 
 import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
-import { ResultStatus } from "@/submission/models/result-status.enum";
-import { RequirementResultService } from "@/submission/requirement-result.service";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
+import { RequirementResultService } from "@/submission/services/requirement-result.service";
 
 describe("requirement result service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());

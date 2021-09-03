@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException, Param } from "@nestjs/common";
 
-import { SubmissionService } from "./submission.service";
+import { SubmissionService } from "../services/submission.service";
 
 @Controller("render")
 export class RendererController {

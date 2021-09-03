@@ -30,32 +30,36 @@ const Breadcrumbs: React.FunctionComponent = () => {
   }, [router.pathname]);
 
   return (
-    <nav className="flex" aria-label="Breadcrumb">
-      <ol className="flex items-center">
-        {routeList.map((route, idx) => {
-          return (
-            <li key={route.href} className="m-0">
-              <div className="flex items-center">
-                {idx > 0 && <Slash />}
-                <Link href={route.href}>
-                  <a
-                    className={clsx(
-                      "ml-1 font-medium",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-primary-light",
-                      idx === routeList.length - 1 ? "text-white font-bold focus:text-primary-light" : "text-grey-middle",
-                    )}
-                    aria-current={idx === routeList.length - 1 ? "page" : undefined}
-                  >
-                    {route.breadcrumb}
-                  </a>
-                </Link>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <>
+      {routeList.length > 1 && (
+        <nav className="flex" aria-label="Breadcrumb">
+          <ol className="flex items-center">
+            {routeList.map((route, idx) => {
+              return (
+                <li key={route.href} className="m-0">
+                  <div className="flex items-center">
+                    {idx > 0 && <Slash />}
+                    <Link href={route.href}>
+                      <a
+                        className={clsx(
+                          "ml-1 font-medium",
+                          "transition-colors duration-300",
+                          "hover:text-primary-light hover:border-primary-light",
+                          idx === routeList.length - 1 ? "text-white font-bold focus:text-primary-light" : "text-grey-middle",
+                        )}
+                        aria-current={idx === routeList.length - 1 ? "page" : undefined}
+                      >
+                        {route.breadcrumb}
+                      </a>
+                    </Link>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      )}
+    </>
   );
 };
 

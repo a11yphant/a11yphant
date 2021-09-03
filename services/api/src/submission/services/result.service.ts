@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma, Result as ResultRecord } from "@prisma/client";
 
-import { PrismaService } from "../prisma/prisma.service";
-import { Result } from "./models/result.model";
-import { ResultStatus } from "./models/result-status.enum";
+import { PrismaService } from "@/prisma/prisma.service";
+
+import { Result } from "../graphql/models/result.model";
+import { ResultStatus } from "../graphql/models/result-status.enum";
 
 @Injectable()
 export class ResultService {
@@ -16,7 +17,7 @@ export class ResultService {
       },
     });
 
-    return record ? this.createModelFromRecord(record) : null;
+    return record ? ResultService.createModelFromRecord(record) : null;
   }
 
   async countNumberOfCheckedRequirements(id: string): Promise<number> {
@@ -35,10 +36,10 @@ export class ResultService {
       data,
     });
 
-    return record ? this.createModelFromRecord(record) : null;
+    return record ? ResultService.createModelFromRecord(record) : null;
   }
 
-  private createModelFromRecord(record: ResultRecord): Result {
+  static createModelFromRecord(record: ResultRecord): Result {
     return new Result({ id: record.id, status: record.status, submissionId: record.submissionId });
   }
 }

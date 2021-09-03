@@ -1,7 +1,8 @@
 import faker from "faker";
 import { IFactoryStatic } from "rosie";
 
-import { ResultStatus } from "../../../src/submission/models/result-status.enum";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
+
 import { CHECK_RESULT, RESULT, SUBMISSION } from "./constants";
 import { buildMultipleOf, buildOneOf } from "./helpers";
 import { CheckResultData, ResultData, SubmissionData } from "./types";
