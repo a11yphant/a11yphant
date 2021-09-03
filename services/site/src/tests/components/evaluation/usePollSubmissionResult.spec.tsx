@@ -9,13 +9,6 @@ import React from "react";
 
 afterEach(cleanup);
 
-// jest.mock("app/generated/graphql", () => {
-//   return {
-//     ...jest.requireActual<NodeJS.Dict<unknown>>("app/generated/graphql"),
-//     useResultForSubmissionLazyQuery: jest.fn(),
-//   };
-// });
-
 const mockFailSubmissionId = "6e19e948-e022-4167-a82c-423feaf0d03a";
 const mockPendingSubmissionId = "51fc32e4-12a0-4dde-abc4-d3fcf5611351";
 const mockRequirements = [
@@ -45,7 +38,7 @@ const mockRequirements = [
   },
 ];
 
-const mockedPendingDataProvider = jest.fn(() => ({
+const getMockedPendingData = jest.fn(() => ({
   data: {
     resultForSubmission: {
       id: mockPendingSubmissionId,
@@ -86,7 +79,7 @@ const mocks: MockedResponse[] = [
         id: mockPendingSubmissionId,
       },
     },
-    newData: mockedPendingDataProvider,
+    newData: getMockedPendingData,
   },
 ];
 
@@ -121,17 +114,34 @@ describe("usePollSubmissionResult", () => {
     await act(async () => {
       await waitForNextUpdate();
     });
+
     // initial call in useEffect
-    expect(mockedPendingDataProvider).toHaveBeenCalledTimes(1);
+    expect(getMockedPendingData).toHaveBeenCalledTimes(1);
 
     // call in interval after 3 seconds
     jest.advanceTimersByTime(3000);
     await waitForNextUpdate();
-    expect(mockedPendingDataProvider).toHaveBeenCalledTimes(2);
+    expect(getMockedPendingData).toHaveBeenCalledTimes(2);
 
     // call again in interval after another 3 seconds
     jest.advanceTimersByTime(3000);
     await waitForNextUpdate();
-    expect(mockedPendingDataProvider).toHaveBeenCalledTimes(3);
+    expect(getMockedPendingData).toHaveBeenCalledTimes(3);
+  });
+
+  it("clears interval after receiving real response", async () => {
+    jest.useFakeTimers();
+    jest.spyOn(window, "clearInterval");
+
+    const { waitForNextUpdate } = renderHook(() => usePollSubmissionResult(mockFailSubmissionId), { wrapper });
+    await act(async () => {
+      await waitForNextUpdate();
+    });
+
+    // make apollo return mocked response
+    jest.advanceTimersByTime(0);
+    await waitForNextUpdate();
+
+    expect(clearInterval).toHaveBeenCalledTimes(1);
   });
 });
