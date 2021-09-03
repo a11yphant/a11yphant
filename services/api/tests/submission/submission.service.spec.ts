@@ -35,7 +35,7 @@ describe("submission service", () => {
   });
 
   describe("findLastForUserAndLevel", () => {
-    it("finds submissions without a result for user and Level", async () => {
+    it("finds the last submission for user and level", async () => {
       const html = "<h1>a11yphant</h1>";
 
       const prisma = getPrismaService();
@@ -57,48 +57,6 @@ describe("submission service", () => {
       expect(submission).toBeTruthy();
       expect(submission.html).toBe(html);
       expect(submission.id).toBe(submissionId);
-    });
-
-    it("finds submissions with a failed for user and Level", async () => {
-      const html = "<h1>a11yphant</h1>";
-
-      const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
-
-      const {
-        id: submissionId,
-        userId,
-        levelId,
-      } = await prisma.submission.create({
-        data: { ...Factory.build<SubmissionData>(SUBMISSION, { html }), result: { create: { status: ResultStatus.FAIL } } },
-        include: {
-          level: true,
-        },
-      });
-
-      const submission = await service.findLastForUserAndLevel(userId, levelId);
-
-      expect(submission).toBeTruthy();
-      expect(submission.html).toBe(html);
-      expect(submission.id).toBe(submissionId);
-    });
-
-    it("does not find submissions with a success result for user and Level", async () => {
-      const html = "<h1>a11yphant</h1>";
-
-      const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
-
-      const { userId, levelId } = await prisma.submission.create({
-        data: { ...Factory.build<SubmissionData>(SUBMISSION, { html }), result: { create: { status: ResultStatus.SUCCESS } } },
-        include: {
-          level: true,
-        },
-      });
-
-      const submission = await service.findLastForUserAndLevel(userId, levelId);
-
-      expect(submission).toBeFalsy();
     });
   });
 

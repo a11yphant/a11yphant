@@ -31,7 +31,6 @@ export class SubmissionService {
       where: {
         userId,
         levelId,
-        OR: [{ result: null }, { result: { status: ResultStatus.FAIL } }],
       },
       orderBy: {
         updatedAt: "desc",
