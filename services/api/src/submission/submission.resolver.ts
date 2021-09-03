@@ -10,16 +10,22 @@ import { CreateSubmissionInput } from "./create-submission.input";
 import { CreateSubmissionResult } from "./create-submission.result";
 import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exceptoin";
+import { Result } from "./models/result.model";
 import { Submission } from "./models/submission.model";
 import { RequestCheckInput } from "./request-check.input";
 import { RequestCheckResult } from "./request-check.result";
+import { ResultService } from "./result.service";
 import { SubmissionService } from "./submission.service";
 import { UpdateSubmissionInput } from "./update-submission.input";
 import { UpdateSubmissionResult } from "./update-submission.result";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {
-  constructor(private readonly submissionService: SubmissionService, private readonly levelService: LevelService) {}
+  constructor(
+    private readonly submissionService: SubmissionService,
+    private readonly levelService: LevelService,
+    private readonly resultService: ResultService,
+  ) {}
 
   @Mutation(() => Submission)
   async submit(
@@ -91,5 +97,10 @@ export class SubmissionResolver {
   @ResolveField()
   async level(@Parent() submission: Submission): Promise<Level> {
     return this.levelService.findOne(submission.levelId);
+  }
+
+  @ResolveField(() => Result)
+  async result(@Parent() submission: Submission): Promise<Result> {
+    return this.resultService.findOneForSubmission(submission.id);
   }
 }
