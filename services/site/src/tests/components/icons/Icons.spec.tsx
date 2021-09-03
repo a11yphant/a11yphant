@@ -7,7 +7,7 @@ import Chevron from "app/components/icons/Chevron";
 import Github from "app/components/icons/Github";
 import IllustrationCoding from "app/components/icons/IllustrationCoding";
 import IllustrationLost from "app/components/icons/IllustrationLost";
-import IllustrationLostSpace from "app/components/icons/IllustrationLost";
+import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import Save from "app/components/icons/Save";

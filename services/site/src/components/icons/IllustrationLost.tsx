@@ -1,6 +1,6 @@
 import React from "react";
 
-const IllustrationLostSpace: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+const IllustrationLost: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
     <svg
       id="ffcf1f7b-abca-46b6-8e43-585f7256c1ae"
@@ -122,4 +122,4 @@ const IllustrationLostSpace: React.FunctionComponent<React.SVGProps<SVGSVGElemen
   );
 };
 
-export default IllustrationLostSpace;
+export default IllustrationLost;
