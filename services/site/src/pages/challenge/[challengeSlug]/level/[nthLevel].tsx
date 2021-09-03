@@ -2,7 +2,7 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
-import IllustrationCoding from "app/components/icons/IllustrationCoding";
+import IllustrationCodingWoman from "app/components/icons/IllustrationCodingWoman";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
@@ -124,7 +124,7 @@ const Level: React.FunctionComponent = () => {
   const smallScreenNotification = (
     <>
       <section className={clsx("mx-8 py-10 h-full flex flex-col justify-center items-left", "md:hidden")}>
-        <IllustrationCoding className={clsx("max-w-xs mb-12 self-start", "sm:mb-12 sm:max-w-sm")} />
+        <IllustrationCodingWoman className={clsx("max-w-xs mb-12 self-start", "sm:mb-12 sm:max-w-sm")} />
         <h2 className={clsx("mb-8", "h3", "sm:h2")}>Your device is too small</h2>
         <p>Please use a tablet or desktop device with a larger screen.</p>
         <Link href="/">
