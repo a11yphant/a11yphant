@@ -70,11 +70,8 @@ describe("Breadcrumbs", () => {
 
     const wrapper = await renderBreadcrumbs();
 
-    expect(wrapper.exists("nav")).toBeTruthy();
-    expect(wrapper.exists("ol")).toBeTruthy();
-
-    // Breadcrumb Home is rendered
-    expect(wrapper.find("li a").first().text()).toBe(expectedBreadcrumbHome.breadcrumb);
+    expect(wrapper.exists("nav")).toBeFalsy();
+    expect(wrapper.exists("ol")).toBeFalsy();
 
     // No Slash is rendered
     expect(wrapper.exists(Slash)).toBeFalsy();

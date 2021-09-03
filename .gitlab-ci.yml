@@ -148,7 +148,8 @@ test:submission-checker:
 build:submission-checker:
   extends:
     - .build
-  needs: []
+  needs:
+    - test:submission-checker
   variables:
     PROJECT_PATH: services/submission-checker
     IMAGE_NAME_APP: a11yphant/a11yphant/submission-checker
@@ -210,7 +211,8 @@ build:api:
     - docker
   stage: build
   image: docker:20
-  needs: []
+  needs:
+    - test:api
   variables:
     PROJECT_PATH: services/api
     IMAGE_NAME_APP: a11yphant/a11yphant/api
@@ -265,6 +267,7 @@ build:site:
     - .build
   needs:
     - generate-graphql-schema:api
+    - test:site
   variables:
     PROJECT_PATH: services/site
     IMAGE_NAME_APP: a11yphant/a11yphant/site
