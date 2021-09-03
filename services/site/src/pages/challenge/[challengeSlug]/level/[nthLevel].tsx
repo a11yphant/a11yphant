@@ -28,7 +28,10 @@ const Level: React.FunctionComponent = () => {
 
   const { setLevelId, submissionId, setSubmissionId, setSubmissionCode, submissionCode, updateSubmission } = useSubmissionAutoSave();
 
-  const { loading, data: levelData } = useLevelByChallengeSlugQuery({
+  const {
+    loading,
+    data: { level },
+  } = useLevelByChallengeSlugQuery({
     variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
     onCompleted: ({ level }) => {
       setLevelId(level.id);
@@ -65,13 +68,13 @@ const Level: React.FunctionComponent = () => {
     if (language) {
       setSubmissionCode({
         ...submissionCode,
-        [language]: levelData.level.code?.[language],
+        [language]: level.code?.[language],
       });
     } else {
       setSubmissionCode({
-        html: levelData.level.code?.html,
-        js: levelData.level.code?.js,
-        css: levelData.level.code?.css,
+        html: level.code?.html,
+        js: level.code?.js,
+        css: level.code?.css,
       });
     }
   };
@@ -96,7 +99,7 @@ const Level: React.FunctionComponent = () => {
 
   const editorConfiguration = [];
 
-  if (levelData.level.hasHtmlEditor) {
+  if (level.hasHtmlEditor) {
     editorConfiguration.push({
       languageLabel: "HTML",
       language: EditorLanguage.html,
@@ -108,7 +111,7 @@ const Level: React.FunctionComponent = () => {
     });
   }
 
-  if (levelData.level.hasCssEditor) {
+  if (level.hasCssEditor) {
     editorConfiguration.push({
       languageLabel: "CSS",
       language: EditorLanguage.css,
@@ -120,7 +123,7 @@ const Level: React.FunctionComponent = () => {
     });
   }
 
-  if (levelData.level.hasJsEditor) {
+  if (level.hasJsEditor) {
     editorConfiguration.push({
       languageLabel: "JavaScript",
       language: EditorLanguage.javascript,
@@ -141,7 +144,7 @@ const Level: React.FunctionComponent = () => {
       </Head>
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
-        <Sidebar className={clsx("h-full hidden", "md:block")} challengeName={challenge.name} level={levelData.level} />
+        <Sidebar className={clsx("h-full hidden", "md:block")} challengeName={challenge.name} level={level} />
         <div className={clsx("h-full pl-4 relative box-border hidden justify-between flex-col flex-auto", "md:flex")}>
           <Editors
             onReset={resetToInitialCode}

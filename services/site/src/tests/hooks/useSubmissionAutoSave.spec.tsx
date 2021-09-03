@@ -61,10 +61,6 @@ function createCreateSubmissionMock(levelId = "level-uuid", code = defaultCode, 
 const defaultApolloMock = [createCreateSubmissionMock(), createUpdateSubmissionMock()];
 
 describe("submission auto save", () => {
-  // afterEach(() => {
-  //   debounceMock.restoreAllMocks();
-  // });
-
   it("can set the submission id", () => {
     const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={defaultApolloMock}>{children}</MockedProvider>;
     const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
