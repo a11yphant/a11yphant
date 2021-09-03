@@ -16,7 +16,7 @@ export class ResultService {
       },
     });
 
-    return record ? this.createModelFromRecord(record) : null;
+    return record ? ResultService.createModelFromRecord(record) : null;
   }
 
   async countNumberOfCheckedRequirements(id: string): Promise<number> {
@@ -35,10 +35,10 @@ export class ResultService {
       data,
     });
 
-    return record ? this.createModelFromRecord(record) : null;
+    return record ? ResultService.createModelFromRecord(record) : null;
   }
 
-  private createModelFromRecord(record: ResultRecord): Result {
+  static createModelFromRecord(record: ResultRecord): Result {
     return new Result({ id: record.id, status: record.status, submissionId: record.submissionId });
   }
 }
