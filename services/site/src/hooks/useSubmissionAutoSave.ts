@@ -1,4 +1,4 @@
-import { Submission, UpdateSubmissionInput, useCreateSubmissionMutation, useUpdateSubmissionMutation } from "app/generated/graphql";
+import { Submission, useCreateSubmissionMutation, useUpdateSubmissionMutation } from "app/generated/graphql";
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 
@@ -22,69 +22,37 @@ export function useSubmissionAutoSave(): {
   const [submissionId, setSubmissionId] = useState<string>();
   const [submissionCode, setSubmissionCode] = useState<SubmissionCode>();
 
-  const updateSubmission = async (submissionInput: UpdateSubmissionInput): Promise<void> => {
-    await updateSubmissionMutation({
-      variables: {
-        submissionInput,
-      },
-      //   update: (cache, { data }) => {
-      //     const variables = {
-      //       challengeSlug: challengeSlug as string,
-      //       nth: Number(nthLevel),
-      //     };
-
-      //     const entry = cache.readQuery<LevelByChallengeSlugQuery>({
-      //       query: LevelByChallengeSlugDocument,
-      //       variables,
-      //     });
-
-      //     const updatedEntry = {
-      //       ...entry,
-      //       level: {
-      //         ...entry.level,
-      //         lastSubmission: {
-      //           ...entry.level.lastSubmission,
-      //           ...data?.updateSubmission.submission,
-      //         },
-      //       },
-      //     };
-
-      //     cache.writeQuery({
-      //       query: LevelByChallengeSlugDocument,
-      //       variables,
-      //       data: updatedEntry,
-      //     });
-      //   },
-    });
-  };
-
-  const autoSaveCode = async (editorCode: SubmissionCode): Promise<void> => {
+  const updateSubmission = async (): Promise<void> => {
     if (!submissionId && !createSubmissionLoading) {
       const { data } = await createSubmissionMutation({
         variables: {
           submissionInput: {
             levelId,
-            ...editorCode,
+            ...submissionCode,
           },
         },
       });
-      setSubmissionId(data.createSubmission.submission.id);
-      return;
+
+      return setSubmissionId(data.createSubmission.submission.id);
     }
 
     if (updateSubmitMutationLoading) {
       return;
     }
 
-    await updateSubmission({
-      id: submissionId,
-      ...editorCode,
+    await updateSubmissionMutation({
+      variables: {
+        submissionInput: {
+          id: submissionId,
+          ...submissionCode,
+        },
+      },
     });
   };
 
   useEffect(() => {
     debounceOneSecond(() => {
-      autoSaveCode(submissionCode);
+      updateSubmission();
     });
   }, [submissionCode]);
 
@@ -92,8 +60,8 @@ export function useSubmissionAutoSave(): {
     setLevelId,
     submissionId,
     setSubmissionId,
-    setSubmissionCode,
     submissionCode,
-    updateSubmission: () => Promise.resolve(),
+    setSubmissionCode,
+    updateSubmission,
   };
 }

@@ -2,6 +2,9 @@ mutation createSubmission($submissionInput: CreateSubmissionInput!) {
   createSubmission(submissionInput: $submissionInput) {
     submission {
         id
+        html
+        css
+        js
     }
   }
 }
