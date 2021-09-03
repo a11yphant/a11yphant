@@ -10,6 +10,7 @@ import {
   LevelByChallengeSlugQuery,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
+  ResultStatus,
   UpdateSubmissionInput,
   useChallengeBySlugQuery,
   useCreateSubmissionMutation,
@@ -46,12 +47,17 @@ const Level: React.FunctionComponent = () => {
     fetchPolicy: "network-only",
     onCompleted: ({ level }) => {
       if (level?.lastSubmission) {
-        setCurrentSubmissionId(level.lastSubmission.id);
         setEditorCode({
           html: level.lastSubmission.html,
           js: level.lastSubmission.js,
           css: level.lastSubmission.css,
         });
+
+        if (level.lastSubmission.result?.status === ResultStatus.Fail) {
+          return;
+        }
+
+        setCurrentSubmissionId(level.lastSubmission.id);
       } else {
         setEditorCode({
           html: level.code?.html,
