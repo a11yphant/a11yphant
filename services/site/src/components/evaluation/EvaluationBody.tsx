@@ -10,14 +10,14 @@ interface EvaluationBodyProps {
 }
 
 const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirements }) => {
-  const successfulRequirement = requirements.filter((requirement) => requirement.result === RequirementStatus.Success);
-  const failedRequirement = requirements.filter((requirement) => requirement.result === RequirementStatus.Fail);
+  const successfulRequirements = requirements.filter((requirement) => requirement.result === RequirementStatus.Success);
+  const failedRequirements = requirements.filter((requirement) => requirement.result === RequirementStatus.Fail);
 
   return (
     <>
-      {failedRequirement.length >= 1 && (
+      {failedRequirements.length >= 1 && (
         <ul className={clsx("h-full", className)}>
-          {failedRequirement.map((requirement, idx) => {
+          {failedRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
               <>
@@ -29,9 +29,9 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           })}
         </ul>
       )}
-      {successfulRequirement.length >= 1 && (
+      {successfulRequirements.length >= 1 && (
         <ul className={clsx("h-full", className)}>
-          {successfulRequirement.map((requirement, idx) => {
+          {successfulRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
               <>
