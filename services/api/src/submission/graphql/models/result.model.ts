@@ -1,6 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { RequirementResult } from "./requirement-result.model";
 import { ResultStatus } from "./result-status.enum";
 
 @ObjectType({
@@ -20,11 +19,6 @@ export class Result {
     description: "The current status of the result.",
   })
   status: ResultStatus;
-
-  @Field(() => [RequirementResult], {
-    description: "The results for the requirements.",
-  })
-  requirements: RequirementResult[];
 
   submissionId: string;
 }

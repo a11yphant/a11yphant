@@ -1,7 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { Level } from "@/challenge/models/level.model";
-
 @ObjectType({
   description: "A submission of an user.",
 })
@@ -30,11 +28,6 @@ export class Submission {
     description: "The timestamp when the submission has been last updated",
   })
   updatedAt: Date;
-
-  @Field(() => Level, {
-    description: "The level this submission is for.",
-  })
-  level: Level;
 
   levelId: string;
 

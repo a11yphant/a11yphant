@@ -7,7 +7,9 @@ import { Requirement } from "./models/requirement.model";
 @Resolver(() => Requirement)
 export class RequirementResolver {
   constructor(private ruleService: RuleService) {}
-  @ResolveField(() => Rule)
+  @ResolveField(() => Rule, {
+    description: "The rule this requirement is based on.",
+  })
   rule(@Parent() requirement: Requirement): Promise<Rule> {
     return this.ruleService.findOneForRequirement(requirement.id);
   }

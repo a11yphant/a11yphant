@@ -1,10 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { Submission } from "@/submission/graphql/models/submission.model";
-
 import { Code } from "./code.model";
-import { Requirement } from "./requirement.model";
-import { Task } from "./task.model";
 
 @ObjectType()
 export class Level {
@@ -30,17 +26,6 @@ export class Level {
     description: "The order of the level in the challenge.",
   })
   order: number;
-
-  @Field(() => [Requirement])
-  requirements: Requirement[];
-
-  @Field(() => [Task], {
-    description: "The tasks that need to be solved for this level.",
-  })
-  tasks: Task[];
-
-  @Field(() => Submission)
-  lastSubmission?: Submission;
 
   @Field(() => Code, { nullable: true, description: "The initial code for the level." })
   code?: Code;

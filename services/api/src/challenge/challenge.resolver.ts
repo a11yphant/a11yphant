@@ -25,7 +25,9 @@ export class ChallengeResolver {
     return this.challengeService.findAll(filter);
   }
 
-  @ResolveField()
+  @ResolveField(() => [Level], {
+    description: "All levels for this challenge.",
+  })
   async levels(@Parent() challenge: Challenge): Promise<Level[]> {
     return this.levelService.findForChallenge(challenge.id);
   }
