@@ -71,7 +71,7 @@ resource "aws_cloudfront_distribution" "site" {
   ordered_cache_behavior {
     path_pattern     = "/auth*"
     allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
-    cached_methods   = []
+    cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.origin_id_api_http_api
 
     forwarded_values {
