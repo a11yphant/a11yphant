@@ -290,4 +290,33 @@ describe("session interceptor", () => {
 
     runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);
   });
+
+  it("redirects on http requests without a valid session cookie", (done) => {
+    const redirect = jest.fn();
+
+    const response = createMock<Response>({
+      redirect,
+    });
+
+    const executionContext = createMock<ExecutionContext>({
+      switchToHttp: () => ({
+        getResponse: jest.fn().mockReturnValue(response),
+        getRequest: jest.fn().mockReturnValue(createMock<Request>()),
+      }),
+    });
+
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>({
+        validateToken: jest.fn().mockReturnValue(false),
+      }),
+      createMock<UserService>(),
+      createMock<Logger>(),
+    );
+
+    const completeCallback = (): void => {
+      expect(redirect).toHaveBeenCalledWith("/");
+    };
+
+    runInterceptor(interceptor, executionContext, doNothing, completeCallback, done);
+  });
 });
