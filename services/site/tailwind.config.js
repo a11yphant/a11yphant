@@ -24,6 +24,9 @@ module.exports = {
         "80ch": "80ch",
         "screen-3xl": "1800px",
       },
+      minHeight: {
+        40: "40%",
+      },
       colors: {
         light: "#FFFFFF",
         dark: "#121212",
