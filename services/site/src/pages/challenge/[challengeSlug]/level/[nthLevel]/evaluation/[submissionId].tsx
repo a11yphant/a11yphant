@@ -32,41 +32,41 @@ const Evaluation: React.FunctionComponent = () => {
 
   const submissionResult = usePollSubmissionResult(submissionId);
 
-  if (data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending) {
-    return <LoadingScreen className="hidden md:flex" />;
-  }
-  const { challenge } = data;
-
-  const { status, requirements, totalScore } = submissionResult;
-  const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
+  const isLastLevel = parseInt(nthLevel as string) + 1 > data.challenge.levels.length;
 
   return (
     <>
       <Head>
         <title>
-          Evaluation - {challenge.name} - Level {nthLevel}
+          Evaluation - {data.challenge.name} - Level {nthLevel}
         </title>
       </Head>
       <main className={clsx("h-main", "md:p-12 md:flex md:flex-col md:justify-between")}>
-        <SmallScreenNotification />
-        <EvaluationHeader
-          className="hidden md:flex"
-          challengeName={challenge.name}
-          levelIdx={Number(nthLevel)}
-          score={totalScore}
-          passed={status === ResultStatus.Success}
-        />
-        <div
-          className={clsx(
-            "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
-            "md:flex",
-          )}
-        >
-          <EvaluationBody requirements={requirements} />
-        </div>
-        <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
-          <CompleteEvaluationButton status={status} isLastLevel={isLastLevel} />
-        </div>
+        {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
+          <LoadingScreen className="hidden md:flex" />
+        ) : (
+          <>
+            <SmallScreenNotification />
+            <EvaluationHeader
+              className="hidden md:flex"
+              challengeName={data.challenge.name}
+              levelIdx={Number(nthLevel)}
+              score={submissionResult.totalScore}
+              passed={submissionResult.status === ResultStatus.Success}
+            />
+            <div
+              className={clsx(
+                "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
+                "md:flex",
+              )}
+            >
+              <EvaluationBody requirements={submissionResult.requirements} />
+            </div>
+            <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
+              <CompleteEvaluationButton status={submissionResult.status} isLastLevel={isLastLevel} />
+            </div>
+          </>
+        )}
       </main>
     </>
   );
