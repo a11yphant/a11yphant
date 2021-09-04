@@ -6,7 +6,7 @@ import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
 import { PrismaService } from "@/prisma/prisma.service";
-import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
 import { ResultStatus } from "@/submission/models/result-status.enum";
 import { SubmissionService } from "@/submission/submission.service";
 

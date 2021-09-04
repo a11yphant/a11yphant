@@ -9,7 +9,7 @@ import { Level } from "@/challenge/models/level.model";
 import { CreateSubmissionInput } from "./create-submission.input";
 import { CreateSubmissionResult } from "./create-submission.result";
 import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exception";
 import { Result } from "./models/result.model";
 import { Submission } from "./models/submission.model";
 import { RequestCheckInput } from "./request-check.input";

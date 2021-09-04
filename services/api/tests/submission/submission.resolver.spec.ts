@@ -7,7 +7,7 @@ import { SessionToken } from "@/authentication/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
 import { CreateSubmissionInput } from "@/submission/create-submission.input";
 import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
 import { Submission } from "@/submission/models/submission.model";
 import { ResultService } from "@/submission/result.service";
 import { SubmissionResolver } from "@/submission/submission.resolver";

@@ -6,7 +6,7 @@ import { Prisma, Submission as SubmissionRecord } from "@prisma/client";
 import { PrismaService } from "@/prisma/prisma.service";
 
 import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exception";
 import { Result } from "./models/result.model";
 import { ResultStatus } from "./models/result-status.enum";
 import { Submission } from "./models/submission.model";
