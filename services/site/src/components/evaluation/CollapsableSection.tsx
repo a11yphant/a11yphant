@@ -29,7 +29,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
 
   return (
     <>
-      <div className="h-14 w-14 mr-20 ml-8 flex justify-center items-center">
+      <div className={clsx("h-14 w-14 mr-8  ml-0 lg:ml-8 flex justify-center items-center", "lg:mr-20 lg:ml-8")}>
         {passed ? <Check className="h-9 w-14 text-success" /> : <X className="h-10 w-10 text-error" />}
         {passed ? (
           <p className="sr-only">The following requirement is fulfilled:</p>
