@@ -18,6 +18,11 @@ jest.mock("next/router", () => require("next-router-mock"));
 jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
   return null;
 });
+jest.mock("react-resize-detector", () => ({
+  useResizeDetector: () => {
+    return;
+  },
+}));
 jest.mock("app/components/evaluation/usePollSubmissionResult", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { ResultStatus } = require("app/generated/graphql");
@@ -99,7 +104,6 @@ describe("Evaluation", () => {
     });
 
     expect(wrapper.exists(LoadingScreen)).toBeTruthy();
-    expect(wrapper.exists("main")).toBeFalsy();
   });
 
   it("renders head", async () => {

@@ -17,7 +17,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
     <aside className={clsx("w-sidebar py-4", "container-dark", className)}>
       <ScrollOverlayWrapper
         className={"w-full h-full px-7 pb-1 flex flex-col overflow-auto"}
-        classNameTopOverlay={"w-sidebar h-28 top-20 rotate-180"}
+        classNameTopOverlay={"w-sidebar h-28 top-20"}
         classNameBottomOverlay={"w-sidebar h-44"}
       >
         <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
