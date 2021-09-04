@@ -8,14 +8,16 @@ const debounceOneSecond = debounce((update: () => void) => {
 
 type SubmissionCode = Pick<Submission, "html" | "css" | "js">;
 
-export function useSubmissionAutoSave(): {
-  setLevelId: (string) => void;
+interface SubmissionAutoSaveApi {
+  setLevelId: (id: string) => void;
   submissionId: string;
-  setSubmissionId: (string) => void;
+  setSubmissionId: (id: string) => void;
   submissionCode: SubmissionCode;
-  setSubmissionCode: (SubmissionCode) => void;
+  setSubmissionCode: (code: SubmissionCode) => void;
   updateSubmission: () => Promise<void>;
-} {
+}
+
+export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
   const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateSubmissionMutation();
   const [updateSubmissionMutation, { loading: updateSubmitMutationLoading }] = useUpdateSubmissionMutation();
   const [levelId, setLevelId] = useState<string>();
