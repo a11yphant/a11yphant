@@ -40,11 +40,16 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
       className={clsx("z-10 inset-0 overflow-y-auto bg-grey-dark bg-opacity-50 flex justify-center items-center", open ? "fixed" : "hidden")}
       aria-hidden
     >
-      <div className={clsx("w-1/2 h-64 px-12 py-14 relative bg-background-light rounded-lg", " shadow-modal")}>
+      <div className={clsx("w-1/2 h-64 px-12 py-14 relative bg-background-light rounded-lg max-w-2xl", " shadow-modal")}>
         <Button
           onClick={onCancel}
           overrideClassName
-          className={clsx("absolute top-6 right-6", "transition-colors duration-300", "hover:text-primary-light", "focus:text-primary-light")}
+          className={clsx(
+            "w-11 h-11 absolute top-6 right-6",
+            "transition-colors duration-300",
+            "hover:text-primary-light",
+            "focus:text-primary-light",
+          )}
         >
           <span className="sr-only">Close</span>
           <X />
