@@ -33,13 +33,13 @@ const Evaluation: React.FunctionComponent = () => {
 
   const submissionResult = usePollSubmissionResult(submissionId);
 
-  const isLastLevel = parseInt(nthLevel as string) + 1 > data.challenge.levels.length;
+  const isLastLevel = parseInt(nthLevel as string) + 1 > data?.challenge.levels.length;
 
   return (
     <>
       <Head>
         <title>
-          Evaluation - {data.challenge.name} - Level {nthLevel}
+          Evaluation - {data?.challenge.name} - Level {nthLevel}
         </title>
       </Head>
       <main className={clsx("h-main", "md:p-12 md:flex md:flex-col md:justify-between")}>
