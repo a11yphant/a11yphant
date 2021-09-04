@@ -14,7 +14,7 @@ interface CollapsibleSectionProps {
 }
 
 const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed, title, description }) => {
-  const [showDescription, setShowDescription] = useState(false);
+  const [showDescription, setShowDescription] = useState(passed);
 
   const AnimatedChevron = animated(Chevron);
 
@@ -62,7 +62,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             />
           </Button>
         </h3>
-        <div hidden={!showDescription}>
+        <div hidden={showDescription}>
           <p className="ml-20 my-4">{description}</p>
         </div>
       </div>
