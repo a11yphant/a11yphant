@@ -45,7 +45,7 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
           onClick={onCancel}
           overrideClassName
           className={clsx(
-            "w-11 h-11 absolute top-6 right-6",
+            "w-11 h-11 p-3.5 absolute top-4 right-4",
             "transition-colors duration-300",
             "hover:text-primary-light",
             "focus:text-primary-light",
