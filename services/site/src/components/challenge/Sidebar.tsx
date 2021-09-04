@@ -21,7 +21,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
         classNameBottomOverlay={"w-sidebar h-44"}
       >
         <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
-        <h3 className={clsx("my-8", "h5", "lg:h4")}>Instructions</h3>
+        <h3 className={clsx("my-8", "h4")}>Instructions</h3>
         <p className={clsx("whitespace-pre-wrap", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
         <HintList tasks={level.tasks} />
       </ScrollOverlayWrapper>
