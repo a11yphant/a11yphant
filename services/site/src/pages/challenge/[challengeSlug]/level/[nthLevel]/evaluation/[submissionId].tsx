@@ -42,11 +42,15 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {data?.challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className={clsx("h-main", "md:p-12 md:flex md:flex-col md:justify-between")}>
-        {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
-          <LoadingScreen className="hidden md:flex" />
-        ) : (
-          <>
+      {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
+        <>
+          <main className={clsx("h-main", "md:p-4 md:flex md:flex-col md:justify-between")}>
+            <LoadingScreen className="hidden md:flex" />
+          </main>
+        </>
+      ) : (
+        <>
+          <main className={clsx("h-main", "md:p-12 md:flex md:flex-col md:justify-between")}>
             <SmallScreenNotification />
             <EvaluationHeader
               className="hidden md:flex"
@@ -65,12 +69,12 @@ const Evaluation: React.FunctionComponent = () => {
             >
               <EvaluationBody requirements={submissionResult.requirements} />
             </ScrollOverlayWrapper>
-            <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
+            <div className={clsx("absolute bottom-4 right-4 hidden", "md:block")}>
               <CompleteEvaluationButton status={submissionResult.status} isLastLevel={isLastLevel} />
             </div>
-          </>
-        )}
-      </main>
+          </main>
+        </>
+      )}
     </>
   );
 };
