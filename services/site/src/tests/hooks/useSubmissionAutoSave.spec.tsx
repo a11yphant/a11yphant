@@ -141,11 +141,8 @@ describe("submission auto save", () => {
       await waitForNextUpdate();
     });
 
-    // don't know why but timers are only executed if this is called in a separate act
-    await act(async () => {
-      jest.runAllTimers();
-      await waitForNextUpdate();
-    });
+    jest.advanceTimersByTime(1000);
+    await waitForNextUpdate();
 
     expect(mockRequest.newData).toHaveBeenCalled();
   });
