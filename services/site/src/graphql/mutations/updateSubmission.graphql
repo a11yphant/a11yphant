@@ -1,0 +1,10 @@
+mutation updateSubmission($submissionInput: UpdateSubmissionInput!) {
+  updateSubmission(submissionInput: $submissionInput) {
+    submission {
+        id
+        css
+        html
+        js
+    }
+  }
+}

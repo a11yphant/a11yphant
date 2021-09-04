@@ -1,0 +1,7 @@
+mutation requestCheck($requestCheckInput: RequestCheckInput!) {
+    requestCheck(requestCheckInput: $requestCheckInput) {
+        result {
+            id
+        }
+    }
+}

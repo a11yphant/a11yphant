@@ -1,5 +1,0 @@
-mutation submit($submissionInput: CreateSubmissionInput!) {
-  submit(submissionInput: $submissionInput) {
-    id
-  }
-}
