@@ -18,6 +18,8 @@ module.exports = {
         main: "92%",
         preview: "90%",
         sidebar: "28%",
+        "sidebar-wider": "40%",
+        "sidebar-widest": "45%",
         "fit-content": "fit-content",
       },
       maxWidth: {
