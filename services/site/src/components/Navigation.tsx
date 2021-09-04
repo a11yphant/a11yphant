@@ -24,7 +24,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         <Link href="/">
           <a
             className={clsx(
-              "block text-light border-none col-span-1",
+              "block text-light border-none col-span-1 max-w-max",
               "transform transition ease-in-out duration-300",
               "motion-safe:hover:scale-110 motion-reduce:border-solid",
             )}
