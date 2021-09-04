@@ -36,13 +36,13 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       </h1>
       {displayBreadcrumbs && (
         <>
-          <div className={clsx("flex justify-center items-center", "hidden md:block")}>
+          <div className={clsx("flex justify-center items-center", "hidden lg:block")}>
             <Breadcrumbs />
           </div>
         </>
       )}
       <div className="flex justify-center items-center">
-        {displaySave && <Save className={clsx("hidden md:block")} />}
+        {displaySave && <Save className={clsx("hidden lg:block")} />}
         {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>
