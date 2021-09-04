@@ -50,7 +50,7 @@ const Evaluation: React.FunctionComponent = () => {
         </>
       ) : (
         <>
-          <main className={clsx("h-main max-w-screen-3xl mx-auto", "md:p-12 md:flex md:flex-col md:justify-between")}>
+          <main className={clsx("h-main max-w-screen-3xl mx-auto", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}>
             <SmallScreenNotification />
             <EvaluationHeader
               className={clsx("hidden", "lg:flex")}
