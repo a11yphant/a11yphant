@@ -1,8 +1,9 @@
 import { createMock } from "@golevelup/ts-jest";
-import { RequirementResultService } from "src/submission/requirement-result.service";
 
-import { ResultResolver } from "../../src/submission/result.resolver";
-import { ResultService } from "../../src/submission/result.service";
+import { ResultResolver } from "@/submission/graphql/resolvers/result.resolver";
+import { RequirementResultService } from "@/submission/services/requirement-result.service";
+import { ResultService } from "@/submission/services/result.service";
+
 import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
 import { ResultFactory } from "../factories/models/result.factory";
 

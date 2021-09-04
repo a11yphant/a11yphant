@@ -1,7 +1,7 @@
 import faker from "faker";
 import { Factory } from "rosie";
 
-import { RequirementResult } from "../../../src/submission/models/requirement-result.model";
+import { RequirementResult } from "@/submission/graphql/models/requirement-result.model";
 
 export const RequirementResultFactory = Factory.define<RequirementResult>(RequirementResult.name, RequirementResult)
   .attr("id", () => faker.datatype.uuid())

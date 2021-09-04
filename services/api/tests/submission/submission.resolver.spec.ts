@@ -5,14 +5,14 @@ import { UserInputError } from "apollo-server-express";
 
 import { SessionToken } from "@/authentication/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
-import { CreateSubmissionInput } from "@/submission/create-submission.input";
 import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
-import { Submission } from "@/submission/models/submission.model";
-import { ResultService } from "@/submission/result.service";
-import { SubmissionResolver } from "@/submission/submission.resolver";
-import { SubmissionService } from "@/submission/submission.service";
-import { UpdateSubmissionInput } from "@/submission/update-submission.input";
+import { CreateSubmissionInput } from "@/submission/graphql/inputs/create-submission.input";
+import { UpdateSubmissionInput } from "@/submission/graphql/inputs/update-submission.input";
+import { Submission } from "@/submission/graphql/models/submission.model";
+import { SubmissionResolver } from "@/submission/graphql/resolvers/submission.resolver";
+import { ResultService } from "@/submission/services/result.service";
+import { SubmissionService } from "@/submission/services/submission.service";
 
 describe("submission resolver", () => {
   it("can resolve a level", async () => {

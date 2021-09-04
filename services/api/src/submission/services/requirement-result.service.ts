@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { CheckResult, Requirement } from "@prisma/client";
 
-import { RequirementStatus } from "../challenge/enums/requirement-status.enum";
-import { PrismaService } from "../prisma/prisma.service";
-import { RequirementResult } from "../submission/models/requirement-result.model";
+import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
+import { PrismaService } from "@/prisma/prisma.service";
+import { RequirementResult } from "@/submission/graphql/models/requirement-result.model";
 
 @Injectable()
 export class RequirementResultService {

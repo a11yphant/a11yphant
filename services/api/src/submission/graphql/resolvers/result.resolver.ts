@@ -1,9 +1,9 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
-import { RequirementResult } from "./models/requirement-result.model";
-import { Result } from "./models/result.model";
-import { RequirementResultService } from "./requirement-result.service";
-import { ResultService } from "./result.service";
+import { RequirementResultService } from "../../services/requirement-result.service";
+import { ResultService } from "../../services/result.service";
+import { RequirementResult } from "../models/requirement-result.model";
+import { Result } from "../models/result.model";
 
 @Resolver(() => Result)
 export class ResultResolver {

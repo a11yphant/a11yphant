@@ -5,8 +5,8 @@ import { CHECK_RESULT, RESULT, ResultData } from "@tests/factories/database";
 import { Factory } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
-import { ResultStatus } from "@/submission/models/result-status.enum";
-import { ResultService } from "@/submission/result.service";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
+import { ResultService } from "@/submission/services/result.service";
 
 describe("result service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());

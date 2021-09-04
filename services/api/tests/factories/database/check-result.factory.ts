@@ -1,6 +1,6 @@
 import { IFactoryStatic } from "rosie";
 
-import { ResultStatus } from "@/submission/models/result-status.enum";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
 import { CHECK_RESULT, REQUIREMENT, RESULT } from "./constants";
 import { buildOneOf } from "./helpers";

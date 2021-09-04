@@ -5,14 +5,14 @@ import { Prisma, Submission as SubmissionRecord } from "@prisma/client";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
-import { SubmissionAlreadyHasCheckResultException } from "./exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "./exceptions/submission-not-found.exception";
-import { Result } from "./models/result.model";
-import { ResultStatus } from "./models/result-status.enum";
-import { Submission } from "./models/submission.model";
+import { SubmissionAlreadyHasCheckResultException } from "../exceptions/submission-already-has-check-result.exception";
+import { SubmissionNotFoundException } from "../exceptions/submission-not-found.exception";
+import { Result } from "../graphql/models/result.model";
+import { ResultStatus } from "../graphql/models/result-status.enum";
+import { Submission } from "../graphql/models/submission.model";
+import { SubmissionCreateData } from "../interfaces/submission-create-data.interface";
+import { SubmissionUpdateData } from "../interfaces/submission-update-data.interface";
 import { ResultService } from "./result.service";
-import { SubmissionCreateData } from "./submission-create-data.interface";
-import { SubmissionUpdateData } from "./submission-update-data.interface";
 
 @Injectable()
 export class SubmissionService {
