@@ -103,16 +103,6 @@ export class SubmissionService {
     return result ? ResultService.createModelFromRecord(result) : null;
   }
 
-  /**
-   * @deprecated
-   */
-  public async save(input: SubmissionCreateData): Promise<Submission> {
-    const submission = await this.create(input);
-    await this.requestCheck(submission.id);
-
-    return submission;
-  }
-
   static createModelFromDatabaseRecord(record: SubmissionRecord): Submission {
     const submission = new Submission({ ...record });
 

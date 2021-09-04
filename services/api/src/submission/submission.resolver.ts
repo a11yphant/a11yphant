@@ -27,23 +27,6 @@ export class SubmissionResolver {
     private readonly resultService: ResultService,
   ) {}
 
-  @Mutation(() => Submission)
-  async submit(
-    @Args("submissionInput") submissionInput: CreateSubmissionInput,
-    @SessionToken() sessionToken: SessionTokenInterface,
-  ): Promise<Submission> {
-    const level = await this.levelService.findOne(submissionInput.levelId);
-
-    if (!level) {
-      throw new UserInputError(`Level to provided levelId not found: ${submissionInput.levelId}.`);
-    }
-
-    return this.submissionService.save({
-      ...submissionInput,
-      userId: sessionToken.userId,
-    });
-  }
-
   @Mutation(() => CreateSubmissionResult)
   async createSubmission(
     @Args("submissionInput") submissionInput: CreateSubmissionInput,

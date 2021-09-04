@@ -15,27 +15,6 @@ import { SubmissionService } from "@/submission/submission.service";
 import { UpdateSubmissionInput } from "@/submission/update-submission.input";
 
 describe("submission resolver", () => {
-  it("can submit a challenge", async () => {
-    const resolver = new SubmissionResolver(
-      createMock<SubmissionService>({
-        save: jest.fn().mockResolvedValue(
-          new Submission({
-            id: "identifier",
-            levelId: "best level ever",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }),
-        ),
-      }),
-      createMock<LevelService>(),
-      createMock<ResultService>(),
-    );
-
-    const submission = await resolver.submit({ levelId: "hallo luca" }, { userId: "uuid" });
-
-    expect(submission).toBeTruthy();
-  });
-
   it("can resolve a level", async () => {
     const mockLevel = LevelFactory.build();
 
