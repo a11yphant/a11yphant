@@ -1,3 +1,4 @@
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
@@ -54,14 +55,16 @@ const Evaluation: React.FunctionComponent = () => {
               score={submissionResult.totalScore}
               passed={submissionResult.status === ResultStatus.Success}
             />
-            <div
+            <ScrollOverlayWrapper
               className={clsx(
                 "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
                 "md:flex",
               )}
+              classNameBottomOverlay={"w-full h-52"}
+              enableTopOverlay={false}
             >
               <EvaluationBody requirements={submissionResult.requirements} />
-            </div>
+            </ScrollOverlayWrapper>
             <div className={clsx("absolute bottom-8 right-8 hidden", "md:block")}>
               <CompleteEvaluationButton status={submissionResult.status} isLastLevel={isLastLevel} />
             </div>
