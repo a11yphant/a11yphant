@@ -8,7 +8,7 @@ import { Task } from "./models/task.model";
 export class TaskResolver {
   constructor(private hintService: HintService) {}
 
-  @ResolveField()
+  @ResolveField(() => [Hint], { description: "All hints available for this task." })
   async hints(@Parent() task: Task): Promise<Hint[]> {
     return this.hintService.findForTask(task.id);
   }

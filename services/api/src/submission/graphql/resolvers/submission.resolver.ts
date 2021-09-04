@@ -77,7 +77,9 @@ export class SubmissionResolver {
     }
   }
 
-  @ResolveField()
+  @ResolveField(() => Level, {
+    description: "The level this submission is for.",
+  })
   async level(@Parent() submission: Submission): Promise<Level> {
     return this.levelService.findOne(submission.levelId);
   }

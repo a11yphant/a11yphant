@@ -1,7 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { RequirementStatus } from "../enums/requirement-status.enum";
-import { Requirement } from "./requirement.model";
 
 @ObjectType()
 export class Rule {
@@ -15,7 +14,4 @@ export class Rule {
 
   @Field(() => String, { description: "The internal key to address this check in the backend infrastructure." })
   key: string;
-
-  @Field(() => [Requirement], { description: "All requirements this rule is a part of." })
-  requirements: Requirement[];
 }
