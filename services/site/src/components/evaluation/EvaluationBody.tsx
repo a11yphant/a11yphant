@@ -10,21 +10,40 @@ interface EvaluationBodyProps {
 }
 
 const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirements }) => {
+  const successfulRequirements = requirements.filter((requirement) => requirement.result === RequirementStatus.Success);
+  const failedRequirements = requirements.filter((requirement) => requirement.result === RequirementStatus.Fail);
+
   return (
-    <ul className={clsx("h-full", className)}>
-      {requirements.map((requirement, idx) => {
-        const requirementTitle = `${idx + 1}. ${requirement.title}`;
-        return (
-          <li key={requirement.id} className="w-full m-4 ml-0 mb-8 grid grid-cols-10 gap-2 box-border max-w-none">
-            <CollapsableSection
-              passed={requirement.result === RequirementStatus.Success}
-              title={requirementTitle}
-              description={requirement.description}
-            />
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      {failedRequirements.length >= 1 && (
+        <ul className={clsx("h-full", className)}>
+          {failedRequirements.map((requirement, idx) => {
+            const requirementTitle = `${requirement.title}`;
+            return (
+              <>
+                <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+                  <CollapsableSection passed={false} title={requirementTitle} description={requirement.description} />
+                </li>
+              </>
+            );
+          })}
+        </ul>
+      )}
+      {successfulRequirements.length >= 1 && (
+        <ul className={clsx("h-full", className)}>
+          {successfulRequirements.map((requirement, idx) => {
+            const requirementTitle = `${requirement.title}`;
+            return (
+              <>
+                <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+                  <CollapsableSection passed={true} title={requirementTitle} description={requirement.description} />
+                </li>
+              </>
+            );
+          })}
+        </ul>
+      )}
+    </>
   );
 };
 
