@@ -27,7 +27,9 @@ export class LevelResolver {
     return this.levelService.findOneForChallengeAtIndex(challengeSlug, nth - 1);
   }
 
-  @ResolveField(() => [Requirement])
+  @ResolveField(() => [Requirement], {
+    description: "The requirements for this level",
+  })
   async requirements(@Parent() level: Level): Promise<Requirement[]> {
     return this.requirementService.findForLevel(level.id);
   }

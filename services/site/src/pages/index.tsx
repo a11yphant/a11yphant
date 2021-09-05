@@ -24,7 +24,13 @@ const Home: React.FunctionComponent = () => {
       <main className={clsx("h-main flex flex-col box-border")}>
         <ScrollOverlayWrapper className={clsx("w-full h-full overflow-auto")} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
           <div
-            className={clsx("max-w-screen-3xl mx-8 mt-12 mb-24 flex flex-col", "sm:m-12", "md:mx-24", "xl:flex-row xl:items-center", "2xl:mx-auto")}
+            className={clsx(
+              "max-w-screen-3xl mx-8 mt-12 mb-24 flex flex-col",
+              "sm:m-12",
+              "md:mx-24",
+              "xl:flex-row xl:items-center xl:h-main",
+              "2xl:mx-auto",
+            )}
           >
             <section className={clsx("flex flex-col justify-center mb-24", "xl:flex-shrink xl:mb-0", "2xl:mx-24")}>
               <h2

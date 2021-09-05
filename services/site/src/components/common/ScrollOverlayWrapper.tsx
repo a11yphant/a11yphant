@@ -52,7 +52,7 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
 
   return (
     <div onScroll={listenToScroll} ref={wrapperRef} className={className}>
-      {enableTopOverlay && isVisibleTop && <div className={clsx("scroll-overlay", classNameTopOverlay)} />}
+      {enableTopOverlay && isVisibleTop && <div className={clsx("rotate-180", "scroll-overlay", classNameTopOverlay)} />}
       {children}
       {enableBottomOverlay && isVisibleBottom && <div className={clsx("scroll-overlay", classNameBottomOverlay)} />}
     </div>

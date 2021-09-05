@@ -33,10 +33,10 @@ const mockRequirements = [
 ];
 
 describe("EvaluationBody", () => {
-  it("renders list", () => {
+  it("renders lists", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
-    expect(wrapper.find("ul").length).toBe(1);
+    expect(wrapper.find("ul").length).toBe(2);
   });
 
   it("renders requirements", () => {
@@ -50,6 +50,6 @@ describe("EvaluationBody", () => {
     const mockClassName = "mock-classname";
     const wrapper = shallow(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
 
-    expect(wrapper.find("ul").props().className).toContain(mockClassName);
+    expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
   });
 });
