@@ -32,7 +32,7 @@ const Hero: React.FC = () => (
     </section>
     <section
       className={clsx(
-        "bg-primary h-full w-full rounded-lg px-6 py-4 flex flex-col mr-16",
+        "bg-primary w-full rounded-lg px-6 py-4 flex flex-col mr-16",
         "sm:mr-0",
         "md:px-12 md:py-10",
         "lg:flex-row lg:items-center lg:px-16 lg:py-14",
