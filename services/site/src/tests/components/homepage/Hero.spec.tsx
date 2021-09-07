@@ -6,6 +6,11 @@ import Hero from "app/components/homepage/Hero";
 afterEach(cleanup);
 
 describe("Hero", () => {
+  it("renders wrapper element", () => {
+    const { container } = render(<Hero />);
+
+    expect(container.firstChild).toBeTruthy();
+  });
   it("renders two headings", async () => {
     const root = render(<Hero />);
 
