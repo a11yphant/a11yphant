@@ -32,32 +32,30 @@ const Hero: React.FC = () => (
     </section>
     <section
       className={clsx(
-        "bg-primary w-full rounded-lg px-6 py-4 flex flex-col mr-16",
-        "sm:mr-0",
+        "p-8 bg-primary rounded-lg",
         "md:px-12 md:py-10",
-        "lg:flex-row lg:items-center lg:px-16 lg:py-14",
-        "xl:block xl:px-24 xl:py-20 xl:w-[527px] xl:col-span-2 xl:ml-12 xl:self-center xl:flex-shrink-0",
+        "lg:items-center lg:px-16 lg:py-14",
+        "xl:block xl:px-20 xl:py-16 xl:max-w-xl xl:ml-12 xl:self-center xl:flex-shrink-0",
       )}
     >
       <h2
         className={clsx(
-          "max-w-2xl font-bold font-sans text-3xl leading-tight mb-6",
+          "max-w-2xl mb-8 font-bold font-sans text-3xl leading-tight",
           "sm:text-4xl sm:leading-snug",
-          "lg:mr-12 lg:mb-0",
           "xl:mr-0 xl:mb-6 xl:text-5xl xl:leading-snug",
         )}
       >
         Sign up to save your progress!
       </h2>
-      <div className={clsx("w-80 max-w-full flex-shrink-0")}>
+      <div className={clsx("max-w-full block")}>
         <a
           href="/auth/github"
           className={clsx(
-            "group block px-8 py-4 w-full text-center align-middle text-white font-normal leading-none rounded border border-white",
+            "group block px-8 py-4 w-full max-w-xs xl:max-w-none text-center align-middle text-white font-normal leading-none rounded border border-white transition duration-300",
             "hover:bg-white hover:text-primary",
           )}
         >
-          Sign Up via Github
+          Sign up via Github
           <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white group-hover:text-primary")} />
         </a>
       </div>
