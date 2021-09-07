@@ -20,11 +20,9 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           {failedRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
-              <>
-                <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
-                  <CollapsableSection passed={false} title={requirementTitle} description={requirement.description} />
-                </li>
-              </>
+              <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+                <CollapsableSection passed={false} title={requirementTitle} description={requirement.description} />
+              </li>
             );
           })}
         </ul>
@@ -34,11 +32,9 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           {successfulRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
-              <>
-                <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
-                  <CollapsableSection passed={true} title={requirementTitle} description={requirement.description} />
-                </li>
-              </>
+              <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+                <CollapsableSection passed={true} title={requirementTitle} description={requirement.description} />
+              </li>
             );
           })}
         </ul>
