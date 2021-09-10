@@ -51,7 +51,8 @@ const Hero: React.FC = () => (
         <a
           href="/auth/github"
           className={clsx(
-            "group block px-8 py-4 w-full max-w-xs xl:max-w-none text-center align-middle text-white font-normal leading-none rounded border border-white transition duration-300",
+            "group block px-8 py-4 w-full max-w-xs xl:max-w-none text-center align-middle text-white font-normal leading-none rounded border border-white",
+            "transition duration-300",
             "hover:bg-white hover:text-primary",
           )}
         >

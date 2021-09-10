@@ -30,19 +30,22 @@
     }
 
     *:focus {
-        outline: 2px solid transparent;
+        outline: 2px solid #fff;
         outline-offset: 2px;
     }
+
     *:focus-visible {
         // focus styles for keyboard only
         outline: 0.15rem solid #fff;
     }
+
     *:focus:not(:focus-visible) {
         // focus styles for mouse & touch
         outline: none;
         // box-shadow: 0 0 0 0.15rem #fff;
         // TODO: add polyfill for browsers that do not support focus-within
     }
+
     .focus-visible-outline {
         gap: 2ch;
 
@@ -54,6 +57,7 @@
             outline: none;
         }
     }
+
     .focus-visible-boxShadow {
         gap: 2ch;
 
