@@ -1,4 +1,3 @@
-import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Hero from "app/components/homepage/Hero";
@@ -21,7 +20,7 @@ const Home: React.FunctionComponent = () => {
         <title>a11yphant</title>
       </Head>
       <main className={clsx("h-main flex flex-col box-border")}>
-        <ScrollOverlayWrapper className={clsx("w-full h-full overflow-auto")} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
+        <div className={clsx("w-full h-full")}>
           <Hero />
           <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
             <ChallengeHeader className={clsx("2xl:mx-24")} />
@@ -77,7 +76,7 @@ const Home: React.FunctionComponent = () => {
               />
             )}
           </section>
-        </ScrollOverlayWrapper>
+        </div>
       </main>
     </>
   );
