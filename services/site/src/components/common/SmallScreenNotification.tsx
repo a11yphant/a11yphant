@@ -7,10 +7,10 @@ import IllustrationCodingMan from "../icons/IllustrationCodingMan";
 const SmallScreenNotification: React.FunctionComponent = () => {
   return (
     <>
-      <section className={clsx("mx-8 py-10 h-full flex flex-col justify-center items-left", "md:hidden")}>
-        <IllustrationCodingMan className={clsx("max-w-xs mb-12 self-start", "sm:mb-12 sm:max-w-sm")} />
-        <h2 className={clsx("mb-8", "h3", "sm:h2")}>Your device is too small</h2>
-        <p>Please use a tablet or desktop device with a larger screen.</p>
+      <section className={clsx("mx-8 py-10 flex flex-col justify-center items-left", "lg:hidden")}>
+        <IllustrationCodingMan className={clsx("max-w-xs min-h-4/10 self-start", "sm:max-w-sm")} />
+        <h2 className={clsx("mb-8 mt-12", "h3", "sm:h2 sm:mt-12")}>Your device is too small</h2>
+        <p>Please use a tablet or desktop device with a larger screen or rotate your device.</p>
         <Link href="/">
           <a
             className={clsx(

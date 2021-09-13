@@ -144,42 +144,44 @@ const Level: React.FunctionComponent = () => {
       </Head>
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
-        <Sidebar className={clsx("h-full hidden", "md:block")} challengeName={challenge.name} level={level} />
-        <div className={clsx("h-full pl-4 relative box-border hidden justify-between flex-col flex-auto", "md:flex")}>
-          <Editors
-            onReset={resetToInitialCode}
-            className="w-full h-3/5"
-            editors={editorConfiguration}
-            theme="light"
-            options={{
-              lineHeight: 24,
-              fontSize: 12,
-              wordWrap: "on",
-              minimap: {
-                enabled: false,
-              },
-            }}
-          />
-          <Preview
-            className="w-full h-2/5"
-            heading="Preview"
-            htmlCode={submissionCode?.html}
-            cssCode={submissionCode?.css}
-            javascriptCode={submissionCode?.js}
-          />
-          <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
-            <ButtonLoading
-              primary
-              onClick={submitLevel}
-              className="px-10"
-              loading={showSubmitLoadingAnimation}
-              submitButton
-              srTextLoading="The submission is being processed."
-            >
-              Submit
-            </ButtonLoading>
+        <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challenge.name} level={level} />
+        <section className={clsx("w-full hidden", "lg:flex")}>
+          <div className="h-full pl-4 relative box-border justify-between flex-col flex-auto">
+            <Editors
+              onReset={resetToInitialCode}
+              className="w-full h-3/5"
+              editors={editorConfiguration}
+              theme="light"
+              options={{
+                lineHeight: 24,
+                fontSize: 12,
+                wordWrap: "on",
+                minimap: {
+                  enabled: false,
+                },
+              }}
+            />
+            <Preview
+              className="w-full h-2/5"
+              heading="Preview"
+              htmlCode={submissionCode?.html}
+              cssCode={submissionCode?.css}
+              javascriptCode={submissionCode?.js}
+            />
+            <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
+              <ButtonLoading
+                primary
+                onClick={submitLevel}
+                className="px-10"
+                loading={showSubmitLoadingAnimation}
+                submitButton
+                srTextLoading="The submission is being processed."
+              >
+                Submit
+              </ButtonLoading>
+            </div>
           </div>
-        </div>
+        </section>
       </main>
     </>
   );
