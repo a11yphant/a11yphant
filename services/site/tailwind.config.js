@@ -22,7 +22,7 @@ module.exports = {
         "screen-3xl": "1800px",
       },
       minHeight: {
-        40: "40%",
+        "4/10": "40%",
       },
       colors: {
         light: "#FFFFFF",
