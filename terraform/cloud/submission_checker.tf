@@ -103,11 +103,15 @@ resource "aws_ecr_repository" "repository_submission_checker" {
 }
 
 module "publish_submission_checker_image_to_aws_ecr" {
-  source          = "../modules/docker_pull_tag_push"
-  source_image    = local.gitlab_ci_submission_checker_image
-  source_provider = "docker.gitlab"
-  target_image    = local.ecr_submission_checker_image_latest
-  target_provider = "docker.ecr"
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_submission_checker_image
+  target_image = local.ecr_submission_checker_image_latest
+
+  providers = {
+    docker        = docker
+    docker.source = docker.gitlab
+    docker.target = docker.ecr
+  }
 }
 
 data "aws_ecr_image" "submission_checker_image" {

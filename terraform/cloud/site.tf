@@ -77,11 +77,15 @@ resource "aws_ecr_repository" "repository_site" {
 }
 
 module "publish_site_image_to_aws_ecr" {
-  source          = "../modules/docker_pull_tag_push"
-  source_image    = local.gitlab_ci_site_image
-  source_provider = "docker.gitlab"
-  target_image    = local.ecr_site_image_latest
-  target_provider = "docker.ecr"
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_site_image
+  target_image = local.ecr_site_image_latest
+
+  providers = {
+    docker        = docker
+    docker.source = docker.gitlab
+    docker.target = docker.ecr
+  }
 }
 
 data "aws_ecr_image" "site_image" {
