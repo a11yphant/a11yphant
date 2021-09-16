@@ -7,7 +7,7 @@ import Link from "next/link";
 afterEach(cleanup);
 
 const mockHeading = "Your device is too small";
-const mockText = "Please use a tablet or desktop device with a larger screen.";
+const mockText = "Please use a tablet or desktop device with a larger screen or rotate your device.";
 
 describe("Small Screen Notification", () => {
   it("renders wrapper elements", () => {
