@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     docker = {
-      source = "kreuzwerker/docker"
-      configuration_aliases = [ docker.source, docker.target ]
+      source                = "kreuzwerker/docker"
+      configuration_aliases = [docker.source, docker.target]
     }
   }
 }
