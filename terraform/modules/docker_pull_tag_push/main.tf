@@ -1,16 +1,19 @@
 terraform {
   required_providers {
     docker = {
-      source = "kreuzwerker/docker"
+      source                = "kreuzwerker/docker"
+      configuration_aliases = [docker.source, docker.target]
     }
   }
 }
 
 data "docker_registry_image" "source_image" {
-  name = var.source_image
+  provider = docker.source
+  name     = var.source_image
 }
 
 resource "docker_image" "source_image" {
+  provider      = docker.source
   name          = var.source_image
   pull_triggers = [data.docker_registry_image.source_image.sha256_digest]
 }
