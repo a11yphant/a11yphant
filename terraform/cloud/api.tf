@@ -54,9 +54,11 @@ resource "heroku_formation" "api" {
 }
 
 module "publish_api_app_image_to_heroku" {
-  source       = "../modules/docker_pull_tag_push"
-  source_image = local.gitlab_ci_app_image
-  target_image = local.heroku_app_image
+  source          = "../modules/docker_pull_tag_push"
+  source_image    = local.gitlab_ci_app_image
+  source_provider = "docker.gitlab"
+  target_image    = local.heroku_app_image
+  target_provider = "docker.heroku"
 
   depends_on = [
     heroku_app.api
@@ -64,9 +66,11 @@ module "publish_api_app_image_to_heroku" {
 }
 
 module "publish_api_release_image_to_heroku" {
-  source       = "../modules/docker_pull_tag_push"
-  source_image = local.gitlab_ci_release_image
-  target_image = local.heroku_release_image
+  source          = "../modules/docker_pull_tag_push"
+  source_image    = local.gitlab_ci_release_image
+  source_provider = "docker.gitlab"
+  target_image    = local.heroku_release_image
+  target_provider = "docker.heroku"
 
   depends_on = [
     heroku_app.api

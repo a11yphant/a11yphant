@@ -7,10 +7,12 @@ terraform {
 }
 
 data "docker_registry_image" "source_image" {
-  name = var.source_image
+  provider = var.source_provider
+  name     = var.source_image
 }
 
 resource "docker_image" "source_image" {
+  provider      = var.source_provider
   name          = var.source_image
   pull_triggers = [data.docker_registry_image.source_image.sha256_digest]
 }
