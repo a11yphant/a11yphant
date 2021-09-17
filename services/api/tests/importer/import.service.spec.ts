@@ -350,8 +350,7 @@ describe("import service", () => {
       expect(await prisma.task.count()).toEqual(challenge.levels[0].tasks.length);
       const task = challenge.levels[0].tasks[0];
 
-      const storedTask = await prisma.task.findFirst();
-      expect(storedTask.id).toEqual(task.id);
+      const storedTask = await prisma.task.findUnique({ where: { id: task.id } });
       expect(storedTask.text).toEqual(task.text);
       expect(storedTask.levelId).toEqual(challenge.levels[0].id);
     });
