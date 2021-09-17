@@ -252,7 +252,7 @@ challenge:
           description: We could not find an ordered list. Make sure you include an <ol>.
           options:
             selector: ol
-        - id: da5c027a-44be-4a2e-9d25-4260642c825b
+        - id: a5559314-0d73-4b22-ab78-82d54092f768
           key: element-exists
           order: 2
           title: The ordered list contains items.
