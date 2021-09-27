@@ -3,6 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-github2";
 
+import { ProviderInformation } from "../interfaces/providerInformation.interface";
+
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, "github") {
   constructor(private readonly configService: ConfigService, private readonly logger: Logger) {
@@ -17,9 +19,16 @@ export class GithubStrategy extends PassportStrategy(Strategy, "github") {
     accessToken: string,
     refreshToken: string,
     profile: Record<string, unknown>,
-    done: (error: Error, profile: Record<string, unknown>) => undefined,
+    done: (error: Error, providerInformation: ProviderInformation) => undefined,
   ): Promise<undefined> {
     this.logger.log(`Logged in github user ${profile.id} with oauth.`);
-    return done(null, profile);
+
+    const providerInformation: ProviderInformation = {
+      id: profile.id as string,
+      displayName: profile.displayName as string,
+      provider: "github",
+    };
+
+    return done(null, providerInformation);
   }
 }

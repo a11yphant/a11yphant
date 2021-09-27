@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Request, Response } from "express";
 
 import { AuthenticationController } from "@/authentication/authentication.controller";
+import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
@@ -18,6 +19,7 @@ describe("authentication controller", () => {
           id: userId,
           authId: "12345",
           authProvider: "github",
+          displayName: "anon",
         }),
       ),
     }),
@@ -29,7 +31,7 @@ describe("authentication controller", () => {
   it("sets the correct cookie", async () => {
     let cookie: { name: string; token: string; options: Record<string, unknown> };
 
-    const req = createMock<Request & { user: Record<string, unknown>; sessionToken: SessionTokenInterface }>();
+    const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
     const res = createMock<Response>({
       cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
         cookie = {
@@ -40,7 +42,7 @@ describe("authentication controller", () => {
       }),
     });
 
-    await authController.createOauthCookie(req, res, "github");
+    await authController.createOauthCookie(req, res);
 
     expect(cookie.name).toBe("a11yphant_session");
     expect(cookie.token).toBe(testToken);
@@ -52,7 +54,7 @@ describe("authentication controller", () => {
     });
 
     it("resolves the callback function", async () => {
-      const req = createMock<Request & { user: Record<string, unknown>; sessionToken: SessionTokenInterface }>();
+      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
       const res = createMock<Response>();
 
       await authController.githubCallback(req, res);

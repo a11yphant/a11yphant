@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
+import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
 import { PrismaService } from "@/prisma/prisma.service";
 
 import { User } from "./models/user.model";
@@ -10,17 +11,19 @@ export class UserService {
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
-      data: {},
+      data: {
+        displayName: "anonymous",
+      },
     });
 
     return new User(record);
   }
 
-  async findUserFromOauth(userId: string, provider: string, providerAuthId: string): Promise<User> {
+  async findUserFromOauth(userId: string, providerInformation: ProviderInformation): Promise<User> {
     let userRecord = await this.prisma.user.findFirst({
       where: {
-        authId: providerAuthId,
-        authProvider: provider,
+        authId: providerInformation.id,
+        authProvider: providerInformation.provider,
       },
     });
 
@@ -31,8 +34,8 @@ export class UserService {
         id: userId,
       },
       data: {
-        authId: providerAuthId,
-        authProvider: provider,
+        authId: providerInformation.id,
+        authProvider: providerInformation.provider,
       },
     });
 
