@@ -2,7 +2,7 @@ import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
-import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
+import { ChallengesDocument, CurrentUserDocument, useChallengesQuery, useCurrentUserQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -14,6 +14,10 @@ const Home: React.FunctionComponent = () => {
     data: { easyChallenges, mediumChallenges, hardChallenges },
   } = useChallengesQuery();
 
+  const {
+    data: { currentUser },
+  } = useCurrentUserQuery();
+
   return (
     <>
       <Head>
@@ -21,7 +25,7 @@ const Home: React.FunctionComponent = () => {
       </Head>
       <main className={clsx("h-main flex flex-col box-border")}>
         <div className={clsx("w-full h-full")}>
-          <Hero />
+          {!currentUser?.isRegistered && <Hero />}
           <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
             <ChallengeHeader className={clsx("2xl:mx-24")} />
             <Legend className={clsx("2xl:mx-24")} />
@@ -85,9 +89,14 @@ const Home: React.FunctionComponent = () => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo(null, context);
 
-  await apolloClient.query({
-    query: ChallengesDocument,
-  });
+  await Promise.all([
+    apolloClient.query({
+      query: ChallengesDocument,
+    }),
+    apolloClient.query({
+      query: CurrentUserDocument,
+    }),
+  ]);
 
   return {
     props: {
