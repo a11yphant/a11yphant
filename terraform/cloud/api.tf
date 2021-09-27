@@ -27,6 +27,9 @@ resource "heroku_app" "api" {
     API_MESSAGING_TOPICS             = "submission=${module.messaging.submission_topic_arn}"
     API_MESSAGING_REGION             = "eu-central-1"
     API_MESSAGING_QUEUE_URL          = module.messaging.api_queue_url
+    GITHUB_CLIENT_ID                 = var.github_client_id
+    GITHUB_CLIENT_SECRET             = var.github_client_secret
+    GITHUB_CALLBACK_URL              = var.github_callback_url
   }
 }
 
