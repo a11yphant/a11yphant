@@ -57,8 +57,8 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
 
         <div className="p-4">
           <ul>
-            {messages.map((message) => (
-              <li>{message}</li>
+            {messages.map((message, idx) => (
+              <li key={idx}>{message}</li>
             ))}
           </ul>
         </div>
