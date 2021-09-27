@@ -52,11 +52,7 @@ export class SessionInterceptor implements NestInterceptor {
 
     if (await this.jwtService.validateToken(sessionCookie)) {
       req.sessionToken = this.jwtService.decodeToken<SessionToken>(sessionCookie);
-      return next.handle();
     }
-
-    const res = executionContext.switchToHttp().getResponse();
-    res.redirect("/");
     return next.handle();
   }
 }

@@ -19,7 +19,7 @@ export class UserService {
     return new User(record);
   }
 
-  async findUserFromOauth(userId: string, providerInformation: ProviderInformation): Promise<User> {
+  async findUserFromOauth(userId: string, providerInformation: ProviderInformation): Promise<User | null> {
     let userRecord = await this.prisma.user.findFirst({
       where: {
         authId: providerInformation.id,
@@ -29,6 +29,8 @@ export class UserService {
 
     if (userRecord) return new User(userRecord);
 
+    if (!userId) return null;
+
     userRecord = await this.prisma.user.update({
       where: {
         id: userId,
@@ -36,6 +38,7 @@ export class UserService {
       data: {
         authId: providerInformation.id,
         authProvider: providerInformation.provider,
+        displayName: providerInformation.displayName,
       },
     });
 
