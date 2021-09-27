@@ -7,7 +7,7 @@ import Button from "../buttons/Button";
 import Github from "../icons/Github";
 import X from "../icons/X";
 
-export interface LoginModalProps {
+export interface UserAccountModalProps {
   open?: boolean;
   onClose?: () => void;
   title: string;
@@ -15,9 +15,10 @@ export interface LoginModalProps {
   loginLinkText?: string;
   registrationLinkText?: string;
   resetLinkText?: string;
+  signUp: boolean;
 }
 
-const LoginModal: React.FunctionComponent<LoginModalProps> = ({
+const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({
   open = false,
   onClose,
   title,
@@ -25,6 +26,7 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
   loginLinkText,
   registrationLinkText,
   resetLinkText,
+  signUp,
 }) => {
   return (
     <Transition
@@ -73,7 +75,7 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                   "hover:bg-white hover:text-primary",
                 )}
               >
-                Sign up via Github
+                {signUp ? "Sign up via Github" : "Login with Github"}
                 <Github
                   className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white", "transition duration-300", "group-hover:text-primary")}
                 />
@@ -132,4 +134,4 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
   );
 };
 
-export default LoginModal;
+export default UserAccountModal;
