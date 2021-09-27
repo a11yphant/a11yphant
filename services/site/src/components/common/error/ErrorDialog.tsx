@@ -1,24 +1,19 @@
 import Button from "app/components/buttons/Button";
+import { ApolloErrorResponse } from "app/components/common/error/useErrorDialog";
 import Exclamation from "app/components/icons/Exclamation";
 import X from "app/components/icons/X";
 import clsx from "clsx";
 import React from "react";
 
 export interface ErrorDialogProps {
-  open?: boolean;
-  onClose?: () => void;
-  title?: string;
-  message?: string;
-  error?: string;
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  messages: Array<React.ReactNode>;
+  errorResponse?: ApolloErrorResponse;
 }
 
-const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({
-  open = true,
-  onClose,
-  title = "An error occurred :(",
-  message = "Luca is probably working on a fix already. Please try again later.",
-  error,
-}) => {
+const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose, title, messages, errorResponse }) => {
   const handleEscapeClick = (event: KeyboardEvent): void => {
     if (event.key === "Escape") {
       onClose?.();
@@ -61,7 +56,11 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({
         </div>
 
         <div className="p-4">
-          <p>{message}</p>
+          <ul>
+            {messages.map((message) => (
+              <li>{message}</li>
+            ))}
+          </ul>
         </div>
 
         {/*{process.env.NODE_ENV === "development" && (*/}

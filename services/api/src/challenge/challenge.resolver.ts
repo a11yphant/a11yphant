@@ -17,6 +17,7 @@ export class ChallengeResolver {
 
   @Query(() => Challenge, { nullable: true })
   async challengeBySlug(@Args("slug", { type: () => String }) slug: string): Promise<Challenge> {
+    // throw new Error();
     return this.challengeService.findOneBySlug(slug);
   }
 
