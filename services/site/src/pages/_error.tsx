@@ -1,4 +1,5 @@
 import IllustrationLost from "app/components/icons/IllustrationLost";
+import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import { NextPage } from "next";
 import Link from "next/link";
@@ -11,6 +12,7 @@ interface CustomErrorProps {
 const CustomError: NextPage<CustomErrorProps> = ({ statusCode }) => {
   return (
     <>
+      <Navigation />
       <main className="h-main box-border max-w-screen-3xl mx-auto">
         <section
           className={clsx("mx-8 py-8 h-main flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}

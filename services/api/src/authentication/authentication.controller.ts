@@ -49,7 +49,7 @@ export class AuthenticationController {
     // will be in the req.user variable
     const { sessionToken, user: providerInformation } = req;
 
-    const foundUser = await this.userService.findUserFromOauth(sessionToken?.userId, providerInformation);
+    const foundUser = await this.userService.updateWithAuthInformation(sessionToken?.userId, providerInformation);
 
     if (!foundUser) return;
 

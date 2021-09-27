@@ -15,7 +15,7 @@ describe("authentication controller", () => {
 
   const authController = new AuthenticationController(
     createMock<UserService>({
-      findUserFromOauth: jest.fn().mockResolvedValue(
+      updateWithAuthInformation: jest.fn().mockResolvedValue(
         new User({
           id: userId,
           authId: "12345",
