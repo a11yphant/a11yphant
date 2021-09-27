@@ -1,5 +1,6 @@
 import { ApolloLink } from "@apollo/client/link/core";
 import { onError } from "@apollo/client/link/error";
+import { ErrorScope, errorScopeForOperationContext } from "app/components/common/error/ErrorScope";
 import { ErrorDialogApi } from "app/components/common/error/useErrorDialog";
 
 interface CreateErrorLinkProps {
@@ -9,8 +10,12 @@ interface CreateErrorLinkProps {
 export const createErrorLink = ({ errorDialogApi }: CreateErrorLinkProps): ApolloLink => {
   return onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (errorDialogApi) {
-      if (graphQLErrors.length > 0 || networkError) {
-        errorDialogApi.showApolloError({ graphQLErrors, networkError });
+      const errorScope = errorScopeForOperationContext(operation.getContext());
+
+      if (errorScope === ErrorScope.Global) {
+        if (graphQLErrors.length > 0 || networkError) {
+          errorDialogApi.showApolloError({ graphQLErrors, networkError });
+        }
       }
     }
   });
