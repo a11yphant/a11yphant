@@ -7,13 +7,14 @@ import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
-  Code,
   LevelByChallengeSlugDocument,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
   useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
+  useRequestCheckMutation,
 } from "app/generated/graphql";
+import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -21,67 +22,75 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-import { useSubmitMutation } from "../../../../generated/graphql";
-
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
 
+  const { setLevelId, submissionId, setSubmissionId, setSubmissionCode, submissionCode, updateSubmission } = useSubmissionAutoSave();
+
   const {
     loading,
     data: { level },
-  } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
+  } = useLevelByChallengeSlugQuery({
+    variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
+    onCompleted: ({ level }) => {
+      setLevelId(level.id);
+      if (level?.lastSubmission) {
+        setSubmissionCode({
+          html: level.lastSubmission.html,
+          js: level.lastSubmission.js,
+          css: level.lastSubmission.css,
+        });
+
+        if (level.lastSubmission.result) {
+          return;
+        }
+
+        setSubmissionId(level.lastSubmission.id);
+      } else {
+        setSubmissionCode({
+          html: level.code?.html,
+          js: level.code?.js,
+          css: level.code?.css,
+        });
+      }
+    },
+  });
 
   const {
     loading: loadingChallenge,
     data: { challenge },
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
-  const [submitLevelMutation] = useSubmitMutation();
-
-  const [initialCode] = useState<Code>(level?.code);
-
-  const [currHtmlCode, setCurrHtmlCode] = useState<string>(level.lastSubmission?.html || level?.code?.html);
-  const [currCssCode, setCurrCssCode] = useState<string>(level.lastSubmission?.css || level?.code?.css);
-  const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level.lastSubmission?.js || level?.code?.js);
+  const [requestCheckMutation] = useRequestCheckMutation();
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
-    // if language === undefined => reset all
-    const newCode: Code = !language
-      ? initialCode
-      : {
-          html: currHtmlCode,
-          css: currCssCode,
-          js: currJavascriptCode,
-        };
-
     if (language) {
-      newCode[language] = initialCode[language];
+      setSubmissionCode({
+        ...submissionCode,
+        [language]: level.code?.[language],
+      });
+    } else {
+      setSubmissionCode({
+        html: level.code?.html,
+        js: level.code?.js,
+        css: level.code?.css,
+      });
     }
-
-    setCurrHtmlCode(newCode.html);
-    setCurrCssCode(newCode.css);
-    setCurrJavascriptCode(newCode.js);
   };
 
-  // button with loading spinner
-  const [loadingAnimation, setLoadingAnimation] = useState(false);
+  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 
   const submitLevel = async (): Promise<void> => {
-    setLoadingAnimation(true);
+    setShowSubmitLoadingAnimation(true);
 
-    const { data } = await submitLevelMutation({
-      variables: {
-        submissionInput: {
-          levelId: level.id,
-          html: currHtmlCode,
-          css: currCssCode,
-          js: currJavascriptCode,
-        },
-      },
+    await updateSubmission();
+
+    await requestCheckMutation({
+      variables: { requestCheckInput: { submissionId } },
     });
 
-    router.push(`${router.asPath}/evaluation/${data.submit.id}`);
+    router.push(`${router.asPath}/evaluation/${submissionId}`);
   };
 
   if (loading || loadingChallenge) {
@@ -94,8 +103,10 @@ const Level: React.FunctionComponent = () => {
     editorConfiguration.push({
       languageLabel: "HTML",
       language: EditorLanguage.html,
-      code: currHtmlCode,
-      updateCode: setCurrHtmlCode,
+      code: submissionCode?.html,
+      updateCode: (html) => {
+        setSubmissionCode({ ...submissionCode, html });
+      },
       heading: "index.html",
     });
   }
@@ -104,8 +115,10 @@ const Level: React.FunctionComponent = () => {
     editorConfiguration.push({
       languageLabel: "CSS",
       language: EditorLanguage.css,
-      code: currCssCode,
-      updateCode: setCurrCssCode,
+      code: submissionCode?.css,
+      updateCode: (css) => {
+        setSubmissionCode({ ...submissionCode, css });
+      },
       heading: "index.css",
     });
   }
@@ -114,8 +127,10 @@ const Level: React.FunctionComponent = () => {
     editorConfiguration.push({
       languageLabel: "JavaScript",
       language: EditorLanguage.javascript,
-      code: currJavascriptCode,
-      updateCode: setCurrJavascriptCode,
+      code: submissionCode?.js,
+      updateCode: (js) => {
+        setSubmissionCode({ ...submissionCode, js });
+      },
       heading: "index.js",
     });
   }
@@ -129,36 +144,44 @@ const Level: React.FunctionComponent = () => {
       </Head>
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
-        <Sidebar className={clsx("h-full hidden", "md:block")} challengeName={challenge.name} level={level} />
-        <div className={clsx("h-full pl-4 relative box-border hidden justify-between flex-col flex-auto", "md:flex")}>
-          <Editors
-            onReset={resetToInitialCode}
-            className="w-full h-3/5"
-            editors={editorConfiguration}
-            theme="light"
-            options={{
-              lineHeight: 24,
-              fontSize: 12,
-              wordWrap: "on",
-              minimap: {
-                enabled: false,
-              },
-            }}
-          />
-          <Preview className="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
-          <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
-            <ButtonLoading
-              primary
-              onClick={submitLevel}
-              className="px-10"
-              loading={loadingAnimation}
-              submitButton
-              srTextLoading="The submission is being processed."
-            >
-              Submit
-            </ButtonLoading>
+        <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challenge.name} level={level} />
+        <section className={clsx("w-full hidden", "lg:flex")}>
+          <div className="h-full pl-4 relative box-border justify-between flex-col flex-auto">
+            <Editors
+              onReset={resetToInitialCode}
+              className="w-full h-3/5"
+              editors={editorConfiguration}
+              theme="light"
+              options={{
+                lineHeight: 24,
+                fontSize: 12,
+                wordWrap: "on",
+                minimap: {
+                  enabled: false,
+                },
+              }}
+            />
+            <Preview
+              className="w-full h-2/5"
+              heading="Preview"
+              htmlCode={submissionCode?.html}
+              cssCode={submissionCode?.css}
+              javascriptCode={submissionCode?.js}
+            />
+            <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
+              <ButtonLoading
+                primary
+                onClick={submitLevel}
+                className="px-10"
+                loading={showSubmitLoadingAnimation}
+                submitButton
+                srTextLoading="The submission is being processed."
+              >
+                Submit
+              </ButtonLoading>
+            </div>
           </div>
-        </div>
+        </section>
       </main>
     </>
   );

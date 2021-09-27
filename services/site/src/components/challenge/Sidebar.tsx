@@ -14,11 +14,11 @@ interface SidebarProps {
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeName, level }) => {
   return (
-    <aside className={clsx("w-sidebar py-4", "container-dark", className)}>
+    <aside className={clsx("w-[45%] py-4", "container-dark", "xl:w-[40%] 2xl:w-[28%]", className)}>
       <ScrollOverlayWrapper
         className={"w-full h-full px-7 pb-1 flex flex-col overflow-auto"}
-        classNameTopOverlay={"w-sidebar h-28 top-20 rotate-180"}
-        classNameBottomOverlay={"w-sidebar h-44"}
+        classNameTopOverlay={clsx("w-[45%] h-28 top-16", "xl:w-[40%] 2xl:w-[28%]")}
+        classNameBottomOverlay={clsx("w-[45%] h-44", "xl:w-[40%] 2xl:w-[28%]")}
       >
         <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
         <h3 className={clsx("my-8", "h4")}>Instructions</h3>

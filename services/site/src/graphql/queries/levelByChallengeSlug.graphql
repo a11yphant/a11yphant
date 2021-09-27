@@ -23,6 +23,10 @@ query levelByChallengeSlug($challengeSlug: String!, $nth: Int!) {
       html
       css
       js
+      result {
+        id
+        status
+      }
     }
   }
 }

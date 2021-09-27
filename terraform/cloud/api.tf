@@ -64,6 +64,12 @@ module "publish_api_app_image_to_heroku" {
   depends_on = [
     heroku_app.api
   ]
+
+  providers = {
+    docker        = docker
+    docker.source = docker.gitlab
+    docker.target = docker.heroku
+  }
 }
 
 module "publish_api_release_image_to_heroku" {
@@ -74,6 +80,12 @@ module "publish_api_release_image_to_heroku" {
   depends_on = [
     heroku_app.api
   ]
+
+  providers = {
+    docker        = docker
+    docker.source = docker.gitlab
+    docker.target = docker.heroku
+  }
 }
 
 data "herokux_registry_image" "api_app" {

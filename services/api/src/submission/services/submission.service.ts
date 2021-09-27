@@ -6,7 +6,7 @@ import { Prisma, Submission as SubmissionRecord } from "@prisma/client";
 import { PrismaService } from "@/prisma/prisma.service";
 
 import { SubmissionAlreadyHasCheckResultException } from "../exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "../exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "../exceptions/submission-not-found.exception";
 import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 import { Submission } from "../graphql/models/submission.model";
@@ -101,16 +101,6 @@ export class SubmissionService {
     });
 
     return result ? ResultService.createModelFromRecord(result) : null;
-  }
-
-  /**
-   * @deprecated
-   */
-  public async save(input: SubmissionCreateData): Promise<Submission> {
-    const submission = await this.create(input);
-    await this.requestCheck(submission.id);
-
-    return submission;
   }
 
   static createModelFromDatabaseRecord(record: SubmissionRecord): Submission {

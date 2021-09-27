@@ -14,15 +14,15 @@ module.exports = {
       },
       spacing: {
         inherit: "inherit",
-        navigation: "8%",
         main: "92%",
-        preview: "90%",
-        sidebar: "28%",
         "fit-content": "fit-content",
       },
       maxWidth: {
         "80ch": "80ch",
         "screen-3xl": "1800px",
+      },
+      minHeight: {
+        "4/10": "40%",
       },
       colors: {
         light: "#FFFFFF",

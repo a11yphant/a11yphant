@@ -6,7 +6,7 @@ import { UserInputError } from "apollo-server-express";
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
 import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
 import { CreateSubmissionInput } from "@/submission/graphql/inputs/create-submission.input";
 import { UpdateSubmissionInput } from "@/submission/graphql/inputs/update-submission.input";
 import { Submission } from "@/submission/graphql/models/submission.model";
@@ -15,27 +15,6 @@ import { ResultService } from "@/submission/services/result.service";
 import { SubmissionService } from "@/submission/services/submission.service";
 
 describe("submission resolver", () => {
-  it("can submit a challenge", async () => {
-    const resolver = new SubmissionResolver(
-      createMock<SubmissionService>({
-        save: jest.fn().mockResolvedValue(
-          new Submission({
-            id: "identifier",
-            levelId: "best level ever",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          }),
-        ),
-      }),
-      createMock<LevelService>(),
-      createMock<ResultService>(),
-    );
-
-    const submission = await resolver.submit({ levelId: "hallo luca" }, { userId: "uuid" });
-
-    expect(submission).toBeTruthy();
-  });
-
   it("can resolve a level", async () => {
     const mockLevel = LevelFactory.build();
 

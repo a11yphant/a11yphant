@@ -1,5 +1,14 @@
 
-# Write your query or mutation here
+fragment EvaluationRequirementResult on RequirementResult {
+  id
+  title
+  description
+  rule {
+    id
+    key
+  }
+  result
+}
 
 query resultForSubmission ($id: String!) {
   resultForSubmission(submissionId: $id) {
@@ -8,14 +17,7 @@ query resultForSubmission ($id: String!) {
     numberOfCheckedRequirements
     numberOfFailedRequirementChecks
     requirements {
-      id
-      title
-      description
-      rule {
-        id
-        key
-      }
-      result
+      ...EvaluationRequirementResult
     }
   }
 }

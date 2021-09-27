@@ -19,12 +19,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const displayRegistration = false;
 
   return (
-    <header className="h-navigation pt-8 pb-6 px-11 flex justify-between items-center">
+    <header className="h-[8%] pt-8 pb-6 px-11 grid grid-cols-4">
       <h1>
         <Link href="/">
           <a
             className={clsx(
-              "block text-light border-none",
+              "block text-light border-none col-span-1 max-w-max",
               "transform transition ease-in-out duration-300",
               "motion-safe:hover:scale-110 motion-reduce:border-solid",
             )}
@@ -36,13 +36,13 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       </h1>
       {displayBreadcrumbs && (
         <>
-          <div className={clsx("flex justify-center items-center", "hidden md:block")}>
+          <div className={clsx("justify-center items-center col-span-2 hidden", "lg:flex")}>
             <Breadcrumbs />
           </div>
         </>
       )}
-      <div className="flex justify-center items-center">
-        {displaySave && <Save className={clsx("hidden md:block")} />}
+      <div className="flex justify-end items-center col-span-1">
+        {displaySave && <Save className={clsx("hidden", "lg:block")} />}
         {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>

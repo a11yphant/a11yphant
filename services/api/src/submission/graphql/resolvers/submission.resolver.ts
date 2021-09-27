@@ -7,7 +7,7 @@ import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 
 import { SubmissionAlreadyHasCheckResultException } from "../../exceptions/submission-already-has-check-result.exception";
-import { SubmissionNotFoundException } from "../../exceptions/submission-not-found.exceptoin";
+import { SubmissionNotFoundException } from "../../exceptions/submission-not-found.exception";
 import { ResultService } from "../../services/result.service";
 import { SubmissionService } from "../../services/submission.service";
 import { CreateSubmissionInput } from "../inputs/create-submission.input";
@@ -26,23 +26,6 @@ export class SubmissionResolver {
     private readonly levelService: LevelService,
     private readonly resultService: ResultService,
   ) {}
-
-  @Mutation(() => Submission)
-  async submit(
-    @Args("submissionInput") submissionInput: CreateSubmissionInput,
-    @SessionToken() sessionToken: SessionTokenInterface,
-  ): Promise<Submission> {
-    const level = await this.levelService.findOne(submissionInput.levelId);
-
-    if (!level) {
-      throw new UserInputError(`Level to provided levelId not found: ${submissionInput.levelId}.`);
-    }
-
-    return this.submissionService.save({
-      ...submissionInput,
-      userId: sessionToken.userId,
-    });
-  }
 
   @Mutation(() => CreateSubmissionResult)
   async createSubmission(
@@ -94,7 +77,9 @@ export class SubmissionResolver {
     }
   }
 
-  @ResolveField()
+  @ResolveField(() => Level, {
+    description: "The level this submission is for.",
+  })
   async level(@Parent() submission: Submission): Promise<Level> {
     return this.levelService.findOne(submission.levelId);
   }
