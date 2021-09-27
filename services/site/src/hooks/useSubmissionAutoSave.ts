@@ -15,6 +15,7 @@ interface SubmissionAutoSaveApi {
   submissionCode: SubmissionCode;
   setSubmissionCode: (code: SubmissionCode) => void;
   updateSubmission: () => Promise<void>;
+  loading: boolean;
 }
 
 export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
@@ -23,6 +24,17 @@ export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
   const [levelId, setLevelId] = useState<string>();
   const [submissionId, setSubmissionId] = useState<string>();
   const [submissionCode, setSubmissionCode] = useState<SubmissionCode>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (createSubmissionLoading || updateSubmitMutationLoading) {
+      setLoading(true);
+    }
+
+    if (!createSubmissionLoading && !updateSubmitMutationLoading) {
+      setLoading(false);
+    }
+  }, [createSubmissionLoading, updateSubmitMutationLoading]);
 
   const updateSubmission = async (): Promise<void> => {
     if (!submissionId && !createSubmissionLoading) {
@@ -65,5 +77,6 @@ export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
     submissionCode,
     setSubmissionCode,
     updateSubmission,
+    loading,
   };
 }

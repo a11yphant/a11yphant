@@ -1,8 +1,11 @@
+import { Transition } from "@headlessui/react";
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
+import Navigation from "app/components/Navigation";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
@@ -26,7 +29,15 @@ const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
 
-  const { setLevelId, submissionId, setSubmissionId, setSubmissionCode, submissionCode, updateSubmission } = useSubmissionAutoSave();
+  const {
+    setLevelId,
+    submissionId,
+    setSubmissionId,
+    setSubmissionCode,
+    submissionCode,
+    updateSubmission,
+    loading: autoSaveLoading,
+  } = useSubmissionAutoSave();
 
   const {
     loading,
@@ -142,6 +153,19 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
+      <Navigation displayBreadcrumbs>
+        <Transition
+          show={autoSaveLoading}
+          enter="transition-opacity duration-300"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-300 delay-1000"
+          leaveTo="opacity-0"
+        >
+          <span>
+            Saving... <LoadingIndicator className="inline ml-4" />
+          </span>
+        </Transition>
+      </Navigation>
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
         <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challenge.name} level={level} />
