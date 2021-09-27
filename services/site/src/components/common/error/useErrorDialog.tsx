@@ -64,6 +64,10 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
 
   const handleClose = (): void => {
     setOpen(false);
+
+    setTitle(defaultTitle);
+    setMessages([]);
+    setError(undefined);
   };
 
   return {
