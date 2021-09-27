@@ -33,7 +33,7 @@ export class AuthenticationController {
     // will be in the req.user variable
     const { sessionToken, user: providerInformation } = req;
 
-    const { id: userId } = await this.userService.findUserFromOauth(sessionToken.userId, providerInformation);
+    const { id: userId } = await this.userService.updateWithAuthInformation(sessionToken.userId, providerInformation);
 
     const token = await this.jwtService.createSignedToken({ userId }, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
     res.cookie("a11yphant_session", token, { sameSite: "lax", secure: true, httpOnly: true });

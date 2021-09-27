@@ -11,9 +11,7 @@ export class UserService {
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
-      data: {
-        displayName: "anonymous",
-      },
+      data: {},
     });
 
     return new User(record);
@@ -29,7 +27,7 @@ export class UserService {
     return userRecord ? new User(userRecord) : null;
   }
 
-  async findUserFromOauth(userId: string, providerInformation: ProviderInformation): Promise<User> {
+  async updateWithAuthInformation(userId: string, providerInformation: ProviderInformation): Promise<User> {
     let userRecord = await this.prisma.user.findFirst({
       where: {
         authId: providerInformation.id,
@@ -46,6 +44,7 @@ export class UserService {
       data: {
         authId: providerInformation.id,
         authProvider: providerInformation.provider,
+        displayName: providerInformation.displayName,
       },
     });
 
