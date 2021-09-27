@@ -11,7 +11,7 @@ export interface LoginModalProps {
   open?: boolean;
   onClose?: () => void;
   title: string;
-  showGithubLogin: boolean;
+  showGithubLogin?: boolean;
   loginLinkText?: string;
   registrationLinkText?: string;
   resetLinkText?: string;
