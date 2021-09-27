@@ -62,7 +62,6 @@ export class SubmissionResolver {
 
   @Mutation(() => RequestCheckResult)
   async requestCheck(@Args("requestCheckInput") requestCheckInput: RequestCheckInput): Promise<RequestCheckResult> {
-    throw new Error();
     try {
       const result = await this.submissionService.requestCheck(requestCheckInput.submissionId);
 
