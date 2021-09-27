@@ -63,12 +63,12 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
           </ul>
         </div>
 
-        {/*{process.env.NODE_ENV === "development" && (*/}
-        {/*  <div className="p-8 border border-error">*/}
-        {/*    <strong className="text-error">Original Error (Only shown in Development Mode): </strong>*/}
-        {/*    <p>{error}</p>*/}
-        {/*  </div>*/}
-        {/*)}*/}
+        {process.env.NODE_ENV === "development" && (
+          <div className="p-8 border border-error">
+            <strong className="text-error">Original Error (Only shown in Development Mode): </strong>
+            <p>{JSON.stringify(errorResponse)}</p>
+          </div>
+        )}
 
         <div className="absolute bottom-7 right-7">
           <Button
