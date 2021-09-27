@@ -16,6 +16,22 @@ describe("user service", () => {
     expect(await service.create()).toHaveProperty("id", expect.any(String));
   });
 
+  it("can find a user by id", async () => {
+    const prisma = getPrismaService();
+    const service = new UserService(prisma);
+
+    const user = await service.create();
+
+    expect(await service.findById(user.id)).toHaveProperty("id", user.id);
+  });
+
+  it("returns null if it cannot find the user by id", async () => {
+    const prisma = getPrismaService();
+    const service = new UserService(prisma);
+
+    expect(await service.findById(faker.datatype.uuid())).toBeNull();
+  });
+
   it("adds auth information to an anonymous user", async () => {
     const prisma = getPrismaService();
     const service = new UserService(prisma);
