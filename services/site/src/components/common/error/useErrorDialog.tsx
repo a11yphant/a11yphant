@@ -5,7 +5,7 @@ import React from "react";
 
 export type ApolloErrorResponse = Pick<ApolloError, "graphQLErrors" | "networkError">;
 
-interface ShowApolloErrorOptions {
+interface EditDialogErrorOptions {
   title?: string;
   defaultMessage?: React.ReactNode;
   specialMessages?: {
@@ -14,7 +14,7 @@ interface ShowApolloErrorOptions {
 }
 
 export interface ErrorDialogApi {
-  showApolloError: (error: ApolloErrorResponse, options?: ShowApolloErrorOptions) => void;
+  showApolloError: (error: ApolloErrorResponse, options?: EditDialogErrorOptions) => void;
 }
 
 const ErrorDialogContext = React.createContext<ErrorDialogApi>({
@@ -31,7 +31,7 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
   const [messages, setMessages] = React.useState<Array<React.ReactNode>>([]);
   const [error, setError] = React.useState<ApolloErrorResponse>();
 
-  const showApolloError = ({ graphQLErrors, networkError }: ApolloErrorResponse, options?: ShowApolloErrorOptions): void => {
+  const showApolloError = ({ graphQLErrors, networkError }: ApolloErrorResponse, options?: EditDialogErrorOptions): void => {
     setTitle(options?.title ?? defaultTitle);
     setError({ graphQLErrors, networkError });
 
@@ -44,10 +44,16 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
       graphQLErrors.map((graphQLError) => {
         let errorMessage;
         if (options?.specialMessages?.[graphQLError.extensions.code]) {
+          // Show error message for this error code if it has been defined
           errorMessage = options?.specialMessages?.[graphQLError.extensions.code];
+        } else if (graphQLError.message.length > 0) {
+          // Show error message from API if it exists
+          errorMessage = graphQLError.message;
         } else if (options?.defaultMessage) {
+          // Show default error message if it has been defined
           errorMessage = options?.defaultMessage;
         } else if (unknownErrorExisting === false) {
+          // Show unknown error (only add unknown error if it isn't in the messages array yet)
           errorMessage = errorMessages.unknownError();
           unknownErrorExisting = true;
         }
