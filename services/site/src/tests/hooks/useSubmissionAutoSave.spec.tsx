@@ -1,5 +1,5 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, cleanup, renderHook } from "@testing-library/react-hooks";
 import { CreateSubmissionDocument, UpdateSubmissionDocument } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import React from "react";
@@ -59,6 +59,8 @@ function createCreateSubmissionMock(levelId = "level-uuid", code = defaultCode, 
 }
 
 const defaultApolloMock = [createCreateSubmissionMock(), createUpdateSubmissionMock()];
+
+afterEach(cleanup);
 
 describe("submission auto save", () => {
   it("can set the submission id", () => {
@@ -141,9 +143,36 @@ describe("submission auto save", () => {
       await waitForNextUpdate();
     });
 
-    jest.advanceTimersByTime(1000);
-    await waitForNextUpdate();
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+      await waitForNextUpdate();
+    });
 
     expect(mockRequest.newData).toHaveBeenCalled();
+    jest.clearAllTimers();
+  });
+
+  it("provides the loading state", async () => {
+    jest.useFakeTimers();
+    const levelId = "uuid";
+
+    const mockRequest = createCreateSubmissionMock(levelId);
+
+    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockRequest]}>{children}</MockedProvider>;
+    const { result, waitForNextUpdate } = renderHook(() => useSubmissionAutoSave(), { wrapper });
+
+    await act(async () => {
+      result.current.setLevelId(levelId);
+      result.current.setSubmissionCode(defaultCode);
+      await waitForNextUpdate();
+    });
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+      await waitForNextUpdate();
+    });
+
+    expect(result.current.loading).toBeTruthy();
+    jest.clearAllTimers();
   });
 });
