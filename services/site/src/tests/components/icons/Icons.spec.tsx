@@ -11,7 +11,6 @@ import IllustrationLost from "app/components/icons/IllustrationLost";
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
-import Save from "app/components/icons/Save";
 import Slash from "app/components/icons/Slash";
 import Twitter from "app/components/icons/Twitter";
 import UserAvatar from "app/components/icons/UserAvatar";
@@ -72,12 +71,6 @@ describe("Icons", () => {
 
   it("Reset exists", () => {
     const wrapper = shallow(<Reset />);
-
-    expect(wrapper.type()).toBe("svg");
-  });
-
-  it("Save exists", () => {
-    const wrapper = shallow(<Save />);
 
     expect(wrapper.type()).toBe("svg");
   });

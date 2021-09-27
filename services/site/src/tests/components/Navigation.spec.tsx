@@ -4,7 +4,6 @@ import { cleanup } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
-import Save from "app/components/icons/Save";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation from "app/components/Navigation";
 import { shallow } from "enzyme";
@@ -25,9 +24,6 @@ describe("Navigation", () => {
 
     // Breadcrumbs exist
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
-
-    // Save does not exist
-    expect(wrapper.exists(Save)).toBeFalsy();
 
     // User Avatar exists
     expect(wrapper.exists(UserAvatar)).toBeFalsy();
@@ -50,17 +46,14 @@ describe("Navigation", () => {
     expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
   });
 
-  it("with save", () => {
-    const wrapper = shallow(<Navigation displaySave={true} />);
+  it("with children", () => {
+    const wrapper = shallow(
+      <Navigation>
+        <p className="test-children">children</p>
+      </Navigation>,
+    );
 
-    // Save exists
-    expect(wrapper.exists(Save)).toBeTruthy();
-  });
-
-  it("without save", () => {
-    const wrapper = shallow(<Navigation displaySave={false} />);
-
-    // Save does not exist
-    expect(wrapper.exists(Save)).toBeFalsy();
+    // Children do exist
+    expect(wrapper.exists(".test-children")).toBeTruthy();
   });
 });

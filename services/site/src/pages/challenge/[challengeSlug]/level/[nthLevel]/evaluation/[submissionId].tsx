@@ -5,6 +5,7 @@ import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
+import Navigation from "app/components/Navigation";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
@@ -42,6 +43,7 @@ const Evaluation: React.FunctionComponent = () => {
           Evaluation - {data?.challenge.name} - Level {nthLevel}
         </title>
       </Head>
+      <Navigation displayBreadcrumbs />
       {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
         <>
           <main className={clsx("h-main", "md:p-4 md:flex md:flex-col md:justify-between")}>
