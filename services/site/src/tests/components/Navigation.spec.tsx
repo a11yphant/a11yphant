@@ -50,17 +50,14 @@ describe("Navigation", () => {
     expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
   });
 
-  it("with save", () => {
-    const wrapper = shallow(<Navigation displaySave={true} />);
+  it("with children", () => {
+    const wrapper = shallow(
+      <Navigation>
+        <p className="test-children">children</p>
+      </Navigation>,
+    );
 
-    // Save exists
-    expect(wrapper.exists(Save)).toBeTruthy();
-  });
-
-  it("without save", () => {
-    const wrapper = shallow(<Navigation displaySave={false} />);
-
-    // Save does not exist
-    expect(wrapper.exists(Save)).toBeFalsy();
+    // Children do exist
+    expect(wrapper.exists(".test-children")).toBeTruthy();
   });
 });

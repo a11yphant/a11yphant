@@ -3,6 +3,7 @@ import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
+import Navigation from "app/components/Navigation";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
@@ -142,6 +143,7 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
+      <Navigation displayBreadcrumbs />
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
         <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challenge.name} level={level} />

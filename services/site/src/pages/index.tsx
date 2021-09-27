@@ -2,6 +2,7 @@ import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
+import Navigation from "app/components/Navigation";
 import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
@@ -19,6 +20,7 @@ const Home: React.FunctionComponent = () => {
       <Head>
         <title>a11yphant</title>
       </Head>
+      <Navigation displayBreadcrumbs />
       <main className={clsx("h-main flex flex-col box-border")}>
         <div className={clsx("w-full h-full")}>
           <Hero />
@@ -92,7 +94,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       initialApolloState: apolloClient.cache.extract(),
-      displayBreadcrumbs: false,
     },
   };
 };
