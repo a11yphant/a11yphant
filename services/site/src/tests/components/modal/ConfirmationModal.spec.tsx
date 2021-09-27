@@ -39,7 +39,7 @@ describe("ConfirmationModal", () => {
   it("shows title", () => {
     const wrapper = renderConfirmationModal({ title: mockTitle });
 
-expect(wrapper.find(Dialog.Title).children().text()).toContain(mockTitle);
+    expect(wrapper.find(Dialog.Title).children().text()).toContain(mockTitle);
   });
 
   it("shows default cancelButtonLabel", () => {
