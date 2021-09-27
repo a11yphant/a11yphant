@@ -1,8 +1,8 @@
 import { Args, Mutation, Parent, ResolveField, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-express";
 
+import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
-import { SessionToken as SessionTokenInterface } from "@/authentication/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 

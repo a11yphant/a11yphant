@@ -3,7 +3,7 @@ import { LevelFactory } from "@tests/factories/models/level.factory";
 import { SubmissionFactory } from "@tests/factories/models/submission.factory";
 import { UserInputError } from "apollo-server-express";
 
-import { SessionToken } from "@/authentication/session-token.interface";
+import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { LevelService } from "@/challenge/level.service";
 import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";

@@ -349,6 +349,9 @@ deploy-staging:
     DOMAIN: beta.a11yphant.com
     USE_CUSTOM_DOMAIN: 1
     API_DYNO_SIZE: free
+    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_STAGING
+    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_STAING 
+    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_STAGING
   environment:
     name: staging
     url: https://beta.a11yphant.com
@@ -362,6 +365,9 @@ deploy-production:
     WORKSPACE: production
     DOMAIN: a11yphant.com
     USE_CUSTOM_DOMAIN: 1
+    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_PROD
+    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_PROD 
+    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_PROD
   environment:
     name: production
     url: https://a11yphant.com

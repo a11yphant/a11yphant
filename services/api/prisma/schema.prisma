@@ -121,8 +121,11 @@ model CheckResult {
 }
 
 model User {
-  id          String       @id @default(uuid()) @db.Uuid
-  submissions Submission[]
+  id           String       @id @default(uuid()) @db.Uuid
+  authProvider String       @default("anonymous")
+  authId       String?
+  displayName  String?
+  submissions  Submission[]
 
   @@map("users")
 }
