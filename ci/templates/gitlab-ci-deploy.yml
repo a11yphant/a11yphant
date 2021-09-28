@@ -36,3 +36,6 @@
                 -var="github_client_id=$GITHUB_CLIENT_ID"
                 -var="github_client_secret=$GITHUB_CLIENT_SECRET"
                 -var="github_callback_url=$GITHUB_CALLBACK_URL"
+                -var="twitter_consumer_key=$TWITTER_CONSUMER_KEY"
+                -var="twitter_consumer_secret=$TWITTER_CONSUMER_SECRET"
+                -var="twitter_callback_url=$TWITTER_CALLBACK_URL"

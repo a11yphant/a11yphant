@@ -1,9 +1,11 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { CHALLENGE, ChallengeData, Factory, LEVEL, LevelData } from "@tests/factories/database";
+import { CHALLENGE, ChallengeData, Factory, LEVEL, LevelData, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
+import { LevelStatus } from "@/challenge/enums/level-status.enum";
 import { LevelService } from "@/challenge/level.service";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
 describe("level service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -84,6 +86,72 @@ describe("level service", () => {
       const service = new LevelService(prisma);
       const count = await service.getNumberOfLevelsForChallenge(id);
       expect(count).toBe(2);
+    });
+  });
+
+  describe("findStatusForUserAndLevel", () => {
+    const getUserAndLevel = async (): Promise<{ userId: string; levelId: string }> => {
+      const prisma = getPrismaService();
+
+      const { id: levelId } = await prisma.codeLevel.create({
+        data: Factory.build<LevelData>(LEVEL),
+      });
+
+      const { id: userId } = await prisma.user.create({
+        data: Factory.build<UserData>(USER),
+      });
+
+      return {
+        userId,
+        levelId,
+      };
+    };
+
+    it("returns OPEN if no attempts were made", async () => {
+      const prisma = getPrismaService();
+
+      const { userId, levelId } = await getUserAndLevel();
+
+      const service = new LevelService(prisma);
+      const status = await service.findStatusForUserAndLevel(userId, levelId);
+
+      expect(status).toBe(LevelStatus.OPEN);
+    });
+
+    it("returns IN_PROGRESS if only failed attempts were made", async () => {
+      const prisma = getPrismaService();
+
+      const { userId, levelId } = await getUserAndLevel();
+
+      await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+
+      const service = new LevelService(prisma);
+      const status = await service.findStatusForUserAndLevel(userId, levelId);
+
+      expect(status).toBe(LevelStatus.IN_PROGRESS);
+    });
+
+    it("returns FINISHED if at least one successful attempt was made", async () => {
+      const prisma = getPrismaService();
+
+      const { userId, levelId } = await getUserAndLevel();
+
+      await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+      await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+      await prisma.submission.create({
+        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+      });
+
+      const service = new LevelService(prisma);
+      const status = await service.findStatusForUserAndLevel(userId, levelId);
+
+      expect(status).toBe(LevelStatus.FINISHED);
     });
   });
 });
