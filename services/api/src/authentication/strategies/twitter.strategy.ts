@@ -10,12 +10,9 @@ import { StoreService } from "../store.service";
 export class TwitterStrategy extends PassportStrategy(Strategy, "twitter") {
   constructor(private readonly configService: ConfigService, private readonly logger: Logger, private readonly store: StoreService) {
     super({
-      // requestTokenURL: "https://api.twitter.com/oauth/request_token",
-      // accessTokenURL: "https://api.twitter.com/oauth/access_token",
-      // userAuthorizationURL: "https://api.twitter.com/oauth/authorize",
-      consumerKey: "7ttDKVhrdJoj97W28mAejbKqv",
-      consumerSecret: "g1xpBubdIZ67a3TuNwJeOIfUNCR9bYMvdzYizMWVLGsjdZRrBb",
-      callbackURL: "http://localhost:3000/auth/twitter/callback",
+      consumerKey: configService.get<string>("oauth.twitter.consumerKey"),
+      consumerSecret: configService.get<string>("oauth.twitter.consumerSecret"),
+      callbackURL: configService.get<string>("oauth.twitter.callbackURL"),
       store: store,
     });
   }
