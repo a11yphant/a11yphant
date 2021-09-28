@@ -3,19 +3,24 @@ import { Request } from "express";
 
 import { JwtService } from "./jwt.service";
 
+interface TokenInformation {
+  oauth_token: string;
+  oauth_token_secret: string;
+  state: unknown;
+}
+
 @Injectable()
 export class StoreService implements OnModuleInit {
-  keyMap: Map<string, any>;
+  private tokenMap: Map<string, TokenInformation>;
 
   constructor(private jwtService: JwtService, private logger: Logger) {}
 
   onModuleInit = (): void => {
-    this.keyMap = new Map();
+    this.tokenMap = new Map();
   };
 
   public set = (req: Request, token: string, tokenSecret: string, state: unknown, meta: unknown, cb: () => void): void => {
-    this.logger.debug("Store: set called");
-    this.keyMap.set(this.getId(req), {
+    this.tokenMap.set(this.getId(req), {
       oauth_token: token,
       oauth_token_secret: tokenSecret,
       state,
@@ -24,15 +29,17 @@ export class StoreService implements OnModuleInit {
     cb();
   };
 
-  public get = (req: Request, token: string, cb: (e: Error, secret: string, state: unknown) => void): void => {
-    this.logger.debug("Store: get called");
-    const { oauth_token_secret, state } = this.keyMap.get(this.getId(req));
-    cb(null, oauth_token_secret, state);
+  public get = (req: Request, token: string, cb: (e: Error, secret?: string, state?: unknown) => void): void => {
+    try {
+      const { oauth_token_secret, state } = this.tokenMap.get(this.getId(req));
+      cb(null, oauth_token_secret, state);
+    } catch (e) {
+      cb(e);
+    }
   };
 
   public destroy = (req: Request, token: string, cb: () => void): void => {
-    this.logger.debug("Store: delete called");
-    this.keyMap.delete(this.getId(req));
+    this.tokenMap.delete(this.getId(req));
     cb();
   };
 

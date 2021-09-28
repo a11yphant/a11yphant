@@ -65,4 +65,20 @@ describe("authentication controller", () => {
       expect(res.redirect).toBeCalled();
     });
   });
+
+  describe("twitter", () => {
+    it("calls the inital function", () => {
+      expect(authController.twitter()).toBeFalsy();
+    });
+
+    it("resolves the callback function", async () => {
+      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
+      const res = createMock<Response>();
+
+      await authController.twitterCallback(req, res);
+
+      expect(res.cookie).toBeCalled();
+      expect(res.redirect).toBeCalled();
+    });
+  });
 });
