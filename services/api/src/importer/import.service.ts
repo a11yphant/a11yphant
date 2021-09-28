@@ -81,24 +81,7 @@ export class ImportService {
       }
 
       if (level.type === "quiz") {
-        await Promise.all(
-          level.answer_options.map((answerOption) =>
-            this.prisma.answerOption.upsert({
-              where: { id: answerOption.id },
-              create: {
-                id: answerOption.id,
-                text: answerOption.text,
-                correct: answerOption.correct,
-                quizLevelId: level.id,
-              },
-              update: {
-                text: answerOption.text,
-                correct: answerOption.correct,
-                quizLevelId: level.id,
-              },
-            }),
-          ),
-        );
+        await this.upsertAnswerOptionsForCodeLevel(level);
       }
     }
 
@@ -110,6 +93,27 @@ export class ImportService {
         challengeId: challenge.id,
       },
     });
+  }
+
+  private async upsertAnswerOptionsForCodeLevel(level: QuizLevel): Promise<void> {
+    await Promise.all(
+      level.answer_options.map((answerOption) =>
+        this.prisma.answerOption.upsert({
+          where: { id: answerOption.id },
+          create: {
+            id: answerOption.id,
+            text: answerOption.text,
+            correct: answerOption.correct,
+            quizLevelId: level.id,
+          },
+          update: {
+            text: answerOption.text,
+            correct: answerOption.correct,
+            quizLevelId: level.id,
+          },
+        }),
+      ),
+    );
   }
 
   private async upsertChallenge(challenge: Challenge): Promise<void> {
