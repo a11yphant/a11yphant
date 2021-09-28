@@ -6,6 +6,7 @@ import { Submission } from "@/submission/graphql/models/submission.model";
 import { SubmissionService } from "@/submission/services/submission.service";
 
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
+import { LevelStatus } from "./enums/level-status.enum";
 import { LevelService } from "./level.service";
 import { Level } from "./models/level.model";
 import { Requirement } from "./models/requirement.model";
@@ -44,5 +45,10 @@ export class LevelResolver {
   @ResolveField(() => Submission, { nullable: true, description: "The last submission of the current user for this level" })
   lastSubmission(@Parent() level: Level, @SessionToken() sessionToken: SessionTokenInterface): Promise<Submission> {
     return this.submissionService.findLastForUserAndLevel(sessionToken.userId, level.id);
+  }
+
+  @ResolveField(() => LevelStatus, { description: "The status of the level for the current user." })
+  status(@Parent() level: Level, @SessionToken() sessionToken: SessionTokenInterface): Promise<LevelStatus> {
+    return this.levelService.findStatusForUserAndLevel(sessionToken.userId, level.id);
   }
 }
