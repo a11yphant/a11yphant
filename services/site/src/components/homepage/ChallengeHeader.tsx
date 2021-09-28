@@ -5,7 +5,7 @@ import Button from "../buttons/Button";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 
-interface ChallengeHeaderProps {
+export interface ChallengeHeaderProps {
   className?: string;
   userLoggedIn?: boolean;
 }
