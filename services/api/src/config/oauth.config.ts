@@ -6,4 +6,9 @@ export default registerAs("oauth", () => ({
     clientSecret: process.env.GITHUB_CLIENT_SECRET || "demo_secret",
     callbackURL: process.env.GITHUB_CALLBACK_URL || "http://localhost:3000/auth/github/callback",
   },
+  twitter: {
+    consumerKey: process.env.TWITTER_CONSUMER_KEY || "demo_key",
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET || "demo_secret",
+    callbackURL: process.env.TWITTER_CALLBACK_URL || "http://localhost:3000/auth/twitter/callback",
+  },
 }));

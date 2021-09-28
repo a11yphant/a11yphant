@@ -1,4 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
+import { Logger } from "@nestjs/common";
 import { Request, Response } from "express";
 
 import { AuthenticationController } from "@/authentication/authentication.controller";
@@ -26,6 +27,7 @@ describe("authentication controller", () => {
     createMock<JwtService>({
       createSignedToken: jest.fn().mockResolvedValue(testToken),
     }),
+    createMock<Logger>(),
   );
 
   it("sets the correct cookie", async () => {
@@ -58,6 +60,22 @@ describe("authentication controller", () => {
       const res = createMock<Response>();
 
       await authController.githubCallback(req, res);
+
+      expect(res.cookie).toBeCalled();
+      expect(res.redirect).toBeCalled();
+    });
+  });
+
+  describe("twitter", () => {
+    it("calls the inital function", () => {
+      expect(authController.twitter()).toBeFalsy();
+    });
+
+    it("resolves the callback function", async () => {
+      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
+      const res = createMock<Response>();
+
+      await authController.twitterCallback(req, res);
 
       expect(res.cookie).toBeCalled();
       expect(res.redirect).toBeCalled();

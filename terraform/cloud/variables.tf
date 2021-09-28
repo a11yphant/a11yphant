@@ -64,6 +64,21 @@ variable "github_callback_url" {
   default = ""
 }
 
+variable "twitter_consumer_key" {
+  type    = string
+  default = ""
+}
+
+variable "twitter_consumer_secret" {
+  type    = string
+  default = ""
+}
+
+variable "twitter_callback_url" {
+  type    = string
+  default = ""
+}
+
 # copied from: https://github.com/hashicorp/terraform-template-dir/blob/556bd64989e7099fabb90c6b883b5d4d92da3ae8/variables.tf
 variable "file_types" {
   type = map(string)

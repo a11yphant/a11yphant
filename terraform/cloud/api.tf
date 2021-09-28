@@ -30,6 +30,9 @@ resource "heroku_app" "api" {
     GITHUB_CLIENT_ID                 = var.github_client_id
     GITHUB_CLIENT_SECRET             = var.github_client_secret
     GITHUB_CALLBACK_URL              = var.github_callback_url
+    TWITTER_CONSUMER_KEY             = var.twitter_consumer_key
+    TWITTER_CONSUMER_SECRET          = var.twitter_consumer_secret
+    TWITTER_CALLBACK_URL             = var.twitter_callback_url
   }
 }
 
