@@ -1,3 +1,5 @@
+import { NormalizedCacheObject } from "@apollo/client/cache";
+import { ApolloClient } from "@apollo/client/core";
 import { createMockClient } from "@apollo/client/testing";
 import { cleanup } from "@testing-library/react";
 import { getRouteList } from "app/components/breadcrumbs/getRouteList";
@@ -19,7 +21,7 @@ const expectedBreadcrumbChallenge = {
 jest.mock("app/components/breadcrumbs/routes");
 jest.mock("next/router", () => require("next-router-mock"));
 
-let mockClient;
+let mockClient: ApolloClient<NormalizedCacheObject>;
 
 beforeEach(() => {
   mockClient = createMockClient<ChallengeBySlugQuery>(
