@@ -27,7 +27,7 @@ export class UserService {
     return userRecord ? new User(userRecord) : null;
   }
 
-  async updateWithAuthInformation(userId: string, providerInformation: ProviderInformation): Promise<User> {
+  async updateWithAuthInformation(userId: string, providerInformation: ProviderInformation): Promise<User | null> {
     let userRecord = await this.prisma.user.findFirst({
       where: {
         authId: providerInformation.id,
@@ -36,6 +36,8 @@ export class UserService {
     });
 
     if (userRecord) return new User(userRecord);
+
+    if (!userId) return null;
 
     userRecord = await this.prisma.user.update({
       where: {
