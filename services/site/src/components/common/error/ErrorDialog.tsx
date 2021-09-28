@@ -17,7 +17,7 @@ export interface ErrorDialogProps {
 const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose, title, messages, errorResponse }) => {
   const handleEscapeClick = (event: KeyboardEvent): void => {
     if (event.key === "Escape") {
-      onClose?.();
+      onClose();
     }
   };
 
@@ -29,6 +29,10 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
     };
   }, []);
 
+  React.useEffect(() => {
+    console.error(errorResponse);
+  }, [errorResponse]);
+
   return (
     <Transition
       show={open}
@@ -39,7 +43,7 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
       leaveFrom="transform scale-100 opacity-100"
       leaveTo="transform scale-95 opacity-0"
     >
-      <Dialog open={open} onClose={() => onClose()} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
+      <Dialog open={open} onClose={onClose} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
         <div
           className={clsx(
             "p-8 bg-background-light rounded-lg min-w-max max-w-xl flex flex-col relative",
@@ -51,7 +55,7 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
         >
           <Dialog.Overlay className="fixed inset-0 bg-background opacity-25 z-[-1]" />
           <Button
-            onClick={() => onClose()}
+            onClick={onClose}
             overrideClassName
             className={clsx("w-11 h-11 p-3.5 absolute top-4 right-4", "transition-colors duration-300", "hover:text-error", "focus:text-error")}
           >
@@ -74,8 +78,7 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
 
           {process.env.NODE_ENV === "development" && (
             <div className="p-8 border border-error">
-              <strong className="text-error">Original Error (Only shown in Development Mode): </strong>
-              <p>{JSON.stringify(errorResponse)}</p>
+              <strong className="text-error">Original Error was logged to console (only in development mode) </strong>
             </div>
           )}
 
