@@ -9,6 +9,7 @@ challenge:
   levels:
     - id: 628e7fa6-b0f1-4a19-85b2-ec6a3613ceff
       order: 1
+      type: code
       requirements:
         - id: 2ac21c0c-1fea-40e9-b908-def211910d9a
           key: html-is-valid
@@ -38,6 +39,7 @@ challenge:
 
     - id: 1b1efb0e-6d5b-4640-b86f-4c2b6f8e71d2
       order: 2
+      type: code
       requirements:
         - id: 07b24075-94b6-4670-9b51-fffd8c12f352
           key: html-is-valid
@@ -74,8 +76,24 @@ challenge:
             </body>
           </html>
 
+    - id: c37cbd66-5289-4df7-b619-48fb799e7889
+      order: 3
+      type: quiz
+      question: What is the purpose of the <code>&lt;head&gt;</code> tag?
+      answer_options:
+        - id: bd6207a7-c02b-4253-8820-db830547b561
+          text: It contains meta information regarding the page, for example the title.
+          correct: true
+        - id: 4fa706f3-3e03-4290-9de9-ca35154285af
+          text: This tag should contain the website's logo.
+          correct: false
+        - id: ebf1c68f-8d56-4a11-b918-adc0103b0d12
+          text: It contains the content of the page.
+          correct: false
+
     - id: 2f391435-98d6-4297-a7e8-f176b8e3d261
       order: 4
+      type: code
       requirements:
         - id: c4f37058-ab15-4f02-a37c-a587d2438baa
           key: html-is-valid
@@ -104,8 +122,27 @@ challenge:
             </body>
           </html>
 
+    - id: ceaebba5-ad2f-4994-8f2c-53950ba8fd87
+      order: 5
+      type: quiz
+      question: What is the purpose of the <code>&lt;body&gt;</code> tag?
+      answer_options:
+        - id: 1ae933e1-b6b4-4123-b342-ee23ee81b861
+          text: It contains images, text, links and other content of the page.
+          correct: true
+        - id: 6cc0d6e3-f6b2-4fab-b8a1-eb1c6b8794fe
+          text: The <code>&lt;body&gt;</code> tag is used to wrap every new content section on a website.
+          correct: false
+        - id: 91a49c27-bd72-4505-89ab-97f3d1fc9a20
+          text: It wraps the <code>&lt;title&gt;</code> tag of the website.
+          correct: false
+        - id: 679598b1-2f7c-4d1d-9a3d-bed6caf6f402
+          text: It represents the footer of a page.
+          correct: false
+
     - id: c97c3828-88ec-47d9-b2db-46bea8c5f294
       order: 6
+      type: code
       requirements:
         - id: a5a9a862-8171-45a2-bcdf-23c403b574ed
           key: html-is-valid
@@ -144,6 +181,7 @@ challenge:
 
     - id: bfe8cb82-2d80-4f9b-bb60-6cc6febfac66
       order: 7
+      type: code
       requirements:
         - id: b7f3fd48-d18a-4930-a6f4-ed6d72d70597
           key: html-is-valid
@@ -180,6 +218,7 @@ challenge:
 
     - id: 3c2508d0-9de3-4bff-9406-26f05652e37a
       order: 8
+      type: code
       requirements:
         - id: 21568a3b-4fb2-40f3-abe5-0de01f8a02ce
           key: html-is-valid
@@ -239,6 +278,7 @@ challenge:
 
     - id: 36905991-5fed-4b9b-b07e-3f5d56d90753
       order: 9
+      type: code
       requirements:
         - id: f3530946-0512-4506-b38b-047a978a9081
           key: html-is-valid
@@ -304,6 +344,7 @@ challenge:
 
     - id: 2da3dffc-9985-410e-9165-6e70b0091acb
       order: 10
+      type: code
       requirements:
         - id: 18084eb9-c821-4c20-a656-6c6a54812abe
           key: html-is-valid
@@ -351,6 +392,7 @@ challenge:
 
     - id: e24fa105-c185-4eab-b5f0-85b551444437
       order: 11
+      type: code
       requirements:
         - id: 2ae4f506-c31c-4e8f-a0ff-f4ea7c708af4
           key: html-is-valid
@@ -391,3 +433,18 @@ challenge:
               <!-- insert your button tag here -->
             </body>
           </html>
+
+    - id: f0b63bf6-3aca-4567-9a8a-45642c1066fb
+      order: 12
+      type: quiz
+      question: When do you use a <code>&lt;button&gt;</code> element?
+      answer_options:
+        - id: 26c7a170-2da0-48e4-896c-72fa05b9193b
+          text: When the user-action causes a change in the backend or frontend of a website (f.ex. submitting a form or opening a pop-up).
+          correct: true
+        - id: f71e02ed-fe8d-444c-916b-76a1ac5a8a4e
+          text: When the user-action does not affect the website at all (f.ex. navigating to another page).
+          correct: false
+        - id: 60efb19a-7e14-457c-8af2-f694762bcc7c
+          text: When you want to link external resources (f.ex. CSS and JS files).
+          correct: false

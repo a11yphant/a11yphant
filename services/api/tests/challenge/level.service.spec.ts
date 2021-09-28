@@ -32,9 +32,9 @@ describe("level service", () => {
         data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
 
       const service = new LevelService(prisma);
       const levels = await service.findForChallenge(id);
@@ -55,8 +55,8 @@ describe("level service", () => {
         data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
 
       const service = new LevelService(prisma);
 
@@ -93,7 +93,7 @@ describe("level service", () => {
     const getUserAndLevel = async (): Promise<{ userId: string; levelId: string }> => {
       const prisma = getPrismaService();
 
-      const { id: levelId } = await prisma.level.create({
+      const { id: levelId } = await prisma.codeLevel.create({
         data: Factory.build<LevelData>(LEVEL),
       });
 
@@ -133,7 +133,7 @@ describe("level service", () => {
       expect(status).toBe(LevelStatus.IN_PROGRESS);
     });
 
-    it("returns FINISHED if at least one successful atttempt was made", async () => {
+    it("returns FINISHED if at least one successful attempt was made", async () => {
       const prisma = getPrismaService();
 
       const { userId, levelId } = await getUserAndLevel();

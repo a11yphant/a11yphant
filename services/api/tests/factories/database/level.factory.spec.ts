@@ -13,7 +13,7 @@ describe("level database factory", () => {
   it("can create a level record with the default options", async () => {
     const prisma = getPrismaService();
 
-    const level = await prisma.level.create({
+    const level = await prisma.codeLevel.create({
       data: Factory.build<LevelData>(LEVEL),
     });
 
@@ -23,7 +23,7 @@ describe("level database factory", () => {
   it("can create a level record with tasks", async () => {
     const prisma = getPrismaService();
 
-    const level = await prisma.level.create({
+    const level = await prisma.codeLevel.create({
       data: Factory.build<LevelData>(LEVEL, {}, { numberOfTasks: 2 }),
       include: {
         tasks: true,
@@ -36,7 +36,7 @@ describe("level database factory", () => {
   it("can create a level record with requirements", async () => {
     const prisma = getPrismaService();
 
-    const level = await prisma.level.create({
+    const level = await prisma.codeLevel.create({
       data: Factory.build<LevelData>(LEVEL, {}, { numberOfRequirements: 2 }),
       include: {
         requirements: true,

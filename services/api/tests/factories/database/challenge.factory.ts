@@ -14,5 +14,5 @@ export function define(factory: IFactoryStatic): void {
     .attr("name", () => faker.lorem.words(3))
     .attr("difficulty", () => faker.random.arrayElement([ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD]))
     .option("numberOfLevels", 0)
-    .attr("levels", ["numberOfLevels"], buildMultipleOf<LevelData>(LEVEL, {}, { createChallengeIfMissing: false }));
+    .attr("codeLevels", ["numberOfLevels"], buildMultipleOf<LevelData>(LEVEL, {}, { createChallengeIfMissing: false }));
 }

@@ -11,7 +11,7 @@ describe("requirement service", () => {
     const prisma = getPrismaService();
     const service = new RequirementService(prisma);
 
-    const { id: levelId } = await prisma.level.create({
+    const { id: levelId } = await prisma.codeLevel.create({
       data: Factory.build<LevelData>(LEVEL, {}, { numberOfRequirements: 2 }),
     });
 

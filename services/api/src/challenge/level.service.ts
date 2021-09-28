@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Level as LevelRecord } from "@prisma/client";
+import { CodeLevel } from "@prisma/client";
 
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
@@ -13,7 +13,7 @@ export class LevelService {
   constructor(private prisma: PrismaService) {}
 
   async findOne(id: string): Promise<Level> {
-    const level = await this.prisma.level.findUnique({
+    const level = await this.prisma.codeLevel.findUnique({
       where: { id },
     });
 
@@ -21,7 +21,7 @@ export class LevelService {
   }
 
   async findForChallenge(challengeId: string): Promise<Level[]> {
-    const levels = await this.prisma.level.findMany({
+    const levels = await this.prisma.codeLevel.findMany({
       where: {
         challengeId,
       },
@@ -33,7 +33,7 @@ export class LevelService {
   }
 
   async findOneForChallengeAtIndex(challengeSlug: string, index: number): Promise<Level> {
-    const record = await this.prisma.level.findFirst({
+    const record = await this.prisma.codeLevel.findFirst({
       where: {
         challenge: {
           slug: challengeSlug,
@@ -49,7 +49,7 @@ export class LevelService {
   }
 
   async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
-    return this.prisma.level.count({ where: { challengeId } });
+    return this.prisma.codeLevel.count({ where: { challengeId } });
   }
 
   async findStatusForUserAndLevel(userId: string, levelId: string): Promise<LevelStatus> {
@@ -77,7 +77,7 @@ export class LevelService {
     return LevelStatus.IN_PROGRESS;
   }
 
-  public static createModelFromDatabaseRecord(record: LevelRecord): Level {
+  public static createModelFromDatabaseRecord(record: CodeLevel): Level {
     const level = new Level({ ...record });
 
     if (!record.html && !record.css && !record.js) {
