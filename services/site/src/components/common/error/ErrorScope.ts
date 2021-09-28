@@ -9,7 +9,7 @@ export const LocalErrorScopeApolloContext = { [ErrorScopeContextIdentifier]: Err
 
 export const errorScopeForOperationContext = (context: NodeJS.Dict<unknown>): ErrorScope => {
   const errorContext = context[ErrorScopeContextIdentifier];
-  if (errorContext == ErrorScope.Local) {
+  if (errorContext === ErrorScope.Local) {
     return ErrorScope.Local;
   }
 
