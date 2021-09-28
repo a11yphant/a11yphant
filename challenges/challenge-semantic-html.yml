@@ -9,6 +9,7 @@ challenge:
   levels:
     - id: 2851ade8-5b45-4c66-9a51-bcaec580eaff
       order: 1
+      type: code
       requirements:
         - id: 4cc9bc09-1c74-4547-bb8b-6f08efce284c
           key: html-is-valid
@@ -79,6 +80,7 @@ challenge:
 
     - id: d2b5f580-16be-4ebd-82e5-b5a3de4fec9d
       order: 2
+      type: code
       requirements:
         - id: 0b9a4640-e49b-4042-8c4a-b718431b0d57
           key: html-is-valid
@@ -134,6 +136,7 @@ challenge:
 
     - id: 22356b69-f422-49b4-8713-6ac01327a5bf
       order: 3
+      type: code
       requirements:
         - id: d73a14ec-8b72-42df-839d-d3a41a6755d2
           key: html-is-valid
@@ -203,6 +206,7 @@ challenge:
 
     - id: 402a1950-16e6-41dc-9cf3-437d461c4e6d
       order: 4
+      type: code
       requirements:
         - id: 8cf34f54-72cd-41c1-a267-6b2fd722705c
           key: html-is-valid

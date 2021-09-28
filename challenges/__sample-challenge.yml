@@ -9,6 +9,7 @@ challenge:
   levels:
     - id: xxuuid
       order: 1
+      type: code
       requirements:
         - key: xxrulekey
           title:
@@ -35,3 +36,12 @@ challenge:
         html: true
         css: false
         js: false
+
+    - id: xxuuid
+      order: 2
+      type: quiz
+      question:
+      answer_options:
+        - id: xxuuid
+          text:
+          correct: true

@@ -9,6 +9,7 @@ challenge:
   levels:
     - id: 5557e647-7a14-47b7-b51c-142f25cc998c
       order: 1
+      type: code
       requirements:
         - id: da787b67-30bd-490e-8913-4d7d2a7fd2d0
           key: html-is-valid
@@ -59,6 +60,7 @@ challenge:
 
     - id: 0682b540-67cb-45b6-bdf3-692fb78e871d
       order: 2
+      type: code
       requirements:
         - id: 3d69d723-44db-48ac-9d50-6a47f132cc9d
           key: html-is-valid
