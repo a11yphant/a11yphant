@@ -4,6 +4,7 @@ import { RequirementFactory } from "@tests/factories/models/requirement.factory"
 import { SubmissionFactory } from "@tests/factories/models/submission.factory";
 import { TaskFactory } from "@tests/factories/models/task.factory";
 
+import { LevelStatus } from "@/challenge/enums/level-status.enum";
 import { LevelResolver } from "@/challenge/level.resolver";
 import { LevelService } from "@/challenge/level.service";
 import { Requirement } from "@/challenge/models/requirement.model";
@@ -90,5 +91,19 @@ describe("level resolver", () => {
     const fetchedSubmission = await resolver.lastSubmission(LevelFactory.build(), { userId: "userid" });
 
     expect(fetchedSubmission.id).toBe(submission.id);
+  });
+
+  it("resolves out the status of a level", async () => {
+    const resolver = new LevelResolver(
+      createMock<LevelService>({
+        findStatusForUserAndLevel: jest.fn().mockResolvedValue(LevelStatus.OPEN),
+      }),
+      createMock<RequirementService>(),
+      createMock<TaskService>(),
+      createMock<SubmissionService>(),
+    );
+    const status = await resolver.status(LevelFactory.build(), { userId: "userid" });
+
+    expect(status).toBe(LevelStatus.OPEN);
   });
 });

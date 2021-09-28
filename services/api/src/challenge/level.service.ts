@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { Level as LevelRecord } from "@prisma/client";
 
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
+
 import { PrismaService } from "../prisma/prisma.service";
+import { LevelStatus } from "./enums/level-status.enum";
 import { Code } from "./models/code.model";
 import { Level } from "./models/level.model";
 
@@ -47,6 +50,31 @@ export class LevelService {
 
   async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
     return this.prisma.level.count({ where: { challengeId } });
+  }
+
+  async findStatusForUserAndLevel(userId: string, levelId: string): Promise<LevelStatus> {
+    const submissionCount = await this.prisma.submission.count({
+      where: {
+        userId,
+        levelId,
+      },
+    });
+
+    if (submissionCount === 0) return LevelStatus.OPEN;
+
+    const successfulSubmissionsCount = await this.prisma.submission.count({
+      where: {
+        userId,
+        levelId,
+        result: {
+          status: ResultStatus.SUCCESS,
+        },
+      },
+    });
+
+    if (successfulSubmissionsCount > 0) return LevelStatus.FINISHED;
+
+    return LevelStatus.IN_PROGRESS;
   }
 
   public static createModelFromDatabaseRecord(record: LevelRecord): Level {
