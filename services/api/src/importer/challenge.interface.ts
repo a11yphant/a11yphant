@@ -31,7 +31,6 @@ export interface QuizLevel {
 
 export interface AnswerOption {
   id: string;
-  order: number;
   text: string;
   correct: boolean;
 }

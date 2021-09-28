@@ -38,7 +38,7 @@ model AnswerOption {
   id          String    @id @default(uuid()) @db.Uuid
   text        String
   correct     Boolean   @default(false)
-  quizLevel   QuizLevel @relation(fields: [quizLevelId], references: [id])
+  quizLevel   QuizLevel @relation(fields: [quizLevelId], references: [id], onDelete: Cascade)
   quizLevelId String    @db.Uuid
 
   @@map("quiz_answer_options")

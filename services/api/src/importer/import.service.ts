@@ -71,15 +71,45 @@ export class ImportService {
     await this.upsertLevelsForChallenge(challenge.levels, challenge.id);
 
     for (const level of challenge.levels) {
-      if (level.type !== "code") continue;
+      if (level.type === "code") {
+        await this.upsertRequirementsForLevel(level.requirements, level.id);
+        await this.upsertTasksForLevel(level.tasks, level.id);
 
-      await this.upsertRequirementsForLevel(level.requirements, level.id);
-      await this.upsertTasksForLevel(level.tasks, level.id);
+        for (const task of level.tasks) {
+          await this.upsertHintsForTask(task.hints, task.id);
+        }
+      }
 
-      for (const task of level.tasks) {
-        await this.upsertHintsForTask(task.hints, task.id);
+      if (level.type === "quiz") {
+        await Promise.all(
+          level.answer_options.map((answerOption) =>
+            this.prisma.answerOption.upsert({
+              where: { id: answerOption.id },
+              create: {
+                id: answerOption.id,
+                text: answerOption.text,
+                correct: answerOption.correct,
+                quizLevelId: level.id,
+              },
+              update: {
+                text: answerOption.text,
+                correct: answerOption.correct,
+                quizLevelId: level.id,
+              },
+            }),
+          ),
+        );
       }
     }
+
+    const quizLevelIds = challenge.levels.filter((level) => level.type === "quiz").map((level) => level.id);
+
+    await this.prisma.quizLevel.deleteMany({
+      where: {
+        id: { notIn: quizLevelIds },
+        challengeId: challenge.id,
+      },
+    });
   }
 
   private async upsertChallenge(challenge: Challenge): Promise<void> {

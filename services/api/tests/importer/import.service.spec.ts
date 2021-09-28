@@ -33,6 +33,7 @@ describe("import service", () => {
       createMock<Logger>(),
       createMock<PrismaService>({
         challenge: { upsert },
+        quizLevel: { deleteMany: jest.fn() },
       }),
       createMock<YamlReaderService>({
         readFile: jest
@@ -236,7 +237,39 @@ describe("import service", () => {
       expect(storedLevel.hasJsEditor).toEqual(false);
     });
 
-    it("can import code levels", async () => {
+    it("can import quiz levels", async () => {
+      const prisma = getPrismaService();
+      const challenge: Challenge = {
+        id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+        slug: "test-slug",
+        name: "test",
+        introduction: "hello",
+        difficulty: "easy",
+        levels: [
+          {
+            id: faker.datatype.uuid(),
+            order: 1,
+            type: "quiz",
+            question: "How are you today?",
+            answer_options: [],
+          },
+        ],
+      };
+
+      const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+
+      await importer.importChallenge(challenge);
+
+      expect(await prisma.quizLevel.count()).toEqual(1);
+      const level = challenge.levels[0] as QuizLevel;
+      const storedLevel = await prisma.quizLevel.findFirst();
+      expect(storedLevel.id).toEqual(level.id);
+      expect(storedLevel.order).toEqual(level.order);
+      expect(storedLevel.question).toEqual(level.question);
+      expect(storedLevel.challengeId).toEqual(challenge.id);
+    });
+
+    it("can import answers for quiz levels", async () => {
       const prisma = getPrismaService();
       const challenge: Challenge = {
         id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
@@ -253,13 +286,11 @@ describe("import service", () => {
             answer_options: [
               {
                 id: faker.datatype.uuid(),
-                order: 1,
                 text: "I'm fine",
                 correct: true,
               },
               {
                 id: faker.datatype.uuid(),
-                order: 2,
                 text: "I'm not fine",
                 correct: false,
               },
@@ -272,13 +303,49 @@ describe("import service", () => {
 
       await importer.importChallenge(challenge);
 
-      expect(await prisma.quizLevel.count()).toEqual(1);
-      const level = challenge.levels[0] as QuizLevel;
-      const storedLevel = await prisma.quizLevel.findFirst();
-      expect(storedLevel.id).toEqual(level.id);
-      expect(storedLevel.order).toEqual(level.order);
-      expect(storedLevel.question).toEqual(level.question);
-      expect(storedLevel.challengeId).toEqual(challenge.id);
+      expect(await prisma.answerOption.count()).toEqual(2);
+      const answerOption = (challenge.levels[0] as QuizLevel).answer_options[0];
+      const storedAnswerOption = await prisma.answerOption.findUnique({ where: { id: answerOption.id } });
+      expect(storedAnswerOption.id).toEqual(answerOption.id);
+      expect(storedAnswerOption.text).toEqual(answerOption.text);
+      expect(storedAnswerOption.quizLevelId).toEqual(challenge.levels[0].id);
+    });
+
+    it("deletes quiz levels from a challenge if they are deleted", async () => {
+      const prisma = getPrismaService();
+      const challengeWithoutLevels: Challenge = {
+        id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+        slug: "test-slug",
+        name: "test",
+        introduction: "hello",
+        difficulty: "easy",
+        levels: [],
+      };
+      const challenge: Challenge = {
+        ...challengeWithoutLevels,
+        levels: [
+          {
+            id: faker.datatype.uuid(),
+            order: 1,
+            type: "quiz",
+            question: "How are you today?",
+            answer_options: [
+              {
+                id: faker.datatype.uuid(),
+                correct: true,
+                text: "Options",
+              },
+            ],
+          },
+        ],
+      };
+
+      const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+
+      await importer.importChallenge(challenge);
+      await importer.importChallenge(challengeWithoutLevels);
+
+      expect(await prisma.quizLevel.count()).toEqual(0);
     });
   });
 
