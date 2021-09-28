@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import ErrorDialog, { ErrorDialogProps } from "app/components/common/error/ErrorDialog";
-import { errorMessages } from "app/components/common/error/errorMessages";
+import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
 import { GraphQLError } from "graphql";
 import React from "react";
 
@@ -36,7 +36,7 @@ const getMessageForGraphQLError = (graphQLError: GraphQLError, options: ErrorDia
     return options?.defaultMessage;
   } else {
     // Show unknown error
-    return errorMessages.unknownError();
+    return <UnknownError />;
   }
 };
 
@@ -55,7 +55,7 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
     let messages = [];
 
     if (networkError) {
-      messages = [errorMessages.networkError()];
+      messages = [<NetworkError />];
     } else if (graphQLErrors) {
       messages = graphQLErrors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
     }
