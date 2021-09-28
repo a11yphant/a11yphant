@@ -79,7 +79,7 @@ challenge:
     - id: c37cbd66-5289-4df7-b619-48fb799e7889
       order: 3
       type: quiz
-      question: What is the purpose of the <code>&lt;headgt;</code> tag?
+      question: What is the purpose of the <code>&lt;head&gt;</code> tag?
       answer_options:
         - id: bd6207a7-c02b-4253-8820-db830547b561
           text: It contains meta information regarding the page, for example the title.
@@ -125,16 +125,16 @@ challenge:
     - id: ceaebba5-ad2f-4994-8f2c-53950ba8fd87
       order: 5
       type: quiz
-      question: What is the purpose of the <code>&lt;body;</code> tag?
+      question: What is the purpose of the <code>&lt;body&gt;</code> tag?
       answer_options:
         - id: 1ae933e1-b6b4-4123-b342-ee23ee81b861
           text: It contains images, text, links and other content of the page.
           correct: true
         - id: 6cc0d6e3-f6b2-4fab-b8a1-eb1c6b8794fe
-          text: The <code>&lt;body;</code> tag is used to wrap every new content section on a website.
+          text: The <code>&lt;body&gt;</code> tag is used to wrap every new content section on a website.
           correct: false
         - id: 91a49c27-bd72-4505-89ab-97f3d1fc9a20
-          text: It wraps the <code>&lt;title;</code> tag of the website.
+          text: It wraps the <code>&lt;title&gt;</code> tag of the website.
           correct: false
         - id: 679598b1-2f7c-4d1d-9a3d-bed6caf6f402
           text: It represents the footer of a page.
@@ -437,7 +437,7 @@ challenge:
     - id: f0b63bf6-3aca-4567-9a8a-45642c1066fb
       order: 12
       type: quiz
-      question: When do you use a <button> element?
+      question: When do you use a <code>&lt;button&gt;</code> element?
       answer_options:
         - id: 26c7a170-2da0-48e4-896c-72fa05b9193b
           text: When the user-action causes a change in the backend or frontend of a website (f.ex. submitting a form or opening a pop-up).
