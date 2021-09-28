@@ -30,7 +30,9 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
   }, []);
 
   React.useEffect(() => {
-    console.error(errorResponse);
+    if (errorResponse) {
+      console.error(errorResponse);
+    }
   }, [errorResponse]);
 
   return (
