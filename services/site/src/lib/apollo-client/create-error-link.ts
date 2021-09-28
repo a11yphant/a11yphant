@@ -13,7 +13,7 @@ export const createErrorLink = ({ errorDialogApi }: CreateErrorLinkProps): Apoll
       const errorScope = errorScopeForOperationContext(operation.getContext());
 
       if (errorScope === ErrorScope.Global) {
-        if (graphQLErrors.length > 0 || networkError) {
+        if ((graphQLErrors && graphQLErrors.length > 0) || networkError) {
           errorDialogApi.showApolloError({ graphQLErrors, networkError });
         }
       }
