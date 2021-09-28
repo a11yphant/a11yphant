@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 
 export type ChallengeData = Prisma.ChallengeCreateArgs["data"];
 export type CheckResultData = Prisma.CheckResultCreateArgs["data"];
-export type LevelData = Prisma.LevelCreateArgs["data"];
+export type LevelData = Prisma.CodeLevelCreateArgs["data"];
 export type HintData = Prisma.HintCreateArgs["data"];
 export type RequirementData = Prisma.RequirementCreateArgs["data"];
 export type ResultData = Prisma.ResultCreateArgs["data"];

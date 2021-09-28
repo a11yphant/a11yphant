@@ -25,10 +25,10 @@ describe("challenge database factory", () => {
     const challenge = await prisma.challenge.create({
       data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 2 }),
       include: {
-        levels: true,
+        codeLevels: true,
       },
     });
 
-    expect(challenge.levels).toHaveLength(2);
+    expect(challenge.codeLevels).toHaveLength(2);
   });
 });

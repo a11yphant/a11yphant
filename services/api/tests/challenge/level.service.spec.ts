@@ -30,9 +30,9 @@ describe("level service", () => {
         data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
 
       const service = new LevelService(prisma);
       const levels = await service.findForChallenge(id);
@@ -53,8 +53,8 @@ describe("level service", () => {
         data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
-      await prisma.level.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
+      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
 
       const service = new LevelService(prisma);
 

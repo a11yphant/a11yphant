@@ -7,22 +7,44 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Challenge {
-  id           String  @id @default(uuid()) @db.Uuid
-  slug         String  @unique
+  id           String      @id @default(uuid()) @db.Uuid
+  slug         String      @unique
   name         String
-  introduction String  @default("")
-  difficulty   Int     @default(0)
-  order        Int     @default(0)
-  levels       Level[]
+  introduction String      @default("")
+  difficulty   Int         @default(0)
+  order        Int         @default(0)
+  codeLevels   CodeLevel[]
+  quizLevels   QuizLevel[]
 
   @@map(name: "challenges")
 }
 
-model Level {
+model QuizLevel {
+  id            String         @id @default(uuid()) @db.Uuid
+  order         Int            @default(0)
+  question      String
+  challenge     Challenge      @relation(fields: [challengeId], references: [id])
+  challengeId   String         @db.Uuid
+  answerOptions AnswerOption[]
+
+  @@map("quiz_levels")
+}
+
+model AnswerOption {
+  id          String    @id @default(uuid()) @db.Uuid
+  text        String
+  correct     Boolean   @default(false)
+  quizLevel   QuizLevel @relation(fields: [quizLevelId], references: [id])
+  quizLevelId String    @db.Uuid
+
+  @@map("quiz_answer_options")
+}
+
+model CodeLevel {
   id            String        @id @default(uuid()) @db.Uuid
   order         Int           @default(0)
   instructions  String
@@ -38,15 +60,15 @@ model Level {
   hasCssEditor  Boolean       @default(false)
   hasJsEditor   Boolean       @default(false)
 
-  @@map(name: "levels")
+  @@map(name: "code_levels")
 }
 
 model Task {
-  id      String  @id @default(uuid()) @db.Uuid
+  id      String     @id @default(uuid()) @db.Uuid
   text    String
   hints   Hint[]
-  Level   Level?  @relation(fields: [levelId], references: [id])
-  levelId String? @db.Uuid
+  Level   CodeLevel? @relation(fields: [levelId], references: [id])
+  levelId String?    @db.Uuid
 
   @@map("tasks")
 }
@@ -64,7 +86,7 @@ model Requirement {
   title       String        @default("")
   description String        @default("")
   order       Int           @default(0)
-  level       Level         @relation(fields: [levelId], references: [id])
+  level       CodeLevel     @relation(fields: [levelId], references: [id])
   levelId     String        @db.Uuid
   rule        Rule?         @relation(fields: [ruleId], references: [id])
   ruleId      String?       @db.Uuid
@@ -90,7 +112,7 @@ model Submission {
   html      String?
   css       String?
   js        String?
-  level     Level     @relation(fields: [levelId], references: [id])
+  level     CodeLevel @relation(fields: [levelId], references: [id])
   levelId   String    @db.Uuid
   result    Result?
   user      User?     @relation(fields: [userId], references: [id])

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Level as LevelRecord } from "@prisma/client";
+import { CodeLevel as CodeLevelRecord } from "@prisma/client";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { Code } from "./models/code.model";
@@ -10,7 +10,7 @@ export class LevelService {
   constructor(private prisma: PrismaService) {}
 
   async findOne(id: string): Promise<Level> {
-    const level = await this.prisma.level.findUnique({
+    const level = await this.prisma.codeLevel.findUnique({
       where: { id },
     });
 
@@ -18,7 +18,7 @@ export class LevelService {
   }
 
   async findForChallenge(challengeId: string): Promise<Level[]> {
-    const levels = await this.prisma.level.findMany({
+    const levels = await this.prisma.codeLevel.findMany({
       where: {
         challengeId,
       },
@@ -30,7 +30,7 @@ export class LevelService {
   }
 
   async findOneForChallengeAtIndex(challengeSlug: string, index: number): Promise<Level> {
-    const record = await this.prisma.level.findFirst({
+    const record = await this.prisma.codeLevel.findFirst({
       where: {
         challenge: {
           slug: challengeSlug,
@@ -46,10 +46,10 @@ export class LevelService {
   }
 
   async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
-    return this.prisma.level.count({ where: { challengeId } });
+    return this.prisma.codeLevel.count({ where: { challengeId } });
   }
 
-  public static createModelFromDatabaseRecord(record: LevelRecord): Level {
+  public static createModelFromDatabaseRecord(record: CodeLevelRecord): Level {
     const level = new Level({ ...record });
 
     if (!record.html && !record.css && !record.js) {

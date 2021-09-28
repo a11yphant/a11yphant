@@ -8,14 +8,32 @@ export interface Challenge {
   levels: Level[];
 }
 
-export interface Level {
+export type Level = CodeLevel | QuizLevel;
+
+export interface CodeLevel {
   id: string;
   order: number;
+  type: "code";
   requirements: Requirement[];
   instructions: string;
   tasks: Task[];
   code?: Code;
   has_editor?: HasEditor;
+}
+
+export interface QuizLevel {
+  id: string;
+  order: number;
+  type: "quiz";
+  answer_options: AnswerOption[];
+  question: string;
+}
+
+export interface AnswerOption {
+  id: string;
+  order: number;
+  text: string;
+  correct: boolean;
 }
 
 export interface Requirement {

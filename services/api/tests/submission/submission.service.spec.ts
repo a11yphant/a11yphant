@@ -71,7 +71,7 @@ describe("submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      const { id: levelId } = await prisma.level.create({
+      const { id: levelId } = await prisma.codeLevel.create({
         data: Factory.build<LevelData>(LEVEL),
       });
 
@@ -125,7 +125,7 @@ describe("submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      const { id: levelId } = await prisma.level.create({
+      const { id: levelId } = await prisma.codeLevel.create({
         data: Factory.build<LevelData>(LEVEL),
       });
 
@@ -162,7 +162,7 @@ describe("submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      const { id: levelId } = await prisma.level.create({
+      const { id: levelId } = await prisma.codeLevel.create({
         data: Factory.build<LevelData>(LEVEL),
       });
 

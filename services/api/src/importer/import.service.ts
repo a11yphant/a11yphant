@@ -4,7 +4,7 @@ import { join, resolve } from "path";
 import { promisify } from "util";
 
 import { PrismaService } from "../prisma/prisma.service";
-import { Challenge, Hint, Level, Requirement, Task } from "./challenge.interface";
+import { Challenge, CodeLevel, Hint, Level, QuizLevel, Requirement, Task } from "./challenge.interface";
 import { Rule } from "./rule.interface";
 import { YamlReaderService } from "./yaml-reader.service";
 
@@ -71,6 +71,8 @@ export class ImportService {
     await this.upsertLevelsForChallenge(challenge.levels, challenge.id);
 
     for (const level of challenge.levels) {
+      if (level.type !== "code") continue;
+
       await this.upsertRequirementsForLevel(level.requirements, level.id);
       await this.upsertTasksForLevel(level.tasks, level.id);
 
@@ -113,34 +115,61 @@ export class ImportService {
   private async upsertLevelsForChallenge(levels: Level[], challengeId: string): Promise<void> {
     await Promise.all(
       levels.map(async (level) => {
-        await this.prisma.level.upsert({
-          where: { id: level.id },
-          create: {
-            id: level.id,
-            order: level.order,
-            instructions: level.instructions,
-            challengeId,
-            html: level.code?.html,
-            css: level.code?.css,
-            js: level.code?.js,
-            hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
-            hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
-            hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
-          },
-          update: {
-            order: level.order,
-            instructions: level.instructions,
-            challengeId,
-            html: level.code?.html,
-            css: level.code?.css,
-            js: level.code?.js,
-            hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
-            hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
-            hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
-          },
-        });
+        if (level.type === "code") {
+          await this.upsertCodeLevel(level, challengeId);
+        }
+
+        if (level.type === "quiz") {
+          await this.upsertQuizLevel(level, challengeId);
+        }
       }),
     );
+  }
+
+  private async upsertQuizLevel(level: QuizLevel, challengeId: string): Promise<void> {
+    await this.prisma.quizLevel.upsert({
+      where: { id: level.id },
+      create: {
+        id: level.id,
+        challengeId: challengeId,
+        order: level.order,
+        question: level.question,
+      },
+      update: {
+        challengeId: challengeId,
+        order: level.order,
+        question: level.question,
+      },
+    });
+  }
+
+  private async upsertCodeLevel(level: CodeLevel, challengeId: string): Promise<void> {
+    await this.prisma.codeLevel.upsert({
+      where: { id: level.id },
+      create: {
+        id: level.id,
+        order: level.order,
+        instructions: level.instructions,
+        challengeId,
+        html: level.code?.html,
+        css: level.code?.css,
+        js: level.code?.js,
+        hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
+        hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
+        hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
+      },
+      update: {
+        order: level.order,
+        instructions: level.instructions,
+        challengeId,
+        html: level.code?.html,
+        css: level.code?.css,
+        js: level.code?.js,
+        hasHtmlEditor: level.has_editor?.html ?? !!level.code?.html,
+        hasCssEditor: level.has_editor?.css ?? !!level.code?.css,
+        hasJsEditor: level.has_editor?.js ?? !!level.code?.js,
+      },
+    });
   }
 
   private async upsertRequirementsForLevel(requirements: Requirement[], levelId: string): Promise<void> {
