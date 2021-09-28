@@ -47,14 +47,6 @@ describe("Error Dialog", () => {
     expect(wrapper.find(Dialog).props().open).toBeTruthy();
   });
 
-  it("is open", () => {
-    const wrapper = shallow(
-      <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
-    );
-
-    expect(wrapper.find(Dialog).props().open).toBeTruthy();
-  });
-
   it("shows title", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,

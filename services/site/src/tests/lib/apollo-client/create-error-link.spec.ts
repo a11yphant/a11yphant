@@ -48,7 +48,6 @@ describe("create error link", () => {
   it("opens errorDialog if error scope is global", (done) => {
     const errorDialogApi = useErrorDialogApi();
 
-    // const link = createErrorLink({ errorDialogApi }).concat(createTerminatingLink());
     const link = createErrorLink({ errorDialogApi }).concat(mockLink);
 
     execute(link, { query }).subscribe({
@@ -66,7 +65,6 @@ describe("create error link", () => {
   it("doesn't open errorDialog if error scope is local", (done) => {
     const errorDialogApi = useErrorDialogApi();
 
-    // const link = createErrorLink({ errorDialogApi }).concat(createTerminatingLink());
     const link = createErrorLink({ errorDialogApi }).concat(mockLink);
 
     execute(link, { query, context: LocalErrorScopeApolloContext }).subscribe({
