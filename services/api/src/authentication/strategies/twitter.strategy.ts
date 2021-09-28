@@ -31,8 +31,6 @@ export class TwitterStrategy extends PassportStrategy(Strategy, "twitter") {
       provider: "twitter",
     };
 
-    console.log(providerInformation);
-
     return done(null, providerInformation);
   }
 }

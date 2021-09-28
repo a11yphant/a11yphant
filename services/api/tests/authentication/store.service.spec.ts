@@ -5,11 +5,7 @@ import { Request } from "express";
 import { JwtService } from "@/authentication/jwt.service";
 import { StoreService } from "@/authentication/store.service";
 
-const getStore = (): StoreService => {
-  const store = new StoreService(createMock<JwtService>(), createMock<Logger>());
-  store.onModuleInit();
-  return store;
-};
+const getStore = (): StoreService => new StoreService(createMock<JwtService>(), createMock<Logger>());
 
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyOWE0M2NmZC1hNWRlLTRmMmYtYjVkMC0wYjUzMzY3MjkzMTIiLCJpYXQiOjE2MzI3NTQ4MDAsImV4cCI6MTY2NDI5MDgwMCwiaXNzIjoiYTExeXBoYW50Iiwic3ViIjoic2Vzc2lvbiJ9.YzKX5OxHOOUeoUSmKsy0pQGBAqGTqkSLSKXZn4b2MY4";
