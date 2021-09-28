@@ -6,7 +6,6 @@ import "app/styles/custom.scss";
 import { ApolloProvider } from "@apollo/client";
 import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error/useErrorDialog";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
-import Navigation from "app/components/Navigation";
 import { useApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
 import Router from "next/router";
@@ -33,7 +32,6 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       <ApolloProvider client={apolloClient}>
         <div className="w-full h-screen">
           <ScrollOverlayWrapper className={clsx("w-full h-full overflow-auto")} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
-            <Navigation displayBreadcrumbs={pageProps.displayBreadcrumbs} displaySave={pageProps.displaySave} />
             <Component {...pageProps} />
           </ScrollOverlayWrapper>
         </div>

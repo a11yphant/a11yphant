@@ -4,6 +4,7 @@ import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/Wra
 import { EditorLanguage } from "app/components/challenge/Editors";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
+import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, shallow } from "enzyme";
 import React from "react";
 
@@ -69,10 +70,12 @@ describe("WrappedEditor", () => {
   });
 
   it("reset is called", () => {
+    setupIntersectionObserverMock();
+
     const onReset = jest.fn();
     const wrapper = mount(<WrappedEditor onReset={onReset} config={editorConfig} />);
 
-    wrapper.find(Reset).closest("button").simulate("click");
+    wrapper.find(Reset).simulate("click");
     wrapper
       .findWhere((n) => n.text() === `Reset ${editorConfig.languageLabel}`)
       .find("button")

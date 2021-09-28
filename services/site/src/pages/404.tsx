@@ -1,4 +1,5 @@
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
+import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
@@ -6,6 +7,7 @@ import React from "react";
 const Custom404: React.FunctionComponent = () => {
   return (
     <>
+      <Navigation />
       <main className="h-main box-border max-w-screen-3xl mx-auto">
         <section
           className={clsx("mx-8 py-8 h-main flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}

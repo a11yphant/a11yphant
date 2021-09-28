@@ -17,6 +17,16 @@ export class UserService {
     return new User(record);
   }
 
+  async findById(userId: string): Promise<User> {
+    const userRecord = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    return userRecord ? new User(userRecord) : null;
+  }
+
   async updateWithAuthInformation(userId: string, providerInformation: ProviderInformation): Promise<User> {
     let userRecord = await this.prisma.user.findFirst({
       where: {

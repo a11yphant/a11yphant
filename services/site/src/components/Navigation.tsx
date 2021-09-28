@@ -5,7 +5,6 @@ import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
-import Save from "./icons/Save";
 import UserAvatar from "./icons/UserAvatar";
 
 interface NavigationProps {
@@ -13,7 +12,7 @@ interface NavigationProps {
   displaySave?: boolean;
 }
 
-const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, displaySave = false }) => {
+const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, children }) => {
   // TODO: replace when login is implemented
   const displayUserProfile = false;
   const displayRegistration = false;
@@ -42,7 +41,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         </>
       )}
       <div className="flex justify-end items-center col-span-1">
-        {displaySave && <Save className={clsx("hidden", "lg:block")} />}
+        {children}
         {displayUserProfile && <UserAvatar className="ml-4" />}
         {displayRegistration && (
           <>

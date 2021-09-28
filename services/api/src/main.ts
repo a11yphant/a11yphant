@@ -39,7 +39,7 @@ async function bootstrap(): Promise<NestExpressApplication | void> {
   const port = configService.get("api.port");
 
   await app.listen(port);
-  await app.startAllMicroservicesAsync();
+  await app.startAllMicroservices();
   logger.log(`App listening on ${url}/graphql`, AppModule.name);
 }
 

@@ -12,6 +12,7 @@ import { TaskResolver } from "./challenge/task.resolver";
 import { RequirementResultResolver } from "./submission/graphql/resolvers/requirement-result.resolver";
 import { ResultResolver } from "./submission/graphql/resolvers/result.resolver";
 import { SubmissionResolver } from "./submission/graphql/resolvers/submission.resolver";
+import { UserResolver } from "./user/user.resolver";
 
 const resolvers = [
   ChallengeResolver,
@@ -21,6 +22,7 @@ const resolvers = [
   ResultResolver,
   RequirementResultResolver,
   RequirementResolver,
+  UserResolver,
 ];
 
 const scalars = [];
