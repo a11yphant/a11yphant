@@ -81,7 +81,7 @@ export class ImportService {
       }
 
       if (level.type === "quiz") {
-        await this.upsertAnswerOptionsForCodeLevel(level);
+        await this.upsertAnswerOptionsForQuizLevel(level);
       }
     }
 
@@ -95,7 +95,7 @@ export class ImportService {
     });
   }
 
-  private async upsertAnswerOptionsForCodeLevel(level: QuizLevel): Promise<void> {
+  private async upsertAnswerOptionsForQuizLevel(level: QuizLevel): Promise<void> {
     await Promise.all(
       level.answer_options.map((answerOption) =>
         this.prisma.answerOption.upsert({
