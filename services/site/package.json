@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.4.13",
-    "@headlessui/react": "^1.4.1",
+    "@headlessui/react": "1.4.1",
     "@monaco-editor/react": "4.2.2",
     "@tailwindcss/typography": "0.4.1",
     "@types/sanitize-html": "2.3.2",
