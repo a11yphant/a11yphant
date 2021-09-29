@@ -54,7 +54,7 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
               "w-11 h-11 p-3.5 absolute top-4 right-4",
               "transition-colors duration-300",
               "hover:text-primary-light",
-              "focus:text-primary-light",
+              "focus-visible:text-primary-light",
             )}
           >
             <span className="sr-only">Close</span>
@@ -74,7 +74,9 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 )}
               >
                 Sign up via Github
-                <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white", "group-hover:text-primary")} />
+                <Github
+                  className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white", "transition duration-300", "group-hover:text-primary")}
+                />
               </a>
             )}
           </div>
@@ -86,8 +88,8 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 className={clsx(
                   "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
                   "transition duration-300",
-                  "hover:text-primary hover:bg-grey-light hover:border-grey-light",
-                  "focus:text-primary focus:bg-grey-light focus:border-grey-light",
+                  "hover:border-transparent",
+                  "focus:border-transparent",
                 )}
               >
                 {loginLinkText}
@@ -101,8 +103,8 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 className={clsx(
                   "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
                   "transition duration-300",
-                  "hover:text-primary hover:bg-grey-light hover:border-grey-light",
-                  "focus:text-primary focus:bg-grey-light focus:border-grey-light",
+                  "hover:border-transparent",
+                  "focus:border-transparent",
                 )}
               >
                 {registrationLinkText}
@@ -116,8 +118,8 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 className={clsx(
                   "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
                   "transition duration-300",
-                  "hover:text-primary hover:bg-grey-light hover:border-grey-light",
-                  "focus:text-primary focus:bg-grey-light focus:border-grey-light",
+                  "hover:border-transparent",
+                  "focus:border-transparent",
                 )}
               >
                 {resetLinkText}
