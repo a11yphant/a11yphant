@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { Dialog } from "@headlessui/react";
 import { cleanup } from "@testing-library/react";
-import { AuthBox } from "app/components/auth/AuthBox";
+import { UserAccountBox } from "app/components/auth/UserAccountBox";
 import Button from "app/components/buttons/Button";
 import X from "app/components/icons/X";
 import UserAccountModal, { UserAccountModalProps } from "app/components/modal/UserAccountModal";
@@ -37,14 +37,14 @@ describe("UserAccountModal", () => {
     const wrapper = renderUserAccountModal({ mode: "signup" });
 
     expect(wrapper.find(Dialog.Title).children().text()).toContain("Sign up");
-    expect(wrapper.find(AuthBox).props().mode).toContain("signup");
+    expect(wrapper.find(UserAccountBox).props().mode).toContain("signup");
   });
 
   it("renders correctly in login mode", () => {
     const wrapper = renderUserAccountModal({ mode: "login" });
 
     expect(wrapper.find(Dialog.Title).children().text()).toContain("Login");
-    expect(wrapper.find(AuthBox).props().mode).toContain("login");
+    expect(wrapper.find(UserAccountBox).props().mode).toContain("login");
   });
 
   it("calls onClose on X press", () => {

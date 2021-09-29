@@ -1,10 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { AuthBox } from "app/components/auth/AuthBox";
 import clsx from "clsx";
 import React from "react";
 
 import Button from "../buttons/Button";
 import X from "../icons/X";
+import { UserAccountBox } from "./UserAccountBox";
 
 export interface UserAccountModalProps {
   open?: boolean;
@@ -50,7 +50,7 @@ const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open
 
           <Dialog.Title className={clsx("mb-8", "h4")}>{mode === "signup" ? "Sign up to save your progress!" : "Login"}</Dialog.Title>
 
-          <AuthBox mode={mode} />
+          <UserAccountBox mode={mode} />
         </div>
       </Dialog>
     </Transition>

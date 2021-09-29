@@ -3,11 +3,11 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-export interface AuthBoxProps {
+export interface UserAccountBoxProps {
   mode: "signup" | "login";
 }
 
-export const AuthBox = ({ mode }: AuthBoxProps): React.ReactElement => {
+export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElement => {
   return (
     <>
       <div className="mb-2">
