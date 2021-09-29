@@ -30,6 +30,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
           "inline-flex items-center px-4 py-2 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-white hover:bg-primary-dark hover:border-primary-dark focus:text-white focus:bg-primary-dark focus:border-primary-dark",
       )}
       ref={innerRef}
+      disabled={disabled}
       {...props}
     >
       {children}
