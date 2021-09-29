@@ -136,7 +136,7 @@ describe("challenge service", () => {
 
         const { userId, challengeId } = await getUserAndChallenge();
 
-        const { id: levelId } = await prisma.level.findFirst({
+        const { id: levelId } = await prisma.codeLevel.findFirst({
           where: { challengeId },
         });
 
@@ -155,7 +155,7 @@ describe("challenge service", () => {
 
         const { userId, challengeId } = await getUserAndChallenge();
 
-        const levels = await prisma.level.findMany({
+        const levels = await prisma.codeLevel.findMany({
           where: { challengeId },
         });
 
@@ -181,7 +181,7 @@ describe("challenge service", () => {
 
         const { userId, challengeId } = await getUserAndChallenge();
 
-        const levels = await prisma.level.findMany({
+        const levels = await prisma.codeLevel.findMany({
           where: { challengeId },
         });
 
@@ -208,7 +208,7 @@ describe("challenge service", () => {
 
         const { userId, challengeId } = await getUserAndChallenge();
 
-        const levels = await prisma.level.findMany({
+        const levels = await prisma.codeLevel.findMany({
           where: { challengeId },
         });
 
