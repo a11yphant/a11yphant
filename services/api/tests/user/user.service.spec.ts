@@ -4,6 +4,7 @@ import { UserFactory } from "@tests/factories/models/user.factory";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
+import { CryptService } from "@/authentication/crypt.service";
 import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
 import { UserService } from "@/user/user.service";
 
@@ -11,14 +12,14 @@ describe("user service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
   it("can create a user", async () => {
     const prisma = getPrismaService();
-    const service = new UserService(prisma);
+    const service = new UserService(prisma, createMock<CryptService>(), createMock<Logger>());
 
     expect(await service.create()).toHaveProperty("id", expect.any(String));
   });
 
   it("can find a user by id", async () => {
     const prisma = getPrismaService();
-    const service = new UserService(prisma);
+    const service = new UserService(prisma, createMock<CryptService>(), createMock<Logger>());
 
     const user = await service.create();
 
@@ -27,14 +28,14 @@ describe("user service", () => {
 
   it("returns null if it cannot find the user by id", async () => {
     const prisma = getPrismaService();
-    const service = new UserService(prisma);
+    const service = new UserService(prisma, createMock<CryptService>(), createMock<Logger>());
 
     expect(await service.findById(faker.datatype.uuid())).toBeNull();
   });
 
   it("adds auth information to an anonymous user", async () => {
     const prisma = getPrismaService();
-    const service = new UserService(prisma);
+    const service = new UserService(prisma, createMock<CryptService>(), createMock<Logger>());
 
     const user = await prisma.user.create({
       data: UserFactory.build({ displayName: null }),
