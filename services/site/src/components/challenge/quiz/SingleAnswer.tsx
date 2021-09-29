@@ -23,7 +23,7 @@ const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, s
               "px-10 py-8 mb-6 w-full rounded-lg border text-left",
               chosenId !== answer.id && "border-light",
               "transition duration-300",
-              "hover:bg-primary hover:border-primary hover:text-light",
+              "hover:bg-primary hover:border-primary hover:text-light hover:cursor-pointer",
               "focus:bg-primary focus:border-primary focus:text-light focus:outline-none",
               chosenId === answer.id && "bg-primary border-primary text-light",
             )}
