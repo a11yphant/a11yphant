@@ -3,6 +3,7 @@ import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
+import Head from "next/head";
 import React, { useState } from "react";
 
 const Quiz: React.FunctionComponent = () => {
@@ -51,6 +52,10 @@ const Quiz: React.FunctionComponent = () => {
 
   return (
     <>
+      <Head>
+        {/* TODO: activate title */}
+        <title>{/* {challenge.name} - Level {nthLevel} */}</title>
+      </Head>
       <Navigation displayBreadcrumbs>
         {/* TODO: display autosave */}
         {/* <Transition
