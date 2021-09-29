@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { SubmissionModule } from "@/submission/submission.module";
 
 import { PrismaModule } from "../prisma/prisma.module";
+import { AnswerOptionService } from "./answer-option.service";
 import { ChallengesArgs } from "./arg-types/challenges.args";
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
 import { ChallengeResolver } from "./challenge.resolver";
@@ -11,6 +12,7 @@ import { CodeLevelResolver } from "./code-level.resolver";
 import { HintService } from "./hint.service";
 import { LevelResolver } from "./level.resolver";
 import { LevelService } from "./level.service";
+import { QuizLevelResolver } from "./quiz-level.resolver";
 import { RequirementResolver } from "./requirement.resolver";
 import { RequirementService } from "./requirement.service";
 import { RuleService } from "./rule.service";
@@ -33,6 +35,8 @@ import { TaskService } from "./task.service";
     RuleService,
     TaskResolver,
     TaskService,
+    AnswerOptionService,
+    QuizLevelResolver,
   ],
   exports: [LevelService, RequirementService, RuleService],
 })

@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { CHALLENGE, ChallengeData, Factory, LEVEL, LevelData, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
+import { CHALLENGE, ChallengeData, CODE_LEVEL, CodeLevelData, Factory, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { LevelStatus } from "@/challenge/enums/level-status.enum";
@@ -15,7 +15,7 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 1 }),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 1 }),
       });
 
       const service = new LevelService(prisma);
@@ -32,9 +32,9 @@ describe("level service", () => {
         data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 3 }) });
-      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 1 }) });
-      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 2 }) });
+      await prisma.codeLevel.create({ data: Factory.build<CodeLevelData>(CODE_LEVEL, { challengeId: id, order: 3 }) });
+      await prisma.codeLevel.create({ data: Factory.build<CodeLevelData>(CODE_LEVEL, { challengeId: id, order: 1 }) });
+      await prisma.codeLevel.create({ data: Factory.build<CodeLevelData>(CODE_LEVEL, { challengeId: id, order: 2 }) });
 
       const service = new LevelService(prisma);
       const levels = await service.findForChallenge(id);
@@ -55,8 +55,8 @@ describe("level service", () => {
         data: Factory.build<ChallengeData>(CHALLENGE),
       });
 
-      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
-      await prisma.codeLevel.create({ data: Factory.build<LevelData>(LEVEL, { challengeId: id, order: 0 }) });
+      await prisma.codeLevel.create({ data: Factory.build<CodeLevelData>(CODE_LEVEL, { id: secondLevelId, challengeId: id, order: 1 }) });
+      await prisma.codeLevel.create({ data: Factory.build<CodeLevelData>(CODE_LEVEL, { challengeId: id, order: 0 }) });
 
       const service = new LevelService(prisma);
 
@@ -80,7 +80,7 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id } = await prisma.challenge.create({
-        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 2 }),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 2 }),
       });
 
       const service = new LevelService(prisma);
@@ -94,7 +94,7 @@ describe("level service", () => {
       const prisma = getPrismaService();
 
       const { id: levelId } = await prisma.codeLevel.create({
-        data: Factory.build<LevelData>(LEVEL),
+        data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
       const { id: userId } = await prisma.user.create({

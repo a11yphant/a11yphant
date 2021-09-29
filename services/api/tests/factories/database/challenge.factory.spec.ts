@@ -19,16 +19,29 @@ describe("challenge database factory", () => {
     expect(challenge).toBeTruthy();
   });
 
-  it("can create a challenge record with with levels", async () => {
+  it("can create a challenge record with with code levels", async () => {
     const prisma = getPrismaService();
 
     const challenge = await prisma.challenge.create({
-      data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 2 }),
+      data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 2 }),
       include: {
         codeLevels: true,
       },
     });
 
     expect(challenge.codeLevels).toHaveLength(2);
+  });
+
+  it("can create a challenge record with with quiz levels", async () => {
+    const prisma = getPrismaService();
+
+    const challenge = await prisma.challenge.create({
+      data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfQuizLevels: 2 }),
+      include: {
+        quizLevels: true,
+      },
+    });
+
+    expect(challenge.quizLevels).toHaveLength(2);
   });
 });

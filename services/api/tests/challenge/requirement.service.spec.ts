@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { Factory, LEVEL, LevelData } from "@tests/factories/database";
+import { CODE_LEVEL, CodeLevelData, Factory } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { RequirementService } from "@/challenge/requirement.service";
@@ -12,7 +12,7 @@ describe("requirement service", () => {
     const service = new RequirementService(prisma);
 
     const { id: levelId } = await prisma.codeLevel.create({
-      data: Factory.build<LevelData>(LEVEL, {}, { numberOfRequirements: 2 }),
+      data: Factory.build<CodeLevelData>(CODE_LEVEL, {}, { numberOfRequirements: 2 }),
     });
 
     expect((await service.findForLevel(levelId)).length).toEqual(2);
