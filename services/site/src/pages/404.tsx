@@ -1,6 +1,9 @@
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import Navigation from "app/components/Navigation";
+import { initializeApollo } from "app/lib/apollo-client";
+import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
 
@@ -38,3 +41,15 @@ const Custom404: React.FunctionComponent = () => {
 };
 
 export default Custom404;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const apolloClient = initializeApollo(null, context);
+
+  await Promise.all([getServerSideCurrentUser(apolloClient)]);
+
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
+  };
+};

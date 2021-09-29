@@ -14,6 +14,7 @@ import {
   useChallengeBySlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -88,12 +89,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { challengeSlug } = context.params;
 
-  await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
-    query: ChallengeBySlugDocument,
-    variables: {
-      slug: challengeSlug as string,
-    },
-  });
+  await Promise.all([
+    getServerSideCurrentUser(apolloClient),
+    apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+      query: ChallengeBySlugDocument,
+      variables: {
+        slug: challengeSlug as string,
+      },
+    }),
+  ]);
 
   return {
     props: {
