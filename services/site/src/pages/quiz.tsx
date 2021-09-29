@@ -85,7 +85,6 @@ const Quiz: React.FunctionComponent = () => {
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={mockAnswers} chosenId={chosenId} onChooseId={setChosenId} />
             </div>
           </div>
-          {/* TODO: disable button when no answer is selected */}
           <div className="flex justify-end mr-[-3rem]">
             <ButtonLoading
               primary
