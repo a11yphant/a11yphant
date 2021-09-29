@@ -68,7 +68,7 @@ const Hero: React.FC = () => {
             )}
           >
             Sign up via Github
-            <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "group-hover:text-primary")} />
+            <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
           </a>
         </div>
       </section>
