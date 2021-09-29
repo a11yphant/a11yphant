@@ -94,6 +94,7 @@ const Quiz: React.FunctionComponent = () => {
               loading={showSubmitLoadingAnimation}
               submitButton
               srTextLoading="The submission is being processed."
+              disabled={chosenId === undefined}
             >
               Submit
             </ButtonLoading>
