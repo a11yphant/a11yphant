@@ -23,7 +23,7 @@ import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
@@ -45,6 +45,8 @@ const Level: React.FunctionComponent = () => {
   } = useLevelByChallengeSlugQuery({
     variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
     onCompleted: ({ level }) => {
+      if (level.__typename !== "CodeLevel") return;
+
       setLevelId(level.id);
       if (level?.lastSubmission) {
         setSubmissionCode({
@@ -75,6 +77,15 @@ const Level: React.FunctionComponent = () => {
 
   const [requestCheckMutation] = useRequestCheckMutation();
 
+  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
+
+  useEffect(() => {
+    if (level.__typename === "QuizLevel") {
+      router.push(`/challenge/${challengeSlug as string}/level/${parseInt(nthLevel as string, 10) + 1}`);
+    }
+  }, [level, nthLevel, challengeSlug, router]);
+  if (level.__typename !== "CodeLevel") return null;
+
   const resetToInitialCode = (language?: EditorLanguage): void => {
     if (language) {
       setSubmissionCode({
@@ -89,8 +100,6 @@ const Level: React.FunctionComponent = () => {
       });
     }
   };
-
-  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 
   const submitLevel = async (): Promise<void> => {
     setShowSubmitLoadingAnimation(true);
