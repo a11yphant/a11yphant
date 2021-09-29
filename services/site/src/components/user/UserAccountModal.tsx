@@ -23,7 +23,7 @@ const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open
       leaveFrom="transform scale-100 opacity-100"
       leaveTo="transform scale-95 opacity-0"
     >
-      <Dialog open={open} onClose={() => onClose()} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
+      <Dialog open={open} onClose={onClose} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
         <div
           className={clsx(
             "p-8 bg-primary rounded-lg min-w-max max-w-xl flex flex-col relative",
