@@ -7,6 +7,7 @@ import { ChallengesArgs } from "./arg-types/challenges.args";
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
 import { ChallengeResolver } from "./challenge.resolver";
 import { ChallengeService } from "./challenge.service";
+import { CodeLevelResolver } from "./code-level.resolver";
 import { HintService } from "./hint.service";
 import { LevelResolver } from "./level.resolver";
 import { LevelService } from "./level.service";
@@ -22,6 +23,7 @@ import { TaskService } from "./task.service";
     ChallengeResolver,
     ChallengesArgs,
     ChallengeService,
+    CodeLevelResolver,
     LevelResolver,
     LevelService,
     LevelByChallengeSlugAndIndexArgs,

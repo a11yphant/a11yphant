@@ -1,12 +1,14 @@
 import { Injectable } from "@nestjs/common";
-import { CodeLevel } from "@prisma/client";
+import { CodeLevel, QuizLevel } from "@prisma/client";
 
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
 import { PrismaService } from "../prisma/prisma.service";
 import { LevelStatus } from "./enums/level-status.enum";
 import { Code } from "./models/code.model";
+import { CodeLevel as CodeLevelModel } from "./models/code-level.model";
 import { Level } from "./models/level.model";
+import { QuizLevel as QuizLevelModel } from "./models/quiz-level.model";
 
 @Injectable()
 export class LevelService {
@@ -17,19 +19,33 @@ export class LevelService {
       where: { id },
     });
 
-    return level ? LevelService.createModelFromDatabaseRecord(level) : null;
+    return level ? LevelService.createCodeLevelModelFromDatabaseRecord(level) : null;
   }
 
   async findForChallenge(challengeId: string): Promise<Level[]> {
-    const levels = await this.prisma.codeLevel.findMany({
-      where: {
-        challengeId,
-      },
-      orderBy: {
-        order: "asc",
-      },
-    });
-    return levels.map((level) => LevelService.createModelFromDatabaseRecord(level));
+    const [codeLevelsRecords, quizLevelsRecords] = await Promise.all([
+      this.prisma.codeLevel.findMany({
+        where: {
+          challengeId,
+        },
+        orderBy: {
+          order: "asc",
+        },
+      }),
+      this.prisma.quizLevel.findMany({
+        where: {
+          challengeId,
+        },
+        orderBy: {
+          order: "asc",
+        },
+      }),
+    ]);
+
+    const codeLevels = codeLevelsRecords.map(LevelService.createCodeLevelModelFromDatabaseRecord);
+    const quizLevels = quizLevelsRecords.map(LevelService.createQuizLevelModelFromDatabaseRecord);
+
+    return [...codeLevels, ...quizLevels].sort((a, b) => a.order - b.order);
   }
 
   async findOneForChallengeAtIndex(challengeSlug: string, index: number): Promise<Level> {
@@ -45,7 +61,7 @@ export class LevelService {
       skip: index,
     });
 
-    return record ? LevelService.createModelFromDatabaseRecord(record) : null;
+    return record ? LevelService.createCodeLevelModelFromDatabaseRecord(record) : null;
   }
 
   async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
@@ -77,8 +93,14 @@ export class LevelService {
     return LevelStatus.IN_PROGRESS;
   }
 
-  public static createModelFromDatabaseRecord(record: CodeLevel): Level {
-    const level = new Level({ ...record });
+  public static createQuizLevelModelFromDatabaseRecord(record: QuizLevel): QuizLevelModel {
+    const level = new QuizLevelModel({ ...record });
+
+    return level;
+  }
+
+  public static createCodeLevelModelFromDatabaseRecord(record: CodeLevel): CodeLevelModel {
+    const level = new CodeLevelModel({ ...record });
 
     if (!record.html && !record.css && !record.js) {
       return level;

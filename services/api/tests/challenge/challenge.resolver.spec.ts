@@ -5,7 +5,7 @@ import { ChallengeService } from "../../src/challenge/challenge.service";
 import { LevelService } from "../../src/challenge/level.service";
 import { Level } from "../../src/challenge/models/level.model";
 import { ChallengeFactory } from "../factories/models/challenge.factory";
-import { LevelFactory } from "../factories/models/level.factory";
+import { CodeLevelFactory } from "../factories/models/code-level.factory";
 
 describe("challenge resolver", () => {
   it("can resolve a challenge", async () => {
@@ -22,7 +22,7 @@ describe("challenge resolver", () => {
   });
 
   it("resolves the levels for a challenge", async () => {
-    const levels: Level[] = [LevelFactory.build(), LevelFactory.build()];
+    const levels: Level[] = [CodeLevelFactory.build(), CodeLevelFactory.build()];
 
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>(),
