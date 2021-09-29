@@ -31,6 +31,7 @@ const Quiz: React.FunctionComponent = () => {
     // router.push(`${router.asPath}/evaluation/${submissionId}`);
   };
 
+  const mockQuestion = "What is the purpose of the head tag?";
   const mockAnswers = [
     {
       id: "1",
@@ -78,9 +79,7 @@ const Quiz: React.FunctionComponent = () => {
           <h2 className={clsx("mb-2", "h4")}>Quiz</h2>
           <div className={clsx("grid grid-cols-7")}>
             {/* TODO:: dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} */}
-            <h3 className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose")}>
-              What is the purpose of the head tag?
-            </h3>
+            <h3 className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose")}>{mockQuestion}</h3>
             <div className={clsx("col-span-3")}>
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={mockAnswers} />
             </div>
