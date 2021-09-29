@@ -75,7 +75,7 @@ const Quiz: React.FunctionComponent = () => {
         <section
           className={clsx("mx-auto h-full w-full box-border hidden", "container-dark", "lg:px-12 lg:pt-12 lg:flex lg:flex-col lg:justify-between")}
         >
-          <h2 className={clsx("mb-2", "h5")}>Quiz</h2>
+          <h2 className={clsx("mb-2", "h4")}>Quiz</h2>
           <div className={clsx("grid grid-cols-7")}>
             {/* TODO:: dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} */}
             <h3 className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose")}>
