@@ -4,6 +4,7 @@ import "app/styles/fonts.scss";
 import "app/styles/custom.scss";
 
 import { ApolloProvider } from "@apollo/client";
+import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error/useErrorDialog";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { useApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
@@ -23,16 +24,19 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
-  const apolloClient = useApollo(pageProps.initialApolloState);
+  const { errorDialog, errorDialogApi } = useErrorDialog();
+  const apolloClient = useApollo(pageProps.initialApolloState, errorDialogApi);
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <div className="w-full h-screen">
-        <ScrollOverlayWrapper className={clsx("w-full h-full overflow-auto")} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
-          <Component {...pageProps} />
-        </ScrollOverlayWrapper>
-      </div>
-    </ApolloProvider>
+    <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
+      <ApolloProvider client={apolloClient}>
+        <div className="w-full h-screen">
+          <ScrollOverlayWrapper className={clsx("w-full h-full overflow-auto")} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
+            <Component {...pageProps} />
+          </ScrollOverlayWrapper>
+        </div>
+      </ApolloProvider>
+    </ErrorDialogProvider>
   );
 };
 

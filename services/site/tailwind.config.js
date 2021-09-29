@@ -27,7 +27,11 @@ module.exports = {
       colors: {
         light: "#FFFFFF",
         dark: "#121212",
-        error: "#E75A7C",
+        error: {
+          DEFAULT: "#E75A7C",
+          light: "#F094A9",
+          dark: "#C41C43",
+        },
         success: "#9ADB66",
         primary: {
           DEFAULT: "#7331FF",
