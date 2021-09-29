@@ -20,7 +20,11 @@ const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
   ...props
 }) => {
   return (
-    <Button className={clsx(className, (disabled || loading) && "cursor-not-allowed")} disabled={disabled || loading} {...props}>
+    <Button
+      className={(clsx(className, loading && "cursor-not-allowed"), disabled && "opacity-50 cursor-not-allowed hover:bg-primary")}
+      disabled={disabled || loading}
+      {...props}
+    >
       <span className={clsx(loading && "invisible")}>{children}</span>
       <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "pt-2 pl-2")}>
         <LoadingIndicator />
