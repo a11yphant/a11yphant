@@ -86,8 +86,8 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 className={clsx(
                   "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
                   "transition duration-300",
-                  "hover:text-primary hover:bg-grey-light hover:border-grey-light",
-                  "focus:text-primary focus:bg-grey-light focus:border-grey-light",
+                  "hover:border-transparent",
+                  "focus:border-transparent",
                 )}
               >
                 {loginLinkText}
@@ -101,8 +101,8 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 className={clsx(
                   "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
                   "transition duration-300",
-                  "hover:text-primary hover:bg-grey-light hover:border-grey-light",
-                  "focus:text-primary focus:bg-grey-light focus:border-grey-light",
+                  "hover:border-transparent",
+                  "focus:border-transparent",
                 )}
               >
                 {registrationLinkText}
@@ -116,8 +116,8 @@ const LoginModal: React.FunctionComponent<LoginModalProps> = ({
                 className={clsx(
                   "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
                   "transition duration-300",
-                  "hover:text-primary hover:bg-grey-light hover:border-grey-light",
-                  "focus:text-primary focus:bg-grey-light focus:border-grey-light",
+                  "hover:border-transparent",
+                  "focus:border-transparent",
                 )}
               >
                 {resetLinkText}
