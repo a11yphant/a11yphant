@@ -76,10 +76,6 @@ export class ChallengeService {
       },
     });
 
-    if (successfulLevelCount >= levelCount) {
-      console.log("Logic for calculating challengeStatus is still flawed...");
-    }
-
     // if they are the same amount than the challenge levels the challenge is finished
     if (successfulLevelCount === levelCount) return ChallengeStatus.FINISHED;
 
