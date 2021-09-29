@@ -2,10 +2,10 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { Dialog } from "@headlessui/react";
 import { cleanup } from "@testing-library/react";
-import { UserAccountBox } from "app/components/auth/UserAccountBox";
 import Button from "app/components/buttons/Button";
 import X from "app/components/icons/X";
-import UserAccountModal, { UserAccountModalProps } from "app/components/modal/UserAccountModal";
+import { UserAccountBox } from "app/components/user/UserAccountBox";
+import UserAccountModal, { UserAccountModalProps } from "app/components/user/UserAccountModal";
 import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
 

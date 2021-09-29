@@ -1,16 +1,16 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
+import { useUserAccountModalApi } from "app/components/user/useUserAccountModal";
 import { CurrentUserDocument } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 
 import Button from "./buttons/Button";
 import UserAvatar from "./icons/UserAvatar";
-import UserAccountModal from "./modal/UserAccountModal";
 
 export interface NavigationProps {
   displayBreadcrumbs?: boolean;
@@ -18,10 +18,8 @@ export interface NavigationProps {
 }
 
 const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, children }) => {
-  const [UserAccountModalOpen, setUserAccountModalOpen] = useState<boolean>(false);
-  const [registrationModalOpen, setRegistrationModalOpen] = useState<boolean>(false);
-
   const { currentUser } = useCurrentUser();
+  const userAccountModalApi = useUserAccountModalApi();
 
   return (
     <header className="h-[8%] pt-8 pb-6 px-11 grid grid-cols-4">
@@ -54,7 +52,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             <Button
               primary
               onClick={() => {
-                setRegistrationModalOpen(true);
+                userAccountModalApi.show("signup");
               }}
               className="mx-4"
             >
@@ -62,25 +60,11 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             </Button>{" "}
             <Button
               onClick={() => {
-                setUserAccountModalOpen(true);
+                userAccountModalApi.show("login");
               }}
             >
               Login
             </Button>
-            <UserAccountModal
-              mode="signup"
-              open={registrationModalOpen}
-              onClose={() => {
-                setRegistrationModalOpen(false);
-              }}
-            />
-            <UserAccountModal
-              mode="login"
-              open={UserAccountModalOpen}
-              onClose={() => {
-                setUserAccountModalOpen(false);
-              }}
-            />
           </>
         )}
       </div>
