@@ -1,11 +1,8 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModal";
-import { CurrentUserDocument } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
-import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
 
@@ -70,22 +67,6 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       </div>
     </header>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
-
-  await Promise.all([
-    apolloClient.query({
-      query: CurrentUserDocument,
-    }),
-  ]);
-
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
-  };
 };
 
 export default Navigation;
