@@ -1,6 +1,7 @@
+import Button from "app/components/buttons/Button";
 import Github from "app/components/icons/Github";
+import { useUserAccountModalApi } from "app/components/user/useUserAccountModal";
 import clsx from "clsx";
-import Link from "next/link";
 import React from "react";
 
 export interface UserAccountBoxProps {
@@ -8,6 +9,8 @@ export interface UserAccountBoxProps {
 }
 
 export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElement => {
+  const userAccountModalApi = useUserAccountModalApi();
+
   return (
     <>
       <div className="mb-2">
@@ -24,50 +27,48 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
         </a>
       </div>
       {mode === "signup" && (
-        //TODO: link to login pop-up
-        <Link href="/">
-          <a
-            className={clsx(
-              "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
-              "transition duration-300",
-              "hover:border-transparent",
-              "focus:border-transparent",
-            )}
-          >
-            Already have an account? Log in.
-          </a>
-        </Link>
+        <Button
+          onClick={() => userAccountModalApi.show("login")}
+          overrideClassName
+          className={clsx(
+            "my-1 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
+            "transition duration-300",
+            "hover:border-transparent",
+            "focus:border-transparent",
+          )}
+        >
+          Already have an account? Log in.
+        </Button>
       )}
       {mode === "login" && (
-        //TODO: link to registration pop-up
-        <Link href="/">
-          <a
-            className={clsx(
-              "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
-              "transition duration-300",
-              "hover:border-transparent",
-              "focus:border-transparent",
-            )}
-          >
-            New? Create a free account.
-          </a>
-        </Link>
+        <Button
+          onClick={() => userAccountModalApi.show("signup")}
+          overrideClassName
+          className={clsx(
+            "my-1 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
+            "transition duration-300",
+            "hover:border-transparent",
+            "focus:border-transparent",
+          )}
+        >
+          New? Create a free account.
+        </Button>
       )}
-      {mode === "login" && (
-        //TODO: link to reset pop-up/page
-        <Link href="/">
-          <a
-            className={clsx(
-              "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
-              "transition duration-300",
-              "hover:border-transparent",
-              "focus:border-transparent",
-            )}
-          >
-            Forgot your password? Reset.
-          </a>
-        </Link>
-      )}
+      {/*{mode === "login" && (*/}
+      {/*  //TODO: link to reset pop-up/page*/}
+      {/*  <Link href="/">*/}
+      {/*    <a*/}
+      {/*      className={clsx(*/}
+      {/*        "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",*/}
+      {/*        "transition duration-300",*/}
+      {/*        "hover:border-transparent",*/}
+      {/*        "focus:border-transparent",*/}
+      {/*      )}*/}
+      {/*    >*/}
+      {/*      Forgot your password? Reset.*/}
+      {/*    </a>*/}
+      {/*  </Link>*/}
+      {/*)}*/}
     </>
   );
 };
