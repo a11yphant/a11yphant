@@ -1,6 +1,7 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
-import { CurrentUserDocument, useCurrentUserQuery } from "app/generated/graphql";
+import { CurrentUserDocument } from "app/generated/graphql";
+import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { initializeApollo } from "app/lib/apollo-client";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -11,7 +12,7 @@ import Button from "./buttons/Button";
 import UserAvatar from "./icons/UserAvatar";
 import UserAccountModal from "./modal/UserAccountModal";
 
-interface NavigationProps {
+export interface NavigationProps {
   displayBreadcrumbs?: boolean;
   displaySave?: boolean;
 }
@@ -20,9 +21,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const [UserAccountModalOpen, setUserAccountModalOpen] = useState<boolean>(false);
   const [registrationModalOpen, setRegistrationModalOpen] = useState<boolean>(false);
 
-  const {
-    data: { currentUser },
-  } = useCurrentUserQuery();
+  const { currentUser } = useCurrentUser();
 
   return (
     <header className="h-[8%] pt-8 pb-6 px-11 grid grid-cols-4">
@@ -69,25 +68,18 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               Login
             </Button>
             <UserAccountModal
-              signUp={true}
-              title={"Sign up to save your progress!"}
-              showGithubLogin={true}
+              mode="signup"
               open={registrationModalOpen}
               onClose={() => {
                 setRegistrationModalOpen(false);
               }}
-              loginLinkText="Already have an account? Log in."
             />
             <UserAccountModal
-              signUp={false}
-              title={"Login"}
-              showGithubLogin={true}
+              mode="login"
               open={UserAccountModalOpen}
               onClose={() => {
                 setUserAccountModalOpen(false);
               }}
-              resetLinkText="Forgot your password? Reset."
-              registrationLinkText="New? Create a free account."
             />
           </>
         )}

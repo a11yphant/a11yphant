@@ -1,33 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { AuthBox } from "app/components/auth/AuthBox";
 import clsx from "clsx";
-import Link from "next/link";
 import React from "react";
 
 import Button from "../buttons/Button";
-import Github from "../icons/Github";
 import X from "../icons/X";
 
 export interface UserAccountModalProps {
   open?: boolean;
   onClose?: () => void;
-  title: string;
-  showGithubLogin?: boolean;
-  loginLinkText?: string;
-  registrationLinkText?: string;
-  resetLinkText?: string;
-  signUp: boolean;
+  mode: "signup" | "login";
 }
 
-const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({
-  open = false,
-  onClose,
-  title,
-  showGithubLogin,
-  loginLinkText,
-  registrationLinkText,
-  resetLinkText,
-  signUp,
-}) => {
+const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open = false, onClose, mode }) => {
   return (
     <Transition
       show={open}
@@ -63,71 +48,9 @@ const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({
             <X />
           </Button>
 
-          <Dialog.Title className={clsx("mb-8", "h4")}>{title}</Dialog.Title>
+          <Dialog.Title className={clsx("mb-8", "h4")}>{mode === "signup" ? "Sign up to save your progress!" : "Login"}</Dialog.Title>
 
-          <div className="mb-2">
-            {showGithubLogin && (
-              <a
-                href={process.env.NEXT_PUBLIC_SITE_GITHUB_LOGIN_ENDPOINT || "/auth/github"}
-                className={clsx(
-                  "px-8 py-4 mb-2 block w-full text-center align-middle text-white font-normal leading-none rounded border border-white",
-                  "transition duration-300 group",
-                  "hover:bg-white hover:text-primary",
-                )}
-              >
-                {signUp ? "Sign up via Github" : "Login with Github"}
-                <Github
-                  className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white", "transition duration-300", "group-hover:text-primary")}
-                />
-              </a>
-            )}
-          </div>
-
-          {loginLinkText && (
-            //TODO: link to login pop-up
-            <Link href="/">
-              <a
-                className={clsx(
-                  "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
-                  "transition duration-300",
-                  "hover:border-transparent",
-                  "focus:border-transparent",
-                )}
-              >
-                {loginLinkText}
-              </a>
-            </Link>
-          )}
-          {registrationLinkText && (
-            //TODO: link to registration pop-up
-            <Link href="/">
-              <a
-                className={clsx(
-                  "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
-                  "transition duration-300",
-                  "hover:border-transparent",
-                  "focus:border-transparent",
-                )}
-              >
-                {registrationLinkText}
-              </a>
-            </Link>
-          )}
-          {resetLinkText && (
-            //TODO: link to reset pop-up/page
-            <Link href="/">
-              <a
-                className={clsx(
-                  "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",
-                  "transition duration-300",
-                  "hover:border-transparent",
-                  "focus:border-transparent",
-                )}
-              >
-                {resetLinkText}
-              </a>
-            </Link>
-          )}
+          <AuthBox mode={mode} />
         </div>
       </Dialog>
     </Transition>

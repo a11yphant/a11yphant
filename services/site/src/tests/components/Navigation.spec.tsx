@@ -2,21 +2,32 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
-import Button from "app/components/buttons/Button";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
-import Navigation from "app/components/Navigation";
-import { shallow } from "enzyme";
-import React from "react";
+import Navigation, { NavigationProps } from "app/components/Navigation";
+import { shallow, ShallowWrapper } from "enzyme";
+import React, { PropsWithChildren } from "react";
+
+jest.mock("app/hooks/useCurrentUser", () => ({
+  useCurrentUser: () => ({
+    currentUser: {
+      id: "mock-id",
+    },
+  }),
+}));
+
+const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): ShallowWrapper => {
+  return shallow(<Navigation {...props} />);
+};
 
 afterEach(cleanup);
 
 describe("Navigation", () => {
   it("renders correctly", () => {
-    const wrapper = shallow(<Navigation />);
+    const wrapper = renderNavigation();
 
     // Wrapper exists
-    expect(wrapper.type()).toBe("header");
+    expect(wrapper.exists("header")).toBeTruthy();
 
     // Logo and Link exist
     expect(wrapper.find("h1")).toHaveProperty("length", 1);
@@ -27,31 +38,24 @@ describe("Navigation", () => {
 
     // User Avatar exists
     expect(wrapper.exists(UserAvatar)).toBeFalsy();
-
-    // SignUp/Login Buttons do not exist
-    expect(wrapper.exists(Button)).toBeFalsy();
   });
 
   it("with breadcrumbs", () => {
-    const wrapper = shallow(<Navigation displayBreadcrumbs={true} />);
+    const wrapper = renderNavigation({ displayBreadcrumbs: true });
 
     // Breadcrumbs exist
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
   });
 
   it("without breadcrumbs", () => {
-    const wrapper = shallow(<Navigation displayBreadcrumbs={false} />);
+    const wrapper = renderNavigation({ displayBreadcrumbs: false });
 
     // Breadcrumbs do not exist
     expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
   });
 
   it("with children", () => {
-    const wrapper = shallow(
-      <Navigation>
-        <p className="test-children">children</p>
-      </Navigation>,
-    );
+    const wrapper = renderNavigation({ children: <p className="test-children">children</p> });
 
     // Children do exist
     expect(wrapper.exists(".test-children")).toBeTruthy();
