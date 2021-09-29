@@ -57,7 +57,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                   )}
                 >
                   <span className="sr-only">Sign up via Github</span>
-                  <Github className={clsx("inline-block h-6 -m-2 -mt-3 w-auto text-light", "group-hover:text-primary")} />
+                  <Github className={clsx("inline-block h-6 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
                 </a>
               </div>
               <div className={clsx("max-w-full block mx-1")}>
@@ -71,7 +71,9 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                   )}
                 >
                   <span className="sr-only">Sign up via Twitter</span>
-                  <Twitter className={clsx("inline-block h-10 -m-2 -mt-3 w-auto text-light", "group-hover:text-primary")} />
+                  <Twitter
+                    className={clsx("inline-block h-10 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")}
+                  />
                 </a>
               </div>
             </div>
