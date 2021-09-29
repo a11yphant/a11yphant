@@ -78,7 +78,9 @@ const Quiz: React.FunctionComponent = () => {
           <h2 className={clsx("mb-2", "h5")}>Quiz</h2>
           <div className={clsx("grid grid-cols-7")}>
             {/* TODO:: dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} */}
-            <h3 className={clsx("h2 leading-tight tracking-wider font-mono col-span-4 mr-8", "prose")}>What is the purpose of the head tag?</h3>
+            <h3 className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose")}>
+              What is the purpose of the head tag?
+            </h3>
             <div className={clsx("col-span-3")}>
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={mockAnswers} />
             </div>
