@@ -74,7 +74,7 @@ const Quiz: React.FunctionComponent = () => {
           <div className={clsx("grid grid-cols-7")}>
             <h3 className={clsx("h2 leading-tight tracking-wider font-mono col-span-4 mr-8")}>What is the purpose of the head tag?</h3>
             <div className={clsx("col-span-3")}>
-              <SingleAnswer srTitle={"Possible answers to the quiz"} answers={mockAnswers}></SingleAnswer>
+              <SingleAnswer srTitle={"Possible answers to the quiz"} answers={mockAnswers} />
             </div>
           </div>
           {/* TODO: disable button when no answer is selected */}

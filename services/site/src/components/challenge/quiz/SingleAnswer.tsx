@@ -2,7 +2,7 @@ import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
 import React from "react";
 
-interface SingleAnswerProps {
+export interface SingleAnswerProps {
   className?: string;
   srTitle: string;
   answers: Array<{ id: string; text: string }>;
