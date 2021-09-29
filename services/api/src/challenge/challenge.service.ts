@@ -51,7 +51,7 @@ export class ChallengeService {
 
     if (submissionCount === 0) return ChallengeStatus.OPEN;
 
-    const levelCount = await this.prisma.level.count({
+    const levelCount = await this.prisma.codeLevel.count({
       where: {
         challengeId,
       },
@@ -60,7 +60,7 @@ export class ChallengeService {
     // all levels from this challenge where at least one
     // submission has the users id and a successful result
     // means: all levels which have been finished by the user
-    const successfulLevelCount = await this.prisma.level.count({
+    const successfulLevelCount = await this.prisma.codeLevel.count({
       where: {
         challengeId,
         submissions: {
