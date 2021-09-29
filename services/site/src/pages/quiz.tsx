@@ -1,5 +1,5 @@
-import Button from "app/components/buttons/Button";
 import ButtonLoading from "app/components/buttons/ButtonLoading";
+import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
@@ -30,6 +30,25 @@ const Quiz: React.FunctionComponent = () => {
     // router.push(`${router.asPath}/evaluation/${submissionId}`);
   };
 
+  const mockAnswers = [
+    {
+      id: "1",
+      text: "This tag does not exist in the HTML specification.",
+    },
+    {
+      id: "2",
+      text: "It contains meta information regarding the page, for example the title.",
+    },
+    {
+      id: "3",
+      text: "It contains the content of the page.",
+    },
+    {
+      id: "4",
+      text: "This tag should contain the website's logo.",
+    },
+  ];
+
   return (
     <>
       <Navigation displayBreadcrumbs>
@@ -55,56 +74,10 @@ const Quiz: React.FunctionComponent = () => {
           <div className={clsx("grid grid-cols-7")}>
             <h3 className={clsx("h2 leading-tight tracking-wider font-mono col-span-4 mr-8")}>What is the purpose of the head tag?</h3>
             <div className={clsx("col-span-3")}>
-              <Button
-                // onClick={}
-                overrideClassName
-                className={clsx(
-                  "px-10 py-8 mb-6 w-full rounded-lg border border-white text-left",
-                  "transition duration-300",
-                  "hover:bg-primary hover:border-primary hover:text-light",
-                  "focus:bg-primary focus:border-primary focus:text-light focus:outline-none",
-                )}
-              >
-                This tag does not exist in the HTML specification.
-              </Button>
-              <Button
-                // onClick={}
-                overrideClassName
-                className={clsx(
-                  "px-10 py-8 mb-6 w-full rounded-lg border border-white text-left",
-                  "transition duration-300",
-                  "hover:bg-primary hover:border-primary hover:text-light",
-                  "focus:bg-primary focus:border-primary focus:text-light focus:outline-none",
-                )}
-              >
-                It contains meta information regarding the page, for example the title.
-              </Button>
-              <Button
-                // onClick={}
-                overrideClassName
-                className={clsx(
-                  "px-10 py-8 mb-6 w-full rounded-lg border border-white text-left",
-                  "transition duration-300",
-                  "hover:bg-primary hover:border-primary hover:text-light",
-                  "focus:bg-primary focus:border-primary focus:text-light focus:outline-none",
-                )}
-              >
-                It contains the content of the page.
-              </Button>
-              <Button
-                // onClick={}
-                overrideClassName
-                className={clsx(
-                  "px-10 py-8 mb-6 w-full rounded-lg border border-white text-left",
-                  "transition duration-300",
-                  "hover:bg-primary hover:border-primary hover:text-light",
-                  "focus:bg-primary focus:border-primary focus:text-light focus:outline-none",
-                )}
-              >
-                This tag should contain the website's logo.
-              </Button>
+              <SingleAnswer srTitle={"Possible answers to the quiz"} answers={mockAnswers}></SingleAnswer>
             </div>
           </div>
+          {/* TODO: disable button when no answer is selected */}
           <div className="flex justify-end mr-[-3rem]">
             <ButtonLoading
               primary
