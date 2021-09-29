@@ -6,13 +6,13 @@ export interface SingleAnswerProps {
   className?: string;
   srTitle: string;
   answers: Array<{ id: string; text: string }>;
+  chosenId?: string;
+  onChooseId?: (id: string) => void;
 }
 
-const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, srTitle, answers }) => {
-  const [chosenId, setChosenId] = React.useState<string>();
-
+const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, srTitle, answers, chosenId, onChooseId }) => {
   return (
-    <RadioGroup value={chosenId} onChange={setChosenId} className={className}>
+    <RadioGroup value={chosenId} onChange={onChooseId} className={className}>
       <RadioGroup.Label className="sr-only">{srTitle}</RadioGroup.Label>
       {answers.map((answer, idx) => {
         return (
