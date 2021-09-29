@@ -6,14 +6,13 @@ import { SessionToken } from "@/authentication/session-token.decorator";
 import { LevelByChallengeSlugAndIndexArgs } from "./arg-types/level-by-challenge-slug-and-index.args";
 import { LevelStatus } from "./enums/level-status.enum";
 import { LevelService } from "./level.service";
-import { CodeLevel } from "./models/code-level.model";
 import { Level } from "./models/level.model";
 
 @Resolver(() => Level)
 export class LevelResolver {
   constructor(private readonly levelService: LevelService) {}
 
-  @Query(() => CodeLevel, { nullable: true })
+  @Query(() => Level, { nullable: true })
   async levelByChallengeSlug(@Args() { challengeSlug, nth }: LevelByChallengeSlugAndIndexArgs): Promise<Level> {
     return this.levelService.findOneForChallengeAtIndex(challengeSlug, nth - 1);
   }

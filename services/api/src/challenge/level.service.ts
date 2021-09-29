@@ -49,7 +49,7 @@ export class LevelService {
   }
 
   async findOneForChallengeAtIndex(challengeSlug: string, index: number): Promise<Level> {
-    const record = await this.prisma.codeLevel.findFirst({
+    const codeLevelRecords = await this.prisma.codeLevel.findMany({
       where: {
         challenge: {
           slug: challengeSlug,
@@ -58,10 +58,24 @@ export class LevelService {
       orderBy: {
         order: "asc",
       },
-      skip: index,
     });
 
-    return record ? LevelService.createCodeLevelModelFromDatabaseRecord(record) : null;
+    const quizLevelRecords = await this.prisma.quizLevel.findMany({
+      where: {
+        challenge: {
+          slug: challengeSlug,
+        },
+      },
+      orderBy: {
+        order: "asc",
+      },
+    });
+
+    const codeLevels = codeLevelRecords.map(LevelService.createCodeLevelModelFromDatabaseRecord);
+    const quizLevels = quizLevelRecords.map(LevelService.createQuizLevelModelFromDatabaseRecord);
+
+    const levels = [...codeLevels, ...quizLevels].sort((a, b) => a.order - b.order);
+    return levels[index] || null;
   }
 
   async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
