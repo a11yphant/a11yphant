@@ -1,12 +1,16 @@
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
 const Custom404: React.FunctionComponent = () => {
   return (
     <>
+      <Head>
+        <title>404 Page not found</title>
+      </Head>
       <Navigation />
       <main className="h-main box-border max-w-screen-3xl mx-auto">
         <section
