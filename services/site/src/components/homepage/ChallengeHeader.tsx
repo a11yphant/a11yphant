@@ -4,6 +4,7 @@ import React from "react";
 import Button from "../buttons/Button";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
+import { useUserAccountModalApi } from "../user/useUserAccountModalApi";
 
 export interface ChallengeHeaderProps {
   className?: string;
@@ -11,7 +12,7 @@ export interface ChallengeHeaderProps {
 }
 
 const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ className, userLoggedIn }) => {
-  // const [registrationModalOpen, setRegistrationModalOpen] = useState<boolean>(false);
+  const userAccountModalApi = useUserAccountModalApi();
 
   return (
     <div className={clsx("my-8 flex flex-row justify-between", className)}>
@@ -27,24 +28,14 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
           <div>
             <Button
               primary
-              // onClick={() => {
-              //   setRegistrationModalOpen(true);
-              // }}
+              onClick={() => {
+                userAccountModalApi.show("signup");
+              }}
               className="mx-1 mb-2 px-16"
             >
               Sign Up
             </Button>
 
-            {/* <UserAccountModal
-            signUp={true}
-            title={"Sign up to save your progress!"}
-            showGithubLogin={true}
-            open={registrationModalOpen}
-            onClose={() => {
-              setRegistrationModalOpen(false);
-            }}
-            loginLinkText="Already have an account? Log in."
-          /> */}
             <div className="flex">
               <div className={clsx("max-w-full block ml-1 mr-2")}>
                 <a
