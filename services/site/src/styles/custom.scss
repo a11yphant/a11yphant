@@ -61,6 +61,10 @@
 }
 
 // Fade Overlay -----
+.scroll-wrapper {
+    scroll-behavior: smooth;
+}
+
 .scroll-overlay {
     @apply fixed;
     @apply bottom-0;

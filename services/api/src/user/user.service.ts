@@ -1,13 +1,15 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 
+import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
 import { PrismaService } from "@/prisma/prisma.service";
 
+import { RegisterUserInput } from "./inputs/register-user.input";
 import { User } from "./models/user.model";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private hashService: HashService, private logger: Logger) {}
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
@@ -21,6 +23,34 @@ export class UserService {
     const userRecord = await this.prisma.user.findUnique({
       where: {
         id: userId,
+      },
+    });
+
+    return userRecord ? new User(userRecord) : null;
+  }
+
+  async registerUser(registerUserInput: RegisterUserInput, currentUserId: string): Promise<User> {
+    const currentUser = await this.prisma.user.findFirst({
+      where: {
+        id: currentUserId,
+      },
+    });
+
+    if (!currentUser) throw new Error("Anonymous user is invalid.");
+
+    if (currentUser.authProvider !== "anonymous") {
+      throw new Error("User is already registered.");
+    }
+
+    const userRecord = await this.prisma.user.update({
+      where: {
+        id: currentUser.id,
+      },
+      data: {
+        authProvider: "local",
+        email: registerUserInput.email,
+        password: await this.hashService.make(registerUserInput.password),
+        displayName: registerUserInput.displayName,
       },
     });
 

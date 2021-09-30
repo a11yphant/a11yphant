@@ -47,14 +47,14 @@ model AnswerOption {
 }
 
 model QuizLevelSubmission {
-  id              String            @id @default(uuid()) @db.Uuid
-  level           QuizLevel         @relation(fields: [levelId], references: [id], onDelete: Cascade)
-  levelId         String            @db.Uuid
+  id              String           @id @default(uuid()) @db.Uuid
+  level           QuizLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  levelId         String           @db.Uuid
   answers         AnswerOption[]
-  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String            @db.Uuid
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime?         @updatedAt
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String           @db.Uuid
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
   quizLevelResult QuizLevelResult?
 }
 
@@ -169,6 +169,8 @@ model User {
   id                  String                @id @default(uuid()) @db.Uuid
   authProvider        String                @default("anonymous")
   authId              String?
+  email               String?
+  password            String?
   displayName         String?
   submissions         Submission[]
   quizLevelSubmission QuizLevelSubmission[]
