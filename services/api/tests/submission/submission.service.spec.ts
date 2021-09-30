@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { Factory, LEVEL, LevelData, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
+import { CODE_LEVEL, CodeLevelData, Factory, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -71,8 +71,8 @@ describe("submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      const { id: levelId } = await prisma.level.create({
-        data: Factory.build<LevelData>(LEVEL),
+      const { id: levelId } = await prisma.codeLevel.create({
+        data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
       const createdSubmission = await service.create({
@@ -125,8 +125,8 @@ describe("submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      const { id: levelId } = await prisma.level.create({
-        data: Factory.build<LevelData>(LEVEL),
+      const { id: levelId } = await prisma.codeLevel.create({
+        data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
       const { id: submissionId } = await prisma.submission.create({
@@ -162,8 +162,8 @@ describe("submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      const { id: levelId } = await prisma.level.create({
-        data: Factory.build<LevelData>(LEVEL),
+      const { id: levelId } = await prisma.codeLevel.create({
+        data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
       expect(async () =>

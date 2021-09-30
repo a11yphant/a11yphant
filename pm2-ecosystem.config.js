@@ -20,7 +20,7 @@ module.exports = {
     },
     {
       name: "docker-compose",
-      script: "docker-compose up",
+      script: "docker compose up",
       namespace: "a11yphant",
       autorestart: true
     },

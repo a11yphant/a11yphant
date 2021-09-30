@@ -3,8 +3,10 @@ import ChallengeList from "app/components/homepage/ChallengeList";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
 import Navigation from "app/components/Navigation";
-import { ChallengesDocument, CurrentUserDocument, useChallengesQuery, useCurrentUserQuery } from "app/generated/graphql";
+import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
+import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -15,9 +17,7 @@ const Home: React.FunctionComponent = () => {
     data: { easyChallenges, mediumChallenges, hardChallenges },
   } = useChallengesQuery();
 
-  const {
-    data: { currentUser },
-  } = useCurrentUserQuery();
+  const { currentUser } = useCurrentUser();
 
   return (
     <>
@@ -92,11 +92,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo(null, context);
 
   await Promise.all([
+    getServerSideCurrentUser(apolloClient),
     apolloClient.query({
       query: ChallengesDocument,
-    }),
-    apolloClient.query({
-      query: CurrentUserDocument,
     }),
   ]);
 

@@ -1,5 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
-import { LevelFactory } from "@tests/factories/models/level.factory";
+import { CodeLevelFactory } from "@tests/factories/models/code-level.factory";
 import { SubmissionFactory } from "@tests/factories/models/submission.factory";
 import { UserInputError } from "apollo-server-express";
 
@@ -16,7 +16,7 @@ import { SubmissionService } from "@/submission/services/submission.service";
 
 describe("submission resolver", () => {
   it("can resolve a level", async () => {
-    const mockLevel = LevelFactory.build();
+    const mockLevel = CodeLevelFactory.build();
 
     const resolver = new SubmissionResolver(
       createMock<SubmissionService>(),

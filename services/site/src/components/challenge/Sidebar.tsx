@@ -1,5 +1,5 @@
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
-import { Level } from "app/generated/graphql";
+import { CodeLevel } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
@@ -9,7 +9,7 @@ import HintList from "./sidebar/HintList";
 interface SidebarProps {
   className?: string;
   challengeName: string;
-  level: Pick<Level, "instructions" | "tasks">;
+  level: Pick<CodeLevel, "instructions" | "tasks">;
 }
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeName, level }) => {

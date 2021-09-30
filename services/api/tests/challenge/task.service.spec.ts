@@ -1,7 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { Factory, LEVEL, LevelData, TASK, TaskData } from "@tests/factories/database";
+import { CODE_LEVEL, CodeLevelData, TASK, TaskData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
+import { Factory } from "rosie";
 
 import { TaskService } from "@/challenge/task.service";
 
@@ -12,7 +13,7 @@ describe("task service", () => {
     it("returns the tasks for the given level id", async () => {
       const prisma = getPrismaService();
 
-      const { id: levelId } = await prisma.level.create({ data: Factory.build<LevelData>(LEVEL) });
+      const { id: levelId } = await prisma.codeLevel.create({ data: Factory.build<CodeLevelData>(CODE_LEVEL) });
 
       await prisma.task.create({
         data: Factory.build<TaskData>(TASK, { levelId }),
