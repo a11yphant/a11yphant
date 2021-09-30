@@ -4,12 +4,23 @@ import X from "app/components/icons/X";
 import clsx from "clsx";
 import React from "react";
 
+interface RestylableProps {
+  className?: string;
+  overrideClassName?: boolean;
+}
+
 export interface ConfirmationModalProps {
   open?: boolean;
   onClose?: () => void;
 }
 
-export const Modal: React.FunctionComponent<ConfirmationModalProps> = ({ open = false, onClose, children }) => {
+export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableProps> = ({
+  open = false,
+  onClose,
+  children,
+  className,
+  overrideClassName = false,
+}) => {
   return (
     <Transition
       show={open}
@@ -21,7 +32,7 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps> = ({ open = 
       leaveTo="transform scale-95 opacity-0"
     >
       <Dialog open={open} onClose={onClose} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
-        <div className={clsx("w-1/2 h-64 px-12 py-14 relative bg-background-light rounded-lg max-w-2xl", " shadow-modal")}>
+        <div className={clsx(!overrideClassName && "w-1/2 h-64 px-12 py-10 relative rounded-lg max-w-2xl", "shadow-modal", className)}>
           <Dialog.Overlay className="fixed inset-0 bg-background opacity-25 z-[-1]" />
 
           <Button
@@ -45,13 +56,8 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps> = ({ open = 
   );
 };
 
-interface RestylableProps {
-  className?: string;
-  overrideClassName?: boolean;
-}
-
 export const ModalTitle: React.FunctionComponent<RestylableProps> = ({ children, className, overrideClassName = false }) => {
-  return <Dialog.Title className={clsx(!overrideClassName && "text-2xl", className)}>{children}</Dialog.Title>;
+  return <Dialog.Title className={clsx(className)}>{children}</Dialog.Title>;
 };
 
 export const ModalContent: React.FunctionComponent<RestylableProps> = ({ children, className, overrideClassName = false }) => {
