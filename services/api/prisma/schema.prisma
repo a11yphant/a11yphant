@@ -146,7 +146,7 @@ model User {
   id           String       @id @default(uuid()) @db.Uuid
   authProvider String       @default("anonymous")
   authId       String?
-  email        String?
+  email        String?      @unique
   password     String?
   displayName  String?
   submissions  Submission[]
