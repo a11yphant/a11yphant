@@ -1,4 +1,4 @@
-import { Submission, useCreateSubmissionMutation, useUpdateSubmissionMutation } from "app/generated/graphql";
+import { CodeLevelSubmission, useCreateCodeLevelSubmissionMutation, useUpdateCodeLevelSubmissionMutation } from "app/generated/graphql";
 import debounce from "lodash.debounce";
 import { useEffect, useState } from "react";
 
@@ -6,7 +6,7 @@ const debounceOneSecond = debounce((update: () => void) => {
   update();
 }, 1000);
 
-type SubmissionCode = Pick<Submission, "html" | "css" | "js">;
+type SubmissionCode = Pick<CodeLevelSubmission, "html" | "css" | "js">;
 
 interface SubmissionAutoSaveApi {
   setLevelId: (id: string) => void;
@@ -19,8 +19,8 @@ interface SubmissionAutoSaveApi {
 }
 
 export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
-  const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateSubmissionMutation();
-  const [updateSubmissionMutation, { loading: updateSubmitMutationLoading }] = useUpdateSubmissionMutation();
+  const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateCodeLevelSubmissionMutation();
+  const [updateSubmissionMutation, { loading: updateSubmitMutationLoading }] = useUpdateCodeLevelSubmissionMutation();
   const [levelId, setLevelId] = useState<string>();
   const [submissionId, setSubmissionId] = useState<string>();
   const [submissionCode, setSubmissionCode] = useState<SubmissionCode>();
@@ -47,7 +47,7 @@ export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
         },
       });
 
-      return setSubmissionId(data.createSubmission.submission.id);
+      return setSubmissionId(data.createCodeLevelSubmission.submission.id);
     }
 
     if (updateSubmitMutationLoading) {

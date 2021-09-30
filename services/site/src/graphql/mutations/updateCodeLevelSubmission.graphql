@@ -1,0 +1,10 @@
+mutation updateCodeLevelSubmission($submissionInput: UpdateCodeLevelSubmissionInput!) {
+  updateCodeLevelSubmission(submissionInput: $submissionInput) {
+    submission {
+        id
+        css
+        html
+        js
+    }
+  }
+}
