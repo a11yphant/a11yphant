@@ -6,10 +6,12 @@ import { PrismaModule } from "@/prisma/prisma.module";
 
 import { RendererController } from "./controllers/renderer.controller";
 import { CodeLevelSubmissionResolver } from "./graphql/resolvers/code-level-submission.resolver";
+import { QuizLevelSubmissionResolver } from "./graphql/resolvers/quiz-level-submission.resolver";
 import { RequirementResultResolver } from "./graphql/resolvers/requirement-result.resolver";
 import { ResultResolver } from "./graphql/resolvers/result.resolver";
 import { SubmissionResolver } from "./graphql/resolvers/submission.resolver";
 import { SubmissionController } from "./microservices/submission.controller";
+import { QuizLevelSubmissionService } from "./services/quiz-level-submission.service";
 import { RequirementResultService } from "./services/requirement-result.service";
 import { ResultService } from "./services/result.service";
 import { SubmissionService } from "./services/submission.service";
@@ -26,6 +28,8 @@ import { SubmissionService } from "./services/submission.service";
     RequirementResultService,
     Logger,
     CodeLevelSubmissionResolver,
+    QuizLevelSubmissionResolver,
+    QuizLevelSubmissionService,
   ],
   exports: [SubmissionService],
 })
