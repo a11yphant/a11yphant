@@ -1,35 +1,19 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
+
+import { Submission } from "./submission.model";
 
 @ObjectType({
   description: "A submission of an user.",
+  implements: [Submission],
 })
-export class CodeLevelSubmission {
+export class CodeLevelSubmission extends Submission {
   constructor(properties: { id: string; html?: string; css?: string; js?: string; levelId: string; createdAt: Date; updatedAt: Date }) {
-    this.id = properties.id;
-    this.createdAt = properties.createdAt;
-    this.updatedAt = properties.updatedAt;
-
-    this.levelId = properties.levelId;
+    super({ id: properties.id, levelId: properties.levelId, createdAt: properties.createdAt, updatedAt: properties.updatedAt });
 
     this.html = properties.html;
     this.css = properties.css;
     this.js = properties.js;
   }
-
-  @Field(() => ID)
-  id: string;
-
-  @Field(() => Date, {
-    description: "The timestamp when the submission was created.",
-  })
-  createdAt: Date;
-
-  @Field(() => Date, {
-    description: "The timestamp when the submission has been last updated",
-  })
-  updatedAt: Date;
-
-  levelId: string;
 
   @Field(() => String, {
     nullable: true,
