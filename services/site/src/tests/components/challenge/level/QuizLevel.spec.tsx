@@ -5,10 +5,15 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { shallow } from "enzyme";
+import router from "next/router";
 import React from "react";
+
+jest.mock("next/router", () => require("next-router-mock"));
 
 afterEach(cleanup);
 
+const mockChallengeSlug = "mock-slug";
+const mockNthLevel = 2;
 const mockHeading = "Quiz";
 const mockText = "What is the purpose of the head tag?";
 const mockAnswers = [
@@ -29,6 +34,11 @@ const mockAnswers = [
     text: "This tag should contain the website's logo.",
   },
 ];
+
+beforeEach(() => {
+  router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
+  router.back = jest.fn();
+});
 
 describe("Quiz Level", () => {
   it("renders wrapper elements", () => {
