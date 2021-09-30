@@ -2,6 +2,7 @@ import IllustrationLost from "app/components/icons/IllustrationLost";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
@@ -12,6 +13,9 @@ interface CustomErrorProps {
 const CustomError: NextPage<CustomErrorProps> = ({ statusCode }) => {
   return (
     <>
+      <Head>
+        <title>Something went wrong</title>
+      </Head>
       <Navigation />
       <main className="h-main box-border max-w-screen-3xl mx-auto">
         <section

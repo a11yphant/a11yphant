@@ -112,7 +112,7 @@ describe("challenge service", () => {
       });
 
       const { id: challengeId } = await prisma.challenge.create({
-        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfLevels: 3 }),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 3 }),
       });
 
       return { userId, challengeId };

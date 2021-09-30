@@ -2,7 +2,7 @@ import { cleanup } from "@testing-library/react";
 import Sidebar from "app/components/challenge/Sidebar";
 import HintList from "app/components/challenge/sidebar/HintList";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
-import { Level } from "app/generated/graphql";
+import { CodeLevel } from "app/generated/graphql";
 import { shallow } from "enzyme";
 import React from "react";
 
@@ -10,7 +10,7 @@ afterEach(cleanup);
 
 const mockChallengeName = "Mock Challenge";
 
-const mockLevel: Pick<Level, "instructions" | "tasks"> = {
+const mockLevel: Pick<CodeLevel, "instructions" | "tasks"> = {
   instructions: "<h4>Mock Instructions</h4>",
   tasks: [
     {
