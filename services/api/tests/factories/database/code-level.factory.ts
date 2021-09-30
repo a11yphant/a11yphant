@@ -1,13 +1,13 @@
 import faker from "faker";
 import { IFactoryStatic } from "rosie";
 
-import { CHALLENGE, LEVEL, REQUIREMENT, TASK } from "./constants";
+import { CHALLENGE, CODE_LEVEL, REQUIREMENT, TASK } from "./constants";
 import { buildMultipleOf, buildOneOf } from "./helpers";
-import { ChallengeData, LevelData, RequirementData, TaskData } from "./types";
+import { ChallengeData, CodeLevelData, RequirementData, TaskData } from "./types";
 
 export function define(factory: IFactoryStatic): void {
   factory
-    .define<LevelData>(LEVEL)
+    .define<CodeLevelData>(CODE_LEVEL)
     .attr("instructions", () => faker.lorem.paragraph())
     .attr("html", "<p>hi</p>")
     .attr("css", "body { color: blue }")

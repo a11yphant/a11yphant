@@ -1,9 +1,11 @@
 import { Factory as RosieFactory } from "rosie";
 
+import * as AnswerOptionFactory from "./answer-option.factory";
 import * as ChallengeFactory from "./challenge.factory";
 import * as CheckResultFactory from "./check-result.factory";
+import * as LevelFactory from "./code-level.factory";
 import * as HintFactory from "./hint.factory";
-import * as LevelFactory from "./level.factory";
+import * as QuizLevelFactory from "./quiz-level.factory";
 import * as RequirementFactory from "./requirement.factory";
 import * as ResultFactory from "./result.factory";
 import * as RuleFactory from "./rule.factory";
@@ -22,6 +24,8 @@ const factories = [
   SubmissionFactory,
   TaskFactory,
   UserFactory,
+  QuizLevelFactory,
+  AnswerOptionFactory,
 ];
 
 factories.forEach((factory) => {

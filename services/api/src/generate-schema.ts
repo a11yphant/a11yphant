@@ -6,7 +6,9 @@ import { writeFileSync } from "fs";
 import { printSchema } from "graphql";
 
 import { ChallengeResolver } from "./challenge/challenge.resolver";
+import { CodeLevelResolver } from "./challenge/code-level.resolver";
 import { LevelResolver } from "./challenge/level.resolver";
+import { QuizLevelResolver } from "./challenge/quiz-level.resolver";
 import { RequirementResolver } from "./challenge/requirement.resolver";
 import { TaskResolver } from "./challenge/task.resolver";
 import { RequirementResultResolver } from "./submission/graphql/resolvers/requirement-result.resolver";
@@ -17,12 +19,14 @@ import { UserResolver } from "./user/user.resolver";
 const resolvers = [
   ChallengeResolver,
   TaskResolver,
-  LevelResolver,
+  CodeLevelResolver,
   SubmissionResolver,
   ResultResolver,
   RequirementResultResolver,
   RequirementResolver,
   UserResolver,
+  LevelResolver,
+  QuizLevelResolver,
 ];
 
 const scalars = [];

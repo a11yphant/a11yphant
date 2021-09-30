@@ -1,8 +1,8 @@
 import { IFactoryStatic } from "rosie";
 
-import { LEVEL, SUBMISSION } from "./constants";
+import { CODE_LEVEL, SUBMISSION } from "./constants";
 import { buildOneOf } from "./helpers";
-import { LevelData, SubmissionData } from "./types";
+import { CodeLevelData, SubmissionData } from "./types";
 
 export function define(factory: IFactoryStatic): void {
   factory
@@ -12,5 +12,5 @@ export function define(factory: IFactoryStatic): void {
     .attr("js", "console.log('hi')")
     .attr("levelId", undefined)
     .option("createLevelIfMissing", true)
-    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<LevelData>(LEVEL, {}, { createSubmissionIfMissing: false }));
+    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<CodeLevelData>(CODE_LEVEL, {}, { createSubmissionIfMissing: false }));
 }

@@ -1,31 +1,35 @@
 query levelByChallengeSlug($challengeSlug: String!, $nth: Int!) {
   level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
+    __typename
     id
-    instructions
-    tasks {
-      id
-      text
-      hints {
+
+    ... on CodeLevel {
+      instructions
+      tasks {
         id
         text
+        hints {
+          id
+          text
+        }
       }
-    }
-    code {
-      html
-      css
-      js
-    }
-    hasHtmlEditor
-    hasCssEditor
-    hasJsEditor
-    lastSubmission {
-      id
-      html
-      css
-      js
-      result {
+      code {
+        html
+        css
+        js
+      }
+      hasHtmlEditor
+      hasCssEditor
+      hasJsEditor
+      lastSubmission {
         id
-        status
+        html
+        css
+        js
+        result {
+          id
+          status
+        }
       }
     }
   }
