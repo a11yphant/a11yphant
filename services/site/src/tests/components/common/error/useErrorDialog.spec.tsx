@@ -208,20 +208,6 @@ describe("useErrorDialogApi", () => {
     }
   });
 
-  it("showApolloError doesn't throw error if it is used inside ErrorDialogContext", (done) => {
-    const wrapper = ({ children }): React.ReactElement => <ErrorDialogProvider>{children}</ErrorDialogProvider>;
-    const { result } = renderHook(() => useErrorDialogApi(), { wrapper });
-
-    try {
-      act(() => {
-        result.current.showApolloError({ graphQLErrors: [], networkError: null });
-      });
-      done();
-    } catch (err) {
-      done(err);
-    }
-  });
-
   it("replace errorDialogApi of ErrorDialogProvider with useErrorDialog output", () => {
     const { result: errorDialogResult } = renderHook(() => useErrorDialog());
 
