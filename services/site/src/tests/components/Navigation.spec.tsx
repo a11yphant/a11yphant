@@ -36,6 +36,7 @@ const mockRegisteredUser = (): void => {
     currentUser: {
       id: "mock-id",
       isRegistered: true,
+      displayName: "mock-display-name",
     },
   }));
 };
@@ -45,6 +46,7 @@ const mockNonRegisteredUser = (): void => {
     currentUser: {
       id: "mock-id",
       isRegistered: false,
+      displayName: "mock-display-name",
     },
   }));
 };
