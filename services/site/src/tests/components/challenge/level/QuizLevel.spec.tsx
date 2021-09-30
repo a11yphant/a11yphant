@@ -32,32 +32,32 @@ const mockAnswers = [
 
 describe("Quiz Level", () => {
   it("renders wrapper elements", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} />);
+    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
 
     expect(wrapper.find("section").length).toBe(1);
   });
 
   it("renders heading", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} />);
+    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
 
     expect(wrapper.find("h2").length).toBe(1);
     expect(wrapper.find("h2").text()).toBe(mockHeading);
   });
 
   it("renders question as html", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} />);
+    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
 
     expect(wrapper.find("h3").html()).toContain(mockText);
   });
 
   it("renders answers", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} />);
+    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
 
     expect(wrapper.find(SingleAnswer).length).toBe(1);
   });
 
   it("renders button", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} />);
+    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
 
     expect(wrapper.find(ButtonLoading).length).toBe(1);
   });

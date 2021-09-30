@@ -44,6 +44,8 @@ const Level: React.FunctionComponent = () => {
     return <div>Loading ...</div>;
   }
 
+  const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
+
   return (
     <>
       <Head>
@@ -67,7 +69,7 @@ const Level: React.FunctionComponent = () => {
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
         {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
-        {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} />}
+        {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} />}
       </main>
     </>
   );

@@ -1,20 +1,29 @@
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
+import { EvaluationRouterParams } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import clsx from "clsx";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import sanitizeHtml from "sanitize-html";
 
 interface QuizLevelProps {
   question: string;
   answers: Array<{ id: string; text: string }>;
+  isLastLevel: boolean;
 }
 
-const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ question, answers }) => {
+const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ question, answers, isLastLevel }) => {
   const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
   const [chosenId, setChosenId] = React.useState<string>();
 
+  const router = useRouter();
+  const { challengeSlug, nthLevel }: EvaluationRouterParams = router.query;
+
   const submitLevel = async (): Promise<void> => {
     setShowSubmitLoadingAnimation(true);
+
+    const nextLevel = parseInt(nthLevel as string) + 1;
+    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
   };
 
   return (
@@ -44,6 +53,8 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ question, answers 
           >
             Submit
           </ButtonLoading>
+          {/* TODO: enable when api submission is ready */}
+          {/* <CompleteEvaluationButton className="px-10 absolute right-0 bottom-0" status={ResultStatus.Success} isLastLevel={isLastLevel} /> */}
         </div>
       </section>
     </>
