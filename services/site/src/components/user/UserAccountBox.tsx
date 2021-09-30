@@ -31,7 +31,7 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
           onClick={() => userAccountModalApi.show("login")}
           overrideClassName
           className={clsx(
-            "my-1 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
+            "my-1 mx-3 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
             "transition duration-300",
             "hover:border-transparent",
             "focus:border-transparent",
@@ -45,7 +45,7 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
           onClick={() => userAccountModalApi.show("signup")}
           overrideClassName
           className={clsx(
-            "my-1 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
+            "my-1 mx-3 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
             "transition duration-300",
             "hover:border-transparent",
             "focus:border-transparent",
