@@ -2,12 +2,12 @@ import { Injectable } from "@nestjs/common";
 import bcrypt from "bcrypt";
 
 @Injectable()
-export class CryptService {
-  hashPassword(password: string): Promise<string> {
+export class HashService {
+  make(password: string): Promise<string> {
     return bcrypt.hash(password, 10);
   }
 
-  comparePassword(plaintext: string, hash: string): Promise<boolean> {
+  compare(plaintext: string, hash: string): Promise<boolean> {
     return bcrypt.compare(plaintext, hash);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 
-import { CryptService } from "@/authentication/crypt.service";
+import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -9,7 +9,7 @@ import { User } from "./models/user.model";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService, private cryptService: CryptService, private logger: Logger) {}
+  constructor(private prisma: PrismaService, private hashService: HashService, private logger: Logger) {}
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
@@ -49,7 +49,7 @@ export class UserService {
       data: {
         authProvider: "local",
         email: registerUserInput.email,
-        password: await this.cryptService.hashPassword(registerUserInput.password),
+        password: await this.hashService.make(registerUserInput.password),
         displayName: registerUserInput.displayName,
       },
     });
