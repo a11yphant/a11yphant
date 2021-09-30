@@ -1,9 +1,9 @@
 import faker from "faker";
 import { IFactoryStatic } from "rosie";
 
-import { LEVEL, REQUIREMENT, RULE } from "./constants";
+import { CODE_LEVEL, REQUIREMENT, RULE } from "./constants";
 import { buildOneOf } from "./helpers";
-import { LevelData, RequirementData, RuleData } from "./types";
+import { CodeLevelData, RequirementData, RuleData } from "./types";
 
 export function define(factory: IFactoryStatic): void {
   factory
@@ -12,7 +12,7 @@ export function define(factory: IFactoryStatic): void {
     .attr("title", () => faker.lorem.words(3))
     .attr("levelId", undefined)
     .option("createLevelIfMissing", true)
-    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<LevelData>(LEVEL, {}, { numberOfRequirements: 0 }))
+    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<CodeLevelData>(CODE_LEVEL, {}, { numberOfRequirements: 0 }))
     .attr("ruleId", undefined)
     .option("createRuleIfMissing", true)
     .attr("rule", ["ruleId", "createRuleIfMissing"], buildOneOf<RuleData>(RULE, {}, { createRequirementIfMissing: false }));

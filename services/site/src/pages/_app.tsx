@@ -33,7 +33,11 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       <ApolloProvider client={apolloClient}>
         <UserAccountModalProvider>
           <div className="w-full h-screen">
-            <ScrollOverlayWrapper className={clsx("w-full h-full overflow-auto")} enableTopOverlay={false} classNameBottomOverlay={"w-full h-52"}>
+            <ScrollOverlayWrapper
+              className={clsx("w-full h-full overflow-auto", "scroll-wrapper")}
+              enableTopOverlay={false}
+              classNameBottomOverlay={"w-full h-52"}
+            >
               <Component {...pageProps} />
             </ScrollOverlayWrapper>
           </div>
