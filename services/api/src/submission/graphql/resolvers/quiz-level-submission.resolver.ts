@@ -3,8 +3,7 @@ import { UserInputError } from "apollo-server-errors";
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
-import { AnswersNotValidException } from "@/submission/exceptions/answers-not-valid.excpetion";
-import { LevelNotFoundException } from "@/submission/exceptions/level-not-found.exception";
+import { ReferenceNotValidException } from "@/submission/exceptions/reference-not-valid.excpetion";
 import { QuizLevelSubmissionService } from "@/submission/services/quiz-level-submission.service";
 
 import { QuizLevelAnswerInput } from "../inputs/quiz-level-answer.input";
@@ -28,7 +27,7 @@ export class QuizLevelSubmissionResolver {
         result,
       };
     } catch (error) {
-      if (error instanceof LevelNotFoundException || error instanceof AnswersNotValidException) {
+      if (error instanceof ReferenceNotValidException) {
         throw new UserInputError(error.message);
       }
 

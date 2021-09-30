@@ -2,8 +2,10 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { QUIZ_LEVEL, QUIZ_LEVEL_SUBMISSION, QuizLevelData, QuizLevelSubmissionData, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
+import faker from "faker";
 import { Factory } from "rosie";
 
+import { ReferenceNotValidException } from "@/submission/exceptions/reference-not-valid.excpetion";
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 import { QuizLevelSubmissionService } from "@/submission/services/quiz-level-submission.service";
 
@@ -39,6 +41,14 @@ describe("quiz level submission service", () => {
       });
 
       expect(submission.answers).toHaveLength(2);
+    });
+
+    it("throws an exception if the level id was not found", async () => {
+      const prisma = getPrismaService();
+
+      const service = new QuizLevelSubmissionService(prisma);
+
+      expect(() => service.create(faker.datatype.uuid(), [], faker.datatype.uuid())).rejects.toThrowError(ReferenceNotValidException);
     });
   });
 

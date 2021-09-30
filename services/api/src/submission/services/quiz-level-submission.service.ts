@@ -2,8 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
-import { AnswersNotValidException } from "../exceptions/answers-not-valid.excpetion";
-import { LevelNotFoundException } from "../exceptions/level-not-found.exception";
+import { ReferenceNotValidException } from "../exceptions/reference-not-valid.excpetion";
 import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 
@@ -34,11 +33,7 @@ export class QuizLevelSubmissionService {
       return submission.id;
     } catch (error) {
       if (error.code === "P2025") {
-        throw new LevelNotFoundException();
-      }
-
-      if (error.code === "P2002") {
-        throw new AnswersNotValidException();
+        throw new ReferenceNotValidException();
       }
 
       throw error;
