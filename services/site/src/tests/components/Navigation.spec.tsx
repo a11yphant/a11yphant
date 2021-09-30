@@ -6,7 +6,7 @@ import Button from "app/components/buttons/Button";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
-import { useUserAccountModalApi } from "app/components/user/useUserAccountModal";
+import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { shallow, ShallowWrapper } from "enzyme";
@@ -16,7 +16,7 @@ import React, { PropsWithChildren } from "react";
 const mockShow = jest.fn();
 const mockHide = jest.fn();
 
-jest.mock("app/components/user/useUserAccountModal", () => ({
+jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
     show: mockShow,
     hide: mockHide,

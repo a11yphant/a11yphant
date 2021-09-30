@@ -1,6 +1,6 @@
 import Button from "app/components/buttons/Button";
 import Github from "app/components/icons/Github";
-import { useUserAccountModalApi } from "app/components/user/useUserAccountModal";
+import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import clsx from "clsx";
 import React from "react";
 

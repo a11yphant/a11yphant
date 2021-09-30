@@ -9,7 +9,7 @@ import React from "react";
 const mockShow = jest.fn();
 const mockHide = jest.fn();
 
-jest.mock("app/components/user/useUserAccountModal", () => ({
+jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
     show: mockShow,
     hide: mockHide,

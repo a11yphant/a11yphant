@@ -1,6 +1,6 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
-import { useUserAccountModalApi } from "app/components/user/useUserAccountModal";
+import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import clsx from "clsx";
 import Link from "next/link";
