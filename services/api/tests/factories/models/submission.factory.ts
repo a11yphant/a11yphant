@@ -1,9 +1,9 @@
 import faker from "faker";
 import { Factory } from "rosie";
 
-import { Submission } from "@/submission/graphql/models/submission.model";
+import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
 
-export const SubmissionFactory = Factory.define<Submission>(Submission.name, Submission)
+export const SubmissionFactory = Factory.define<CodeLevelSubmission>(CodeLevelSubmission.name, CodeLevelSubmission)
   .attr("id", () => faker.datatype.uuid())
   .attr("html", "<p>hi</p>")
   .attr("css", "body { color: blue }")

@@ -3,7 +3,7 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 @ObjectType({
   description: "A submission of an user.",
 })
-export class Submission {
+export class CodeLevelSubmission {
   constructor(properties: { id: string; html?: string; css?: string; js?: string; levelId: string; createdAt: Date; updatedAt: Date }) {
     this.id = properties.id;
     this.createdAt = properties.createdAt;

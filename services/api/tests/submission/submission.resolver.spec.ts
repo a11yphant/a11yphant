@@ -7,9 +7,9 @@ import { SessionToken } from "@/authentication/interfaces/session-token.interfac
 import { LevelService } from "@/challenge/level.service";
 import { SubmissionAlreadyHasCheckResultException } from "@/submission/exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
-import { CreateSubmissionInput } from "@/submission/graphql/inputs/create-submission.input";
-import { UpdateSubmissionInput } from "@/submission/graphql/inputs/update-submission.input";
-import { Submission } from "@/submission/graphql/models/submission.model";
+import { CreateCodeLevelSubmissionInput } from "@/submission/graphql/inputs/create-code-level-submission.input";
+import { UpdateCodeLevelSubmissionInput } from "@/submission/graphql/inputs/update-code-level-submission.input";
+import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
 import { SubmissionResolver } from "@/submission/graphql/resolvers/submission.resolver";
 import { ResultService } from "@/submission/services/result.service";
 import { SubmissionService } from "@/submission/services/submission.service";
@@ -26,7 +26,7 @@ describe("submission resolver", () => {
       createMock<ResultService>(),
     );
 
-    const level = await resolver.level(new Submission({ id: "bla", levelId: "blu", createdAt: new Date(), updatedAt: new Date() }));
+    const level = await resolver.level(new CodeLevelSubmission({ id: "bla", levelId: "blu", createdAt: new Date(), updatedAt: new Date() }));
 
     expect(level).toBeTruthy();
     expect(level.id).toBe(mockLevel.id);
@@ -42,14 +42,14 @@ describe("submission resolver", () => {
       createMock<ResultService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
-    const submission: CreateSubmissionInput = {
+    const submission: CreateCodeLevelSubmissionInput = {
       levelId: "uuid",
       html: "bla",
       css: "blub",
       js: "bli",
     };
 
-    const result = await resolver.createSubmission(submission, sessionToken);
+    const result = await resolver.createCodeLevelSubmission(submission, sessionToken);
 
     expect(result.submission).toBeTruthy();
     expect(create).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
@@ -65,14 +65,14 @@ describe("submission resolver", () => {
       createMock<ResultService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
-    const submission: UpdateSubmissionInput = {
+    const submission: UpdateCodeLevelSubmissionInput = {
       id: "uuid",
       html: "bla",
       css: "blub",
       js: "bli",
     };
 
-    const result = await resolver.updateSubmission(submission, sessionToken);
+    const result = await resolver.updateCodeLevelSubmission(submission, sessionToken);
 
     expect(result.submission).toBeTruthy();
     expect(update).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
@@ -88,21 +88,21 @@ describe("submission resolver", () => {
       createMock<ResultService>(),
     );
     const sessionToken: SessionToken = { userId: "uuid" };
-    const submission: UpdateSubmissionInput = {
+    const submission: UpdateCodeLevelSubmissionInput = {
       id: "uuid",
       html: "bla",
       css: "blub",
       js: "bli",
     };
 
-    expect(resolver.updateSubmission(submission, sessionToken)).rejects.toBeInstanceOf(UserInputError);
+    expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toBeInstanceOf(UserInputError);
   });
 
   it("can request a check for submission", async () => {
     const requestCheck = jest.fn().mockResolvedValue({ id: "uuid" });
     const resolver = new SubmissionResolver(createMock<SubmissionService>({ requestCheck }), createMock<LevelService>(), createMock<ResultService>());
 
-    const mutationResult = await resolver.requestCheck({ submissionId: "bla" });
+    const mutationResult = await resolver.requestCodeLevelCheck({ submissionId: "bla" });
 
     expect(mutationResult.result).toHaveProperty("id", "uuid");
     expect(requestCheck).toHaveBeenCalledWith("bla");
@@ -115,7 +115,7 @@ describe("submission resolver", () => {
       createMock<ResultService>(),
     );
 
-    expect(resolver.requestCheck({ submissionId: "bla" })).rejects.toBeInstanceOf(UserInputError);
+    expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toBeInstanceOf(UserInputError);
   });
 
   it("can find the result for a submission", async () => {

@@ -10,16 +10,16 @@ import { SubmissionAlreadyHasCheckResultException } from "../../exceptions/submi
 import { SubmissionNotFoundException } from "../../exceptions/submission-not-found.exception";
 import { ResultService } from "../../services/result.service";
 import { SubmissionService } from "../../services/submission.service";
-import { CreateSubmissionInput } from "../inputs/create-submission.input";
-import { RequestCheckInput } from "../inputs/request-check.input";
-import { UpdateSubmissionInput } from "../inputs/update-submission.input";
+import { CreateCodeLevelSubmissionInput } from "../inputs/create-code-level-submission.input";
+import { RequestCodeLevelCheckInput } from "../inputs/request-code-level-check.input";
+import { UpdateCodeLevelSubmissionInput } from "../inputs/update-code-level-submission.input";
+import { CodeLevelSubmission } from "../models/code-level-submission.model";
 import { Result } from "../models/result.model";
-import { Submission } from "../models/submission.model";
-import { CreateSubmissionResult } from "../results/create-submission.result";
+import { CreateCodeLevelSubmissionResult } from "../results/create-code-level-submission.result";
 import { RequestCheckResult } from "../results/request-check.result";
-import { UpdateSubmissionResult } from "../results/update-submission.result";
+import { UpdateCodeLevelSubmissionResult } from "../results/update-code-level-submission.result";
 
-@Resolver(() => Submission)
+@Resolver(() => CodeLevelSubmission)
 export class SubmissionResolver {
   constructor(
     private readonly submissionService: SubmissionService,
@@ -27,11 +27,11 @@ export class SubmissionResolver {
     private readonly resultService: ResultService,
   ) {}
 
-  @Mutation(() => CreateSubmissionResult)
-  async createSubmission(
-    @Args("submissionInput") submissionInput: CreateSubmissionInput,
+  @Mutation(() => CreateCodeLevelSubmissionResult)
+  async createCodeLevelSubmission(
+    @Args("submissionInput") submissionInput: CreateCodeLevelSubmissionInput,
     @SessionToken() sessionToken: SessionTokenInterface,
-  ): Promise<CreateSubmissionResult> {
+  ): Promise<CreateCodeLevelSubmissionResult> {
     const submission = await this.submissionService.create({ ...submissionInput, userId: sessionToken.userId });
 
     return {
@@ -39,11 +39,11 @@ export class SubmissionResolver {
     };
   }
 
-  @Mutation(() => UpdateSubmissionResult)
-  async updateSubmission(
-    @Args("submissionInput") submissionInput: UpdateSubmissionInput,
+  @Mutation(() => UpdateCodeLevelSubmissionResult)
+  async updateCodeLevelSubmission(
+    @Args("submissionInput") submissionInput: UpdateCodeLevelSubmissionInput,
     @SessionToken() sessionToken: SessionTokenInterface,
-  ): Promise<UpdateSubmissionResult> {
+  ): Promise<UpdateCodeLevelSubmissionResult> {
     let submission;
     try {
       submission = await this.submissionService.update({ ...submissionInput, userId: sessionToken.userId });
@@ -61,7 +61,7 @@ export class SubmissionResolver {
   }
 
   @Mutation(() => RequestCheckResult)
-  async requestCheck(@Args("requestCheckInput") requestCheckInput: RequestCheckInput): Promise<RequestCheckResult> {
+  async requestCodeLevelCheck(@Args("requestCheckInput") requestCheckInput: RequestCodeLevelCheckInput): Promise<RequestCheckResult> {
     try {
       const result = await this.submissionService.requestCheck(requestCheckInput.submissionId);
 
@@ -80,12 +80,12 @@ export class SubmissionResolver {
   @ResolveField(() => Level, {
     description: "The level this submission is for.",
   })
-  async level(@Parent() submission: Submission): Promise<Level> {
+  async level(@Parent() submission: CodeLevelSubmission): Promise<Level> {
     return this.levelService.findOne(submission.levelId);
   }
 
   @ResolveField(() => Result, { nullable: true })
-  async result(@Parent() submission: Submission): Promise<Result> {
+  async result(@Parent() submission: CodeLevelSubmission): Promise<Result> {
     return this.resultService.findOneForSubmission(submission.id);
   }
 }
