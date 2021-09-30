@@ -6,6 +6,7 @@ import faker from "faker";
 
 import { CryptService } from "@/authentication/crypt.service";
 import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
+import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserService } from "@/user/user.service";
 
 describe("user service", () => {
@@ -52,5 +53,54 @@ describe("user service", () => {
     const updatedUser = await prisma.user.findUnique({ where: { id: user.id } });
     expect(updatedUser).toHaveProperty("displayName", providerInformation.displayName);
     expect(updatedUser).toHaveProperty("authProvider", providerInformation.provider);
+  });
+
+  describe("register", () => {
+    it("registers an user", async () => {
+      const prisma = getPrismaService();
+      const service = new UserService(
+        prisma,
+        createMock<CryptService>({ hashPassword: jest.fn().mockResolvedValue("hashedPassword") }),
+        createMock<Logger>(),
+      );
+
+      const userId = faker.datatype.uuid();
+      const email = "hallo@a11yphant.com";
+      const password = "fake_password";
+
+      await prisma.user.create({
+        data: UserFactory.build({ id: userId, authProvider: "anonymous" }),
+      });
+
+      const input: RegisterUserInput = {
+        email,
+        password,
+        displayName: "A11y Phant",
+      };
+
+      const createdUser = await service.registerUser(input, userId);
+
+      expect(createdUser.authProvider).toBe("local");
+      expect(createdUser.email).toBe(email);
+    });
+
+    it("throws an error if the anonymous user is not found", async () => {
+      const service = new UserService(getPrismaService(), createMock<CryptService>(), createMock<Logger>());
+
+      expect(service.registerUser({ email: "test", password: "test" }, faker.datatype.uuid())).rejects.toThrowError("Anonymous user is invalid.");
+    });
+
+    it("throws an error if the user is already registered", async () => {
+      const prisma = getPrismaService();
+      const service = new UserService(prisma, createMock<CryptService>(), createMock<Logger>());
+
+      const userId = faker.datatype.uuid();
+
+      await prisma.user.create({
+        data: UserFactory.build({ id: userId, authProvider: "github" }),
+      });
+
+      expect(service.registerUser({ email: "test", password: "test" }, userId)).rejects.toThrowError("User is already registered.");
+    });
   });
 });
