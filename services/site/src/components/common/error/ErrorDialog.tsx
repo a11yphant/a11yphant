@@ -1,4 +1,3 @@
-import { Dialog } from "@headlessui/react";
 import Button from "app/components/buttons/Button";
 import { ApolloErrorResponse } from "app/components/common/error/useErrorDialog";
 import Exclamation from "app/components/icons/Exclamation";
@@ -35,9 +34,9 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
         "border border-4 border-error-dark",
       )}
     >
-      <ModalTitle className="flex">
+      <ModalTitle as="div" className="flex">
         <Exclamation className={clsx("w-8 h-8 mr-2", "text-error-dark")} />
-        <Dialog.Title className={clsx("mb-8", "h4")}>{title}</Dialog.Title>
+        <h2 className={clsx("mb-8", "h4")}>{title}</h2>
       </ModalTitle>
 
       <ModalContent>

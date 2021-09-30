@@ -56,8 +56,16 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
   );
 };
 
-export const ModalTitle: React.FunctionComponent<RestylableProps> = ({ children, className, overrideClassName = false }) => {
-  return <Dialog.Title className={clsx(className)}>{children}</Dialog.Title>;
+interface ModalTitleProps {
+  as?: React.ElementType;
+}
+
+export const ModalTitle: React.FunctionComponent<ModalTitleProps & RestylableProps> = ({ children, className, overrideClassName = false, as }) => {
+  return (
+    <Dialog.Title as={as} className={clsx(className)}>
+      {children}
+    </Dialog.Title>
+  );
 };
 
 export const ModalContent: React.FunctionComponent<RestylableProps> = ({ children, className, overrideClassName = false }) => {

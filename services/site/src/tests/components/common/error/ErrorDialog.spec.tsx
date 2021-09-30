@@ -1,8 +1,7 @@
-import { Dialog } from "@headlessui/react";
 import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ErrorDialog from "app/components/common/error/ErrorDialog";
-import X from "app/components/icons/X";
+import { Modal, ModalTitle } from "app/components/modal/Modal";
 import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, shallow } from "enzyme";
 import { GraphQLError } from "graphql";
@@ -19,6 +18,7 @@ const mockNetworkErrorMessage = "Network Error Message";
 const mockErrorResponse = { graphQLErrors: [new GraphQLError(mockGraphQLErrorMessage)], networkError: new Error(mockNetworkErrorMessage) };
 
 beforeEach(() => {
+  jest.resetAllMocks();
   jest.resetModules(); // Most important - it clears the cache
   process.env = { ...OLD_ENV }; // Make a copy
   mockOnClose = jest.fn();
@@ -36,7 +36,7 @@ describe("Error Dialog", () => {
       <ErrorDialog open={false} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
 
-    expect(wrapper.find(Dialog).props().open).toBeFalsy();
+    expect(wrapper.find(Modal).props().open).toBeFalsy();
   });
 
   it("is open", () => {
@@ -44,7 +44,7 @@ describe("Error Dialog", () => {
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
 
-    expect(wrapper.find(Dialog).props().open).toBeTruthy();
+    expect(wrapper.find(Modal).props().open).toBeTruthy();
   });
 
   it("shows title", () => {
@@ -52,7 +52,12 @@ describe("Error Dialog", () => {
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
 
-    expect(wrapper.find(Dialog.Title).children().text()).toContain(mockTitle);
+    expect(
+      wrapper
+        .find(ModalTitle)
+        .children()
+        .findWhere((n) => n.text() === mockTitle).length,
+    ).toBe(1);
   });
 
   it("shows error messages", () => {
@@ -94,6 +99,7 @@ describe("Error Dialog", () => {
     // Greater than or equal because findWhere also finds parents elements containing this text
     expect(wrapper.find("div").findWhere((n) => n.text().includes("Original Error was logged to console")).length).toBeGreaterThanOrEqual(1);
     expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error).toHaveBeenCalledWith(mockErrorResponse);
   });
 
   it("does not show original error in production mode", () => {
@@ -126,39 +132,10 @@ describe("Error Dialog", () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onClose on X press", () => {
+  it("calls onClose in onClose of modal", () => {
     const wrapper = shallow(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} />);
 
-    wrapper.find(X).closest(Button).simulate("click");
+    wrapper.find(Modal).props().onClose();
     expect(mockOnClose).toHaveBeenCalledTimes(1);
-  });
-
-  it("calls onClose on Escape press", () => {
-    setupIntersectionObserverMock();
-
-    const wrapper = mount(
-      <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
-    );
-    wrapper.update();
-
-    const event = new KeyboardEvent("keydown", { key: "Escape" });
-    document.dispatchEvent(event);
-
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-  });
-
-  it("doesn't call onClose on Escape press after unmount", () => {
-    setupIntersectionObserverMock();
-
-    const wrapper = mount(
-      <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
-    );
-    wrapper.update();
-    wrapper.unmount();
-
-    const event = new KeyboardEvent("keydown", { key: "Escape" });
-    document.dispatchEvent(event);
-
-    expect(mockOnClose).toHaveBeenCalledTimes(0);
   });
 });
