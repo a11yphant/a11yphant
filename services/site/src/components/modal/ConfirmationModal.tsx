@@ -22,7 +22,7 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
   onConfirm,
 }) => {
   return (
-    <Modal open={open} onClose={onCancel} className="bg-background-light">
+    <Modal open={open} onClose={onCancel} className={clsx("px-12 py-14 w-1/2 max-w-2xl h-64", "bg-background-light")}>
       <ModalTitle className="text-2xl">{title}</ModalTitle>
       <ModalActions>
         <Button
