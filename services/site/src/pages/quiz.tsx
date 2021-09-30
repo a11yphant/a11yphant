@@ -10,16 +10,6 @@ const Quiz: React.FunctionComponent = () => {
   const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
   const [chosenId, setChosenId] = React.useState<string>();
 
-  //   const {
-  //     // setLevelId,
-  //     // submissionId,
-  //     // setSubmissionId,
-  //     // setSubmissionCode,
-  //     // submissionCode,
-  //     // updateSubmission,
-  //     loading: autoSaveLoading,
-  //   } = useSubmissionAutoSave();
-
   const submitLevel = async (): Promise<void> => {
     setShowSubmitLoadingAnimation(true);
 
@@ -58,20 +48,7 @@ const Quiz: React.FunctionComponent = () => {
         {/* TODO: activate title */}
         <title>{/* {challenge.name} - Level {nthLevel} */}</title>
       </Head>
-      <Navigation displayBreadcrumbs>
-        {/* TODO: display autosave */}
-        {/* <Transition
-          show={autoSaveLoading}
-          enter="transition-opacity duration-300"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-300 delay-1000"
-          leaveTo="opacity-0"
-        >
-          <span>
-            Saving... <LoadingIndicator className="inline ml-4" />
-          </span>
-        </Transition> */}
-      </Navigation>
+      <Navigation displayBreadcrumbs></Navigation>
       <main className={clsx("h-main box-border mx-auto p-4")}>
         <SmallScreenNotification />
         <section
