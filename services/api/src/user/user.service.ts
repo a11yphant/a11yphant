@@ -36,13 +36,13 @@ export class UserService {
       },
     });
 
-    if (!currentUser) throw new Error("User from JWT is invalid.");
+    if (!currentUser) throw new Error("Anonymous user is invalid.");
 
     if (currentUser.authProvider !== "anonymous") {
       throw new Error("User is already registered.");
     }
 
-    return this.prisma.user.update({
+    const userRecord = await this.prisma.user.update({
       where: {
         id: currentUser.id,
       },
@@ -53,6 +53,8 @@ export class UserService {
         displayName: registerUserInput.displayName,
       },
     });
+
+    return userRecord ? new User(userRecord) : null;
   }
 
   async updateWithAuthInformation(userId: string, providerInformation: ProviderInformation): Promise<User | null> {
