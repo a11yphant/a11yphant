@@ -52,6 +52,6 @@ describe("SingleAnswer", () => {
   it("shows answers", () => {
     const wrapper = renderSingleAnswer({ answers: mockAnswers });
 
-    expect(wrapper.find("span").length).toBe(4);
+    expect(wrapper.find(RadioGroup.Option).length).toBe(4);
   });
 });
