@@ -67,7 +67,7 @@ describe("code level submission resolver", () => {
       js: "bli",
     };
 
-    expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toBeInstanceOf(UserInputError);
+    expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toThrowError(UserInputError);
   });
 
   it("can request a check for submission", async () => {
@@ -85,6 +85,6 @@ describe("code level submission resolver", () => {
       createMock<SubmissionService>({ requestCheck: jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException()) }),
     );
 
-    expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toBeInstanceOf(UserInputError);
+    expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toThrowError(UserInputError);
   });
 });
