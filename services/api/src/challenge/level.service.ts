@@ -79,7 +79,20 @@ export class LevelService {
   }
 
   async getNumberOfLevelsForChallenge(challengeId: string): Promise<number> {
-    return this.prisma.codeLevel.count({ where: { challengeId } });
+    const counts = await Promise.all([
+      this.prisma.codeLevel.count({
+        where: {
+          challengeId,
+        },
+      }),
+      this.prisma.quizLevel.count({
+        where: {
+          challengeId,
+        },
+      }),
+    ]);
+
+    return counts.reduce((acc, count) => acc + count, 0);
   }
 
   async findStatusForUserAndLevel(userId: string, levelId: string): Promise<LevelStatus> {
