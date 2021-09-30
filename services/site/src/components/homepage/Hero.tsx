@@ -1,8 +1,7 @@
+import { UserAccountBox } from "app/components/user/UserAccountBox";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
-
-import Github from "../icons/Github";
 
 const Hero: React.FC = () => {
   return (
@@ -57,20 +56,7 @@ const Hero: React.FC = () => {
         >
           Sign up to save your progress!
         </h2>
-        <div className={clsx("max-w-full block")}>
-          <a
-            href={process.env.NEXT_PUBLIC_SITE_GITHUB_LOGIN_ENDPOINT || "/auth/github"}
-            className={clsx(
-              "px-8 py-4 w-full max-w-xs block text-center align-middle text-light font-normal leading-none rounded border border-light",
-              "transition duration-300 group",
-              "hover:bg-light hover:text-primary",
-              "xl:max-w-none",
-            )}
-          >
-            Sign up via Github
-            <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
-          </a>
-        </div>
+        <UserAccountBox mode="signup" />
       </section>
     </div>
   );
