@@ -46,7 +46,7 @@ describe("SingleAnswer", () => {
   it("renders screen reader title", () => {
     const wrapper = renderSingleAnswer({ srTitle: mockSRTitle });
 
-    expect(wrapper.find("label").contains(mockSRTitle));
+    expect(wrapper.find(RadioGroup.Label).children().text()).toContain(mockSRTitle);
   });
 
   it("shows answers", () => {
