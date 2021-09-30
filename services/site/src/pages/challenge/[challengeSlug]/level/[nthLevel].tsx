@@ -44,27 +44,6 @@ const Level: React.FunctionComponent = () => {
     return <div>Loading ...</div>;
   }
 
-  // --------------------- QUIZ
-  const mockQuestion = "What is the purpose of the head tag?";
-  const mockAnswers = [
-    {
-      id: "1",
-      text: "This tag does not exist in the HTML specification.",
-    },
-    {
-      id: "2",
-      text: "It contains meta information regarding the page, for example the title.",
-    },
-    {
-      id: "3",
-      text: "It contains the content of the page.",
-    },
-    {
-      id: "4",
-      text: "This tag should contain the website's logo.",
-    },
-  ];
-
   return (
     <>
       <Head>
@@ -88,7 +67,7 @@ const Level: React.FunctionComponent = () => {
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
         <SmallScreenNotification />
         {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
-        {isQuizLevel(level) && <QuizLevel question={mockQuestion} answers={mockAnswers} />}
+        {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} />}
       </main>
     </>
   );
