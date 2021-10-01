@@ -84,6 +84,9 @@ challenge:
         - id: bd6207a7-c02b-4253-8820-db830547b561
           text: It contains meta information regarding the page, for example the title.
           correct: true
+        - id: 2e9bbbe7-d8fb-4570-ba72-620ef94a91d6
+          text: This tag does not exist in the HTML specification.
+          correct: false
         - id: 4fa706f3-3e03-4290-9de9-ca35154285af
           text: This tag should contain the website's logo.
           correct: false
