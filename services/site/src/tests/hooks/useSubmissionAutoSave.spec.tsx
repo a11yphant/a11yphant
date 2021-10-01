@@ -1,6 +1,6 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { act, cleanup, renderHook } from "@testing-library/react-hooks";
-import { CreateSubmissionDocument, UpdateSubmissionDocument } from "app/generated/graphql";
+import { CreateCodeLevelSubmissionDocument, UpdateCodeLevelSubmissionDocument } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import React from "react";
 
@@ -13,7 +13,7 @@ const defaultCode = {
 function createUpdateSubmissionMock(submissionId = "uuid", code = defaultCode): MockedResponse {
   return {
     request: {
-      query: UpdateSubmissionDocument,
+      query: UpdateCodeLevelSubmissionDocument,
       variables: {
         submissionInput: {
           id: submissionId,
@@ -23,7 +23,7 @@ function createUpdateSubmissionMock(submissionId = "uuid", code = defaultCode): 
     },
     newData: jest.fn(() => ({
       data: {
-        updateSubmission: {
+        updateCodeLevelSubmission: {
           submission: {
             id: submissionId,
             ...code,
@@ -37,7 +37,7 @@ function createUpdateSubmissionMock(submissionId = "uuid", code = defaultCode): 
 function createCreateSubmissionMock(levelId = "level-uuid", code = defaultCode, submissionId = "submission-uuid"): MockedResponse {
   return {
     request: {
-      query: CreateSubmissionDocument,
+      query: CreateCodeLevelSubmissionDocument,
       variables: {
         submissionInput: {
           levelId,
@@ -47,7 +47,7 @@ function createCreateSubmissionMock(levelId = "level-uuid", code = defaultCode, 
     },
     newData: jest.fn(() => ({
       data: {
-        createSubmission: {
+        createCodeLevelSubmission: {
           submission: {
             id: submissionId,
             ...code,

@@ -24,6 +24,6 @@ describe("webdriver factory", () => {
     });
     const factory = new WebdriverFactory(createMock<Logger>(), configService);
 
-    expect(factory.create()).rejects.toBeInstanceOf(WebdriverDriverNotSupportedException);
+    expect(factory.create()).rejects.toThrowError(WebdriverDriverNotSupportedException);
   });
 });

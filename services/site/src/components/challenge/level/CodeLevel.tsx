@@ -2,7 +2,7 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
-import { CodeLevelDetailsFragment, useRequestCheckMutation } from "app/generated/graphql";
+import { CodeLevelDetailsFragment } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
@@ -54,7 +54,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     }
   }, [level, setLevelId, setSubmissionCode, setSubmissionId]);
 
-  const [requestCheckMutation] = useRequestCheckMutation();
+  const [requestCheckMutation] = useRequestCodeLevelCheckMutation();
 
   const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 
@@ -168,3 +168,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
 };
 
 export default CodeLevel;
+function useRequestCodeLevelCheckMutation(): [any] {
+  throw new Error("Function not implemented.");
+}

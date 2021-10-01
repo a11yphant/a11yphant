@@ -1,0 +1,10 @@
+mutation createCodeLevelSubmission($submissionInput: CreateCodeLevelSubmissionInput!) {
+  createCodeLevelSubmission(submissionInput: $submissionInput) {
+    submission {
+        id
+        html
+        css
+        js
+    }
+  }
+}
