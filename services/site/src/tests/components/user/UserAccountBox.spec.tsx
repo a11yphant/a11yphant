@@ -51,7 +51,7 @@ describe("UserAccountBox", () => {
     // Github button has login text
     expect(wrapper.findWhere((n) => n.text() === "Login with Github").length).toBeGreaterThanOrEqual(1);
 
-    // Twitte button has login text
+    // Twitter button has login text
     expect(wrapper.findWhere((n) => n.text() === "Login with Twitter").length).toBeGreaterThanOrEqual(1);
 
     // "link" to signup modal exists
