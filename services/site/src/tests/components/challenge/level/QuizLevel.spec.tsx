@@ -1,10 +1,12 @@
 import "@testing-library/jest-dom/extend-expect";
 
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { cleanup } from "@testing-library/react";
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
-import { shallow } from "enzyme";
+import { ResultStatus, SubmitQuizLevelAnswerDocument } from "app/generated/graphql";
+import { mount } from "enzyme";
 import router from "next/router";
 import React from "react";
 
@@ -35,6 +37,23 @@ const mockAnswers = [
   },
 ];
 
+const mocks: MockedResponse[] = [
+  {
+    request: {
+      query: SubmitQuizLevelAnswerDocument,
+      variables: {
+        levelId: "1",
+        answers: ["This is an answer id."],
+      },
+    },
+    result: {
+      data: {
+        result: { id: "1", status: ResultStatus.Success },
+      },
+    },
+  },
+];
+
 beforeEach(() => {
   router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
   router.back = jest.fn();
@@ -42,32 +61,52 @@ beforeEach(() => {
 
 describe("Quiz Level", () => {
   it("renders wrapper elements", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
 
     expect(wrapper.find("section").length).toBe(1);
   });
 
   it("renders heading", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
 
     expect(wrapper.find("h2").length).toBe(1);
     expect(wrapper.find("h2").text()).toBe(mockHeading);
   });
 
   it("renders question as html", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
 
     expect(wrapper.find("h3").html()).toContain(mockText);
   });
 
   it("renders answers", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
 
     expect(wrapper.find(SingleAnswer).length).toBe(1);
   });
 
   it("renders button", () => {
-    const wrapper = shallow(<QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} />);
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
 
     expect(wrapper.find(ButtonLoading).length).toBe(1);
   });
