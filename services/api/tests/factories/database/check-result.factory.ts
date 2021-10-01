@@ -1,10 +1,19 @@
-import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-import { CheckResult } from ".prisma/client";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
-export const CheckResultFactory = Factory.define<CheckResult>("check-result-record")
-  .attr("id", () => faker.datatype.uuid())
-  .attr("status", 1)
-  .attr("requirementId", () => faker.datatype.uuid())
-  .attr("resultId", () => faker.datatype.uuid());
+import { CHECK_RESULT, REQUIREMENT, RESULT } from "./constants";
+import { buildOneOf } from "./helpers";
+import { CheckResultData, RequirementData, ResultData } from "./types";
+
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<CheckResultData>(CHECK_RESULT)
+    .attr("status", ResultStatus.SUCCESS)
+    .attr("resultId", undefined)
+    .option("createResultIfMissing", true)
+    .attr("result", ["resultId", "createResultIfMissing"], buildOneOf<ResultData>(RESULT, {}, { numberOfCheckResults: 0 }))
+    .attr("requirementId", undefined)
+    .option("createRequirementIfMissing", true)
+    .attr("requirement", ["requirementId", "createRequirementIfMissing"], buildOneOf<RequirementData>(REQUIREMENT, {}, { numberOfCheckResults: 0 }));
+}

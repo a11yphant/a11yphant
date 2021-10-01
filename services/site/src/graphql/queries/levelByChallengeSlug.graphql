@@ -1,19 +1,54 @@
-query levelByChallengeSlug($challengeSlug: String!, $nth: Int!) {
-  level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
+fragment QuizLevelDetails on QuizLevel {
+  id
+  question
+  answerOptions {
     id
-    instructions
-    tasks {
+    text
+  }
+}
+
+fragment CodeLevelDetails on CodeLevel {
+  id
+  instructions
+  tasks {
+    id
+    text
+    hints {
       id
       text
-      hints {
-        id
-        text
-      }
     }
-    code {
-      html
-      css
-      js
+  }
+  code {
+    html
+    css
+    js
+  }
+  hasHtmlEditor
+  hasCssEditor
+  hasJsEditor
+  lastSubmission {
+    id
+    html
+    css
+    js
+    result {
+      id
+      status
+    }
+  }
+}
+
+query levelByChallengeSlug($challengeSlug: String!, $nth: Int!) {
+  level: levelByChallengeSlug(challengeSlug: $challengeSlug, nth: $nth) {
+    __typename
+    id
+
+    ... on QuizLevel {
+      ...QuizLevelDetails
+    }
+
+    ... on CodeLevel {
+      ...CodeLevelDetails
     }
   }
 }

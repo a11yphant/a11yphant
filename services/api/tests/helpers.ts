@@ -34,7 +34,7 @@ export async function setupDatabase(): Promise<void> {
 
   for (let worker = 1; worker < os.cpus().length; worker++) {
     try {
-      await client.$executeRaw(`CREATE SCHEMA IF NOT EXISTS "${getSchemaName(worker)}"`);
+      await client.$executeRawUnsafe(`CREATE SCHEMA IF NOT EXISTS "${getSchemaName(worker)}"`);
     } catch (e) {
       throw new Error(`Could not create a schema for worker ${worker}: ${e.message}`);
     }
@@ -66,13 +66,13 @@ export function createTestingPrismaClient(logger: Logger): PrismaService {
 }
 
 async function clearTableContents(client: PrismaClient): Promise<void> {
-  const tableNames = await client.$queryRaw(`
+  const tableNames = await client.$queryRawUnsafe<{ table_name: string }[]>(`
           SELECT table_name FROM information_schema.tables
           WHERE table_schema = '${getSchemaName()}' AND table_name != '_prisma_migrations';
         `);
 
   for (const tableName of tableNames.map((row: any) => row.table_name)) {
-    await client.$executeRaw(`DELETE FROM "${tableName}";`);
+    await client.$executeRawUnsafe(`TRUNCATE TABLE "${tableName}" CASCADE;`);
   }
 }
 

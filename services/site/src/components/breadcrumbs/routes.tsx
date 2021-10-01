@@ -26,7 +26,7 @@ export const routes: Routes = {
     },
   },
   "/challenge/[challengeSlug]": {
-    getBreadcrumbInfo: async (urlParams, apolloClient) => {
+    getBreadcrumbInfo: async (urlParams: { challengeSlug: string }, apolloClient) => {
       const { challengeSlug } = urlParams;
 
       const { data } = await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
@@ -41,7 +41,7 @@ export const routes: Routes = {
     },
   },
   "/challenge/[challengeSlug]/level/[nthLevel]": {
-    getBreadcrumbInfo: async (urlParams) => {
+    getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
       const { challengeSlug, nthLevel } = urlParams;
 
       return {
@@ -54,7 +54,7 @@ export const routes: Routes = {
     },
   },
   "/challenge/[challengeSlug]/level/[nthLevel]/evaluation": {
-    getBreadcrumbInfo: async (urlParams) => {
+    getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
       const { challengeSlug, nthLevel } = urlParams;
 
       return {

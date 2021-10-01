@@ -1,14 +1,17 @@
 import Editor, { EditorProps } from "@monaco-editor/react";
+import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { animated, useSpring } from "react-spring";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
-  reset: (language?: EditorLanguage) => void;
+  onReset: (language?: EditorLanguage) => void;
 }
 
 export interface EditorConfig {
@@ -21,7 +24,7 @@ export interface EditorConfig {
 
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
-const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, config, ...props }) => {
+const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, ...props }) => {
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
   const headingRef = useRef<HTMLHeadingElement>();
@@ -34,6 +37,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
   const [editorHeight, setEditorHeight] = useState<number>(0);
   const [editorTop, setEditorTop] = useState<number>(0);
 
+  const [animateIcon, setAnimateIcon] = useState<boolean>(false);
+
   const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
       const wrapperHeight = wrapperRef.current.offsetHeight;
@@ -41,9 +46,9 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
       const buttonHeight = buttonRef.current.offsetHeight;
       const wrapperWidth = wrapperRef.current.clientWidth;
 
-      const marginHeading = getComputedStyle(headingRef.current);
-      const marginButton = getComputedStyle(buttonRef.current);
-      const paddingWrapper = getComputedStyle(wrapperRef.current);
+      const marginHeading = window.getComputedStyle(headingRef.current);
+      const marginButton = window.getComputedStyle(buttonRef.current);
+      const paddingWrapper = window.getComputedStyle(wrapperRef.current);
 
       // calculate real width
       setEditorWidth(wrapperWidth - parseInt(paddingWrapper.paddingLeft) - parseInt(paddingWrapper.paddingRight));
@@ -64,18 +69,25 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
     }
   }, [wrapperRef, headingRef, buttonRef]);
 
-  // hook if dependency changed
-  React.useEffect(() => {
-    updateEditorSize();
-  }, [updateEditorSize]);
-
   useResizeDetector({
     targetRef: wrapperRef,
     onResize: updateEditorSize,
   });
 
+  const AnimatedResetIcon = animated(Reset);
+
+  // any is necessary here because the types of react-spring are somehow messed up
+  const { transform }: any = useSpring({
+    transform: animateIcon ? "rotate(100deg)" : "rotate(360deg)",
+    config: {
+      tension: 0,
+      duration: 300,
+      delay: 0,
+    },
+  });
+
   return (
-    <div className={clsx("w-inherit h-full", "editor-container")}>
+    <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
       <div ref={wrapperRef} className={clsx("p-4 w-inherit h-full", "container-dark overflow-hidden")}>
         <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
           {config.heading}
@@ -85,6 +97,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
             {...props}
             theme="vs-dark"
             language={config.language}
+            loading={
+              <span>
+                <span className="sr-only">The editor is loading...</span>
+                <LoadingIndicator className="w-6 h-6" />
+              </span>
+            }
             value={config.code}
             onChange={(value) => {
               config.updateCode(value);
@@ -93,19 +111,29 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
             height={editorHeight}
           />
         </div>
-        <button
+        <Button
           onClick={() => {
             setModalOpen(true);
           }}
+          onMouseEnter={() => {
+            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
+          }}
+          onMouseLeave={() => {
+            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
+          }}
           className={clsx(
-            "absolute bottom-2 flex items-center transition duration-300 text-grey mx-3",
-            "group hover:text-primaryDark group-hover:text-primaryDark",
+            "absolute bottom-2 flex items-center text-grey mx-3",
+            "group transition duration-300",
+            "hover:text-primary-light",
+            "focus:text-primary-light",
           )}
-          ref={buttonRef}
+          overrideClassName
+          innerRef={buttonRef}
         >
-          <Reset />
+          <AnimatedResetIcon style={{ transform: transform }} />
           Reset
-        </button>
+        </Button>
+
         <ConfirmationModal
           open={modalOpen}
           title="Do you really want to reset the code?"
@@ -115,7 +143,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ reset, conf
           confirmButtonLabel={`Reset ${config.languageLabel}`}
           onConfirm={() => {
             setModalOpen(false);
-            reset(config.language);
+            onReset(config.language);
           }}
         />
       </div>

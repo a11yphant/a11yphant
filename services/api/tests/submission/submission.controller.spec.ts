@@ -1,11 +1,12 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 
-import { ResultStatus } from "../../src/submission/models/result-status.enum";
-import { RequirementResultService } from "../../src/submission/requirement-result.service";
-import { ResultService } from "../../src/submission/result.service";
-import { SubmissionController } from "../../src/submission/submission.controller";
-import { SubmissionCheckCompletedEvent } from "../../src/submission/submission-check-completed-event.interface";
+import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
+import { SubmissionCheckCompletedEvent } from "@/submission/interfaces/submission-check-completed-event.interface";
+import { SubmissionController } from "@/submission/microservices/submission.controller";
+import { RequirementResultService } from "@/submission/services/requirement-result.service";
+import { ResultService } from "@/submission/services/result.service";
+
 import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
 import { ResultFactory } from "../factories/models/result.factory";
 

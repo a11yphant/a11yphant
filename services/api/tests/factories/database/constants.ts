@@ -1,0 +1,13 @@
+export const CHECK_RESULT = "check-result";
+export const CHALLENGE = "challenge";
+export const HINT = "hint";
+export const CODE_LEVEL = "code_level";
+export const QUIZ_LEVEL = "quiz_level";
+export const QUIZ_LEVEL_SUBMISSION = "quiz_level_submission";
+export const REQUIREMENT = "requirement";
+export const RESULT = "result";
+export const RULE = "rule";
+export const ANSWER_OPTION = "answer_option";
+export const SUBMISSION = "submission";
+export const TASK = "task";
+export const USER = "user";

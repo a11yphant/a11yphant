@@ -5,6 +5,11 @@ locals {
   heroku_release_image    = "registry.heroku.com/${terraform.workspace}-a11yphant-api/release:latest"
 }
 
+resource "random_password" "api_secret_key" {
+  length  = 32
+  special = false
+}
+
 resource "heroku_app" "api" {
   name   = "${terraform.workspace}-a11yphant-api"
   region = "eu"
@@ -15,12 +20,19 @@ resource "heroku_app" "api" {
     NO_COLOR                         = 1
     AWS_ACCESS_KEY_ID                = aws_iam_access_key.api_user_access_key.id
     AWS_SECRET_ACCESS_KEY            = aws_iam_access_key.api_user_access_key.secret
+    API_KEY                          = random_password.api_secret_key.result
     API_GRAPHQL_DEBUG                = 1
     API_GRAPHQL_PLAYGROUND           = 1
     API_GRAPHQL_SCHEMA_INTROSPECTION = 1
     API_MESSAGING_TOPICS             = "submission=${module.messaging.submission_topic_arn}"
     API_MESSAGING_REGION             = "eu-central-1"
     API_MESSAGING_QUEUE_URL          = module.messaging.api_queue_url
+    GITHUB_CLIENT_ID                 = var.github_client_id
+    GITHUB_CLIENT_SECRET             = var.github_client_secret
+    GITHUB_CALLBACK_URL              = var.github_callback_url
+    TWITTER_CONSUMER_KEY             = var.twitter_consumer_key
+    TWITTER_CONSUMER_SECRET          = var.twitter_consumer_secret
+    TWITTER_CALLBACK_URL             = var.twitter_callback_url
   }
 }
 
@@ -47,80 +59,36 @@ resource "heroku_formation" "api" {
   ]
 }
 
-data "docker_registry_image" "gitlab_ci_api_app_image" {
-  name = local.gitlab_ci_app_image
-}
-
-resource "docker_image" "gitlab_ci_api_app_image" {
-  name          = local.gitlab_ci_app_image
-  pull_triggers = [data.docker_registry_image.gitlab_ci_api_app_image.sha256_digest]
-}
-
-resource "null_resource" "tag_api_app_image_for_heroku" {
-  provisioner "local-exec" {
-    command = "docker image tag ${local.gitlab_ci_app_image} ${local.heroku_app_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
+module "publish_api_app_image_to_heroku" {
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_app_image
+  target_image = local.heroku_app_image
 
   depends_on = [
-    docker_image.gitlab_ci_api_app_image
+    heroku_app.api
   ]
+
+  providers = {
+    docker        = docker
+    docker.source = docker.gitlab
+    docker.target = docker.heroku
+  }
 }
 
-resource "null_resource" "push_api_app_image_to_heroku" {
-  provisioner "local-exec" {
-    command = "docker push ${local.heroku_app_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
+module "publish_api_release_image_to_heroku" {
+  source       = "../modules/docker_pull_tag_push"
+  source_image = local.gitlab_ci_release_image
+  target_image = local.heroku_release_image
 
   depends_on = [
-    null_resource.tag_api_app_image_for_heroku,
-    heroku_app.api,
+    heroku_app.api
   ]
-}
 
-data "docker_registry_image" "gitlab_ci_api_release_image" {
-  name = local.gitlab_ci_release_image
-}
-
-resource "docker_image" "gitlab_ci_api_release_image" {
-  name          = local.gitlab_ci_release_image
-  pull_triggers = [data.docker_registry_image.gitlab_ci_api_release_image.sha256_digest]
-}
-
-resource "null_resource" "tag_api_release_image_for_heroku" {
-  provisioner "local-exec" {
-    command = "docker image tag ${local.gitlab_ci_release_image} ${local.heroku_release_image}"
+  providers = {
+    docker        = docker
+    docker.source = docker.gitlab
+    docker.target = docker.heroku
   }
-
-  triggers = {
-    always_run = timestamp()
-  }
-
-  depends_on = [
-    docker_image.gitlab_ci_api_release_image
-  ]
-}
-
-resource "null_resource" "push_api_release_image_to_heroku" {
-  provisioner "local-exec" {
-    command = "docker push ${local.heroku_release_image}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
-
-  depends_on = [
-    null_resource.tag_api_release_image_for_heroku,
-    heroku_app.api,
-  ]
 }
 
 data "herokux_registry_image" "api_app" {
@@ -129,7 +97,7 @@ data "herokux_registry_image" "api_app" {
   docker_tag   = "latest"
 
   depends_on = [
-    null_resource.push_api_app_image_to_heroku
+    module.publish_api_app_image_to_heroku
   ]
 }
 
@@ -149,7 +117,7 @@ data "herokux_registry_image" "api_release" {
   docker_tag   = "latest"
 
   depends_on = [
-    null_resource.push_api_release_image_to_heroku
+    module.publish_api_release_image_to_heroku
   ]
 }
 

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
 
@@ -13,13 +14,13 @@ interface CollapsibleSectionProps {
 }
 
 const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed, title, description }) => {
-  const [showDescription, setShowDescription] = useState(false);
+  const [showDescription, setShowDescription] = useState(!passed);
 
   const AnimatedChevron = animated(Chevron);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
-    transform: showDescription ? "rotate(180deg)" : "rotate(0deg)",
+    transform: showDescription ? "rotate(0deg)" : "rotate(180deg)",
     config: {
       tension: 0,
       delay: 0,
@@ -27,32 +28,45 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
   });
 
   return (
-    <div className={`${className} flex flex-row items-start w-full box-border py-2`}>
-      <div className="flex flex-col w-full">
-        <h4>
+    <>
+      <div className={clsx("h-14 w-14 mr-8  ml-0 lg:ml-8 flex justify-center items-center", "lg:mr-20 lg:ml-8")}>
+        {passed ? <Check className="h-9 w-14 text-success" /> : <X className="h-10 w-10 text-error" />}
+        {passed ? (
+          <p className="sr-only">The following requirement is fulfilled:</p>
+        ) : (
+          <p className="sr-only">The following requirement is not fulfilled:</p>
+        )}
+      </div>
+
+      <div className="flex flex-col col-start-2 col-span-9">
+        <h3>
           <Button
             onClick={() => {
               setShowDescription((prevShowDescription) => !prevShowDescription);
             }}
-            className="h3 flex flex-row-reverse m-0 py-4 pr-4 group text-white font-bold transition duration-300 hover:text-primaryDark focus:text-primaryDark"
-            overrideClassname
+            className={clsx(
+              "py-3 pl-4 flex flex-row-reverse",
+              "group transition duration-300",
+              "hover:text-primary-light",
+              "focus:text-primary-light",
+              "h4",
+              className,
+            )}
+            overrideClassName
             aria-expanded={showDescription}
-            icon={
-              <AnimatedChevron
-                style={{ transform: transform }}
-                className="text-white mr-8 group-hover:text-primaryDark group-focus:text-primaryDark"
-              />
-            }
           >
             {title}
+            <AnimatedChevron
+              style={{ transform: transform }}
+              className={clsx("mr-8 text-light", "group-hover:text-primary-light", "group-focus:text-primary-light", className)}
+            />
           </Button>
-        </h4>
+        </h3>
         <div hidden={!showDescription}>
-          <p className="text-white ml-16 my-4">{description}</p>
+          <p className="ml-20 my-4">{description}</p>
         </div>
       </div>
-      {passed ? <Check className="h-20 w-20 text-white ml-10" /> : <X className="h-20 w-20 text-white ml-10" />}
-    </div>
+    </>
   );
 };
 

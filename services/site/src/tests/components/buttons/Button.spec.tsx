@@ -23,14 +23,14 @@ describe("Button", () => {
   });
 
   it("override className", () => {
-    render(<Button overrideClassname>{buttonText}</Button>);
+    render(<Button overrideClassName>{buttonText}</Button>);
 
     // expected value is {"0": "undefined", "1": "false"}
     expect(screen.getByText(buttonText, { selector: "button" }).classList.length).toBeLessThanOrEqual(2);
   });
 
   it("full attribute works", () => {
-    const { container } = render(<Button full>{buttonText}</Button>);
+    const { container } = render(<Button primary>{buttonText}</Button>);
 
     expect(container.querySelector("button.bg-primary")).toBeTruthy();
     expect(container.querySelector("button.text-white")).toBeTruthy();
@@ -41,7 +41,8 @@ describe("Button", () => {
     const srText = "Screen Reader Text";
 
     const { container } = render(
-      <Button icon={icon} srText={srText}>
+      <Button srText={srText}>
+        {icon}
         {buttonText}
       </Button>,
     );

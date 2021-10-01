@@ -1,20 +1,28 @@
+import "module-alias/register";
+
 import { AwsTransportStrategy } from "@a11yphant/nestjs-aws-messaging";
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
+import { SessionInterceptor } from "./authentication/session.interceptor";
 
 let transportStrategy: AwsTransportStrategy;
 
 async function bootstrap(): Promise<NestExpressApplication | void> {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);
+  const sessionInterceptor = app.get<SessionInterceptor>(SessionInterceptor);
+
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(sessionInterceptor);
 
   transportStrategy = new AwsTransportStrategy({
     polling: true,
@@ -31,7 +39,7 @@ async function bootstrap(): Promise<NestExpressApplication | void> {
   const port = configService.get("api.port");
 
   await app.listen(port);
-  await app.startAllMicroservicesAsync();
+  await app.startAllMicroservices();
   logger.log(`App listening on ${url}/graphql`, AppModule.name);
 }
 

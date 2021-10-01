@@ -1,34 +1,29 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { Factory, REQUIREMENT, RequirementData, RULE, RuleData } from "@tests/factories/database";
+import { useDatabase } from "@tests/helpers";
+import faker from "faker";
 
-import { RuleService } from "../../src/challenge/rule.service";
-import { ChallengeFactory } from "../factories/database/challenge.factory";
-import { LevelFactory } from "../factories/database/level.factory";
-import { RequirementFactory } from "../factories/database/requirement.factory";
-import { RuleFactory } from "../factories/database/rule.factory";
-import { useDatabase } from "../helpers";
+import { RuleService } from "@/challenge/rule.service";
 
 describe("rule service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
 
   it("returns rule for a requirement", async () => {
     const prisma = getPrismaService();
-    const rule = await prisma.rule.create({ data: RuleFactory.build() });
-    const challenge = await prisma.challenge.create({ data: ChallengeFactory.build() });
-    const level = await prisma.level.create({ data: LevelFactory.build({ challengeId: challenge.id }) });
-    const requirement = await prisma.requirement.create({ data: RequirementFactory.build({ ruleId: rule.id, levelId: level.id }) });
+    const requirement = await prisma.requirement.create({ data: Factory.build<RequirementData>(REQUIREMENT) });
 
     const ruleService = new RuleService(prisma);
 
-    expect(await ruleService.findOneForRequirement(requirement.id)).toHaveProperty("id", rule.id);
+    expect(await ruleService.findOneForRequirement(requirement.id)).toHaveProperty("id", requirement.ruleId);
   });
 
   it("returns null for a requirement if it is not found", async () => {
     const prisma = getPrismaService();
-    await prisma.rule.create({ data: RuleFactory.build() });
+    await prisma.rule.create({ data: Factory.build<RuleData>(RULE) });
 
     const ruleService = new RuleService(prisma);
 
-    expect(await ruleService.findOneForRequirement("not-existing-uuid")).toBeNull();
+    expect(await ruleService.findOneForRequirement(faker.datatype.uuid())).toBeNull();
   });
 });

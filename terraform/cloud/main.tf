@@ -20,6 +20,12 @@ terraform {
 
     docker = {
       source = "kreuzwerker/docker"
+      # lock version until this bug is resolved: https://github.com/kreuzwerker/terraform-provider-docker/issues/239
+      version = "2.15.0"
+    }
+
+    random = {
+      source = "hashicorp/random"
     }
   }
 }
@@ -44,18 +50,33 @@ locals {
 
 provider "docker" {
   host = "unix:///var/run/docker.sock"
+}
 
-  registry_auth {
-    address  = "gitlab.mediacube.at:5050"
-    username = var.gitlab_ci_registery_user
-    password = var.gitlab_ci_registry_password
-  }
+provider "docker" {
+  alias = "heroku"
+  host  = "unix:///var/run/docker.sock"
 
   registry_auth {
     address  = "registry.heroku.com"
     username = var.heroku_registry_user
     password = var.heroku_registry_password
   }
+}
+
+provider "docker" {
+  alias = "gitlab"
+  host  = "unix:///var/run/docker.sock"
+
+  registry_auth {
+    address  = "gitlab.mediacube.at:5050"
+    username = var.gitlab_ci_registery_user
+    password = var.gitlab_ci_registry_password
+  }
+}
+
+provider "docker" {
+  alias = "ecr"
+  host  = "unix:///var/run/docker.sock"
 
   registry_auth {
     address  = local.ecr_address
@@ -72,6 +93,9 @@ provider "aws" {
 provider "aws" {
   alias  = "us_west_2"
   region = "us-west-2"
+}
+
+provider "external" {
 }
 
 module "messaging" {

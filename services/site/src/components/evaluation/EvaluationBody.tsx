@@ -1,20 +1,45 @@
-import { RequirementStatus } from "app/generated/graphql";
+import { EvaluationRequirementResultFragment, RequirementStatus } from "app/generated/graphql";
+import clsx from "clsx";
 import React from "react";
 
 import CollapsableSection from "./CollapsableSection";
 
 interface EvaluationBodyProps {
   className?: string;
-  requirementTitle: string;
-  description: string;
-  result: RequirementStatus;
+  requirements: EvaluationRequirementResultFragment[];
 }
 
-const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirementTitle, result, description }) => {
+const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ className, requirements }) => {
+  const successfulRequirements = requirements.filter((requirement) => requirement.result === RequirementStatus.Success);
+  const failedRequirements = requirements.filter((requirement) => requirement.result === RequirementStatus.Fail);
+
   return (
-    <div className={`${className} flex flex-col items-left w-full box-border h-full m-auto mb-8`}>
-      <CollapsableSection passed={result === RequirementStatus.Success ? true : false} title={requirementTitle} description={description} />
-    </div>
+    <>
+      {failedRequirements.length >= 1 && (
+        <ul className={clsx("h-full", className)}>
+          {failedRequirements.map((requirement, idx) => {
+            const requirementTitle = `${requirement.title}`;
+            return (
+              <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+                <CollapsableSection passed={false} title={requirementTitle} description={requirement.description} />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {successfulRequirements.length >= 1 && (
+        <ul className={clsx("h-full", className)}>
+          {successfulRequirements.map((requirement, idx) => {
+            const requirementTitle = `${requirement.title}`;
+            return (
+              <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+                <CollapsableSection passed={true} title={requirementTitle} description={requirement.description} />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </>
   );
 };
 

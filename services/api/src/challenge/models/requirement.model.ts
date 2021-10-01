@@ -1,7 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
-import { Rule } from "./rule.model";
-
 @ObjectType()
 export class Requirement {
   constructor(properties: { id: string; title: string; description: string }) {
@@ -20,9 +18,4 @@ export class Requirement {
   description: string;
 
   options: { [key: string]: string };
-
-  @Field(() => Rule, {
-    description: "The rule this requirement is based on.",
-  })
-  rule: Rule;
 }

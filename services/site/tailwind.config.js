@@ -1,39 +1,57 @@
 module.exports = {
+  mode: "jit",
   purge: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        xs: "426px",
+        // => @media (min-width: 640px) { ... }
+      },
       boxShadow: {
+        card: "0 0 1.25rem 0.25rem rgba(0, 0, 0, 0.8)",
         modal: "0px 24px 38px rgba(0, 0, 0, 0.14), 0px 0px 46px rgba(0, 0, 0, 0.12), 0px 0px 15px rgba(0, 0, 0, 0.2)",
       },
       spacing: {
         inherit: "inherit",
-        screenHalf: "50vh",
-        navigation: "8%",
         main: "92%",
-        sidebar: "28%",
-        "18/20": "90%",
-        fitContent: "fit-content",
+        "fit-content": "fit-content",
       },
       maxWidth: {
         "80ch": "80ch",
+        "screen-3xl": "1800px",
+      },
+      minHeight: {
+        "4/10": "40%",
       },
       colors: {
-        primary: "#7331FF",
-        primaryLight: "#B795FF",
-        primaryDark: "#6657C5",
-        error: "#E75A7C",
-        background: "#121212",
-        backgroundMiddle: "#1C1C1C",
-        grey: "#EDEDED",
-        greyLight: "#EFEFEF",
-        greyMiddle: "#B4B8B8",
-        greyDark: "#4F4F4F",
         light: "#FFFFFF",
         dark: "#121212",
+        error: {
+          DEFAULT: "#E75A7C",
+          light: "#F094A9",
+          dark: "#C41C43",
+        },
+        success: "#9ADB66",
+        primary: {
+          DEFAULT: "#7331FF",
+          light: "#B795FF",
+          dark: "#5719D9",
+        },
+        background: {
+          DEFAULT: "#121212",
+          light: "#202226",
+        },
+        grey: {
+          DEFAULT: "#EDEDED",
+          light: "#EFEFEF",
+          middle: "#B4B8B8",
+          dark: "#4F4F4F",
+        },
       },
       fontFamily: {
-        ibmPlex: ["IBM Plex Sans", "sans-serif"],
+        sans: ['"IBM Plex Sans"', "sans-serif"],
+        mono: ['"IBM Plex Mono"', "monospace"],
       },
       transitionProperty: {
         width: "width",
@@ -44,12 +62,33 @@ module.exports = {
         "gradient-medium": "url('/images/02_medium.jpg')",
         "gradient-hard": "url('/images/03_hard.jpg')",
       }),
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.light"),
+            code: {
+              color: theme("colors.primary.light"),
+              fontFamily: theme("fontFamily.mono").join(" "),
+              fontSize: "1em",
+              "&::before": {
+                // cannot overwrite the content without important...
+                content: "none !important",
+              },
+              "&::after": {
+                content: "none !important",
+              },
+            },
+          },
+        },
+      }),
     },
   },
   variants: {
     extend: {
       textColor: ["group-focus"],
+      transitionProperty: ["hover", "motion-safe", "motion-reduce"],
+      borderWidth: ["first", "last"],
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

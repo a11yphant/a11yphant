@@ -1,14 +1,15 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { useDatabase } from "@tests/helpers";
+import faker from "faker";
 import mock from "mock-fs";
 import { join } from "path";
 
-import { Challenge } from "../../src/importer/challenge.interface";
-import { ImportService } from "../../src/importer/import.service";
-import { Rule } from "../../src/importer/rule.interface";
-import { YamlReaderService } from "../../src/importer/yaml-reader.service";
-import { PrismaService } from "../../src/prisma/prisma.service";
-import { useDatabase } from "../helpers";
+import { Challenge, CodeLevel, QuizLevel } from "@/importer/challenge.interface";
+import { ImportService } from "@/importer/import.service";
+import { Rule } from "@/importer/rule.interface";
+import { YamlReaderService } from "@/importer/yaml-reader.service";
+import { PrismaService } from "@/prisma/prisma.service";
 
 describe("import service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -32,6 +33,7 @@ describe("import service", () => {
       createMock<Logger>(),
       createMock<PrismaService>({
         challenge: { upsert },
+        quizLevel: { deleteMany: jest.fn() },
       }),
       createMock<YamlReaderService>({
         readFile: jest
@@ -126,7 +128,7 @@ describe("import service", () => {
   });
 
   describe("level", () => {
-    it("can import the levels for a challenge", async () => {
+    it("can import the code levels for a challenge", async () => {
       const prisma = getPrismaService();
       const challenge: Challenge = {
         id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
@@ -136,8 +138,9 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
+            type: "code",
             instructions: "hi",
             requirements: [],
             tasks: [],
@@ -149,16 +152,16 @@ describe("import service", () => {
 
       await importer.importChallenge(challenge);
 
-      expect(await prisma.level.count()).toEqual(1);
-      const level = challenge.levels[0];
-      const storedLevel = await prisma.level.findFirst();
+      expect(await prisma.codeLevel.count()).toEqual(1);
+      const level = challenge.levels[0] as CodeLevel;
+      const storedLevel = await prisma.codeLevel.findFirst();
       expect(storedLevel.id).toEqual(level.id);
       expect(storedLevel.order).toEqual(level.order);
       expect(storedLevel.instructions).toEqual(level.instructions);
       expect(storedLevel.challengeId).toEqual(challenge.id);
     });
 
-    it("can import the levels with code for a challenge", async () => {
+    it("can import the code levels with code for a challenge", async () => {
       const prisma = getPrismaService();
       const challenge: Challenge = {
         id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
@@ -168,8 +171,9 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
+            type: "code",
             instructions: "hi",
             requirements: [],
             tasks: [],
@@ -186,15 +190,15 @@ describe("import service", () => {
 
       await importer.importChallenge(challenge);
 
-      expect(await prisma.level.count()).toEqual(1);
-      const level = challenge.levels[0];
-      const storedLevel = await prisma.level.findFirst();
+      expect(await prisma.codeLevel.count()).toEqual(1);
+      const level = challenge.levels[0] as CodeLevel;
+      const storedLevel = await prisma.codeLevel.findFirst();
       expect(storedLevel.html).toEqual(level.code.html);
       expect(storedLevel.css).toEqual(level.code.css);
       expect(storedLevel.js).toEqual(level.code.js);
     });
 
-    it("sets the correct editor configuration for the level", async () => {
+    it("sets the correct editor configuration for the code level", async () => {
       const prisma = getPrismaService();
       const challenge: Challenge = {
         id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
@@ -204,8 +208,9 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
+            type: "code",
             instructions: "hi",
             requirements: [],
             tasks: [],
@@ -224,12 +229,123 @@ describe("import service", () => {
       const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
       await importer.importChallenge(challenge);
 
-      expect(await prisma.level.count()).toEqual(1);
-      const storedLevel = await prisma.level.findFirst();
+      expect(await prisma.codeLevel.count()).toEqual(1);
+      const storedLevel = await prisma.codeLevel.findFirst();
 
       expect(storedLevel.hasHtmlEditor).toEqual(true);
       expect(storedLevel.hasCssEditor).toEqual(true);
       expect(storedLevel.hasJsEditor).toEqual(false);
+    });
+
+    it("can import quiz levels", async () => {
+      const prisma = getPrismaService();
+      const challenge: Challenge = {
+        id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+        slug: "test-slug",
+        name: "test",
+        introduction: "hello",
+        difficulty: "easy",
+        levels: [
+          {
+            id: faker.datatype.uuid(),
+            order: 1,
+            type: "quiz",
+            question: "How are you today?",
+            answer_options: [],
+          },
+        ],
+      };
+
+      const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+
+      await importer.importChallenge(challenge);
+
+      expect(await prisma.quizLevel.count()).toEqual(1);
+      const level = challenge.levels[0] as QuizLevel;
+      const storedLevel = await prisma.quizLevel.findFirst();
+      expect(storedLevel.id).toEqual(level.id);
+      expect(storedLevel.order).toEqual(level.order);
+      expect(storedLevel.question).toEqual(level.question);
+      expect(storedLevel.challengeId).toEqual(challenge.id);
+    });
+
+    it("can import answers for quiz levels", async () => {
+      const prisma = getPrismaService();
+      const challenge: Challenge = {
+        id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+        slug: "test-slug",
+        name: "test",
+        introduction: "hello",
+        difficulty: "easy",
+        levels: [
+          {
+            id: faker.datatype.uuid(),
+            order: 1,
+            type: "quiz",
+            question: "How are you today?",
+            answer_options: [
+              {
+                id: faker.datatype.uuid(),
+                text: "I'm fine",
+                correct: true,
+              },
+              {
+                id: faker.datatype.uuid(),
+                text: "I'm not fine",
+                correct: false,
+              },
+            ],
+          },
+        ],
+      };
+
+      const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+
+      await importer.importChallenge(challenge);
+
+      expect(await prisma.answerOption.count()).toEqual(2);
+      const answerOption = (challenge.levels[0] as QuizLevel).answer_options[0];
+      const storedAnswerOption = await prisma.answerOption.findUnique({ where: { id: answerOption.id } });
+      expect(storedAnswerOption.id).toEqual(answerOption.id);
+      expect(storedAnswerOption.text).toEqual(answerOption.text);
+      expect(storedAnswerOption.quizLevelId).toEqual(challenge.levels[0].id);
+    });
+
+    it("deletes quiz levels from a challenge if they are deleted", async () => {
+      const prisma = getPrismaService();
+      const challengeWithoutLevels: Challenge = {
+        id: "6a15a6de-306c-4a8b-9765-a1d5c6b91083",
+        slug: "test-slug",
+        name: "test",
+        introduction: "hello",
+        difficulty: "easy",
+        levels: [],
+      };
+      const challenge: Challenge = {
+        ...challengeWithoutLevels,
+        levels: [
+          {
+            id: faker.datatype.uuid(),
+            order: 1,
+            type: "quiz",
+            question: "How are you today?",
+            answer_options: [
+              {
+                id: faker.datatype.uuid(),
+                correct: true,
+                text: "Options",
+              },
+            ],
+          },
+        ],
+      };
+
+      const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());
+
+      await importer.importChallenge(challenge);
+      await importer.importChallenge(challengeWithoutLevels);
+
+      expect(await prisma.quizLevel.count()).toEqual(0);
     });
   });
 
@@ -251,11 +367,12 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
+            type: "code",
             instructions: "hi",
             tasks: [],
-            requirements: [{ id: "asdf", title: "lala", description: "asdf", key: "test-rule" }],
+            requirements: [{ id: faker.datatype.uuid(), title: "lala", description: "asdf", key: "test-rule" }],
           },
         ],
       };
@@ -265,7 +382,7 @@ describe("import service", () => {
       await importer.importChallenge(challenge);
 
       expect(await prisma.requirement.count()).toEqual(1);
-      const requirement = challenge.levels[0].requirements[0];
+      const requirement = (challenge.levels[0] as CodeLevel).requirements[0];
       const storedRequirement = await prisma.requirement.findFirst();
       expect(storedRequirement.id).toEqual(requirement.id);
       expect(storedRequirement.title).toEqual(requirement.title);
@@ -291,6 +408,7 @@ describe("import service", () => {
           {
             id: "f3b74759-59b7-4e42-83de-f68886b30a61",
             order: 0,
+            type: "code",
             instructions: "do your best",
             tasks: [],
             requirements: [
@@ -330,8 +448,9 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
+            type: "code",
             instructions: "hi",
             requirements: [],
             tasks: [
@@ -346,11 +465,10 @@ describe("import service", () => {
 
       await importer.importChallenge(challenge);
 
-      expect(await prisma.task.count()).toEqual(challenge.levels[0].tasks.length);
-      const task = challenge.levels[0].tasks[0];
+      expect(await prisma.task.count()).toEqual((challenge.levels[0] as CodeLevel).tasks.length);
+      const task = (challenge.levels[0] as CodeLevel).tasks[0];
 
-      const storedTask = await prisma.task.findFirst();
-      expect(storedTask.id).toEqual(task.id);
+      const storedTask = await prisma.task.findUnique({ where: { id: task.id } });
       expect(storedTask.text).toEqual(task.text);
       expect(storedTask.levelId).toEqual(challenge.levels[0].id);
     });
@@ -367,8 +485,9 @@ describe("import service", () => {
         difficulty: "easy",
         levels: [
           {
-            id: "a",
+            id: faker.datatype.uuid(),
             order: 1,
+            type: "code",
             instructions: "hi",
             requirements: [],
             tasks: [
@@ -386,13 +505,13 @@ describe("import service", () => {
 
       await importer.importChallenge(challenge);
 
-      expect(await prisma.hint.count()).toEqual(challenge.levels[0].tasks[0].hints.length);
-      const hint = challenge.levels[0].tasks[0].hints[0];
+      expect(await prisma.hint.count()).toEqual((challenge.levels[0] as CodeLevel).tasks[0].hints.length);
+      const hint = (challenge.levels[0] as CodeLevel).tasks[0].hints[0];
 
       const storedHint = await prisma.hint.findFirst();
       expect(storedHint.id).toEqual(hint.id);
       expect(storedHint.text).toEqual(hint.text);
-      expect(storedHint.taskId).toEqual(challenge.levels[0].tasks[0].id);
+      expect(storedHint.taskId).toEqual((challenge.levels[0] as CodeLevel).tasks[0].id);
     });
   });
 });

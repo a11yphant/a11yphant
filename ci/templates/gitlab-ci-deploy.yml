@@ -3,13 +3,13 @@
     - docker
   stage: deploy
   needs:
-    - build:nestjs-aws-messaging
     - build:api
     - build:site
-    - production-dependencies:site
     - build:submission-checker
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   cache: {} # disable cache
+  # prevent concurrent deployment jobs for one workspace
+  resource_group: $WORKSPACE
   variables:
     TF_IN_AUTOMATION: 1
   before_script:
@@ -23,4 +23,19 @@
   script:
     - terraform -chdir="terraform/cloud" workspace new $WORKSPACE || echo ""
     - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud apply -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG" -var="api_dyno_size=${API_DYNO_SIZE:-free}"
+    - terraform -chdir=terraform/cloud apply 
+                -auto-approve
+                -var="gitlab_ci_registery_user=$CI_REGISTRY_USER"
+                -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD"
+                -var="heroku_registry_password=$HEROKU_AUTH_TOKEN"
+                -var="domain=$DOMAIN"
+                -var="route53_zone_id=$AWS_ZONE_ID"
+                -var="use_custom_domain=$USE_CUSTOM_DOMAIN"
+                -var="docker_tag=$CI_COMMIT_REF_SLUG"
+                -var="api_dyno_size=${API_DYNO_SIZE:-free}"
+                -var="github_client_id=$GITHUB_CLIENT_ID"
+                -var="github_client_secret=$GITHUB_CLIENT_SECRET"
+                -var="github_callback_url=$GITHUB_CALLBACK_URL"
+                -var="twitter_consumer_key=$TWITTER_CONSUMER_KEY"
+                -var="twitter_consumer_secret=$TWITTER_CONSUMER_SECRET"
+                -var="twitter_callback_url=$TWITTER_CALLBACK_URL"

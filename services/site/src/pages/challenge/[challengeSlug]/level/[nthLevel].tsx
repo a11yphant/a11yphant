@@ -1,89 +1,50 @@
-import Button from "app/components/buttons/Button";
-import Editors, { EditorLanguage } from "app/components/challenge/Editors";
-import Preview from "app/components/challenge/Preview";
-import Sidebar from "app/components/challenge/Sidebar";
+import { Transition } from "@headlessui/react";
+import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
+import CodeLevel from "app/components/challenge/level/CodeLevel";
+import QuizLevel from "app/components/challenge/level/QuizLevel";
+import SmallScreenNotification from "app/components/common/SmallScreenNotification";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
+import Navigation from "app/components/Navigation";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
-  Code,
   LevelByChallengeSlugDocument,
   LevelByChallengeSlugQueryResult,
   LevelByChallengeSlugQueryVariables,
   useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
-import { initializeApollo } from "app/lib/apolloClient";
-import { useChallenge } from "app/lib/ChallengeContext";
+import { initializeApollo } from "app/lib/apollo-client";
+import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
+import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
-
-import { useSubmitMutation } from "../../../../generated/graphql";
+import React from "react";
 
 const Level: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
-
-  const {
-    loading,
-    data: { level },
-  } = useLevelByChallengeSlugQuery({ variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) } });
+  const [autoSaveLoading, setAutoSaveLoading] = React.useState<boolean>(false);
 
   const {
     loading: loadingChallenge,
     data: { challenge },
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
-  const [submitLevelMutation] = useSubmitMutation();
-
-  const challengeContext = useChallenge();
-
-  const [initialCode] = useState<Code>(level?.code);
-
-  const [currHtmlCode, setCurrHtmlCode] = useState<string>(level?.code?.html);
-  const [currCssCode, setCurrCssCode] = useState<string>(level?.code?.css);
-  // const [currJavascriptCode, setCurrJavascriptCode] = useState<string>(level?.code?.js);
-
-  const resetToInitialCode = (language?: EditorLanguage): void => {
-    // if language === undefined => reset all
-    const newCode: Code = !language
-      ? initialCode
-      : {
-          html: currHtmlCode,
-          css: currCssCode,
-          // js: currJavascriptCode,
-        };
-
-    if (language) {
-      newCode[language] = initialCode[language];
-    }
-
-    setCurrHtmlCode(newCode.html);
-    setCurrCssCode(newCode.css);
-    // setCurrJavascriptCode(newCode.js);
-  };
-
-  const submitLevel = async (): Promise<void> => {
-    const { data } = await submitLevelMutation({
-      variables: {
-        submissionInput: {
-          levelId: level.id,
-          html: currHtmlCode,
-          css: currCssCode,
-          // js: currJavascriptCode,
-        },
-      },
-    });
-
-    challengeContext.setSubmissionId(data.submit.id);
-    router.push(`${router.asPath}/evaluation`);
-  };
+  const {
+    loading,
+    data: { level },
+  } = useLevelByChallengeSlugQuery({
+    variables: { challengeSlug: challengeSlug as string, nth: Number(nthLevel) },
+  });
 
   if (loading || loadingChallenge) {
     return <div>Loading ...</div>;
   }
+
+  const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
   return (
     <>
@@ -92,40 +53,23 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <main className="flex justify-between h-main box-border p-4">
-        <Sidebar classes="h-full" challengeName={challenge.name} level={level} />
-        <div className="flex justify-between flex-col flex-auto h-full box-border pl-4 relative">
-          <Editors
-            reset={resetToInitialCode}
-            classes="w-full h-3/5"
-            editors={[
-              { languageLabel: "HTML", language: EditorLanguage.html, code: currHtmlCode, updateCode: setCurrHtmlCode, heading: "index.html" },
-              { languageLabel: "CSS", language: EditorLanguage.css, code: currCssCode, updateCode: setCurrCssCode, heading: "index.css" },
-              // {
-              //   languageLabel: "JavaScript",
-              //   language: EditorLanguage.javascript,
-              //   code: currJavascriptCode,
-              //   updateCode: setCurrJavascriptCode,
-              //   heading: "index.js",
-              // },
-            ]}
-            theme="light"
-            options={{
-              lineHeight: 24,
-              fontSize: 12,
-              wordWrap: "on",
-              minimap: {
-                enabled: false,
-              },
-            }}
-          />
-          <Preview classes="w-full h-2/5" heading="Preview" htmlCode={currHtmlCode} cssCode={currCssCode} javascriptCode={""} />
-          <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
-            <Button full onClick={submitLevel} className="px-10">
-              Submit
-            </Button>
-          </div>
-        </div>
+      <Navigation displayBreadcrumbs>
+        <Transition
+          show={autoSaveLoading}
+          enter="transition-opacity duration-300"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-300 delay-1000"
+          leaveTo="opacity-0"
+        >
+          <span>
+            Saving... <LoadingIndicator className="inline ml-4" />
+          </span>
+        </Transition>
+      </Navigation>
+      <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
+        <SmallScreenNotification />
+        {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
+        {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} />}
       </main>
     </>
   );
@@ -134,24 +78,26 @@ const Level: React.FunctionComponent = () => {
 export default Level;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo();
+  const apolloClient = initializeApollo(null, context);
 
   const { challengeSlug, nthLevel } = context.params;
 
-  await apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
-    query: LevelByChallengeSlugDocument,
-    variables: {
-      challengeSlug: challengeSlug as string,
-      nth: Number(nthLevel),
-    },
-  });
-
-  await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
-    query: ChallengeBySlugDocument,
-    variables: {
-      slug: challengeSlug as string,
-    },
-  });
+  await Promise.all([
+    getServerSideCurrentUser(apolloClient),
+    apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
+      query: LevelByChallengeSlugDocument,
+      variables: {
+        challengeSlug: challengeSlug as string,
+        nth: Number(nthLevel),
+      },
+    }),
+    apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+      query: ChallengeBySlugDocument,
+      variables: {
+        slug: challengeSlug as string,
+      },
+    }),
+  ]);
 
   return {
     props: {

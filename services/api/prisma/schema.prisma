@@ -7,28 +7,72 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["orderByRelation"]
+  provider = "prisma-client-js"
 }
 
 model Challenge {
-  id           String  @id @default(uuid())
-  slug         String  @unique
+  id           String      @id @default(uuid()) @db.Uuid
+  slug         String      @unique
   name         String
-  introduction String  @default("")
-  difficulty   Int     @default(0)
-  order        Int     @default(0)
-  levels       Level[]
+  introduction String      @default("")
+  difficulty   Int         @default(0)
+  order        Int         @default(0)
+  codeLevels   CodeLevel[]
+  quizLevels   QuizLevel[]
 
   @@map(name: "challenges")
 }
 
-model Level {
-  id            String        @id @default(uuid())
+model QuizLevel {
+  id                  String                @id @default(uuid()) @db.Uuid
+  order               Int                   @default(0)
+  question            String
+  challenge           Challenge             @relation(fields: [challengeId], references: [id])
+  challengeId         String                @db.Uuid
+  answerOptions       AnswerOption[]
+  quizLevelSubmission QuizLevelSubmission[]
+
+  @@map("quiz_levels")
+}
+
+model AnswerOption {
+  id          String                @id @default(uuid()) @db.Uuid
+  text        String
+  correct     Boolean               @default(false)
+  quizLevel   QuizLevel             @relation(fields: [quizLevelId], references: [id], onDelete: Cascade)
+  quizLevelId String                @db.Uuid
+  submissions QuizLevelSubmission[]
+
+  @@map("quiz_answer_options")
+}
+
+model QuizLevelSubmission {
+  id              String           @id @default(uuid()) @db.Uuid
+  level           QuizLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  levelId         String           @db.Uuid
+  answers         AnswerOption[]
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String           @db.Uuid
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
+  quizLevelResult QuizLevelResult?
+}
+
+model QuizLevelResult {
+  id           String              @id @default(uuid()) @db.Uuid
+  status       Int                 @default(0)
+  submission   QuizLevelSubmission @relation(fields: [submissionId], references: [id])
+  submissionId String              @db.Uuid
+
+  @@map(name: "quiz_level_resuls")
+}
+
+model CodeLevel {
+  id            String        @id @default(uuid()) @db.Uuid
   order         Int           @default(0)
   instructions  String
   challenge     Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId   String
+  challengeId   String        @db.Uuid
   requirements  Requirement[]
   submissions   Submission[]
   tasks         Task[]
@@ -39,21 +83,21 @@ model Level {
   hasCssEditor  Boolean       @default(false)
   hasJsEditor   Boolean       @default(false)
 
-  @@map(name: "levels")
+  @@map(name: "code_levels")
 }
 
 model Task {
-  id      String  @id @default(uuid())
+  id      String     @id @default(uuid()) @db.Uuid
   text    String
   hints   Hint[]
-  Level   Level?  @relation(fields: [levelId], references: [id])
-  levelId String?
+  Level   CodeLevel? @relation(fields: [levelId], references: [id])
+  levelId String?    @db.Uuid
 
   @@map("tasks")
 }
 
 model Rule {
-  id           String        @id @default(uuid())
+  id           String        @id @default(uuid()) @db.Uuid
   key          String        @unique
   requirements Requirement[]
 
@@ -61,14 +105,14 @@ model Rule {
 }
 
 model Requirement {
-  id          String        @id @default(uuid())
+  id          String        @id @default(uuid()) @db.Uuid
   title       String        @default("")
   description String        @default("")
   order       Int           @default(0)
-  level       Level         @relation(fields: [levelId], references: [id])
-  levelId     String
+  level       CodeLevel     @relation(fields: [levelId], references: [id])
+  levelId     String        @db.Uuid
   rule        Rule?         @relation(fields: [ruleId], references: [id])
-  ruleId      String?
+  ruleId      String?       @db.Uuid
   options     Json?
   CheckResult CheckResult[]
 
@@ -76,43 +120,60 @@ model Requirement {
 }
 
 model Hint {
-  id     String  @id @default(uuid())
+  id     String  @id @default(uuid()) @db.Uuid
   text   String  @default("")
   Task   Task?   @relation(fields: [taskId], references: [id])
-  taskId String?
+  taskId String? @db.Uuid
 
   @@map(name: "hints")
 }
 
 model Submission {
-  id      String  @id @default(uuid())
-  html    String?
-  css     String?
-  js      String?
-  level   Level   @relation(fields: [levelId], references: [id])
-  levelId String
-  result  Result?
+  id        String    @id @default(uuid()) @db.Uuid
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  html      String?
+  css       String?
+  js        String?
+  level     CodeLevel @relation(fields: [levelId], references: [id])
+  levelId   String    @db.Uuid
+  result    Result?
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?   @db.Uuid
 
   @@map(name: "submissions")
 }
 
 model Result {
-  id           String        @id @default(uuid())
+  id           String        @id @default(uuid()) @db.Uuid
   status       Int           @default(0)
   checkResults CheckResult[]
-  Submission   Submission    @relation(fields: [submissionId], references: [id])
-  submissionId String
+  submission   Submission    @relation(fields: [submissionId], references: [id])
+  submissionId String        @db.Uuid
 
   @@map(name: "results")
 }
 
 model CheckResult {
-  id            String      @id @default(uuid())
+  id            String      @id @default(uuid()) @db.Uuid
   result        Result      @relation(fields: [resultId], references: [id])
-  resultId      String
+  resultId      String      @db.Uuid
   requirement   Requirement @relation(fields: [requirementId], references: [id])
-  requirementId String
+  requirementId String      @db.Uuid
   status        Int
 
   @@map(name: "check_results")
+}
+
+model User {
+  id                  String                @id @default(uuid()) @db.Uuid
+  authProvider        String                @default("anonymous")
+  authId              String?
+  email               String?
+  password            String?
+  displayName         String?
+  submissions         Submission[]
+  quizLevelSubmission QuizLevelSubmission[]
+
+  @@map("users")
 }

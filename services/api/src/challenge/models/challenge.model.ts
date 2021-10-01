@@ -1,7 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 import { ChallengeDifficulty } from "../enums/challenge-difficulty.enum";
-import { Level } from "./level.model";
 
 @ObjectType({
   description: "General and level information for a specific challenge.",
@@ -29,9 +28,4 @@ export class Challenge {
 
   @Field(() => ChallengeDifficulty)
   difficulty: ChallengeDifficulty;
-
-  @Field(() => [Level], {
-    description: "All levels for this challenge.",
-  })
-  levels: Level[];
 }

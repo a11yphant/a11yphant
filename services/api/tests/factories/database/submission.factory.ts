@@ -1,10 +1,16 @@
-import { Submission } from "@prisma/client";
-import faker from "faker";
-import { Factory } from "rosie";
+import { IFactoryStatic } from "rosie";
 
-export const SubmissionFactory = Factory.define<Submission>("submission-record")
-  .attr("id", () => faker.datatype.uuid())
-  .attr("html", "<p>hi</p>")
-  .attr("css", "body { color: blue }")
-  .attr("js", "console.log('hi')")
-  .attr("levelId", () => faker.datatype.uuid());
+import { CODE_LEVEL, SUBMISSION } from "./constants";
+import { buildOneOf } from "./helpers";
+import { CodeLevelData, SubmissionData } from "./types";
+
+export function define(factory: IFactoryStatic): void {
+  factory
+    .define<SubmissionData>(SUBMISSION)
+    .attr("html", "<p>hi</p>")
+    .attr("css", "body { color: blue }")
+    .attr("js", "console.log('hi')")
+    .attr("levelId", undefined)
+    .option("createLevelIfMissing", true)
+    .attr("level", ["levelId", "createLevelIfMissing"], buildOneOf<CodeLevelData>(CODE_LEVEL, {}, { createSubmissionIfMissing: false }));
+}
