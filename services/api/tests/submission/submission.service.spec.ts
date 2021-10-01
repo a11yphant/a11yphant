@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { CODE_LEVEL, CodeLevelData, Factory, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
+import { CODE_LEVEL, CODE_LEVEL_SUBMISSION, CodeLevelData, CodeLevelSubmissionData, Factory, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -23,8 +23,8 @@ describe("submission service", () => {
         createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
       );
 
-      const { id } = await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
+      const { id } = await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { html }),
       });
 
       const submission = await service.findOne(id);
@@ -45,8 +45,8 @@ describe("submission service", () => {
         id: submissionId,
         userId,
         levelId,
-      } = await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
+      } = await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { html }),
         include: {
           level: true,
         },
@@ -86,7 +86,7 @@ describe("submission service", () => {
       expect(createdSubmission).toBeTruthy();
       expect(createdSubmission.html).toBe(html);
 
-      const queriedSubmission = await prisma.submission.findUnique({
+      const queriedSubmission = await prisma.codeLevelSubmission.findUnique({
         where: {
           id: createdSubmission.id,
         },
@@ -129,8 +129,8 @@ describe("submission service", () => {
         data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
-      const { id: submissionId } = await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION),
+      const { id: submissionId } = await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION),
       });
 
       const updatedSubmission = await service.update({
@@ -142,7 +142,7 @@ describe("submission service", () => {
         js: null,
       });
 
-      const queriedSubmission = await prisma.submission.findUnique({
+      const queriedSubmission = await prisma.codeLevelSubmission.findUnique({
         where: {
           id: updatedSubmission.id,
         },
@@ -190,10 +190,10 @@ describe("submission service", () => {
 
       const service = new SubmissionService(
         createMock<PrismaService>({
-          result: {
+          codeLevelResult: {
             count: jest.fn().mockResolvedValue(0),
           },
-          submission: {
+          codeLevelSubmission: {
             update: jest.fn().mockResolvedValue({ result: { status: ResultStatus.PENDING } }),
             findUnique: jest.fn().mockResolvedValue(submission),
           },
@@ -227,7 +227,7 @@ describe("submission service", () => {
     it("throws an exception if the submission already has a result", async () => {
       const service = new SubmissionService(
         createMock<PrismaService>({
-          result: {
+          codeLevelResult: {
             count: jest.fn().mockResolvedValue(1),
           },
         }),

@@ -1,7 +1,7 @@
 import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { Prisma, Submission as SubmissionRecord } from "@prisma/client";
+import { CodeLevelSubmission as SubmissionRecord, Prisma } from "@prisma/client";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -19,7 +19,7 @@ export class SubmissionService {
   constructor(private prisma: PrismaService, @Inject(AwsMessagingClient) private clientProxy: ClientProxy) {}
 
   public async findOne(id: string): Promise<CodeLevelSubmission> {
-    const submission = await this.prisma.submission.findUnique({
+    const submission = await this.prisma.codeLevelSubmission.findUnique({
       where: { id },
     });
 
@@ -27,7 +27,7 @@ export class SubmissionService {
   }
 
   public async findLastForUserAndLevel(userId: string, levelId: string): Promise<CodeLevelSubmission> {
-    const submission = await this.prisma.submission.findFirst({
+    const submission = await this.prisma.codeLevelSubmission.findFirst({
       where: {
         userId,
         levelId,
@@ -41,7 +41,7 @@ export class SubmissionService {
   }
 
   public async create(data: CodeLevelSubmissionCreateData): Promise<CodeLevelSubmission> {
-    const submission = await this.prisma.submission.create({
+    const submission = await this.prisma.codeLevelSubmission.create({
       data,
     });
 
@@ -50,7 +50,7 @@ export class SubmissionService {
 
   public async update(data: CodeLevelSubmissionUpdateData): Promise<CodeLevelSubmission> {
     try {
-      const submission = await this.prisma.submission.update({
+      const submission = await this.prisma.codeLevelSubmission.update({
         where: { id: data.id },
         data,
       });
@@ -67,11 +67,11 @@ export class SubmissionService {
   }
 
   public async requestCheck(submissionId: string): Promise<Result> {
-    if ((await this.prisma.result.count({ where: { submissionId } })) === 1) {
+    if ((await this.prisma.codeLevelResult.count({ where: { submissionId } })) === 1) {
       throw new SubmissionAlreadyHasCheckResultException();
     }
 
-    const { result } = await this.prisma.submission.update({
+    const { result } = await this.prisma.codeLevelSubmission.update({
       where: { id: submissionId },
       data: {
         result: {
@@ -81,7 +81,7 @@ export class SubmissionService {
       include: { result: true },
     });
 
-    const submission = await this.prisma.submission.findUnique({
+    const submission = await this.prisma.codeLevelSubmission.findUnique({
       where: { id: submissionId },
       include: { level: { include: { requirements: { include: { rule: true } } } } },
     });

@@ -68,20 +68,20 @@ model QuizLevelResult {
 }
 
 model CodeLevel {
-  id            String        @id @default(uuid()) @db.Uuid
-  order         Int           @default(0)
+  id            String                @id @default(uuid()) @db.Uuid
+  order         Int                   @default(0)
   instructions  String
-  challenge     Challenge     @relation(fields: [challengeId], references: [id])
-  challengeId   String        @db.Uuid
+  challenge     Challenge             @relation(fields: [challengeId], references: [id])
+  challengeId   String                @db.Uuid
   requirements  Requirement[]
-  submissions   Submission[]
+  submissions   CodeLevelSubmission[]
   tasks         Task[]
   html          String?
   css           String?
   js            String?
-  hasHtmlEditor Boolean       @default(true)
-  hasCssEditor  Boolean       @default(false)
-  hasJsEditor   Boolean       @default(false)
+  hasHtmlEditor Boolean               @default(true)
+  hasCssEditor  Boolean               @default(false)
+  hasJsEditor   Boolean               @default(false)
 
   @@map(name: "code_levels")
 }
@@ -128,52 +128,52 @@ model Hint {
   @@map(name: "hints")
 }
 
-model Submission {
-  id        String    @id @default(uuid()) @db.Uuid
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+model CodeLevelSubmission {
+  id        String           @id @default(uuid()) @db.Uuid
+  createdAt DateTime         @default(now())
+  updatedAt DateTime?        @updatedAt
   html      String?
   css       String?
   js        String?
-  level     CodeLevel @relation(fields: [levelId], references: [id])
-  levelId   String    @db.Uuid
-  result    Result?
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?   @db.Uuid
+  level     CodeLevel        @relation(fields: [levelId], references: [id])
+  levelId   String           @db.Uuid
+  result    CodeLevelResult?
+  user      User?            @relation(fields: [userId], references: [id])
+  userId    String?          @db.Uuid
 
   @@map(name: "submissions")
 }
 
-model Result {
-  id           String        @id @default(uuid()) @db.Uuid
-  status       Int           @default(0)
+model CodeLevelResult {
+  id           String              @id @default(uuid()) @db.Uuid
+  status       Int                 @default(0)
   checkResults CheckResult[]
-  submission   Submission    @relation(fields: [submissionId], references: [id])
-  submissionId String        @db.Uuid
+  submission   CodeLevelSubmission @relation(fields: [submissionId], references: [id])
+  submissionId String              @db.Uuid
 
   @@map(name: "results")
 }
 
 model CheckResult {
-  id            String      @id @default(uuid()) @db.Uuid
-  result        Result      @relation(fields: [resultId], references: [id])
-  resultId      String      @db.Uuid
-  requirement   Requirement @relation(fields: [requirementId], references: [id])
-  requirementId String      @db.Uuid
+  id            String          @id @default(uuid()) @db.Uuid
+  result        CodeLevelResult @relation(fields: [resultId], references: [id])
+  resultId      String          @db.Uuid
+  requirement   Requirement     @relation(fields: [requirementId], references: [id])
+  requirementId String          @db.Uuid
   status        Int
 
   @@map(name: "check_results")
 }
 
 model User {
-  id                  String                @id @default(uuid()) @db.Uuid
-  authProvider        String                @default("anonymous")
-  authId              String?
-  email               String?
-  password            String?
-  displayName         String?
-  submissions         Submission[]
-  quizLevelSubmission QuizLevelSubmission[]
+  id                   String                @id @default(uuid()) @db.Uuid
+  authProvider         String                @default("anonymous")
+  authId               String?
+  email                String?
+  password             String?
+  displayName          String?
+  codeLevelSubmissions CodeLevelSubmission[]
+  quizLevelSubmissions QuizLevelSubmission[]
 
   @@map("users")
 }

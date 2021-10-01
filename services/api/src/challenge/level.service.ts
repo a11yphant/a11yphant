@@ -96,7 +96,7 @@ export class LevelService {
   }
 
   async findStatusForUserAndLevel(userId: string, levelId: string): Promise<LevelStatus> {
-    const submissionCount = await this.prisma.submission.count({
+    const submissionCount = await this.prisma.codeLevelSubmission.count({
       where: {
         userId,
         levelId,
@@ -105,7 +105,7 @@ export class LevelService {
 
     if (submissionCount === 0) return LevelStatus.OPEN;
 
-    const successfulSubmissionsCount = await this.prisma.submission.count({
+    const successfulSubmissionsCount = await this.prisma.codeLevelSubmission.count({
       where: {
         userId,
         levelId,

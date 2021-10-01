@@ -4,12 +4,12 @@ import {
   CHALLENGE,
   ChallengeData,
   CODE_LEVEL,
+  CODE_LEVEL_SUBMISSION,
   CodeLevelData,
+  CodeLevelSubmissionData,
   Factory,
   QUIZ_LEVEL,
   QuizLevelData,
-  SUBMISSION,
-  SubmissionData,
   USER,
   UserData,
 } from "@tests/factories/database";
@@ -153,8 +153,8 @@ describe("level service", () => {
 
       const { userId, levelId } = await getUserAndLevel();
 
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
       });
 
       const service = new LevelService(prisma);
@@ -168,14 +168,18 @@ describe("level service", () => {
 
       const { userId, levelId } = await getUserAndLevel();
 
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
       });
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
       });
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+          levelId,
+          userId,
+          result: { create: { status: ResultStatus.SUCCESS } },
+        }),
       });
 
       const service = new LevelService(prisma);
