@@ -24,24 +24,47 @@ model Challenge {
 }
 
 model QuizLevel {
-  id            String         @id @default(uuid()) @db.Uuid
-  order         Int            @default(0)
-  question      String
-  challenge     Challenge      @relation(fields: [challengeId], references: [id])
-  challengeId   String         @db.Uuid
-  answerOptions AnswerOption[]
+  id                  String                @id @default(uuid()) @db.Uuid
+  order               Int                   @default(0)
+  question            String
+  challenge           Challenge             @relation(fields: [challengeId], references: [id])
+  challengeId         String                @db.Uuid
+  answerOptions       AnswerOption[]
+  quizLevelSubmission QuizLevelSubmission[]
 
   @@map("quiz_levels")
 }
 
 model AnswerOption {
-  id          String    @id @default(uuid()) @db.Uuid
+  id          String                @id @default(uuid()) @db.Uuid
   text        String
-  correct     Boolean   @default(false)
-  quizLevel   QuizLevel @relation(fields: [quizLevelId], references: [id], onDelete: Cascade)
-  quizLevelId String    @db.Uuid
+  correct     Boolean               @default(false)
+  quizLevel   QuizLevel             @relation(fields: [quizLevelId], references: [id], onDelete: Cascade)
+  quizLevelId String                @db.Uuid
+  submissions QuizLevelSubmission[]
 
   @@map("quiz_answer_options")
+}
+
+model QuizLevelSubmission {
+  id              String           @id @default(uuid()) @db.Uuid
+  level           QuizLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  levelId         String           @db.Uuid
+  answers         AnswerOption[]
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String           @db.Uuid
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime?        @updatedAt
+  quizLevelResult QuizLevelResult?
+}
+
+model QuizLevelResult {
+  id           String              @id @default(uuid()) @db.Uuid
+  status       Int                 @default(0)
+  submission   QuizLevelSubmission @relation(fields: [submissionId], references: [id])
+  submissionId String              @db.Uuid
+
+  @@map(name: "quiz_level_resuls")
 }
 
 model CodeLevel {
@@ -143,13 +166,14 @@ model CheckResult {
 }
 
 model User {
-  id           String       @id @default(uuid()) @db.Uuid
-  authProvider String       @default("anonymous")
-  authId       String?
-  email        String?
-  password     String?
-  displayName  String?
-  submissions  Submission[]
+  id                  String                @id @default(uuid()) @db.Uuid
+  authProvider        String                @default("anonymous")
+  authId              String?
+  email               String?
+  password            String?
+  displayName         String?
+  submissions         Submission[]
+  quizLevelSubmission QuizLevelSubmission[]
 
   @@map("users")
 }

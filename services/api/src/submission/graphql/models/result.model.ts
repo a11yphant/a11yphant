@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, HideField, ID, ObjectType } from "@nestjs/graphql";
 
 import { ResultStatus } from "./result-status.enum";
 
@@ -20,5 +20,6 @@ export class Result {
   })
   status: ResultStatus;
 
+  @HideField()
   submissionId: string;
 }

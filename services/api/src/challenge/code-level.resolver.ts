@@ -2,7 +2,7 @@ import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
-import { Submission } from "@/submission/graphql/models/submission.model";
+import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
 import { SubmissionService } from "@/submission/services/submission.service";
 
 import { CodeLevel } from "./models/code-level.model";
@@ -28,8 +28,8 @@ export class CodeLevelResolver {
     return this.taskService.findForLevel(level.id);
   }
 
-  @ResolveField(() => Submission, { nullable: true, description: "The last submission of the current user for this level" })
-  lastSubmission(@Parent() level: CodeLevel, @SessionToken() sessionToken: SessionTokenInterface): Promise<Submission> {
+  @ResolveField(() => CodeLevelSubmission, { nullable: true, description: "The last submission of the current user for this level" })
+  lastSubmission(@Parent() level: CodeLevel, @SessionToken() sessionToken: SessionTokenInterface): Promise<CodeLevelSubmission> {
     return this.submissionService.findLastForUserAndLevel(sessionToken.userId, level.id);
   }
 }

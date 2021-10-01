@@ -21,7 +21,7 @@ registerEnumType(ResultStatus, {
       description: "The submission needs to be checked. The result is not yet available.",
     },
     ERROR: {
-      description: "An error ocurred. Please call Luca.",
+      description: "An error occurred. Please call Luca.",
     },
   },
 });
