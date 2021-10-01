@@ -14,7 +14,7 @@ export class AnswerOptionService {
       where: { quizLevelId: quizLevelId },
     });
 
-    return record.map(AnswerOptionService.creatModelFromRecord);
+    return record.sort(() => 0.5 - Math.random()).map(AnswerOptionService.creatModelFromRecord);
   }
 
   static creatModelFromRecord(record: AnswerOption): AnswerOptionModel {
