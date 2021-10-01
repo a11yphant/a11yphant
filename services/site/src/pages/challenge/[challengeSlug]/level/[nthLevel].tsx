@@ -15,7 +15,7 @@ import {
   LevelByChallengeSlugQueryVariables,
   useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
-  useRequestCheckMutation,
+  useRequestCodeLevelCheckMutation,
 } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import { initializeApollo } from "app/lib/apollo-client";
@@ -76,7 +76,7 @@ const Level: React.FunctionComponent = () => {
     data: { challenge },
   } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
-  const [requestCheckMutation] = useRequestCheckMutation();
+  const [requestCheckMutation] = useRequestCodeLevelCheckMutation();
 
   const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 

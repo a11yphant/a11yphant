@@ -7,9 +7,9 @@ import { PrismaService } from "@/prisma/prisma.service";
 
 import { SubmissionAlreadyHasCheckResultException } from "../exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "../exceptions/submission-not-found.exception";
+import { CodeLevelSubmission } from "../graphql/models/code-level-submission.model";
 import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
-import { Submission } from "../graphql/models/submission.model";
 import { SubmissionCreateData } from "../interfaces/submission-create-data.interface";
 import { SubmissionUpdateData } from "../interfaces/submission-update-data.interface";
 import { ResultService } from "./result.service";
@@ -18,7 +18,7 @@ import { ResultService } from "./result.service";
 export class SubmissionService {
   constructor(private prisma: PrismaService, @Inject(AwsMessagingClient) private clientProxy: ClientProxy) {}
 
-  public async findOne(id: string): Promise<Submission> {
+  public async findOne(id: string): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.submission.findUnique({
       where: { id },
     });
@@ -26,7 +26,7 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async findLastForUserAndLevel(userId: string, levelId: string): Promise<Submission> {
+  public async findLastForUserAndLevel(userId: string, levelId: string): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.submission.findFirst({
       where: {
         userId,
@@ -40,7 +40,7 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async create(data: SubmissionCreateData): Promise<Submission> {
+  public async create(data: SubmissionCreateData): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.submission.create({
       data,
     });
@@ -48,7 +48,7 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async update(data: SubmissionUpdateData): Promise<Submission> {
+  public async update(data: SubmissionUpdateData): Promise<CodeLevelSubmission> {
     try {
       const submission = await this.prisma.submission.update({
         where: { id: data.id },
@@ -103,8 +103,8 @@ export class SubmissionService {
     return result ? ResultService.createModelFromRecord(result) : null;
   }
 
-  static createModelFromDatabaseRecord(record: SubmissionRecord): Submission {
-    const submission = new Submission({ ...record });
+  static createModelFromDatabaseRecord(record: SubmissionRecord): CodeLevelSubmission {
+    const submission = new CodeLevelSubmission({ ...record });
 
     return submission;
   }

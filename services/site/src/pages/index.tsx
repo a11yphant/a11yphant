@@ -29,7 +29,7 @@ const Home: React.FunctionComponent = () => {
         <div className={clsx("w-full h-full")}>
           {!currentUser?.isRegistered && <Hero />}
           <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
-            <ChallengeHeader className={clsx("2xl:mx-24")} />
+            <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
             <Legend className={clsx("2xl:mx-24")} />
             {easyChallenges.length !== 0 && (
               <ChallengeList

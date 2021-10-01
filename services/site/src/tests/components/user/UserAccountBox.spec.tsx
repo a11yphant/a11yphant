@@ -28,6 +28,9 @@ describe("UserAccountBox", () => {
     // Github button has sign up text
     expect(wrapper.findWhere((n) => n.text() === "Sign up via Github").length).toBeGreaterThanOrEqual(1);
 
+    // Twitter button has sign up text
+    expect(wrapper.findWhere((n) => n.text() === "Sign up via Twitter").length).toBeGreaterThanOrEqual(1);
+
     // "link" to login modal exists
     expect(wrapper.find(Button).findWhere((n) => n.children().length === 1 && n.children().text() === "Already have an account? Log in."));
   });
@@ -47,6 +50,9 @@ describe("UserAccountBox", () => {
 
     // Github button has login text
     expect(wrapper.findWhere((n) => n.text() === "Login with Github").length).toBeGreaterThanOrEqual(1);
+
+    // Twitter button has login text
+    expect(wrapper.findWhere((n) => n.text() === "Login with Twitter").length).toBeGreaterThanOrEqual(1);
 
     // "link" to signup modal exists
     expect(wrapper.find(Button).findWhere((n) => n.children().length === 1 && n.children().text() === "New? Create a free account."));

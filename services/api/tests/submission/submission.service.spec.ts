@@ -172,7 +172,7 @@ describe("submission service", () => {
           levelId,
           userId,
         }),
-      ).rejects.toBeInstanceOf(SubmissionNotFoundException);
+      ).rejects.toThrowError(SubmissionNotFoundException);
     });
   });
 
