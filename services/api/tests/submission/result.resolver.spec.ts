@@ -4,12 +4,12 @@ import { ResultResolver } from "@/submission/graphql/resolvers/result.resolver";
 import { RequirementResultService } from "@/submission/services/requirement-result.service";
 import { ResultService } from "@/submission/services/result.service";
 
+import { CodeLevelResultFactory } from "../factories/models/code-level-result.factory";
 import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
-import { ResultFactory } from "../factories/models/result.factory";
 
 describe("result resolver", () => {
   it("can return the result for a submission", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const resolver = new ResultResolver(
       createMock<ResultService>({ findOneForSubmission: jest.fn().mockResolvedValue(result) }),
       createMock<RequirementResultService>(),
@@ -19,7 +19,7 @@ describe("result resolver", () => {
   });
 
   it("returns the requirement check results", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const requirementResults = RequirementResultFactory.buildList(3);
     const resolver = new ResultResolver(
       createMock<ResultService>(),
@@ -32,7 +32,7 @@ describe("result resolver", () => {
   });
 
   it("returns the number of requirements for the result", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const resolver = new ResultResolver(
       createMock<ResultService>({
         countNumberOfCheckedRequirements: jest.fn().mockResolvedValue(3),
@@ -44,7 +44,7 @@ describe("result resolver", () => {
   });
 
   it("returns the number of failed requirement checks for the result", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const resolver = new ResultResolver(
       createMock<ResultService>({
         countNumberOfFailedRequirementChecks: jest.fn().mockResolvedValue(2),

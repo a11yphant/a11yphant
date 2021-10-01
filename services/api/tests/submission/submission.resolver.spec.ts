@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { CodeLevelFactory } from "@tests/factories/models/code-level.factory";
-import { SubmissionFactory } from "@tests/factories/models/submission.factory";
+import { CodeLevelSubmissionFactory } from "@tests/factories/models/code-level-submission.factory";
 
 import { LevelService } from "@/challenge/level.service";
 import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
@@ -32,7 +32,7 @@ describe("submission resolver", () => {
       }),
     );
 
-    const submission = await resolver.result(SubmissionFactory.build({ id: "uuid" }));
+    const submission = await resolver.result(CodeLevelSubmissionFactory.build({ id: "uuid" }));
 
     expect(submission).toBeTruthy();
     expect(submission).toHaveProperty("id", "uuid");
@@ -46,7 +46,7 @@ describe("submission resolver", () => {
       }),
     );
 
-    const submission = await resolver.result(SubmissionFactory.build({ id: "uuid" }));
+    const submission = await resolver.result(CodeLevelSubmissionFactory.build({ id: "uuid" }));
 
     expect(submission).toBeNull();
   });

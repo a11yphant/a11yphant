@@ -1,7 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { CodeLevelFactory } from "@tests/factories/models/code-level.factory";
+import { CodeLevelSubmissionFactory } from "@tests/factories/models/code-level-submission.factory";
 import { RequirementFactory } from "@tests/factories/models/requirement.factory";
-import { SubmissionFactory } from "@tests/factories/models/submission.factory";
 import { TaskFactory } from "@tests/factories/models/task.factory";
 
 import { CodeLevelResolver } from "@/challenge/code-level.resolver";
@@ -57,7 +57,7 @@ describe("code level resolver", () => {
   });
 
   it("resolves the last submission for a level", async () => {
-    const submission = SubmissionFactory.build();
+    const submission = CodeLevelSubmissionFactory.build();
 
     const resolver = new CodeLevelResolver(
       createMock<RequirementService>(),
@@ -73,7 +73,7 @@ describe("code level resolver", () => {
   });
 
   it("resolves the last submission for a level", async () => {
-    const submission = SubmissionFactory.build();
+    const submission = CodeLevelSubmissionFactory.build();
 
     const resolver = new CodeLevelResolver(
       createMock<RequirementService>(),

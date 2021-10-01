@@ -7,8 +7,8 @@ import { SubmissionController } from "@/submission/microservices/submission.cont
 import { RequirementResultService } from "@/submission/services/requirement-result.service";
 import { ResultService } from "@/submission/services/result.service";
 
+import { CodeLevelResultFactory } from "../factories/models/code-level-result.factory";
 import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
-import { ResultFactory } from "../factories/models/result.factory";
 
 describe("submission controller", () => {
   it("can handle a submission.check-completed event", () => {
@@ -25,8 +25,8 @@ describe("submission controller", () => {
   });
 
   it("updates the submission status for successful results", async () => {
-    const result = ResultFactory.build();
-    const update = jest.fn().mockResolvedValue(ResultFactory.build());
+    const result = CodeLevelResultFactory.build();
+    const update = jest.fn().mockResolvedValue(CodeLevelResultFactory.build());
     const controller = new SubmissionController(
       createMock<Logger>(),
       createMock<ResultService>({
@@ -50,7 +50,7 @@ describe("submission controller", () => {
   });
 
   it("updates the submission status for failed results", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const update = jest.fn().mockResolvedValue(result);
     const controller = new SubmissionController(
       createMock<Logger>(),
@@ -81,7 +81,7 @@ describe("submission controller", () => {
   });
 
   it("updates the submission status for error results", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const update = jest.fn().mockResolvedValue(result);
     const controller = new SubmissionController(
       createMock<Logger>(),
