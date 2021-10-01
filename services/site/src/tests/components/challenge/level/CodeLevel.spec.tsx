@@ -7,7 +7,7 @@ import Editors from "app/components/challenge/Editors";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
-import { LevelByChallengeSlugDocument } from "app/generated/graphql";
+import { CodeLevelDetailsFragment, LevelByChallengeSlugDocument } from "app/generated/graphql";
 import { mount } from "enzyme";
 import router from "next/router";
 import React from "react";
@@ -26,7 +26,7 @@ const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
 const mockChallengeName = "HTML Basics";
 const mockOnAutoSaveLoadingChange = jest.fn();
-const mockLevel = {
+const mockLevel: CodeLevelDetailsFragment = {
   id: "1",
   instructions: "This is a instruction.",
   tasks: [
