@@ -1,0 +1,8 @@
+mutation submitQuizLevelAnswer ($input: QuizLevelAnswerInput!){
+    submitQuizLevelAnswer (input: $input) {
+        result {
+            id
+            status
+        }
+    }
+}

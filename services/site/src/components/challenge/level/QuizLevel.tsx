@@ -1,29 +1,33 @@
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
-import { EvaluationRouterParams } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
+import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
+import { ResultStatus, useSubmitQuizLevelAnswerMutation } from "app/generated/graphql";
 import clsx from "clsx";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import sanitizeHtml from "sanitize-html";
 
 interface QuizLevelProps {
   question: string;
   answers: Array<{ id: string; text: string }>;
   isLastLevel: boolean;
+  levelId: string;
 }
 
-const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ question, answers, isLastLevel }) => {
-  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
+const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question, answers, isLastLevel }) => {
   const [chosenId, setChosenId] = React.useState<string>();
+  const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>();
 
-  const router = useRouter();
-  const { challengeSlug, nthLevel }: EvaluationRouterParams = router.query;
+  const [submitQuizLevelAnswerMutation, { loading }] = useSubmitQuizLevelAnswerMutation();
 
   const submitLevel = async (): Promise<void> => {
-    setShowSubmitLoadingAnimation(true);
+    const { data } = await submitQuizLevelAnswerMutation({ variables: { input: { levelId: levelId, answers: [chosenId] } } });
 
-    const nextLevel = parseInt(nthLevel as string) + 1;
-    router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
+    setQuizResult(data.submitQuizLevelAnswer.result);
+  };
+
+  const handleRetry = (): void => {
+    setQuizResult(undefined);
+    setChosenId(undefined);
   };
 
   return (
@@ -42,19 +46,27 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ question, answers,
           </div>
         </div>
         <div className="flex justify-end mr-[-3rem]">
-          <ButtonLoading
-            primary
-            onClick={submitLevel}
-            className="px-10 absolute right-0 bottom-0"
-            loading={showSubmitLoadingAnimation}
-            submitButton
-            srTextLoading="The submission is being processed."
-            disabled={chosenId === undefined}
-          >
-            Submit
-          </ButtonLoading>
-          {/* TODO: enable when api submission is ready */}
-          {/* <CompleteEvaluationButton className="px-10 absolute right-0 bottom-0" status={ResultStatus.Success} isLastLevel={isLastLevel} /> */}
+          {quizResult === undefined && (
+            <ButtonLoading
+              primary
+              onClick={submitLevel}
+              className="px-10 absolute right-0 bottom-0"
+              loading={loading}
+              submitButton
+              srTextLoading="The submission is being processed."
+              disabled={chosenId === undefined}
+            >
+              Submit
+            </ButtonLoading>
+          )}
+          {quizResult && (
+            <CompleteEvaluationButton
+              className="px-10 absolute right-0 bottom-0"
+              status={quizResult.status}
+              isLastLevel={isLastLevel}
+              onRetry={handleRetry}
+            />
+          )}
         </div>
       </section>
     </>

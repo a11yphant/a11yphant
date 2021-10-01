@@ -10,9 +10,16 @@ interface CompleteEvaluationButtonProps {
   isLastLevel: boolean;
   className?: string;
   disabled?: boolean;
+  onRetry?: () => void;
 }
 
-export const CompleteEvaluationButton = ({ status, isLastLevel, className, disabled }: CompleteEvaluationButtonProps): React.ReactElement => {
+export const CompleteEvaluationButton = ({
+  status,
+  isLastLevel,
+  className,
+  disabled,
+  onRetry,
+}: CompleteEvaluationButtonProps): React.ReactElement => {
   const router = useRouter();
   const { challengeSlug, nthLevel }: EvaluationRouterParams = router.query;
 
@@ -24,7 +31,11 @@ export const CompleteEvaluationButton = ({ status, isLastLevel, className, disab
         primary
         onClick={() => {
           setLoadingAnimation(true);
-          router.back();
+          if (onRetry) {
+            onRetry();
+          } else {
+            router.back();
+          }
         }}
         className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
