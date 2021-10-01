@@ -7,6 +7,7 @@ import { ConsoleModule } from "nestjs-console";
 import { AuthenticationModule } from "./authentication/authentication.module";
 import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
+import cookieConfig from "./config/cookie.config";
 import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import messaging from "./config/messaging.config";
@@ -20,7 +21,7 @@ import { UserModule } from "./user/user.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig],
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],

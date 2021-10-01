@@ -22,7 +22,9 @@ describe("user service", () => {
     const prisma = getPrismaService();
     const service = new UserService(prisma, createMock<HashService>(), createMock<Logger>());
 
-    const user = UserFactory.build();
+    const user = await prisma.user.create({
+      data: UserFactory.build(),
+    });
 
     expect(await service.findById(user.id)).toHaveProperty("id", user.id);
   });
@@ -31,7 +33,9 @@ describe("user service", () => {
     const prisma = getPrismaService();
     const service = new UserService(prisma, createMock<HashService>(), createMock<Logger>());
 
-    const user = UserFactory.build();
+    const user = await prisma.user.create({
+      data: UserFactory.build({ email: "hallo@a11yphant.com" }),
+    });
 
     expect(await service.findByEmail(user.email)).toHaveProperty("email", user.email);
   });

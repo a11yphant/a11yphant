@@ -1,4 +1,5 @@
 import { Controller, Get, Logger, Req, Res, UseGuards } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
 
@@ -10,7 +11,7 @@ import { JwtService } from "./jwt.service";
 
 @Controller("auth")
 export class AuthenticationController {
-  constructor(private readonly userService: UserService, private readonly jwtService: JwtService, private readonly logger: Logger) {}
+  constructor(private userService: UserService, private jwtService: JwtService, private logger: Logger, private config: ConfigService) {}
 
   @UseGuards(AuthGuard("github"))
   @Get("github")
@@ -54,7 +55,7 @@ export class AuthenticationController {
     if (!foundUser) return;
 
     const token = await this.jwtService.createSignedToken({ userId: foundUser.id }, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
-    res.cookie("a11yphant_session", token, { sameSite: "lax", secure: true, httpOnly: true });
+    res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
     this.logger.verbose(`Set session cookie for user ${providerInformation.id} with provider ${providerInformation.provider}`);
   }
 }
