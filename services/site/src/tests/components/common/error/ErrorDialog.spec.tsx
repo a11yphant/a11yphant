@@ -56,7 +56,9 @@ describe("Error Dialog", () => {
       wrapper
         .find(ModalTitle)
         .children()
-        .findWhere((n) => n.text() === mockTitle).length,
+        .findWhere((n) => n.text() === mockTitle)
+        .getElements()
+        .filter((n) => n).length,
     ).toBe(1);
   });
 
