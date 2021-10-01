@@ -6,7 +6,7 @@ import { SessionToken } from "@/authentication/session-token.decorator";
 
 import { SubmissionAlreadyHasCheckResultException } from "../../exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "../../exceptions/submission-not-found.exception";
-import { SubmissionService } from "../../services/submission.service";
+import { CodeLevelSubmissionService } from "../../services/code-level-submission.service";
 import { CreateCodeLevelSubmissionInput } from "../inputs/create-code-level-submission.input";
 import { RequestCodeLevelCheckInput } from "../inputs/request-code-level-check.input";
 import { UpdateCodeLevelSubmissionInput } from "../inputs/update-code-level-submission.input";
@@ -17,7 +17,7 @@ import { UpdateCodeLevelSubmissionResult } from "../results/update-code-level-su
 
 @Resolver(() => CodeLevelSubmission)
 export class CodeLevelSubmissionResolver {
-  constructor(private readonly submissionService: SubmissionService) {}
+  constructor(private readonly submissionService: CodeLevelSubmissionService) {}
 
   @Mutation(() => CreateCodeLevelSubmissionResult)
   async createCodeLevelSubmission(

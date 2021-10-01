@@ -15,7 +15,7 @@ import { CodeLevelSubmissionUpdateData } from "../interfaces/code-level-submissi
 import { ResultService } from "./result.service";
 
 @Injectable()
-export class SubmissionService {
+export class CodeLevelSubmissionService {
   constructor(private prisma: PrismaService, @Inject(AwsMessagingClient) private clientProxy: ClientProxy) {}
 
   public async findOne(id: string): Promise<CodeLevelSubmission> {
@@ -23,7 +23,7 @@ export class SubmissionService {
       where: { id },
     });
 
-    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+    return submission ? CodeLevelSubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
   public async findLastForUserAndLevel(userId: string, levelId: string): Promise<CodeLevelSubmission> {
@@ -37,7 +37,7 @@ export class SubmissionService {
       },
     });
 
-    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+    return submission ? CodeLevelSubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
   public async create(data: CodeLevelSubmissionCreateData): Promise<CodeLevelSubmission> {
@@ -45,7 +45,7 @@ export class SubmissionService {
       data,
     });
 
-    return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+    return submission ? CodeLevelSubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
   public async update(data: CodeLevelSubmissionUpdateData): Promise<CodeLevelSubmission> {
@@ -55,7 +55,7 @@ export class SubmissionService {
         data,
       });
 
-      return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
+      return submission ? CodeLevelSubmissionService.createModelFromDatabaseRecord(submission) : null;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === "P2025") {

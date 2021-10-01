@@ -11,17 +11,17 @@ import { RequirementResultResolver } from "./graphql/resolvers/requirement-resul
 import { ResultResolver } from "./graphql/resolvers/result.resolver";
 import { SubmissionResolver } from "./graphql/resolvers/submission.resolver";
 import { SubmissionController } from "./microservices/submission.controller";
+import { CodeLevelSubmissionService } from "./services/code-level-submission.service";
 import { QuizLevelSubmissionService } from "./services/quiz-level-submission.service";
 import { RequirementResultService } from "./services/requirement-result.service";
 import { ResultService } from "./services/result.service";
-import { SubmissionService } from "./services/submission.service";
 
 @Module({
   imports: [PrismaModule, AwsMessagingModule, forwardRef(() => ChallengeModule)],
   controllers: [SubmissionController, RendererController],
   providers: [
     SubmissionResolver,
-    SubmissionService,
+    CodeLevelSubmissionService,
     ResultResolver,
     ResultService,
     RequirementResultResolver,
@@ -31,6 +31,6 @@ import { SubmissionService } from "./services/submission.service";
     QuizLevelSubmissionResolver,
     QuizLevelSubmissionService,
   ],
-  exports: [SubmissionService],
+  exports: [CodeLevelSubmissionService],
 })
 export class SubmissionModule {}
