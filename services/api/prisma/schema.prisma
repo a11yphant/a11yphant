@@ -151,7 +151,7 @@ model CodeLevelResult {
   submission   CodeLevelSubmission @relation(fields: [submissionId], references: [id])
   submissionId String              @db.Uuid
 
-  @@map(name: "results")
+  @@map(name: "code_level_results")
 }
 
 model CheckResult {
