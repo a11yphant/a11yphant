@@ -46,9 +46,6 @@ const mockLevel = {
     css: "css",
     js: "js",
   },
-  // hasHtmlEditor
-  // hasCssEditor
-  // hasJsEditor
 };
 
 const mocks: MockedResponse[] = [
