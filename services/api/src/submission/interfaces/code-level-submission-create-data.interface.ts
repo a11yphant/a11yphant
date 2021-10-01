@@ -1,4 +1,4 @@
-export interface SubmissionCreateData {
+export interface CodeLevelSubmissionCreateData {
   html?: string;
   css?: string;
   js?: string;

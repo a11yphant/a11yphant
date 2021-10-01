@@ -10,8 +10,8 @@ import { SubmissionNotFoundException } from "../exceptions/submission-not-found.
 import { CodeLevelSubmission } from "../graphql/models/code-level-submission.model";
 import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
-import { SubmissionCreateData } from "../interfaces/submission-create-data.interface";
-import { SubmissionUpdateData } from "../interfaces/submission-update-data.interface";
+import { CodeLevelSubmissionCreateData } from "../interfaces/code-level-submission-create-data.interface";
+import { CodeLevelSubmissionUpdateData } from "../interfaces/code-level-submission-update-data.interface";
 import { ResultService } from "./result.service";
 
 @Injectable()
@@ -40,7 +40,7 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async create(data: SubmissionCreateData): Promise<CodeLevelSubmission> {
+  public async create(data: CodeLevelSubmissionCreateData): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.submission.create({
       data,
     });
@@ -48,7 +48,7 @@ export class SubmissionService {
     return submission ? SubmissionService.createModelFromDatabaseRecord(submission) : null;
   }
 
-  public async update(data: SubmissionUpdateData): Promise<CodeLevelSubmission> {
+  public async update(data: CodeLevelSubmissionUpdateData): Promise<CodeLevelSubmission> {
     try {
       const submission = await this.prisma.submission.update({
         where: { id: data.id },
