@@ -1,15 +1,18 @@
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import { ResultStatus } from "app/generated/graphql";
 import { EvaluationRouterParams } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
+import clsx from "clsx";
 import { useRouter } from "next/router";
 import React from "react";
 
 interface CompleteEvaluationButtonProps {
   status: ResultStatus;
   isLastLevel: boolean;
+  className?: string;
+  disabled?: boolean;
 }
 
-export const CompleteEvaluationButton = ({ status, isLastLevel }: CompleteEvaluationButtonProps): React.ReactElement => {
+export const CompleteEvaluationButton = ({ status, isLastLevel, className, disabled }: CompleteEvaluationButtonProps): React.ReactElement => {
   const router = useRouter();
   const { challengeSlug, nthLevel }: EvaluationRouterParams = router.query;
 
@@ -23,7 +26,7 @@ export const CompleteEvaluationButton = ({ status, isLastLevel }: CompleteEvalua
           setLoadingAnimation(true);
           router.back();
         }}
-        className="px-10"
+        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
@@ -37,7 +40,7 @@ export const CompleteEvaluationButton = ({ status, isLastLevel }: CompleteEvalua
           router.push("/");
         }}
         primary
-        className="px-10"
+        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
@@ -52,7 +55,7 @@ export const CompleteEvaluationButton = ({ status, isLastLevel }: CompleteEvalua
           router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
         }}
         primary
-        className="px-10"
+        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
