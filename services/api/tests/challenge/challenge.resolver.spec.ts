@@ -67,7 +67,7 @@ describe("challenge resolver", () => {
     expect(challenges.length).toBe(slugs.length);
   });
 
-  it("resolves the status of a challenge", async () => {
+  it("resolves the status of a challenge for the current user", async () => {
     const resolver = new ChallengeResolver(
       createMock<ChallengeService>({
         getStatusForUserAndChallenge: jest.fn().mockResolvedValue(ChallengeStatus.FINISHED),
@@ -76,6 +76,19 @@ describe("challenge resolver", () => {
     );
 
     const status = await resolver.status(ChallengeFactory.build(), { userId: "test_id" });
+
+    expect(status).toBe(ChallengeStatus.FINISHED);
+  });
+
+  it("resolves the status of a challenge for a given user", async () => {
+    const resolver = new ChallengeResolver(
+      createMock<ChallengeService>({
+        getStatusForUserAndChallenge: jest.fn().mockResolvedValue(ChallengeStatus.FINISHED),
+      }),
+      createMock<LevelService>(),
+    );
+
+    const status = await resolver.statusForUser(ChallengeFactory.build(), "userId");
 
     expect(status).toBe(ChallengeStatus.FINISHED);
   });
