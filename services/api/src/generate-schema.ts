@@ -5,6 +5,7 @@ import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphq
 import { writeFileSync } from "fs";
 import { printSchema } from "graphql";
 
+import { AuthenticationResolver } from "./authentication/authentication.resolver";
 import { ChallengeResolver } from "./challenge/challenge.resolver";
 import { CodeLevelResolver } from "./challenge/code-level.resolver";
 import { LevelResolver } from "./challenge/level.resolver";
@@ -17,15 +18,16 @@ import { SubmissionResolver } from "./submission/graphql/resolvers/submission.re
 import { UserResolver } from "./user/user.resolver";
 
 const resolvers = [
+  AuthenticationResolver,
   ChallengeResolver,
-  TaskResolver,
   CodeLevelResolver,
-  SubmissionResolver,
-  ResultResolver,
-  RequirementResultResolver,
-  RequirementResolver,
-  UserResolver,
   LevelResolver,
+  RequirementResolver,
+  RequirementResultResolver,
+  ResultResolver,
+  SubmissionResolver,
+  TaskResolver,
+  UserResolver,
   QuizLevelResolver,
 ];
 
