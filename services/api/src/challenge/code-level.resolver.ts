@@ -5,6 +5,8 @@ import { SessionToken } from "@/authentication/session-token.decorator";
 import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
 import { CodeLevelSubmissionService } from "@/submission/services/code-level-submission.service";
 
+import { LevelStatus } from "./enums/level-status.enum";
+import { LevelService } from "./level.service";
 import { CodeLevel } from "./models/code-level.model";
 import { Requirement } from "./models/requirement.model";
 import { Task } from "./models/task.model";
@@ -17,6 +19,7 @@ export class CodeLevelResolver {
     private requirementService: RequirementService,
     private taskService: TaskService,
     private submissionService: CodeLevelSubmissionService,
+    private levelService: LevelService,
   ) {}
   @ResolveField(() => [Requirement], {
     description: "The requirements for this level",
@@ -35,5 +38,10 @@ export class CodeLevelResolver {
   @ResolveField(() => CodeLevelSubmission, { nullable: true, description: "The last submission of the current user for this level" })
   lastSubmission(@Parent() level: CodeLevel, @SessionToken() sessionToken: SessionTokenInterface): Promise<CodeLevelSubmission> {
     return this.submissionService.findLastForUserAndLevel(sessionToken.userId, level.id);
+  }
+
+  @ResolveField(() => LevelStatus)
+  status(@Parent() level: CodeLevel, @SessionToken() sessionToken: SessionTokenInterface): Promise<LevelStatus> {
+    return this.levelService.findStatusForCodeLevel(level.id, sessionToken.userId);
   }
 }

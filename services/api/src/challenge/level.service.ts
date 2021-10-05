@@ -95,7 +95,7 @@ export class LevelService {
     return counts.reduce((acc, count) => acc + count, 0);
   }
 
-  async findStatusForUserAndLevel(userId: string, levelId: string): Promise<LevelStatus> {
+  async findStatusForCodeLevel(levelId: string, userId: string): Promise<LevelStatus> {
     const submissionCount = await this.prisma.codeLevelSubmission.count({
       where: {
         userId,
@@ -106,6 +106,31 @@ export class LevelService {
     if (submissionCount === 0) return LevelStatus.OPEN;
 
     const successfulSubmissionsCount = await this.prisma.codeLevelSubmission.count({
+      where: {
+        userId,
+        levelId,
+        result: {
+          status: ResultStatus.SUCCESS,
+        },
+      },
+    });
+
+    if (successfulSubmissionsCount > 0) return LevelStatus.FINISHED;
+
+    return LevelStatus.IN_PROGRESS;
+  }
+
+  async findStatusForQuizLevel(levelId: string, userId: string): Promise<LevelStatus> {
+    const submissionCount = await this.prisma.quizLevelSubmission.count({
+      where: {
+        userId,
+        levelId,
+      },
+    });
+
+    if (submissionCount === 0) return LevelStatus.OPEN;
+
+    const successfulSubmissionsCount = await this.prisma.quizLevelSubmission.count({
       where: {
         userId,
         levelId,
