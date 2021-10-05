@@ -19,7 +19,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const userAccountModalApi = useUserAccountModalApi();
 
   return (
-    <header className="h-[8%] pt-8 pb-6 px-11 grid grid-cols-4">
+    <header className="h-[8%] pt-8 pb-6 px-11 grid grid-cols-4 relative z-10">
       <h1>
         <Link href="/">
           <a
