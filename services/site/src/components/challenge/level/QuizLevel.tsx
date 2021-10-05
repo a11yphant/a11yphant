@@ -50,7 +50,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             {quizResult?.status === ResultStatus.Fail && (
               <div>
                 <p className="h2 leading-tight">
-                  Really?<br></br> Try Again!
+                  Wrong answer,<br></br> try again!
                 </p>
                 <Lottie
                   options={{
