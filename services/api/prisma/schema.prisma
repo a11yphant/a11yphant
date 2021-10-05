@@ -30,7 +30,7 @@ model QuizLevel {
   challenge           Challenge             @relation(fields: [challengeId], references: [id])
   challengeId         String                @db.Uuid
   answerOptions       AnswerOption[]
-  quizLevelSubmission QuizLevelSubmission[]
+  submissions         QuizLevelSubmission[]
 
   @@map("quiz_levels")
 }
@@ -56,6 +56,8 @@ model QuizLevelSubmission {
   createdAt DateTime         @default(now())
   updatedAt DateTime?        @updatedAt
   result    QuizLevelResult?
+
+  @@map("quiz_level_submissions")
 }
 
 model QuizLevelResult {
