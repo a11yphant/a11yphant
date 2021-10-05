@@ -30,7 +30,7 @@ model QuizLevel {
   challenge           Challenge             @relation(fields: [challengeId], references: [id])
   challengeId         String                @db.Uuid
   answerOptions       AnswerOption[]
-  quizLevelSubmission QuizLevelSubmission[]
+  submissions         QuizLevelSubmission[]
 
   @@map("quiz_levels")
 }
