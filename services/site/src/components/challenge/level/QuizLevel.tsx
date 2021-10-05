@@ -38,12 +38,12 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
         className={clsx("mx-auto h-full w-full box-border hidden", "container-dark", "lg:px-12 lg:pt-12 lg:flex lg:flex-col lg:justify-between")}
       >
         <h2 className={clsx("mb-2", "h4")}>Quiz</h2>
-        <div className={clsx("grid grid-cols-7")}>
+        <div className={clsx("grid grid-cols-7 min-h-[50vh]")}>
           <h3
             className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
-          <div className={clsx("col-span-3")}>
+          <div className={clsx("col-span-3 mb-8 overflow-y-scroll")}>
             {quizResult === undefined && (
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
             )}
