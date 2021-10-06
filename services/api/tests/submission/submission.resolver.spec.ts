@@ -5,7 +5,7 @@ import { CodeLevelSubmissionFactory } from "@tests/factories/models/code-level-s
 import { LevelService } from "@/challenge/level.service";
 import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
 import { SubmissionResolver } from "@/submission/graphql/resolvers/submission.resolver";
-import { ResultService } from "@/submission/services/result.service";
+import { CodeLevelResultService } from "@/submission/services/code-level-result.service";
 
 describe("submission resolver", () => {
   it("can resolve a level", async () => {
@@ -15,7 +15,7 @@ describe("submission resolver", () => {
       createMock<LevelService>({
         findOne: jest.fn().mockResolvedValue(mockLevel),
       }),
-      createMock<ResultService>(),
+      createMock<CodeLevelResultService>(),
     );
 
     const level = await resolver.level(new CodeLevelSubmission({ id: "bla", levelId: "blu", createdAt: new Date(), updatedAt: new Date() }));
@@ -27,7 +27,7 @@ describe("submission resolver", () => {
   it("can find the result for a submission", async () => {
     const resolver = new SubmissionResolver(
       createMock<LevelService>(),
-      createMock<ResultService>({
+      createMock<CodeLevelResultService>({
         findOneForSubmission: jest.fn().mockResolvedValue({ id: "uuid" }),
       }),
     );
@@ -41,7 +41,7 @@ describe("submission resolver", () => {
   it("returns null if the submission does not have a result", async () => {
     const resolver = new SubmissionResolver(
       createMock<LevelService>(),
-      createMock<ResultService>({
+      createMock<CodeLevelResultService>({
         findOneForSubmission: jest.fn().mockResolvedValue(null),
       }),
     );

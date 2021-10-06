@@ -7,7 +7,7 @@ import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 
 @Injectable()
-export class ResultService {
+export class CodeLevelResultService {
   constructor(private prisma: PrismaService) {}
 
   async findOneForSubmission(id: string): Promise<Result> {
@@ -17,7 +17,7 @@ export class ResultService {
       },
     });
 
-    return record ? ResultService.createModelFromRecord(record) : null;
+    return record ? CodeLevelResultService.createModelFromRecord(record) : null;
   }
 
   async countNumberOfCheckedRequirements(id: string): Promise<number> {
@@ -36,7 +36,7 @@ export class ResultService {
       data,
     });
 
-    return record ? ResultService.createModelFromRecord(record) : null;
+    return record ? CodeLevelResultService.createModelFromRecord(record) : null;
   }
 
   static createModelFromRecord(record: ResultRecord): Result {

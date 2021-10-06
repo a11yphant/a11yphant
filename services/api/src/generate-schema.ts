@@ -11,10 +11,10 @@ import { LevelResolver } from "./challenge/level.resolver";
 import { QuizLevelResolver } from "./challenge/quiz-level.resolver";
 import { RequirementResolver } from "./challenge/requirement.resolver";
 import { TaskResolver } from "./challenge/task.resolver";
+import { CodeLevelResultResolver } from "./submission/graphql/resolvers/code-level-result.resolver";
 import { CodeLevelSubmissionResolver } from "./submission/graphql/resolvers/code-level-submission.resolver";
 import { QuizLevelSubmissionResolver } from "./submission/graphql/resolvers/quiz-level-submission.resolver";
 import { RequirementResultResolver } from "./submission/graphql/resolvers/requirement-result.resolver";
-import { ResultResolver } from "./submission/graphql/resolvers/result.resolver";
 import { SubmissionResolver } from "./submission/graphql/resolvers/submission.resolver";
 import { UserResolver } from "./user/user.resolver";
 
@@ -23,7 +23,7 @@ const resolvers = [
   TaskResolver,
   CodeLevelResolver,
   SubmissionResolver,
-  ResultResolver,
+  CodeLevelResultResolver,
   RequirementResultResolver,
   RequirementResolver,
   UserResolver,
