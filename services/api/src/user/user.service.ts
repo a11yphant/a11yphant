@@ -38,6 +38,16 @@ export class UserService {
     }
   }
 
+  async findByEmail(email: string): Promise<User> {
+    const userRecord = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    return userRecord ? new User(userRecord) : null;
+  }
+
   async registerUser(registerUserInput: RegisterUserInput, currentUserId: string): Promise<User> {
     const currentUser = await this.prisma.user.findFirst({
       where: {

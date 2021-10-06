@@ -1,11 +1,12 @@
 import { createMock } from "@golevelup/ts-jest";
-import { Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { createConfigServiceMock } from "@tests/helpers";
 import { Request } from "express";
 
 import { JwtService } from "@/authentication/jwt.service";
 import { StoreService } from "@/authentication/store.service";
 
-const getStore = (): StoreService => new StoreService(createMock<JwtService>(), createMock<Logger>());
+const getStore = (): StoreService => new StoreService(createMock<JwtService>(), createMock<ConfigService>(createConfigServiceMock()));
 
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyOWE0M2NmZC1hNWRlLTRmMmYtYjVkMC0wYjUzMzY3MjkzMTIiLCJpYXQiOjE2MzI3NTQ4MDAsImV4cCI6MTY2NDI5MDgwMCwiaXNzIjoiYTExeXBoYW50Iiwic3ViIjoic2Vzc2lvbiJ9.YzKX5OxHOOUeoUSmKsy0pQGBAqGTqkSLSKXZn4b2MY4";

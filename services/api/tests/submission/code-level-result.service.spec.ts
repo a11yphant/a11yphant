@@ -6,9 +6,9 @@ import { Factory } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
-import { ResultService } from "@/submission/services/result.service";
+import { CodeLevelResultService } from "@/submission/services/code-level-result.service";
 
-describe("result service", () => {
+describe("code level result service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
 
   it("returns the result for a submission", async () => {
@@ -19,7 +19,7 @@ describe("result service", () => {
       include: { submission: true },
     });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     const foundResult = await resultService.findOneForSubmission(expectedResult.submission.id);
 
@@ -48,7 +48,7 @@ describe("result service", () => {
       data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
     });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     expect(await resultService.countNumberOfFailedRequirementChecks(result.id)).toBe(2);
   });
@@ -63,7 +63,7 @@ describe("result service", () => {
       data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
     });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     expect(await resultService.countNumberOfCheckedRequirements(result.id)).toBe(2);
   });
@@ -74,7 +74,7 @@ describe("result service", () => {
       data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }),
     });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     expect(
       await resultService.update(result.id, {
