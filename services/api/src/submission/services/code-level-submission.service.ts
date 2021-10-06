@@ -12,7 +12,7 @@ import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 import { CodeLevelSubmissionCreateData } from "../interfaces/code-level-submission-create-data.interface";
 import { CodeLevelSubmissionUpdateData } from "../interfaces/code-level-submission-update-data.interface";
-import { ResultService } from "./result.service";
+import { CodeLevelResultService } from "./code-level-result.service";
 
 @Injectable()
 export class CodeLevelSubmissionService {
@@ -100,7 +100,7 @@ export class CodeLevelSubmissionService {
       })),
     });
 
-    return result ? ResultService.createModelFromRecord(result) : null;
+    return result ? CodeLevelResultService.createModelFromRecord(result) : null;
   }
 
   static createModelFromDatabaseRecord(record: SubmissionRecord): CodeLevelSubmission {

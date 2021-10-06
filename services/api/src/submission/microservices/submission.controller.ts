@@ -5,12 +5,12 @@ import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
 
 import { ResultStatus } from "../graphql/models/result-status.enum";
 import { SubmissionCheckCompletedEvent } from "../interfaces/submission-check-completed-event.interface";
+import { CodeLevelResultService } from "../services/code-level-result.service";
 import { RequirementResultService } from "../services/requirement-result.service";
-import { ResultService } from "../services/result.service";
 
 @Controller()
 export class SubmissionController {
-  constructor(private logger: Logger, private resultService: ResultService, private requirementResultService: RequirementResultService) {}
+  constructor(private logger: Logger, private resultService: CodeLevelResultService, private requirementResultService: RequirementResultService) {}
   @EventPattern("submission.check-completed")
   public async handleSubmissionEvent(event: SubmissionCheckCompletedEvent): Promise<void> {
     this.logger.log(`Received submission.check-completed for ${event.submissionId}`, SubmissionController.name);

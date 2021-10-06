@@ -1,13 +1,13 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
+import { CodeLevelResultService } from "../../services/code-level-result.service";
 import { RequirementResultService } from "../../services/requirement-result.service";
-import { ResultService } from "../../services/result.service";
 import { RequirementResult } from "../models/requirement-result.model";
 import { Result } from "../models/result.model";
 
 @Resolver(() => Result)
-export class ResultResolver {
-  constructor(private resultService: ResultService, private requirementResultService: RequirementResultService) {}
+export class CodeLevelResultResolver {
+  constructor(private resultService: CodeLevelResultService, private requirementResultService: RequirementResultService) {}
 
   @Query(() => Result)
   async resultForSubmission(@Args("submissionId") submissionId: string): Promise<Result> {

@@ -1,5 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { createConfigServiceMock } from "@tests/helpers";
 import { Request, Response } from "express";
 
 import { AuthenticationController } from "@/authentication/authentication.controller";
@@ -28,6 +30,7 @@ describe("authentication controller", () => {
       createSignedToken: jest.fn().mockResolvedValue(testToken),
     }),
     createMock<Logger>(),
+    createMock<ConfigService>(createConfigServiceMock()),
   );
 
   it("sets the correct cookie", async () => {

@@ -3,13 +3,13 @@ import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
 import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
 
-import { ResultService } from "../../services/result.service";
+import { CodeLevelResultService } from "../../services/code-level-result.service";
 import { Result } from "../models/result.model";
 import { Submission } from "../models/submission.model";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {
-  constructor(private readonly levelService: LevelService, private readonly resultService: ResultService) {}
+  constructor(private readonly levelService: LevelService, private readonly resultService: CodeLevelResultService) {}
 
   @ResolveField(() => Level, {
     description: "The level this submission is for.",
