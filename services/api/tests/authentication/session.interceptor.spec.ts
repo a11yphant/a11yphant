@@ -1,6 +1,8 @@
 import { createMock } from "@golevelup/ts-jest";
 import { CallHandler, ExecutionContext, Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { UserFactory } from "@tests/factories/models/user.factory";
+import { createConfigServiceMock } from "@tests/helpers";
 import { Request, Response } from "express";
 import { of } from "rxjs";
 
@@ -39,7 +41,12 @@ describe("session interceptor", () => {
     expect.assertions(1);
     const executionContext = createMock<ExecutionContext>();
 
-    const interceptor = new SessionInterceptor(createMock<JwtService>(), createMock<UserService>(), createMock<Logger>());
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>(),
+      createMock<UserService>(),
+      createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
+    );
 
     const completeCallback = (): void => {
       // check if this callback has been executed
@@ -73,6 +80,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const nextCallback = (): void => {
@@ -112,6 +120,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const nextCallback = (): void => {
@@ -147,6 +156,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const nextCallback = (): void => {
@@ -182,6 +192,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const nextCallback = (): void => {
@@ -216,6 +227,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const completeCallback = (): void => {
@@ -249,6 +261,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const completeCallback = (): void => {
@@ -282,6 +295,7 @@ describe("session interceptor", () => {
         create: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
     );
 
     const completeCallback = (): void => {

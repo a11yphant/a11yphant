@@ -1,6 +1,7 @@
 import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
 import React from "react";
+import sanitizeHtml from "sanitize-html";
 
 export interface SingleAnswerProps {
   className?: string;
@@ -28,7 +29,7 @@ const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, s
               chosenId === answer.id && "bg-primary border-primary text-light",
             )}
           >
-            <span>{answer.text}</span>
+            <span className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(answer.text) }} />
           </RadioGroup.Option>
         );
       })}

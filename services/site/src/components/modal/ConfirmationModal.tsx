@@ -31,7 +31,7 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
       leaveFrom="transform scale-100 opacity-100"
       leaveTo="transform scale-95 opacity-0"
     >
-      <Dialog open={open} onClose={() => onCancel()} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
+      <Dialog open={open} onClose={onCancel} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
         <div className={clsx("w-1/2 h-64 px-12 py-14 relative bg-background-light rounded-lg max-w-2xl", " shadow-modal")}>
           <Dialog.Overlay className="fixed inset-0 bg-background opacity-25 z-[-1]" />
 
