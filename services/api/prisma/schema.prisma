@@ -62,7 +62,7 @@ model QuizLevelResult {
   id           String              @id @default(uuid()) @db.Uuid
   status       Int                 @default(0)
   submission   QuizLevelSubmission @relation(fields: [submissionId], references: [id])
-  submissionId String              @db.Uuid
+  submissionId String              @unique @db.Uuid
 
   @@map(name: "quiz_level_resuls")
 }
@@ -149,7 +149,7 @@ model Result {
   status       Int           @default(0)
   checkResults CheckResult[]
   submission   Submission    @relation(fields: [submissionId], references: [id])
-  submissionId String        @db.Uuid
+  submissionId String        @unique @db.Uuid
 
   @@map(name: "results")
 }
@@ -169,7 +169,7 @@ model User {
   id                  String                @id @default(uuid()) @db.Uuid
   authProvider        String                @default("anonymous")
   authId              String?
-  email               String?
+  email               String?               @unique
   password            String?
   displayName         String?
   submissions         Submission[]

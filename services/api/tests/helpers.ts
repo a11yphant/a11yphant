@@ -1,4 +1,6 @@
+import { PartialFuncReturn } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { PrismaClient } from "@prisma/client";
 import { Migrate } from "@prisma/migrate";
 import os from "os";
@@ -92,5 +94,18 @@ export function useDatabase(logger: Logger): { getPrismaService: () => PrismaSer
 
   return {
     getPrismaService: () => client,
+  };
+}
+
+export function createConfigServiceMock(data?: Record<string, any>): PartialFuncReturn<ConfigService<Record<string, unknown>>> {
+  const mockData = {
+    "cookie.name": "a11yphant_session",
+    "cookie.defaultConfig": { sameSite: "lax", secure: true, httpOnly: true },
+    ...data,
+  };
+  return {
+    get: jest.fn((key: string) => {
+      return mockData[key];
+    }),
   };
 }
