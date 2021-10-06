@@ -1,0 +1,7 @@
+mutation requestCodeLevelCheck($requestCheckInput: RequestCodeLevelCheckInput!) {
+    requestCodeLevelCheck(requestCheckInput: $requestCheckInput) {
+        result {
+            id
+        }
+    }
+}
