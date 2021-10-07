@@ -1,17 +1,17 @@
 import { createMock } from "@golevelup/ts-jest";
 
-import { ResultResolver } from "@/submission/graphql/resolvers/result.resolver";
+import { CodeLevelResultResolver } from "@/submission/graphql/resolvers/code-level-result.resolver";
+import { CodeLevelResultService } from "@/submission/services/code-level-result.service";
 import { RequirementResultService } from "@/submission/services/requirement-result.service";
-import { ResultService } from "@/submission/services/result.service";
 
+import { CodeLevelResultFactory } from "../factories/models/code-level-result.factory";
 import { RequirementResultFactory } from "../factories/models/requirement-result.factory";
-import { ResultFactory } from "../factories/models/result.factory";
 
-describe("result resolver", () => {
+describe("code level result resolver", () => {
   it("can return the result for a submission", async () => {
-    const result = ResultFactory.build();
-    const resolver = new ResultResolver(
-      createMock<ResultService>({ findOneForSubmission: jest.fn().mockResolvedValue(result) }),
+    const result = CodeLevelResultFactory.build();
+    const resolver = new CodeLevelResultResolver(
+      createMock<CodeLevelResultService>({ findOneForSubmission: jest.fn().mockResolvedValue(result) }),
       createMock<RequirementResultService>(),
     );
 
@@ -19,10 +19,10 @@ describe("result resolver", () => {
   });
 
   it("returns the requirement check results", async () => {
-    const result = ResultFactory.build();
+    const result = CodeLevelResultFactory.build();
     const requirementResults = RequirementResultFactory.buildList(3);
-    const resolver = new ResultResolver(
-      createMock<ResultService>(),
+    const resolver = new CodeLevelResultResolver(
+      createMock<CodeLevelResultService>(),
       createMock<RequirementResultService>({
         findManyForResult: jest.fn().mockResolvedValue(requirementResults),
       }),
@@ -32,9 +32,9 @@ describe("result resolver", () => {
   });
 
   it("returns the number of requirements for the result", async () => {
-    const result = ResultFactory.build();
-    const resolver = new ResultResolver(
-      createMock<ResultService>({
+    const result = CodeLevelResultFactory.build();
+    const resolver = new CodeLevelResultResolver(
+      createMock<CodeLevelResultService>({
         countNumberOfCheckedRequirements: jest.fn().mockResolvedValue(3),
       }),
       createMock<RequirementResultService>(),
@@ -44,9 +44,9 @@ describe("result resolver", () => {
   });
 
   it("returns the number of failed requirement checks for the result", async () => {
-    const result = ResultFactory.build();
-    const resolver = new ResultResolver(
-      createMock<ResultService>({
+    const result = CodeLevelResultFactory.build();
+    const resolver = new CodeLevelResultResolver(
+      createMock<CodeLevelResultService>({
         countNumberOfFailedRequirementChecks: jest.fn().mockResolvedValue(2),
       }),
       createMock<RequirementResultService>(),

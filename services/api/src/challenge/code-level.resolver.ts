@@ -3,7 +3,7 @@ import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
 import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";
-import { SubmissionService } from "@/submission/services/submission.service";
+import { CodeLevelSubmissionService } from "@/submission/services/code-level-submission.service";
 
 import { CodeLevel } from "./models/code-level.model";
 import { Requirement } from "./models/requirement.model";
@@ -13,7 +13,11 @@ import { TaskService } from "./task.service";
 
 @Resolver(() => CodeLevel)
 export class CodeLevelResolver {
-  constructor(private requirementService: RequirementService, private taskService: TaskService, private submissionService: SubmissionService) {}
+  constructor(
+    private requirementService: RequirementService,
+    private taskService: TaskService,
+    private submissionService: CodeLevelSubmissionService,
+  ) {}
   @ResolveField(() => [Requirement], {
     description: "The requirements for this level",
   })

@@ -40,7 +40,7 @@ export class ChallengeService {
   }
 
   async getStatusForUserAndChallenge(userId: string, challengeId: string): Promise<ChallengeStatus> {
-    const submissionCount = await this.prisma.submission.count({
+    const submissionCount = await this.prisma.codeLevelSubmission.count({
       where: {
         userId,
         level: {

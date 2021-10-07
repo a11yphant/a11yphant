@@ -1,2 +1,2 @@
-export { SubmissionService } from "./services/submission.service";
+export { CodeLevelSubmissionService as SubmissionService } from "./services/code-level-submission.service";
 export { SubmissionModule } from "./submission.module";

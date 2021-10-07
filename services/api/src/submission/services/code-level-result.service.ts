@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Prisma, Result as ResultRecord } from "@prisma/client";
+import { CodeLevelResult as ResultRecord, Prisma } from "@prisma/client";
 
 import { PrismaService } from "@/prisma/prisma.service";
 
@@ -7,17 +7,17 @@ import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 
 @Injectable()
-export class ResultService {
+export class CodeLevelResultService {
   constructor(private prisma: PrismaService) {}
 
   async findOneForSubmission(id: string): Promise<Result> {
-    const record = await this.prisma.result.findFirst({
+    const record = await this.prisma.codeLevelResult.findFirst({
       where: {
         submissionId: id,
       },
     });
 
-    return record ? ResultService.createModelFromRecord(record) : null;
+    return record ? CodeLevelResultService.createModelFromRecord(record) : null;
   }
 
   async countNumberOfCheckedRequirements(id: string): Promise<number> {
@@ -28,15 +28,15 @@ export class ResultService {
     return this.prisma.checkResult.count({ where: { resultId: id, status: ResultStatus.FAIL } });
   }
 
-  async update(id: string, data: Pick<Prisma.ResultUpdateInput, "status">): Promise<Result> {
-    const record = await this.prisma.result.update({
+  async update(id: string, data: Pick<Prisma.CodeLevelResultUpdateInput, "status">): Promise<Result> {
+    const record = await this.prisma.codeLevelResult.update({
       where: {
         id,
       },
       data,
     });
 
-    return record ? ResultService.createModelFromRecord(record) : null;
+    return record ? CodeLevelResultService.createModelFromRecord(record) : null;
   }
 
   static createModelFromRecord(record: ResultRecord): Result {

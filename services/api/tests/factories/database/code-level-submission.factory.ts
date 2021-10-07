@@ -1,12 +1,12 @@
 import { IFactoryStatic } from "rosie";
 
-import { CODE_LEVEL, SUBMISSION } from "./constants";
+import { CODE_LEVEL, CODE_LEVEL_SUBMISSION } from "./constants";
 import { buildOneOf } from "./helpers";
-import { CodeLevelData, SubmissionData } from "./types";
+import { CodeLevelData, CodeLevelSubmissionData } from "./types";
 
 export function define(factory: IFactoryStatic): void {
   factory
-    .define<SubmissionData>(SUBMISSION)
+    .define<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION)
     .attr("html", "<p>hi</p>")
     .attr("css", "body { color: blue }")
     .attr("js", "console.log('hi')")

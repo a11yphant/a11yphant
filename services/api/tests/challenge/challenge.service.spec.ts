@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { CHALLENGE, ChallengeData, Factory, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
+import { CHALLENGE, ChallengeData, CODE_LEVEL_SUBMISSION, CodeLevelSubmissionData, Factory, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -140,8 +140,8 @@ describe("challenge service", () => {
           where: { challengeId },
         });
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
         });
 
         const status = await service.getStatusForUserAndChallenge(userId, challengeId);
@@ -160,11 +160,19 @@ describe("challenge service", () => {
         });
 
         await Promise.all([
-          prisma.submission.create({
-            data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[0].id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+          prisma.codeLevelSubmission.create({
+            data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+              levelId: levels[0].id,
+              userId,
+              result: { create: { status: ResultStatus.SUCCESS } },
+            }),
           }),
-          prisma.submission.create({
-            data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[1].id, userId, result: { create: { status: ResultStatus.FAIL } } }),
+          prisma.codeLevelSubmission.create({
+            data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+              levelId: levels[1].id,
+              userId,
+              result: { create: { status: ResultStatus.FAIL } },
+            }),
           }),
         ]);
 
@@ -185,14 +193,22 @@ describe("challenge service", () => {
           where: { challengeId },
         });
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[0].id, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+            levelId: levels[0].id,
+            userId,
+            result: { create: { status: ResultStatus.FAIL } },
+          }),
         });
 
         await Promise.all(
           levels.map((level) =>
-            prisma.submission.create({
-              data: Factory.build<SubmissionData>(SUBMISSION, { levelId: level.id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+            prisma.codeLevelSubmission.create({
+              data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+                levelId: level.id,
+                userId,
+                result: { create: { status: ResultStatus.SUCCESS } },
+              }),
             }),
           ),
         );
@@ -212,20 +228,32 @@ describe("challenge service", () => {
           where: { challengeId },
         });
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[0].id, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+            levelId: levels[0].id,
+            userId,
+            result: { create: { status: ResultStatus.FAIL } },
+          }),
         });
 
         await Promise.all(
           levels.map((level) =>
-            prisma.submission.create({
-              data: Factory.build<SubmissionData>(SUBMISSION, { levelId: level.id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+            prisma.codeLevelSubmission.create({
+              data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+                levelId: level.id,
+                userId,
+                result: { create: { status: ResultStatus.SUCCESS } },
+              }),
             }),
           ),
         );
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[2].id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+            levelId: levels[2].id,
+            userId,
+            result: { create: { status: ResultStatus.SUCCESS } },
+          }),
         });
 
         const status = await service.getStatusForUserAndChallenge(userId, challengeId);
