@@ -37,7 +37,7 @@ const resolvers = [
 
 const scalars = [];
 
-async function generateSchema(): Promise<void> {
+export async function generateSchema(): Promise<void> {
   const app = await NestFactory.create(GraphQLSchemaBuilderModule);
   await app.init();
 
@@ -46,4 +46,7 @@ async function generateSchema(): Promise<void> {
   writeFileSync("schema.gql", printSchema(schema));
 }
 
-generateSchema();
+// generate the schema only if the file is executed directly
+if (require.main === module) {
+  generateSchema();
+}
