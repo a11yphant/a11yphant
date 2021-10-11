@@ -1,6 +1,6 @@
 import Navigation from "app/components/Navigation";
 import {
-  ChallengeStatus,
+  ChallengeStatus as ChallengeStatusEnum,
   ChallengesWithStatusForUserDocument,
   ChallengesWithStatusForUserQuery,
   ChallengesWithStatusForUserQueryVariables,
@@ -18,7 +18,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-function challengeStatusToText(status: ChallengeStatus): string {
+// Workaround due too ts-jests issues with enums: https://github.com/kulshekhar/ts-jest/issues/1357#issuecomment-580736356
+const ChallengeStatus = { ...ChallengeStatusEnum };
+
+function challengeStatusToText(status: ChallengeStatusEnum): string {
   if (status === ChallengeStatus.Open) {
     return "Not started";
   } else if (status === ChallengeStatus.InProgress) {
