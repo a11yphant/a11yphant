@@ -34,7 +34,7 @@ jest.mock("app/generated/graphql", () => ({
   }),
 }));
 
-jest.mock("app/components/navigation", () => ({
+jest.mock("app/components/Navigation", () => ({
   __esModule: true,
   default: () => <></>,
 }));
