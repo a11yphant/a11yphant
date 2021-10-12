@@ -17,7 +17,7 @@ export class DocumentStartsWithHtml5Doctype implements Check {
     try {
       const renderedSubmission = await this.fetch(url).then((response) => response.text());
 
-      const isValid = renderedSubmission.toLowerCase().startsWith("<!doctype html>");
+      const isValid = renderedSubmission.toLowerCase().trimStart().startsWith("<!doctype html>");
 
       return {
         id: rule.id,
