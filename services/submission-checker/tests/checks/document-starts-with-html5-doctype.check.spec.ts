@@ -75,4 +75,27 @@ describe("document-starts-with-html5-doctype check", () => {
     expect(result).toHaveProperty("id", "asdf");
     expect(result).toHaveProperty("status", "failed");
   });
+
+  it("returns an error if fetching the document fails", async () => {
+    const fetch = jest.fn().mockRejectedValue(new Error("some error"));
+
+    const check = new DocumentStartsWithHtml5Doctype(
+      createMock<Logger>(),
+      createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
+      fetch as unknown as typeof nodeFetch,
+    );
+
+    const result = await check.run(
+      {
+        id: "some-id",
+        css: "",
+        html: "",
+        js: "",
+      },
+      { id: "asdf", key: "document-starts-with-html5-doctype", options: {} },
+    );
+
+    expect(result).toHaveProperty("id", "asdf");
+    expect(result).toHaveProperty("status", "error");
+  });
 });
