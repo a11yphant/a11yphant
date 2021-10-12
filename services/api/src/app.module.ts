@@ -2,6 +2,8 @@ import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
+import { SentryModule } from "@ntegral/nestjs-sentry";
+import { LogLevel } from "@sentry/types";
 import { ConsoleModule } from "nestjs-console";
 
 import { AuthenticationModule } from "./authentication/authentication.module";
@@ -13,15 +15,27 @@ import gqlConfig from "./config/gql.config";
 import messaging from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
+import sentryConfig from "./config/sentry.config";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
+import { SentryProvider } from "./sentry/sentry.provider";
 import { SubmissionModule } from "./submission/submission.module";
 import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig, sentryConfig],
+    }),
+    SentryModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        dsn: configService.get<string>("sentry.dsn"),
+        environment: configService.get<string>("sentry.environment"),
+        logLevel: configService.get<LogLevel>("sentry.logLevel"),
+        tracesSampleRate: configService.get<number>("sentry.traces-sample-rate"),
+      }),
+      inject: [ConfigService],
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
@@ -68,5 +82,6 @@ import { UserModule } from "./user/user.module";
     ImporterModule,
     UserModule,
   ],
+  providers: [SentryProvider],
 })
 export class AppModule {}
