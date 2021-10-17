@@ -1,8 +1,9 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
-import { SentryModule, SentryService } from "@ntegral/nestjs-sentry";
+import { GraphqlInterceptor, SentryModule } from "@ntegral/nestjs-sentry";
 import { LogLevel } from "@sentry/types";
 import { ConsoleModule } from "nestjs-console";
 
@@ -18,8 +19,6 @@ import oauthConfig from "./config/oauth.config";
 import sentryConfig from "./config/sentry.config";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
-import { SentryProvider } from "./sentry/sentry.provider";
-import { SentryApolloGraphQLTracingPlugin } from "./sentry/sentry-apollo-graphql-tracing.plugin";
 import { SubmissionModule } from "./submission/submission.module";
 import { UserModule } from "./user/user.module";
 
@@ -40,7 +39,7 @@ import { UserModule } from "./user/user.module";
     }),
     GraphQLModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService, sentryService: SentryService) => ({
+      useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>("gql.debug"),
         tracing: configService.get<boolean>("gql.debug"),
         playground: configService.get<boolean>("gql.playground")
@@ -52,20 +51,13 @@ import { UserModule } from "./user/user.module";
           : false,
         introspection: configService.get<boolean>("gql.schemaIntrospection"),
         autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
-        context: ({ req, res }) => {
-          const transaction = sentryService.instance().startTransaction({
-            op: "gql",
-            name: "GraphQLTransaction", // this will be the default name, unless the gql query has a name
-          });
-          return { req, res, transaction };
-        },
         cors: {
           credentials: true,
           origin: true,
         },
-        plugins: [SentryApolloGraphQLTracingPlugin],
+        context: ({ req, res }) => ({ req, res }),
       }),
-      inject: [ConfigService, SentryService],
+      inject: [ConfigService],
     }),
     PrismaModule.forRootAsync({
       imports: [ConfigModule],
@@ -90,6 +82,11 @@ import { UserModule } from "./user/user.module";
     ImporterModule,
     UserModule,
   ],
-  providers: [SentryProvider],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useFactory: () => new GraphqlInterceptor(),
+    },
+  ],
 })
 export class AppModule {}
