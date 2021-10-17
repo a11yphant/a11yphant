@@ -1,4 +1,6 @@
-import { Modal, ModalContent, ModalTitle } from "app/components/modal/Modal";
+import { Modal } from "app/components/modal/Modal";
+import { ModalContent } from "app/components/modal/ModalContent";
+import { ModalTitle } from "app/components/modal/ModalTitle";
 import clsx from "clsx";
 import React from "react";
 

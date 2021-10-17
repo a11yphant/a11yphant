@@ -3,7 +3,8 @@ import "@testing-library/jest-dom/extend-expect";
 import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ConfirmationModal, { ConfirmationModalProps } from "app/components/modal/ConfirmationModal";
-import { Modal, ModalTitle } from "app/components/modal/Modal";
+import { Modal } from "app/components/modal/Modal";
+import { ModalTitle } from "app/components/modal/ModalTitle";
 import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
 

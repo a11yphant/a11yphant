@@ -1,7 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
-import { Modal, ModalTitle } from "app/components/modal/Modal";
+import { Modal } from "app/components/modal/Modal";
+import { ModalTitle } from "app/components/modal/ModalTitle";
 import { UserAccountBox } from "app/components/user/UserAccountBox";
 import UserAccountModal, { UserAccountModalProps } from "app/components/user/UserAccountModal";
 import { shallow, ShallowWrapper } from "enzyme";

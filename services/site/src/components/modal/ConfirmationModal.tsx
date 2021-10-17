@@ -1,8 +1,10 @@
 import Button from "app/components/buttons/Button";
+import { ModalActions } from "app/components/modal/ModalActions";
+import { ModalTitle } from "app/components/modal/ModalTitle";
 import clsx from "clsx";
 import React from "react";
 
-import { Modal, ModalActions, ModalTitle } from "./Modal";
+import { Modal } from "./Modal";
 
 export interface ConfirmationModalProps {
   open?: boolean;

@@ -1,7 +1,8 @@
 import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ErrorDialog from "app/components/common/error/ErrorDialog";
-import { Modal, ModalTitle } from "app/components/modal/Modal";
+import { Modal } from "app/components/modal/Modal";
+import { ModalTitle } from "app/components/modal/ModalTitle";
 import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, shallow } from "enzyme";
 import { GraphQLError } from "graphql";

@@ -4,7 +4,7 @@ import X from "app/components/icons/X";
 import clsx from "clsx";
 import React from "react";
 
-interface RestylableProps {
+export interface RestylableProps {
   className?: string;
   overrideClassName?: boolean;
 }
@@ -54,24 +54,4 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
       </Dialog>
     </Transition>
   );
-};
-
-interface ModalTitleProps {
-  as?: React.ElementType;
-}
-
-export const ModalTitle: React.FunctionComponent<ModalTitleProps & RestylableProps> = ({ children, className, overrideClassName = false, as }) => {
-  return (
-    <Dialog.Title as={as} className={clsx(className)}>
-      {children}
-    </Dialog.Title>
-  );
-};
-
-export const ModalContent: React.FunctionComponent<RestylableProps> = ({ children, className, overrideClassName = false }) => {
-  return <div className={clsx(className)}>{children}</div>;
-};
-
-export const ModalActions: React.FunctionComponent<RestylableProps> = ({ children, className, overrideClassName = false }) => {
-  return <div className={clsx(!overrideClassName && "absolute bottom-7 right-7", className)}>{children}</div>;
 };
