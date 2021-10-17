@@ -32,7 +32,7 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
       leaveTo="transform scale-95 opacity-0"
     >
       <Dialog open={open} onClose={onClose} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
-        <div className={clsx(!overrideClassName && "relative rounded-lg shadow-modal", className)}>
+        <div className={clsx("relative", !overrideClassName && "rounded-lg", className)}>
           <Dialog.Overlay className="fixed inset-0 bg-background opacity-25 z-[-1]" />
 
           <Button
