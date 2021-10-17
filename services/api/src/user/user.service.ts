@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { PrismaClientUnknownRequestError } from "@prisma/client/runtime";
 
 import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
@@ -20,13 +21,21 @@ export class UserService {
   }
 
   async findById(userId: string): Promise<User> {
-    const userRecord = await this.prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
+    try {
+      const userRecord = await this.prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
 
-    return userRecord ? new User(userRecord) : null;
+      return userRecord ? new User(userRecord) : null;
+    } catch (error) {
+      if (error instanceof PrismaClientUnknownRequestError) {
+        return null;
+      }
+
+      throw error;
+    }
   }
 
   async findByEmail(email: string): Promise<User> {

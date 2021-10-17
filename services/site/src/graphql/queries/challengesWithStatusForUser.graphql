@@ -1,0 +1,7 @@
+query challengesWithStatusForUser($userId: ID!) {
+    challenges {
+        id
+        name
+        statusForUser(userId: $userId)
+    }
+}
