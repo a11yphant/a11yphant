@@ -11,8 +11,8 @@
   "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "license": "UNLICENSED",
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.1 || ^5.0.0",
+    "@typescript-eslint/parser": "^4.15.1 || ^5.0.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0 || ^8.0.0",
     "eslint-plugin-import": "^2.22.1",
