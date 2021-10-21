@@ -1,4 +1,4 @@
-import { Inject, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ModuleRef } from "@nestjs/core";
 
 import { CHECK_TO_CLASS_MAP } from "./check-to-class-map";
@@ -7,6 +7,7 @@ import { CheckProviderNotFound as CheckProviderNotFoundException } from "./excep
 
 type ClassType = { new (): any };
 
+@Injectable()
 export class CheckFactory {
   constructor(private logger: Logger, @Inject(CHECK_TO_CLASS_MAP) private checkToClassMap: Record<string, ClassType>, private moduleRef: ModuleRef) {}
 
