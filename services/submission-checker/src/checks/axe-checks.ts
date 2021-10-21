@@ -1,8 +1,9 @@
 import { ClassProvider } from "@nestjs/common";
+import { getRules } from "axe-core";
 
 import { AxeCheck } from "./axe.check";
 
-export const AVAILABLE_AXE_CHECKS = ["link-name"];
+export const AVAILABLE_AXE_CHECKS = getRules().map((rule) => rule.ruleId);
 
 function buildCheckName(checkName: string): string {
   return `axe-${checkName}`;
