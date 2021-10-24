@@ -1,22 +1,25 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
-import { CHECK_RESULT, RESULT, ResultData } from "@tests/factories/database";
+import { CHECK_RESULT, CODE_LEVEL_RESULT, CodeLevelResultData } from "@tests/factories/database";
 import { Factory } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
-import { ResultService } from "@/submission/services/result.service";
+import { CodeLevelResultService } from "@/submission/services/code-level-result.service";
 
-describe("result service", () => {
+describe("code level result service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
 
   it("returns the result for a submission", async () => {
     const prisma = getPrismaService();
 
-    const expectedResult = await prisma.result.create({ data: Factory.build<ResultData>(RESULT), include: { submission: true } });
+    const expectedResult = await prisma.codeLevelResult.create({
+      data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT),
+      include: { submission: true },
+    });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     const foundResult = await resultService.findOneForSubmission(expectedResult.submission.id);
 
@@ -27,9 +30,9 @@ describe("result service", () => {
   it("returns the number of failed requirements for the result", async () => {
     const prisma = getPrismaService();
 
-    const result = await prisma.result.create({
+    const result = await prisma.codeLevelResult.create({
       data: {
-        ...Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }),
+        ...Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }),
         checkResults: {
           create: Factory.buildList<Prisma.CheckResultCreateWithoutResultInput>(
             CHECK_RESULT,
@@ -41,11 +44,11 @@ describe("result service", () => {
       },
     });
 
-    await prisma.result.create({
-      data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
+    await prisma.codeLevelResult.create({
+      data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
     });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     expect(await resultService.countNumberOfFailedRequirementChecks(result.id)).toBe(2);
   });
@@ -53,23 +56,25 @@ describe("result service", () => {
   it("returns the number of requirement checks for the result", async () => {
     const prisma = getPrismaService();
 
-    const result = await prisma.result.create({
-      data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
+    const result = await prisma.codeLevelResult.create({
+      data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
     });
-    await prisma.result.create({
-      data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
+    await prisma.codeLevelResult.create({
+      data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }, { numberOfCheckResults: 2 }),
     });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     expect(await resultService.countNumberOfCheckedRequirements(result.id)).toBe(2);
   });
 
   it("can update the status of a result", async () => {
     const prisma = getPrismaService();
-    const result = await prisma.result.create({ data: Factory.build<ResultData>(RESULT, { status: ResultStatus.SUCCESS }) });
+    const result = await prisma.codeLevelResult.create({
+      data: Factory.build<CodeLevelResultData>(CODE_LEVEL_RESULT, { status: ResultStatus.SUCCESS }),
+    });
 
-    const resultService = new ResultService(prisma);
+    const resultService = new CodeLevelResultService(prisma);
 
     expect(
       await resultService.update(result.id, {

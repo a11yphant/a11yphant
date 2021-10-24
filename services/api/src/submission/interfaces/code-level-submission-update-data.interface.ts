@@ -1,4 +1,4 @@
-export interface SubmissionUpdateData {
+export interface CodeLevelSubmissionUpdateData {
   id: string;
   html?: string;
   css?: string;

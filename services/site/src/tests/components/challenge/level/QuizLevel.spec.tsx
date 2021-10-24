@@ -5,12 +5,18 @@ import { cleanup } from "@testing-library/react";
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
+import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import { ResultStatus, SubmitQuizLevelAnswerDocument } from "app/generated/graphql";
 import { mount } from "enzyme";
 import router from "next/router";
 import React from "react";
+import Lottie, { LottieProps } from "react-lottie";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
+jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
+  return;
+});
 
 afterEach(cleanup);
 
@@ -101,7 +107,31 @@ describe("Quiz Level", () => {
     expect(wrapper.find(SingleAnswer).length).toBe(1);
   });
 
-  it("renders button", () => {
+  // TODO: add quizStatus
+  it("renders fail animation when quiz status is fail", () => {
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
+
+    expect(wrapper.find(Lottie).length).toBe(0);
+    // expect(wrapper.find(Lottie).props().options.animationData).toBe(failAnimation);
+  });
+
+  // TODO: add quizStatus
+  it("renders success animation when quiz status is success", () => {
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
+
+    expect(wrapper.find(Lottie).length).toBe(0);
+    // expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
+  });
+
+  it("renders submit button", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
@@ -109,5 +139,16 @@ describe("Quiz Level", () => {
     );
 
     expect(wrapper.find(ButtonLoading).length).toBe(1);
+  });
+
+  // TODO: add quizStatus
+  it("renders retry / next level button when quiz status is defined", () => {
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
+      </MockedProvider>,
+    );
+
+    expect(wrapper.find(CompleteEvaluationButton).length).toBe(0);
   });
 });

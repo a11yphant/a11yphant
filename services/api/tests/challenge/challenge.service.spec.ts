@@ -1,6 +1,16 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { CHALLENGE, ChallengeData, Factory, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
+import {
+  CHALLENGE,
+  ChallengeData,
+  CODE_LEVEL_SUBMISSION,
+  CodeLevelSubmissionData,
+  Factory,
+  QUIZ_LEVEL_SUBMISSION,
+  QuizLevelSubmissionData,
+  USER,
+  UserData,
+} from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
@@ -104,7 +114,13 @@ describe("challenge service", () => {
   });
 
   describe("getStatusForUserAndChallenge", () => {
-    const getUserAndChallenge = async (): Promise<{ userId: string; challengeId: string }> => {
+    const getUserAndChallenge = async ({
+      numberOfCodeLevels = 0,
+      numberOfQuizLevels = 0,
+    }: {
+      numberOfCodeLevels?: number;
+      numberOfQuizLevels?: number;
+    }): Promise<{ userId: string; challengeId: string }> => {
       const prisma = getPrismaService();
 
       const { id: userId } = await prisma.user.create({
@@ -112,7 +128,7 @@ describe("challenge service", () => {
       });
 
       const { id: challengeId } = await prisma.challenge.create({
-        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 3 }),
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels, numberOfQuizLevels }),
       });
 
       return { userId, challengeId };
@@ -122,7 +138,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const { userId, challengeId } = await getUserAndChallenge();
+      const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
 
       const status = await service.getStatusForUserAndChallenge(userId, challengeId);
 
@@ -130,18 +146,37 @@ describe("challenge service", () => {
     });
 
     describe("returns IN_PROGRESS", () => {
-      it("if attempts were found", async () => {
+      it("if code level attempts were found", async () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const { userId, challengeId } = await getUserAndChallenge();
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
 
         const { id: levelId } = await prisma.codeLevel.findFirst({
           where: { challengeId },
         });
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        });
+
+        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+
+        expect(status).toBe(ChallengeStatus.IN_PROGRESS);
+      });
+
+      it("if quiz level attempts were found", async () => {
+        const prisma = getPrismaService();
+        const service = new ChallengeService(prisma);
+
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfQuizLevels: 3 });
+
+        const { id: levelId } = await prisma.quizLevel.findFirst({
+          where: { challengeId },
+        });
+
+        await prisma.quizLevelSubmission.create({
+          data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
         });
 
         const status = await service.getStatusForUserAndChallenge(userId, challengeId);
@@ -153,18 +188,26 @@ describe("challenge service", () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const { userId, challengeId } = await getUserAndChallenge();
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3, numberOfQuizLevels: 1 });
 
         const levels = await prisma.codeLevel.findMany({
           where: { challengeId },
         });
 
         await Promise.all([
-          prisma.submission.create({
-            data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[0].id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+          prisma.codeLevelSubmission.create({
+            data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+              levelId: levels[0].id,
+              userId,
+              result: { create: { status: ResultStatus.SUCCESS } },
+            }),
           }),
-          prisma.submission.create({
-            data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[1].id, userId, result: { create: { status: ResultStatus.FAIL } } }),
+          prisma.codeLevelSubmission.create({
+            data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+              levelId: levels[1].id,
+              userId,
+              result: { create: { status: ResultStatus.FAIL } },
+            }),
           }),
         ]);
 
@@ -175,24 +218,59 @@ describe("challenge service", () => {
     });
 
     describe("returns FINISHED", () => {
-      it("if all levels were finished once", async () => {
+      it("if all code levels were finished once", async () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const { userId, challengeId } = await getUserAndChallenge();
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
 
         const levels = await prisma.codeLevel.findMany({
           where: { challengeId },
         });
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[0].id, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+            levelId: levels[0].id,
+            userId,
+            result: { create: { status: ResultStatus.FAIL } },
+          }),
         });
 
         await Promise.all(
           levels.map((level) =>
-            prisma.submission.create({
-              data: Factory.build<SubmissionData>(SUBMISSION, { levelId: level.id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+            prisma.codeLevelSubmission.create({
+              data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+                levelId: level.id,
+                userId,
+                result: { create: { status: ResultStatus.SUCCESS } },
+              }),
+            }),
+          ),
+        );
+
+        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+
+        expect(status).toBe(ChallengeStatus.FINISHED);
+      });
+
+      it("if all quiz levels were finished", async () => {
+        const prisma = getPrismaService();
+        const service = new ChallengeService(prisma);
+
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfQuizLevels: 3 });
+
+        const levels = await prisma.quizLevel.findMany({
+          where: { challengeId },
+        });
+
+        await Promise.all(
+          levels.map((level) =>
+            prisma.quizLevelSubmission.create({
+              data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, {
+                levelId: level.id,
+                userId,
+                result: { create: { status: ResultStatus.SUCCESS } },
+              }),
             }),
           ),
         );
@@ -206,27 +284,55 @@ describe("challenge service", () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
-        const { userId, challengeId } = await getUserAndChallenge();
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3, numberOfQuizLevels: 1 });
 
-        const levels = await prisma.codeLevel.findMany({
+        const codeLevels = await prisma.codeLevel.findMany({
           where: { challengeId },
         });
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[0].id, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+            levelId: codeLevels[0].id,
+            userId,
+            result: { create: { status: ResultStatus.FAIL } },
+          }),
         });
 
         await Promise.all(
-          levels.map((level) =>
-            prisma.submission.create({
-              data: Factory.build<SubmissionData>(SUBMISSION, { levelId: level.id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+          codeLevels.map((level) =>
+            prisma.codeLevelSubmission.create({
+              data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+                levelId: level.id,
+                userId,
+                result: { create: { status: ResultStatus.SUCCESS } },
+              }),
             }),
           ),
         );
 
-        await prisma.submission.create({
-          data: Factory.build<SubmissionData>(SUBMISSION, { levelId: levels[2].id, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+            levelId: codeLevels[2].id,
+            userId,
+            result: { create: { status: ResultStatus.SUCCESS } },
+          }),
         });
+
+        const quizLevel = await prisma.quizLevel.findFirst({
+          where: { challengeId },
+        });
+
+        await Promise.all(
+          [1, 2].map(() =>
+            prisma.quizLevelSubmission.create({
+              data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, {
+                levelId: quizLevel.id,
+                userId,
+                result: { create: { status: ResultStatus.SUCCESS } },
+              }),
+            }),
+          ),
+        );
 
         const status = await service.getStatusForUserAndChallenge(userId, challengeId);
 

@@ -2,7 +2,7 @@ import { Field, HideField, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class User {
-  constructor(properties: { id: string; displayName: string; email?: string; password?: string; authId?: string; authProvider?: string }) {
+  constructor(properties: { id: string; displayName?: string; email?: string; password?: string; authId?: string; authProvider?: string }) {
     this.id = properties.id;
     this.displayName = properties.displayName;
     this.email = properties.email;

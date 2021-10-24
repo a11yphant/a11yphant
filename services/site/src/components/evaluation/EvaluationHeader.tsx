@@ -38,7 +38,7 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
               height={70}
               width={70}
               ariaRole={"img"}
-              title={"A cross"}
+              title={"A check mark"}
               style={{ marginTop: "-20px" }}
             />
           ) : (

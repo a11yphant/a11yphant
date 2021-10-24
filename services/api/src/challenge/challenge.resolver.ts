@@ -45,4 +45,9 @@ export class ChallengeResolver {
   status(@Parent() challenge: Challenge, @SessionToken() sessionToken: SessionTokenInterface): Promise<ChallengeStatus> {
     return this.challengeService.getStatusForUserAndChallenge(sessionToken.userId, challenge.id);
   }
+
+  @ResolveField(() => ChallengeStatus, { description: "The status of the challenge for the user with the passed id." })
+  statusForUser(@Parent() challenge: Challenge, @Args("userId", { type: () => ID }) userId: string): Promise<ChallengeStatus> {
+    return this.challengeService.getStatusForUserAndChallenge(userId, challenge.id);
+  }
 }

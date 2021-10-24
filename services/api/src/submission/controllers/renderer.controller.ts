@@ -1,10 +1,10 @@
 import { Controller, Get, NotFoundException, Param } from "@nestjs/common";
 
-import { SubmissionService } from "../services/submission.service";
+import { CodeLevelSubmissionService } from "../services/code-level-submission.service";
 
 @Controller("render")
 export class RendererController {
-  constructor(private submissionService: SubmissionService) {}
+  constructor(private submissionService: CodeLevelSubmissionService) {}
 
   @Get(":id")
   async show(@Param("id") id: string): Promise<string> {

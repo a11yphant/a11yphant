@@ -1,16 +1,16 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { CODE_LEVEL, CodeLevelData, Factory, SUBMISSION, SubmissionData, USER, UserData } from "@tests/factories/database";
+import { CODE_LEVEL, CODE_LEVEL_SUBMISSION, CodeLevelData, CodeLevelSubmissionData, Factory, USER, UserData } from "@tests/factories/database";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
 import { PrismaService } from "@/prisma/prisma.service";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
-import { SubmissionService } from "@/submission/services/submission.service";
+import { CodeLevelSubmissionService } from "@/submission/services/code-level-submission.service";
 
-describe("submission service", () => {
+describe("code level submission service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
 
   describe("findOne", () => {
@@ -18,13 +18,13 @@ describe("submission service", () => {
       const html = "<div>hello</div>";
 
       const prisma = getPrismaService();
-      const service = new SubmissionService(
+      const service = new CodeLevelSubmissionService(
         prisma,
         createMock<ClientProxy>({ emit: jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) })) }),
       );
 
-      const { id } = await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
+      const { id } = await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { html }),
       });
 
       const submission = await service.findOne(id);
@@ -39,14 +39,14 @@ describe("submission service", () => {
       const html = "<h1>a11yphant</h1>";
 
       const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+      const service = new CodeLevelSubmissionService(prisma, createMock<ClientProxy>());
 
       const {
         id: submissionId,
         userId,
         levelId,
-      } = await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { html }),
+      } = await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { html }),
         include: {
           level: true,
         },
@@ -65,7 +65,7 @@ describe("submission service", () => {
       const html = "<div>good morning :)</div>";
 
       const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+      const service = new CodeLevelSubmissionService(prisma, createMock<ClientProxy>());
 
       const { id: userId } = await prisma.user.create({
         data: Factory.build<UserData>(USER),
@@ -86,7 +86,7 @@ describe("submission service", () => {
       expect(createdSubmission).toBeTruthy();
       expect(createdSubmission.html).toBe(html);
 
-      const queriedSubmission = await prisma.submission.findUnique({
+      const queriedSubmission = await prisma.codeLevelSubmission.findUnique({
         where: {
           id: createdSubmission.id,
         },
@@ -99,7 +99,7 @@ describe("submission service", () => {
 
     it("throws error if no level is found for id", async () => {
       const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+      const service = new CodeLevelSubmissionService(prisma, createMock<ClientProxy>());
 
       const { id: userId } = await prisma.user.create({
         data: Factory.build<UserData>(USER),
@@ -119,7 +119,7 @@ describe("submission service", () => {
       const html = "<div>good morning :)</div>";
 
       const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+      const service = new CodeLevelSubmissionService(prisma, createMock<ClientProxy>());
 
       const { id: userId } = await prisma.user.create({
         data: Factory.build<UserData>(USER),
@@ -129,8 +129,8 @@ describe("submission service", () => {
         data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
-      const { id: submissionId } = await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION),
+      const { id: submissionId } = await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION),
       });
 
       const updatedSubmission = await service.update({
@@ -142,7 +142,7 @@ describe("submission service", () => {
         js: null,
       });
 
-      const queriedSubmission = await prisma.submission.findUnique({
+      const queriedSubmission = await prisma.codeLevelSubmission.findUnique({
         where: {
           id: updatedSubmission.id,
         },
@@ -156,7 +156,7 @@ describe("submission service", () => {
 
     it("throws error if no level is found for id", async () => {
       const prisma = getPrismaService();
-      const service = new SubmissionService(prisma, createMock<ClientProxy>());
+      const service = new CodeLevelSubmissionService(prisma, createMock<ClientProxy>());
 
       const { id: userId } = await prisma.user.create({
         data: Factory.build<UserData>(USER),
@@ -188,12 +188,12 @@ describe("submission service", () => {
         level: { requirements: [{ id: "some-uuid", rule: { key: "test-key" }, options: { selector: "ul > li" } }] },
       };
 
-      const service = new SubmissionService(
+      const service = new CodeLevelSubmissionService(
         createMock<PrismaService>({
-          result: {
+          codeLevelResult: {
             count: jest.fn().mockResolvedValue(0),
           },
-          submission: {
+          codeLevelSubmission: {
             update: jest.fn().mockResolvedValue({ result: { status: ResultStatus.PENDING } }),
             findUnique: jest.fn().mockResolvedValue(submission),
           },
@@ -225,9 +225,9 @@ describe("submission service", () => {
     });
 
     it("throws an exception if the submission already has a result", async () => {
-      const service = new SubmissionService(
+      const service = new CodeLevelSubmissionService(
         createMock<PrismaService>({
-          result: {
+          codeLevelResult: {
             count: jest.fn().mockResolvedValue(1),
           },
         }),
