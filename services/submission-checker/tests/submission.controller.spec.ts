@@ -18,7 +18,7 @@ describe("submission controller", () => {
       createMock<BrowserService>({
         startSession: jest.fn().mockResolvedValue(
           createMock<ThenableWebDriver>({
-            close: jest.fn().mockResolvedValue(null),
+            quit: jest.fn().mockResolvedValue(null),
           }),
         ),
       }),

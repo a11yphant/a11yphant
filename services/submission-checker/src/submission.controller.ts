@@ -32,6 +32,6 @@ export class SubmissionController {
     this.logger.log(`Check for submission ${submission.id} completed`, SubmissionController.name);
 
     await this.clientProxy.emit("submission.check-completed", submissionCheckedEvent).toPromise();
-    await browser.close();
+    await browser.quit();
   }
 }
