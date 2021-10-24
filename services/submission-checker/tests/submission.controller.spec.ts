@@ -1,10 +1,12 @@
 import { createMock } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { CheckSubmissionService } from "src/check-submission.service";
+import { ThenableWebDriver } from "selenium-webdriver";
 
-import { SubmissionController } from "../src/submission.controller";
-import { SubmissionCreatedEvent } from "../src/submission-created-event.interface";
+import { BrowserService } from "@/browser.service";
+import { CheckSubmissionService } from "@/check-submission.service";
+import { SubmissionController } from "@/submission.controller";
+import { SubmissionCreatedEvent } from "@/submission-created-event.interface";
 
 describe("submission controller", () => {
   it("it handles submission.created events", async () => {
@@ -13,6 +15,13 @@ describe("submission controller", () => {
       createMock<Logger>(),
       createMock<ClientProxy>({ emit }),
       createMock<CheckSubmissionService>({ check: jest.fn().mockResolvedValue({}) }),
+      createMock<BrowserService>({
+        startSession: jest.fn().mockResolvedValue(
+          createMock<ThenableWebDriver>({
+            close: jest.fn().mockResolvedValue(null),
+          }),
+        ),
+      }),
     );
     const submissionCreatedEvent: SubmissionCreatedEvent = {
       submission: {
