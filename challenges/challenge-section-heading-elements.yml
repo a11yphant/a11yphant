@@ -1,0 +1,320 @@
+challenge:
+  id: 2f7e0f74-57ff-4823-ba73-c5b9fa85a9c7
+  name: Section Heading Elements
+  slug: section-heading-elements
+  difficulty: easy
+  order: 2
+  introduction: >
+    Always remember: Your pages need more structure than your average day!
+    In this challenge you will learn how to use the six available HTML headings to structure your page. <code>&lt;h1&gt;</code> is the first and most important heading, <code>&lt;h6&gt;</code> the least important. Headings communicate how the content on the page is structured. Web browsers, plugins and assistive technologies like screen readers can use headings to provide in-page navigation. That's why a logical structure is very important.
+  levels:
+
+    - id: 5cd71c4d-329c-4d85-947c-bb4c65a2d049
+      order: 1
+      type: code
+      instructions: |-
+        You should use headings to structure the content on your page. There are six heading levels available. These are represented as the elements <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>. 
+        The current best practice is to use only one <code>&lt;h1&gt;</code> element per page. It should be the heading that best describes the content on the page. For example, if the page contains a blog post, the <code>&lt;h1&gt;</code> could be the headline of the post. 
+        The <code>&lt;h1&gt;</code> does not have to be the first heading on your page. You can use other headings before your main heading appears. For example, for the website title or inside the navigation.
+      tasks:
+        - id: 26d5d6fa-1140-41cf-8e7f-a54288404f7b
+          text: Replace the <code>&lt;p&gt;</code> element containing the heading with a level 1 heading.
+          hints:
+            - id: 71b028ce-c11f-4fa2-aa37-48492a169e8c
+              text: The element for a level 1 heading is <code>&lt;h1&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <p>Why I like dogs</p>
+              <p>There are many reasons why I like dogs better. In this blog post I am going to tell you my most important reasons...</p>
+            </body>
+          </html>
+      requirements:
+        - id: dc1fb072-ead1-4af1-ac54-296782505d88
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+          options:
+            selector: htmltag
+        - id: 43bc6b39-95c0-48a6-95ac-0f14efaf5254
+          key: element-exists
+          title: The page contains a heading with the level 1
+          description: Each page should contain a level one heading that describes the content of the page.
+          order: 1
+          options:
+            selector: h1
+        - id: 14994bd2-2e80-41ce-9c42-a94da60dbb4f
+          key: element-exists
+          title: The level 1 heading is followed by a paragraph of text
+          description: The heading should always be followed by the content that it describes. Not the other way around.
+          order: 1
+          options:
+            selector: h1 + p
+    
+    # TODO add level 2
+    
+    - id: e60f445f-8971-439b-a423-ce38c5c1bf26
+      order: 3
+      type: quiz
+      question: How many <code>&lt;h1&gt;</code> headings should be used on a page?
+      answer_options:
+        - id: 4838041d-4b8b-4d1e-83ba-4f64d8fcf227
+          text: There should only be one. Screen reader users can jump to the <code>&lt;h1&gt;</code> if they want to get to the main content of the page.
+          correct: true
+        - id: ae72db8c-3ac1-4d25-b50f-582b13186e72
+          text: You can use as many as you like. There is no best practice regarding the number of <code>&lt;h1&gt;</code> elements on a page.
+          correct: false
+
+    - id: d935d377-bb97-4be9-a76c-aadbe8366652
+      order: 4
+      type: code
+      instructions: |-
+        You can use the different heading levels to structure the content of your HTML document, just like you would structure the content of a Word document. People using assistive technologies can then navigate the page by jumping from heading to heading.
+      tasks:
+        - id: 43b197cf-dd0b-4143-9155-63d997087cb8
+          text: |- 
+            Use the different heading levels to create a document with the following heading structure:
+              <ul>
+                <li>My favorite cat
+                  <ul>
+                    <li>About this cat
+                      <ul>
+                        <li>Biography</li>
+                        <li>Breed</li>
+                      </ul>
+                    </li>
+                    <li>Our history together</li>
+                    <li>Future adventoures</li>
+                  </ul>
+                </li>
+              <ul>
+          hints:
+            - id: fe64a87d-3529-49b4-9ef7-81bbfcaf7b9e
+              text: You need the <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> elements.
+            - id: c22308bd-e3fb-4637-8d0d-f46b615ca986
+              text: '"My favorite cat" should be an <code>&lt;h1&gt;</code>. "About this cat" should be an <code>&lt;h2&gt;</code> and "Biography" should be an <code>&lt;h3&gt;</code>.'
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>My favourite cat</title>
+            </head>
+            
+            <body>
+              <!-- insert the headings here -->
+            </body>
+          </html>
+      requirements:
+        - id: de975fc4-c1ce-43fb-835e-e18b37a83264
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 87ec8608-6e82-4447-a7e2-b60879f40f6c
+          key: element-exists
+          title: The headings are in the correct order
+          description: The required headings exist and are displayed in the correct order for this level.
+          order: 2
+          options:
+            selector: h1 + h2 + h3 + h3 + h2 + h2
+        - id: bceb6339-d0b4-4764-aa6f-6a624f1600fd
+          key: axe-heading-order
+          title: No heading level is skipped
+          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screenreader users.
+          order: 3
+        - id: 9644db3c-b76b-45d7-a19f-2a87879a1b0f
+          key: axe-empty-heading
+          title: Headings must not be empty
+          description: Headings should always contain text. Screen reader users will not be able to extract information about the page structure from a heading if there is no content.
+          order: 4
+
+    - id: 33e668bc-6c3d-4364-9e5a-eb7ead657dd1
+      order: 5
+      type: quiz
+      question: Should you use an <code>&lt;h4&gt;</code> directly after an <code>&lt;h2&gt;</code>?
+      answer_options:
+        - id: 3637b7b1-daf8-465f-b706-e5214a33b6a2
+          text: No. Skipping heading levels should be avoided, because it can lead to confusing document structures.
+          correct: true
+        - id: 27cdb588-347e-4be1-9045-09a33868b949
+          text: Yes. If the <code>&lt;h4&gt;</code> matches the visual style you want to achieve.
+          correct: false
+
+    - id: df8e5d10-22f6-453c-89bb-8e2e2d0ec6b6
+      order: 6
+      type: code
+      instructions: |-
+        Besides structuring text on a page, you can also use headings to structure the page itself. You can use headings to provide labels for the main navigation, the footer and other important sections of the page. That allows users navigating with assistive technologies to quickly identify these sections and jump directly to them.
+      tasks:
+        - id: ed982390-c341-42bb-90f7-fb3a8ed459a4
+          text: Replace the <code>&lt;div&gt;</code> elements containing "Navigation menu", "Sidebar" and "Footer" with suitable headings.
+          hints:
+            - id: da2cfab0-6415-4ceb-9151-0a3b61851380
+              text: The navigation section is a child of the page, which is described by an <code>&lt;h1&gt;</code>. Because of that we should use the next lower heading level for this section.
+            - id: 8ae3d0e5-07a8-42f5-ba5b-1adea085f2e2
+              text: The heading level that we want to use for these sections is an <code>&lt;h2&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>My favourite cat</title>
+            </head>
+            
+            <body>
+              <h1>My favourite cat</h1>
+              <div>
+                <div>Navigation menu</div>
+                <!-- Main navigation content -->
+              </div>
+              <div>
+                <div>Sidebar</div>
+                <!-- Sidebar content -->
+              </div>
+              <h2>About my favourite cat</h2>
+              <h3>Our history together</h2>
+              <h3>Future adventures</h2>
+              <div>
+                <div>Footer</div>
+                <!-- Footer content -->
+              </div>
+            </body>
+          </html>
+      requirements:
+        - id: 25ca7b9b-e750-4fbb-a567-dede1e229a4d
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 7f554737-1ff4-4425-abfb-0f8523164476
+          key: axe-heading-order
+          title: No heading level is skipped
+          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screenreader users.
+          order: 2
+        - id: 55fbac1e-e2b9-4123-9acb-8daca92cb430
+          key: axe-empty-heading
+          title: Headings must not be empty
+          description: Headings should always contain text. Screen reader users will not be able to extract information about the page structure from a heading if there is no content.
+          order: 3
+        - id: 2d02976a-1cfb-42b1-b8bd-83adf2a186e9
+          key: element-exists
+          title: The navigation area uses an <code>&lt;h2&gt;</code> element
+          description: The heading of the navigation should be an <code>&lt;h2&gt;</code>, because it is a child of the page and the page is described by an <code>&lt;h1&gt;</code> element.
+          order: 4
+          options:
+            selector: body > div:nth-child(2) > h2
+        - id: a2c79be8-5190-41df-ba49-a88014d46abf
+          key: element-exists
+          title: The sidebar area uses an <code>&lt;h2&gt;</code> element
+          description: The heading of the sidebar should be an <code>&lt;h2&gt;</code>, because it is a child of the page and the page is described by an <code>&lt;h1&gt;</code> element.
+          order: 5
+          options:
+            selector: body > div:nth-child(3) > h2
+        - id: 9e1b9321-2bcd-4a38-b936-3289c873e115
+          key: element-exists
+          title: The footer area uses an <code>&lt;h2&gt;</code> element
+          description: The heading of the footer should be an <code>&lt;h2&gt;</code>, because it is a child of the page and the page is described by an <code>&lt;h1&gt;</code> element.
+          order: 6
+          options:
+            selector: body > div:nth-child(7) > h2
+      
+    - id: f80a4a63-d6c9-4192-835c-58ef8761f54a
+      order: 7
+      type: code
+      instructions: |-
+        Sometimes the first heading on a page is not the heading that best describes the page content. In this case, it is possible to start with an <code>&lt;h2&gt;</code> instead of an <code>&lt;h1&gt;</code>. The <code>&lt;h1&gt;</code> element should then be used to wrap the heading that best describes the page content.
+        That is the only time that you are allowed to skip a heading level.
+      tasks:
+        - id: c7546cc0-e3c7-4d3c-8f3e-2add4aab363c
+          text: Remove the <code>&lt;h1&gt;</code> element at the beginning of the page. Then choose the heading that best describes the page content and make it the new <code>&lt;h1&gt;</code>. Update the levels of the other headings accordingly.
+          hints:
+            - id: 0b3a9059-812a-4cee-ac73-59c69b533ac6
+              text: The heading "About my favorite cat" seems like it describes the following page content. Upgrade it to an <code>&lt;h1&gt;</code> element.
+            - id: 53409478-3ac9-4061-a984-6ea13ff7dfb4
+              text: Upgrade the <code>&lt;h3&gt;</code> elements to <code>&lt;h2&gt;</code> elements for improved content structure.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>My favourite cat</title>
+            </head>
+            
+            <body>
+              <h1>My favourite cat</h1>
+              <div>
+                <h2>Navigation menu</h2>
+                <!-- Main navigation content -->
+              </div>
+              <div>
+                <h2>Sidebar</h2>
+                <!-- Sidebar content -->
+              </div>
+              <h2>About my favorite cat</h2>
+              <h3>Our history together</h2>
+              <h3>Future adventoures</h2>
+              <div>
+                <h2>Footer</h2>
+                <!-- Footer content -->
+              </div>
+            </body>
+          </html>
+      requirements:
+        - id: 36ce0931-efc0-4ea2-8add-9ada0e2020b0
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 910dc839-d800-483b-ab5e-d395f048ee86
+          key: axe-heading-order
+          title: No heading level is skipped
+          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screenreader users.
+          order: 2
+        - id: 223deb88-a18f-4c4e-a4eb-ff0734e15e89
+          key: element-not-exists
+          title: There is no <code>&lt;h1&gt;</code> element at the beginning of the document
+          description: Since we add a new <code>&lt;h1&gt;</code> into the document the <code>&lt;h1&gt;</code> element at the beginning of the document is not needed anymore.
+          order: 3
+          options:
+            selector: body > h1:first-child 
+        - id: b286fb13-7be9-46bb-b185-d8267fde82d9
+          key: element-exists
+          title: The main heading for the content has been converted from an <code>&lt;h2&gt;</code> to an <code>&lt;h1&gt;</code>
+          description: The heading that best describes the page content should be used as an <code>&lt;h1&gt;</code>.
+          order: 4
+          options:
+            selector: div + h1
+        - id: e35b00e1-f172-4358-9035-37cc5d0dcde0
+          key: element-exists
+          title: The content headings have been converted from <code>&lt;h3&gt;</code> to <code>&lt;h2&gt;</code>
+          description: The <code>&lt;h3&gt;</code> headings should be promoted to <code>&lt;h2&gt;</code> headings in order to improve the clarity of the page structure.
+          order: 5
+          options:
+            selector: h2 + h2
+
+    - id: ebcc2730-3e0c-43c6-8925-c7cb0792fb2b
+      order: 8
+      type: quiz
+      question: Are you allowed to use any other heading element than an <code>&lt;h1&gt;</code> as the first heading on the page?
+      answer_options:
+        - id: 8e244785-e837-47df-bbf8-8dcc67853a08
+          text: Yes, but only if there is an <code>&lt;h1&gt;</code> element at the start of the main page content. In that case, you should use <code>&lt;h2&gt;</code> headings for sections before the main content.
+          correct: true
+        - id: be2cda79-71d8-47fe-8574-d64bfae34a80
+          text: Yes, it does not matter.
+          correct: false
+        - id: 88a582b7-2e8a-44a4-9912-8b7aa693f52c
+          text: No, the <code>&lt;h1&gt;</code> element always has to be the first heading on the page.
+          correct: false

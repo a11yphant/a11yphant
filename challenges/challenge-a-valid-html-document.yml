@@ -1,0 +1,237 @@
+challenge:
+  id: 8b350581-bf0f-4d36-b8b6-09c470d613d0
+  name: A valid HTML document
+  slug: a-valid-html-document
+  difficulty: easy
+  order: 1
+  introduction: >
+    A valid HTML document lays the foundation for an accessible web page. Screen readers and other assistive technologies extract information based on the structure of the document. If the document does not comply with the HTML specification, assistive technologies are not able to properly interpret the content of the page.
+    In this challenge you will learn the basics on what is required to create a valid html document.
+  levels:
+    - id: 0c7968b5-c2a8-47d0-ad10-8cd79a2a6493
+      order: 1
+      type: code
+      instructions: |-
+        Each website requires a bit of boilerplate code that tells the browser key information about the page. The first required statement is the doctype. The doctype tells the browser which version of HTML is used for this page. A doctype should look like this: <code>&lt;!DOCTYPE {HTML_VERSION}&gt;</code>. For example, if <code>html</code> is specified as the version, browsers will use HTML5 (the latest version) for rendering. The doctype needs to be at the very beginning of the document.
+      tasks:
+        - id: 239908ab-0206-468c-8113-af420f26a3cf
+          text: Add the doctype declaration for HTML5 to the <code>&lt;!DOCTYPE&gt;</code> in the editor.
+          hints:
+            - id: 8b1f4cba-504e-4b15-a288-d49d8a8911cb
+              text: The declaration for HTML5 is <code>&lt;!DOCTYPE html&gt;</code>.
+      code:
+        html: |-
+          <!-- add the doctype here -->
+          <html>
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <p>Cats are better than dogs!</p>
+            </body>
+          </html>
+      requirements:
+        - id: 772c4310-20fe-4024-a2cd-6075ab6783f2
+          key: document-starts-with-html5-doctype
+          title: The document starts with an HTML5 doctype
+          description: At the beginning of the HTML document there needs to be a doctype that tells the browser how the document should be parsed. For this document there should be an HTML5 doctype.
+          order: 1
+
+    - id: 71aab54b-0c51-4c4e-b134-3ed2f6b41d83
+      order: 2
+      type: quiz
+      question: Which statement about <code>&lt;!DOCTYPE html&gt;</code> is true?
+      answer_options:
+        - id: c6427184-0cd9-45d9-9aeb-fdf326aa70e5
+          text: It tells the browser to use the latest html version for rendering the page.
+          correct: true
+        - id: 18472aed-1e05-45e2-a2e4-b2126716e7a9
+          text: <code>&lt;!DOCTYPE html&gt;</code> does not exist in the HTML specification.
+          correct: false
+        - id: 64f297c7-f7ed-4214-90b5-13babcae6f81
+          text: It is not required in a valid HTML document.
+          correct: false
+        - id: 8c5748a7-eaf8-4168-ac63-33d35f3a92ba
+          text: It specifies that no HTML code will be used in the following document.
+          correct: false
+
+    - id: d548e9f3-92e9-4e42-b921-dc0167010d4a
+      order: 3
+      type: code
+      instructions: |-
+        Websites exist in various languages. To help assistive devices, the language of a page should be declared on the <code>&lt;html&gt;</code> element by using the <code>lang</code> attribute. The value of the attribute should be the abbreviation of the document language. For example <code>en</code> for english, <code>de</code> for german. Browsers use this information to offer translations and correctly pronounce words when converting text to speech.
+        The <code>lang</code> attribute should always be set on the <code>&lt;html&gt;</code> element, as it is inherited by all other elements of the website. This means that the declared default language for the text will be set for all following elements inside the <code>&lt;html&gt;</code> element.
+      tasks:
+        - id: 5e19408c-3849-46fe-ac75-0468df04cd8c
+          text: Add the language of the website to the <code>&lt;html&gt;</code> element.
+          hints:
+            - id: f25507df-df7d-4f05-afce-b58f6452a6ca
+              text: The language of the website is English&#58; <code>&lt;html lang="en"&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <p>Dogs are better than cats!</p>
+            </body>
+          </html>
+      requirements:
+        - id: ffe615e2-cbb9-4cdf-aa64-5698a8fd0ce0
+          key: document-starts-with-html5-doctype
+          title: The document starts with an HTML5 doctype
+          description: At the beginning of the HTML document there needs to be a doctype that tells the browser how the document should be parsed. For this document there should be an HTML5 doctype.
+          order: 1
+        - id: d246c7c9-5f28-422c-8f75-5deb2cbeb591
+          key: axe-valid-lang
+          title: The value for the language attribute is valid
+          description: The language attribute must contain a valid language code. If the language code is not valid, screen readers cannot use this information.
+          order: 2
+        - id: b6d5f0d6-d171-4f8b-a223-6af981822956
+          key: element-exists
+          title: The language of the page is specified
+          description: The language of the page needs to be specified on the <code>&lt;html&gt;</code> element. For this page, an english language code (e.g. <code>en</code> or <code>en-us`) is suitable. This allows screen readers to properly pronounce the content of the page.
+          order: 3
+          options:
+            selector: 'html[lang="en"],html[lang="en-au"],html[lang="en-bz"],html[lang="en-ca"],html[lang="en-ie"],html[lang="en-jm"],html[lang="en-nz"],html[lang="en-za"],html[lang="en-tt"],html[lang="en-gb"],html[lang="en-us"]'
+
+    - id: 012d0f47-d66e-43d5-802d-f8683e43804f
+      order: 4
+      type: quiz
+      question: Why is it important to declare the document language inside the <code>language</code> attribute?
+      answer_options:
+        - id: 8658195a-89e6-4f16-9e9d-9600b2bfc777
+          text: To help assistive devices with announcing/displaying the content correctly.
+          correct: true
+        - id: b2996afe-193c-4070-aab4-26cc0735cc9c
+          text: To tell the browser that the website should never be translated.
+          correct: false
+        - id: ebd74c59-3b0e-459b-b924-43a46ea9afee
+          text: To make the website available exclusively in countries with this official language.
+          correct: false
+        - id: ed5a3d6a-ef38-480f-9b43-5df8bea52218
+          text: To showcase which mother tongue the lead developer of the website is speaking.
+          correct: false
+
+    - id: fdd35cbf-ba59-4b2f-98b5-9395f629e778
+      order: 5
+      type: code
+      instructions: |-
+        The <code>&lt;title&gt;</code> element inside the <code>&lt;head&gt;</code> defines the title of a web page. Browsers and assistive technologies use the content of this element to name the window or tab in which the page is displayed. The title should be informative and describe the content of the page. The best practice is to use the main heading of a page also as the page's title.
+      tasks:
+        - id: cd4613c7-418e-4682-85ff-67ec2426ea79
+          text: Add a title that describes the page.
+          hints:
+            - id: ac05d923-0c6f-46d4-8fa2-43172c6ed9c2
+              text: If you prefer dogs over cats add a <code>&lt;title&gt;</code> element like so&#58; <code>&lt;title>Doggos!</title&gt;</code>
+            - id: 0a1747a1-8e9f-46da-930d-7c035ace8f8a
+              text: Make sure that the <code>&lt;title&gt;</code> element is inside the <code>&lt;head&gt;</code>.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <body>
+              <p>Cats are better than dogs!</p>
+            </body>
+          </html>
+      requirements:
+        - id: 5fe03117-33d8-42a1-a034-d17983523810
+          key: html-is-valid
+          title: The HTML is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 5a5bd7ff-58ee-4581-92e9-363d640e415b
+          key: element-exists
+          title: A title is specified
+          description: The title of the page can be used by browsers and assistive technologies to, for example, provide names for browser tabs.
+          order: 2
+          options:
+            selector: title
+        - id: e0322333-0a07-43ea-9c14-776703accd96
+          key: element-exists
+          title: The title is located inside the document head
+          description: The title should be located in the document head, alongside other meta information for the page.
+          order: 3
+          options:
+            selector: head > title
+
+    - id: 87468d31-afdb-4417-be04-1113be1eafb1
+      order: 6
+      type: quiz
+      question: What is the purpose of the <code>&lt;head&gt;</code> element?
+      answer_options:
+        - id: 71862bfd-ca5e-443c-8eae-b68d7444f08b
+          text: It contains meta information regarding the page, for example the title.
+          correct: true
+        - id: 8a906694-67b9-4cc1-874f-80ae4d8ed3b2
+          text: It does not exist in the HTML specification.
+          correct: false
+        - id: 4a4d7a15-3ce1-4ca5-8a6d-4509b7c6e097
+          text: It should contain the website's logo.
+          correct: false
+        - id: 735857f3-53ad-4d1b-9a01-20b103e3bcf9
+          text: It contains the content of the page.
+          correct: false
+
+    - id: 850f4919-3c86-430c-89d2-b0363022031a
+      order: 7
+      type: code
+      instructions: |-
+        The content of a page should be located inside the <code>&lt;body&gt;</code>. If we combine everything we have learned in this challenge, we are now able to create an HTML document that contains everything that is needed to be valid.
+      tasks:
+        - id: 2a503c66-b292-4f63-b948-1a98d40c52c9
+          text: Add a <code>&lt;body&gt;</code> to the page. Then add a paragraph (<code>&lt;p&gt;</code> element) containing text.
+          hints:
+            - id: 0f0f0022-ab9d-4fd2-8dfd-f8296460c3b9
+              text: The <code>&lt;p&gt;</code> element has to be inside the <code>&lt;body&gt;</code> element.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats rock!</title>
+            </head>
+          </html>
+      requirements:
+        - id: 7ed87908-81a2-4f84-acf8-4c73f61cd1ce
+          key: html-is-valid
+          title: The HTML is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 9ec7cc12-da06-4992-b06a-f68332a07192
+          key: element-exists
+          title: The document contains a body
+          description: An HTML document should always contain a <code>&lt;body&gt;</code> element. It tells the browser, search engines and assistive technologies where the actual content of the page starts.
+          order: 1
+          options:
+            selector: body
+        - id: 0607f954-bce4-46ed-a2f3-4e2a85e1bd64
+          key: element-exists
+          title: The page contains a paragraph
+          description: Like an essay or a newspaper article, the text on a website should also be separated into meaningful paragraphs. That gives the text structure and improves its readability.
+          order: 1
+          options:
+            selector: body > p
+
+    - id: 8e763092-092c-4cfd-8164-193797be550a
+      order: 8
+      type: quiz
+      question: What is the purpose of the <code>&lt;body&gt;</code> element?
+      answer_options:
+        - id: d3bbaa7f-0e0b-4fb8-a3c1-b87d905b159a
+          text: It contains images, text, links and other content of the page.
+          correct: true
+        - id: f0623545-b204-4033-bb63-66e8f1f8ad49
+          text: It can be used to add a description text underneath an image.
+          correct: false
+        - id: 22ac4910-9ca7-40c7-9948-42129b024594
+          text: It wraps the <code>&lt;title&gt;</code> element of the website.
+          correct: false
+        - id: f4b108ec-fa5e-4479-a58b-916b41dc2cec
+          text: It represents the footer of a page.
+          correct: false
