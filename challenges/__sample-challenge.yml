@@ -10,13 +10,6 @@ challenge:
     - id: xxuuid
       order: 1
       type: code
-      requirements:
-        - key: xxrulekey
-          title:
-          description:
-          order: 1
-          options:
-            selector: htmltag
       instructions: |-
         xxinstructions
       tasks:
@@ -36,6 +29,14 @@ challenge:
         html: true
         css: false
         js: false
+      requirements:
+        - id: xxuuid
+          key: xxrulekey
+          title:
+          description:
+          order: 1
+          options:
+            selector: htmltag
 
     - id: xxuuid
       order: 2
