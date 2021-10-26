@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
+import sanitizeHtml from "sanitize-html";
 
 import Button from "../buttons/Button";
 import Check from "../icons/Check";
@@ -55,7 +56,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             overrideClassName
             aria-expanded={showDescription}
           >
-            {title}
+            <span className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
             <AnimatedChevron
               style={{ transform: transform }}
               className={clsx("mr-8 text-light", "group-hover:text-primary-light", "group-focus:text-primary-light", className)}
@@ -63,7 +64,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
           </Button>
         </h3>
         <div hidden={!showDescription}>
-          <p className="ml-20 my-4">{description}</p>
+          <p className={clsx("ml-20 my-4", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }} />
         </div>
       </div>
     </>
