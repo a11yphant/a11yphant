@@ -1,0 +1,319 @@
+challenge:
+  id: 9dd5aa21-8a0f-4687-a143-9353a66c3870
+  name: Content Elements
+  slug: content-elements
+  difficulty: easy
+  order: 3
+  introduction: >
+    HTML defines a lot of different elements (146 to be precise). Assistive technologies can extract information about the content and form if you use appropriate elements. Screen readers, for example, can provide their users with the number of items in a list.
+    In this challenge, we will give you an overview of a few simple elements that you can use to structure the content on your page.
+  levels:
+    - id: 3435e87f-b07c-4244-9a3a-9bf4465387a2
+      order: 1
+      type: code
+      instructions: |-
+        The <code>&lt;p&gt;</code> element defines a paragraph of text. A text should be structured into paragraphs to improve its readability.
+        As screen readers may announce the presence of a <code>&lt;p&gt;</code> element, it should never be empty. Otherwise users could get confused and frustrated. If you want to add spacing between paragraphs, only use CSS.
+      tasks:
+        - id: 1c20674c-f5b6-41f4-89e5-109a3e5acbba
+          text: Add a short description on why you love dogs or cats below the heading.
+          hints:
+            - id: 6eb8c248-4334-4a9c-870c-d4cab48ed493
+              text: Wrap your text inside a <code>&lt;p&gt;</code> element.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <h1>Cats or Dogs?</h1>
+            </body>
+          </html>
+      requirements:
+        - id: e1b94982-1847-42e6-94a0-fb4625496818
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 7b57d6c4-d75d-429d-9e10-2e4e7452fdfa
+          key: element-exists
+          title: The page contains a paragraph of text
+          description: Your text must be inside a paragraph element (<code>&lt;p&gt;</code>).
+          order: 2
+          options:
+            selector: p
+        - id: a2580d4f-01ee-40e8-b515-1acdf8d1b4b1
+          key: element-exists
+          title: The paragraph is preceded by a heading
+          description: The heading should always be followed by the content that it describes. Not the other way around.
+          order: 3
+          options:
+            selector: h1 + p
+
+    - id: 1de4a80b-848e-466a-8f78-d0588fa2df68
+      order: 2
+      type: quiz
+      question: Is it a valid technique to use empty <code>&lt;p&gt;</code> elements to add spacing between paragraphs?
+      answer_options:
+        - id: 49b7dea4-4514-4ae1-8b09-92bc2ad684df
+          text: No, it is a bad practice because screen readers may announce the presence of the empty element. Styling must be added with CSS.
+          correct: true
+        - id: 80de1ee1-06a8-4336-9adf-a8c79b048256
+          text: Yes, you can use as many empty <code>&lt;p&gt;</code> elements as you wish.
+          correct: false
+
+    - id: 1a103a8b-c4f1-47b3-995d-4e4a0f23ec5e
+      order: 3
+      type: code
+      instructions: |-
+        You can create an unordered list of items using the <code>&lt;ul&gt;</code> element. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ul&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children.
+        Since it is an unordered list, the order of the items in the list is not important.
+      tasks:
+        - id: 13a89852-6a83-4f5b-b042-528776ac34ea
+          text: Create an unordered list containing the things you like most about cats or dogs.
+          hints:
+            - id: 93980371-31f7-4709-9ed5-2b97c670d90d
+              text: |-
+                Your list could look something like this&#58;
+                <code>
+                  &lt;ul&gt;
+                    &lt;li&gt;Dogs are always happy&lt;/li&gt;
+                    &lt;li&gt;Dogs are like a best friend&lt;/li&gt;
+                    &lt;li&gt;Dogs are very loyal&lt;/li&gt;
+                  &lt;/ul&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <h1>My favourite things about dogs</h1>
+              <!-- insert your list here -->
+            </body>
+          </html>
+      requirements:
+        - id: 2411ac5f-1751-4b6e-b26d-ed44c4fd28ac
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1 
+        - id: 1704b34b-286a-4d66-adcf-1e8ecfc8e709
+          key: element-exists
+          title: The unordered list is present and contains items
+          description: A list must contain items. Make sure that there is at least one list item (<code>&lt;li&gt;</code>) inside your list. It has to be a direct child of the list.
+          order: 2
+          options:
+            selector: ul > li    
+
+    - id: 8f084a78-38b9-483d-8906-16c7ae6d8c58
+      order: 4
+      type: quiz
+      question: Which elements are allowed as direct children inside a list?
+      answer_options:
+        - id: a430b39d-d36d-4f7b-86ea-81e77477ba78
+          text: Only <code>&lt;li&gt;</code> elements are allowed as direct children.
+          correct: true
+        - id: fbae9fb0-985c-4671-adeb-0ba49234d24a
+          text: Only <code>&lt;p&gt;</code> elements and links (<code>&lt;a&gt;</code>) are allowed as direct children.
+          correct: false
+        - id: 987e0dfb-6c3d-4c03-8eaa-637c7b3dd49d
+          text: All available HTML elements are allowed.
+          correct: false
+        - id: cf7d574e-06f5-4d34-97da-f0eacfc2ca1a
+          text: Only headings (<code>&lt;h1&gt;</code> - <code>&lt;h6&gt;</code>) are allowed as direct children.
+          correct: false
+
+    - id: 04f0b0ed-ded8-4f2c-8177-78144c810693
+      order: 5
+      type: code
+      instructions: |-
+        You can create an ordered list of items using the <code>&lt;ol&gt;</code> element. It has to be used in conjunction with list items wich can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ol&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children
+        Since it is an ordered list, the order of the items in the list is important.
+      tasks:
+        - id: aa4309f5-ccac-45e9-b0ea-acf149834d5e
+          text: Replace the unordered list with an ordered list and rank its content according to your preference.
+          hints:
+            - id: 9b1baa90-3458-4105-a11d-0282f5d196ec
+              text: |-
+                Your list could look something like this:
+                <code>
+                  &lt;ol&gt;
+                    &lt;li&gt;Cats are low maintenance&lt;/li&gt;
+                    &lt;li&gt;Cats have long life spans&lt;/li&gt;
+                    &lt;li&gt;Cats are independent&lt;/li&gt;
+                  &lt;/ol&gt; 
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <h1>My three favourite things about cats</h1>
+              <ul>
+                <li>Cats are low maintenance</li>
+                <li>Cats have long life spans</li>
+                <li>Cats are independent</li>
+              </ul>
+            </body>
+          </html>
+      requirements:
+        - id: cd821689-59d8-4dca-a6cf-7e74d9e850ff
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 00702c5c-dcc4-49f6-aff7-bf87967a7e95
+          key: element-exists
+          title: The ordered list is present and contains items
+          description: The list must contain items. Make sure that there is at least one list item (<code>&lt;li&gt;</code>) in your list. It has to be a direct child of the list.
+          order: 2
+          options:
+            selector: ol > li
+
+    - id: 49667a64-a4ed-4f0c-8fbe-8d17c42aefc7
+      order: 6
+      type: quiz
+      question: The children of which HTML list element are ordered?
+      answer_options:
+        - id: cbae70bf-8a0c-4096-864d-5221768bf8b2
+          text: The order of the children of the <code>&lt;ol&gt;</code> element matters.
+          correct: true
+        - id: 08fdd380-98b7-49bc-97e5-57dd4bf768ac
+          text: The order of the children of the <code>&lt;ul&gt;</code> element matters.
+          correct: false
+        - id: 4632675a-2083-42e2-9746-4f8ddb3b503a
+          text: All available lists (<code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>) are unordered.
+          correct: false
+        - id: 2b3a56ce-4814-49ac-b6be-7ebc7703415a
+          text: All available lists (<code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>) are ordered.
+          correct: false
+
+    - id: 4c09d6a1-aefb-4f34-9c9f-29a3a09cd0f9
+      order: 7
+      type: code
+      instructions: |-
+        To link to other resources, for example another website, you can use the <code>&lt;a&gt;</code> element. You can specify the target of your link using the `href` attribute. Inside the link element you should always add a descriptive text.
+        Use links only for navigating to another page or website. If you want to trigger an on click action, use a <code>&lt;button&gt;</code> element instead.
+      tasks:
+        - id: 2226f9ac-4e38-4ab1-a4d7-2a2ceb218507
+          text: Create a link to one of your favourite dog or cat resources.
+          hints:
+            - id: 82ab85ce-9879-4739-847d-0020250b3c8f
+              text: |-
+                Your link could look something like this:
+                <code>
+                  &lt;a href="https://openpuppies.com/"&gt;Amazing dog clips&lt;/a&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <h1>Dogs are better than cats!</h1>
+              <!-- insert your link element here -->
+            </body>
+          </html>
+      requirements:
+        - id: ad3c9f53-32d9-4c1d-8749-99ec952adfe9
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 538ccaeb-b0ef-4231-b77a-d0ab93d0d663
+          key: element-exists
+          title: The page contains a link
+          description: The page must contain a link that links to another website.
+          order: 2
+          options:
+            selector: a
+        - id: e4ea6159-8daa-48d0-bf2f-1bad384b026c
+          key: axe-link-name
+          title: The link must contain text
+          description: Links must contain a descriptive text that can be detected by assistive technologies.
+          order: 3
+
+    - id: b02bcc73-1001-4526-96e1-7ee44502b108
+      order: 8
+      type: code
+      instructions: |-
+        If you want to trigger an action, you should use a button. The <code>&lt;button&gt;</code> element could, for example, be used to open a pop-up, a modal or to submit a form. You can specify the action by adding JavaScript in the `onclick` attribute of the button, for example `onclick="alert('Hi!')"`.
+        It is important to provide descriptive text within the button to allow users and assistive technologies to identify the purpose of the button.
+        The <code>&lt;button&gt;</code> should not trigger navigation to a different page. Use a link (<code>&lt;a&gt;</code>) for that instead.
+      tasks:
+        - id: 8548de86-c380-4128-9882-f9131d6bd9e2
+          text: Add a button inside the body. The button could, for example, show an alert with a cat/dog fact or change the background color of the button.
+          hints:
+            - id: a7ea5755-0555-4574-86c9-226c8dd1ad6d
+              text: |-
+                Your list could look something like this:
+                <code>
+                  &lt;button onclick="alert('Cats spend 70% of their lives sleeping')"&gt;Show me a cat fact&lt;/button&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+            
+            <body>
+              <h1>Cats are better than dogs!</h1>
+              <!-- insert your button element here -->
+            </body>
+          </html> 
+      requirements:
+        - id: aea7ee51-d043-4c2b-ad96-593320fb6632
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+        - id: 135869e7-386a-4869-b0ab-0ce203c1ba6c
+          key: element-exists
+          title: The page contains a button
+          description: The page must contain a <code>&lt;button&gt;</code> element that triggers an action on the page.
+          order: 2
+          options:
+            selector: button
+        - id: ff21e3e4-225e-4a31-8580-3ef3af05a845
+          key: axe-button-name
+          title: The button must contain text
+          description: Buttons must contain text that can be detected by assistive technologies.
+          order: 3
+      
+    - id: 4f3dc78c-0275-4689-9529-5d2b18663a6f
+      order: 9
+      type: quiz
+      question: When should you use a <code>&lt;button&gt;</code> element?
+      answer_options:
+        - id: 779462b6-ad88-45e1-95fa-792482fa1b0e
+          text: When the user-action causes a change in the backend or frontend of a website (f.ex. submitting a form or opening a pop-up).
+          correct: true
+        - id: 8c56c51f-96f8-4fdf-b6ac-44a29d7d2344
+          text: When the user-action does not affect the website at all (f.ex. navigating to another page).
+          correct: false
+        - id: 0bca2112-0d5a-4f0f-942a-0eb777e15f3c
+          text: When you want to integrate external resources (f.ex. CSS and JS files).
+          correct: false
+        - id: 16478f4f-733e-401d-95f2-4c0196b6382d
+          text: When you want to turn your butt on (as opposed by the <code>&lt;buttoff&gt;</code> element).
+          correct: false

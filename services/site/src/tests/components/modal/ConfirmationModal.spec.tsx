@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { Dialog } from "@headlessui/react";
 import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
-import X from "app/components/icons/X";
 import ConfirmationModal, { ConfirmationModalProps } from "app/components/modal/ConfirmationModal";
+import { Modal } from "app/components/modal/Modal";
+import { ModalTitle } from "app/components/modal/ModalTitle";
 import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
 
@@ -27,19 +27,19 @@ describe("ConfirmationModal", () => {
   it("is closed", () => {
     const wrapper = renderConfirmationModal({ open: false });
 
-    expect(wrapper.find(Dialog).props().open).toBeFalsy();
+    expect(wrapper.find(Modal).props().open).toBeFalsy();
   });
 
   it("is opened", () => {
     const wrapper = renderConfirmationModal({ open: true });
 
-    expect(wrapper.find(Dialog).props().open).toBeTruthy();
+    expect(wrapper.find(Modal).props().open).toBeTruthy();
   });
 
   it("shows title", () => {
     const wrapper = renderConfirmationModal({ title: mockTitle });
 
-    expect(wrapper.find(Dialog.Title).children().text()).toContain(mockTitle);
+    expect(wrapper.find(ModalTitle).children().text()).toContain(mockTitle);
   });
 
   it("shows default cancelButtonLabel", () => {
@@ -66,10 +66,10 @@ describe("ConfirmationModal", () => {
     expect(wrapper.find(Button).findWhere((n) => n.text() === mockConfirmButtonLabel)).toBeTruthy();
   });
 
-  it("calls onCancel on X press", () => {
+  it("calls onCancel in onClose of modal", () => {
     const wrapper = renderConfirmationModal({ onCancel: mockOnCancel });
 
-    wrapper.find(X).closest(Button).simulate("click");
+    wrapper.find(Modal).props().onClose();
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 

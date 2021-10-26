@@ -40,44 +40,84 @@ export class ChallengeService {
   }
 
   async getStatusForUserAndChallenge(userId: string, challengeId: string): Promise<ChallengeStatus> {
-    const submissionCount = await this.prisma.submission.count({
-      where: {
-        userId,
-        level: {
+    const [codeSubmissionCount, quizSubmissionCount] = await Promise.all([
+      this.prisma.codeLevelSubmission.count({
+        where: {
+          userId,
+          level: {
+            challengeId,
+          },
+        },
+      }),
+      this.prisma.quizLevelSubmission.count({
+        where: {
+          userId,
+          level: {
+            challengeId,
+          },
+        },
+      }),
+    ]);
+
+    if (codeSubmissionCount === 0 && quizSubmissionCount === 0) {
+      return ChallengeStatus.OPEN;
+    }
+
+    const [codeLevelCount, quizLevelCount] = await Promise.all([
+      this.prisma.codeLevel.count({
+        where: {
           challengeId,
         },
-      },
-    });
+      }),
+      this.prisma.quizLevel.count({
+        where: {
+          challengeId,
+        },
+      }),
+    ]);
 
-    if (submissionCount === 0) return ChallengeStatus.OPEN;
-
-    const levelCount = await this.prisma.codeLevel.count({
-      where: {
-        challengeId,
-      },
-    });
+    const levelCount = codeLevelCount + quizLevelCount;
 
     // all levels from this challenge where at least one
     // submission has the users id and a successful result
     // means: all levels which have been finished by the user
-    const successfulLevelCount = await this.prisma.codeLevel.count({
-      where: {
-        challengeId,
-        submissions: {
-          some: {
-            AND: {
-              userId,
-              result: {
-                status: ResultStatus.SUCCESS,
+    const [successfulCodeLevelCount, successfulQuizLevelCount] = await Promise.all([
+      this.prisma.codeLevel.count({
+        where: {
+          challengeId,
+          submissions: {
+            some: {
+              AND: {
+                userId,
+                result: {
+                  status: ResultStatus.SUCCESS,
+                },
               },
             },
           },
         },
-      },
-    });
+      }),
+      this.prisma.quizLevel.count({
+        where: {
+          challengeId,
+          submissions: {
+            some: {
+              AND: {
+                userId,
+                result: {
+                  status: ResultStatus.SUCCESS,
+                },
+              },
+            },
+          },
+        },
+      }),
+    ]);
 
     // if they are the same amount than the challenge levels the challenge is finished
-    if (successfulLevelCount === levelCount) return ChallengeStatus.FINISHED;
+    if (successfulCodeLevelCount + successfulQuizLevelCount === levelCount) {
+      return ChallengeStatus.FINISHED;
+    }
 
     return ChallengeStatus.IN_PROGRESS;
   }

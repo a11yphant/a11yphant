@@ -4,12 +4,14 @@ import {
   CHALLENGE,
   ChallengeData,
   CODE_LEVEL,
+  CODE_LEVEL_SUBMISSION,
   CodeLevelData,
+  CodeLevelSubmissionData,
   Factory,
   QUIZ_LEVEL,
+  QUIZ_LEVEL_SUBMISSION,
   QuizLevelData,
-  SUBMISSION,
-  SubmissionData,
+  QuizLevelSubmissionData,
   USER,
   UserData,
 } from "@tests/factories/database";
@@ -119,7 +121,7 @@ describe("level service", () => {
     });
   });
 
-  describe("findStatusForUserAndLevel", () => {
+  describe("findStatusForCodeLevel", () => {
     const getUserAndLevel = async (): Promise<{ userId: string; levelId: string }> => {
       const prisma = getPrismaService();
 
@@ -143,7 +145,7 @@ describe("level service", () => {
       const { userId, levelId } = await getUserAndLevel();
 
       const service = new LevelService(prisma);
-      const status = await service.findStatusForUserAndLevel(userId, levelId);
+      const status = await service.findStatusForCodeLevel(levelId, userId);
 
       expect(status).toBe(LevelStatus.OPEN);
     });
@@ -153,12 +155,12 @@ describe("level service", () => {
 
       const { userId, levelId } = await getUserAndLevel();
 
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
       });
 
       const service = new LevelService(prisma);
-      const status = await service.findStatusForUserAndLevel(userId, levelId);
+      const status = await service.findStatusForCodeLevel(levelId, userId);
 
       expect(status).toBe(LevelStatus.IN_PROGRESS);
     });
@@ -168,18 +170,92 @@ describe("level service", () => {
 
       const { userId, levelId } = await getUserAndLevel();
 
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
       });
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
       });
-      await prisma.submission.create({
-        data: Factory.build<SubmissionData>(SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.SUCCESS } } }),
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+          levelId,
+          userId,
+          result: { create: { status: ResultStatus.SUCCESS } },
+        }),
       });
 
       const service = new LevelService(prisma);
-      const status = await service.findStatusForUserAndLevel(userId, levelId);
+      const status = await service.findStatusForCodeLevel(levelId, userId);
+
+      expect(status).toBe(LevelStatus.FINISHED);
+    });
+  });
+
+  describe("findStatusForQuizLevel", () => {
+    const getUserAndLevel = async (): Promise<{ userId: string; levelId: string }> => {
+      const prisma = getPrismaService();
+
+      const { id: levelId } = await prisma.quizLevel.create({
+        data: Factory.build<QuizLevelData>(QUIZ_LEVEL),
+      });
+
+      const { id: userId } = await prisma.user.create({
+        data: Factory.build<UserData>(USER),
+      });
+
+      return {
+        userId,
+        levelId,
+      };
+    };
+
+    it("returns OPEN if no attempts were made", async () => {
+      const prisma = getPrismaService();
+
+      const { userId, levelId } = await getUserAndLevel();
+
+      const service = new LevelService(prisma);
+      const status = await service.findStatusForQuizLevel(levelId, userId);
+
+      expect(status).toBe(LevelStatus.OPEN);
+    });
+
+    it("returns IN_PROGRESS if only failed attempts were made", async () => {
+      const prisma = getPrismaService();
+
+      const { userId, levelId } = await getUserAndLevel();
+
+      await prisma.quizLevelSubmission.create({
+        data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+
+      const service = new LevelService(prisma);
+      const status = await service.findStatusForQuizLevel(levelId, userId);
+
+      expect(status).toBe(LevelStatus.IN_PROGRESS);
+    });
+
+    it("returns FINISHED if at least one successful attempt was made", async () => {
+      const prisma = getPrismaService();
+
+      const { userId, levelId } = await getUserAndLevel();
+
+      await prisma.quizLevelSubmission.create({
+        data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+      await prisma.quizLevelSubmission.create({
+        data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+      await prisma.quizLevelSubmission.create({
+        data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, {
+          levelId,
+          userId,
+          result: { create: { status: ResultStatus.SUCCESS } },
+        }),
+      });
+
+      const service = new LevelService(prisma);
+      const status = await service.findStatusForQuizLevel(levelId, userId);
 
       expect(status).toBe(LevelStatus.FINISHED);
     });

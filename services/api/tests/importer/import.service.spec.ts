@@ -13,13 +13,13 @@ import { PrismaService } from "@/prisma/prisma.service";
 
 describe("import service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
+  const path = join(__dirname, "test-challenges");
+
   afterEach(() => {
     mock.restore();
   });
 
-  it("imports yml files from a folder", async () => {
-    const upsert = jest.fn();
-    const path = join(__dirname, "test-challenges");
+  beforeEach(() => {
     mock({
       [path]: {
         "challenge-1.yml": "",
@@ -28,11 +28,15 @@ describe("import service", () => {
         ".": {},
       },
     });
+  });
+
+  it("imports yml files from a folder", async () => {
+    const upsert = jest.fn();
 
     const importer = new ImportService(
       createMock<Logger>(),
       createMock<PrismaService>({
-        challenge: { upsert },
+        challenge: { upsert, deleteMany: jest.fn().mockResolvedValue({ count: 1 }) },
         quizLevel: { deleteMany: jest.fn() },
       }),
       createMock<YamlReaderService>({
@@ -65,6 +69,41 @@ describe("import service", () => {
         where: { id: "7a15a6de-306c-4a8b-9765-a1d5c6b91085" },
       }),
     );
+  });
+
+  it("deletes old challenges", async () => {
+    const deleteMany = jest.fn().mockResolvedValue({ count: 1 });
+    const challengeIds = [faker.datatype.uuid(), faker.datatype.uuid()];
+
+    const importer = new ImportService(
+      createMock<Logger>(),
+      createMock<PrismaService>({
+        challenge: { upsert: jest.fn(), deleteMany },
+        quizLevel: { deleteMany: jest.fn() },
+      }),
+      createMock<YamlReaderService>({
+        readFile: jest
+          .fn()
+          .mockResolvedValueOnce({
+            id: challengeIds[0],
+            levels: [],
+          })
+          .mockResolvedValueOnce({
+            id: challengeIds[1],
+            levels: [],
+          }),
+      }),
+    );
+
+    await importer.importAllFromFolder(path);
+
+    expect(deleteMany).toHaveBeenNthCalledWith(1, {
+      where: {
+        id: {
+          notIn: challengeIds,
+        },
+      },
+    });
   });
 
   describe("challenge", () => {

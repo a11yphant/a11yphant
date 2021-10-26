@@ -5,29 +5,31 @@ import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphq
 import { writeFileSync } from "fs";
 import { printSchema } from "graphql";
 
+import { AuthenticationResolver } from "./authentication/authentication.resolver";
 import { ChallengeResolver } from "./challenge/challenge.resolver";
 import { CodeLevelResolver } from "./challenge/code-level.resolver";
 import { LevelResolver } from "./challenge/level.resolver";
 import { QuizLevelResolver } from "./challenge/quiz-level.resolver";
 import { RequirementResolver } from "./challenge/requirement.resolver";
 import { TaskResolver } from "./challenge/task.resolver";
+import { CodeLevelResultResolver } from "./submission/graphql/resolvers/code-level-result.resolver";
 import { CodeLevelSubmissionResolver } from "./submission/graphql/resolvers/code-level-submission.resolver";
 import { QuizLevelSubmissionResolver } from "./submission/graphql/resolvers/quiz-level-submission.resolver";
 import { RequirementResultResolver } from "./submission/graphql/resolvers/requirement-result.resolver";
-import { ResultResolver } from "./submission/graphql/resolvers/result.resolver";
 import { SubmissionResolver } from "./submission/graphql/resolvers/submission.resolver";
 import { UserResolver } from "./user/user.resolver";
 
 const resolvers = [
+  AuthenticationResolver,
   ChallengeResolver,
-  TaskResolver,
   CodeLevelResolver,
-  SubmissionResolver,
-  ResultResolver,
-  RequirementResultResolver,
-  RequirementResolver,
-  UserResolver,
+  CodeLevelResultResolver,
   LevelResolver,
+  RequirementResolver,
+  RequirementResultResolver,
+  SubmissionResolver,
+  TaskResolver,
+  UserResolver,
   QuizLevelResolver,
   CodeLevelSubmissionResolver,
   QuizLevelSubmissionResolver,
@@ -35,7 +37,7 @@ const resolvers = [
 
 const scalars = [];
 
-async function generateSchema(): Promise<void> {
+export async function generateSchema(): Promise<void> {
   const app = await NestFactory.create(GraphQLSchemaBuilderModule);
   await app.init();
 
@@ -44,4 +46,7 @@ async function generateSchema(): Promise<void> {
   writeFileSync("schema.gql", printSchema(schema));
 }
 
-generateSchema();
+// generate the schema only if the file is executed directly
+if (require.main === module) {
+  generateSchema();
+}
