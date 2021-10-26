@@ -45,7 +45,7 @@ challenge:
       question: Which statement about <code>&lt;!DOCTYPE html&gt;</code> is true?
       answer_options:
         - id: c6427184-0cd9-45d9-9aeb-fdf326aa70e5
-          text: It tells the browser to use the latest html version for rendering the page.
+          text: It tells the browser to use the latest html version to render the page.
           correct: true
         - id: 18472aed-1e05-45e2-a2e4-b2126716e7a9
           text: <code>&lt;!DOCTYPE html&gt;</code> does not exist in the HTML specification.

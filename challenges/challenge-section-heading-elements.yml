@@ -42,8 +42,6 @@ challenge:
           title: The HTML document is valid
           description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
           order: 1
-          options:
-            selector: htmltag
         - id: 43bc6b39-95c0-48a6-95ac-0f14efaf5254
           key: element-exists
           title: The page contains a heading with the level 1
@@ -99,7 +97,7 @@ challenge:
           text: |- 
             Use the different heading levels to create a document with the following heading structure:
               <ul>
-                <li>My favorite cat
+                <li>My favourite cat
                   <ul>
                     <li>About this cat
                       <ul>
@@ -108,7 +106,7 @@ challenge:
                       </ul>
                     </li>
                     <li>Our history together</li>
-                    <li>Future adventoures</li>
+                    <li>Future adventures</li>
                   </ul>
                 </li>
               <ul>
@@ -116,7 +114,7 @@ challenge:
             - id: fe64a87d-3529-49b4-9ef7-81bbfcaf7b9e
               text: You need the <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> elements.
             - id: c22308bd-e3fb-4637-8d0d-f46b615ca986
-              text: '"My favorite cat" should be an <code>&lt;h1&gt;</code>. "About this cat" should be an <code>&lt;h2&gt;</code> and "Biography" should be an <code>&lt;h3&gt;</code>.'
+              text: '"My favoriten cat" should be an <code>&lt;h1&gt;</code>. "About this cat" should be an <code>&lt;h2&gt;</code> and "Biography" should be an <code>&lt;h3&gt;</code>.'
       code:
         html: |-
           <!DOCTYPE html>
@@ -146,7 +144,7 @@ challenge:
         - id: bceb6339-d0b4-4764-aa6f-6a624f1600fd
           key: axe-heading-order
           title: No heading level is skipped
-          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screenreader users.
+          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screen reader users.
           order: 3
         - id: 9644db3c-b76b-45d7-a19f-2a87879a1b0f
           key: axe-empty-heading
@@ -199,8 +197,8 @@ challenge:
                 <!-- Sidebar content -->
               </div>
               <h2>About my favourite cat</h2>
-              <h3>Our history together</h2>
-              <h3>Future adventures</h2>
+              <h3>Our history together</h3>
+              <h3>Future adventures</h3>
               <div>
                 <div>Footer</div>
                 <!-- Footer content -->
@@ -216,7 +214,7 @@ challenge:
         - id: 7f554737-1ff4-4425-abfb-0f8523164476
           key: axe-heading-order
           title: No heading level is skipped
-          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screenreader users.
+          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screen reader users.
           order: 2
         - id: 55fbac1e-e2b9-4123-9acb-8daca92cb430
           key: axe-empty-heading
@@ -256,7 +254,7 @@ challenge:
           text: Remove the <code>&lt;h1&gt;</code> element at the beginning of the page. Then choose the heading that best describes the page content and make it the new <code>&lt;h1&gt;</code>. Update the levels of the other headings accordingly.
           hints:
             - id: 0b3a9059-812a-4cee-ac73-59c69b533ac6
-              text: The heading "About my favorite cat" seems like it describes the following page content. Upgrade it to an <code>&lt;h1&gt;</code> element.
+              text: The heading "About my favourite cat" seems like it describes the following page content. Upgrade it to an <code>&lt;h1&gt;</code> element.
             - id: 53409478-3ac9-4061-a984-6ea13ff7dfb4
               text: Upgrade the <code>&lt;h3&gt;</code> elements to <code>&lt;h2&gt;</code> elements for improved content structure.
       code:
@@ -278,9 +276,9 @@ challenge:
                 <h2>Sidebar</h2>
                 <!-- Sidebar content -->
               </div>
-              <h2>About my favorite cat</h2>
-              <h3>Our history together</h2>
-              <h3>Future adventoures</h2>
+              <h2>About my favourite cat</h2>
+              <h3>Our history together</h3>
+              <h3>Future adventures</h3>
               <div>
                 <h2>Footer</h2>
                 <!-- Footer content -->
@@ -296,7 +294,7 @@ challenge:
         - id: 910dc839-d800-483b-ab5e-d395f048ee86
           key: axe-heading-order
           title: No heading level is skipped
-          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screenreader users.
+          description: Heading levels should be used in the correct order. For example, between an <code>&lt;h1&gt;</code> and an <code>&lt;h3&gt;</code> there needs to be an <code>&lt;h2&gt;</code>. Missing heading levels make it harder to navigate the page by jumping between headings. This is a technique commonly used by screen reader users.
           order: 2
         - id: 223deb88-a18f-4c4e-a4eb-ff0734e15e89
           key: element-not-exists
