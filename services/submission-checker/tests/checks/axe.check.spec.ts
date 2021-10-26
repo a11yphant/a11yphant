@@ -5,7 +5,7 @@ import { AxeResults } from "axe-core";
 import { ThenableWebDriver } from "selenium-webdriver";
 
 import { AxeFactory } from "@/axe.factory";
-import { AxeLinkNameCheck } from "@/checks/axe-link-name.check";
+import { AxeCheck } from "@/checks/axe.check";
 import { Rule } from "@/rule.interface";
 import { Submission } from "@/submission.interface";
 
@@ -63,7 +63,8 @@ const axeResultFailure: AxeResults = {
   ],
 };
 
-describe("axe link name check", () => {
+describe("axe check", () => {
+  const AxeLinkNameCheck = AxeCheck("link-name");
   it("returns a successful result when the check was successful", async () => {
     const check = new AxeLinkNameCheck(
       createMock<Logger>(),
