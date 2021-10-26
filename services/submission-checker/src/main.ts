@@ -24,7 +24,7 @@ async function bootstrap(): Promise<AwsTransportStrategy> {
 
   await appContext.close();
 
-  await app.listenAsync();
+  await app.listen();
 
   return server;
 }
