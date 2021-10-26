@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { AxeResults } from "axe-core";
 
 import { BrowserService } from "../../src/browser.service";
-import { AxeLinkNameCheck } from "../../src/checks/axe-link-name.check";
+import { AxeCheck } from "../../src/checks/axe.check";
 import { Rule } from "../../src/rule.interface";
 import { Submission } from "../../src/submission.interface";
 
@@ -62,7 +62,8 @@ const axeResultFailure: AxeResults = {
   ],
 };
 
-describe("axe link name check", () => {
+describe("axe check", () => {
+  const AxeLinkNameCheck = AxeCheck("link-name");
   it("returns a successful result when the check was successful", async () => {
     const check = new AxeLinkNameCheck(
       createMock<Logger>(),
