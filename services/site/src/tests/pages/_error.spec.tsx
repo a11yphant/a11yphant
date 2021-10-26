@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
-import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import IllustrationLost from "app/components/icons/IllustrationLost";
 import CustomError from "app/pages/_error";
 import { shallow } from "enzyme";
@@ -19,12 +18,6 @@ describe("Error Page", () => {
 
     expect(wrapper.find("main").length).toBe(1);
     expect(wrapper.find("section").length).toBe(1);
-  });
-
-  it("renders scroll overlay", () => {
-    const wrapper = shallow(<CustomError statusCode={500} />);
-
-    expect(wrapper.find(ScrollOverlayWrapper).length).toBe(1);
   });
 
   it("renders heading with status code", () => {

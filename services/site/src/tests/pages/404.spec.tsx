@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
-import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import Custom404 from "app/pages/404";
 import { shallow } from "enzyme";
@@ -19,12 +18,6 @@ describe("404 Page", () => {
 
     expect(wrapper.find("main").length).toBe(1);
     expect(wrapper.find("section").length).toBe(1);
-  });
-
-  it("renders scroll overlay", () => {
-    const wrapper = shallow(<Custom404 />);
-
-    expect(wrapper.find(ScrollOverlayWrapper).length).toBe(1);
   });
 
   it("renders heading", () => {

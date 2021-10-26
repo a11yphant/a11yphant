@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { useCallback, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-interface ScrollOverlayWrapperProps {
+export interface ScrollOverlayWrapperProps {
   className?: string;
   classNameTopOverlay?: string;
   classNameBottomOverlay?: string;

@@ -103,6 +103,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       displaySave: true,
+      showScrollOverlay: false,
     },
   };
 };

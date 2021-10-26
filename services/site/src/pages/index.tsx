@@ -1,4 +1,3 @@
-import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Hero from "app/components/homepage/Hero";
@@ -22,75 +21,69 @@ const Home: React.FunctionComponent = () => {
 
   return (
     <>
-      <ScrollOverlayWrapper
-        className={clsx("w-full h-full overflow-auto", "scroll-wrapper")}
-        enableTopOverlay={false}
-        classNameBottomOverlay={"w-full h-52"}
-      >
-        <Head>
-          <title>a11yphant</title>
-        </Head>
-        <Navigation displayBreadcrumbs />
-        <main className={clsx("h-main flex flex-col box-border")}>
-          <div className={clsx("w-full h-full")}>
-            {!currentUser?.isRegistered && <Hero />}
-            <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
-              <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
-              <Legend className={clsx("2xl:mx-24")} />
-              {easyChallenges.length !== 0 && (
-                <ChallengeList
-                  className={clsx("2xl:mx-24")}
-                  heading={
-                    <>
-                      Easy
-                      <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                      <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
-                      <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
-                    </>
-                  }
-                  completedLevel={0}
-                  openLevel={easyChallenges.length}
-                  challenges={easyChallenges}
-                />
-              )}
+      <Head>
+        <title>a11yphant</title>
+      </Head>
+      <Navigation displayBreadcrumbs />
+      <main className={clsx("h-main flex flex-col box-border")}>
+        <div className={clsx("w-full h-full")}>
+          {!currentUser?.isRegistered && <Hero />}
+          <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
+            <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
+            <Legend className={clsx("2xl:mx-24")} />
+            {easyChallenges.length !== 0 && (
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={
+                  <>
+                    Easy
+                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                  </>
+                }
+                completedLevel={0}
+                openLevel={easyChallenges.length}
+                challenges={easyChallenges}
+              />
+            )}
 
-              {mediumChallenges.length !== 0 && (
-                <ChallengeList
-                  className={clsx("2xl:mx-24")}
-                  heading={
-                    <>
-                      Medium
-                      <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                      <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                      <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
-                    </>
-                  }
-                  completedLevel={0}
-                  openLevel={mediumChallenges.length}
-                  challenges={mediumChallenges}
-                />
-              )}
+            {mediumChallenges.length !== 0 && (
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={
+                  <>
+                    Medium
+                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                  </>
+                }
+                completedLevel={0}
+                openLevel={mediumChallenges.length}
+                challenges={mediumChallenges}
+              />
+            )}
 
-              {hardChallenges.length !== 0 && (
-                <ChallengeList
-                  className={clsx("2xl:mx-24")}
-                  heading={
-                    <>
-                      Hard
-                      <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                      <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                      <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    </>
-                  }
-                  completedLevel={0}
-                  openLevel={hardChallenges.length}
-                  challenges={hardChallenges}
-                />
-              )}
-            </section>
-          </div>
-        </main>
-      </ScrollOverlayWrapper>
+            {hardChallenges.length !== 0 && (
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={
+                  <>
+                    Hard
+                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                  </>
+                }
+                completedLevel={0}
+                openLevel={hardChallenges.length}
+                challenges={hardChallenges}
+              />
+            )}
+          </section>
+        </div>
+      </main>
     </>
   );
 };

@@ -24,6 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       displayBreadcrumbs: false,
+      showScrollOverlay: false,
     },
   };
 };
