@@ -59,7 +59,23 @@ challenge:
           options:
             selector: h1 + p
     
-    # TODO add level 2
+    - id: bf963819-df32-4d3b-8d97-215c2f07c7f5
+      order: 2
+      type: quiz
+      question: Which statement about the <code>&lt;h1&gt;</code> heading is true?
+      answer_options:
+        - id: d676a4b0-bea6-4749-8350-ba08284d7dcc
+          text: It should describe the content of the page and is therefore the most important heading.
+          correct: true
+        - id: 1564c5d0-41b7-49b1-8ca3-5f197c8970a6
+          text: It should be used for the heading you want to visually style the largest.
+          correct: false
+        - id: def2bfdb-09bb-4299-b3a3-e88b68496026
+          text: It has no special meaning.
+          correct: false
+        - id: 967111b3-b500-4803-89a8-ad60e7042a50
+          text: It is the least important heading level.
+          correct: false
     
     - id: e60f445f-8971-439b-a423-ce38c5c1bf26
       order: 3
