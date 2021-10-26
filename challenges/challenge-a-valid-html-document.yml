@@ -87,11 +87,11 @@ challenge:
           title: The document starts with an HTML5 doctype
           description: At the beginning of the HTML document there needs to be a doctype that tells the browser how the document should be parsed. For this document there should be an HTML5 doctype.
           order: 1
-        - id: d246c7c9-5f28-422c-8f75-5deb2cbeb591
-          key: axe-valid-lang
-          title: The value for the language attribute is valid
-          description: The language attribute must contain a valid language code. If the language code is not valid, screen readers cannot use this information.
-          order: 2
+        # - id: d246c7c9-5f28-422c-8f75-5deb2cbeb591
+        #   key: axe-valid-lang
+        #   title: The value for the language attribute is valid
+        #   description: The language attribute must contain a valid language code. If the language code is not valid, screen readers cannot use this information.
+        #   order: 2
         - id: b6d5f0d6-d171-4f8b-a223-6af981822956
           key: element-exists
           title: The language of the page is specified
