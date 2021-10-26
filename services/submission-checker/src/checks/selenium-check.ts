@@ -22,7 +22,6 @@ export abstract class SeleniumCheck implements Check {
       return result;
     } catch (error) {
       this.logger.error(`Executing check ${rule.key} on submission ${submission.id} failed: ${error.message}`, error.stack, SeleniumCheck.name);
-      this.logger.log("WebDriver session closing", SeleniumCheck.name);
 
       return {
         id: rule.id,
