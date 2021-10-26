@@ -56,10 +56,10 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             overrideClassName
             aria-expanded={showDescription}
           >
-            <span className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
+            <span className="h4 prose prose-2xl text-left" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
             <AnimatedChevron
               style={{ transform: transform }}
-              className={clsx("mr-8 text-light", "group-hover:text-primary-light", "group-focus:text-primary-light", className)}
+              className={clsx("mr-8 text-light flex-shrink-0", "group-hover:text-primary-light", "group-focus:text-primary-light", className)}
             />
           </Button>
         </h3>

@@ -128,7 +128,7 @@ challenge:
           text: Add a title that describes the page.
           hints:
             - id: ac05d923-0c6f-46d4-8fa2-43172c6ed9c2
-              text: If you prefer dogs over cats add a <code>&lt;title&gt;</code> element like so&#58; <code>&lt;title>Doggos!</title&gt;</code>
+              text: If you prefer dogs over cats add a <code>&lt;title&gt;</code> element like so&#58; <code>&lt;title>Doggos!&lt;/title&gt;</code>
             - id: 0a1747a1-8e9f-46da-930d-7c035ace8f8a
               text: Make sure that the <code>&lt;title&gt;</code> element is inside the <code>&lt;head&gt;</code>.
       code:
