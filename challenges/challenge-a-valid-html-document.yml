@@ -207,14 +207,14 @@ challenge:
           key: element-exists
           title: The document contains a body
           description: An HTML document should always contain a <code>&lt;body&gt;</code> element. It tells the browser, search engines and assistive technologies where the actual content of the page starts.
-          order: 1
+          order: 2
           options:
             selector: body
         - id: 0607f954-bce4-46ed-a2f3-4e2a85e1bd64
           key: element-exists
           title: The page contains a paragraph
           description: Like an essay or a newspaper article, the text on a website should also be separated into meaningful paragraphs. That gives the text structure and improves its readability.
-          order: 1
+          order: 3
           options:
             selector: body > p
 

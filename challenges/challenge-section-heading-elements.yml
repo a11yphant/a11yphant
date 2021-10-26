@@ -48,14 +48,14 @@ challenge:
           key: element-exists
           title: The page contains a heading with the level 1
           description: Each page should contain a level one heading that describes the content of the page.
-          order: 1
+          order: 2
           options:
             selector: h1
         - id: 14994bd2-2e80-41ce-9c42-a94da60dbb4f
           key: element-exists
           title: The level 1 heading is followed by a paragraph of text
           description: The heading should always be followed by the content that it describes. Not the other way around.
-          order: 1
+          order: 3
           options:
             selector: h1 + p
     
