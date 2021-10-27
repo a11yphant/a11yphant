@@ -14,7 +14,6 @@ const sentryWebpackPluginOptions = {
   project: process.env.SITE_SENTRY_PROJECT,
   release: process.env.NEXT_PUBLIC_SITE_VERSION,
   dryRun: !process.env.SENTRY_AUTH_TOKEN,
-  debug: true,
 };
 
 const config = {

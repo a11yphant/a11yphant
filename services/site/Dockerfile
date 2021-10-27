@@ -34,6 +34,7 @@ COPY services/site/.eslintrc.json ./
 COPY services/site/codegen.yml ./
 COPY services/site/entrypoint.js ./
 COPY services/site/next-env.d.ts ./
+COPY services/site/next.config.js ./
 COPY services/site/postcss.config.js ./
 COPY services/site/tailwind.config.js ./
 COPY services/site/tsconfig.json ./
