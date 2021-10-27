@@ -338,6 +338,10 @@ terraform:local:validate:
 deploy-review:
   extends:
     - .deploy
+  needs:
+    - build:api
+    - build:site:review
+    - build:submission-checker
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
@@ -352,6 +356,10 @@ deploy-review:
 deploy-staging:
   extends:
     - .deploy
+  needs:
+    - build:api
+    - build:site:staging
+    - build:submission-checker
   variables:
     WORKSPACE: staging
     DOMAIN: beta.a11yphant.com
@@ -372,6 +380,10 @@ deploy-staging:
 deploy-production:
   extends:
     - .deploy
+  needs:
+    - build:api
+    - build:site:production
+    - build:submission-checker
   variables:
     WORKSPACE: production
     DOMAIN: a11yphant.com
