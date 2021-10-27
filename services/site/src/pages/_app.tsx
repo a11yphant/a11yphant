@@ -8,6 +8,7 @@ import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error
 import ScrollOverlayWrapper, { ScrollOverlayWrapperProps } from "app/components/common/ScrollOverlayWrapper";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useApollo } from "app/lib/apollo-client";
+import { initializeTracking } from "app/lib/tracking";
 import clsx from "clsx";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -20,6 +21,7 @@ interface AppProps {
 NProgress.configure({
   showSpinner: false,
 });
+
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
@@ -33,6 +35,8 @@ type ConditionalWrapperProps<T> = T & {
 const ConditionalWrapper = <T,>({ condition, Wrapper, children, ...otherProps }: ConditionalWrapperProps<T>): React.ReactElement => {
   return condition ? <Wrapper {...otherProps}>{children}</Wrapper> : children;
 };
+
+initializeTracking();
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
