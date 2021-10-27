@@ -17,6 +17,7 @@ const sentryWebpackPluginOptions = {
 };
 
 const config = {
+  target: "server",
   async rewrites() {
     if (!process.env.NEXT_PUBLIC_SITE_GRAPHQL_PROXY_TARGET) {
       return [];
