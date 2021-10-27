@@ -14,6 +14,7 @@
         -f $PROJECT_PATH/Dockerfile 
         -t $IMAGE_APP 
         --cache-from $IMAGE_APP 
-        --build-arg VERSION=$CI_COMMIT_REF_SLUG SPLITBEE_TOKEN=$SPLITBEE_TOKEN
+        --build-arg VERSION=$CI_COMMIT_REF_SLUG
+        --build-arg SPLITBEE_TOKEN=$SPLITBEE_TOKEN
         --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP
