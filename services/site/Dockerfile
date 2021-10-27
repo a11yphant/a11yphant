@@ -37,6 +37,9 @@ COPY services/site/next-env.d.ts ./
 COPY services/site/postcss.config.js ./
 COPY services/site/tailwind.config.js ./
 COPY services/site/tsconfig.json ./
+COPY services/site/sentry.client.config.js ./
+COPY services/site/sentry.server.config.js ./
+
 COPY services/api/schema.gql /api/schema.gql
 
 RUN npm run build
