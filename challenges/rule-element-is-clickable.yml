@@ -1,6 +1,0 @@
-rule:
-  id: 95670834-e116-4b25-84b5-635609f9d222
-  key: element-is-clickable
-  title: Element is clickable with a mouse
-  shortDescription: >
-    The element with [attribute]=[value] must be clickable using the mouse.

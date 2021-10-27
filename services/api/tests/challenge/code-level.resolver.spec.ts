@@ -5,6 +5,8 @@ import { RequirementFactory } from "@tests/factories/models/requirement.factory"
 import { TaskFactory } from "@tests/factories/models/task.factory";
 
 import { CodeLevelResolver } from "@/challenge/code-level.resolver";
+import { LevelStatus } from "@/challenge/enums/level-status.enum";
+import { LevelService } from "@/challenge/level.service";
 import { Requirement } from "@/challenge/models/requirement.model";
 import { RequirementService } from "@/challenge/requirement.service";
 import { TaskService } from "@/challenge/task.service";
@@ -23,6 +25,7 @@ describe("code level resolver", () => {
       }),
       createMock<TaskService>(),
       createMock<CodeLevelSubmissionService>(),
+      createMock<LevelService>(),
     );
 
     expect((await resolver.requirements(CodeLevelFactory.build())).length).toEqual(2);
@@ -37,6 +40,7 @@ describe("code level resolver", () => {
         findForLevel: jest.fn().mockResolvedValue(tasks),
       }),
       createMock<CodeLevelSubmissionService>(),
+      createMock<LevelService>(),
     );
 
     expect((await resolver.tasks(CodeLevelFactory.build())).length).toEqual(tasks.length);
@@ -51,6 +55,7 @@ describe("code level resolver", () => {
       }),
       createMock<TaskService>(),
       createMock<CodeLevelSubmissionService>(),
+      createMock<LevelService>(),
     );
 
     expect((await resolver.requirements(CodeLevelFactory.build())).length).toEqual(requirements.length);
@@ -65,6 +70,7 @@ describe("code level resolver", () => {
       createMock<CodeLevelSubmissionService>({
         findLastForUserAndLevel: jest.fn().mockResolvedValue(submission),
       }),
+      createMock<LevelService>(),
     );
 
     const fetchedSubmission = await resolver.lastSubmission(CodeLevelFactory.build(), { userId: "userid" });
@@ -81,10 +87,25 @@ describe("code level resolver", () => {
       createMock<CodeLevelSubmissionService>({
         findLastForUserAndLevel: jest.fn().mockResolvedValue(submission),
       }),
+      createMock<LevelService>(),
     );
 
     const fetchedSubmission = await resolver.lastSubmission(CodeLevelFactory.build(), { userId: "userid" });
 
     expect(fetchedSubmission.id).toBe(submission.id);
+  });
+
+  it("resolves out the status of a level", async () => {
+    const resolver = new CodeLevelResolver(
+      createMock<RequirementService>(),
+      createMock<TaskService>(),
+      createMock<CodeLevelSubmissionService>(),
+      createMock<LevelService>({
+        findStatusForCodeLevel: jest.fn().mockResolvedValue(LevelStatus.OPEN),
+      }),
+    );
+    const status = await resolver.status(CodeLevelFactory.build(), { userId: "userid" });
+
+    expect(status).toBe(LevelStatus.OPEN);
   });
 });

@@ -1,0 +1,7 @@
+query userById($id: ID!) {
+    user(id: $id) {
+        id
+        displayName
+        isRegistered
+    }
+}

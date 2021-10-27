@@ -27,7 +27,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
     return () => {
       isMounted = false;
     };
-  }, [router.pathname]);
+  }, [apolloClient, router, router.pathname]);
 
   return (
     <>

@@ -29,6 +29,18 @@ describe("user resolver", () => {
     expect(resolver.currentUser({ userId: "uuid" })).resolves.toHaveProperty("id", user.id);
   });
 
+  it("returns a user by id", () => {
+    const user = getUser();
+
+    const resolver = new UserResolver(
+      createMock<UserService>({
+        findById: jest.fn().mockResolvedValue(user),
+      }),
+    );
+
+    expect(resolver.user(user.id)).resolves.toHaveProperty("id", user.id);
+  });
+
   it("shows that the user is registered for gitlab users", () => {
     const user = getUser({ authProvider: "github" });
 

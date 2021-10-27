@@ -3,11 +3,13 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import fetch from "node-fetch";
 
+import { AxeFactory } from "./axe.factory";
 import { BrowserService } from "./browser.service";
 import { CheckFactory } from "./check.factory";
 import { CheckSubmissionService } from "./check-submission.service";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./check-to-class-map";
-import { AxeLinkNameCheck } from "./checks/axe-link-name.check";
+import { AVAILABLE_AXE_CHECKS, buildCheckProviders } from "./checks/axe-checks";
+import { DocumentStartsWithHtml5Doctype } from "./checks/document-starts-with-html5-doctype.check";
 import { ElementExists } from "./checks/element-exists.check";
 import { ElementNotExists } from "./checks/element-not-exists.check";
 import { HtmlIsValidCheck } from "./checks/html-is-valid.check";
@@ -36,14 +38,16 @@ import { WebdriverFactory } from "./webdriver.factory";
     BrowserService,
     CheckSubmissionService,
     WebdriverFactory,
+    AxeFactory,
     Logger,
+    { provide: "fetch", useValue: fetch },
     { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
     CheckFactory,
-    AxeLinkNameCheck,
     HtmlIsValidCheck,
-    { provide: "fetch", useValue: fetch },
     ElementExists,
     ElementNotExists,
+    DocumentStartsWithHtml5Doctype,
+    ...buildCheckProviders(AVAILABLE_AXE_CHECKS),
   ],
 })
 export class AppModule {}

@@ -27,10 +27,14 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
     setQuizResult(data.submitQuizLevelAnswer.result);
   };
 
-  const handleRetry = (): void => {
+  const reset = (): void => {
     setQuizResult(undefined);
     setChosenId(undefined);
   };
+
+  React.useEffect(() => {
+    reset();
+  }, [levelId]);
 
   return (
     <>
@@ -43,7 +47,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
-          <div className={clsx("col-span-3 mb-8 overflow-y-scroll")}>
+          <div className={clsx("col-span-3 mb-8 overflow-y-auto")}>
             {quizResult === undefined && (
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
             )}
@@ -92,7 +96,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
           </div>
         </div>
         <div className="flex justify-end mr-[-3rem]">
-          {quizResult === undefined && (
+          {quizResult === undefined ? (
             <ButtonLoading
               primary
               onClick={submitLevel}
@@ -104,13 +108,12 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             >
               Submit
             </ButtonLoading>
-          )}
-          {quizResult && (
+          ) : (
             <CompleteEvaluationButton
               className="px-10 absolute right-0 bottom-0"
               status={quizResult.status}
               isLastLevel={isLastLevel}
-              onRetry={handleRetry}
+              onRetry={reset}
             />
           )}
         </div>

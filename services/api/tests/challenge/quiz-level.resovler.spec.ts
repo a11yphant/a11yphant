@@ -3,6 +3,8 @@ import { AnswerOptionFactory } from "@tests/factories/models/answer-option.facto
 import { QuizLevelFactory } from "@tests/factories/models/quiz-level.factory";
 
 import { AnswerOptionService } from "@/challenge/answer-option.service";
+import { LevelStatus } from "@/challenge/enums/level-status.enum";
+import { LevelService } from "@/challenge/level.service";
 import { QuizLevelResolver } from "@/challenge/quiz-level.resolver";
 
 describe("quiz level resolver", () => {
@@ -11,9 +13,22 @@ describe("quiz level resolver", () => {
       createMock<AnswerOptionService>({
         findForQuizLevel: jest.fn().mockResolvedValue(AnswerOptionFactory.buildList(2)),
       }),
+      createMock<LevelService>(),
     );
     const level = QuizLevelFactory.build();
 
     expect(await resolver.answerOptions(level)).toHaveLength(2);
+  });
+
+  it("resolves out the status of a level", async () => {
+    const resolver = new QuizLevelResolver(
+      createMock<AnswerOptionService>(),
+      createMock<LevelService>({
+        findStatusForQuizLevel: jest.fn().mockResolvedValue(LevelStatus.OPEN),
+      }),
+    );
+    const status = await resolver.status(QuizLevelFactory.build(), { userId: "userid" });
+
+    expect(status).toBe(LevelStatus.OPEN);
   });
 });

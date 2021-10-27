@@ -1,4 +1,4 @@
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
@@ -11,6 +11,11 @@ import { UserService } from "./user.service";
 @Resolver(() => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
+
+  @Query(() => User, { nullable: true })
+  async user(@Args("id", { type: () => ID }) id: string): Promise<User> {
+    return this.userService.findById(id);
+  }
 
   @Query(() => User, { nullable: true, description: "Returns the current user" })
   currentUser(@SessionToken() sessionToken: SessionTokenInterface): Promise<User> {

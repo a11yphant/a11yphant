@@ -16,7 +16,7 @@ describe("html-is-valid check", () => {
     const check = new HtmlIsValidCheck(
       createMock<Logger>(),
       createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
-      (fetch as unknown) as typeof nodeFetch,
+      fetch as unknown as typeof nodeFetch,
     );
 
     const result = await check.run(
@@ -42,7 +42,7 @@ describe("html-is-valid check", () => {
     const check = new HtmlIsValidCheck(
       createMock<Logger>(),
       createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
-      (fetch as unknown) as typeof nodeFetch,
+      fetch as unknown as typeof nodeFetch,
     );
 
     const result = await check.run(
@@ -57,5 +57,31 @@ describe("html-is-valid check", () => {
 
     expect(result).toHaveProperty("id", "asdf");
     expect(result).toHaveProperty("status", "failed");
+  });
+
+  it("returns an error if checking using the validator fails", async () => {
+    const fetch = fetchMock
+      .sandbox()
+      .get("begin:https://url.com/", "some-html")
+      .post("begin:https://validator.w3.org", { throws: new Error("did not work") });
+
+    const check = new HtmlIsValidCheck(
+      createMock<Logger>(),
+      createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
+      fetch as unknown as typeof nodeFetch,
+    );
+
+    const result = await check.run(
+      {
+        id: "some-id",
+        css: "",
+        html: "",
+        js: "",
+      },
+      { id: "asdf", key: "html-is-valid", options: {} },
+    );
+
+    expect(result).toHaveProperty("id", "asdf");
+    expect(result).toHaveProperty("status", "error");
   });
 });

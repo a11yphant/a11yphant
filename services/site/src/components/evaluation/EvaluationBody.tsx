@@ -1,5 +1,4 @@
 import { EvaluationRequirementResultFragment, RequirementStatus } from "app/generated/graphql";
-import clsx from "clsx";
 import React from "react";
 
 import CollapsableSection from "./CollapsableSection";
@@ -16,7 +15,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
   return (
     <>
       {failedRequirements.length >= 1 && (
-        <ul className={clsx("h-full", className)}>
+        <ul className={className}>
           {failedRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
@@ -28,7 +27,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
         </ul>
       )}
       {successfulRequirements.length >= 1 && (
-        <ul className={clsx("h-full", className)}>
+        <ul className={className}>
           {successfulRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (

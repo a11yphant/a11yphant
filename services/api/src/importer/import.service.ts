@@ -36,20 +36,33 @@ export class ImportService {
 
     this.logger.log(`Imported ${ruleImportPromises.length} rules`, ImportService.name);
 
-    const challengeImportPromises = fileNames
-      .filter((file) => file.endsWith(".yml") && file.startsWith("challenge-"))
-      .map(async (file) => {
-        this.logger.log(`Importing file: ${file}`, ImportService.name);
+    const challenges = await Promise.all(
+      fileNames
+        .filter((file) => file.endsWith(".yml") && file.startsWith("challenge-"))
+        .map(async (file) => {
+          this.logger.log(`Importing file: ${file}`, ImportService.name);
 
-        const filePath = join(path, file);
-        const content = await this.ymlReader.readFile<Challenge>(filePath, "challenge");
+          const filePath = join(path, file);
 
-        await this.importChallenge(content);
-      });
+          return await this.ymlReader.readFile<Challenge>(filePath, "challenge");
+        }),
+    );
 
-    await Promise.all(challengeImportPromises);
+    await Promise.all(challenges.map((challenge) => this.importChallenge(challenge)));
 
-    this.logger.log(`Imported ${challengeImportPromises.length} challenges`, ImportService.name);
+    this.logger.log(`Imported ${challenges.length} challenges`, ImportService.name);
+
+    const challengeIds = challenges.map((challenge) => challenge.id);
+
+    const { count } = await this.prisma.challenge.deleteMany({
+      where: {
+        id: {
+          notIn: challengeIds,
+        },
+      },
+    });
+
+    this.logger.log(`Deleted ${count} challenges`, ImportService.name);
   }
 
   public async upsertRule(rule: Rule): Promise<void> {
