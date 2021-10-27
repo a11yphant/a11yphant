@@ -17,12 +17,6 @@ describe("Hero", () => {
     expect(await root.findAllByRole("heading", { level: 2 })).toHaveLength(2);
   });
 
-  it("renders a link to the challenges section", async () => {
-    const root = render(<Hero />);
-
-    expect(await root.findByText("Start Coding")).toHaveAttribute("href", "/#challenges");
-  });
-
   it("renders a link for the github sign up", async () => {
     const root = render(<Hero />);
 
