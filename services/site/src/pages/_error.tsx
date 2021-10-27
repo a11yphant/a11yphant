@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import IllustrationLost from "app/components/icons/IllustrationLost";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
@@ -8,9 +9,15 @@ import React from "react";
 
 interface CustomErrorProps {
   statusCode: number;
+  err?: Error;
+  hasGetInitialPropsRun?: boolean;
 }
 
-const CustomError: NextPage<CustomErrorProps> = ({ statusCode }) => {
+const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialPropsRun = false, err }) => {
+  if (!hasGetInitialPropsRun && err) {
+    Sentry.captureException(err);
+  }
+
   return (
     <>
       <Head>
@@ -47,8 +54,9 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode }) => {
 };
 
 CustomError.getInitialProps = ({ res, err }) => {
+  Sentry.captureException(err);
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-  return { statusCode };
+  return { statusCode, err, hasGetInitialPropsRun: true };
 };
 
 export default CustomError;
