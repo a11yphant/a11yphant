@@ -3,6 +3,7 @@ include:
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
+  - /ci/templates/gitlab-ci-build-site.yml
   - /ci/templates/gitlab-ci-deploy.yml
 
 cache:
@@ -262,20 +263,27 @@ test:site:
     - develop
     - merge_request
 
-build:site:
+build:site:review:
   extends:
-    - .build
-  needs:
-    - generate-graphql-schema:api
-    - test:site
+    - .build:site
+  only:
+    - merge_request
+
+build:site:staging:
+  extends:
+    - .build:site
   variables:
-    PROJECT_PATH: services/site
-    IMAGE_NAME_APP: a11yphant/a11yphant/site
-    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
+  only:
+    - develop
+
+build:site:production:
+  extends:
+    - .build:site
+  variables:
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
   only:
     - master
-    - develop
-    - merge_request
 
 #-----------------------------------
 # Terraform
