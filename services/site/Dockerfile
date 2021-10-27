@@ -1,5 +1,11 @@
 FROM public.ecr.aws/lambda/nodejs:14 as package-files
 
+WORKDIR /app
+
+COPY services/site/package* ./
+
+FROM package-files as builder
+
 ARG SENTRY_AUTH_TOKEN
 ARG SENTRY_ORG
 ARG SENTRY_PROJECT
@@ -8,14 +14,6 @@ ARG VERSION
 ARG ENVIRONMENT
 ARG SPLITBEE_TOKEN
 
-WORKDIR /app
-
-COPY services/site/package* ./
-
-FROM package-files as builder
-
-WORKDIR /app
-
 ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 ENV SENTRY_ORG=${SENTRY_ORG}
 ENV SENTRY_PROJECT=${SENTRY_PROJECT}
@@ -23,6 +21,8 @@ ENV NEXT_PUBLIC_SITE_SENTRY_DSN=${SENTRY_DSN}
 ENV NEXT_PUBLIC_SITE_VERSION=${VERSION}
 ENV NEXT_PUBLIC_SITE_ENVIRONMENT=${ENVIRONMENT}
 ENV NEXT_PUBLIC_SITE_SPLITBEE_TOKEN=${SPLITBEE_TOKEN}
+
+WORKDIR /app
 
 RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci
 
@@ -50,6 +50,10 @@ RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci --production
 FROM public.ecr.aws/lambda/nodejs:14
 
 WORKDIR /var/task
+
+ARG SENTRY_DSN
+ARG VERSION
+ARG ENVIRONMENT
 
 ENV NEXT_PUBLIC_SITE_SENTRY_DSN=${SENTRY_DSN}
 ENV NEXT_PUBLIC_SITE_VERSION=${VERSION}
