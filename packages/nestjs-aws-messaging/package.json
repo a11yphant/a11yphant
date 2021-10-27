@@ -2,7 +2,7 @@
   "name": "@a11yphant/nestjs-aws-messaging",
   "version": "0.2.2",
   "description": "",
-  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "scripts": {
