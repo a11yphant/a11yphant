@@ -3,6 +3,7 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import fetch from "node-fetch";
 
+import { AxeFactory } from "./axe.factory";
 import { BrowserService } from "./browser.service";
 import { CheckFactory } from "./check.factory";
 import { CheckSubmissionService } from "./check-submission.service";
@@ -37,6 +38,7 @@ import { WebdriverFactory } from "./webdriver.factory";
     BrowserService,
     CheckSubmissionService,
     WebdriverFactory,
+    AxeFactory,
     Logger,
     { provide: "fetch", useValue: fetch },
     { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },

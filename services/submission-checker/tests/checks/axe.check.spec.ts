@@ -2,11 +2,12 @@ import { createMock } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AxeResults } from "axe-core";
+import { ThenableWebDriver } from "selenium-webdriver";
 
-import { BrowserService } from "../../src/browser.service";
-import { AxeCheck } from "../../src/checks/axe.check";
-import { Rule } from "../../src/rule.interface";
-import { Submission } from "../../src/submission.interface";
+import { AxeFactory } from "@/axe.factory";
+import { AxeCheck } from "@/checks/axe.check";
+import { Rule } from "@/rule.interface";
+import { Submission } from "@/submission.interface";
 
 const axeResultSuccess: AxeResults = {
   inapplicable: [],
@@ -68,7 +69,11 @@ describe("axe check", () => {
     const check = new AxeLinkNameCheck(
       createMock<Logger>(),
       createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ runAxeChecks: jest.fn().mockResolvedValue(axeResultSuccess) }),
+      createMock<AxeFactory>({
+        create: jest.fn().mockReturnValue({
+          analyze: jest.fn().mockResolvedValue(axeResultSuccess),
+        }),
+      }),
     );
 
     const submission: Submission = {
@@ -84,7 +89,13 @@ describe("axe check", () => {
       options: {},
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(
+      submission,
+      rule,
+      createMock<ThenableWebDriver>({
+        get: jest.fn().mockResolvedValue(null),
+      }),
+    );
 
     expect(result.status).toEqual("success");
   });
@@ -93,7 +104,11 @@ describe("axe check", () => {
     const check = new AxeLinkNameCheck(
       createMock<Logger>(),
       createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ runAxeChecks: jest.fn().mockResolvedValue(axeResultFailure) }),
+      createMock<AxeFactory>({
+        create: jest.fn().mockReturnValue({
+          analyze: jest.fn().mockReturnValue(axeResultFailure),
+        }),
+      }),
     );
 
     const submission: Submission = {
@@ -109,7 +124,13 @@ describe("axe check", () => {
       options: {},
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(
+      submission,
+      rule,
+      createMock<ThenableWebDriver>({
+        get: jest.fn().mockResolvedValue(null),
+      }),
+    );
 
     expect(result.status).toEqual("failed");
   });
@@ -118,7 +139,11 @@ describe("axe check", () => {
     const check = new AxeLinkNameCheck(
       createMock<Logger>(),
       createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ runAxeChecks: jest.fn().mockRejectedValue(new Error("something went wrong")) }),
+      createMock<AxeFactory>({
+        create: jest.fn().mockReturnValue({
+          analyze: jest.fn().mockRejectedValue(new Error("error")),
+        }),
+      }),
     );
 
     const submission: Submission = {
@@ -134,7 +159,13 @@ describe("axe check", () => {
       options: {},
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(
+      submission,
+      rule,
+      createMock<ThenableWebDriver>({
+        get: jest.fn().mockResolvedValue(null),
+      }),
+    );
 
     expect(result.status).toEqual("error");
   });
