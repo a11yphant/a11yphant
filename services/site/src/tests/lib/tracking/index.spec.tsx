@@ -7,6 +7,10 @@ jest.mock("@splitbee/web", () => {
   };
 });
 
+beforeEach(() => {
+  jest.resetAllMocks();
+});
+
 afterEach(() => {
   (process as any).browser = undefined;
   process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = undefined;
@@ -26,7 +30,7 @@ describe("splitbee tracking", () => {
     process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = "123";
     initializeTracking();
 
-    expect(splitbee.init).toHaveBeenCalled();
+    expect(splitbee.init).not.toHaveBeenCalled();
   });
 
   it("does not initialize splitbee without token", async () => {
@@ -34,6 +38,6 @@ describe("splitbee tracking", () => {
     process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = "";
     initializeTracking();
 
-    expect(splitbee.init).toHaveBeenCalled();
+    expect(splitbee.init).not.toHaveBeenCalled();
   });
 });
