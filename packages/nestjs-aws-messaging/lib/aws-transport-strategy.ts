@@ -90,7 +90,8 @@ export class AwsTransportStrategy extends Server implements CustomTransportStrat
     }
 
     try {
-      await handler(event.body);
+      const stream = this.transformToObservable(await handler(event.body));
+      stream.subscribe();
     } catch (error) {
       throw new Error(`Could not process event ${event.messageId}: ${error.message}`);
     }

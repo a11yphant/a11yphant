@@ -1,5 +1,7 @@
 FROM public.ecr.aws/lambda/nodejs:14 as package-files
 
+ARG SPLITBEE_TOKEN
+
 WORKDIR /app
 
 COPY services/site/package* ./
@@ -7,6 +9,7 @@ COPY services/site/package* ./
 FROM package-files as builder
 
 WORKDIR /app
+ENV NEXT_PUBLIC_SITE_SPLITBEE_TOKEN=${SPLITBEE_TOKEN}
 
 RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci
 

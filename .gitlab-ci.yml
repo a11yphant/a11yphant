@@ -3,6 +3,7 @@ include:
   - /ci/templates/gitlab-ci-test.yml
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
+  - /ci/templates/gitlab-ci-build-site.yml
   - /ci/templates/gitlab-ci-deploy.yml
 
 cache:
@@ -262,20 +263,27 @@ test:site:
     - develop
     - merge_request
 
-build:site:
+build:site:review:
   extends:
-    - .build
-  needs:
-    - generate-graphql-schema:api
-    - test:site
+    - .build:site
+  only:
+    - merge_request
+
+build:site:staging:
+  extends:
+    - .build:site
   variables:
-    PROJECT_PATH: services/site
-    IMAGE_NAME_APP: a11yphant/a11yphant/site
-    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
+  only:
+    - develop
+
+build:site:production:
+  extends:
+    - .build:site
+  variables:
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
   only:
     - master
-    - develop
-    - merge_request
 
 #-----------------------------------
 # Terraform
@@ -330,6 +338,10 @@ terraform:local:validate:
 deploy-review:
   extends:
     - .deploy
+  needs:
+    - build:api
+    - build:site:review
+    - build:submission-checker
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
@@ -344,6 +356,10 @@ deploy-review:
 deploy-staging:
   extends:
     - .deploy
+  needs:
+    - build:api
+    - build:site:staging
+    - build:submission-checker
   variables:
     WORKSPACE: staging
     DOMAIN: beta.a11yphant.com
@@ -364,6 +380,10 @@ deploy-staging:
 deploy-production:
   extends:
     - .deploy
+  needs:
+    - build:api
+    - build:site:production
+    - build:submission-checker
   variables:
     WORKSPACE: production
     DOMAIN: a11yphant.com

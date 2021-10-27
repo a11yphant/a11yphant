@@ -3,10 +3,9 @@ import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { WebDriver } from "selenium-webdriver";
 
-import { BrowserService } from "../../src/browser.service";
-import { ElementExists } from "../../src/checks/element-exists.check";
-import { Rule } from "../../src/rule.interface";
-import { Submission } from "../../src/submission.interface";
+import { ElementExists } from "@/checks/element-exists.check";
+import { Rule } from "@/rule.interface";
+import { Submission } from "@/submission.interface";
 
 describe("element-exists check", () => {
   it("is successful if the selector was found", async () => {
@@ -16,11 +15,7 @@ describe("element-exists check", () => {
       quit: jest.fn().mockResolvedValue(null),
     });
 
-    const check = new ElementExists(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ startSession: jest.fn().mockResolvedValue(webdriver) }),
-    );
+    const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
 
     const submission: Submission = {
       id: "1",
@@ -37,7 +32,7 @@ describe("element-exists check", () => {
       },
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(submission, rule, webdriver);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "success");
@@ -50,11 +45,7 @@ describe("element-exists check", () => {
       quit: jest.fn().mockResolvedValue(null),
     });
 
-    const check = new ElementExists(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ startSession: jest.fn().mockResolvedValue(webdriver) }),
-    );
+    const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
 
     const submission: Submission = {
       id: "1",
@@ -71,7 +62,7 @@ describe("element-exists check", () => {
       },
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(submission, rule, webdriver);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "failed");
@@ -84,11 +75,7 @@ describe("element-exists check", () => {
       quit: jest.fn().mockResolvedValue(null),
     });
 
-    const check = new ElementExists(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ startSession: jest.fn().mockResolvedValue(webdriver) }),
-    );
+    const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
 
     const submission: Submission = {
       id: "1",
@@ -105,7 +92,7 @@ describe("element-exists check", () => {
       },
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(submission, rule, webdriver);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "error");
@@ -118,11 +105,7 @@ describe("element-exists check", () => {
       quit: jest.fn().mockResolvedValue(null),
     });
 
-    const check = new ElementExists(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url") }),
-      createMock<BrowserService>({ startSession: jest.fn().mockResolvedValue(webdriver) }),
-    );
+    const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
 
     const submission: Submission = {
       id: "1",
@@ -137,7 +120,7 @@ describe("element-exists check", () => {
       options: {},
     };
 
-    const result = await check.run(submission, rule);
+    const result = await check.run(submission, rule, webdriver);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "error");

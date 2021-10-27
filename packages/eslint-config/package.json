@@ -8,7 +8,7 @@
     "lint": "eslint ./**/*.js",
     "lint:fix": "npm run lint -- --fix"
   },
-  "author": "Michael Brandstätter | Thomas Dax | Daniela Kubesch | Luca Pircher",
+  "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "license": "UNLICENSED",
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1 || ^5.0.0",
