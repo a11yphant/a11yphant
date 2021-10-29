@@ -37,7 +37,7 @@ export class SessionInterceptor implements NestInterceptor {
       userId: user.id,
     };
 
-    context.sessionToken = sessionToken;
+    context.sessionToken = newToken;
     const token = await this.jwtService.createSignedToken(newToken, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
     return next.handle().pipe(
       tap(() => {
