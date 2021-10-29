@@ -151,9 +151,11 @@ describe("session interceptor", () => {
       createMock<JwtService>({
         createSignedToken: jest.fn().mockResolvedValue("token"),
         validateToken: jest.fn().mockResolvedValue(true),
+        decodeToken: jest.fn().mockReturnValue({}),
       }),
       createMock<UserService>({
         create: jest.fn().mockResolvedValue(UserFactory.build()),
+        findByEmail: jest.fn().mockResolvedValue(UserFactory.build()),
       }),
       createMock<Logger>(),
       createMock<ConfigService>(createConfigServiceMock()),
@@ -190,6 +192,45 @@ describe("session interceptor", () => {
       }),
       createMock<UserService>({
         create: jest.fn().mockResolvedValue(UserFactory.build()),
+      }),
+      createMock<Logger>(),
+      createMock<ConfigService>(createConfigServiceMock()),
+    );
+
+    const nextCallback = (): void => {
+      expect(cookie).toHaveBeenCalled();
+    };
+
+    runInterceptor(interceptor, executionContext, nextCallback, doNothing, done);
+  });
+
+  it("ignores the existing cookie if the user does not exist", (done) => {
+    expect.assertions(1);
+    const cookie = jest.fn();
+    const context: Context = {
+      req: createMock<Request>({
+        cookies: { a11yphant_session: "cookie" as any },
+      }),
+      res: createMock<Response>({
+        cookie,
+      }),
+      sessionToken: null,
+    };
+
+    const executionContext = createMock<ExecutionContext>({
+      getType: jest.fn().mockReturnValue("graphql"),
+      getArgs: jest.fn().mockReturnValue([null, null, context]),
+    });
+
+    const interceptor = new SessionInterceptor(
+      createMock<JwtService>({
+        createSignedToken: jest.fn().mockResolvedValue("token"),
+        validateToken: jest.fn().mockResolvedValue(true),
+        decodeToken: jest.fn().mockReturnValue({}),
+      }),
+      createMock<UserService>({
+        create: jest.fn().mockResolvedValue(UserFactory.build()),
+        findById: jest.fn().mockResolvedValue(null),
       }),
       createMock<Logger>(),
       createMock<ConfigService>(createConfigServiceMock()),
