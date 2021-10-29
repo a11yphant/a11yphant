@@ -24,21 +24,21 @@ export class SessionInterceptor implements NestInterceptor {
   }
 
   async handleGql(context: Context, next: CallHandler): Promise<Observable<any>> {
-    this.logger.verbose("Handling session for gql request.");
     const sessionCookie = context.req.cookies[this.config.get<string>("cookie.name")];
-    if (await this.jwtService.validateToken(sessionCookie)) {
-      context.sessionToken = this.jwtService.decodeToken<SessionToken>(sessionCookie);
+    const sessionToken = this.jwtService.decodeToken<SessionToken>(sessionCookie);
+    if ((await this.jwtService.validateToken(sessionCookie)) && (await this.userService.findById(sessionToken.userId))) {
+      context.sessionToken = sessionToken;
       return next.handle();
     }
 
     const user = await this.userService.create();
 
-    const sessionToken: SessionToken = {
+    const newToken: SessionToken = {
       userId: user.id,
     };
 
     context.sessionToken = sessionToken;
-    const token = await this.jwtService.createSignedToken(sessionToken, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
+    const token = await this.jwtService.createSignedToken(newToken, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
     return next.handle().pipe(
       tap(() => {
         context.res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
@@ -47,7 +47,6 @@ export class SessionInterceptor implements NestInterceptor {
   }
 
   async handleHttp(executionContext: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
-    this.logger.verbose("Handling session for http request.");
     const req = executionContext.switchToHttp().getRequest<Request & { sessionToken: any }>();
     const sessionCookie = req.cookies[this.config.get<string>("cookie.name")];
 
