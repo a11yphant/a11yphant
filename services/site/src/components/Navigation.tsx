@@ -19,7 +19,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const userAccountModalApi = useUserAccountModalApi();
 
   return (
-    <header className="h-[8%] pt-8 pb-6 px-11 grid grid-cols-4 relative z-10">
+    <header className={clsx("h-[8%] pt-8 pb-6 px-11 grid grid-cols-2 relative z-10", "lg:grid-cols-3")}>
       <h1>
         <Link href="/">
           <a
@@ -35,19 +35,17 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         </Link>
       </h1>
       {displayBreadcrumbs && (
-        <>
-          <div className={clsx("justify-center items-center col-span-2 hidden", "lg:flex")}>
-            <Breadcrumbs />
-          </div>
-        </>
+        <div className={clsx("ml-[50%] transform -translate-x-1/2 col-span-1 w-fit-content hidden self-center", "lg:block")}>
+          <Breadcrumbs />
+        </div>
       )}
-      <div className="flex justify-end items-center col-span-1">
+      <div className={clsx("hidden justify-end items-center", "sm:flex")}>
         {children}
         {currentUser?.isRegistered && (
           <Link href={`/profile/${currentUser?.id}`}>
             <a className={clsx("text-white ml-4", "hover:text-primary-light hover:border-transparent")}>
               <span className={clsx("sr-only")}>Your Profile</span>
-              <UserAvatar className="" />
+              <UserAvatar />
             </a>
           </Link>
         )}
