@@ -1,7 +1,7 @@
+import Lottie from "app/components/Lottie";
 import loadingAnimation from "app/lotties/loading_lottie_eval.json";
 import clsx from "clsx";
 import React from "react";
-import Lottie from "react-lottie";
 
 interface LoadingScreenProps {
   className?: string;
@@ -20,8 +20,8 @@ const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className 
               preserveAspectRatio: "xMidYMid slice",
             },
           }}
-          height={300}
-          ariaRole={"progressbar"}
+          role={"progressbar"}
+          className={"h-[300px]"}
         />
       </div>
       <h2 className="text-5xl">Evaluation</h2>

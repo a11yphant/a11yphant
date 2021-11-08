@@ -1,8 +1,8 @@
+import Lottie from "app/components/Lottie";
 import correctAnimation from "app/lotties/correct_lottie.json";
 import failAnimation from "app/lotties/fail_lottie.json";
 import clsx from "clsx";
 import React from "react";
-import Lottie from "react-lottie";
 
 interface EvaluationHeaderProps {
   className?: string;
@@ -25,39 +25,19 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
       <div className="flex flex-col">
         <div className="flex flex-row justify-between items-center">
           <h3 className={clsx("ml-2 font-normal", "h3", "lg:h2")}>Result</h3>
-          {passed ? (
-            <Lottie
-              options={{
-                loop: false,
-                autoplay: true,
-                animationData: correctAnimation,
-                rendererSettings: {
-                  preserveAspectRatio: "xMidYMid slice",
-                },
-              }}
-              height={70}
-              width={70}
-              ariaRole={"img"}
-              title={"A check mark"}
-              style={{ marginTop: "-20px" }}
-            />
-          ) : (
-            <Lottie
-              options={{
-                loop: false,
-                autoplay: true,
-                animationData: failAnimation,
-                rendererSettings: {
-                  preserveAspectRatio: "xMidYMid slice",
-                },
-              }}
-              height={50}
-              width={70}
-              ariaRole={"img"}
-              title={"A cross"}
-              style={{ marginTop: "-10px", marginLeft: "10px" }}
-            />
-          )}
+          <Lottie
+            className={clsx(passed ? "w-[70px] h-[70px] ml-3 mt-[-20px]" : "w-[70px] h-[50px] ml-3 mt-[-10px]")}
+            options={{
+              loop: false,
+              autoplay: true,
+              animationData: passed ? correctAnimation : failAnimation,
+              rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice",
+              },
+            }}
+            role="img"
+            aria-label={passed ? "All checks passed" : "Some checks failed"}
+          />
         </div>
         <p className={clsx("p-2 pt-1 mt-2 mb-0 text-7xl text-white font-mono font-bold w-fit-content", "container-dark", "lg:text-8xl")}>
           {score.toFixed(0)}%

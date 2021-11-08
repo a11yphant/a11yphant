@@ -1,12 +1,12 @@
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
+import Lottie from "app/components/Lottie";
 import { ResultStatus, useSubmitQuizLevelAnswerMutation } from "app/generated/graphql";
 import correctAnimation from "app/lotties/correct_lottie.json";
 import failAnimation from "app/lotties/fail_lottie.json";
 import clsx from "clsx";
 import React from "react";
-import Lottie from "react-lottie";
 import sanitizeHtml from "sanitize-html";
 interface QuizLevelProps {
   question: string;
@@ -65,11 +65,8 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
                       preserveAspectRatio: "xMidYMid slice",
                     },
                   }}
-                  height={230}
-                  width={160}
-                  ariaRole={"img"}
-                  title={"A cross"}
-                  style={{ margin: "2rem 0 0" }}
+                  className={"h-[230px] w-[160px] mt-8"}
+                  aria-hidden={true}
                 />
               </div>
             )}
@@ -85,11 +82,8 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
                       preserveAspectRatio: "xMidYMid slice",
                     },
                   }}
-                  height={240}
-                  width={200}
-                  ariaRole={"img"}
-                  title={"A check mark"}
-                  style={{ margin: "2rem 0 0" }}
+                  className={"h-[240px] w-[200px] mt-8"}
+                  aria-hidden={true}
                 />
               </div>
             )}
