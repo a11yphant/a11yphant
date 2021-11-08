@@ -67,6 +67,7 @@ const Level: React.FunctionComponent = () => {
         </Transition>
       </Navigation>
       <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
+        <h1 className="sr-only">{`${challenge.name} - Level ${nthLevel}`}</h1>
         <SmallScreenNotification />
         {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
         {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}

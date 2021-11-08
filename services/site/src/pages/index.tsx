@@ -26,6 +26,9 @@ const Home: React.FunctionComponent = () => {
       </Head>
       <Navigation displayBreadcrumbs />
       <main className={clsx("h-main flex flex-col box-border")}>
+        <h1 className="sr-only" aria-label="Allyphant">
+          a11yphant
+        </h1>
         <div className={clsx("w-full h-full")}>
           {!currentUser?.isRegistered && <Hero />}
           <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
