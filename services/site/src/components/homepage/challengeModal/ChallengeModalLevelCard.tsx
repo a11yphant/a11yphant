@@ -14,7 +14,7 @@ interface ChallengeModalLevelCardProps {
 export const ChallengeModalLevelCard = ({ challengeSlug, nthLevel, status, firstOpenLevel }: ChallengeModalLevelCardProps): React.ReactElement => {
   return (
     <Link
-      href={`challenge/${challengeSlug}/level/${Number(nthLevel).toLocaleString("de-AT", {
+      href={`/challenge/${challengeSlug}/level/${Number(nthLevel).toLocaleString("de-AT", {
         minimumIntegerDigits: 2,
         useGrouping: false,
       })}`}

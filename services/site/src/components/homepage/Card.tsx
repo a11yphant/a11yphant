@@ -32,7 +32,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
           <span className="sr-only">{`Challenge ${challengeNumber}`}</span>
           {/* TODO: Link to Info Pop-Up when implemented */}
           {/*<Link href="/challenge/[challengeSlug]" as={`/challenge/${challengeSlug}`} shallow={true}>*/}
-          <Link href={`?challenge=${challengeSlug}`} shallow={true}>
+          <Link href={`/?challenge=${challengeSlug}`} shallow={true}>
             <a className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}>
               {heading}
             </a>

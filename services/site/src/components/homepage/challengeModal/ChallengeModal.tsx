@@ -83,7 +83,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                 const firstOpenLevel = challenge.levels.find((level) => level.id === firstOpenLevelId);
 
                 router.push(
-                  `challenge/${challengeSlug}/level/${Number(firstOpenLevel?.order ?? 1).toLocaleString("de-AT", {
+                  `/challenge/${challengeSlug}/level/${Number(firstOpenLevel?.order ?? 1).toLocaleString("de-AT", {
                     minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}`,
