@@ -60,7 +60,13 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
           <div className={clsx("grid grid-cols-3 gap-x-24 gap-y-4", "pt-8")}>
             {challenge.levels.map((level) => {
               return (
-                <ChallengeModalLevelCard key={level.id} nthLevel={level.order} status={level.status} firstOpenLevel={level.id === firstOpenLevelId} />
+                <ChallengeModalLevelCard
+                  key={level.id}
+                  challengeSlug={challengeSlug}
+                  nthLevel={level.order}
+                  status={level.status}
+                  firstOpenLevel={level.id === firstOpenLevelId}
+                />
               );
             })}
           </div>
