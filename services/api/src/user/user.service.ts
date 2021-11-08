@@ -101,4 +101,15 @@ export class UserService {
 
     return new User(userRecord);
   }
+
+  async seenUser(userId: string): Promise<void> {
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        lastSeen: new Date(),
+      },
+    });
+  }
 }
