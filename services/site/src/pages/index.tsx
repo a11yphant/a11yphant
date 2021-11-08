@@ -23,7 +23,7 @@ const Home: React.FunctionComponent = () => {
   } = useChallengesQuery();
 
   const onCloseModal = React.useCallback(() => {
-    router.push("/");
+    router.push("/", undefined, { shallow: true });
   }, [router]);
 
   return (
