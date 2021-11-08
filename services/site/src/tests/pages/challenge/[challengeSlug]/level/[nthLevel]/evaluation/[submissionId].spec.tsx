@@ -4,18 +4,18 @@ import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEval
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
+import { LottieProps } from "app/components/Lottie";
 import { ChallengeBySlugDocument } from "app/generated/graphql";
 import Evaluation from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { mount, ReactWrapper } from "enzyme";
 import Head from "next/head";
 import router from "next/router";
 import React from "react";
-import { LottieProps } from "react-lottie";
 
 afterEach(cleanup);
 
 jest.mock("next/router", () => require("next-router-mock"));
-jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
+jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return null;
 });
 jest.mock("react-resize-detector", () => ({
