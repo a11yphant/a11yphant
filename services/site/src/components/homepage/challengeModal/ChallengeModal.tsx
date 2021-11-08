@@ -44,9 +44,10 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
       onClose={onClose}
       className={clsx(
         "bg-background-light",
-        "p-8 w-[80%] h-[80%]",
+        "p-8 w-full h-full",
         "flex flex-col",
-        "md:px-12 md:py-10 md:min-w-[32rem] md:mx-auto",
+        "sm:w-[80%] sm:h-[80%] sm:max-w-[1250px] sm:max-h-[775px]",
+        "md:px-12 md:py-10 md:mx-auto",
         "lg:px-16 lg:py-14",
         "xl:px-20 xl:py-16",
       )}
@@ -55,23 +56,25 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
 
       {challenge && (
         <>
-          <section>
-            <ModalTitle className={clsx("pb-14")}>{challenge.name}</ModalTitle>
-            <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
-          </section>
+          <div className={"overflow-auto mb-20"}>
+            <section>
+              <ModalTitle className={clsx("pb-14")}>{challenge.name}</ModalTitle>
+              <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
+            </section>
 
-          <div className={clsx("grid grid-cols-3 gap-x-24 gap-y-4", "pt-8")}>
-            {challenge.levels.map((level) => {
-              return (
-                <ChallengeModalLevelCard
-                  key={level.id}
-                  challengeSlug={challengeSlug}
-                  nthLevel={level.order}
-                  status={level.status}
-                  firstOpenLevel={level.id === firstOpenLevelId}
-                />
-              );
-            })}
+            <div className={clsx("pt-8", "grid grid-cols-1 gap-y-4", "sm:grid-cols-2", "lg:grid-cols-3", "2xl:grid-cols-4")}>
+              {challenge.levels.map((level) => {
+                return (
+                  <ChallengeModalLevelCard
+                    key={level.id}
+                    challengeSlug={challengeSlug}
+                    nthLevel={level.order}
+                    status={level.status}
+                    firstOpenLevel={level.id === firstOpenLevelId}
+                  />
+                );
+              })}
+            </div>
           </div>
 
           <ModalActions>
