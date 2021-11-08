@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-twitter";
 
+import { OauthProfile } from "../interfaces/oauthProfile.interface";
 import { ProviderInformation } from "../interfaces/providerInformation.interface";
 import { StoreService } from "../store.service";
 
@@ -20,7 +21,7 @@ export class TwitterStrategy extends PassportStrategy(Strategy, "twitter") {
   async validate(
     token: string,
     tokenSecret: string,
-    profile: Record<string, unknown>,
+    profile: OauthProfile,
     done: (error: Error, providerInformation: ProviderInformation) => undefined,
   ): Promise<undefined> {
     this.logger.log(`Logged in twitter user ${profile.id} with oauth.`);
