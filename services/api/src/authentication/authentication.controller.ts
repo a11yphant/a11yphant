@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 
 import { UserService } from "@/user/user.service";
 
-import { ProviderInformation } from "./interfaces/providerInformation.interface";
+import { ProviderInformation } from "./interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
 
@@ -50,9 +50,9 @@ export class AuthenticationController {
     // will be in the req.user variable
     const { sessionToken, user: providerInformation } = req;
 
-    const foundUser = await this.userService.updateWithAuthInformation(sessionToken?.userId, providerInformation);
+    if (!sessionToken?.userId) return;
 
-    if (!foundUser) return;
+    const foundUser = await this.userService.updateWithAuthInformation(sessionToken?.userId, providerInformation);
 
     const token = await this.jwtService.createSignedToken({ userId: foundUser.id }, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
     res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));

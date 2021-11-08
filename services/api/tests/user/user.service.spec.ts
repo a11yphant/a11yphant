@@ -5,7 +5,7 @@ import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
 import { HashService } from "@/authentication/hash.service";
-import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
+import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserService } from "@/user/user.service";
 

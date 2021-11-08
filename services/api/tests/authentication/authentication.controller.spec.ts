@@ -5,7 +5,7 @@ import { createConfigServiceMock } from "@tests/helpers";
 import { Request, Response } from "express";
 
 import { AuthenticationController } from "@/authentication/authentication.controller";
-import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
+import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
@@ -36,7 +36,11 @@ describe("authentication controller", () => {
   it("sets the correct cookie", async () => {
     let cookie: { name: string; token: string; options: Record<string, unknown> };
 
-    const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
+    const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
+      sessionToken: {
+        userId,
+      },
+    });
     const res = createMock<Response>({
       cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
         cookie = {
@@ -59,7 +63,11 @@ describe("authentication controller", () => {
     });
 
     it("resolves the callback function", async () => {
-      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
+      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
+        sessionToken: {
+          userId,
+        },
+      });
       const res = createMock<Response>();
 
       await authController.githubCallback(req, res);
@@ -75,7 +83,11 @@ describe("authentication controller", () => {
     });
 
     it("resolves the callback function", async () => {
-      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>();
+      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
+        sessionToken: {
+          userId,
+        },
+      });
       const res = createMock<Response>();
 
       await authController.twitterCallback(req, res);
