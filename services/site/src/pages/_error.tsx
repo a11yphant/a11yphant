@@ -29,7 +29,7 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
           className={clsx("mx-8 py-8 h-main flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
         >
           <div>
-            <h2 className={clsx("font-normal mb-4", "h5", "sm:h4")}>Error {statusCode}</h2>
+            <h1 className={clsx("font-normal mb-4", "h5", "sm:h4")}>Error {statusCode}</h1>
             <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>ooops, something went wrong</p>
             <Link href="/">
               <a

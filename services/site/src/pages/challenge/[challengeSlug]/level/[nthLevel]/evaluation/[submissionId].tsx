@@ -37,23 +37,26 @@ const Evaluation: React.FunctionComponent = () => {
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > data?.challenge.levels.length;
 
+  const pageTitle = `Evaluation - ${data?.challenge.name} - Level ${nthLevel}`;
+  const heading = <h1 className="sr-only">{pageTitle}</h1>;
+
   return (
     <>
       <Head>
-        <title>
-          Evaluation - {data?.challenge.name} - Level {nthLevel}
-        </title>
+        <title>{pageTitle}</title>
       </Head>
       <Navigation displayBreadcrumbs />
       {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
         <>
           <main className={clsx("h-main", "md:p-4 md:flex md:flex-col md:justify-between")}>
+            {heading}
             <LoadingScreen className={clsx("hidden", "lg:flex")} />
           </main>
         </>
       ) : (
         <>
           <main className={clsx("h-main max-w-screen-3xl mx-auto", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}>
+            {heading}
             <SmallScreenNotification />
             <EvaluationHeader
               className={clsx("hidden", "lg:flex")}

@@ -33,8 +33,8 @@ describe("Error Page", () => {
   it("renders heading with status code", () => {
     const wrapper = shallow(<CustomError statusCode={500} />);
 
-    expect(wrapper.find("h2").length).toBe(1);
-    expect(wrapper.find("h2").text()).toBe(mockHeading);
+    expect(wrapper.find("h1").length).toBe(1);
+    expect(wrapper.find("h1").text()).toBe(mockHeading);
   });
 
   it("renders description text", () => {
