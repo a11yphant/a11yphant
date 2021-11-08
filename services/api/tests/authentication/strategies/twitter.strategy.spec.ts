@@ -3,7 +3,7 @@ import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { createConfigServiceMock } from "@tests/helpers";
 
-import { OauthProfile } from "@/authentication/interfaces/oauthProfile.interface";
+import { OauthProfile } from "@/authentication/interfaces/oauth-profile.interface";
 import { StoreService } from "@/authentication/store.service";
 import { TwitterStrategy } from "@/authentication/strategies/twitter.strategy";
 

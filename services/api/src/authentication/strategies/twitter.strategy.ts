@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-twitter";
 
-import { OauthProfile } from "../interfaces/oauthProfile.interface";
-import { ProviderInformation } from "../interfaces/providerInformation.interface";
+import { OauthProfile } from "../interfaces/oauth-profile.interface";
+import { ProviderInformation } from "../interfaces/provider-information.interface";
 import { StoreService } from "../store.service";
 
 @Injectable()

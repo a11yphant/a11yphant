@@ -2,7 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime";
 
 import { HashService } from "@/authentication/hash.service";
-import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
+import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { PrismaService } from "@/prisma/prisma.service";
 
 import { RegisterUserInput } from "./inputs/register-user.input";

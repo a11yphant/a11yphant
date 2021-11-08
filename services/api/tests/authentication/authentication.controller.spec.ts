@@ -5,7 +5,7 @@ import { createConfigServiceMock } from "@tests/helpers";
 import { Request, Response } from "express";
 
 import { AuthenticationController } from "@/authentication/authentication.controller";
-import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
+import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";

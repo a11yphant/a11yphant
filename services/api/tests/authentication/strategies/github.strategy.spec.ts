@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { OauthProfile } from "@/authentication/interfaces/oauthProfile.interface";
+import { OauthProfile } from "@/authentication/interfaces/oauth-profile.interface";
 import { GithubStrategy } from "@/authentication/strategies/github.strategy";
 
 describe("github strategy", () => {

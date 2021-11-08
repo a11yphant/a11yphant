@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 
 import { UserService } from "@/user/user.service";
 
-import { ProviderInformation } from "./interfaces/providerInformation.interface";
+import { ProviderInformation } from "./interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
 
