@@ -23,8 +23,8 @@ describe("404 Page", () => {
   it("renders heading", () => {
     const wrapper = shallow(<Custom404 />);
 
-    expect(wrapper.find("h2").length).toBe(1);
-    expect(wrapper.find("h2").text()).toBe(mockHeading);
+    expect(wrapper.find("h1").length).toBe(1);
+    expect(wrapper.find("h1").text()).toBe(mockHeading);
   });
 
   it("renders description text", () => {
