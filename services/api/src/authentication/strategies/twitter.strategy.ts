@@ -25,9 +25,11 @@ export class TwitterStrategy extends PassportStrategy(Strategy, "twitter") {
   ): Promise<undefined> {
     this.logger.log(`Logged in twitter user ${profile.id} with oauth.`);
 
+    const displayName = (profile.displayName as string) || (profile.username as string);
+
     const providerInformation: ProviderInformation = {
       id: profile.id as string,
-      displayName: profile.displayName as string,
+      displayName,
       provider: "twitter",
     };
 

@@ -23,9 +23,11 @@ export class GithubStrategy extends PassportStrategy(Strategy, "github") {
   ): Promise<undefined> {
     this.logger.log(`Logged in github user ${profile.id} with oauth.`);
 
+    const displayName = (profile.displayName as string) || (profile.username as string);
+
     const providerInformation: ProviderInformation = {
       id: profile.id as string,
-      displayName: profile.displayName as string,
+      displayName,
       provider: "github",
     };
 

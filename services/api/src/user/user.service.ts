@@ -84,13 +84,9 @@ export class UserService {
       },
     });
 
-    if (userRecord) return new User(userRecord);
-
-    if (!userId) return null;
-
     userRecord = await this.prisma.user.update({
       where: {
-        id: userId,
+        id: userRecord?.id || userId,
       },
       data: {
         authId: providerInformation.id,
