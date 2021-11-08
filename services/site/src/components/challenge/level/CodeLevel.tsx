@@ -155,6 +155,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
               onClick={submitLevel}
               className="px-10"
               loading={showSubmitLoadingAnimation}
+              disabled={!submissionId}
               submitButton
               srTextLoading="The submission is being processed."
             >
