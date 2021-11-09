@@ -1,8 +1,11 @@
-import { PartialFuncReturn } from "@golevelup/ts-jest";
-import { Logger } from "@nestjs/common";
+import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
+import { INestApplication, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { Test } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
 import { Migrate } from "@prisma/migrate";
+import ApolloClient from "apollo-boost";
+import fetch from "cross-fetch";
 import os from "os";
 import { join } from "path";
 
@@ -78,8 +81,8 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
   }
 }
 
-export function useDatabase(logger: Logger): { getPrismaService: () => PrismaService } {
-  const client = createTestingPrismaClient(logger);
+export function useDatabase(logger?: Logger): { getPrismaService: () => PrismaService } {
+  const client = createTestingPrismaClient(logger || createMock<Logger>());
   beforeAll(async () => {
     await client.$connect();
   });
@@ -107,5 +110,41 @@ export function createConfigServiceMock(data?: Record<string, any>): PartialFunc
     get: jest.fn((key: string) => {
       return mockData[key];
     }),
+  };
+}
+
+export function useTestingApp(): { getGraphQlClient: () => ApolloClient<unknown> } {
+  process.env.IGNORE_ENV_FILE = "true";
+  process.env.DB_URL = getCurrentSchemaUrl();
+  process.env.API_MESSAGING_POLL_QUEUE = "false";
+
+  let app: INestApplication;
+  let graphqlClient: ApolloClient<unknown>;
+
+  beforeEach(async () => {
+    const { configureApp, setupMicroservices } = await import("../src/main");
+    const { appModuleMetadata } = await import("../src/app.module");
+
+    const module = await Test.createTestingModule(appModuleMetadata).compile();
+
+    module.useLogger(createMock<Logger>());
+
+    app = module.createNestApplication();
+    configureApp(app);
+    setupMicroservices(app);
+    await app.listen(0);
+
+    graphqlClient = new ApolloClient({
+      uri: `http://localhost:${app.getHttpServer().address().port}/graphql`,
+      fetch,
+    });
+  });
+
+  afterEach(async () => {
+    await app.close();
+  });
+
+  return {
+    getGraphQlClient: () => graphqlClient,
   };
 }
