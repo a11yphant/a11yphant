@@ -14,14 +14,8 @@ const challenges = [
     slug: "semantic-html",
     name: "Semantic HTML",
     difficulty: ChallengeDifficulty.Easy,
-    levels: [
-      {
-        id: "f0a71757-3e7d-4a88-988e-17d857e547a1",
-      },
-      {
-        id: "959b4d8f-77bb-4f55-a84d-1765630b0979",
-      },
-    ],
+    numberOfLevels: 2,
+    numberOfFinishedLevels: 0,
   },
 ];
 

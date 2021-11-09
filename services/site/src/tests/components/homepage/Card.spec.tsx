@@ -8,6 +8,7 @@ afterEach(cleanup);
 
 const headingText = "Semantic HTML";
 const levelAmount = 12;
+const finishedLevels = 0;
 
 describe("Card", () => {
   it("renders correctly", () => {
@@ -18,6 +19,7 @@ describe("Card", () => {
         challengeSlug={"semantic-html"}
         heading={headingText}
         levels={levelAmount}
+        finishedLevels={finishedLevels}
         difficulty={ChallengeDifficulty.Easy}
         challengeNumber={1}
       />,
@@ -37,6 +39,7 @@ describe("Card", () => {
         challengeSlug={"semantic-html"}
         heading={headingText}
         levels={levelAmount}
+        finishedLevels={finishedLevels}
         difficulty={ChallengeDifficulty.Easy}
         challengeNumber={1}
       />,
@@ -53,6 +56,7 @@ describe("Card", () => {
         challengeSlug={"semantic-html"}
         heading={headingText}
         levels={levelAmount}
+        finishedLevels={finishedLevels}
         difficulty={ChallengeDifficulty.Medium}
         challengeNumber={1}
       />,
@@ -69,11 +73,45 @@ describe("Card", () => {
         challengeSlug={"semantic-html"}
         heading={headingText}
         levels={levelAmount}
+        finishedLevels={finishedLevels}
         difficulty={ChallengeDifficulty.Hard}
         challengeNumber={1}
       />,
     );
 
     expect(container.querySelector(".bg-gradient-hard")).toBeTruthy();
+  });
+
+  it("renders the progress for started challenges", () => {
+    const { findByText } = render(
+      <Card
+        key={1}
+        className="mr-24"
+        challengeSlug={"semantic-html"}
+        heading={headingText}
+        levels={levelAmount}
+        finishedLevels={2}
+        difficulty={ChallengeDifficulty.Hard}
+        challengeNumber={1}
+      />,
+    );
+
+    expect(findByText(`${finishedLevels}`)).toBeTruthy();
+  });
+  it("renders a checkmark for finished challenges", () => {
+    const { container } = render(
+      <Card
+        key={1}
+        className="mr-24"
+        challengeSlug={"semantic-html"}
+        heading={headingText}
+        levels={levelAmount}
+        finishedLevels={levelAmount}
+        difficulty={ChallengeDifficulty.Hard}
+        challengeNumber={1}
+      />,
+    );
+
+    expect(container.querySelector("svg")).toBeTruthy();
   });
 });

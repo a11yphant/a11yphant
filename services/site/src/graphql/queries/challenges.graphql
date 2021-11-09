@@ -3,9 +3,8 @@ fragment ChallengeOverview on Challenge {
     slug
     name
     difficulty
-    levels {
-        id
-    }
+    numberOfLevels
+    numberOfFinishedLevels
 }
 
 query challenges {
