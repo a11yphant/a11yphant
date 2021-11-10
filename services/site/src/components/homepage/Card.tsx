@@ -1,3 +1,4 @@
+import { DifficultyEasy, DifficultyHard, DifficultyMedium, DifficultyProps } from "app/components/homepage/difficulties/Difficulties";
 import { ChallengeDifficulty } from "app/generated/graphql";
 import clsx from "clsx";
 import Link from "next/link";
@@ -12,7 +13,20 @@ interface CardProps {
   challengeNumber: number;
 }
 
+const getDifficultyIcon = (difficulty: ChallengeDifficulty): ((props: DifficultyProps) => React.ReactElement) => {
+  switch (difficulty) {
+    case ChallengeDifficulty.Easy:
+      return DifficultyEasy;
+    case ChallengeDifficulty.Medium:
+      return DifficultyMedium;
+    case ChallengeDifficulty.Hard:
+      return DifficultyHard;
+  }
+};
+
 const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
+  const DifficultyIcon = getDifficultyIcon(difficulty);
+
   return (
     <li
       className={clsx(
@@ -42,29 +56,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
           </p>
           <p className="sr-only">{`Difficulty ${difficulty}`}</p>
           <div className="flex">
-            <div
-              className={clsx(
-                "w-2.5 h-4/5 ml-4 border-2 rounded-sm border-grey bg-grey",
-                "transition duration-300",
-                "group-hover:border-grey-dark group-hover:bg-grey-dark",
-              )}
-            />
-            <div
-              className={clsx(
-                "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1",
-                "transition duration-300",
-                "group-hover:border-grey-dark",
-                difficulty !== ChallengeDifficulty.Easy && "bg-grey group-hover:bg-grey-dark",
-              )}
-            />
-            <div
-              className={clsx(
-                "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1",
-                "transition duration-300",
-                "group-hover:border-grey-dark",
-                difficulty === ChallengeDifficulty.Hard && "bg-grey group-hover:bg-grey-dark",
-              )}
-            />
+            <DifficultyIcon className={clsx("w-2.5 h-4/5", "transition duration-300")} />
           </div>
         </div>
       </div>

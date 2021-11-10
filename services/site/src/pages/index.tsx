@@ -1,6 +1,7 @@
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
+import { DifficultyEasy, DifficultyHard, DifficultyMedium } from "app/components/homepage/difficulties/Difficulties";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
 import Navigation from "app/components/Navigation";
@@ -47,9 +48,7 @@ const Home: React.FunctionComponent = () => {
                 heading={
                   <>
                     Easy
-                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                    <DifficultyEasy className={"w-2.5 h-5"} firstClassName={"ml-4"} />
                   </>
                 }
                 completedLevel={0}
@@ -64,9 +63,7 @@ const Home: React.FunctionComponent = () => {
                 heading={
                   <>
                     Medium
-                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                    <DifficultyMedium className={"w-2.5 h-5"} firstClassName={"ml-4"} />
                   </>
                 }
                 completedLevel={0}
@@ -81,9 +78,7 @@ const Home: React.FunctionComponent = () => {
                 heading={
                   <>
                     Hard
-                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <DifficultyHard className={"w-2.5 h-5"} firstClassName={"ml-4"} />
                   </>
                 }
                 completedLevel={0}
