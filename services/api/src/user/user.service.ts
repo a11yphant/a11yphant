@@ -112,4 +112,34 @@ export class UserService {
       },
     });
   }
+
+  async deleteStaleUsers(): Promise<void> {
+    const [codeLevelusers, quizLevelUsers] = await Promise.all([
+      this.prisma.codeLevelSubmission.groupBy({
+        by: ["userId"],
+      }),
+      this.prisma.quizLevelSubmission.groupBy({
+        by: ["userId"],
+      }),
+    ]);
+
+    const userIdsWithSubmissions = Array.from(new Set([...codeLevelusers, ...quizLevelUsers].map((sub) => sub.userId)));
+
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+
+    await this.prisma.user.deleteMany({
+      where: {
+        AND: {
+          authProvider: "anonymous",
+          id: {
+            notIn: userIdsWithSubmissions,
+          },
+          lastSeen: {
+            lt: date,
+          },
+        },
+      },
+    });
+  }
 }

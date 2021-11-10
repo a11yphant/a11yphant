@@ -1,11 +1,13 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { CODE_LEVEL_SUBMISSION, CodeLevelSubmissionData, Factory, USER, UserData } from "@tests/factories/database";
 import { UserFactory } from "@tests/factories/models/user.factory";
 import { useDatabase } from "@tests/helpers";
 import faker from "faker";
 
 import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/providerInformation.interface";
+import { PrismaService } from "@/prisma/prisma.service";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserService } from "@/user/user.service";
 
@@ -142,6 +144,82 @@ describe("user service", () => {
       });
 
       expect(user.lastSeen.getTime()).toBeGreaterThan(oldTime.getTime());
+    });
+  });
+
+  describe("deleteStaleUsers", () => {
+    const runDeleteOnService = async (prisma: PrismaService): Promise<void> => {
+      const service = new UserService(prisma, createMock<HashService>(), createMock<Logger>());
+      await service.deleteStaleUsers();
+    };
+
+    it("deletes an stale user successfully", async () => {
+      const prisma = getPrismaService();
+
+      const date = new Date();
+      date.setDate(date.getDate() - 8);
+
+      await prisma.user.create({
+        data: Factory.build<UserData>(USER, { authProvider: "anonymous", lastSeen: date }),
+      });
+
+      await runDeleteOnService(prisma);
+
+      expect(await prisma.user.count()).toEqual(0);
+    });
+
+    it("doesn't delete recently active users", async () => {
+      const prisma = getPrismaService();
+
+      const date = new Date();
+      date.setDate(date.getDate() - 2);
+
+      await prisma.user.create({
+        data: Factory.build<UserData>(USER, { lastSeen: date }),
+      });
+
+      await runDeleteOnService(prisma);
+
+      expect(await prisma.user.count()).toEqual(1);
+    });
+
+    it("doesn't delete user with submissions", async () => {
+      const prisma = getPrismaService();
+      const date = new Date();
+      date.setDate(date.getDate() - 12);
+
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+          user: {
+            create: Factory.build<UserData>(USER, {
+              lastSeen: date,
+            }),
+          },
+        }),
+      });
+
+      await runDeleteOnService(prisma);
+
+      expect(await prisma.user.count()).toEqual(1);
+    });
+
+    it("only deletes anonymous users", async () => {
+      const prisma = getPrismaService();
+      const date = new Date();
+      date.setDate(date.getDate() - 12);
+
+      await prisma.user.create({
+        data: Factory.build<UserData>(USER, { authProvider: "anonymous", lastSeen: date }),
+      });
+
+      const goodUser = await prisma.user.create({
+        data: Factory.build<UserData>(USER, { authProvider: "github", lastSeen: date }),
+      });
+
+      await runDeleteOnService(prisma);
+
+      expect(await prisma.user.count()).toEqual(1);
+      expect((await prisma.user.findFirst()).id).toBe(goodUser.id);
     });
   });
 });
