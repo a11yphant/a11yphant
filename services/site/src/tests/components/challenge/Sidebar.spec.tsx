@@ -27,10 +27,9 @@ const mockLevel: Pick<CodeLevel, "instructions" | "tasks"> = {
 };
 
 describe("Sidebar", () => {
-  it("renders wrapper aside and div", () => {
+  it("renders the scroll overlay", () => {
     const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.find("aside").length).toBe(1);
     expect(wrapper.find(ScrollOverlayWrapper).length).toBe(1);
   });
 
@@ -60,10 +59,10 @@ describe("Sidebar", () => {
     expect(wrapper.find(HintList).length).toBe(1);
   });
 
-  it("adds className", () => {
+  it("passes the className to the root element", () => {
     const mockClassName = "mock-class";
     const wrapper = shallow(<Sidebar className={mockClassName} challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.find("aside").props().className).toContain(mockClassName);
+    expect(wrapper.find("section").props().className).toContain(mockClassName);
   });
 });

@@ -126,7 +126,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   return (
     <>
       <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challengeName} level={level} />
-      <section className={clsx("w-full hidden", "lg:flex")}>
+      <div className={clsx("w-full hidden", "lg:flex")}>
         <div className="h-full pl-4 relative box-border justify-between flex-col flex-auto">
           <Editors
             onReset={resetToInitialCode}
@@ -162,7 +162,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             </ButtonLoading>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 };
