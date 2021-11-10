@@ -1,4 +1,4 @@
-import { DifficultyEasy, DifficultyHard, DifficultyMedium, DifficultyProps } from "app/components/homepage/difficulties/Difficulties";
+import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import { ChallengeDifficulty } from "app/generated/graphql";
 import clsx from "clsx";
 import Link from "next/link";
@@ -13,19 +13,8 @@ interface CardProps {
   challengeNumber: number;
 }
 
-const getDifficultyIcon = (difficulty: ChallengeDifficulty): ((props: DifficultyProps) => React.ReactElement) => {
-  switch (difficulty) {
-    case ChallengeDifficulty.Easy:
-      return DifficultyEasy;
-    case ChallengeDifficulty.Medium:
-      return DifficultyMedium;
-    case ChallengeDifficulty.Hard:
-      return DifficultyHard;
-  }
-};
-
 const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
-  const DifficultyIcon = getDifficultyIcon(difficulty);
+  const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
 
   return (
     <li

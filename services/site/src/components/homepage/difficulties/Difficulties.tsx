@@ -1,3 +1,4 @@
+import { ChallengeDifficulty } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";
 
@@ -108,4 +109,15 @@ export const DifficultyHard = ({ className, firstClassName, secondClassName, thi
       />
     </>
   );
+};
+
+export const getDifficultyIconByChallengeDifficulty = (difficulty: ChallengeDifficulty): ((props: DifficultyProps) => React.ReactElement) => {
+  switch (difficulty) {
+    case ChallengeDifficulty.Easy:
+      return DifficultyEasy;
+    case ChallengeDifficulty.Medium:
+      return DifficultyMedium;
+    case ChallengeDifficulty.Hard:
+      return DifficultyHard;
+  }
 };

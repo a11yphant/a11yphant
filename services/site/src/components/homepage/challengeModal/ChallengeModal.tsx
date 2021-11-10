@@ -1,5 +1,6 @@
 import Button from "app/components/buttons/Button";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
+import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { Modal } from "app/components/modal/Modal";
 import { ModalActions } from "app/components/modal/ModalActions";
@@ -30,6 +31,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
     challenge === undefined
       ? undefined
       : challenge.levels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
+  const DifficultyIcon = challenge === undefined ? null : getDifficultyIconByChallengeDifficulty(challenge.difficulty);
 
   return (
     <Modal
@@ -55,7 +57,12 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
         <>
           <div className={"overflow-auto mb-20"}>
             <section>
-              <ModalTitle className={clsx("pb-14")}>{challenge.name}</ModalTitle>
+              <ModalTitle className={clsx("pb-14", "text-4xl")}>
+                {challenge.name}
+                <div className="inline-block">
+                  <DifficultyIcon className="w-2.5 h-6 inline-block" firstClassName="ml-4" />
+                </div>
+              </ModalTitle>
               <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
             </section>
 
