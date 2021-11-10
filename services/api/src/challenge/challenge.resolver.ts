@@ -46,6 +46,11 @@ export class ChallengeResolver {
     return this.challengeService.getStatusForUserAndChallenge(sessionToken.userId, challenge.id);
   }
 
+  @ResolveField(() => Number, { description: "The number of finished levels for this challenge" })
+  async numberOfFinishedLevels(@Parent() challenge: Challenge, @SessionToken() sessionToken: SessionTokenInterface): Promise<number> {
+    return this.challengeService.getNumberOfFinishedLevelsForUserAndChallenge(sessionToken.userId, challenge.id);
+  }
+
   @ResolveField(() => ChallengeStatus, { description: "The status of the challenge for the user with the passed id." })
   statusForUser(@Parent() challenge: Challenge, @Args("userId", { type: () => ID }) userId: string): Promise<ChallengeStatus> {
     return this.challengeService.getStatusForUserAndChallenge(userId, challenge.id);

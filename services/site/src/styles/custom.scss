@@ -28,8 +28,6 @@
 // Card -----
 // make whole card focusable when a-tag is only inside
 @mixin card {
-    gap: 2ch;
-
     a::after {
         content: "";
         position: absolute;
