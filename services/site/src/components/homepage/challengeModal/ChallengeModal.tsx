@@ -29,7 +29,7 @@ const getFirstOpenLevel = (levels: Array<Pick<Level, "id" | "status">>): string 
 export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalProps): React.ReactElement => {
   const router = useRouter();
 
-  const { data } = useChallengeDetailsBySlugQuery({
+  const { data, loading } = useChallengeDetailsBySlugQuery({
     variables: {
       slug: challengeSlug,
     },
@@ -52,9 +52,9 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
         "xl:px-20 xl:py-16",
       )}
     >
-      {challenge === undefined && <LoadingIndicator />}
+      {loading && <LoadingIndicator />}
 
-      {challenge && (
+      {!loading && challenge && (
         <>
           <div className={"overflow-auto mb-20"}>
             <section>
