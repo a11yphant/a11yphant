@@ -16,7 +16,7 @@ interface ChallengeModalProps {
   challengeSlug?: string;
 }
 
-const getFirstOpenLevel = (levels: Array<Pick<Level, "id" | "status">>): string | undefined => {
+const getFirstUnfinishedLevel = (levels: Array<Pick<Level, "id" | "status">>): string | undefined => {
   for (const level of levels) {
     if (level.status === LevelStatus.Open || level.status === LevelStatus.InProgress) {
       return level.id;
@@ -36,7 +36,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
     skip: challengeSlug === undefined,
   });
   const challenge = data?.challenge;
-  const firstOpenLevelId = challenge === undefined ? undefined : getFirstOpenLevel(challenge.levels);
+  const firstUnfinishedLevelId = challenge === undefined ? undefined : getFirstUnfinishedLevel(challenge.levels);
 
   return (
     <Modal
@@ -68,9 +68,9 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                   <ChallengeModalLevelCard
                     key={level.id}
                     challengeSlug={challengeSlug}
-                    nthLevel={level.order}
+                    levelNumber={level.order}
                     status={level.status}
-                    firstOpenLevel={level.id === firstOpenLevelId}
+                    isFirstUnfinishedLevel={level.id === firstUnfinishedLevelId}
                   />
                 );
               })}
@@ -83,7 +83,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
             </Button>
             <Button
               onClick={() => {
-                const firstOpenLevel = challenge.levels.find((level) => level.id === firstOpenLevelId);
+                const firstOpenLevel = challenge.levels.find((level) => level.id === firstUnfinishedLevelId);
 
                 router.push(
                   `/challenge/${challengeSlug}/level/${Number(firstOpenLevel?.order ?? 1).toLocaleString("de-AT", {

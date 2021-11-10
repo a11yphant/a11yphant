@@ -6,15 +6,20 @@ import React from "react";
 
 interface ChallengeModalLevelCardProps {
   challengeSlug: string;
-  nthLevel: number;
+  levelNumber: number;
   status: LevelStatus;
-  firstOpenLevel: boolean;
+  isFirstUnfinishedLevel: boolean;
 }
 
-export const ChallengeModalLevelCard = ({ challengeSlug, nthLevel, status, firstOpenLevel }: ChallengeModalLevelCardProps): React.ReactElement => {
+export const ChallengeModalLevelCard = ({
+  challengeSlug,
+  levelNumber,
+  status,
+  isFirstUnfinishedLevel,
+}: ChallengeModalLevelCardProps): React.ReactElement => {
   return (
     <Link
-      href={`/challenge/${challengeSlug}/level/${Number(nthLevel).toLocaleString("de-AT", {
+      href={`/challenge/${challengeSlug}/level/${Number(levelNumber).toLocaleString("de-AT", {
         minimumIntegerDigits: 2,
         useGrouping: false,
       })}`}
@@ -22,17 +27,17 @@ export const ChallengeModalLevelCard = ({ challengeSlug, nthLevel, status, first
       <a
         className={clsx(
           "border border-solid rounded-lg",
-          !firstOpenLevel && "border-grey-dark",
+          !isFirstUnfinishedLevel && "border-grey-dark",
           "px-4 py-3",
           "w-52 h-16",
-          firstOpenLevel && "border-primary bg-primary",
+          isFirstUnfinishedLevel && "border-primary bg-primary",
           "relative",
           "hover:bg-primary-dark hover:border-primary-dark",
         )}
       >
         <h3 className="text-base">
           Level{" "}
-          {Number(nthLevel).toLocaleString("de-AT", {
+          {Number(levelNumber).toLocaleString("de-AT", {
             minimumIntegerDigits: 2,
             useGrouping: false,
           })}
