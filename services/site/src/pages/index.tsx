@@ -1,5 +1,6 @@
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
+import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
 import Navigation from "app/components/Navigation";
@@ -10,14 +11,20 @@ import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React from "react";
 
 const Home: React.FunctionComponent = () => {
+  const router = useRouter();
+  const { currentUser } = useCurrentUser();
+
   const {
     data: { easyChallenges, mediumChallenges, hardChallenges },
   } = useChallengesQuery();
 
-  const { currentUser } = useCurrentUser();
+  const onCloseModal = (): void => {
+    router.push("/", undefined, { shallow: true });
+  };
 
   return (
     <>
@@ -86,6 +93,7 @@ const Home: React.FunctionComponent = () => {
             )}
           </section>
         </div>
+        <ChallengeModal open={!!router.query.challenge} onClose={onCloseModal} challengeSlug={router.query.challenge as string} />
       </main>
     </>
   );
