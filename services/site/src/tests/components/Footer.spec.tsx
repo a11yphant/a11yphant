@@ -1,5 +1,7 @@
-import { render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import Footer from "app/components/Footer";
+
+afterEach(cleanup);
 
 describe("footer", () => {
   it("renders a footer", () => {
