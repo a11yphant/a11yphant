@@ -45,7 +45,11 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
         "xl:px-20 xl:py-16",
       )}
     >
-      {loading && <LoadingIndicator />}
+      {loading && (
+        <div className={clsx("w-full h-full", "flex justify-center items-center")}>
+          <LoadingIndicator />
+        </div>
+      )}
 
       {!loading && challenge && (
         <>
