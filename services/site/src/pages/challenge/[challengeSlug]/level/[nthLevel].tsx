@@ -10,7 +10,7 @@ import {
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
   LevelByChallengeSlugDocument,
-  LevelByChallengeSlugQueryResult,
+  LevelByChallengeSlugQuery,
   LevelByChallengeSlugQueryVariables,
   useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
@@ -83,9 +83,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { challengeSlug, nthLevel } = context.params;
 
-  await Promise.all([
+  const [, levelResult, challengeResult] = await Promise.all([
     getServerSideCurrentUser(apolloClient),
-    apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
+    apolloClient.query<LevelByChallengeSlugQuery, LevelByChallengeSlugQueryVariables>({
       query: LevelByChallengeSlugDocument,
       variables: {
         challengeSlug: challengeSlug as string,
@@ -99,6 +99,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     }),
   ]);
+
+  if (!challengeResult.data.challenge || !levelResult.data.level) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
