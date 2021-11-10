@@ -22,9 +22,9 @@ const Home: React.FunctionComponent = () => {
     data: { easyChallenges, mediumChallenges, hardChallenges },
   } = useChallengesQuery();
 
-  const onCloseModal = React.useCallback(() => {
+  const onCloseModal = (): void => {
     router.push("/", undefined, { shallow: true });
-  }, [router]);
+  };
 
   return (
     <>
