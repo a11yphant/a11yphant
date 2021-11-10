@@ -92,4 +92,17 @@ describe("challenge resolver", () => {
 
     expect(status).toBe(ChallengeStatus.FINISHED);
   });
+
+  it("resolves then number of completed levels for a user", async () => {
+    const resolver = new ChallengeResolver(
+      createMock<ChallengeService>({
+        getNumberOfFinishedLevelsForUserAndChallenge: jest.fn().mockResolvedValue(4),
+      }),
+      createMock<LevelService>(),
+    );
+
+    const status = await resolver.numberOfFinishedLevels(ChallengeFactory.build(), { userId: "userId" });
+
+    expect(status).toEqual(4);
+  });
 });

@@ -35,7 +35,7 @@ export const routes: Routes = {
       });
 
       return {
-        href: `/challenge/${challengeSlug}`,
+        href: `/?challenge=${challengeSlug}`,
         breadcrumb: data.challenge?.name,
       };
     },

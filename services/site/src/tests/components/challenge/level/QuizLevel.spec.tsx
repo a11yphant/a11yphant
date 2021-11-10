@@ -6,15 +6,15 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
+import Lottie, { LottieProps } from "app/components/Lottie";
 import { ResultStatus, SubmitQuizLevelAnswerDocument } from "app/generated/graphql";
 import { mount } from "enzyme";
 import router from "next/router";
 import React from "react";
-import Lottie, { LottieProps } from "react-lottie";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
-jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
+jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return;
 });
 

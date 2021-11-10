@@ -65,8 +65,6 @@ describe("Navigation", () => {
     // Wrapper exists
     expect(wrapper.exists("header")).toBeTruthy();
 
-    // Logo and Link exist
-    expect(wrapper.find("h1")).toHaveProperty("length", 1);
     expect(wrapper.exists(A11yphantLogo)).toBeTruthy();
 
     // Breadcrumbs exist

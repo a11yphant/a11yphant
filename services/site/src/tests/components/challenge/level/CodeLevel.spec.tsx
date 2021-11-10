@@ -120,4 +120,14 @@ describe("Code Level", () => {
 
     expect(wrapper.find(ButtonLoading).length).toBe(1);
   });
+
+  it("disables the submit button if the submission is not yet available", () => {
+    const wrapper = mount(
+      <MockedProvider mocks={mocks}>
+        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
+      </MockedProvider>,
+    );
+
+    expect(wrapper.find(ButtonLoading).props()).toHaveProperty("disabled", true);
+  });
 });

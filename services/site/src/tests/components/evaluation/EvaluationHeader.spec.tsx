@@ -2,13 +2,13 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
+import Lottie, { LottieProps } from "app/components/Lottie";
 import correctAnimation from "app/lotties/correct_lottie.json";
 import failAnimation from "app/lotties/fail_lottie.json";
 import { shallow } from "enzyme";
 import React from "react";
-import Lottie, { LottieProps } from "react-lottie";
 
-jest.mock("react-lottie", () => (): React.FunctionComponent<LottieProps> => {
+jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return;
 });
 
