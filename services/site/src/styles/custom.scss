@@ -10,8 +10,6 @@
 }
 
 .container-dark {
-    @apply relative;
-    @apply border-2;
     @apply rounded-xl;
     @apply border-background-light;
     @apply bg-background-light;
@@ -60,18 +58,6 @@
     @include card;
 }
 
-// Fade Overlay -----
-.scroll-wrapper {
+.scroll-smooth {
     scroll-behavior: smooth;
-}
-
-.scroll-overlay {
-    @apply fixed;
-    @apply bottom-0;
-    @apply left-2;
-    @apply border-0;
-    @apply rounded-xl;
-    @apply bg-gradient-to-t;
-    @apply from-background;
-    @apply pointer-events-none;
 }

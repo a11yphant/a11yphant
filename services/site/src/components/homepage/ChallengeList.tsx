@@ -15,14 +15,12 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
   return (
     <div className={clsx("mt-2 mb-6 flex flex-col items-start", className)}>
       <div className="mx-4 mb-6 flex flex-row items-center">
-        <h3 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")}>
-          <span className="sr-only">Difficulty </span>
+        <h3 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")} aria-label={`Difficulty ${heading}`}>
           {heading}
         </h3>
-        <p className={clsx("ml-4 mb-0 text-grey font-normal", "h4")} aria-hidden="true">
+        <p className={clsx("ml-4 mb-0 text-grey font-normal", "h4")} aria-label={`${completedLevel} of ${openLevel} challenges completed`}>
           {`(${completedLevel}/${openLevel})`}
         </p>
-        <p className="sr-only">{`${completedLevel} of ${openLevel} challenges completed`}</p>
       </div>
       <ul className={clsx("flex flex-row flex-wrap")}>
         {challenges.map((challenge) => (
