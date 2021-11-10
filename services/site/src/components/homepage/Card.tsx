@@ -1,3 +1,4 @@
+import Check from "app/components/icons/Check";
 import { ChallengeDifficulty } from "app/generated/graphql";
 import clsx from "clsx";
 import Link from "next/link";
@@ -7,26 +8,39 @@ interface CardProps {
   className?: string;
   heading: string;
   levels: number;
+  finishedLevels: number;
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
 }
 
-const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
+const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, finishedLevels, difficulty, challengeSlug, challengeNumber }) => {
   return (
     <li
       className={clsx(
         "w-64 h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
         "group transition duration-300",
-        "hover:bg-grey",
-        "card shadow-card",
-        difficulty === ChallengeDifficulty.Easy && "bg-gradient-easy",
-        difficulty === ChallengeDifficulty.Medium && "bg-gradient-medium",
-        difficulty === ChallengeDifficulty.Hard && "bg-gradient-hard",
+        "card shadow-card gap-0",
         "bg-no-repeat	bg-contain bg-top",
+        difficulty === ChallengeDifficulty.Easy && finishedLevels !== levels && "bg-gradient-easy",
+        difficulty === ChallengeDifficulty.Medium && finishedLevels !== levels && "bg-gradient-medium",
+        difficulty === ChallengeDifficulty.Hard && finishedLevels !== levels && "bg-gradient-hard",
         className,
       )}
     >
+      {finishedLevels > 0 && finishedLevels !== levels && (
+        <div className={clsx("flex-1 flex items-center justify-center")}>
+          <p className="text-black font-mono text-6xl mb-0">
+            {finishedLevels}/{levels} <span className="sr-only">levels completed</span>
+          </p>
+        </div>
+      )}
+
+      {finishedLevels > 0 && finishedLevels === levels && (
+        <div className="flex-1 flex items-center justify-center bg-background-light">
+          <Check className="h-20 text-grey-middle" />
+        </div>
+      )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
         <h4 className="w-full">
           <span className="sr-only">{`Challenge ${challengeNumber}`}</span>

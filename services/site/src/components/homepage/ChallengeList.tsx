@@ -31,7 +31,8 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
             className={clsx("mb-12 mr-12 last:mr-0", "sm:mr-14", "md:mr-16", "lg:mr-24")}
             challengeSlug={challenge.slug}
             heading={challenge.name}
-            levels={challenge.levels.length}
+            levels={challenge.numberOfLevels}
+            finishedLevels={challenge.numberOfFinishedLevels}
             difficulty={challenge.difficulty}
             challengeNumber={challenges.length}
           />
