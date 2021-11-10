@@ -1,3 +1,4 @@
+import Footer from "app/components/Footer";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import Hero from "app/components/homepage/Hero";
@@ -25,7 +26,7 @@ const Home: React.FunctionComponent = () => {
         <title>a11yphant</title>
       </Head>
       <Navigation displayBreadcrumbs />
-      <main className={clsx("h-main flex flex-col box-border")}>
+      <main className={clsx("flex flex-col box-border")}>
         <h1 className="sr-only" aria-label="Allyphant">
           a11yphant
         </h1>
@@ -87,6 +88,7 @@ const Home: React.FunctionComponent = () => {
           </section>
         </div>
       </main>
+      <Footer />
     </>
   );
 };
