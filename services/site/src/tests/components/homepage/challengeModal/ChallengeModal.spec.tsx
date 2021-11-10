@@ -28,6 +28,8 @@ const mockLevels = [
   { id: "850f4919-3c86-430c-89d2-b0363022031a", order: 7, status: LevelStatus.Open },
   { id: "8e763092-092c-4cfd-8164-193797be550a", order: 8, status: LevelStatus.Open },
 ];
+const firstUnfinishedLevel = mockLevels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
+
 const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
   {
     request: {
@@ -94,6 +96,12 @@ describe("ChallengeModal", () => {
 
   it("only one level card has the 'isFirstUnfinishedLevel' attribute", () => {
     expect(wrapper.find(ChallengeModalLevelCard).findWhere((n) => n.props().isFirstUnfinishedLevel === true).length).toBe(1);
+    expect(
+      wrapper
+        .find(ChallengeModalLevelCard)
+        .findWhere((n) => n.props().isFirstUnfinishedLevel === true)
+        .props().levelNumber,
+    ).toBe(firstUnfinishedLevel.order);
   });
 
   it("has a cancel button that calls onClose", () => {
@@ -110,8 +118,6 @@ describe("ChallengeModal", () => {
       .find("button")
       .findWhere((n) => n.type() === "button" && n.text() === "Start Coding")
       .simulate("click");
-
-    const firstUnfinishedLevel = mockLevels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
 
     expect(router).toMatchObject({
       asPath: `/challenge/${mockChallengeSlug}/level/${firstUnfinishedLevel.order.toLocaleString("de-AT", {

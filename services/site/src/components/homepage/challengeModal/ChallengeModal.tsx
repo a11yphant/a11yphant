@@ -4,7 +4,7 @@ import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { Modal } from "app/components/modal/Modal";
 import { ModalActions } from "app/components/modal/ModalActions";
 import { ModalTitle } from "app/components/modal/ModalTitle";
-import { Level, LevelStatus, useChallengeDetailsBySlugQuery } from "app/generated/graphql";
+import { LevelStatus, useChallengeDetailsBySlugQuery } from "app/generated/graphql";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import React from "react";
@@ -16,16 +16,6 @@ interface ChallengeModalProps {
   challengeSlug?: string;
 }
 
-const getFirstUnfinishedLevel = (levels: Array<Pick<Level, "id" | "status">>): string | undefined => {
-  for (const level of levels) {
-    if (level.status === LevelStatus.Open || level.status === LevelStatus.InProgress) {
-      return level.id;
-    }
-  }
-
-  return undefined;
-};
-
 export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalProps): React.ReactElement => {
   const router = useRouter();
 
@@ -36,7 +26,10 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
     skip: challengeSlug === undefined,
   });
   const challenge = data?.challenge;
-  const firstUnfinishedLevelId = challenge === undefined ? undefined : getFirstUnfinishedLevel(challenge.levels);
+  const firstUnfinishedLevel =
+    challenge === undefined
+      ? undefined
+      : challenge.levels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
 
   return (
     <Modal
@@ -70,7 +63,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                     challengeSlug={challengeSlug}
                     levelNumber={level.order}
                     status={level.status}
-                    isFirstUnfinishedLevel={level.id === firstUnfinishedLevelId}
+                    isFirstUnfinishedLevel={level.id === firstUnfinishedLevel?.id}
                   />
                 );
               })}
@@ -83,10 +76,8 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
             </Button>
             <Button
               onClick={() => {
-                const firstOpenLevel = challenge.levels.find((level) => level.id === firstUnfinishedLevelId);
-
                 router.push(
-                  `/challenge/${challengeSlug}/level/${Number(firstOpenLevel?.order ?? 1).toLocaleString("de-AT", {
+                  `/challenge/${challengeSlug}/level/${Number(firstUnfinishedLevel?.order ?? 1).toLocaleString("de-AT", {
                     minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}`,
