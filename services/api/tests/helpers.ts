@@ -1,10 +1,11 @@
-import { PartialFuncReturn } from "@golevelup/ts-jest";
-import { Logger } from "@nestjs/common";
+import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
+import { CallHandler, ExecutionContext, Logger, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PrismaClient } from "@prisma/client";
 import { Migrate } from "@prisma/migrate";
 import os from "os";
 import { join } from "path";
+import { Observable, of } from "rxjs";
 
 import { PrismaService } from "../src/prisma/prisma.service";
 
@@ -108,4 +109,25 @@ export function createConfigServiceMock(data?: Record<string, any>): PartialFunc
       return mockData[key];
     }),
   };
+}
+
+export function runInterceptor(
+  interceptor: NestInterceptor,
+  executionContext: ExecutionContext,
+  nextCallback: () => void,
+  completeCallback: () => void,
+  done: () => {},
+): void {
+  const handle = jest.fn(() => of("something"));
+  (interceptor.intercept(executionContext, createMock<CallHandler>({ handle })) as Promise<Observable<any>>).then((observable) =>
+    observable.subscribe({
+      next() {
+        nextCallback();
+      },
+      complete() {
+        completeCallback();
+        done();
+      },
+    }),
+  );
 }
