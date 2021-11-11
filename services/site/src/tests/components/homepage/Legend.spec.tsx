@@ -12,7 +12,7 @@ describe("Legend", () => {
 
     expect(container.querySelectorAll("ul")).toHaveProperty("length", 1);
     expect(container.querySelectorAll("li")).toHaveProperty("length", 3);
-    expect(container.querySelectorAll("div")).toHaveProperty("length", 10);
+    expect(container.querySelectorAll("span")).toHaveProperty("length", 9);
     expect(screen.getByText("Easy", { selector: "li:nth-of-type(1)" })).toBeTruthy();
     expect(screen.getByText("Medium", { selector: "li:nth-of-type(2)" })).toBeTruthy();
     expect(screen.getByText("Hard", { selector: "li:nth-of-type(3)" })).toBeTruthy();

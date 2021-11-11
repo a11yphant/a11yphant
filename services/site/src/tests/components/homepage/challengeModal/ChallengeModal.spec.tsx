@@ -1,17 +1,24 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
 import { act, cleanup } from "@testing-library/react";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { ModalTitle } from "app/components/modal/ModalTitle";
-import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, LevelStatus } from "app/generated/graphql";
+import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
 import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
+jest.mock("react-resize-detector", () => ({
+  useResizeDetector: () => {
+    return;
+  },
+}));
 
 const mockChallengeSlug = "mocked-challenge-slug";
 const mockChallengeName = "A mocked Challenge";
@@ -42,6 +49,7 @@ const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
       data: {
         challenge: {
           id: "8b350581-bf0f-4d36-b8b6-09c470d613d0",
+          difficulty: ChallengeDifficulty.Easy,
           name: mockChallengeName,
           introduction: mockChallengeIntroduction,
           levels: mockLevels,
@@ -88,6 +96,10 @@ describe("ChallengeModal", () => {
   it("renders heading and introduction", async () => {
     expect(wrapper.find(ModalTitle).text()).toBe(mockChallengeName);
     expect(wrapper.find("p").text()).toBe(mockChallengeIntroduction);
+  });
+
+  it("has a ScrollOverlayWrapper", async () => {
+    expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
   });
 
   it("renders level cards", async () => {
