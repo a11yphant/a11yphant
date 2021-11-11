@@ -1,5 +1,6 @@
 import { UserAccountBox } from "app/components/user/UserAccountBox";
 import clsx from "clsx";
+import Link from "next/link";
 import React from "react";
 
 const Hero: React.FC = () => {
@@ -9,7 +10,7 @@ const Hero: React.FC = () => {
         "max-w-screen-3xl mx-8 mt-12 mb-24 flex flex-col",
         "sm:m-12",
         "md:mx-24",
-        "xl:h-main xl:flex-row xl:items-center",
+        "xl:h-[85vh] xl:flex-row xl:items-center",
         "2xl:mx-auto",
       )}
     >
@@ -24,8 +25,7 @@ const Hero: React.FC = () => {
           read large amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web
           accessibility challenge and improve your skills.
         </p>
-        {/* TODO: add button again when browser scroll bug is fixed */}
-        {/* <Link href="/#challenges">
+        <Link href="/#challenges">
           <a
             className={clsx(
               "w-max mt-8 px-4 py-2 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
           >
             Start Coding
           </a>
-        </Link> */}
+        </Link>
       </section>
       <section
         className={clsx(

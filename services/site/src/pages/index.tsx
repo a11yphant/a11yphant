@@ -32,7 +32,7 @@ const Home: React.FunctionComponent = () => {
         <title>a11yphant</title>
       </Head>
       <Navigation displayBreadcrumbs />
-      <main className={clsx("h-main flex flex-col box-border")}>
+      <main>
         <h1 className="sr-only" aria-label="Allyphant">
           a11yphant
         </h1>
@@ -47,9 +47,9 @@ const Home: React.FunctionComponent = () => {
                 heading={
                   <>
                     Easy
-                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                    <span className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                    <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
                   </>
                 }
                 completedLevel={0}
@@ -64,9 +64,9 @@ const Home: React.FunctionComponent = () => {
                 heading={
                   <>
                     Medium
-                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
+                    <span className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
                   </>
                 }
                 completedLevel={0}
@@ -81,9 +81,9 @@ const Home: React.FunctionComponent = () => {
                 heading={
                   <>
                     Hard
-                    <div className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
-                    <div className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <span className={clsx("ml-4 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
+                    <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
                   </>
                 }
                 completedLevel={0}

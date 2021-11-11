@@ -14,7 +14,6 @@ module.exports = {
       },
       spacing: {
         inherit: "inherit",
-        main: "92%",
         "fit-content": "fit-content",
       },
       maxWidth: {
