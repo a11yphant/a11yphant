@@ -61,7 +61,7 @@ describe("last-seen interceptor", () => {
     expect(seenFunc).not.toHaveBeenCalled();
   });
 
-  it("logs the current user as seen", (done) => {
+  it("marks the current user as seen", (done) => {
     const seenFunc = jest.fn();
     const userId = "user";
 
