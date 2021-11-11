@@ -1,6 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
 import { act, cleanup } from "@testing-library/react";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
@@ -12,6 +13,12 @@ import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
+jest.mock("react-resize-detector", () => ({
+  useResizeDetector: () => {
+    return;
+  },
+}));
 
 const mockChallengeSlug = "mocked-challenge-slug";
 const mockChallengeName = "A mocked Challenge";
@@ -89,6 +96,10 @@ describe("ChallengeModal", () => {
   it("renders heading and introduction", async () => {
     expect(wrapper.find(ModalTitle).text()).toBe(mockChallengeName);
     expect(wrapper.find("p").text()).toBe(mockChallengeIntroduction);
+  });
+
+  it("has a ScrollOverlayWrapper", async () => {
+    expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
   });
 
   it("renders level cards", async () => {
