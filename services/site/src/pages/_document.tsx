@@ -10,7 +10,7 @@ class CustomDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        <body className="overflow-hidden">
+        <body>
           <Main />
           <NextScript />
         </body>

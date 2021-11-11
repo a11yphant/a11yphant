@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 export interface ScrollOverlayWrapperProps {
@@ -18,43 +18,46 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
   enableTopOverlay = true,
   enableBottomOverlay = true,
 }) => {
-  const [isVisibleBottom, setIsVisibleBottom] = useState(false);
-  const [isVisibleTop, setIsVisibleTop] = useState(false);
+  const [showBottomOverlay, setShowBottomOverlay] = useState(false);
+  const [showTopOverlay, setShowTopOverlay] = useState(false);
   const wrapperRef = React.useRef<HTMLDivElement>();
 
   // show overlay when content is scroll-able
   React.useEffect(() => {
     if (wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight) {
-      setIsVisibleBottom(true);
+      setShowBottomOverlay(true);
     }
   }, []);
 
-  const listenToScroll = useCallback(() => {
+  const listenToScroll = (): void => {
     // remove gradient when scrolled to bottom
-    if (wrapperRef.current?.clientHeight === wrapperRef.current?.scrollHeight - Math.abs(wrapperRef.current?.scrollTop)) {
-      setIsVisibleBottom(false);
-    } else {
-      setIsVisibleBottom(true);
-    }
+    const containerHeight = wrapperRef.current?.clientHeight;
+    const scrollableHeight = wrapperRef.current?.scrollHeight;
+    const scrollDistanceToTop = wrapperRef.current?.scrollTop;
+    const isScrolledToBottom = containerHeight === scrollableHeight - scrollDistanceToTop;
 
-    // add gradient on top when scrolled to bottom
-    if (wrapperRef.current?.scrollTop > 0) {
-      setIsVisibleTop(true);
-    } else {
-      setIsVisibleTop(false);
-    }
-  }, [wrapperRef, isVisibleBottom]);
+    setShowBottomOverlay(!isScrolledToBottom);
+    setShowTopOverlay(scrollDistanceToTop > 0);
+  };
 
   useResizeDetector({
     targetRef: wrapperRef,
     onResize: listenToScroll,
   });
 
+  const scrollOverLayClasses = clsx("sticky w-full left-0 border-0 from-background pointer-events-none", "transition-opacity");
+
   return (
-    <div onScroll={listenToScroll} ref={wrapperRef} className={className}>
-      {enableTopOverlay && isVisibleTop && <div className={clsx("rotate-180", "scroll-overlay", classNameTopOverlay)} />}
+    <div onScroll={listenToScroll} ref={wrapperRef} className={clsx("relative overflow-auto scroll-smooth", className)}>
+      {enableTopOverlay && (
+        <div className={clsx("top-0 bg-gradient-to-b", scrollOverLayClasses, classNameTopOverlay, showTopOverlay ? "opacity-100" : "opacity-0")} />
+      )}
       {children}
-      {enableBottomOverlay && isVisibleBottom && <div className={clsx("scroll-overlay", classNameBottomOverlay)} />}
+      {enableBottomOverlay && (
+        <div
+          className={clsx("bottom-0 bg-gradient-to-t", scrollOverLayClasses, classNameBottomOverlay, showBottomOverlay ? "opacity-100" : "opacity-0")}
+        />
+      )}
     </div>
   );
 };

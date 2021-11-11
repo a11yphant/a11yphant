@@ -78,40 +78,9 @@ export class ChallengeService {
 
     const levelCount = codeLevelCount + quizLevelCount;
 
-    // all levels from this challenge where at least one
-    // submission has the users id and a successful result
-    // means: all levels which have been finished by the user
     const [successfulCodeLevelCount, successfulQuizLevelCount] = await Promise.all([
-      this.prisma.codeLevel.count({
-        where: {
-          challengeId,
-          submissions: {
-            some: {
-              AND: {
-                userId,
-                result: {
-                  status: ResultStatus.SUCCESS,
-                },
-              },
-            },
-          },
-        },
-      }),
-      this.prisma.quizLevel.count({
-        where: {
-          challengeId,
-          submissions: {
-            some: {
-              AND: {
-                userId,
-                result: {
-                  status: ResultStatus.SUCCESS,
-                },
-              },
-            },
-          },
-        },
-      }),
+      this.getNumberOfFinishedCodeLevelsForUser(challengeId, userId),
+      this.getNumberOfFinishedQuizLevelsForUser(challengeId, userId),
     ]);
 
     // if they are the same amount than the challenge levels the challenge is finished
@@ -120,6 +89,54 @@ export class ChallengeService {
     }
 
     return ChallengeStatus.IN_PROGRESS;
+  }
+
+  async getNumberOfFinishedLevelsForUserAndChallenge(userId: string, challengeId: string): Promise<number> {
+    const [codeLevelCount, quizLevelCount] = await Promise.all([
+      this.getNumberOfFinishedCodeLevelsForUser(challengeId, userId),
+      this.getNumberOfFinishedQuizLevelsForUser(challengeId, userId),
+    ]);
+
+    return codeLevelCount + quizLevelCount;
+  }
+
+  private getNumberOfFinishedQuizLevelsForUser(challengeId: string, userId: string): Promise<number> {
+    return this.prisma.quizLevel.count({
+      where: {
+        challengeId,
+        submissions: {
+          some: {
+            AND: {
+              userId,
+              result: {
+                status: ResultStatus.SUCCESS,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  private getNumberOfFinishedCodeLevelsForUser(challengeId: string, userId: string): Promise<number> {
+    // all levels from this challenge where at least one
+    // submission has the users id and a successful result
+    // means: all levels which have been finished by the user
+    return this.prisma.codeLevel.count({
+      where: {
+        challengeId,
+        submissions: {
+          some: {
+            AND: {
+              userId,
+              result: {
+                status: ResultStatus.SUCCESS,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   static createModelFromDatabaseRecord(record: ChallengeRecord): Challenge {
