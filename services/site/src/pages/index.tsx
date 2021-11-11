@@ -1,3 +1,4 @@
+import Footer from "app/components/Footer";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
@@ -95,6 +96,7 @@ const Home: React.FunctionComponent = () => {
         </div>
         <ChallengeModal open={!!router.query.challenge} onClose={onCloseModal} challengeSlug={router.query.challenge as string} />
       </main>
+      <Footer />
     </>
   );
 };
