@@ -12,7 +12,7 @@ export interface DifficultyProps {
 export const DifficultyEasy = ({ className, firstClassName, secondClassName, thirdClassName }: DifficultyProps): React.ReactElement => {
   return (
     <>
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -21,7 +21,7 @@ export const DifficultyEasy = ({ className, firstClassName, secondClassName, thi
           "group-hover:border-grey-dark group-hover:bg-grey-dark",
         )}
       />
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -30,7 +30,7 @@ export const DifficultyEasy = ({ className, firstClassName, secondClassName, thi
           "group-hover:border-grey-dark",
         )}
       />
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -46,7 +46,7 @@ export const DifficultyEasy = ({ className, firstClassName, secondClassName, thi
 export const DifficultyMedium = ({ className, firstClassName, secondClassName, thirdClassName }: DifficultyProps): React.ReactElement => {
   return (
     <>
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -55,7 +55,7 @@ export const DifficultyMedium = ({ className, firstClassName, secondClassName, t
           "group-hover:border-grey-dark group-hover:bg-grey-dark",
         )}
       />
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -64,7 +64,7 @@ export const DifficultyMedium = ({ className, firstClassName, secondClassName, t
           "group-hover:border-grey-dark group-hover:bg-grey-dark",
         )}
       />
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -80,7 +80,7 @@ export const DifficultyMedium = ({ className, firstClassName, secondClassName, t
 export const DifficultyHard = ({ className, firstClassName, secondClassName, thirdClassName }: DifficultyProps): React.ReactElement => {
   return (
     <>
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -89,7 +89,7 @@ export const DifficultyHard = ({ className, firstClassName, secondClassName, thi
           "group-hover:border-grey-dark group-hover:bg-grey-dark",
         )}
       />
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",
@@ -98,7 +98,7 @@ export const DifficultyHard = ({ className, firstClassName, secondClassName, thi
           "group-hover:border-grey-dark group-hover:bg-grey-dark",
         )}
       />
-      <div
+      <span
         className={clsx(
           className,
           className === undefined && "w-2.5 h-4/5",

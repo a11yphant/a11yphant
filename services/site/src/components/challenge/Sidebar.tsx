@@ -14,18 +14,16 @@ interface SidebarProps {
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeName, level }) => {
   return (
-    <aside className={clsx("w-[45%] py-4", "container-dark", "xl:w-[40%] 2xl:w-[28%]", className)}>
-      <ScrollOverlayWrapper
-        className={"w-full h-full px-7 pb-1 flex flex-col overflow-auto"}
-        classNameTopOverlay={clsx("w-[31%] h-28 top-16", "xl:w-[29%] 2xl:w-[22%]")}
-        classNameBottomOverlay={clsx("w-[31%] h-44", "xl:w-[29%] 2xl:w-[22%]")}
-      >
-        <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
-        <h3 className={clsx("my-8", "h4")}>Instructions</h3>
-        <p className={clsx("whitespace-pre-wrap", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
-        <HintList tasks={level.tasks} />
+    <section className={clsx("h-full w-[45%]", "container-dark", "xl:w-[40%] 2xl:w-[28%]", className)}>
+      <ScrollOverlayWrapper className="max-h-full" classNameTopOverlay="h-28 -mb-28" classNameBottomOverlay="h-28 -mt-28">
+        <div className="py-4 px-7">
+          <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
+          <h3 className={clsx("my-8", "h4")}>Instructions</h3>
+          <p className={clsx("whitespace-pre-wrap", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
+          <HintList tasks={level.tasks} />
+        </div>
       </ScrollOverlayWrapper>
-    </aside>
+    </section>
   );
 };
 

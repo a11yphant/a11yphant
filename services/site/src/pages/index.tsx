@@ -33,7 +33,7 @@ const Home: React.FunctionComponent = () => {
         <title>a11yphant</title>
       </Head>
       <Navigation displayBreadcrumbs />
-      <main className={clsx("h-main flex flex-col box-border")}>
+      <main>
         <h1 className="sr-only" aria-label="Allyphant">
           a11yphant
         </h1>

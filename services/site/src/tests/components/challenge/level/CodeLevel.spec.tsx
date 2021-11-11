@@ -81,17 +81,7 @@ describe("Code Level", () => {
     expect(wrapper.find(Sidebar).length).toBe(1);
   });
 
-  it("renders section", () => {
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
-
-    expect(wrapper.find("section").length).toBe(1);
-  });
-
-  it("renders all editors", () => {
+  it("renders the editor", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />

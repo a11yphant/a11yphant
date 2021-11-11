@@ -46,17 +46,16 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
       <ApolloProvider client={apolloClient}>
         <UserAccountModalProvider>
-          <div className="w-full h-screen">
-            <ConditionalWrapper<ScrollOverlayWrapperProps>
-              condition={pageProps.showScrollOverlay ?? true}
-              Wrapper={ScrollOverlayWrapper}
-              className={clsx("w-full h-full overflow-auto", "scroll-wrapper")}
-              enableTopOverlay={false}
-              classNameBottomOverlay={"w-full h-52"}
-            >
-              <Component {...pageProps} />
-            </ConditionalWrapper>
-          </div>
+          <ConditionalWrapper<ScrollOverlayWrapperProps>
+            condition={pageProps.showScrollOverlay ?? true}
+            Wrapper={ScrollOverlayWrapper}
+            className={clsx("h-screen")}
+            enableTopOverlay={false}
+            enableBottomOverlay={true}
+            classNameBottomOverlay={"h-52 -mt-52"}
+          >
+            <Component {...pageProps} />
+          </ConditionalWrapper>
         </UserAccountModalProvider>
       </ApolloProvider>
     </ErrorDialogProvider>
