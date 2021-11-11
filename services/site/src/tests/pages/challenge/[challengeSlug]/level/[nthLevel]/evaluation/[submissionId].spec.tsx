@@ -1,3 +1,4 @@
+import { ApolloError } from "@apollo/client";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { act, cleanup } from "@testing-library/react";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
@@ -6,8 +7,10 @@ import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import { LottieProps } from "app/components/Lottie";
 import { ChallengeBySlugDocument } from "app/generated/graphql";
-import Evaluation from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
+import Evaluation, { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { mount, ReactWrapper } from "enzyme";
+import { GraphQLError } from "graphql";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import router from "next/router";
 import React from "react";
@@ -23,6 +26,7 @@ jest.mock("react-resize-detector", () => ({
     return;
   },
 }));
+
 jest.mock("app/components/evaluation/usePollSubmissionResult", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { ResultStatus } = require("app/generated/graphql");
@@ -31,6 +35,10 @@ jest.mock("app/components/evaluation/usePollSubmissionResult", () => {
     usePollSubmissionResult: () => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 }),
   };
 });
+
+jest.mock("app/lib/apollo-client", () => ({
+  initializeApollo: (_, context) => context.apolloClient,
+}));
 
 const mockChallengeName = "Mock Challenge Name";
 const mockChallengeSlug = "mock-slug";
@@ -76,56 +84,149 @@ beforeEach(() => {
 });
 
 describe("Evaluation", () => {
-  let wrapper: ReactWrapper;
-  beforeEach(async () => {
-    wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <Evaluation />
-      </MockedProvider>,
-    );
+  describe("page", () => {
+    let wrapper: ReactWrapper;
+    beforeEach(async () => {
+      wrapper = mount(
+        <MockedProvider mocks={mocks}>
+          <Evaluation />
+        </MockedProvider>,
+      );
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-      wrapper.update();
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+        wrapper.update();
+      });
+    });
+
+    it("renders loading screen", async () => {
+      // override wrapper from beforeEach because
+      // we don't want the query to resolve
+      const wrapper = mount(
+        <MockedProvider mocks={mocks}>
+          <Evaluation />
+        </MockedProvider>,
+      );
+
+      await act(async () => {
+        wrapper.update();
+      });
+
+      expect(wrapper.exists(LoadingScreen)).toBeTruthy();
+    });
+
+    it("renders head", async () => {
+      expect(wrapper.exists(Head)).toBeTruthy();
+
+      // couldn't find a way to test `title` and its content since
+      // the children of `Head` aren't actually rendered but injected into `<head>`
+    });
+
+    it("renders wrapper elements", async () => {
+      expect(wrapper.exists("main")).toBeTruthy();
+    });
+
+    it("renders EvaluationHeader", async () => {
+      expect(wrapper.exists(EvaluationHeader)).toBeTruthy();
+    });
+
+    it("renders EvaluationBody", async () => {
+      expect(wrapper.exists(EvaluationBody)).toBeTruthy();
+    });
+
+    it("renders EvaluationBody", async () => {
+      expect(wrapper.exists(CompleteEvaluationButton)).toBeTruthy();
     });
   });
 
-  it("renders loading screen", async () => {
-    // override wrapper from beforeEach because
-    // we don't want the query to resolve
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <Evaluation />
-      </MockedProvider>,
-    );
+  describe("getServerSideProps", () => {
+    it("returns initial props", async () => {
+      const apolloClient = {
+        query: jest
+          .fn()
+          .mockResolvedValueOnce({})
+          .mockResolvedValueOnce({
+            data: { challenge: { id: 12 } },
+          })
+          .mockResolvedValueOnce({
+            data: { resultForSubmission: { id: 1234 } },
+          }),
+        cache: { extract: jest.fn() },
+      };
 
-    await act(async () => {
-      wrapper.update();
+      const result: any = await getServerSideProps({
+        apolloClient,
+        params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "valid-uuid" },
+      } as unknown as GetServerSidePropsContext);
+
+      expect(result.props).toBeTruthy();
+    });
+    it("returns 404 if the result was not found", async () => {
+      const apolloClient = {
+        query: jest
+          .fn()
+          .mockResolvedValueOnce({})
+          .mockResolvedValueOnce({
+            data: { challenge: { id: 12 } },
+          })
+          .mockResolvedValueOnce({
+            data: { resultForSubmission: null },
+          }),
+        cache: { extract: jest.fn() },
+      };
+
+      const result: any = await getServerSideProps({
+        apolloClient,
+        params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "unknown-uuid" },
+      } as unknown as GetServerSidePropsContext);
+
+      expect(result.notFound).toBeTruthy();
     });
 
-    expect(wrapper.exists(LoadingScreen)).toBeTruthy();
-  });
+    it("returns 404 if the challenge was not found", async () => {
+      const apolloClient = {
+        query: jest
+          .fn()
+          .mockResolvedValueOnce({})
+          .mockResolvedValueOnce({
+            data: { challenge: null },
+          })
+          .mockResolvedValueOnce({
+            data: { resultForSubmission: { id: 1234 } },
+          }),
+        cache: { extract: jest.fn() },
+      };
 
-  it("renders head", async () => {
-    expect(wrapper.exists(Head)).toBeTruthy();
+      const result: any = await getServerSideProps({
+        apolloClient,
+        params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "unknown-uuid" },
+      } as unknown as GetServerSidePropsContext);
 
-    // couldn't find a way to test `title` and its content since
-    // the children of `Head` aren't actually rendered but injected into `<head>`
-  });
+      expect(result.notFound).toBeTruthy();
+    });
 
-  it("renders wrapper elements", async () => {
-    expect(wrapper.exists("main")).toBeTruthy();
-  });
+    it("returns 404 if the querying the result resulted in a BAD_USER_INPUT error", async () => {
+      const apolloClient = {
+        query: jest
+          .fn()
+          .mockResolvedValueOnce({})
+          .mockResolvedValueOnce({
+            data: { challenge: { id: 12 } },
+          })
+          .mockRejectedValueOnce(
+            new ApolloError({
+              graphQLErrors: [{ extensions: { code: "BAD_USER_INPUT" } } as unknown as GraphQLError],
+            }),
+          ),
+        cache: { extract: jest.fn() },
+      };
 
-  it("renders EvaluationHeader", async () => {
-    expect(wrapper.exists(EvaluationHeader)).toBeTruthy();
-  });
+      const result: any = await getServerSideProps({
+        apolloClient,
+        params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "unknown-uuid" },
+      } as unknown as GetServerSidePropsContext);
 
-  it("renders EvaluationBody", async () => {
-    expect(wrapper.exists(EvaluationBody)).toBeTruthy();
-  });
-
-  it("renders EvaluationBody", async () => {
-    expect(wrapper.exists(CompleteEvaluationButton)).toBeTruthy();
+      expect(result.notFound).toBeTruthy();
+    });
   });
 });

@@ -1,3 +1,4 @@
+import { ParseUUIDPipe } from "@nestjs/common";
 import { Args, Int, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
 import { CodeLevelResultService } from "../../services/code-level-result.service";
@@ -9,8 +10,8 @@ import { Result } from "../models/result.model";
 export class CodeLevelResultResolver {
   constructor(private resultService: CodeLevelResultService, private requirementResultService: RequirementResultService) {}
 
-  @Query(() => Result)
-  async resultForSubmission(@Args("submissionId") submissionId: string): Promise<Result> {
+  @Query(() => Result, { nullable: true })
+  async resultForSubmission(@Args("submissionId", new ParseUUIDPipe()) submissionId: string): Promise<Result> {
     return this.resultService.findOneForSubmission(submissionId);
   }
 
