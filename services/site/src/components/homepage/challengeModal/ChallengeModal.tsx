@@ -1,4 +1,5 @@
 import Button from "app/components/buttons/Button";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
@@ -55,7 +56,11 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
 
       {!loading && challenge && (
         <>
-          <div className={"overflow-auto mb-20"}>
+          <ScrollOverlayWrapper
+            className="max-h-full overflow-auto mb-20"
+            classNameTopOverlay="h-28 -mb-28 from-background-light"
+            classNameBottomOverlay="h-28 -mt-28 from-background-light"
+          >
             <section>
               <ModalTitle className={clsx("pb-14", "text-4xl")}>
                 {challenge.name}
@@ -79,7 +84,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                 );
               })}
             </div>
-          </div>
+          </ScrollOverlayWrapper>
 
           <ModalActions>
             <Button onClick={onClose} overrideClassName className={clsx("text-grey-middle", "mr-14", "hover:border-b hover:border-grey-middle")}>
