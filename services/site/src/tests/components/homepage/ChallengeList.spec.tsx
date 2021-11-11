@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup, render, screen } from "@testing-library/react";
 import ChallengeList from "app/components/homepage/ChallengeList";
-import { ChallengeDifficulty } from "app/generated/graphql";
+import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 
 afterEach(cleanup);
 
@@ -16,6 +16,7 @@ const challenges = [
     difficulty: ChallengeDifficulty.Easy,
     numberOfLevels: 2,
     numberOfFinishedLevels: 0,
+    status: ChallengeStatus.Finished,
   },
 ];
 
@@ -31,13 +32,11 @@ describe("ChallengeList", () => {
             <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
           </>
         }
-        completedLevel={0}
-        openLevel={1}
         challenges={challenges}
       />,
     );
 
     expect(screen.getByText(headingText, { selector: "h3" })).toBeTruthy();
-    expect(screen.getByText("(0/1)", { selector: "p" })).toBeTruthy();
+    expect(screen.getByText("(1/1)", { selector: "p" })).toBeTruthy();
   });
 });

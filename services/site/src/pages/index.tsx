@@ -52,8 +52,6 @@ const Home: React.FunctionComponent = () => {
                     <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
                   </>
                 }
-                completedLevel={0}
-                openLevel={easyChallenges.length}
                 challenges={easyChallenges}
               />
             )}
@@ -69,8 +67,6 @@ const Home: React.FunctionComponent = () => {
                     <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-transparent")} />
                   </>
                 }
-                completedLevel={0}
-                openLevel={mediumChallenges.length}
                 challenges={mediumChallenges}
               />
             )}
@@ -86,8 +82,6 @@ const Home: React.FunctionComponent = () => {
                     <span className={clsx("ml-1 w-2.5 h-5 border-2 rounded-sm border-grey bg-grey")} />
                   </>
                 }
-                completedLevel={0}
-                openLevel={hardChallenges.length}
                 challenges={hardChallenges}
               />
             )}

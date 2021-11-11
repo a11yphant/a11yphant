@@ -2,6 +2,7 @@ fragment ChallengeOverview on Challenge {
     id
     slug
     name
+    status
     difficulty
     numberOfLevels
     numberOfFinishedLevels
