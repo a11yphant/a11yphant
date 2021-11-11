@@ -12,6 +12,8 @@ export const createErrorLink = ({ errorDialogApi }: CreateErrorLinkProps): Apoll
     if (errorDialogApi) {
       const errorScope = errorScopeForOperationContext(operation.getContext());
 
+      console.log("global ", { graphQLErrors, networkError });
+
       if (errorScope === ErrorScope.Global) {
         if ((graphQLErrors && graphQLErrors.length > 0) || networkError) {
           errorDialogApi.showApolloError({ graphQLErrors, networkError });

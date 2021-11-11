@@ -25,12 +25,11 @@ const ErrorDialogContext = React.createContext<ErrorDialogApi>({
 });
 
 const getMessageForGraphQLError = (graphQLError: GraphQLError, options: ErrorDialogOptions): React.ReactNode => {
+  console.log("defaultMessage ", options?.defaultMessage);
+
   if (options?.specificMessages?.[graphQLError.extensions.code]) {
     // Show error message for this error code if it has been defined
     return options?.specificMessages?.[graphQLError.extensions.code];
-  } else if (graphQLError.message.length > 0) {
-    // Show error message from API if it exists
-    return graphQLError.message;
   } else if (options?.defaultMessage) {
     // Show default error message if it has been defined
     return options?.defaultMessage;
@@ -49,15 +48,18 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
   const [error, setError] = React.useState<ApolloErrorResponse>();
 
   const showApolloError = ({ graphQLErrors, networkError }: ApolloErrorResponse, options?: ErrorDialogOptions): void => {
+    console.log("showApolloError ", options);
     setTitle(options?.title ?? defaultTitle);
     setError({ graphQLErrors, networkError });
 
     let messages = [];
 
-    if (networkError) {
-      messages = [<NetworkError />];
-    } else if (graphQLErrors) {
+    if (graphQLErrors.length > 0) {
       messages = graphQLErrors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
+    } else if (networkError) {
+      messages = [<NetworkError />];
+    } else {
+      messages = [<UnknownError />];
     }
 
     setMessages(messages);

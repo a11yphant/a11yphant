@@ -2,6 +2,8 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
+import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
+import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
@@ -16,6 +18,7 @@ interface CodeLevelProps {
 
 const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
+  const errorDialogApi = useErrorDialogApi();
 
   const {
     setLevelId,
@@ -54,7 +57,21 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     }
   }, [level, setLevelId, setSubmissionCode, setSubmissionId]);
 
-  const [requestCheckMutation] = useRequestCodeLevelCheckMutation();
+  const [requestCheckMutation] = useRequestCodeLevelCheckMutation({
+    context: LocalErrorScopeApolloContext,
+    onError: (error) => {
+      console.log("local ", { graphqlErrors: error.graphQLErrors, networkError: error.networkError });
+      errorDialogApi.showApolloError(error, {
+        defaultMessage: (
+          <>
+            <strong>Submission Error.</strong> A problem occurred while checking this submission. Please try again later.
+          </>
+        ),
+      });
+
+      throw new Error();
+    },
+  });
 
   const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 
@@ -79,7 +96,8 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     await updateSubmission();
 
     await requestCheckMutation({
-      variables: { requestCheckInput: { submissionId } },
+      // variables: { requestCheckInput: { submissionId } },
+      variables: { requestCheckInput: { submissionId: undefined } },
     });
 
     router.push(`${router.asPath}/evaluation/${submissionId}`);
@@ -155,7 +173,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
               onClick={submitLevel}
               className="px-10"
               loading={showSubmitLoadingAnimation}
-              disabled={!submissionId}
+              // disabled={!submissionId}
               submitButton
               srTextLoading="The submission is being processed."
             >
