@@ -1,4 +1,5 @@
 import { forwardRef, Logger, Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { AuthenticationModule } from "@/authentication/authentication.module";
 import { PrismaModule } from "@/prisma/prisma.module";
@@ -10,7 +11,7 @@ import { UserService } from "./user.service";
 
 @Module({
   imports: [PrismaModule, forwardRef(() => AuthenticationModule)],
-  providers: [UserService, UserResolver, Logger, LastSeenInterceptor, DeleteStaleUsers],
+  providers: [ConfigService, UserService, UserResolver, Logger, LastSeenInterceptor, DeleteStaleUsers],
   exports: [UserService, LastSeenInterceptor],
 })
 export class UserModule {}
