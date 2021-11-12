@@ -165,7 +165,7 @@ describe("user service", () => {
         createMock<HashService>(),
         createMock<ConfigService>(
           createConfigServiceMock({
-            "api.userAsStaleDays": STALEDAYS,
+            "api.user-as-stale-days": STALEDAYS,
           }),
         ),
       );

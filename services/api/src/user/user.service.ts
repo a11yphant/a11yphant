@@ -123,7 +123,7 @@ export class UserService {
     const userIdsWithSubmissions = Array.from(new Set([...codeLevelusers, ...quizLevelUsers].map((sub) => sub.userId)));
 
     const date = new Date();
-    date.setDate(date.getDate() - this.config.get<number>("api.userAsStaleDays"));
+    date.setDate(date.getDate() - this.config.get<number>("api.user-as-stale-days"));
 
     await this.prisma.user.deleteMany({
       where: {
