@@ -3,6 +3,8 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
+import { MailerModule } from "@nestjs-modules/mailer";
+import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 import { GraphqlInterceptor, SentryModule } from "@ntegral/nestjs-sentry";
 import { LogLevel } from "@sentry/types";
 import { ConsoleModule } from "nestjs-console";
@@ -13,11 +15,11 @@ import apiConfig from "./config/api.config";
 import cookieConfig from "./config/cookie.config";
 import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
+import mailConfig from "./config/mail.config";
 import messagingConfig from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
 import sentryConfig from "./config/sentry.config";
-import smtpConfig from "./config/smtp.config";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SubmissionModule } from "./submission/submission.module";
@@ -26,7 +28,7 @@ import { UserModule } from "./user/user.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, sentryConfig, smtpConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, sentryConfig],
     }),
     SentryModule.forRootAsync({
       imports: [ConfigModule],
@@ -77,6 +79,33 @@ import { UserModule } from "./user/user.module";
       }),
       inject: [ConfigService],
     }),
+
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => ({
+        transport: {
+          host: config.get<string>("mail.smtp.endpoint"),
+          port: config.get<number>("mail.smtp.port"),
+          secure: false, // upgrade to TLS later with STARTTLS
+          auth: {
+            user: config.get<string>("mail.smtp.username"),
+            pass: config.get<string>("mail.smtp.password"),
+          },
+        },
+        defaults: {
+          from: config.get<string>("mail.from"),
+        },
+        template: {
+          dir: config.get<string>("mail.template-dir"),
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
+      }),
+      inject: [ConfigService],
+    }),
+
     AuthenticationModule,
     ChallengeModule,
     SubmissionModule,
