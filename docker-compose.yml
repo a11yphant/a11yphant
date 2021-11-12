@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   selenium:
@@ -34,11 +34,17 @@ services:
 
   terraform:
     image: hashicorp/terraform
-    restart: 'no'
+    restart: "no"
     volumes:
-     - ./terraform:/terraform
+      - ./terraform:/terraform
     depends_on:
-     - localstack
+      - localstack
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: unless-stopped
+    ports:
+      - 8025:8025
 
 volumes:
   postgres_data:
