@@ -9,5 +9,6 @@ export default registerAs("api", () => {
     url: `http://${host}:${port}`,
     "challenges-location": process.env.API_CHALLENGES_LOCATION,
     key: process.env.API_KEY,
+    userAsStaleDays: 7,
   };
 });

@@ -1,4 +1,5 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime";
 
 import { HashService } from "@/authentication/hash.service";
@@ -10,7 +11,7 @@ import { User } from "./models/user.model";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService, private hashService: HashService, private logger: Logger) {}
+  constructor(private prisma: PrismaService, private hashService: HashService, private config: ConfigService) {}
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
@@ -122,7 +123,7 @@ export class UserService {
     const userIdsWithSubmissions = Array.from(new Set([...codeLevelusers, ...quizLevelUsers].map((sub) => sub.userId)));
 
     const date = new Date();
-    date.setDate(date.getDate() - 7);
+    date.setDate(date.getDate() - this.config.get<number>("api.userAsStaleDays"));
 
     await this.prisma.user.deleteMany({
       where: {
