@@ -52,8 +52,6 @@ const Home: React.FunctionComponent = () => {
                     <DifficultyEasy className={"w-2.5 h-5"} firstClassName={"ml-4"} />
                   </>
                 }
-                completedLevel={0}
-                openLevel={easyChallenges.length}
                 challenges={easyChallenges}
               />
             )}
@@ -67,8 +65,6 @@ const Home: React.FunctionComponent = () => {
                     <DifficultyMedium className={"w-2.5 h-5"} firstClassName={"ml-4"} />
                   </>
                 }
-                completedLevel={0}
-                openLevel={mediumChallenges.length}
                 challenges={mediumChallenges}
               />
             )}
@@ -82,8 +78,6 @@ const Home: React.FunctionComponent = () => {
                     <DifficultyHard className={"w-2.5 h-5"} firstClassName={"ml-4"} />
                   </>
                 }
-                completedLevel={0}
-                openLevel={hardChallenges.length}
                 challenges={hardChallenges}
               />
             )}
