@@ -67,8 +67,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
           </>
         ),
       });
-
-      throw new Error();
     },
   });
 
@@ -90,11 +88,13 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   const submitLevel = async (): Promise<void> => {
     await updateSubmission();
 
-    await requestCheckMutation({
+    const { errors } = await requestCheckMutation({
       variables: { requestCheckInput: { submissionId } },
     });
 
-    router.push(`${router.asPath}/evaluation/${submissionId}`);
+    if (errors === undefined) {
+      router.push(`${router.asPath}/evaluation/${submissionId}`);
+    }
   };
 
   const editorConfiguration = [];
