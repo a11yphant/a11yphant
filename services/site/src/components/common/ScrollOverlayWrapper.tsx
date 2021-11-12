@@ -8,6 +8,7 @@ export interface ScrollOverlayWrapperProps {
   classNameBottomOverlay?: string;
   enableTopOverlay?: boolean;
   enableBottomOverlay?: boolean;
+  attachScrollListenerToDocument?: boolean;
 }
 
 const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> = ({
@@ -17,28 +18,39 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
   classNameBottomOverlay,
   enableTopOverlay = true,
   enableBottomOverlay = true,
+  attachScrollListenerToDocument = false,
 }) => {
   const [showBottomOverlay, setShowBottomOverlay] = useState(false);
   const [showTopOverlay, setShowTopOverlay] = useState(false);
   const wrapperRef = React.useRef<HTMLDivElement>();
 
-  // show overlay when content is scroll-able
   React.useEffect(() => {
-    if (wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight) {
+    const element = attachScrollListenerToDocument ? document.documentElement : wrapperRef.current;
+    if (element.scrollHeight > element.clientHeight) {
       setShowBottomOverlay(true);
     }
   }, []);
 
-  const listenToScroll = (): void => {
-    // remove gradient when scrolled to bottom
-    const containerHeight = wrapperRef.current?.clientHeight;
-    const scrollableHeight = wrapperRef.current?.scrollHeight;
-    const scrollDistanceToTop = wrapperRef.current?.scrollTop;
+  const listenToScroll = React.useCallback(() => {
+    const element = attachScrollListenerToDocument ? document.documentElement : wrapperRef.current;
+    const containerHeight = element.clientHeight;
+    const scrollableHeight = element.scrollHeight;
+    const scrollDistanceToTop = element.scrollTop;
     const isScrolledToBottom = containerHeight === scrollableHeight - scrollDistanceToTop;
 
     setShowBottomOverlay(!isScrolledToBottom);
     setShowTopOverlay(scrollDistanceToTop > 0);
-  };
+  }, [attachScrollListenerToDocument]);
+
+  React.useEffect(() => {
+    if (!attachScrollListenerToDocument) {
+      return;
+    }
+
+    document.addEventListener("scroll", listenToScroll);
+
+    return () => document.removeEventListener("scroll", listenToScroll);
+  }, [attachScrollListenerToDocument, listenToScroll]);
 
   useResizeDetector({
     targetRef: wrapperRef,
@@ -48,7 +60,11 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
   const scrollOverLayClasses = clsx("sticky w-full left-0 border-0 from-background pointer-events-none", "transition-opacity");
 
   return (
-    <div onScroll={listenToScroll} ref={wrapperRef} className={clsx("relative overflow-auto scroll-smooth", className)}>
+    <div
+      onScroll={!attachScrollListenerToDocument && listenToScroll}
+      ref={wrapperRef}
+      className={clsx(!attachScrollListenerToDocument && "relative overflow-auto scroll-smooth", className)}
+    >
       {enableTopOverlay && (
         <div className={clsx("top-0 bg-gradient-to-b", scrollOverLayClasses, classNameTopOverlay, showTopOverlay ? "opacity-100" : "opacity-0")} />
       )}
