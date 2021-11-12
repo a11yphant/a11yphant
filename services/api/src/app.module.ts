@@ -13,10 +13,11 @@ import apiConfig from "./config/api.config";
 import cookieConfig from "./config/cookie.config";
 import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
-import messaging from "./config/messaging.config";
+import messagingConfig from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
 import sentryConfig from "./config/sentry.config";
+import smtpConfig from "./config/smtp.config";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SubmissionModule } from "./submission/submission.module";
@@ -25,7 +26,7 @@ import { UserModule } from "./user/user.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig, sentryConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, sentryConfig, smtpConfig],
     }),
     SentryModule.forRootAsync({
       imports: [ConfigModule],
