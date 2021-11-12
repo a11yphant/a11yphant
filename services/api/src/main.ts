@@ -9,7 +9,6 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
-import { SessionInterceptor } from "./authentication/session.interceptor";
 
 let transportStrategy: AwsTransportStrategy;
 
@@ -18,11 +17,9 @@ async function bootstrap(): Promise<NestExpressApplication | void> {
 
   const configService = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);
-  const sessionInterceptor = app.get<SessionInterceptor>(SessionInterceptor);
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(sessionInterceptor);
 
   transportStrategy = new AwsTransportStrategy({
     polling: true,

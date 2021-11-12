@@ -8,5 +8,6 @@ export function define(factory: IFactoryStatic): void {
   factory
     .define<UserData>(USER)
     .attr("id", () => faker.datatype.uuid())
-    .attr("displayName", () => faker.name.firstName());
+    .attr("displayName", () => faker.name.firstName())
+    .attr("lastSeen", () => faker.date.recent(2));
 }
