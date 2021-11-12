@@ -4,7 +4,16 @@ import { NetworkError, UnknownError } from "app/components/common/error/errorMes
 import { GraphQLError } from "graphql";
 import React from "react";
 
-export type ApolloErrorResponse = Pick<ApolloError, "graphQLErrors" | "networkError">;
+export interface ApolloErrorResponse {
+  graphQLErrors: ApolloError["graphQLErrors"];
+  networkError: ApolloError["networkError"] & {
+    result?: {
+      errors?: GraphQLError[];
+    };
+  };
+}
+
+// export type ApolloErrorResponse = Pick<ApolloError, "graphQLErrors" | "networkError">;
 
 interface ErrorDialogOptions {
   title?: string;
@@ -48,15 +57,20 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
   const [error, setError] = React.useState<ApolloErrorResponse>();
 
   const showApolloError = ({ graphQLErrors, networkError }: ApolloErrorResponse, options?: ErrorDialogOptions): void => {
-    console.log("showApolloError ", options);
     setTitle(options?.title ?? defaultTitle);
     setError({ graphQLErrors, networkError });
 
     let messages = [];
 
-    if (graphQLErrors.length > 0) {
+    console.log("showApolloError ", graphQLErrors);
+    console.log("showApolloError ", graphQLErrors.length > 0);
+    if (graphQLErrors && graphQLErrors.length > 0) {
       messages = graphQLErrors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
-    } else if (networkError) {
+    } else if (networkError?.result?.errors && networkError.result.errors.length > 0) {
+      // when handling errors locally, the graphqlErrors are for some reason moved to networkError.result.errors
+      // see https://github.com/apollographql/apollo-client/issues/2810
+      messages = networkError.result.errors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
+    } else if (networkError?.message === "Network request failed") {
       messages = [<NetworkError />];
     } else {
       messages = [<UnknownError />];
@@ -69,9 +83,13 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
   const handleClose = (): void => {
     setOpen(false);
 
-    setTitle(defaultTitle);
-    setMessages([]);
-    setError(undefined);
+    // short timeout prevents flashing of the text
+    // before closing the modal
+    setTimeout(() => {
+      setTitle(defaultTitle);
+      setMessages([]);
+      setError(undefined);
+    }, 100);
   };
 
   return {

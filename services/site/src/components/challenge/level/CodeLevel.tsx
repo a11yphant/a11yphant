@@ -8,7 +8,7 @@ import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 
 interface CodeLevelProps {
   challengeName: string;
@@ -57,7 +57,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     }
   }, [level, setLevelId, setSubmissionCode, setSubmissionId]);
 
-  const [requestCheckMutation] = useRequestCodeLevelCheckMutation({
+  const [requestCheckMutation, { loading: requestCheckMutationLoading }] = useRequestCodeLevelCheckMutation({
     context: LocalErrorScopeApolloContext,
     onError: (error) => {
       console.log("local ", { graphqlErrors: error.graphQLErrors, networkError: error.networkError });
@@ -72,8 +72,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
       throw new Error();
     },
   });
-
-  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     if (language) {
@@ -91,8 +89,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   };
 
   const submitLevel = async (): Promise<void> => {
-    setShowSubmitLoadingAnimation(true);
-
     await updateSubmission();
 
     await requestCheckMutation({
@@ -172,7 +168,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
               primary
               onClick={submitLevel}
               className="px-10"
-              loading={showSubmitLoadingAnimation}
+              loading={requestCheckMutationLoading}
               // disabled={!submissionId}
               submitButton
               srTextLoading="The submission is being processed."
