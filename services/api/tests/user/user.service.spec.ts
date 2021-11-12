@@ -153,7 +153,7 @@ describe("user service", () => {
       await service.deleteStaleUsers();
     };
 
-    it("deletes an stale user successfully", async () => {
+    it("deletes a stale user successfully", async () => {
       const prisma = getPrismaService();
 
       const date = new Date();
