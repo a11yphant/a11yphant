@@ -1,3 +1,4 @@
+import { ApolloError } from "@apollo/client";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
@@ -11,6 +12,9 @@ import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
+  ResultForSubmissionDocument,
+  ResultForSubmissionQuery,
+  ResultForSubmissionQueryVariables,
   ResultStatus,
   useChallengeBySlugQuery,
 } from "app/generated/graphql";
@@ -92,17 +96,38 @@ export default Evaluation;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo(null, context);
 
-  const { challengeSlug } = context.params;
+  const { challengeSlug, submissionId } = context.params;
 
-  await Promise.all([
-    getServerSideCurrentUser(apolloClient),
-    apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
-      query: ChallengeBySlugDocument,
-      variables: {
-        slug: challengeSlug as string,
-      },
-    }),
-  ]);
+  try {
+    const [, challenge, result] = await Promise.all([
+      getServerSideCurrentUser(apolloClient),
+      apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+        query: ChallengeBySlugDocument,
+        variables: {
+          slug: challengeSlug as string,
+        },
+      }),
+      apolloClient.query<ResultForSubmissionQuery, ResultForSubmissionQueryVariables>({
+        query: ResultForSubmissionDocument,
+        variables: {
+          id: submissionId as string,
+        },
+      }),
+    ]);
+
+    if (!result.data.resultForSubmission || !challenge.data.challenge) {
+      return {
+        notFound: true,
+      };
+    }
+  } catch (e) {
+    if (e instanceof ApolloError && e.graphQLErrors.find((error) => error.extensions.code === "BAD_USER_INPUT")) {
+      return {
+        notFound: true,
+      };
+    }
+    throw e;
+  }
 
   return {
     props: {
