@@ -8,6 +8,7 @@ import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handleba
 import { GraphqlInterceptor, SentryModule } from "@ntegral/nestjs-sentry";
 import { LogLevel } from "@sentry/types";
 import { ConsoleModule } from "nestjs-console";
+import path from "path";
 
 import { AuthenticationModule } from "./authentication/authentication.module";
 import { SessionInterceptor } from "./authentication/session.interceptor";
@@ -98,7 +99,7 @@ import { UserModule } from "./user/user.module";
           from: config.get<string>("mail.from"),
         },
         template: {
-          dir: config.get<string>("mail.template-dir"),
+          dir: path.resolve(__dirname, "..", "mail-templates"),
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
