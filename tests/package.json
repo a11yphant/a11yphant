@@ -1,0 +1,17 @@
+{
+  "name": "@a11yphant/tests",
+  "version": "1.0.0",
+  "description": "A11yphant End-to-End Tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^9.0.0"
+  }
+}
