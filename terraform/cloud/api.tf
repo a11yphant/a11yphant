@@ -20,6 +20,9 @@ resource "heroku_app" "api" {
     NO_COLOR                         = 1
     AWS_ACCESS_KEY_ID                = aws_iam_access_key.api_user_access_key.id
     AWS_SECRET_ACCESS_KEY            = aws_iam_access_key.api_user_access_key.secret
+    AWS_SES_SMTP_PASSWORD            = aws_iam_access_key.api_user_access_key.ses_smtp_password_v4
+    AWS_SES_SMTP_ENDPOINT            = "email-smtp.eu-central-1.amazonaws.com"
+    AWS_SES_SMTP_PORT                = "587"
     API_KEY                          = random_password.api_secret_key.result
     API_GRAPHQL_DEBUG                = 1
     API_GRAPHQL_PLAYGROUND           = 1
@@ -164,6 +167,30 @@ EOF
 resource "aws_iam_user_policy_attachment" "api_api_queue_access" {
   user       = aws_iam_user.api_user.name
   policy_arn = aws_iam_policy.access_api_queue.arn
+}
+
+resource "aws_iam_policy" "ses_smtp" {
+  name        = "${terraform.workspace}-ses-smtp"
+  path        = "/"
+  description = "IAM policy for sending SMTP mail"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ses:SendRawEmail",
+      "Resource": "*"
+    }
+  ]
+}
+  EOF
+}
+
+resource "aws_iam_user_policy_attachment" "ses_smtp_access" {
+  user       = aws_iam_user.api_user.name
+  policy_arn = aws_iam_policy.ses_smtp.arn
 }
 
 resource "aws_iam_access_key" "api_user_access_key" {
