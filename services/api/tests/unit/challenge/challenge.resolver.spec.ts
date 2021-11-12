@@ -1,13 +1,12 @@
 import { createMock } from "@golevelup/ts-jest";
+import { ChallengeFactory } from "@tests/support/factories/models/challenge.factory";
+import { CodeLevelFactory } from "@tests/support/factories/models/code-level.factory";
 
 import { ChallengeResolver } from "@/challenge/challenge.resolver";
 import { ChallengeService } from "@/challenge/challenge.service";
 import { ChallengeStatus } from "@/challenge/enums/challenge-status";
 import { LevelService } from "@/challenge/level.service";
 import { Level } from "@/challenge/models/level.model";
-
-import { ChallengeFactory } from "../../support/factories/models/challenge.factory";
-import { CodeLevelFactory } from "../../support/factories/models/code-level.factory";
 
 describe("challenge resolver", () => {
   it("can resolve a challenge", async () => {

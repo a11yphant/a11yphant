@@ -1,7 +1,7 @@
 import faker from "faker";
 import { Factory } from "rosie";
 
-import { Challenge } from "../../../../src/challenge/models/challenge.model";
+import { Challenge } from "@/challenge/models/challenge.model";
 
 export const ChallengeFactory = Factory.define<Challenge>(Challenge.name, Challenge)
   .attr("id", () => faker.datatype.uuid())

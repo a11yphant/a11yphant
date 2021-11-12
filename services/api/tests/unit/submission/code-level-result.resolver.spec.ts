@@ -1,11 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
+import { CodeLevelResultFactory } from "@tests/support/factories/models/code-level-result.factory";
+import { RequirementResultFactory } from "@tests/support/factories/models/requirement-result.factory";
 
 import { CodeLevelResultResolver } from "@/submission/graphql/resolvers/code-level-result.resolver";
 import { CodeLevelResultService } from "@/submission/services/code-level-result.service";
 import { RequirementResultService } from "@/submission/services/requirement-result.service";
-
-import { CodeLevelResultFactory } from "../../support/factories/models/code-level-result.factory";
-import { RequirementResultFactory } from "../../support/factories/models/requirement-result.factory";
 
 describe("code level result resolver", () => {
   it("can return the result for a submission", async () => {
