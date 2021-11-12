@@ -113,14 +113,17 @@ export function createConfigServiceMock(data?: Record<string, any>): PartialFunc
   };
 }
 
-export function useTestingApp(): { getGraphQlClient: () => ApolloClient<unknown> } {
+interface GetGraphQlClientOptions {
+  authCookie?: string;
+}
+
+export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClientOptions) => ApolloClient<unknown>; getApp: () => INestApplication } {
   process.env.API_KEY = "secret";
   process.env.IGNORE_ENV_FILE = "true";
   process.env.DB_URL = getCurrentSchemaUrl();
   process.env.API_MESSAGING_POLL_QUEUE = "false";
 
   let app: INestApplication;
-  let graphqlClient: ApolloClient<unknown>;
 
   beforeEach(async () => {
     const { configureApp, setupMicroservices } = await import("../../src/main");
@@ -134,11 +137,6 @@ export function useTestingApp(): { getGraphQlClient: () => ApolloClient<unknown>
     configureApp(app);
     setupMicroservices(app);
     await app.listen(0);
-
-    graphqlClient = new ApolloClient({
-      uri: `http://localhost:${app.getHttpServer().address().port}/graphql`,
-      fetch,
-    });
   });
 
   afterEach(async () => {
@@ -146,6 +144,20 @@ export function useTestingApp(): { getGraphQlClient: () => ApolloClient<unknown>
   });
 
   return {
-    getGraphQlClient: () => graphqlClient,
+    getGraphQlClient: ({ authCookie } = {}) =>
+      new ApolloClient({
+        uri: `http://localhost:${app.getHttpServer().address().port}/graphql`,
+        credentials: "include",
+        fetch,
+        request: (operation) => {
+          if (!authCookie) return;
+          operation.setContext({
+            headers: {
+              cookie: `a11yphant_session=${authCookie}`,
+            },
+          });
+        },
+      }),
+    getApp: () => app,
   };
 }
