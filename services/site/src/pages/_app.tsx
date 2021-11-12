@@ -9,7 +9,6 @@ import ScrollOverlayWrapper, { ScrollOverlayWrapperProps } from "app/components/
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useApollo } from "app/lib/apollo-client";
 import { initializeTracking } from "app/lib/tracking";
-import clsx from "clsx";
 import Router from "next/router";
 import NProgress from "nprogress";
 import React from "react";
@@ -46,17 +45,16 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
       <ApolloProvider client={apolloClient}>
         <UserAccountModalProvider>
-          <div className="w-full h-screen">
-            <ConditionalWrapper<ScrollOverlayWrapperProps>
-              condition={pageProps.showScrollOverlay ?? true}
-              Wrapper={ScrollOverlayWrapper}
-              className={clsx("w-full h-full overflow-auto", "scroll-wrapper")}
-              enableTopOverlay={false}
-              classNameBottomOverlay={"w-full h-52"}
-            >
-              <Component {...pageProps} />
-            </ConditionalWrapper>
-          </div>
+          <ConditionalWrapper<ScrollOverlayWrapperProps>
+            condition={pageProps.showScrollOverlay ?? true}
+            Wrapper={ScrollOverlayWrapper}
+            enableTopOverlay={false}
+            enableBottomOverlay={true}
+            classNameBottomOverlay={"h-52 -mt-52"}
+            attachScrollListenerToDocument
+          >
+            <Component {...pageProps} />
+          </ConditionalWrapper>
         </UserAccountModalProvider>
       </ApolloProvider>
     </ErrorDialogProvider>

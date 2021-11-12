@@ -1,3 +1,5 @@
+import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
+import Check from "app/components/icons/Check";
 import { ChallengeDifficulty } from "app/generated/graphql";
 import clsx from "clsx";
 import Link from "next/link";
@@ -7,31 +9,45 @@ interface CardProps {
   className?: string;
   heading: string;
   levels: number;
+  finishedLevels: number;
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
 }
 
-const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, difficulty, challengeSlug, challengeNumber }) => {
+const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, finishedLevels, difficulty, challengeSlug, challengeNumber }) => {
+  const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
+
   return (
     <li
       className={clsx(
         "w-64 h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
         "group transition duration-300",
-        "hover:bg-grey",
-        "card shadow-card",
-        difficulty === ChallengeDifficulty.Easy && "bg-gradient-easy",
-        difficulty === ChallengeDifficulty.Medium && "bg-gradient-medium",
-        difficulty === ChallengeDifficulty.Hard && "bg-gradient-hard",
+        "card shadow-card gap-0",
         "bg-no-repeat	bg-contain bg-top",
+        difficulty === ChallengeDifficulty.Easy && finishedLevels !== levels && "bg-gradient-easy",
+        difficulty === ChallengeDifficulty.Medium && finishedLevels !== levels && "bg-gradient-medium",
+        difficulty === ChallengeDifficulty.Hard && finishedLevels !== levels && "bg-gradient-hard",
         className,
       )}
     >
+      {finishedLevels > 0 && finishedLevels !== levels && (
+        <div className={clsx("flex-1 flex items-center justify-center")}>
+          <p className="text-black font-mono text-6xl mb-0">
+            {finishedLevels}/{levels} <span className="sr-only">levels completed</span>
+          </p>
+        </div>
+      )}
+
+      {finishedLevels > 0 && finishedLevels === levels && (
+        <div className="flex-1 flex items-center justify-center bg-background-light">
+          <Check className="h-20 text-grey-middle" />
+        </div>
+      )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
         <h4 className="w-full">
           <span className="sr-only">{`Challenge ${challengeNumber}`}</span>
-          {/* TODO: Link to Info Pop-Up when implemented */}
-          <Link href={`/challenge/${challengeSlug}/level/01`}>
+          <Link href={`/?challenge=${challengeSlug}`} shallow={true}>
             <a className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}>
               {heading}
             </a>
@@ -43,29 +59,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
           </p>
           <p className="sr-only">{`Difficulty ${difficulty}`}</p>
           <div className="flex">
-            <div
-              className={clsx(
-                "w-2.5 h-4/5 ml-4 border-2 rounded-sm border-grey bg-grey",
-                "transition duration-300",
-                "group-hover:border-grey-dark group-hover:bg-grey-dark",
-              )}
-            />
-            <div
-              className={clsx(
-                "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1",
-                "transition duration-300",
-                "group-hover:border-grey-dark",
-                difficulty !== ChallengeDifficulty.Easy && "bg-grey group-hover:bg-grey-dark",
-              )}
-            />
-            <div
-              className={clsx(
-                "w-2.5 h-4/5 border-2 rounded-sm border-grey ml-1",
-                "transition duration-300",
-                "group-hover:border-grey-dark",
-                difficulty === ChallengeDifficulty.Hard && "bg-grey group-hover:bg-grey-dark",
-              )}
-            />
+            <DifficultyIcon className={clsx("w-2.5 h-4/5", "transition duration-300")} />
           </div>
         </div>
       </div>

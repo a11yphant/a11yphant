@@ -4,13 +4,14 @@ import CodeLevel from "app/components/challenge/level/CodeLevel";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
+import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
 import {
   ChallengeBySlugDocument,
   ChallengeBySlugQuery,
   ChallengeBySlugQueryVariables,
   LevelByChallengeSlugDocument,
-  LevelByChallengeSlugQueryResult,
+  LevelByChallengeSlugQuery,
   LevelByChallengeSlugQueryVariables,
   useChallengeBySlugQuery,
   useLevelByChallengeSlugQuery,
@@ -46,6 +47,22 @@ const Level: React.FunctionComponent = () => {
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
+  const header = (
+    <Navigation displayBreadcrumbs>
+      <Transition
+        show={autoSaveLoading}
+        enter="transition-opacity duration-300"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-300 delay-1000"
+        leaveTo="opacity-0"
+      >
+        <span>
+          Saving... <LoadingIndicator className="inline ml-4" />
+        </span>
+      </Transition>
+    </Navigation>
+  );
+
   return (
     <>
       <Head>
@@ -53,25 +70,14 @@ const Level: React.FunctionComponent = () => {
           {challenge.name} - Level {nthLevel}
         </title>
       </Head>
-      <Navigation displayBreadcrumbs>
-        <Transition
-          show={autoSaveLoading}
-          enter="transition-opacity duration-300"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-300 delay-1000"
-          leaveTo="opacity-0"
-        >
-          <span>
-            Saving... <LoadingIndicator className="inline ml-4" />
-          </span>
-        </Transition>
-      </Navigation>
-      <main className={clsx("h-main", "md:p-4 md:flex md:justify-between md:box-border")}>
-        <h1 className="sr-only">{`${challenge.name} - Level ${nthLevel}`}</h1>
-        <SmallScreenNotification />
-        {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
-        {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
-      </main>
+      <FullScreenLayout header={header}>
+        <main className={clsx("max-h-full h-full", "md:p-4 md:pt-0 md:flex md:justify-between md:box-border")}>
+          <h1 className="sr-only">{`${challenge.name} - Level ${nthLevel}`}</h1>
+          <SmallScreenNotification />
+          {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
+          {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
+        </main>
+      </FullScreenLayout>
     </>
   );
 };
@@ -83,9 +89,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { challengeSlug, nthLevel } = context.params;
 
-  await Promise.all([
+  const [, levelResult, challengeResult] = await Promise.all([
     getServerSideCurrentUser(apolloClient),
-    apolloClient.query<LevelByChallengeSlugQueryResult, LevelByChallengeSlugQueryVariables>({
+    apolloClient.query<LevelByChallengeSlugQuery, LevelByChallengeSlugQueryVariables>({
       query: LevelByChallengeSlugDocument,
       variables: {
         challengeSlug: challengeSlug as string,
@@ -99,6 +105,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     }),
   ]);
+
+  if (!challengeResult.data.challenge || !levelResult.data.level) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
