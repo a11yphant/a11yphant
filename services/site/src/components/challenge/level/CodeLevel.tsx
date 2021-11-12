@@ -60,7 +60,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   const [requestCheckMutation, { loading: requestCheckMutationLoading }] = useRequestCodeLevelCheckMutation({
     context: LocalErrorScopeApolloContext,
     onError: (error) => {
-      console.log("local ", { graphqlErrors: error.graphQLErrors, networkError: error.networkError });
       errorDialogApi.showApolloError(error, {
         defaultMessage: (
           <>
@@ -92,8 +91,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     await updateSubmission();
 
     await requestCheckMutation({
-      // variables: { requestCheckInput: { submissionId } },
-      variables: { requestCheckInput: { submissionId: undefined } },
+      variables: { requestCheckInput: { submissionId } },
     });
 
     router.push(`${router.asPath}/evaluation/${submissionId}`);
@@ -169,7 +167,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
               onClick={submitLevel}
               className="px-10"
               loading={requestCheckMutationLoading}
-              // disabled={!submissionId}
+              disabled={!submissionId}
               submitButton
               srTextLoading="The submission is being processed."
             >

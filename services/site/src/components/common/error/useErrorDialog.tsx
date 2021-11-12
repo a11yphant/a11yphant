@@ -13,8 +13,6 @@ export interface ApolloErrorResponse {
   };
 }
 
-// export type ApolloErrorResponse = Pick<ApolloError, "graphQLErrors" | "networkError">;
-
 interface ErrorDialogOptions {
   title?: string;
   defaultMessage?: React.ReactNode;
@@ -34,8 +32,6 @@ const ErrorDialogContext = React.createContext<ErrorDialogApi>({
 });
 
 const getMessageForGraphQLError = (graphQLError: GraphQLError, options: ErrorDialogOptions): React.ReactNode => {
-  console.log("defaultMessage ", options?.defaultMessage);
-
   if (options?.specificMessages?.[graphQLError.extensions.code]) {
     // Show error message for this error code if it has been defined
     return options?.specificMessages?.[graphQLError.extensions.code];
@@ -62,8 +58,6 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
 
     let messages = [];
 
-    console.log("showApolloError ", graphQLErrors);
-    console.log("showApolloError ", graphQLErrors.length > 0);
     if (graphQLErrors && graphQLErrors.length > 0) {
       messages = graphQLErrors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
     } else if (networkError?.result?.errors && networkError.result.errors.length > 0) {
