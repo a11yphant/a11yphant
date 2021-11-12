@@ -16,6 +16,7 @@ resource "aws_route53_record" "a11yphant_ses_verification_record" {
 }
 
 resource "aws_route53_record" "a11yphant_ses_dkim_record" {
+  count   = 3
   zone_id = var.route53_zone_id
   name    = "${element(aws_ses_domain_dkim.a11yphant.dkim_tokens, count.index)}._domainkey"
   type    = "CNAME"
