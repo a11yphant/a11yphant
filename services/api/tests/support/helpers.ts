@@ -114,6 +114,7 @@ export function createConfigServiceMock(data?: Record<string, any>): PartialFunc
 }
 
 export function useTestingApp(): { getGraphQlClient: () => ApolloClient<unknown> } {
+  process.env.API_KEY = "secret";
   process.env.IGNORE_ENV_FILE = "true";
   process.env.DB_URL = getCurrentSchemaUrl();
   process.env.API_MESSAGING_POLL_QUEUE = "false";
