@@ -134,7 +134,7 @@ describe("Evaluation", () => {
       expect(wrapper.exists(EvaluationBody)).toBeTruthy();
     });
 
-    it("renders EvaluationBody", async () => {
+    it("renders CompleteEvaluationButton", async () => {
       expect(wrapper.exists(CompleteEvaluationButton)).toBeTruthy();
     });
   });
