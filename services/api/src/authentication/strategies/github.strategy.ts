@@ -3,7 +3,8 @@ import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-github2";
 
-import { ProviderInformation } from "../interfaces/providerInformation.interface";
+import { OauthProfile } from "../interfaces/oauth-profile.interface";
+import { ProviderInformation } from "../interfaces/provider-information.interface";
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, "github") {
@@ -18,14 +19,16 @@ export class GithubStrategy extends PassportStrategy(Strategy, "github") {
   async validate(
     accessToken: string,
     refreshToken: string,
-    profile: Record<string, unknown>,
+    profile: OauthProfile,
     done: (error: Error, providerInformation: ProviderInformation) => undefined,
   ): Promise<undefined> {
     this.logger.log(`Logged in github user ${profile.id} with oauth.`);
 
+    const displayName = (profile.displayName as string) || (profile.username as string);
+
     const providerInformation: ProviderInformation = {
       id: profile.id as string,
-      displayName: profile.displayName as string,
+      displayName,
       provider: "github",
     };
 

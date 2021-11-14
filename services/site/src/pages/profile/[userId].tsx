@@ -59,7 +59,7 @@ const Challenge: React.FunctionComponent = () => {
       </Head>
       <Navigation />
       <main className={clsx("max-w-screen-xl mx-8 mt-32 mb-24 sm:mx-12 sm:mt-28 sm:mb-12 md:mx-24 2xl:mx-auto")}>
-        <h2 className={clsx("pb-24 text-grey h3 sm:h2")}>{user.displayName || "Anonymous users"}'s profile</h2>
+        <h1 className={clsx("pb-24 text-grey h3 sm:h2")}>{user.displayName || "Anonymous users"}'s profile</h1>
         <table>
           <thead className={clsx("text-left h5")}>
             <tr>

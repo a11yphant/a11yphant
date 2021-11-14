@@ -40,6 +40,7 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
             overrideClassName
             className={clsx(
               "w-11 h-11 p-3.5 absolute top-4 right-4",
+              "z-10",
               "transition-colors duration-300",
               "hover:text-primary-light",
               "focus-visible:text-primary-light",

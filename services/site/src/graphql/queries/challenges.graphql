@@ -2,10 +2,10 @@ fragment ChallengeOverview on Challenge {
     id
     slug
     name
+    status
     difficulty
-    levels {
-        id
-    }
+    numberOfLevels
+    numberOfFinishedLevels
 }
 
 query challenges {

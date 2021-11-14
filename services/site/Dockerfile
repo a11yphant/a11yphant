@@ -29,7 +29,6 @@ RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci
 COPY .prettierrc ./
 COPY services/site/public ./public
 COPY services/site/src ./src
-COPY services/site/.babelrc ./
 COPY services/site/.eslintrc.json ./
 COPY services/site/codegen.yml ./
 COPY services/site/entrypoint.js ./

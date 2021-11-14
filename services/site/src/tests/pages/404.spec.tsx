@@ -13,18 +13,17 @@ const mockHeading = "Error 404";
 const mockText = "seems like you got lost in space";
 
 describe("404 Page", () => {
-  it("renders wrapper elements", () => {
+  it("renders a main element", () => {
     const wrapper = shallow(<Custom404 />);
 
     expect(wrapper.find("main").length).toBe(1);
-    expect(wrapper.find("section").length).toBe(1);
   });
 
   it("renders heading", () => {
     const wrapper = shallow(<Custom404 />);
 
-    expect(wrapper.find("h2").length).toBe(1);
-    expect(wrapper.find("h2").text()).toBe(mockHeading);
+    expect(wrapper.find("h1").length).toBe(1);
+    expect(wrapper.find("h1").text()).toBe(mockHeading);
   });
 
   it("renders description text", () => {

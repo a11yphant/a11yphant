@@ -30,7 +30,7 @@ describe("Routes", () => {
 
     const breadcrumbInfo = await routes["/challenge/[challengeSlug]"].getBreadcrumbInfo({ challengeSlug }, mockClient);
 
-    expect(breadcrumbInfo.href).toBe(`/challenge/${challengeSlug}`);
+    expect(breadcrumbInfo.href).toBe(`/?challenge=${challengeSlug}`);
     expect(breadcrumbInfo.breadcrumb).toBe(name);
   });
 

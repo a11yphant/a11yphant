@@ -1,0 +1,13 @@
+query challengeDetailsBySlug ($slug: String!) {
+    challenge: challengeBySlug(slug: $slug) {
+        id
+        name
+        difficulty
+        introduction
+        levels {
+            id
+            order
+            status
+        }
+    }
+}

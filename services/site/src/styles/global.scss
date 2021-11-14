@@ -21,7 +21,6 @@
         @apply break-words;
         @apply bg-background;
         @apply text-grey;
-        gap: 1ch; // needed for focus style animation
     }
 
     * {
