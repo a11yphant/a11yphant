@@ -114,7 +114,7 @@ challenge:
             - id: fe64a87d-3529-49b4-9ef7-81bbfcaf7b9e
               text: You need the <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> elements.
             - id: c22308bd-e3fb-4637-8d0d-f46b615ca986
-              text: '"My favoriten cat" should be an <code>&lt;h1&gt;</code>. "About this cat" should be an <code>&lt;h2&gt;</code> and "Biography" should be an <code>&lt;h3&gt;</code>.'
+              text: '"My favourite cat" should be an <code>&lt;h1&gt;</code>. "About this cat" should be an <code>&lt;h2&gt;</code> and "Biography" should be an <code>&lt;h3&gt;</code>.'
       code:
         html: |-
           <!DOCTYPE html>
