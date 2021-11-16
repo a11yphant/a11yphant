@@ -53,6 +53,10 @@ resource "herokux_scheduler_job" "delete_stale_users" {
   command   = "npm run console delete:staleusers"
   dyno_size = "Standard-1X"
   frequency = "every_day_at_0:00"
+
+  depends_on = [
+    heroku_addon.scheduler,
+  ]
 }
 
 resource "heroku_collaborator" "api_collaborators" {
