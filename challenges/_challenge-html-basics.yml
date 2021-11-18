@@ -303,7 +303,7 @@ challenge:
           options:
             selector: ol > li
       instructions: |-
-        You can create an ordered list of items using the <code>&lt;ol&gt;</code> tag. It has to be used in conjunction with list items wich can be created using the <code>&lt;li&gt;</code> tag. The <code>&lt;ol&gt;</code> tag only allows <code>&lt;li&gt;</code> tags as direct children.
+        You can create an ordered list of items using the <code>&lt;ol&gt;</code> tag. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> tag. The <code>&lt;ol&gt;</code> tag only allows <code>&lt;li&gt;</code> tags as direct children.
         Since this is an ordered list, the order of the items in the list is important.
         Here is an example:
         <code>
