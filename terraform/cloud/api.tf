@@ -43,6 +43,22 @@ resource "heroku_addon" "api_database" {
   plan = "heroku-postgresql:hobby-dev"
 }
 
+resource "heroku_addon" "scheduler" {
+  app  = heroku_app.api.name
+  plan = "scheduler:standard"
+}
+
+resource "herokux_scheduler_job" "delete_stale_users" {
+  app_id    = heroku_app.api.uuid
+  command   = "npm run console delete:staleusers"
+  dyno_size = "Standard-1X"
+  frequency = "every_day_at_0:00"
+
+  depends_on = [
+    heroku_addon.scheduler,
+  ]
+}
+
 resource "heroku_collaborator" "api_collaborators" {
   count = length(var.heroku_collaborators)
   app   = heroku_app.api.name

@@ -136,7 +136,7 @@ challenge:
       order: 5
       type: code
       instructions: |-
-        You can create an ordered list of items using the <code>&lt;ol&gt;</code> element. It has to be used in conjunction with list items wich can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ol&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children
+        You can create an ordered list of items using the <code>&lt;ol&gt;</code> element. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ol&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children
         Since it is an ordered list, the order of the items in the list is important.
       tasks:
         - id: aa4309f5-ccac-45e9-b0ea-acf149834d5e

@@ -57,7 +57,8 @@ const Level: React.FunctionComponent = () => {
         leaveTo="opacity-0"
       >
         <span>
-          Saving... <LoadingIndicator className="inline ml-4" />
+          <span className="sr-only xl:not-sr-only">Saving... </span>
+          <LoadingIndicator className="inline ml-4" />
         </span>
       </Transition>
     </Navigation>

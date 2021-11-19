@@ -1,5 +1,5 @@
 import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
-import { INestApplication, Logger } from "@nestjs/common";
+import { CallHandler, ExecutionContext, INestApplication, Logger, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
@@ -8,6 +8,7 @@ import ApolloClient from "apollo-boost";
 import fetch from "cross-fetch";
 import os from "os";
 import { join } from "path";
+import { Observable, of } from "rxjs";
 
 import { PrismaService } from "../../src/prisma/prisma.service";
 
@@ -160,4 +161,25 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
       }),
     getApp: () => app,
   };
+}
+
+export function runInterceptor(
+  interceptor: NestInterceptor,
+  executionContext: ExecutionContext,
+  nextCallback: () => void,
+  completeCallback: () => void,
+  done: () => {},
+): void {
+  const handle = jest.fn(() => of("something"));
+  (interceptor.intercept(executionContext, createMock<CallHandler>({ handle })) as Promise<Observable<any>>).then((observable) =>
+    observable.subscribe({
+      next() {
+        nextCallback();
+      },
+      complete() {
+        completeCallback();
+        done();
+      },
+    }),
+  );
 }

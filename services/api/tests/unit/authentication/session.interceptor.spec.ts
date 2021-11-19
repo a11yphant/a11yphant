@@ -1,10 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
-import { CallHandler, ExecutionContext, Logger } from "@nestjs/common";
+import { ExecutionContext, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
+import { runInterceptor } from "@tests/support/helpers";
 import { Request, Response } from "express";
-import { of } from "rxjs";
 
 import { Context } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
@@ -14,27 +14,6 @@ import { UserService } from "@/user/user.service";
 const doNothing = (): void => {
   // do nothing
 };
-
-function runInterceptor(
-  interceptor: SessionInterceptor,
-  executionContext: ExecutionContext,
-  nextCallback: () => void,
-  completeCallback: () => void,
-  done: any,
-): void {
-  const handle = jest.fn(() => of("something"));
-  interceptor.intercept(executionContext, createMock<CallHandler>({ handle })).then((observable) =>
-    observable.subscribe({
-      next() {
-        nextCallback();
-      },
-      complete() {
-        completeCallback();
-        done();
-      },
-    }),
-  );
-}
 
 describe("session interceptor", () => {
   it("handles normal requests", (done) => {

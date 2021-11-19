@@ -8,14 +8,10 @@ import { MicroserviceOptions } from "@nestjs/microservices";
 import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
-import { SessionInterceptor } from "./authentication/session.interceptor";
 
 export function configureApp(app: INestApplication): void {
-  const sessionInterceptor = app.get<SessionInterceptor>(SessionInterceptor);
-
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(sessionInterceptor);
 }
 
 export async function setupMicroservices(app: INestApplication): Promise<void> {

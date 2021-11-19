@@ -1,4 +1,5 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime";
 
 import { HashService } from "@/authentication/hash.service";
@@ -10,7 +11,7 @@ import { User } from "./models/user.model";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService, private hashService: HashService, private logger: Logger) {}
+  constructor(private prisma: PrismaService, private hashService: HashService, private config: ConfigService) {}
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
@@ -96,5 +97,46 @@ export class UserService {
     });
 
     return new User(userRecord);
+  }
+
+  async seenUser(userId: string): Promise<void> {
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        lastSeen: new Date(),
+      },
+    });
+  }
+
+  async deleteStaleUsers(): Promise<void> {
+    const [codeLevelusers, quizLevelUsers] = await Promise.all([
+      this.prisma.codeLevelSubmission.groupBy({
+        by: ["userId"],
+      }),
+      this.prisma.quizLevelSubmission.groupBy({
+        by: ["userId"],
+      }),
+    ]);
+
+    const userIdsWithSubmissions = Array.from(new Set([...codeLevelusers, ...quizLevelUsers].map((sub) => sub.userId)));
+
+    const date = new Date();
+    date.setDate(date.getDate() - this.config.get<number>("api.user-as-stale-days"));
+
+    await this.prisma.user.deleteMany({
+      where: {
+        AND: {
+          authProvider: "anonymous",
+          id: {
+            notIn: userIdsWithSubmissions,
+          },
+          lastSeen: {
+            lt: date,
+          },
+        },
+      },
+    });
   }
 }
