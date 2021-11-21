@@ -7,6 +7,15 @@ import { ChallengeService } from "@/challenge/challenge.service";
 import { ChallengeStatus } from "@/challenge/enums/challenge-status";
 import { LevelService } from "@/challenge/level.service";
 
+function createChallengeResolver(
+  partials: { challengeService?: Partial<ChallengeService>; levelService?: Partial<LevelService> } = {},
+): ChallengeResolver {
+  const challengeService = createMock<ChallengeService>(partials.challengeService);
+  const levelService = createMock<LevelService>(partials.levelService);
+
+  return new ChallengeResolver(challengeService, levelService);
+}
+
 describe("challenge resolver", () => {
   const challenge = ChallengeFactory.build();
   const sessionToken: SessionToken = { userId: "userId" };
@@ -15,7 +24,7 @@ describe("challenge resolver", () => {
     const findOne = jest.fn().mockResolvedValue(ChallengeFactory.build());
     const id = "uuid";
 
-    const resolver = new ChallengeResolver(createMock<ChallengeService>({ findOne }), createMock<LevelService>());
+    const resolver = createChallengeResolver({ challengeService: { findOne } });
     const resolvedChallenge = await resolver.challenge(id);
 
     expect(resolvedChallenge).toBeTruthy();
@@ -25,7 +34,7 @@ describe("challenge resolver", () => {
   it("resolves the levels for a challenge", async () => {
     const findForChallenge = jest.fn().mockResolvedValue([]);
 
-    const resolver = new ChallengeResolver(createMock<ChallengeService>(), createMock<LevelService>({ findForChallenge }));
+    const resolver = createChallengeResolver({ levelService: { findForChallenge } });
     const resolvedLevels = await resolver.levels(challenge);
 
     expect(resolvedLevels).toBeTruthy();
@@ -35,7 +44,7 @@ describe("challenge resolver", () => {
   it("can resolve a challenge by slug", async () => {
     const findOneBySlug = jest.fn().mockResolvedValue(ChallengeFactory.build());
 
-    const resolver = new ChallengeResolver(createMock<ChallengeService>({ findOneBySlug }), createMock<LevelService>());
+    const resolver = createChallengeResolver({ challengeService: { findOneBySlug } });
     const resolvedChallenge = await resolver.challengeBySlug("test-slug");
 
     expect(resolvedChallenge).toBeTruthy();
@@ -45,8 +54,7 @@ describe("challenge resolver", () => {
   it("finds all challenges", async () => {
     const findAll = jest.fn().mockResolvedValue([]);
 
-    const resolver = new ChallengeResolver(createMock<ChallengeService>({ findAll }), createMock<LevelService>());
-
+    const resolver = createChallengeResolver({ challengeService: { findAll } });
     const resolvedChallenges = await resolver.challenges();
 
     expect(resolvedChallenges).toBeTruthy();
@@ -56,7 +64,7 @@ describe("challenge resolver", () => {
   it("resolves the status of a challenge for the current user", async () => {
     const getStatusForUserAndChallenge = jest.fn().mockResolvedValue(ChallengeStatus.FINISHED);
 
-    const resolver = new ChallengeResolver(createMock<ChallengeService>({ getStatusForUserAndChallenge }), createMock<LevelService>());
+    const resolver = createChallengeResolver({ challengeService: { getStatusForUserAndChallenge } });
     const status = await resolver.status(challenge, sessionToken);
 
     expect(status).toBeTruthy();
@@ -67,7 +75,7 @@ describe("challenge resolver", () => {
     const getStatusForUserAndChallenge = jest.fn().mockResolvedValue(ChallengeStatus.FINISHED);
     const userId = "userId";
 
-    const resolver = new ChallengeResolver(createMock<ChallengeService>({ getStatusForUserAndChallenge }), createMock<LevelService>());
+    const resolver = createChallengeResolver({ challengeService: { getStatusForUserAndChallenge } });
     const resolvedStatus = await resolver.statusForUser(challenge, userId);
 
     expect(resolvedStatus).toBeTruthy();
@@ -77,10 +85,7 @@ describe("challenge resolver", () => {
   it("resolves then number of completed levels for a user", async () => {
     const getNumberOfFinishedLevelsForUserAndChallenge = jest.fn().mockResolvedValue(4);
 
-    const resolver = new ChallengeResolver(
-      createMock<ChallengeService>({ getNumberOfFinishedLevelsForUserAndChallenge }),
-      createMock<LevelService>(),
-    );
+    const resolver = createChallengeResolver({ challengeService: { getNumberOfFinishedLevelsForUserAndChallenge } });
     const status = await resolver.numberOfFinishedLevels(challenge, sessionToken);
 
     expect(status).toBeTruthy();
