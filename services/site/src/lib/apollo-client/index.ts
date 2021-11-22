@@ -11,13 +11,14 @@ import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-se
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function createApolloClient(context: GetServerSidePropsContext = null, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
+  const isServer = typeof window === "undefined";
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT,
+    uri: isServer ? process.env.SITE_GRAPHQL_ENDPOINT_SSR : process.env.NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT,
     fetch: crossFetch,
   });
 
   return new ApolloClient({
-    ssrMode: typeof window === "undefined",
+    ssrMode: isServer,
     // the http link has to be at the end because it is a terminating link
     link: from([createForwardCookiesToClientLink(context), createForwardCookiesToServerLink(context), createErrorLink({ errorDialogApi }), httpLink]),
     cache: new InMemoryCache(),
