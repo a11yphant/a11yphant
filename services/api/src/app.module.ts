@@ -1,5 +1,5 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
-import { Module } from "@nestjs/common";
+import { Logger, Module, ModuleMetadata } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
@@ -8,6 +8,7 @@ import { LogLevel } from "@sentry/types";
 import { ConsoleModule } from "nestjs-console";
 
 import { AuthenticationModule } from "./authentication/authentication.module";
+import { SessionInterceptor } from "./authentication/session.interceptor";
 import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
 import cookieConfig from "./config/cookie.config";
@@ -20,12 +21,14 @@ import sentryConfig from "./config/sentry.config";
 import { ImporterModule } from "./importer/importer.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SubmissionModule } from "./submission/submission.module";
+import { LastSeenInterceptor } from "./user/last-seen.interceptor";
 import { UserModule } from "./user/user.module";
 
-@Module({
+export const appModuleMetadata: ModuleMetadata = {
   imports: [
     ConfigModule.forRoot({
       load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig, sentryConfig],
+      ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
     }),
     SentryModule.forRootAsync({
       imports: [ConfigModule],
@@ -83,10 +86,20 @@ import { UserModule } from "./user/user.module";
     UserModule,
   ],
   providers: [
+    Logger,
     {
       provide: APP_INTERCEPTOR,
       useFactory: () => new GraphqlInterceptor(),
     },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: SessionInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LastSeenInterceptor,
+    },
   ],
-})
+};
+@Module(appModuleMetadata)
 export class AppModule {}
