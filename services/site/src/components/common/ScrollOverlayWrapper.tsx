@@ -61,7 +61,7 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
 
   return (
     <div
-      onScroll={!attachScrollListenerToDocument && listenToScroll}
+      onScroll={!attachScrollListenerToDocument ? listenToScroll : undefined}
       ref={wrapperRef}
       className={clsx(!attachScrollListenerToDocument && "relative overflow-auto scroll-smooth", className)}
     >
