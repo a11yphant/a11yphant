@@ -33,6 +33,7 @@ COPY services/site/.eslintrc.json ./
 COPY services/site/codegen.yml ./
 COPY services/site/server.js ./
 COPY services/site/entrypoint.js ./
+COPY services/site/entrypoint-server.js ./
 COPY services/site/next-env.d.ts ./
 COPY services/site/next.config.js ./
 COPY services/site/postcss.config.js ./
@@ -69,5 +70,6 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/server.js ./server.js
 COPY --from=builder /app/entrypoint.js ./entrypoint.js
+COPY --from=builder /app/entrypoint-server.js ./entrypoint.js
 
 CMD ["entrypoint.handler"]
