@@ -19,6 +19,10 @@ const sentryWebpackPluginOptions = {
 
 const config = {
   async rewrites() {
+    if (!process.env.SITE_GRAPHQL_ENDPOINT_SERVER) {
+      return [];
+    }
+
     return [
       {
         source: "/graphql",
