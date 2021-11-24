@@ -84,7 +84,7 @@ variable "api_sentry_dsn" {
   default = ""
 }
 
-variable "version" {
+variable "app_version" {
   type    = string
   default = ""
 }

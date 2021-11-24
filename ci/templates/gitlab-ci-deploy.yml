@@ -38,4 +38,4 @@
                 -var="api_sentry_dsn=$API_SENTRY_DSN"
                 -var="site_sentry_dsn=$SITE_SENTRY_DSN"
                 -var="site_splitbee_token=$SPLITBEE_TOKEN"
-                -var="version=$VERSION"
+                -var="app_version=$VERSION"
