@@ -84,6 +84,21 @@ variable "api_sentry_dsn" {
   default = ""
 }
 
+variable "version" {
+  type    = string
+  default = ""
+}
+
+variable "site_sentry_dsn" {
+  type    = string
+  default = ""
+}
+
+variable "site_splitbee_token" {
+  type    = string
+  default = ""
+}
+
 # copied from: https://github.com/hashicorp/terraform-template-dir/blob/556bd64989e7099fabb90c6b883b5d4d92da3ae8/variables.tf
 variable "file_types" {
   type = map(string)

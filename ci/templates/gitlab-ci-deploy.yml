@@ -36,3 +36,6 @@
                 -var="twitter_consumer_secret=$TWITTER_CONSUMER_SECRET"
                 -var="twitter_callback_url=$TWITTER_CALLBACK_URL"
                 -var="api_sentry_dsn=$API_SENTRY_DSN"
+                -var="site_sentry_dsn=$SITE_SENTRY_DSN"
+                -var="site_splitbee_token=$SPLITBEE_TOKEN"
+                -var="version=$VERSION"

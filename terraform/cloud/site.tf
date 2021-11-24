@@ -19,8 +19,13 @@ resource "aws_lambda_function" "site" {
     variables = {
       NODE_ENV                          = "production"
       NO_COLOR                          = 1
-      NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT = "${heroku_app.api.web_url}graphql"
-      NEXT_PUBLIC_SITE_ASSET_BASE_URL   = "https://${var.domain}"
+      SITE_GRAPHQL_ENDPOINT_SERVER      = "${heroku_app.api.web_url}graphql"
+      SITE_GRAPHQL_ENDPOINT_CLIENT      = "https://${var.domain}/graphql"
+      SITE_ASSET_BASE_URL               = "https://${var.domain}"
+      SITE_VERSION                      = var.version
+      SITE_SENTRY_DSN                   = var.site_sentry_dsn
+      SITE_ENVIRONMENT                  = terraform.workspace
+      SITE_SPLITBEE_TOKEN               = var.site_splitbee_token
     }
   }
 

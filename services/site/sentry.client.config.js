@@ -1,8 +1,11 @@
 import * as Sentry from "@sentry/nextjs";
+import getConfig from "next/config";
+
+const config = getConfig();
 
 Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SITE_SENTRY_DSN,
+  dsn: config.publicRuntimeConfig.sentryDsn,
   tracesSampleRate: 1.0,
-  release: process.env.NEXT_PUBLIC_SITE_VERSION,
-  environment: process.env.NEXT_PUBLIC_SITE_ENVIRONMENT,
+  release: config.publicRuntimeConfig.version,
+  environment: config.publicRuntimeConfig.environment,
 });

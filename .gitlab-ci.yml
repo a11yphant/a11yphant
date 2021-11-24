@@ -267,26 +267,18 @@ test:site:
 build:site:review:
   extends:
     - .build:site
-  variables:
-    ENVIRONMENT: review-${CI_MERGE_REQUEST_IID}
   only:
     - merge_request
 
 build:site:staging:
   extends:
     - .build:site
-  variables:
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
-    ENVIRONMENT: staging
   only:
     - develop
 
 build:site:production:
   extends:
     - .build:site
-  variables:
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
-    ENVIRONMENT: production
   only:
     - master
 
@@ -376,6 +368,7 @@ deploy-staging:
     TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
     TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_STAGING
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
   environment:
     name: staging
     url: https://beta.a11yphant.com
@@ -400,6 +393,7 @@ deploy-production:
     TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
     TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_PROD
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
   environment:
     name: production
     url: https://a11yphant.com
