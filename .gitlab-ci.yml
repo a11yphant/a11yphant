@@ -340,7 +340,6 @@ test:end-to-end:
     - wget --quiet https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_linux_amd64.zip
     - unzip terraform_${TER_VER}_linux_amd64.zip
     - mv terraform /usr/local/bin/
-    - which terraform
     - cd -
   script:
     - npm run cypress:run --prefix tests
