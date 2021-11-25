@@ -335,7 +335,7 @@ test:end-to-end:
   script:
     - npm run cypress:run
   artifacts:
-    when: on-failure
+    when: on_failure
     expire_in: 1 week
     paths:
       - tests/cypress/screenshots
