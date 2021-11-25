@@ -55,6 +55,7 @@ COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/server.js ./server.js
+COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/entrypoint.js ./entrypoint.js
 COPY --from=builder /app/entrypoint-server.js ./entrypoint-server.js
 
