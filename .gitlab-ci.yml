@@ -340,6 +340,10 @@ test:end-to-end:
     paths:
       - tests/cypress/screenshots
       - tests/cypress/videos
+  only:
+    - merge_request
+    - develop
+    - master
 
 #-----------------------------------
 # Deployment
