@@ -325,8 +325,9 @@ terraform:local:validate:
 
 test:end-to-end:
   stage: end-to-end-tests
-  image: cypress/included:9.1.0
-  entrypoint: [""]
+  image: 
+    name: cypress/included:9.1.0
+    entrypoint: [""]
   tags:
    - docker
   needs:
