@@ -27,6 +27,7 @@ stages:
   - analyze
   - test
   - build
+  - end-to-end-tests
   - deploy
 
 #----------------------------------------------------------------------
@@ -319,6 +320,28 @@ terraform:local:validate:
     - terraform -chdir=terraform/local validate
 
 #-----------------------------------
+# End to end tests
+#-----------------------------------
+
+test:end-to-end:
+  stage: end-to-end-tests
+  image: node:14
+  needs:
+    - build:api
+    - build:site
+    - build:submission-checker
+  before_script:
+    - npm ci --prefix tests
+  script:
+    - npm run cypress:run
+  artifacts:
+    when: on-failure
+    expire_in: 1 week
+    paths:
+      - tests/cypress/screenshots
+      - tests/cypress/videos
+
+#-----------------------------------
 # Deployment
 #-----------------------------------
 
@@ -326,9 +349,7 @@ deploy-review:
   extends:
     - .deploy
   needs:
-    - build:api
-    - build:site
-    - build:submission-checker
+    - test:end-to-end
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
@@ -344,9 +365,7 @@ deploy-staging:
   extends:
     - .deploy
   needs:
-    - build:api
-    - build:site
-    - build:submission-checker
+    - test:end-to-end
   variables:
     WORKSPACE: staging
     DOMAIN: beta.a11yphant.com
@@ -369,9 +388,7 @@ deploy-production:
   extends:
     - .deploy
   needs:
-    - build:api
-    - build:site
-    - build:submission-checker
+    - test:end-to-end
   variables:
     WORKSPACE: production
     DOMAIN: a11yphant.com
