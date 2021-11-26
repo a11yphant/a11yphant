@@ -364,13 +364,14 @@ test:end-to-end:
     SITE_HOST: 0.0.0.0
     SITE_PORT: 3001
     SITE_GRAPHQL_ENDPOINT_SERVER: http://api:3000/graphql
-    SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3000/graphql
+    SITE_GRAPHQL_ENDPOINT_CLIENT: http://site:3001/graphql
     SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
     SUBMISSION_CHECKER_MESSAGING_POLL_QUEUE: 1
     SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES: 1
     SUBMISSION_CHECKER_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-submission-checker-queue
     SUBMISSION_CHECKER_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
     SUBMISSION_CHECKER_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+    CYPRESS_BASE_URL: "http://site:3001"
   before_script:
     # install terraform
     - cd /tmp
@@ -382,9 +383,9 @@ test:end-to-end:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
 
     # seed database
-    - npm ci --prefix services/api --cache .npm-alpine --prefer-offline
-    - npm --prefix services/api run prisma:migrate
-    - npm run import-challenges
+    - npm  --silent --prefix services/api ci --cache .npm-alpine --prefer-offline
+    - npm  --silent --prefix services/api run prisma:migrate
+    - npm  --silent run import-challenges
 
     # setup localstack
     - terraform -chdir=terraform/local init
