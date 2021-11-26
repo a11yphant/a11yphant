@@ -342,11 +342,14 @@ test:end-to-end:
       name: selenium/standalone-chrome:4
     - alias: api
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG
+      entrypoint: [""]
+      command: ["node", "entrypoint.js"]
     - alias: site
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG
     - alias: submission-checker
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG
   variables:
+    FF_NETWORK_PER_BUILD: 1
     POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
     POSTGRES_DB: a11yphant
