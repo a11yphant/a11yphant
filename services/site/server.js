@@ -47,8 +47,6 @@ async function init() {
   app.get("*", (req, res) => {
     return handle(req, res);
   });
-
-  app.listen(3001);
 }
 
 async function loadNextJsConfig() {
