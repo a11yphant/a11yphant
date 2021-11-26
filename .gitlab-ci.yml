@@ -341,7 +341,7 @@ test:end-to-end:
     - gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_NAME
     - gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_NAME
     - gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_NAME
-  environment:
+  variables:
     POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
     POSTGRES_DB: a11yphant
