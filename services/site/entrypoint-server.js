@@ -3,13 +3,19 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 const { init, getServer } = require("./server");
 
-const initializationPromise = init();
-
-async function bootstrap() {
-  await initializationPromise;
+async function bootstrap(config) {
+  await init(config);
   const server = getServer();
-  server.listen(process.env.SITE_PORT);
-  console.log(`Server is listening on port ${process.env.SITE_PORT}`);
+  const port = process.env.SITE_PORT || 3001;
+  const host = process.env.SITE_HOST || "localhost";
+  server.listen(port, host);
+  console.log(`Server is listening on ${host}:${port}`);
 }
 
-bootstrap();
+if (require.main === module) {
+  bootstrap();
+}
+
+module.exports = {
+  bootstrap,
+};

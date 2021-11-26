@@ -9,9 +9,8 @@ const { default: loadConfig } = require("next/dist/server/config");
 const url = require("url");
 const { PHASE_PRODUCTION_SERVER } = require("next/constants");
 const { resolve } = require("path");
+const proxy = require("express-http-proxy");
 
-const nextServer = next({ dev: false });
-const handle = nextServer.getRequestHandler();
 let app = null;
 let serverless = null;
 
@@ -23,7 +22,9 @@ function getServer() {
   return app;
 }
 
-async function init() {
+async function init({ dev = false } = {}) {
+  const nextServer = next({ dev });
+  const handle = nextServer.getRequestHandler();
   await nextServer.prepare();
   app = express();
   serverless = configure({ app });
@@ -43,6 +44,15 @@ async function init() {
   app.get("/_next/image", (req, res) => {
     return imageOptimizer(nextServer, req, res, url.parse(req.url, true), nextConfig, "/tmp/next-image");
   });
+
+  if (process.env.SITE_GRAPHQL_ENDPOINT_SERVER) {
+    app.use(
+      "/graphql",
+      proxy(process.env.SITE_GRAPHQL_ENDPOINT_SERVER, {
+        proxyReqPathResolver: () => "/graphql",
+      }),
+    );
+  }
 
   app.get("*", (req, res) => {
     return handle(req, res);

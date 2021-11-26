@@ -1,29 +1,28 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 require("dotenv").config();
 
-const existingCommands = ["start", "dev", "build", "telemetry"];
-const errorMessage =
-    "No or wrong command. Options: start | dev | build | telemetry";
+const existingCommands = ["start", "dev"];
+const errorMessage = "No or wrong command. Options: start | dev";
 
 if (!(process.argv.length >= 3)) {
-    throw new Error(errorMessage);
+  throw new Error(errorMessage);
 }
 
-const [, , command, ...args] = process.argv;
-const port = process.env.SITE_PORT || 3001;
-const host = process.env.SITE_HOST || "localhost";
+const [, , command] = process.argv;
 
 if (!existingCommands.includes(command)) {
-    throw new Error(errorMessage);
+  throw new Error(errorMessage);
 }
 
-let cli;
+const { bootstrap } = require("./entrypoint-server");
 switch (command) {
-    case "start":
-        cli = require("next/dist/cli/next-start");
-        cli.nextStart(["-p", port, "-H", host, ...args]);
-        break;
-    case "dev":
-        cli = require("next/dist/cli/next-dev");
-        cli.nextDev(["-p", port, "-H", host, ...args]);
-        break;
+  case "start":
+    bootstrap({ dev: false });
+    break;
+  case "dev":
+    bootstrap({ dev: true });
+    break;
 }

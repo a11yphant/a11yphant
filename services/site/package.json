@@ -38,6 +38,7 @@
     "clsx": "1.1.1",
     "cross-fetch": "3.1.4",
     "express": "4.17.1",
+    "express-http-proxy": "^1.6.3",
     "graphql": "15.7.2",
     "lodash.debounce": "4.0.8",
     "lottie-web": "5.8.1",
