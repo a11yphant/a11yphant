@@ -341,11 +341,11 @@ test:end-to-end:
     - alias: selenium
       name: selenium/standalone-chrome:4
     - alias: api
-      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_NAME
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG
     - alias: site
-      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_NAME
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG
     - alias: submission-checker
-      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_NAME
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG
   variables:
     POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
