@@ -394,6 +394,7 @@ test:end-to-end:
     - terraform -chdir=terraform/local init
     - terraform -chdir=terraform/local apply -auto-approve
   script:
+    - curl -X POST "http://site:3001/graphql" -H "Content-Type: application/json" --data '{ "query": "{ currentUser { id } }" }'
     - npm run cypress:run --prefix tests
   artifacts:
     when: on_failure
