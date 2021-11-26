@@ -343,7 +343,7 @@ test:end-to-end:
     - alias: api
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG
       entrypoint: [""]
-      command: ["node", "entrypoint-site.js"]
+      command: ["node", "entrypoint-server.js"]
     - alias: site
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG
     - alias: submission-checker
