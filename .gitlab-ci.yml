@@ -336,16 +336,16 @@ test:end-to-end:
     - build:submission-checker
   services:
     - postgres
-    - name: localstack
-      image: localstack/localstack
-    - name: selenium
-      image: selenium/standalone-chrome:4
-    - name: api
-      image: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_NAME
-    - name: site
-      image: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_NAME
-    - name: submission-checker
-      image: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_NAME
+    - alias: localstack
+      name: localstack/localstack
+    - alias: selenium
+      name: selenium/standalone-chrome:4
+    - alias: api
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_NAME
+    - alias: site
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_NAME
+    - alias: submission-checker
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_NAME
   variables:
     POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
