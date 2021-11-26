@@ -378,6 +378,7 @@ test:end-to-end:
 
     # seed database
     - npm ci --prefix services/api --cache .npm-alpine --prefer-offline
+    - npm --prefix services/api run prisma:migrate
     - npm run import-challenges
 
     # setup localstack
