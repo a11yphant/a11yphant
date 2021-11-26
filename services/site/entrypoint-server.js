@@ -9,6 +9,7 @@ async function bootstrap() {
   await initializationPromise;
   const server = getServer();
   server.listen(process.env.SITE_PORT);
+  console.log(`Server is listening on port ${process.env.SITE_PORT}`);
 }
 
 bootstrap();

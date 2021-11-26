@@ -48,6 +48,8 @@ RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci --production
 
 FROM public.ecr.aws/lambda/nodejs:14
 
+ENV SITE_PORT=3001
+
 WORKDIR /var/task
 
 COPY --from=production-dependencies /app/package* ./
@@ -58,5 +60,7 @@ COPY --from=builder /app/server.js ./server.js
 COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/entrypoint.js ./entrypoint.js
 COPY --from=builder /app/entrypoint-server.js ./entrypoint-server.js
+
+EXPOSE ${SITE_PORT}
 
 CMD ["entrypoint.handler"]
