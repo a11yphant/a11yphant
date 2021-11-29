@@ -3,12 +3,7 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "plugins": ["@nestjs/graphql"],
-    "assets": [
-      {
-        "include": "email-templates/**/*.hbs",
-        "outDir": "dist"
-      }
-    ],
+    "assets": ["mail-templates/**/*.hbs"],
     "watchAssets": true
   }
 }

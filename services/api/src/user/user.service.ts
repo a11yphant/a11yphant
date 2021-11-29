@@ -1,6 +1,5 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { MailerService } from "@nestjs-modules/mailer";
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime";
 
 import { HashService } from "@/authentication/hash.service";
@@ -12,13 +11,7 @@ import { User } from "./models/user.model";
 
 @Injectable()
 export class UserService {
-  constructor(
-    private prisma: PrismaService,
-    private config: ConfigService,
-    private hashService: HashService,
-    private mailService: MailerService,
-    private logger: Logger,
-  ) {}
+  constructor(private prisma: PrismaService, private config: ConfigService, private hashService: HashService) {}
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
@@ -145,20 +138,5 @@ export class UserService {
         },
       },
     });
-  }
-
-  async sendRegistrationMail(user: User): Promise<void> {
-    this.logger.log(`Sending registration Mail to ${user.email}`);
-    await this.mailService
-      .sendMail({
-        to: user.email,
-        subject: "Registration",
-        template: "./registration",
-        context: {
-          text: "Hello!",
-        },
-      })
-      .then(() => this.logger.log(`Successfully sent Mail to ${user.email}`))
-      .catch((e) => this.logger.error(e.message));
   }
 }
