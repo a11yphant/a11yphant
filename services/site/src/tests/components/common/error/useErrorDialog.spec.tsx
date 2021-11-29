@@ -8,14 +8,12 @@ import React from "react";
 const mockTitle = "Mock Title";
 
 const mockErrorCode = "MOCK_ERROR_CODE";
+const MockDefaultError = (): React.ReactElement => <div>Mock Default Error</div>;
 const mockSpecificErrorMessage = "Mock specific error message";
-
-const mockDefaultErrorMessage = "Mock default error message";
-
 const mockGraphQLErrorMessage1 = "Mock GraphQL Error Message 1";
 const mockGraphQLErrorMessage2 = "Mock GraphQL Error Message 2";
 
-const mockNetworkError = new Error("Mock Network Error Message");
+const mockNetworkError = new Error("Network request failed");
 
 const mockErrorResponseWithGraphQLErrors = {
   graphQLErrors: [new GraphQLError(mockGraphQLErrorMessage1), new GraphQLError(mockGraphQLErrorMessage2)],
@@ -25,6 +23,14 @@ const mockErrorResponseWithNetworkError = { graphQLErrors: [], networkError: moc
 const mockErrorResponseWithGraphQLAndNetworkError = {
   graphQLErrors: [new GraphQLError(mockGraphQLErrorMessage1), new GraphQLError(mockGraphQLErrorMessage2)],
   networkError: mockNetworkError,
+};
+const mockErrorResponseWithGraphQLErrorsInsideNetworkError = {
+  graphQLErrors: [],
+  networkError: {
+    name: "Network Error with GraphQL errors",
+    message: "Network Error with GraphQL errors",
+    result: { errors: [new GraphQLError(mockGraphQLErrorMessage1), new GraphQLError(mockGraphQLErrorMessage2)] },
+  },
 };
 
 afterEach(cleanup);
@@ -54,6 +60,7 @@ describe("useErrorDialog", () => {
   });
 
   it("closes errorDialog", async () => {
+    jest.useFakeTimers();
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -64,11 +71,24 @@ describe("useErrorDialog", () => {
 
     await act(async () => {
       result.current.errorDialog.props.onClose();
+      jest.runOnlyPendingTimers();
     });
 
     expect(result.current.errorDialog.props.open).toBeFalsy();
     expect(result.current.errorDialog.props.errorResponse).toBe(undefined);
     expect(result.current.errorDialog.props.messages.length).toBe(0);
+  });
+
+  it("displays graphQLErrors if exist", async () => {
+    const { result } = renderHook(() => useErrorDialog());
+
+    await act(async () => {
+      result.current.errorDialogApi.showApolloError(mockErrorResponseWithGraphQLErrors, { defaultMessage: <MockDefaultError /> });
+    });
+
+    expect(result.current.errorDialog.props.messages.length).toBe(2);
+    expect(result.current.errorDialog.props.messages[0]).toEqual(<MockDefaultError />);
+    expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
   it("displays networkError if exists", async () => {
@@ -82,30 +102,31 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[0]).toEqual(<NetworkError />);
   });
 
-  it("displays graphQLErrors if exist", async () => {
+  it("displays graphqlErrors inside a networkError if exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
-      result.current.errorDialogApi.showApolloError(mockErrorResponseWithGraphQLErrors);
+      result.current.errorDialogApi.showApolloError(mockErrorResponseWithGraphQLErrorsInsideNetworkError, { defaultMessage: <MockDefaultError /> });
     });
 
     expect(result.current.errorDialog.props.messages.length).toBe(2);
-    expect(result.current.errorDialog.props.messages[0]).toBe(mockGraphQLErrorMessage1);
-    expect(result.current.errorDialog.props.messages[1]).toBe(mockGraphQLErrorMessage2);
+    expect(result.current.errorDialog.props.messages[0]).toEqual(<MockDefaultError />);
+    expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
-  it("displays only networkError if graphQLErrors and networkError exist", async () => {
+  it("displays graphQLErrors if graphQLErrors and networkError exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
-      result.current.errorDialogApi.showApolloError(mockErrorResponseWithGraphQLAndNetworkError);
+      result.current.errorDialogApi.showApolloError(mockErrorResponseWithGraphQLAndNetworkError, { defaultMessage: <MockDefaultError /> });
     });
 
-    expect(result.current.errorDialog.props.messages.length).toBe(1);
-    expect(result.current.errorDialog.props.messages[0]).toEqual(<NetworkError />);
+    expect(result.current.errorDialog.props.messages.length).toBe(2);
+    expect(result.current.errorDialog.props.messages[0]).toEqual(<MockDefaultError />);
+    expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
-  it("displays unknown error if no specific message or api message or default message exists", async () => {
+  it("displays unknown error if no specific message or default message exists", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -119,7 +140,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[0]).toEqual(<UnknownError />);
   });
 
-  it("displays default error message if no specific message or api message exists", async () => {
+  it("displays default error message if no specific message exists", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -129,32 +150,13 @@ describe("useErrorDialog", () => {
           networkError: null,
         },
         {
-          defaultMessage: mockDefaultErrorMessage,
+          defaultMessage: <MockDefaultError />,
         },
       );
     });
 
     expect(result.current.errorDialog.props.messages.length).toBe(1);
-    expect(result.current.errorDialog.props.messages[0]).toBe(mockDefaultErrorMessage);
-  });
-
-  it("displays api error message if no specific message exists", async () => {
-    const { result } = renderHook(() => useErrorDialog());
-
-    await act(async () => {
-      result.current.errorDialogApi.showApolloError(
-        {
-          graphQLErrors: [new GraphQLError(mockGraphQLErrorMessage1)],
-          networkError: null,
-        },
-        {
-          defaultMessage: mockDefaultErrorMessage,
-        },
-      );
-    });
-
-    expect(result.current.errorDialog.props.messages.length).toBe(1);
-    expect(result.current.errorDialog.props.messages[0]).toBe(mockGraphQLErrorMessage1);
+    expect(result.current.errorDialog.props.messages[0]).toEqual(<MockDefaultError />);
   });
 
   it("displays specific error message", async () => {
@@ -167,7 +169,7 @@ describe("useErrorDialog", () => {
           networkError: null,
         },
         {
-          defaultMessage: mockDefaultErrorMessage,
+          defaultMessage: <MockDefaultError />,
           specificMessages: {
             [mockErrorCode]: mockSpecificErrorMessage,
           },

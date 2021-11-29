@@ -2,11 +2,13 @@ import ButtonLoading from "app/components/buttons/ButtonLoading";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
+import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
+import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 
 interface CodeLevelProps {
   challengeName: string;
@@ -16,6 +18,7 @@ interface CodeLevelProps {
 
 const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
+  const errorDialogApi = useErrorDialogApi();
 
   const {
     setLevelId,
@@ -54,9 +57,18 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     }
   }, [level, setLevelId, setSubmissionCode, setSubmissionId]);
 
-  const [requestCheckMutation] = useRequestCodeLevelCheckMutation();
-
-  const [showSubmitLoadingAnimation, setShowSubmitLoadingAnimation] = useState(false);
+  const [requestCheckMutation, { loading: requestCheckMutationLoading }] = useRequestCodeLevelCheckMutation({
+    context: LocalErrorScopeApolloContext,
+    onError: (error) => {
+      errorDialogApi.showApolloError(error, {
+        defaultMessage: (
+          <>
+            <strong>Submission Error.</strong> A problem occurred while checking this submission. Please try again later.
+          </>
+        ),
+      });
+    },
+  });
 
   const resetToInitialCode = (language?: EditorLanguage): void => {
     if (language) {
@@ -74,15 +86,15 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   };
 
   const submitLevel = async (): Promise<void> => {
-    setShowSubmitLoadingAnimation(true);
-
     await updateSubmission();
 
-    await requestCheckMutation({
+    const { errors } = await requestCheckMutation({
       variables: { requestCheckInput: { submissionId } },
     });
 
-    router.push(`${router.asPath}/evaluation/${submissionId}`);
+    if (errors === undefined) {
+      router.push(`${router.asPath}/evaluation/${submissionId}`);
+    }
   };
 
   const editorConfiguration = [];
@@ -154,7 +166,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
               primary
               onClick={submitLevel}
               className="px-10"
-              loading={showSubmitLoadingAnimation}
+              loading={requestCheckMutationLoading}
               disabled={!submissionId}
               submitButton
               srTextLoading="The submission is being processed."

@@ -1,11 +1,22 @@
 import { execute, gql } from "@apollo/client";
 import { MockLink } from "@apollo/client/testing";
-import { MockApolloLink, MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
+import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
+import * as Sentry from "@sentry/nextjs";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
 
 import { createTerminatingLink } from "./helpers";
+
+jest.mock("app/components/common/error/useErrorDialog", () => ({
+  useErrorDialogApi: () => ({
+    showApolloError: jest.fn(),
+  }),
+}));
+
+jest.mock("@sentry/nextjs", () => ({
+  captureException: jest.fn(),
+}));
 
 const query = gql`
   query test {
@@ -15,22 +26,17 @@ const query = gql`
   }
 `;
 
-jest.mock("app/components/common/error/useErrorDialog", () => ({
-  useErrorDialogApi: () => ({
-    showApolloError: jest.fn(),
-  }),
-}));
-
 const mockedResponse: MockedResponse = {
   request: {
     query: query,
   },
-  error: new Error("Ein Error"),
+  error: new Error("An Error"),
 };
 
-let mockLink: MockApolloLink;
+const mockLink = new MockLink([mockedResponse]);
+
 beforeEach(() => {
-  mockLink = new MockLink([mockedResponse]);
+  jest.resetAllMocks();
 });
 
 describe("create error link", () => {
@@ -42,6 +48,19 @@ describe("create error link", () => {
     execute(link, { query }).subscribe({
       complete: done,
       error: done.fail,
+    });
+  });
+
+  it("logs error to sentry", (done) => {
+    const errorDialogApi = useErrorDialogApi();
+
+    const link = createErrorLink({ errorDialogApi }).concat(mockLink);
+
+    execute(link, { query }).subscribe({
+      error: () => {
+        expect(Sentry.captureException).toHaveBeenCalled();
+        done();
+      },
     });
   });
 
