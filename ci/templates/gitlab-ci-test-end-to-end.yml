@@ -4,6 +4,7 @@
     entrypoint: [""]
   tags:
    - docker
+  cache: {}
   services:
     - postgres
     - alias: localstack
@@ -53,10 +54,10 @@
     - unzip terraform_${TER_VER}_linux_amd64.zip
     - mv terraform /usr/local/bin/
     - cd -
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
 
     # seed database
-    - npm  --silent --prefix services/api ci --cache .npm-alpine --prefer-offline
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - npm  --silent --prefix services/api ci --prefer-offline
     - npm  --silent --prefix services/api run prisma:migrate
     - npm  --silent run import-challenges
 
