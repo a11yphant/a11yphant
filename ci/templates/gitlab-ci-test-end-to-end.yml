@@ -57,15 +57,14 @@
 
     # seed database
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
-    - npm  --silent --prefix services/api ci --prefer-offline
-    - npm  --silent --prefix services/api run prisma:migrate
-    - npm  --silent run import-challenges
+    - npm --prefix services/api ci
+    - npm --prefix services/api run prisma:migrate
+    - npm run import-challenges
 
     # setup localstack
     - terraform -chdir=terraform/local init
     - terraform -chdir=terraform/local apply -auto-approve
   script:
-    - 'curl -X POST "http://site:3001/graphql" -H "Content-Type: application/json" --data "{ \"query\": \"{ currentUser { id } }\" }"'
     - npm run cypress:run --prefix tests
   artifacts:
     when: on_failure
