@@ -6,6 +6,7 @@ import { SessionToken } from "@/authentication/interfaces/session-token.interfac
 import { JwtService } from "@/authentication/jwt.service";
 
 describe("current user", () => {
+  jest.setTimeout(10000);
   const { getPrismaService } = useDatabase();
   const { getGraphQlClient, getApp } = useTestingApp();
 
