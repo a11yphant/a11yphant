@@ -56,7 +56,7 @@
     - cd -
 
     # seed database
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> services/api/.npmrc
     - npm --prefix services/api ci
     - npm --prefix services/api run prisma:migrate
     - npm run import-challenges
