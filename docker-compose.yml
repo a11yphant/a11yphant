@@ -2,7 +2,7 @@ version: '3'
 
 services:
   selenium:
-    image: seleniarm/standalone-chromium
+    image: ${SELENIUM_IMAGE:-selenium/standalone-chromium:4}
     restart: always
     volumes:
       - /dev/shm:/dev/shm
