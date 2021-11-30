@@ -51,5 +51,6 @@ describe("submission resolver", () => {
     const resolvedSubmission = await resolver.result(submission);
 
     expect(resolvedSubmission).toBeNull();
+    expect(findOneForSubmission).toHaveBeenCalledWith(submission.id);
   });
 });
