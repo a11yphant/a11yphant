@@ -39,5 +39,6 @@ describe("quiz level resolver", () => {
     const status = await resolver.status(level, sessionToken);
 
     expect(status).toBe(LevelStatus.OPEN);
+    expect(findStatusForQuizLevel).toHaveBeenCalledWith(level.id, sessionToken.userId);
   });
 });
