@@ -1,14 +1,13 @@
 challenge:
   id: 2f7e0f74-57ff-4823-ba73-c5b9fa85a9c7
-  name: Section Heading Elements
-  slug: section-heading-elements
+  name: Headings
+  slug: headings
   difficulty: easy
   order: 2
   introduction: >
     Always remember: Your pages need more structure than your average day!
     In this challenge you will learn how to use the six available HTML headings to structure your page. <code>&lt;h1&gt;</code> is the first and most important heading, <code>&lt;h6&gt;</code> the least important. Headings communicate how the content on the page is structured. Web browsers, plugins and assistive technologies like screen readers can use headings to provide in-page navigation. That's why a logical structure is very important.
   levels:
-
     - id: 5cd71c4d-329c-4d85-947c-bb4c65a2d049
       order: 1
       type: code
@@ -56,7 +55,7 @@ challenge:
           order: 3
           options:
             selector: h1 + p
-    
+
     - id: bf963819-df32-4d3b-8d97-215c2f07c7f5
       order: 2
       type: quiz
@@ -74,7 +73,7 @@ challenge:
         - id: 967111b3-b500-4803-89a8-ad60e7042a50
           text: It is the least important heading level.
           correct: false
-    
+
     - id: e60f445f-8971-439b-a423-ce38c5c1bf26
       order: 3
       type: quiz
@@ -94,7 +93,7 @@ challenge:
         You can use the different heading levels to structure the content of your HTML document, just like you would structure the content of a Word document. People using assistive technologies can then navigate the page by jumping from heading to heading.
       tasks:
         - id: 43b197cf-dd0b-4143-9155-63d997087cb8
-          text: |- 
+          text: |-
             Use the different heading levels to create a document with the following heading structure:
               <ul>
                 <li>My favourite cat
@@ -242,7 +241,7 @@ challenge:
           order: 6
           options:
             selector: body > div:nth-child(7) > h2
-      
+
     - id: f80a4a63-d6c9-4192-835c-58ef8761f54a
       order: 7
       type: code
@@ -302,7 +301,7 @@ challenge:
           description: Since we add a new <code>&lt;h1&gt;</code> into the document the <code>&lt;h1&gt;</code> element at the beginning of the document is not needed anymore.
           order: 3
           options:
-            selector: body > h1:first-child 
+            selector: body > h1:first-child
         - id: b286fb13-7be9-46bb-b185-d8267fde82d9
           key: element-exists
           title: The main heading for the content has been converted from an <code>&lt;h2&gt;</code> to an <code>&lt;h1&gt;</code>
