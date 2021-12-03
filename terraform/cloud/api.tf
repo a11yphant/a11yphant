@@ -50,7 +50,7 @@ resource "heroku_addon" "scheduler" {
 
 resource "herokux_scheduler_job" "delete_stale_users" {
   app_id    = heroku_app.api.uuid
-  command   = "npm run console delete:staleusers"
+  command   = "npm run console:prod delete:staleusers"
   dyno_size = "Standard-1X"
   frequency = "every_day_at_0:00"
 
