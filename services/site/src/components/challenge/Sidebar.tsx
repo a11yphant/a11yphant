@@ -19,7 +19,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ className, challengeNa
         <div className="py-4 px-7">
           <h2 className={clsx("text-grey-middle", "h6")}>{challengeName}</h2>
           <h3 className={clsx("my-8", "h4")}>Instructions</h3>
-          <p className={clsx("whitespace-pre-wrap", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
+          <div className={clsx("whitespace-pre-wrap", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(level.instructions) }} />
           <HintList tasks={level.tasks} />
         </div>
       </ScrollOverlayWrapper>

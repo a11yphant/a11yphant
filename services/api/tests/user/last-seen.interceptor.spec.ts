@@ -1,6 +1,6 @@
 import { createMock, DeepMocked } from "@golevelup/ts-jest";
 import { ExecutionContext } from "@nestjs/common";
-import { runInterceptor } from "@tests/helpers";
+import { runInterceptor } from "@tests/support/helpers";
 import { Request, Response } from "express";
 
 import { Context } from "@/authentication/interfaces/context.interface";

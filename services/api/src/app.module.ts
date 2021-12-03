@@ -1,5 +1,5 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, ModuleMetadata } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
@@ -24,10 +24,11 @@ import { SubmissionModule } from "./submission/submission.module";
 import { LastSeenInterceptor } from "./user/last-seen.interceptor";
 import { UserModule } from "./user/user.module";
 
-@Module({
+export const appModuleMetadata: ModuleMetadata = {
   imports: [
     ConfigModule.forRoot({
       load: [apiConfig, cookieConfig, gqlConfig, nodeConfig, databaseConfig, messaging, oauthConfig, sentryConfig],
+      ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
     }),
     SentryModule.forRootAsync({
       imports: [ConfigModule],
@@ -99,5 +100,6 @@ import { UserModule } from "./user/user.module";
       useClass: LastSeenInterceptor,
     },
   ],
-})
+};
+@Module(appModuleMetadata)
 export class AppModule {}
