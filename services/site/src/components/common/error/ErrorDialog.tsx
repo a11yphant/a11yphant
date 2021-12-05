@@ -64,8 +64,8 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
           overrideClassName
           className={clsx(
             "px-6 py-4 leading-4 inline-flex items-center rounded tracking-wider transition duration-300",
-            "hover:text-white hover:bg-error hover:border-error",
-            "focus:text-white focus:bg-error focus:border-error",
+            "hover:text-light hover:bg-error hover:border-error",
+            "focus:text-light focus:bg-error focus:border-error",
             "bg-error-dark",
           )}
         >

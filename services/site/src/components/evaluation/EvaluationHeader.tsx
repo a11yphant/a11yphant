@@ -39,7 +39,7 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
             aria-label={passed ? "All checks passed" : "Some checks failed"}
           />
         </div>
-        <p className={clsx("p-2 pt-1 mt-2 mb-0 text-7xl text-white font-mono font-bold w-fit-content", "container-dark", "lg:text-8xl")}>
+        <p className={clsx("p-2 pt-1 mt-2 mb-0 text-7xl text-light font-mono font-bold w-fit-content", "container-dark", "lg:text-8xl")}>
           {score.toFixed(0)}%
         </p>
       </div>

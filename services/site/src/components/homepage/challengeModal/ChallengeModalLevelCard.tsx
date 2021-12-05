@@ -43,7 +43,7 @@ export const ChallengeModalLevelCard = ({
             useGrouping: false,
           })}
         </h3>
-        {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10", "absolute top-4 right-5", "text-white")} />}
+        {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10", "absolute top-4 right-5", "text-light")} />}
       </a>
     </Link>
   );

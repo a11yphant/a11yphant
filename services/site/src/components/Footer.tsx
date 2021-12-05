@@ -9,12 +9,12 @@ const Footer: React.FunctionComponent = () => (
         <ul className={clsx("mb-0")}>
           <li className={clsx("mb-0 pt-4 pb-4", "md:pt-0 md:pb-0 md:inline-block md:mr-16")}>
             <Link href="/imprint">
-              <a className={clsx("text-white font-sans font-normal", "hover:text-primary-light hover:border-transparent")}>Imprint</a>
+              <a className={clsx("text-light font-sans font-normal", "hover:text-primary-light hover:border-transparent")}>Imprint</a>
             </Link>
           </li>
           <li className={clsx("mb-0 pt-4 pb-4 inline-block", "md:pt-0 md:pb-0 md:mr-16")}>
             <Link href="/privacy-policy">
-              <a className={clsx("text-white font-sans font-normal", "hover:text-primary-light hover:border-transparent")}>Privacy Policy</a>
+              <a className={clsx("text-light font-sans font-normal", "hover:text-primary-light hover:border-transparent")}>Privacy Policy</a>
             </Link>
           </li>
         </ul>
