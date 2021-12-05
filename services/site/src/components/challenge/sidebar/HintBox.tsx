@@ -36,11 +36,10 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             setUsedHints((usedHints) => (usedHints > 1 ? usedHints : 1));
           }}
           className={clsx(
-            "w-full p-4 m-0 flex flex-row items-center justify-between font-normal text-left",
+            "w-full p-4 m-0 flex flex-row items-center justify-between font-normal text-left text-lg leading-8",
             "group transition duration-300",
             "hover:text-primary-light",
             "focus-visible:outline-none focus:outline-none",
-            "h6",
           )}
           overrideClassName
           aria-expanded={usedHints > 0}
@@ -55,7 +54,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             {hints.slice(0, usedHints).map((hint) => (
               <li
                 key={hint.id}
-                className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose")}
+                className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose text-lg leading-8")}
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }}
               />
             ))}
@@ -67,7 +66,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
               }}
               overrideClassName
               className={clsx(
-                "mt-4 mb-4 font-normal border-b",
+                "mt-4 mb-4 font-normal border-b text-lg leading-8",
                 "transition duration-300",
                 "hover:text-primary-light hover:border-primary-light",
                 "focus:text-primary-light focus:border-primary-light focus-visible-outline",
