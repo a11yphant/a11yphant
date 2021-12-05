@@ -31,15 +31,15 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
   return (
     <>
       <div className={clsx("h-14 w-14 mr-8  ml-0 lg:ml-8 flex justify-center items-center", "lg:mr-20 lg:ml-8")}>
-        {passed ? <Check className="h-9 w-14 text-success" /> : <X className="h-10 w-10 text-error" />}
+        {passed ? <Check className={clsx("h-9 w-14 text-success")} /> : <X className={clsx("h-10 w-10 text-error")} />}
         {passed ? (
-          <p className="sr-only">The following requirement is fulfilled:</p>
+          <p className={clsx("sr-only")}>The following requirement is fulfilled:</p>
         ) : (
-          <p className="sr-only">The following requirement is not fulfilled:</p>
+          <p className={clsx("sr-only")}>The following requirement is not fulfilled:</p>
         )}
       </div>
 
-      <div className="flex flex-col col-start-2 col-span-9">
+      <div className={clsx("flex flex-col col-start-2 col-span-9")}>
         <h3>
           <Button
             onClick={() => {
@@ -56,7 +56,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             overrideClassName
             aria-expanded={showDescription}
           >
-            <span className="h4 prose prose-2xl text-left" dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
+            <span className={clsx("h4 prose prose-2xl text-left")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
             <AnimatedChevron
               style={{ transform: transform }}
               className={clsx("mr-8 text-light flex-shrink-0", "group-hover:text-primary-light", "group-focus:text-primary-light", className)}

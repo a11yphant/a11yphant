@@ -25,7 +25,7 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
         <title>Something went wrong</title>
       </Head>
       <FullScreenLayout header={<Navigation />}>
-        <main className="h-full box-border max-w-screen-3xl mx-auto">
+        <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <section
             className={clsx("mx-8 py-8 h-full flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
           >

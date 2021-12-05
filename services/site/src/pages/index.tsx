@@ -35,7 +35,7 @@ const Home: React.FunctionComponent = () => {
       </Head>
       <Navigation displayBreadcrumbs />
       <main>
-        <h1 className="sr-only" aria-label="Allyphant">
+        <h1 className={clsx("sr-only")} aria-label="Allyphant">
           a11yphant
         </h1>
         <div className={clsx("w-full h-full")}>

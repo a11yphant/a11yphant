@@ -32,12 +32,12 @@ const Breadcrumbs: React.FunctionComponent = () => {
   return (
     <>
       {routeList.length > 1 && (
-        <nav className="w-fit-content" aria-label="Breadcrumbs">
-          <ol className="flex flex-row">
+        <nav className={clsx("w-fit-content")} aria-label="Breadcrumbs">
+          <ol className={clsx("flex flex-row")}>
             {routeList.map((route, idx) => {
               return (
-                <li key={route.href} className="m-0">
-                  <div className="flex items-center">
+                <li key={route.href} className={clsx("m-0")}>
+                  <div className={clsx("flex items-center")}>
                     {idx > 0 && <Slash />}
                     <Link href={route.href}>
                       <a

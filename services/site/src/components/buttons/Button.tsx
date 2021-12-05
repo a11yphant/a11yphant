@@ -34,7 +34,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       {...props}
     >
       {children}
-      {srText && <span className="sr-only">{srText}</span>}
+      {srText && <span className={clsx("sr-only")}>{srText}</span>}
     </button>
   );
 };

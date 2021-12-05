@@ -24,9 +24,9 @@ const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className 
           className={"h-[300px]"}
         />
       </div>
-      <h2 className="text-5xl">Evaluation</h2>
+      <h2 className={clsx("text-5xl")}>Evaluation</h2>
       <br />
-      <span className="text-4xl">loading ...</span>
+      <span className={clsx("text-4xl")}>loading ...</span>
     </div>
   );
 };

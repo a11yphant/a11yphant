@@ -57,15 +57,15 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
         {heading}
         {!previewUpdated && (
-          <span className="text-current">
-            <span className="sr-only">Updating the live preview is in progress...</span>
-            <LoadingIndicator className="inline-block ml-2 mb-0.5" />
+          <span className={clsx("text-current")}>
+            <span className={clsx("sr-only")}>Updating the live preview is in progress...</span>
+            <LoadingIndicator className={clsx("inline-block ml-2 mb-0.5")} />
           </span>
         )}
       </h3>
       <iframe
         title="Preview"
-        className="w-full h-[90%] pb-8"
+        className={clsx("w-full h-[90%] pb-8")}
         tabIndex={-1}
         srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />

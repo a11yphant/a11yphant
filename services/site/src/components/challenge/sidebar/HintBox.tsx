@@ -29,7 +29,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
 
   return (
     <div className={clsx("flex flex-col", "container-ultra-dark card-smaller")}>
-      <h4 className="w-full">
+      <h4 className={clsx("w-full")}>
         <Button
           onClick={() => {
             setShowHint((showHint) => !showHint);
