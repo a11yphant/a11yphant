@@ -1,3 +1,4 @@
+import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
 import lottie, { AnimationConfigWithData } from "lottie-web";
 import React, { HTMLAttributes, useEffect, useRef } from "react";
 
@@ -6,6 +7,8 @@ export interface LottieProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Lottie: React.FunctionComponent<LottieProps> = ({ options, ...elementProps }) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   const wrapper = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,6 +19,10 @@ const Lottie: React.FunctionComponent<LottieProps> = ({ options, ...elementProps
       autoplay: true,
       ...options,
     });
+
+    if (prefersReducedMotion) {
+      animation.goToAndStop(animation.totalFrames - 1, true);
+    }
 
     return () => {
       animation.destroy();
