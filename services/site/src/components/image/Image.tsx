@@ -1,7 +1,10 @@
+import getConfig from "next/config";
 import { default as NextImage, ImageLoaderProps, ImageProps } from "next/image";
 
 export function imageLoader({ src, width, quality }: ImageLoaderProps): string {
-  const assetDomain = process.env.NEXT_PUBLIC_SITE_ASSET_BASE_URL;
+  const { publicRuntimeConfig } = getConfig();
+
+  const assetDomain = publicRuntimeConfig.assetBaseUrl;
   const prefixedSource = assetDomain ? assetDomain + src : src;
 
   // copied from: https://github.com/vercel/next.js/blob/canary/packages/next/client/image.tsx#L709

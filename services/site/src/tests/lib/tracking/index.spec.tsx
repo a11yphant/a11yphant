@@ -1,5 +1,6 @@
 import splitbee from "@splitbee/web";
 import { initializeTracking } from "app/lib/tracking";
+import getConfig from "next/config";
 
 jest.mock("@splitbee/web", () => {
   return {
@@ -7,19 +8,21 @@ jest.mock("@splitbee/web", () => {
   };
 });
 
+jest.mock("next/config", () => jest.fn());
+
 beforeEach(() => {
   jest.resetAllMocks();
 });
 
 afterEach(() => {
   (process as any).browser = undefined;
-  process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = undefined;
 });
 
 describe("splitbee tracking", () => {
   it("initializes splitbee", async () => {
     (process as any).browser = true;
-    process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = "123";
+    (getConfig as jest.Mock).mockReturnValue({ publicRuntimeConfig: { splitbeeToken: "123" } });
+
     initializeTracking();
 
     expect(splitbee.init).toHaveBeenCalled();
@@ -27,7 +30,7 @@ describe("splitbee tracking", () => {
 
   it("does not initialize splitbee outside of a browser", async () => {
     (process as any).browser = false;
-    process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = "123";
+    (getConfig as jest.Mock).mockReturnValue({ publicRuntimeConfig: { splitbeeToken: "123" } });
     initializeTracking();
 
     expect(splitbee.init).not.toHaveBeenCalled();
@@ -35,7 +38,7 @@ describe("splitbee tracking", () => {
 
   it("does not initialize splitbee without token", async () => {
     (process as any).browser = true;
-    process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN = "";
+    (getConfig as jest.Mock).mockReturnValue({ publicRuntimeConfig: { splitbeeToken: "" } });
     initializeTracking();
 
     expect(splitbee.init).not.toHaveBeenCalled();

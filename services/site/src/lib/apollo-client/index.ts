@@ -3,21 +3,25 @@ import { ErrorDialogApi, useErrorDialogApi } from "app/components/common/error/u
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
 import crossFetch from "cross-fetch";
 import { GetServerSidePropsContext } from "next";
+import getConfig from "next/config";
 import { useMemo } from "react";
 
 import { createForwardCookiesToClientLink } from "./create-forward-cookies-to-client-link";
 import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-server-link";
 
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
+
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function createApolloClient(context: GetServerSidePropsContext = null, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
+  const isServer = typeof window === "undefined";
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT,
+    uri: isServer ? serverRuntimeConfig.graphqlEndpointServer : publicRuntimeConfig.graphqlEndpointClient,
     fetch: crossFetch,
   });
 
   return new ApolloClient({
-    ssrMode: typeof window === "undefined",
+    ssrMode: isServer,
     // the http link has to be at the end because it is a terminating link
     link: from([createForwardCookiesToClientLink(context), createForwardCookiesToServerLink(context), createErrorLink({ errorDialogApi }), httpLink]),
     cache: new InMemoryCache(),

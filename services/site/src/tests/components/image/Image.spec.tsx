@@ -1,11 +1,15 @@
 import { imageLoader } from "app/components/image/Image";
+import getConfig from "next/config";
 
 const assetBaseUrl = "https://cdn.domain";
 
+jest.mock("next/config", () => jest.fn());
+
 describe("image", () => {
   describe("image loader", () => {
-    afterEach(() => {
-      delete process.env.NEXT_PUBLIC_SITE_ASSET_BASE_URL;
+    beforeEach(() => {
+      jest.resetAllMocks();
+      (getConfig as jest.Mock).mockReturnValue({ publicRuntimeConfig: { assetBaseUrl } });
     });
 
     it("forwards the width", () => {
@@ -29,11 +33,10 @@ describe("image", () => {
     it("forwards the url", () => {
       const url = new URL(imageLoader({ src: "/image.jpg", width: 10, quality: 50 }), "https://base.url");
 
-      expect(url.searchParams.get("url")).toEqual("/image.jpg");
+      expect(url.searchParams.get("url")).toContain("/image.jpg");
     });
 
     it("prepends the asset base url if it is configured", () => {
-      process.env.NEXT_PUBLIC_SITE_ASSET_BASE_URL = assetBaseUrl;
       const src = "/image.jpg";
 
       const url = new URL(imageLoader({ src, width: 10 }), "https://base.url");
