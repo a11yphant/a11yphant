@@ -1,4 +1,4 @@
-import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
+import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";

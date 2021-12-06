@@ -1,7 +1,7 @@
 import Button from "app/components/buttons/Button";
 import Chevron from "app/components/icons/Chevron";
 import { Hint } from "app/generated/graphql";
-import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
+import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";

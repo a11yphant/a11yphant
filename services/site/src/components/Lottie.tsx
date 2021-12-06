@@ -1,4 +1,4 @@
-import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
+import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import lottie, { AnimationConfigWithData } from "lottie-web";
 import React, { HTMLAttributes, useEffect, useRef } from "react";
 
