@@ -2,9 +2,12 @@ import Button from "app/components/buttons/Button";
 import Github from "app/components/icons/Github";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import clsx from "clsx";
+import getConfig from "next/config";
 import React from "react";
 
 import Twitter from "../icons/Twitter";
+
+const { publicRuntimeConfig } = getConfig();
 
 export interface UserAccountBoxProps {
   mode: "signup" | "login";
@@ -17,7 +20,7 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
     <>
       <div className="mb-2">
         <a
-          href={process.env.NEXT_PUBLIC_SITE_GITHUB_LOGIN_ENDPOINT || "/auth/github"}
+          href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}
           className={clsx(
             "px-8 py-4 mb-2 block w-full text-center align-middle text-white font-normal leading-none rounded border border-white",
             "transition duration-300 group",
@@ -28,7 +31,7 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
           <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white", "transition duration-300", "group-hover:text-primary")} />
         </a>
         <a
-          href={process.env.NEXT_PUBLIC_SITE_TWITTER_LOGIN_ENDPOINT || "/auth/twitter"}
+          href={publicRuntimeConfig.twitterLoginEndpoint || "/auth/twitter"}
           className={clsx(
             "px-8 py-4 mb-2 block w-full text-center align-middle text-white font-normal leading-none rounded border border-white",
             "transition duration-300 group",

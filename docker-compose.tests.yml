@@ -1,0 +1,47 @@
+services:
+  api:
+    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:develop
+    environment:
+      DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
+      AWS_ACCESS_KEY_ID: mock_access_key
+      AWS_SECRET_ACCESS_KEY: mock_secret_key
+      API_HOST: 0.0.0.0
+      API_PORT: 3000
+      API_KEY: please-generate-a-secret-key-for-production
+      API_CHALLENGES_LOCATION: "../../../../challenges"
+      API_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
+      API_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+      API_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-api-queue
+    ports:
+      - 3000:3000
+    depends_on:
+      - localstack
+      - postgres
+
+  site:
+    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:develop
+    entrypoint: ""
+    command: node entrypoint.js
+    environment:
+      SITE_HOST: 0.0.0.0
+      SITE_PORT: 3001
+      SITE_GRAPHQL_ENDPOINT_SERVER: http://api:3000/graphql
+      SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3000/graphql
+    ports:
+      - 3001:3001
+    depends_on:
+      - api
+
+  submission-checker:
+    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:develop
+    environment:
+      SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
+      SUBMISSION_CHECKER_MESSAGING_POLL_QUEUE: 1
+      SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES: 1
+      SUBMISSION_CHECKER_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-submission-checker-queue
+      SUBMISSION_CHECKER_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
+      SUBMISSION_CHECKER_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+    depends_on:
+      - api
+
+  

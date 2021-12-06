@@ -1,0 +1,74 @@
+.test:end-to-end:
+  image: 
+    name: cypress/included:9.1.0
+    entrypoint: [""]
+  tags:
+   - docker
+  cache: {}
+  services:
+    - postgres
+    - alias: localstack
+      name: localstack/localstack
+    - alias: selenium
+      name: selenium/standalone-chrome:4
+    - alias: api
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG
+    - alias: site
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG
+      entrypoint: [""]
+      command: ["node", "entrypoint-server.js"]
+    - alias: submission-checker
+      name: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG
+  variables:
+    FF_NETWORK_PER_BUILD: 1
+    POSTGRES_USER: a11yphant
+    POSTGRES_PASSWORD: secret
+    POSTGRES_DB: a11yphant
+    SERVICES: sns,sqs
+    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
+    AWS_ACCESS_KEY_ID: mock_access_key
+    AWS_SECRET_ACCESS_KEY: mock_secret_key
+    API_HOST: 0.0.0.0
+    API_PORT: 3000
+    API_KEY: please-generate-a-secret-key-for-production
+    API_CHALLENGES_LOCATION: "../../../../challenges"
+    API_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
+    API_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+    API_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-api-queue
+    SITE_HOST: 0.0.0.0
+    SITE_PORT: 3001
+    SITE_GRAPHQL_ENDPOINT_SERVER: http://api:3000/graphql
+    SITE_GRAPHQL_ENDPOINT_CLIENT: http://site:3001/graphql
+    SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
+    SUBMISSION_CHECKER_MESSAGING_POLL_QUEUE: 1
+    SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES: 1
+    SUBMISSION_CHECKER_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-submission-checker-queue
+    SUBMISSION_CHECKER_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
+    SUBMISSION_CHECKER_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+    CYPRESS_BASE_URL: "http://site:3001"
+  before_script:
+    # install terraform
+    - cd /tmp
+    - TER_VER=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d":" -f2 | tr -d \"\,\v | awk '{$1=$1};1')
+    - wget --quiet https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_linux_amd64.zip
+    - unzip terraform_${TER_VER}_linux_amd64.zip
+    - mv terraform /usr/local/bin/
+    - cd -
+
+    # seed database
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> services/api/.npmrc
+    - npm --prefix services/api ci
+    - npm --prefix services/api run prisma:migrate
+    - npm run import-challenges
+
+    # setup localstack
+    - terraform -chdir=terraform/local init
+    - terraform -chdir=terraform/local apply -auto-approve
+  script:
+    - npm run cypress:run --prefix tests
+  artifacts:
+    when: on_failure
+    expire_in: 1 week
+    paths:
+      - tests/cypress/screenshots
+      - tests/cypress/videos
