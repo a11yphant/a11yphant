@@ -57,7 +57,6 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
                 <Lottie
                   options={{
                     loop: false,
-                    autoplay: true,
                     animationData: failAnimation,
                     rendererSettings: {
                       preserveAspectRatio: "xMidYMid slice",
@@ -74,7 +73,6 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
                 <Lottie
                   options={{
                     loop: false,
-                    autoplay: true,
                     animationData: correctAnimation,
                     rendererSettings: {
                       preserveAspectRatio: "xMidYMid slice",

@@ -13,8 +13,6 @@ const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className 
       <div>
         <Lottie
           options={{
-            loop: true,
-            autoplay: true,
             animationData: loadingAnimation,
             rendererSettings: {
               preserveAspectRatio: "xMidYMid slice",
