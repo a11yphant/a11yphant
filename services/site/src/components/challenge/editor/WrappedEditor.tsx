@@ -4,11 +4,10 @@ import { EditorLanguage } from "app/components/challenge/Editors";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
-import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { animated, useSpring } from "react-spring";
+import { animated } from "react-spring";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -37,8 +36,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
   const [editorTop, setEditorTop] = useState<number>(0);
-
-  const [animateIcon, setAnimateIcon] = useState<boolean>(false);
 
   const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
@@ -75,19 +72,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
     onResize: updateEditorSize,
   });
 
-  const prefersReducedMotion = usePrefersReducedMotion();
-
   const AnimatedResetIcon = animated(Reset);
-
-  // any is necessary here because the types of react-spring are somehow messed up
-  const { transform }: any = useSpring({
-    transform: animateIcon && !prefersReducedMotion ? "rotate(100deg)" : "rotate(360deg)",
-    config: {
-      tension: 0,
-      duration: 300,
-      delay: 0,
-    },
-  });
 
   return (
     <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
@@ -118,12 +103,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           onClick={() => {
             setModalOpen(true);
           }}
-          onMouseEnter={() => {
-            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
-          }}
-          onMouseLeave={() => {
-            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
-          }}
           className={clsx(
             "absolute bottom-2 flex items-center text-grey mx-3",
             "group transition duration-300",
@@ -133,7 +112,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           overrideClassName
           innerRef={buttonRef}
         >
-          <AnimatedResetIcon style={{ transform: transform }} />
+          <AnimatedResetIcon className={clsx("motion-safe:group-hover:-rotate-260")} />
           Reset
         </Button>
 
