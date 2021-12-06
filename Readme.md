@@ -122,3 +122,26 @@ pm2 del all
 # Delete individual service
 pm2 del <pm2-service-name>
 ```
+
+## Coding conventions
+
+We follow some coding conventions within this project.
+
+### HTML
+
+#### Class order
+
+When assigning Tailwind classes to an HTML element, they have to be ordered starting with:
+
+1. classes that don't fit into any other bullet point category (like positioning, colors, fonts, etc.)
+2. animation stuff like `group`, `transition`, etc.
+3. `Hover` styles
+4. `Focus` styles
+5. custom Tailwind classes
+6. Breakpoint `xs`
+7. Breakpoint `sm`
+8. Breakpoint `md`
+9. Breakpoint `lg`
+10. Breakpoint `xl`
+11. Breakpoint `2xl`
+
