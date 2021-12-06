@@ -87,7 +87,16 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
           </ScrollOverlayWrapper>
 
           <ModalActions>
-            <Button onClick={onClose} overrideClassName className={clsx("text-grey-middle", "mr-14", "hover:border-b hover:border-grey-middle")}>
+            <Button
+              onClick={onClose}
+              overrideClassName
+              className={clsx(
+                "mr-14 text-grey-middle border-b-2 border-transparent",
+                "transition-colors duration-300",
+                "hover:text-primary-light hover:border-primary-light",
+                "focus:text-primary-light focus:border-primary-light",
+              )}
+            >
               Cancel
             </Button>
             <Button
