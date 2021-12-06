@@ -27,7 +27,7 @@ const Lottie: React.FunctionComponent<LottieProps> = ({ options, ...elementProps
     return () => {
       animation.destroy();
     };
-  }, [wrapper, options]);
+  }, [wrapper, options, prefersReducedMotion]);
 
   return <div ref={wrapper} {...elementProps}></div>;
 };

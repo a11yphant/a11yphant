@@ -10,7 +10,7 @@ interface LoadingScreenProps {
 const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className }) => {
   return (
     <div className={clsx(" h-full w-full flex flex-col justify-center items-center box-border", "container-dark", className)}>
-      <div>
+      <div className={clsx("motion-reduce:hidden")}>
         <Lottie
           options={{
             animationData: loadingAnimation,
