@@ -87,7 +87,7 @@
     "eslint-plugin-react": "7.27.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
-    "eslint-plugin-unused-imports": "1.1.5",
+    "eslint-plugin-unused-imports": "2.0.0",
     "gray-matter": "4.0.3",
     "jest": "27.3.1",
     "jest-dom": "4.0.0",
