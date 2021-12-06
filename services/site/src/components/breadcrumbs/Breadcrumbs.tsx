@@ -32,12 +32,12 @@ const Breadcrumbs: React.FunctionComponent = () => {
   return (
     <>
       {routeList.length > 1 && (
-        <nav className="w-fit-content" aria-label="Breadcrumbs">
-          <ol className="flex flex-row">
+        <nav className={clsx("w-fit-content")} aria-label="Breadcrumbs">
+          <ol className={clsx("flex flex-row")}>
             {routeList.map((route, idx) => {
               return (
-                <li key={route.href} className="m-0">
-                  <div className="flex items-center">
+                <li key={route.href} className={clsx("m-0")}>
+                  <div className={clsx("flex items-center")}>
                     {idx > 0 && <Slash />}
                     <Link href={route.href}>
                       <a
@@ -45,7 +45,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
                           "ml-1 font-medium whitespace-nowrap",
                           "transition-colors duration-300",
                           "hover:text-primary-light hover:border-primary-light",
-                          idx === routeList.length - 1 ? "text-white font-bold focus:text-primary-light" : "text-grey-middle",
+                          idx === routeList.length - 1 ? "text-light font-bold focus:text-primary-light" : "text-grey-middle",
                         )}
                         aria-current={idx === routeList.length - 1 ? "page" : undefined}
                       >

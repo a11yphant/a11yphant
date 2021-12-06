@@ -35,12 +35,15 @@ const Home: React.FunctionComponent = () => {
       </Head>
       <Navigation displayBreadcrumbs />
       <main>
-        <h1 className="sr-only" aria-label="Allyphant">
+        <h1 className={clsx("sr-only")} aria-label="Allyphant">
           a11yphant
         </h1>
         <div className={clsx("w-full h-full")}>
           {!currentUser?.isRegistered && <Hero />}
-          <section id="challenges" className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
+          <section
+            id="challenges"
+            className={clsx("max-w-screen-3xl mx-8 mt-32 mb-4", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24 md:mb-24", "2xl:mx-auto")}
+          >
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
             <Legend className={clsx("2xl:mx-24")} />
             {easyChallenges.length !== 0 && (

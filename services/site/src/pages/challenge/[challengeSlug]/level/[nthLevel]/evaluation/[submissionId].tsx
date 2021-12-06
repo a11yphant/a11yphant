@@ -43,7 +43,7 @@ const Evaluation: React.FunctionComponent = () => {
   const isLastLevel = parseInt(nthLevel as string) + 1 > data?.challenge.levels.length;
 
   const pageTitle = `Evaluation - ${data?.challenge.name} - Level ${nthLevel}`;
-  const heading = <h1 className="sr-only">{pageTitle}</h1>;
+  const heading = <h1 className={clsx("sr-only")}>{pageTitle}</h1>;
 
   return (
     <>

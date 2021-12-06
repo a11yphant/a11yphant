@@ -92,15 +92,15 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
         <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
           {config.heading}
         </h3>
-        <div className="absolute" style={{ top: editorTop }}>
+        <div className={clsx("absolute")} style={{ top: editorTop }}>
           <Editor
             {...props}
             theme="vs-dark"
             language={config.language}
             loading={
               <span>
-                <span className="sr-only">The editor is loading...</span>
-                <LoadingIndicator className="w-6 h-6" />
+                <span className={clsx("sr-only")}>The editor is loading...</span>
+                <LoadingIndicator className={clsx("w-6 h-6")} />
               </span>
             }
             value={config.code}

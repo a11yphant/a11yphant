@@ -25,7 +25,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
       </div>
       {!userLoggedIn && (
         <section className={clsx("hidden", "lg:flex")}>
-          <p className="max-w-xs ml-12 mr-8 my-1">
+          <p className={clsx("max-w-xs ml-12 mr-8 my-1")}>
             Why not sign up and track your <br></br> stats and save your progress?
           </p>
           <div>
@@ -34,12 +34,12 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
               onClick={() => {
                 userAccountModalApi.show("signup");
               }}
-              className="mx-1 mb-2 px-16"
+              className={clsx("mx-1 mb-2 px-16")}
             >
               Sign Up
             </Button>
 
-            <div className="flex">
+            <div className={clsx("flex")}>
               <div className={clsx("max-w-full block ml-1 mr-2")}>
                 <a
                   href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}

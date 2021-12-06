@@ -51,7 +51,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
             {quizResult?.status === ResultStatus.Fail && (
               <div>
-                <p className="h2 leading-tight">
+                <p className={clsx("h2 leading-tight")}>
                   Wrong answer,<br></br> try again!
                 </p>
                 <Lottie
@@ -70,7 +70,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
             {quizResult?.status === ResultStatus.Success && (
               <div>
-                <p className="h2 leading-tight">Correct!</p>
+                <p className={clsx("h2 leading-tight")}>Correct!</p>
                 <Lottie
                   options={{
                     loop: false,
@@ -87,7 +87,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className={clsx("flex justify-end")}>
           {quizResult === undefined ? (
             <ButtonLoading
               primary

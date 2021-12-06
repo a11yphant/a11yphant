@@ -22,24 +22,24 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
         <a
           href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}
           className={clsx(
-            "px-8 py-4 mb-2 block w-full text-center align-middle text-white font-normal leading-none rounded border border-white",
+            "px-8 py-4 mb-2 block w-full text-center align-middle text-light font-normal leading-none rounded border border-white",
             "transition duration-300 group",
             "hover:bg-white hover:text-primary",
           )}
         >
           {mode === "signup" ? "Sign up via Github" : "Login with Github"}
-          <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-white", "transition duration-300", "group-hover:text-primary")} />
+          <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
         </a>
         <a
           href={publicRuntimeConfig.twitterLoginEndpoint || "/auth/twitter"}
           className={clsx(
-            "px-8 py-4 mb-2 block w-full text-center align-middle text-white font-normal leading-none rounded border border-white",
+            "px-8 py-4 mb-2 block w-full text-center align-middle text-light font-normal leading-none rounded border border-white",
             "transition duration-300 group",
             "hover:bg-white hover:text-primary",
           )}
         >
           {mode === "signup" ? "Sign up via Twitter" : "Login with Twitter"}
-          <Twitter className={clsx("inline-block h-8 -m-2 ml-4 -mt-3 w-auto text-white", "transition duration-300", "group-hover:text-primary")} />
+          <Twitter className={clsx("inline-block h-8 -m-2 ml-4 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
         </a>
       </div>
       {mode === "signup" && (
