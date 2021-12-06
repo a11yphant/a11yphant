@@ -14,12 +14,15 @@ afterEach(cleanup);
 
 describe("lottie", () => {
   const destroy = jest.fn();
+  const goToAndStop = jest.fn();
 
   beforeEach(() => {
     jest.resetAllMocks();
 
     (lottie.loadAnimation as jest.Mock).mockReturnValue({
       destroy,
+      goToAndStop,
+      totalFrames: 15,
     });
   });
 
@@ -38,5 +41,11 @@ describe("lottie", () => {
     const { unmount } = render(<Lottie options={{}} />);
     unmount();
     expect(destroy).toHaveBeenCalled();
+  });
+
+  it("goes to last frame and stops", () => {
+    render(<Lottie options={{}} />);
+
+    expect(goToAndStop).toHaveBeenCalledWith(14, true);
   });
 });
