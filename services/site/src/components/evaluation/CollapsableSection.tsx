@@ -1,3 +1,4 @@
+import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
@@ -17,12 +18,14 @@ interface CollapsibleSectionProps {
 const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ className, passed, title, description }) => {
   const [showDescription, setShowDescription] = useState(!passed);
 
+  const prefersReducedMotion = usePrefersReducedMotion();
   const AnimatedChevron = animated(Chevron);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
-    transform: showDescription ? "rotate(0deg)" : "rotate(180deg)",
+    transform: showDescription && !prefersReducedMotion ? "rotate(0deg)" : "rotate(180deg)",
     config: {
+      immediate: true,
       tension: 0,
       delay: 0,
     },

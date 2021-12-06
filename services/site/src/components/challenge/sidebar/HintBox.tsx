@@ -1,6 +1,7 @@
 import Button from "app/components/buttons/Button";
 import Chevron from "app/components/icons/Chevron";
 import { Hint } from "app/generated/graphql";
+import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { animated, useSpring } from "react-spring";
@@ -18,9 +19,11 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
 
   const totalHints = hints.length;
 
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
-    transform: showHint ? "rotate(0deg)" : "rotate(180deg)",
+    transform: showHint && !prefersReducedMotion ? "rotate(0deg)" : "rotate(180deg)",
     config: {
       tension: 0,
       delay: 0,

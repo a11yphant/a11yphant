@@ -4,6 +4,7 @@ import { EditorLanguage } from "app/components/challenge/Editors";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
+import { usePrefersReducedMotion } from "app/hooks/preferrsReducedMotion";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
@@ -74,11 +75,13 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
     onResize: updateEditorSize,
   });
 
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   const AnimatedResetIcon = animated(Reset);
 
   // any is necessary here because the types of react-spring are somehow messed up
   const { transform }: any = useSpring({
-    transform: animateIcon ? "rotate(100deg)" : "rotate(360deg)",
+    transform: animateIcon && !prefersReducedMotion ? "rotate(100deg)" : "rotate(360deg)",
     config: {
       tension: 0,
       duration: 300,
