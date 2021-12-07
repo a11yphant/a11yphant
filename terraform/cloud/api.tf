@@ -38,6 +38,7 @@ resource "heroku_app" "api" {
     TWITTER_CALLBACK_URL             = var.twitter_callback_url
     API_SENTRY_DSN                   = var.api_sentry_dsn
     API_SENTRY_ENVIRONMENT           = terraform.workspace
+    API_HOST                         = var.domain
   }
 }
 
