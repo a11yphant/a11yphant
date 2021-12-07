@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Logger, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
@@ -12,6 +12,17 @@ import { JwtService } from "./jwt.service";
 @Controller("auth")
 export class AuthenticationController {
   constructor(private userService: UserService, private jwtService: JwtService, private logger: Logger, private config: ConfigService) {}
+
+  @Get("confirm")
+  async confirm(@Query("code") token: string, @Res() res: Response): Promise<void> {
+    if (!(await this.jwtService.validateToken(token))) {
+      return res.redirect("/");
+    }
+
+    const { sub: userId } = await this.jwtService.decodeToken(token);
+    await this.userService.confirmUser(userId);
+    res.redirect("/");
+  }
 
   @UseGuards(AuthGuard("github"))
   @Get("github")
