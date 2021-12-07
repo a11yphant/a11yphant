@@ -39,7 +39,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   return (
     <>
       <section className={clsx("mx-auto h-full w-full box-border hidden", "container-dark", "lg:pt-12 lg:flex lg:flex-col lg:justify-between")}>
-        <h2 className={clsx("mb-2", "h4")}>Quiz</h2>
+        <h2 className={clsx("mb-2 lg:px-12", "h4")}>Quiz</h2>
         <div className={clsx("grid grid-cols-7 lg:px-12  min-h-[50vh]")}>
           <h3
             className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
@@ -51,7 +51,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
             {quizResult?.status === ResultStatus.Fail && (
               <div>
-                <p className="h2 leading-tight">
+                <p className={clsx("h2 leading-tight")}>
                   Wrong answer,<br></br> try again!
                 </p>
                 <Lottie
@@ -70,7 +70,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
             {quizResult?.status === ResultStatus.Success && (
               <div>
-                <p className="h2 leading-tight">Correct!</p>
+                <p className={clsx("h2 leading-tight")}>Correct!</p>
                 <Lottie
                   options={{
                     loop: false,
@@ -87,7 +87,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className={clsx("flex justify-end")}>
           {quizResult === undefined ? (
             <ButtonLoading
               primary

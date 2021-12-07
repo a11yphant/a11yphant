@@ -1,11 +1,14 @@
 import splitbee from "@splitbee/web";
+import getConfig from "next/config";
 
 export function initializeTracking(): void {
+  const { publicRuntimeConfig } = getConfig();
+
   if (!process.browser) return;
-  if (!process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN) return;
+  if (!publicRuntimeConfig.splitbeeToken) return;
 
   splitbee.init({
     disableCookie: true,
-    token: process.env.NEXT_PUBLIC_SITE_SPLITBEE_TOKEN,
+    token: publicRuntimeConfig.splitbeeToken,
   });
 }

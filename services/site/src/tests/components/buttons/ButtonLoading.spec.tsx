@@ -46,7 +46,7 @@ describe("Button Animated", () => {
     );
 
     expect(container.querySelector("button.bg-primary")).toBeTruthy();
-    expect(container.querySelector("button.text-white")).toBeTruthy();
+    expect(container.querySelector("button.text-light")).toBeTruthy();
   });
 
   it("Screen reader text is displayed", () => {

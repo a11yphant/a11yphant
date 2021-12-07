@@ -1,5 +1,6 @@
 import { EditorProps } from "@monaco-editor/react";
 import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
+import clsx from "clsx";
 import React from "react";
 
 export enum EditorLanguage {
@@ -16,7 +17,7 @@ interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "on
 
 const Editors: React.FunctionComponent<CustomEditorProps> = ({ className, editors, onReset, ...props }) => {
   return (
-    <div className={`${className} pb-4 flex flex-row justify-between box-border`}>
+    <div className={clsx("pb-4 flex flex-row justify-between box-border", className)}>
       {editors.map((config) => (
         <WrappedEditor onReset={onReset} key={config.heading} config={config} {...props} />
       ))}

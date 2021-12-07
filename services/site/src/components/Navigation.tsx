@@ -41,7 +41,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {children}
         {currentUser?.isRegistered && (
           <Link href={`/profile/${currentUser?.id}`}>
-            <a className={clsx("text-white ml-4", "hover:text-primary-light hover:border-transparent")}>
+            <a className={clsx("text-light ml-4", "hover:text-primary-light hover:border-transparent")}>
               <span className={clsx("sr-only")}>Your Profile</span>
               <UserAvatar />
             </a>

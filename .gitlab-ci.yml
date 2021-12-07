@@ -1,6 +1,7 @@
 include:
   - /ci/templates/gitlab-ci-lint.yml
   - /ci/templates/gitlab-ci-test.yml
+  - /ci/templates/gitlab-ci-test-end-to-end.yml
   - /ci/templates/gitlab-ci-rules.yml
   - /ci/templates/gitlab-ci-build.yml
   - /ci/templates/gitlab-ci-build-site.yml
@@ -27,6 +28,7 @@ stages:
   - analyze
   - test
   - build
+  - end-to-end-tests
   - deploy
 
 #----------------------------------------------------------------------
@@ -264,30 +266,12 @@ test:site:
     - develop
     - merge_request
 
-build:site:review:
+build:site:
   extends:
     - .build:site
-  variables:
-    ENVIRONMENT: review-${CI_MERGE_REQUEST_IID}
   only:
     - merge_request
-
-build:site:staging:
-  extends:
-    - .build:site
-  variables:
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
-    ENVIRONMENT: staging
-  only:
     - develop
-
-build:site:production:
-  extends:
-    - .build:site
-  variables:
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
-    ENVIRONMENT: production
-  only:
     - master
 
 #-----------------------------------
@@ -337,6 +321,22 @@ terraform:local:validate:
     - terraform -chdir=terraform/local validate
 
 #-----------------------------------
+# End to end tests
+#-----------------------------------
+
+test:end-to-end:
+  extends: .test:end-to-end
+  stage: end-to-end-tests
+  needs:
+    - build:api
+    - build:site
+    - build:submission-checker
+  only:
+    - merge_request
+    - develop
+    - master
+
+#-----------------------------------
 # Deployment
 #-----------------------------------
 
@@ -344,9 +344,7 @@ deploy-review:
   extends:
     - .deploy
   needs:
-    - build:api
-    - build:site:review
-    - build:submission-checker
+    - test:end-to-end
   variables:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
@@ -362,9 +360,7 @@ deploy-staging:
   extends:
     - .deploy
   needs:
-    - build:api
-    - build:site:staging
-    - build:submission-checker
+    - test:end-to-end
   variables:
     WORKSPACE: staging
     DOMAIN: beta.a11yphant.com
@@ -376,6 +372,7 @@ deploy-staging:
     TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
     TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_STAGING
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
   environment:
     name: staging
     url: https://beta.a11yphant.com
@@ -386,9 +383,7 @@ deploy-production:
   extends:
     - .deploy
   needs:
-    - build:api
-    - build:site:production
-    - build:submission-checker
+    - test:end-to-end
   variables:
     WORKSPACE: production
     DOMAIN: a11yphant.com
@@ -400,6 +395,7 @@ deploy-production:
     TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
     TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_PROD
+    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
   environment:
     name: production
     url: https://a11yphant.com

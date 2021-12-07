@@ -1,6 +1,6 @@
 {
   "name": "@a11yphant/eslint-config",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-unused-imports": "^1.1.0",
+    "eslint-plugin-unused-imports": "^1.1.0 || ^2.0.0",
     "prettier": "^2.2.1"
   },
   "devDependencies": {
@@ -29,7 +29,7 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
-    "eslint-plugin-unused-imports": "1.1.5",
+    "eslint-plugin-unused-imports": "2.0.0",
     "prettier": "2.4.1"
   }
 }

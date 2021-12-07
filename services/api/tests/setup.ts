@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { resolve } from "path";
 
-import { setupDatabase } from "./helpers";
+import { setupDatabase } from "./support/helpers";
 
 config({ path: resolve(__dirname, "../.env") });
 

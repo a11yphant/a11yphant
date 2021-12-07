@@ -50,7 +50,7 @@ describe("Sidebar", () => {
   it("renders instructions as html", () => {
     const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.find("p").html()).toContain(mockLevel.instructions);
+    expect(wrapper.html()).toContain(mockLevel.instructions);
   });
 
   it("renders HintList", () => {

@@ -45,7 +45,7 @@ describe("HintList", () => {
 
     expect(wrapper.exists("ol")).toBeFalsy();
     expect(wrapper.exists("li")).toBeFalsy();
-    expect(wrapper.find("p").length).toBe(1);
+    expect(wrapper.find("div").length).toBe(1);
     expect(wrapper.find(HintBox).length).toBe(1);
   });
 
@@ -53,7 +53,7 @@ describe("HintList", () => {
     const task = mockTasks[0];
     const wrapper = shallow(<HintList tasks={[task]} />);
 
-    expect(wrapper.find("p").props().dangerouslySetInnerHTML.__html).toBe(task.text);
+    expect(wrapper.html()).toContain(task.text);
   });
 
   it("renders list of text and HintBoxes if multiple tasks", () => {
@@ -61,17 +61,17 @@ describe("HintList", () => {
 
     expect(wrapper.exists("ol")).toBeTruthy();
     expect(wrapper.find("li").length).toBe(mockTasks.length);
-    expect(wrapper.find("p").length).toBe(mockTasks.length);
+    expect(wrapper.find("li>div").length).toBe(mockTasks.length);
     expect(wrapper.find(HintBox).length).toBe(mockTasks.length);
   });
 
   it("text is numbered and rendered as html if multiple task", () => {
     const wrapper = shallow(<HintList tasks={mockTasks} />);
 
-    expect(wrapper.find("p").at(0).props().dangerouslySetInnerHTML.__html).toContain("1.");
-    expect(wrapper.find("p").at(0).props().dangerouslySetInnerHTML.__html).toContain(mockTasks[0].text);
+    expect(wrapper.find("li").at(0).html()).toContain("1.");
+    expect(wrapper.find("li").at(0).html()).toContain(mockTasks[0].text);
 
-    expect(wrapper.find("p").at(1).props().dangerouslySetInnerHTML.__html).toContain("2.");
-    expect(wrapper.find("p").at(1).props().dangerouslySetInnerHTML.__html).toContain(mockTasks[1].text);
+    expect(wrapper.find("li").at(1).html()).toContain("2.");
+    expect(wrapper.find("li").at(1).html()).toContain(mockTasks[1].text);
   });
 });

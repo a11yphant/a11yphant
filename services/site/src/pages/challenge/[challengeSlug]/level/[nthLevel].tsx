@@ -57,8 +57,8 @@ const Level: React.FunctionComponent = () => {
         leaveTo="opacity-0"
       >
         <span>
-          <span className="sr-only xl:not-sr-only">Saving... </span>
-          <LoadingIndicator className="inline ml-4" />
+          <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
+          <LoadingIndicator className={clsx("inline ml-4")} />
         </span>
       </Transition>
     </Navigation>
@@ -73,7 +73,7 @@ const Level: React.FunctionComponent = () => {
       </Head>
       <FullScreenLayout header={header}>
         <main className={clsx("max-h-full h-full", "md:p-4 md:pt-0 md:flex md:justify-between md:box-border")}>
-          <h1 className="sr-only">{`${challenge.name} - Level ${nthLevel}`}</h1>
+          <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
           <SmallScreenNotification />
           {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
