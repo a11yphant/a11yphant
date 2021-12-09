@@ -21,7 +21,7 @@ const HintList: React.FunctionComponent<HintListProps> = ({ tasks }) => {
     return (
       <ol>
         {tasks.map((task, idx) => (
-          <li key={task.id} className="font-bold my-6">
+          <li key={task.id} className={clsx("font-bold my-6")}>
             <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(`${idx + 1}. ${task.text}`) }} />
             <HintBox hints={task.hints} />
           </li>

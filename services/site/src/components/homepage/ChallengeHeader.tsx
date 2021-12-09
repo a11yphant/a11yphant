@@ -1,10 +1,13 @@
 import clsx from "clsx";
+import getConfig from "next/config";
 import React from "react";
 
 import Button from "../buttons/Button";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 import { useUserAccountModalApi } from "../user/useUserAccountModalApi";
+
+const { publicRuntimeConfig } = getConfig();
 
 export interface ChallengeHeaderProps {
   className?: string;
@@ -22,7 +25,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
       </div>
       {!userLoggedIn && (
         <section className={clsx("hidden", "lg:flex")}>
-          <p className="max-w-xs ml-12 mr-8 my-1">
+          <p className={clsx("max-w-xs ml-12 mr-8 my-1")}>
             Why not sign up and track your <br></br> stats and save your progress?
           </p>
           <div>
@@ -31,15 +34,15 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
               onClick={() => {
                 userAccountModalApi.show("signup");
               }}
-              className="mx-1 mb-2 px-16"
+              className={clsx("mx-1 mb-2 px-16")}
             >
               Sign Up
             </Button>
 
-            <div className="flex">
+            <div className={clsx("flex")}>
               <div className={clsx("max-w-full block ml-1 mr-2")}>
                 <a
-                  href={process.env.NEXT_PUBLIC_SITE_GITHUB_LOGIN_ENDPOINT || "/auth/github"}
+                  href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}
                   className={clsx(
                     "px-10 py-2 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
                     "group transition duration-300",
@@ -53,7 +56,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
               </div>
               <div className={clsx("max-w-full block mx-1")}>
                 <a
-                  href={process.env.NEXT_PUBLIC_SITE_TWITTER_LOGIN_ENDPOINT || "/auth/twitter"}
+                  href={publicRuntimeConfig.twitterLoginEndpoint || "/auth/twitter"}
                   className={clsx(
                     "px-8 py-2 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
                     "group transition duration-300",

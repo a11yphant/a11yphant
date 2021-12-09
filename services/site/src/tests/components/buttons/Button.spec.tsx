@@ -33,7 +33,7 @@ describe("Button", () => {
     const { container } = render(<Button primary>{buttonText}</Button>);
 
     expect(container.querySelector("button.bg-primary")).toBeTruthy();
-    expect(container.querySelector("button.text-white")).toBeTruthy();
+    expect(container.querySelector("button.text-light")).toBeTruthy();
   });
 
   it("icon works", () => {

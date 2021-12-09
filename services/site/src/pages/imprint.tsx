@@ -12,8 +12,8 @@ const Imprint: React.FunctionComponent = () => {
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Navigation />
-      <main className="box-border max-w-screen-3xl mx-auto">
-        <div className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12 md:mx-24 2xl:mx-auto")}>
+      <main className={clsx("box-border max-w-screen-3xl mx-auto")}>
+        <div className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
           <h1>Imprint</h1>
         </div>
       </main>

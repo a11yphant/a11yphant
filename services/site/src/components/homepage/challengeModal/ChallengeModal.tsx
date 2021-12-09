@@ -57,15 +57,15 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
       {!loading && challenge && (
         <>
           <ScrollOverlayWrapper
-            className="max-h-full overflow-auto mb-20"
+            className={clsx("max-h-full overflow-auto mb-20")}
             classNameTopOverlay="h-28 -mb-28 from-background-light"
             classNameBottomOverlay="h-28 -mt-28 from-background-light"
           >
             <section>
               <ModalTitle className={clsx("pb-14", "text-4xl")}>
                 {challenge.name}
-                <div className="inline-block">
-                  <DifficultyIcon className="w-2.5 h-6 inline-block" firstClassName="ml-4" />
+                <div className={clsx("inline-block")}>
+                  <DifficultyIcon className={clsx("w-2.5 h-6 inline-block")} firstClassName="ml-4" />
                 </div>
               </ModalTitle>
               <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
@@ -87,7 +87,16 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
           </ScrollOverlayWrapper>
 
           <ModalActions>
-            <Button onClick={onClose} overrideClassName className={clsx("text-grey-middle", "mr-14", "hover:border-b hover:border-grey-middle")}>
+            <Button
+              onClick={onClose}
+              overrideClassName
+              className={clsx(
+                "mr-14 text-grey-middle border-b-2 border-transparent",
+                "transition-colors duration-300",
+                "hover:text-primary-light hover:border-primary-light",
+                "focus:text-primary-light focus:border-primary-light",
+              )}
+            >
               Cancel
             </Button>
             <Button
@@ -99,7 +108,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                   })}`,
                 );
               }}
-              className="bg-primary px-8 py-4"
+              className={clsx("bg-primary px-8 py-4")}
             >
               Start Coding
             </Button>

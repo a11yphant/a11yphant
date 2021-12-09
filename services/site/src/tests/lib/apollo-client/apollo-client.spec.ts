@@ -13,14 +13,6 @@ const query = gql`
 const queryResult = { user: { __typename: "user", id: 4 } };
 
 describe("apollo client", () => {
-  beforeAll(() => {
-    process.env.NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT = "https://here-is-the-api.com/graphql";
-  });
-
-  afterAll(() => {
-    process.env.NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT = undefined;
-  });
-
   describe("initialize apollo client", () => {
     it("returns creates an apollo client", () => {
       const client = initializeApollo();

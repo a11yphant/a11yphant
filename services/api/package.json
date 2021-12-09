@@ -98,7 +98,7 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
-    "eslint-plugin-unused-imports": "1.1.5",
+    "eslint-plugin-unused-imports": "2.0.0",
     "faker": "5.5.3",
     "jest": "27.4.3",
     "jest-junit": "13.0.0",

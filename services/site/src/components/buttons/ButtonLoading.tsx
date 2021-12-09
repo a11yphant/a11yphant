@@ -29,7 +29,7 @@ const ButtonLoading: React.FunctionComponent<ButtonLoadingProps> = ({
       <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "pt-2 pl-2")}>
         <LoadingIndicator />
       </span>
-      {loading && <span className="sr-only">{srTextLoading}</span>}
+      {loading && <span className={clsx("sr-only")}>{srTextLoading}</span>}
     </Button>
   );
 };

@@ -1,4 +1,5 @@
 import { EvaluationRequirementResultFragment, RequirementStatus } from "app/generated/graphql";
+import clsx from "clsx";
 import React from "react";
 
 import CollapsableSection from "./CollapsableSection";
@@ -19,7 +20,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           {failedRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
-              <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+              <li key={requirement.id} className={clsx("w-full max-w-none m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border")}>
                 <CollapsableSection passed={false} title={requirementTitle} description={requirement.description} />
               </li>
             );
@@ -31,7 +32,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           {successfulRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
-              <li key={requirement.id} className="w-full m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border max-w-none">
+              <li key={requirement.id} className={clsx("w-full max-w-none m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border")}>
                 <CollapsableSection passed={true} title={requirementTitle} description={requirement.description} />
               </li>
             );

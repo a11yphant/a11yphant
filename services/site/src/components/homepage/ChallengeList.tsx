@@ -13,7 +13,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
   const numberOfCompletedChallenges = challenges.filter((challenge) => challenge.status === ChallengeStatus.Finished).length;
   return (
     <div className={clsx("mt-2 mb-6 flex flex-col items-start", className)}>
-      <div className="mx-4 mb-6 flex flex-row items-center">
+      <div className={clsx("mx-4 mb-6 flex flex-row items-center")}>
         <h3 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")} aria-label={`Difficulty ${heading}`}>
           {heading}
         </h3>
