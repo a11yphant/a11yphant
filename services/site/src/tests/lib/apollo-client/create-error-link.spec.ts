@@ -1,6 +1,5 @@
 import { execute, gql } from "@apollo/client";
-import { MockLink } from "@apollo/client/testing";
-import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
+import { MockedResponse, MockLink } from "@apollo/client/testing";
 import * as Sentry from "@sentry/nextjs";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
