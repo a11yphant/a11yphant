@@ -1,36 +1,51 @@
-import { cleanup } from "@testing-library/react-hooks";
+import { cleanup, renderHook } from "@testing-library/react-hooks";
+import { renderHook as renderHookServer } from "@testing-library/react-hooks/server";
+import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 
 jest.unmock("app/hooks/prefersReducedMotion");
 
+const mockMatchMedia = (matches: boolean): void => {
+  // against Type Error "window.matchMedia is not a function"
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: matches,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // Deprecated
+      removeListener: jest.fn(), // Deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+};
+
 afterEach(cleanup);
 
-describe("preferrsReducedMotion", () => {
-  // against Type Error "window.matchMedia is not a function"
-  beforeAll(() => {
-    Object.defineProperty(window, "matchMedia", {
-      writable: true,
-      value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(), // Deprecated
-        removeListener: jest.fn(), // Deprecated
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-      })),
-    });
+describe("prefersReducedMotion", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
-  it("user does not preferr reduced motion", async () => {
-    return;
+  it("returns true during SSR", () => {
+    mockMatchMedia(true);
+    const { result } = renderHookServer(() => usePrefersReducedMotion());
+
+    expect(result.current).toBeTruthy();
   });
 
-  it.todo("returns true during SSR");
+  it("returns true if prefers-reduced-motion is activated", async () => {
+    mockMatchMedia(false);
+    const { result } = renderHook(() => usePrefersReducedMotion());
 
-  it.todo("returns true on the client initially");
+    expect(result.current).toBeTruthy();
+  });
 
-  it.todo("returns true if prefers-reduced-motion is activated");
+  it("returns false if prefers-reduced-motion is not activated", () => {
+    mockMatchMedia(true);
+    const { result } = renderHook(() => usePrefersReducedMotion());
 
-  it.todo("returns false if prefers-reduced-motion is not activated");
+    expect(result.current).toBeFalsy();
+  });
 });
