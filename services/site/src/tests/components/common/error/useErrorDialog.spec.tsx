@@ -1,3 +1,8 @@
+/**
+ * To fix the warning "useLayoutEffect does nothing on the server"
+ * @jest-environment node
+ */
+
 import { cleanup } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
