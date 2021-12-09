@@ -16,7 +16,8 @@
     "baseUrl": "./",
     "paths": {
       "app/*": ["src/*"]
-    }
+    },
+    "incremental": true
   },
   "include": ["./jest-setup.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
