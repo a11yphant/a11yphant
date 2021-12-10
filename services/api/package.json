@@ -93,7 +93,7 @@
     "aws-lambda": "1.0.7",
     "cross-fetch": "3.1.4",
     "dotenv": "10.0.0",
-    "eslint": "7.32.0",
+    "eslint": "8.4.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
