@@ -63,7 +63,7 @@ const renderBreadcrumbs = async (): Promise<ReactWrapper> => {
 };
 
 describe("Breadcrumbs", () => {
-  it("one breadcrumb", async () => {
+  it("renders one breadcrumb", async () => {
     await act(async () => {
       router.push("/");
     });
@@ -72,12 +72,20 @@ describe("Breadcrumbs", () => {
 
     expect(wrapper.exists("nav")).toBeFalsy();
     expect(wrapper.exists("ol")).toBeFalsy();
+  });
+
+  it("renders no Slash when there is only one breadcrumb", async () => {
+    await act(async () => {
+      router.push("/");
+    });
+
+    const wrapper = await renderBreadcrumbs();
 
     // No Slash is rendered
     expect(wrapper.exists(Slash)).toBeFalsy();
   });
 
-  it("two breadcrumbs", async () => {
+  it("renders two breadcrumbs with dividing slashes", async () => {
     await act(async () => {
       router.push({
         pathname: "/challenge/[challengeSlug]",

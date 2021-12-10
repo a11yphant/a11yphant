@@ -6,14 +6,14 @@ import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/gra
 afterEach(cleanup);
 
 describe("Routes", () => {
-  it("'/' route", async () => {
+  it("renders '/' route", async () => {
     const breadcrumbInfo = await routes["/"].getBreadcrumbInfo({});
 
     expect(breadcrumbInfo.href).toBe("/");
     expect(breadcrumbInfo.breadcrumb).toBe("Challenges");
   });
 
-  it("'/challenge/[challengeSlug]' route", async () => {
+  it("renders '/challenge/[challengeSlug]' route", async () => {
     const challengeSlug = "test-challenge";
     const name = "Test Challenge";
     const mockClient = createMockClient<ChallengeBySlugQuery>(
@@ -34,7 +34,7 @@ describe("Routes", () => {
     expect(breadcrumbInfo.breadcrumb).toBe(name);
   });
 
-  it("'/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
+  it("renders '/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
     const challengeSlug = "test-challenge";
     const nthLevel = "5";
 
@@ -44,7 +44,7 @@ describe("Routes", () => {
     expect(breadcrumbInfo.breadcrumb).toBe(`Level 0${nthLevel}`);
   });
 
-  it("'/challenge/[challengeSlug]/level/[nthLevel]/evaluation' route", async () => {
+  it("renders '/challenge/[challengeSlug]/level/[nthLevel]/evaluation' route", async () => {
     const challengeSlug = "test-challenge";
     const nthLevel = "5";
 

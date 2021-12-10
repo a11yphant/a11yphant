@@ -87,7 +87,7 @@ describe("Quiz Level", () => {
     expect(wrapper.find("h2").text()).toBe(mockHeading);
   });
 
-  it("renders question as html", () => {
+  it("renders quiz question as html", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
@@ -97,7 +97,7 @@ describe("Quiz Level", () => {
     expect(wrapper.find("h3").html()).toContain(mockText);
   });
 
-  it("renders answers", () => {
+  it("renders quiz answers", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
@@ -131,7 +131,7 @@ describe("Quiz Level", () => {
     // expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
   });
 
-  it("renders submit button", () => {
+  it("renders button with loading animation for submit", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />

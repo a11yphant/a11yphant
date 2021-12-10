@@ -38,14 +38,14 @@ beforeEach(() => {
 });
 
 describe("getRouteList", () => {
-  it("home route", async () => {
+  it("renders home route", async () => {
     router.push("/");
     const routeList = await getRouteList(router, mockClient);
 
     expect(routeList).toEqual([expectedBreadcrumbHome]);
   });
 
-  it("challenge route (with apollo request)", async () => {
+  it("renders challenge route (with apollo request)", async () => {
     router.push({
       pathname: "/challenge/[challengeSlug]",
       query: { challengeSlug: challengeSlug },
