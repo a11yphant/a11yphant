@@ -7,7 +7,6 @@ import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { animated } from "react-spring";
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -72,8 +71,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
     onResize: updateEditorSize,
   });
 
-  const AnimatedResetIcon = animated(Reset);
-
   return (
     <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
       <div ref={wrapperRef} className={clsx("relative", "p-4 w-inherit h-full", "container-dark overflow-hidden")}>
@@ -112,7 +109,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           overrideClassName
           innerRef={buttonRef}
         >
-          <AnimatedResetIcon className={clsx("motion-safe:group-hover:-rotate-260")} />
+          <Reset className={clsx("motion-safe:group-hover:-rotate-260")} />
           Reset
         </Button>
 
