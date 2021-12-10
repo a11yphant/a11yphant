@@ -6,7 +6,7 @@ import Hero from "app/components/homepage/Hero";
 afterEach(cleanup);
 
 describe("Hero", () => {
-  it("renders wrapper element", () => {
+  it("renders the wrapper element", () => {
     const { container } = render(<Hero />);
 
     expect(container.firstChild).toBeTruthy();

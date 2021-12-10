@@ -32,7 +32,7 @@ afterAll(() => {
 });
 
 describe("Error Dialog", () => {
-  it("is closed", () => {
+  it("renders a closed modal", () => {
     const wrapper = shallow(
       <ErrorDialog open={false} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -40,7 +40,7 @@ describe("Error Dialog", () => {
     expect(wrapper.find(Modal).props().open).toBeFalsy();
   });
 
-  it("is open", () => {
+  it("renders an open modal", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -48,7 +48,7 @@ describe("Error Dialog", () => {
     expect(wrapper.find(Modal).props().open).toBeTruthy();
   });
 
-  it("shows title", () => {
+  it("renders the title", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -63,7 +63,7 @@ describe("Error Dialog", () => {
     ).toBe(1);
   });
 
-  it("shows error messages", () => {
+  it("renders the error messages", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -87,7 +87,7 @@ describe("Error Dialog", () => {
     ).toBe(1);
   });
 
-  it("shows original error in development mode", async () => {
+  it("renders the original error in development mode", async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     process.env.NODE_ENV = "development";
@@ -105,7 +105,7 @@ describe("Error Dialog", () => {
     expect(console.error).toHaveBeenCalledWith(mockErrorResponse);
   });
 
-  it("does not show original error in production mode", () => {
+  it("renders no original error in production mode", () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignoresrc/tests/components/modal/LoginModal.spec.tsx
     process.env.NODE_ENV = "production";
@@ -120,7 +120,7 @@ describe("Error Dialog", () => {
     expect(console.error).toHaveBeenCalledTimes(0);
   });
 
-  it("calls onClose on Okay press", () => {
+  it("calls onClose on button press", () => {
     setupIntersectionObserverMock();
 
     const wrapper = mount(

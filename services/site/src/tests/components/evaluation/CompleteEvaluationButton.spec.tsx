@@ -21,30 +21,30 @@ beforeEach(() => {
 });
 
 describe("CompleteEvaluationButton", () => {
-  it("renders 'Retry' button", () => {
+  it("renders the 'Retry' button", () => {
     const wrapper = shallow(<CompleteEvaluationButton status={ResultStatus.Fail} isLastLevel={false} />);
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
     expect(wrapper.find(ButtonLoading).render().text()).toBe("Retry");
 
     wrapper.find(ButtonLoading).simulate("click");
     expect(router.back).toHaveBeenCalledTimes(1);
   });
 
-  it("renders 'Finish Challenge' button", () => {
+  it("renders the 'Finish Challenge' button", () => {
     const wrapper = shallow(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={true} />);
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
     expect(wrapper.find(ButtonLoading).render().text()).toBe("Finish Challenge");
 
     wrapper.find(ButtonLoading).simulate("click");
     expect(router.asPath).toBe("/");
   });
 
-  it("renders 'Next Level' button", () => {
+  it("renders the 'Next Level' button", () => {
     const wrapper = shallow(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={false} />);
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
     expect(wrapper.find(ButtonLoading).render().text()).toBe("Next Level");
 
     wrapper.find(ButtonLoading).simulate("click");

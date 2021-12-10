@@ -58,7 +58,7 @@ beforeEach(() => {
 });
 
 describe("Navigation", () => {
-  it("renders correctly", () => {
+  it("renders the header, logo and breadcrumbs", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation();
 
@@ -71,21 +71,22 @@ describe("Navigation", () => {
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
   });
 
-  it("avatar exists if user is registered", () => {
+  it("renders an avatar if the user is registered", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation();
 
     expect(wrapper.exists(UserAvatar)).toBeTruthy();
   });
 
-  it("avatar doesn't exist if user is not registered", () => {
+  it("renders no avatar if the user is not registered", () => {
     mockNonRegisteredUser();
     const wrapper = renderNavigation();
 
     expect(wrapper.exists(UserAvatar)).toBeFalsy();
   });
 
-  it("with breadcrumbs", () => {
+  // TODO: ist der test nicht eh auch schon ganz oben integriert?
+  it("renders the breadcrumbs", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: true });
 
@@ -93,7 +94,7 @@ describe("Navigation", () => {
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
   });
 
-  it("without breadcrumbs", () => {
+  it("renders no breadcrumbs", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: false });
 
@@ -101,7 +102,7 @@ describe("Navigation", () => {
     expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
   });
 
-  it("with children", () => {
+  it("renders all children", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ children: <p className="test-children">children</p> });
 
@@ -109,14 +110,14 @@ describe("Navigation", () => {
     expect(wrapper.exists(".test-children")).toBeTruthy();
   });
 
-  it("login and signup buttons exist if user is not registered", () => {
+  it("renders login and signup buttons if the user is not registered", () => {
     mockNonRegisteredUser();
     const wrapper = renderNavigation();
 
     expect(wrapper.find(Button).length).toBe(2);
   });
 
-  it("sign up click calls userAccountModalApi.show with mode 'signup'", async () => {
+  it("a click on `sign up` calls userAccountModalApi.show with the mode 'signup'", async () => {
     mockNonRegisteredUser();
     const userAccountModalApi = useUserAccountModalApi();
     const wrapper = renderNavigation();
@@ -133,7 +134,7 @@ describe("Navigation", () => {
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
   });
 
-  it("login click calls userAccountModalApi.show with mode 'login'", async () => {
+  it("a click on `login` calls userAccountModalApi.show with the mode 'login'", async () => {
     mockNonRegisteredUser();
     const userAccountModalApi = useUserAccountModalApi();
     const wrapper = renderNavigation();

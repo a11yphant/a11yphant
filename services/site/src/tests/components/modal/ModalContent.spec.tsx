@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import React from "react";
 
 describe("ModalContent", () => {
-  it("renders children", () => {
+  it("renders all children", () => {
     const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
     const wrapper = shallow(
       <ModalContent>

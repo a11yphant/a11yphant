@@ -7,13 +7,13 @@ import React from "react";
 const mockOnClose = jest.fn();
 
 describe("ModalTitle", () => {
-  it("renders Dialog.Title", () => {
+  it("renders the Dialog.Title", () => {
     const wrapper = shallow(<ModalTitle />);
 
     expect(wrapper.exists(Dialog.Title)).toBeTruthy();
   });
 
-  it("renders Dialog.Title as component specified in 'as' prop", () => {
+  it("renders the `Dialog.Title` as component specified in 'as' prop", () => {
     const wrapper = shallow(<ModalTitle as="div" />);
 
     expect(
@@ -25,7 +25,7 @@ describe("ModalTitle", () => {
     ).toBe("div");
   });
 
-  it("renders children", () => {
+  it("renders all children", () => {
     const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
     const wrapper = shallow(
       <Modal open={false} onClose={mockOnClose}>

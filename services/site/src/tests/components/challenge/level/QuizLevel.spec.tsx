@@ -73,7 +73,7 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find("section").length).toBe(1);
+    expect(wrapper.exists("section")).toBeTruthy();
   });
 
   it("renders heading", () => {
@@ -83,7 +83,7 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find("h2").length).toBe(1);
+    expect(wrapper.exists("h2")).toBeTruthy();
     expect(wrapper.find("h2").text()).toBe(mockHeading);
   });
 
@@ -104,7 +104,7 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find(SingleAnswer).length).toBe(1);
+    expect(wrapper.exists(SingleAnswer)).toBeTruthy();
   });
 
   // TODO: add quizStatus
@@ -138,17 +138,17 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
   });
 
   // TODO: add quizStatus
-  it("renders retry / next level button when quiz status is defined", () => {
+  it("renders retry / next level button only when the quiz status is defined", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(CompleteEvaluationButton).length).toBe(0);
+    expect(wrapper.exists(CompleteEvaluationButton)).toBeFalsy();
   });
 });

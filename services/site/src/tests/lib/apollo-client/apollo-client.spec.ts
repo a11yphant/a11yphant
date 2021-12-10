@@ -14,6 +14,7 @@ const queryResult = { user: { __typename: "user", id: 4 } };
 
 describe("apollo client", () => {
   describe("initialize apollo client", () => {
+    // TODO: was jetzt, return oder create?
     it("returns creates an apollo client", () => {
       const client = initializeApollo();
 

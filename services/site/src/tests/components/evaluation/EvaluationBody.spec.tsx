@@ -33,23 +33,23 @@ const mockRequirements = [
 ];
 
 describe("EvaluationBody", () => {
-  it("renders lists", () => {
+  it("renders the list with classes", () => {
+    const mockClassName = "mock-classname";
+    const wrapper = shallow(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
+
+    expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
+  });
+
+  it("renders two list elements for the requirements", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
     expect(wrapper.find("ul").length).toBe(2);
   });
 
-  it("renders requirements", () => {
+  it("renders the requirements as bullet points inside a list", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
     expect(wrapper.find("li").length).toBe(2);
     expect(wrapper.find(CollapsableSection).length).toBe(2);
-  });
-
-  it("adds className", () => {
-    const mockClassName = "mock-classname";
-    const wrapper = shallow(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
-
-    expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
   });
 });

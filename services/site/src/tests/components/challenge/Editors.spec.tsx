@@ -27,7 +27,7 @@ const cssEditorConfig: EditorConfig = {
 const handleReset = jest.fn();
 
 describe("Editors", () => {
-  it("renders wrapper div with class", () => {
+  it("renders wrapper element", () => {
     const wrapper = shallow(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
 
     expect(wrapper.exists("div")).toBeTruthy();

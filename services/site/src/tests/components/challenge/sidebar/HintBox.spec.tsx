@@ -26,17 +26,17 @@ describe("HintBox", () => {
     expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(180deg)");
 
     // no hints are rendered when closed
-    expect(wrapper.find("ol").length).toBe(0);
+    expect(wrapper.exists("ol")).toBeFalsy();
   });
 
-  it("renders open hint box after click", () => {
+  it("renders open HintBox after click", () => {
     const wrapper = mount(<HintBox hints={hints} />);
 
     wrapper.find(Button).simulate("click");
 
     // show one hint in a list after click
-    expect(wrapper.find("ol").length).toBe(1);
-    expect(wrapper.find("li").length).toBe(1);
+    expect(wrapper.exists("ol")).toBeTruthy();
+    expect(wrapper.exists("li")).toBeTruthy();
     expect(wrapper.find("li").text()).toBe(hints[0].text);
     // switch heading text to "Hint"
     expect(wrapper.find("h4").text()).toContain("Hint");
@@ -47,7 +47,7 @@ describe("HintBox", () => {
     // expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(0deg)");
   });
 
-  it("show another hint", () => {
+  it("renders another hint in open HintBox after click", () => {
     const wrapper = mount(<HintBox hints={hints} />);
 
     wrapper.find("h4").children(Button).simulate("click");

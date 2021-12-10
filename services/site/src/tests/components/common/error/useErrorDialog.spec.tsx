@@ -84,7 +84,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages.length).toBe(0);
   });
 
-  it("displays graphQLErrors if exist", async () => {
+  it("renders graphQLErrors if they exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -96,7 +96,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
-  it("displays networkError if exists", async () => {
+  it("renders networkError if they exists", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -107,7 +107,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[0]).toEqual(<NetworkError />);
   });
 
-  it("displays graphqlErrors inside a networkError if exist", async () => {
+  it("renders graphqlErrors inside a networkError if they exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -119,7 +119,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
-  it("displays graphQLErrors if graphQLErrors and networkError exist", async () => {
+  it("renders graphQLErrors if `graphQLErrors and networkError` exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -131,7 +131,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
-  it("displays unknown error if no specific message or default message exists", async () => {
+  it("renders unknown error if no specific message or default message are present", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -145,7 +145,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[0]).toEqual(<UnknownError />);
   });
 
-  it("displays default error message if no specific message exists", async () => {
+  it("renders default error message if no specific message exists", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -164,7 +164,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[0]).toEqual(<MockDefaultError />);
   });
 
-  it("displays specific error message", async () => {
+  it("renders specific error message", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -188,7 +188,7 @@ describe("useErrorDialog", () => {
 });
 
 describe("useErrorDialogApi", () => {
-  it("showApolloError throws error if it is used outside ErrorDialogContext", (done) => {
+  it("showApolloError throws an error if it is used outside the `ErrorDialogContext`", (done) => {
     const { result } = renderHook(() => useErrorDialogApi());
 
     expect(result.current.showApolloError).toBeTruthy();
@@ -201,7 +201,7 @@ describe("useErrorDialogApi", () => {
     }
   });
 
-  it("showApolloError doesn't throw error if it is used inside ErrorDialogContext", (done) => {
+  it("showApolloError doesn't throw an error if it is used inside the `ErrorDialogContext`", (done) => {
     const wrapper = ({ children }): React.ReactElement => <ErrorDialogProvider>{children}</ErrorDialogProvider>;
     const { result } = renderHook(() => useErrorDialogApi(), { wrapper });
 
@@ -215,7 +215,7 @@ describe("useErrorDialogApi", () => {
     }
   });
 
-  it("replace errorDialogApi of ErrorDialogProvider with useErrorDialog output", () => {
+  it("replace `errorDialogApi` of `ErrorDialogProvider` with `useErrorDialog` output", () => {
     const { result: errorDialogResult } = renderHook(() => useErrorDialog());
 
     const wrapper = ({ children }): React.ReactElement => <ErrorDialogProvider {...errorDialogResult.current}>{children}</ErrorDialogProvider>;

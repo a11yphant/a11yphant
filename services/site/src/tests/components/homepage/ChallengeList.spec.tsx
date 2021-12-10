@@ -21,7 +21,7 @@ const challenges = [
 ];
 
 describe("ChallengeList", () => {
-  it("renders correctly", () => {
+  it("renders the heading and description text", () => {
     render(
       <ChallengeList
         heading={

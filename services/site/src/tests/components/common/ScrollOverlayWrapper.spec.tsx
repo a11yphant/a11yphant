@@ -12,7 +12,7 @@ jest.mock("react-resize-detector", () => ({
 }));
 
 describe("Scroll Overlay Wrapper", () => {
-  it("renders Wrapper div", () => {
+  it("renders wrapper element", () => {
     const wrapper = shallow(<ScrollOverlayWrapper />);
 
     expect(wrapper.find("div")).toBeTruthy();
@@ -42,7 +42,7 @@ describe("Scroll Overlay Wrapper", () => {
   //     expect(wrapper.find(".scroll-overlay").length).toBe(1);
   //   });
 
-  it("renders no overlay", () => {
+  it("renders no scroll overlay", () => {
     const wrapper = shallow(<ScrollOverlayWrapper enableTopOverlay={false} enableBottomOverlay={false} />);
     expect(wrapper.find("div.scroll-overlay").length).toBe(0);
   });

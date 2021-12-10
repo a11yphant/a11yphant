@@ -37,10 +37,10 @@ const renderSingleAnswer = (props?: Partial<SingleAnswerProps>): ShallowWrapper 
 };
 
 describe("SingleAnswer", () => {
-  it("renders correctly", () => {
+  it("renders wrapper elements", () => {
     const wrapper = renderSingleAnswer();
 
-    expect(wrapper.find(RadioGroup).length).toBe(1);
+    expect(wrapper.exists(RadioGroup)).toBeTruthy();
   });
 
   it("renders screen reader title", () => {
@@ -49,7 +49,7 @@ describe("SingleAnswer", () => {
     expect(wrapper.find(RadioGroup.Label).children().text()).toContain(mockSRTitle);
   });
 
-  it("shows answers", () => {
+  it("renders multiple quiz answers", () => {
     const wrapper = renderSingleAnswer({ answers: mockAnswers });
 
     expect(wrapper.find(RadioGroup.Option).length).toBe(4);
