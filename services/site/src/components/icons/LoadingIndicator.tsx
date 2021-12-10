@@ -1,7 +1,10 @@
+import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
 import React from "react";
 
 const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <svg
       fill="none"
@@ -9,7 +12,7 @@ const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> =
       aria-hidden="true"
       focusable="false"
       viewBox="0 0 15 15"
-      className={clsx("animate-spin", "loading-spinner w-[0.94rem] h-[0.94rem]", className)}
+      className={clsx(!prefersReducedMotion && "animate-spin", "loading-spinner w-[0.94rem] h-[0.94rem]", className)}
       {...props}
     >
       <g>
