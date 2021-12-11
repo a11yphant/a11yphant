@@ -1,25 +1,32 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render } from "@testing-library/react";
+import { MockedProvider } from "@apollo/client/testing";
+import { render, screen } from "@testing-library/react";
 import Hero from "app/components/homepage/Hero";
 
-afterEach(cleanup);
+function renderHero(): ReturnType<typeof render> {
+  return render(
+    <MockedProvider>
+      <Hero />
+    </MockedProvider>,
+  );
+}
 
 describe("Hero", () => {
   it("renders wrapper element", () => {
-    const { container } = render(<Hero />);
+    const { container } = renderHero();
 
     expect(container.firstChild).toBeTruthy();
   });
   it("renders two headings", async () => {
-    const root = render(<Hero />);
+    renderHero();
 
-    expect(await root.findAllByRole("heading", { level: 2 })).toHaveLength(2);
+    expect(await screen.findAllByRole("heading", { level: 2 })).toHaveLength(2);
   });
 
   it("renders a link for the github sign up", async () => {
-    const root = render(<Hero />);
+    renderHero();
 
-    expect(await root.findByText("Sign up via Github")).toHaveProperty("href", "http://localhost/auth/github");
+    expect(await screen.findByText("Sign up via Github")).toHaveProperty("href", "http://localhost/auth/github");
   });
 });

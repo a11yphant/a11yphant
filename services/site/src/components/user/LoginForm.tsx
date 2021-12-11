@@ -1,0 +1,95 @@
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
+import { CurrentUserDocument, useLoginMutation } from "app/generated/graphql";
+import clsx from "clsx";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+
+import TextInput from "../common/inputs/TextInput";
+import LoadingIndicator from "../icons/LoadingIndicator";
+
+const schema = yup
+  .object({
+    email: yup.string().email("This email address is not valid").required("The email address is required"),
+    password: yup.string().required("The password is required"),
+  })
+  .required();
+
+interface LoginFormProps {
+  onSuccessfulLogin?: () => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfulLogin: onLogin }) => {
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const [login, { loading }] = useLoginMutation({
+    context: LocalErrorScopeApolloContext,
+    refetchQueries: [{ query: CurrentUserDocument }],
+    onError: (error) => {
+      if (error.graphQLErrors?.[0].extensions.code === "BAD_USER_INPUT") {
+        setError("password", { message: "The email or the password is incorrect." });
+      }
+    },
+  });
+
+  const submitLogin = async ({ email, password }): Promise<void> => {
+    await login({ variables: { email, password } });
+    onLogin?.();
+  };
+
+  return (
+    <form onSubmit={handleSubmit(submitLogin)} aria-label="Login form">
+      <div className="mb-4">
+        <Controller
+          name="email"
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextInput inputRef={ref} label="Email" error={!!errors?.email} helperText={errors?.email?.message} {...field} />
+          )}
+        />
+      </div>
+      <div className="mb-2">
+        <Controller
+          name="password"
+          control={control}
+          render={({ field: { ref, ...field } }) => (
+            <TextInput inputRef={ref} label="Password" type="password" error={!!errors?.password} helperText={errors?.password?.message} {...field} />
+          )}
+        />
+      </div>
+
+      <button
+        className={clsx(
+          "px-8 py-4 mb-2 block w-full text-center align-middle text-primary bg-white font-normal leading-none rounded border border-white",
+          "transition duration-300 group",
+          "hover:bg-primary hover:text-white",
+          loading && "cursor-wait",
+        )}
+        type="submit"
+        disabled={loading}
+      >
+        {!loading && "Log in"}
+        {loading && (
+          <>
+            <LoadingIndicator className="inline" />
+            <span className="sr-only">Login in progress</span>
+          </>
+        )}
+      </button>
+    </form>
+  );
+};
+
+export default LoginForm;

@@ -1,7 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup } from "@testing-library/react";
-import Button from "app/components/buttons/Button";
+import LoginBox from "app/components/user/LoginBox";
+import SignUpBox from "app/components/user/SignUpBox";
 import { UserAccountBox } from "app/components/user/UserAccountBox";
 import { shallow } from "enzyme";
 import React from "react";
@@ -22,49 +23,41 @@ afterEach(() => {
 });
 
 describe("UserAccountBox", () => {
-  it("renders correctly in signup mode", () => {
+  it("renders the sign up options in sign up mode", () => {
     const wrapper = shallow(<UserAccountBox mode="signup" />);
 
-    // Github button has sign up text
-    expect(wrapper.findWhere((n) => n.text() === "Sign up via Github").length).toBeGreaterThanOrEqual(1);
-
-    // Twitter button has sign up text
-    expect(wrapper.findWhere((n) => n.text() === "Sign up via Twitter").length).toBeGreaterThanOrEqual(1);
-
-    // "link" to login modal exists
-    expect(wrapper.find(Button).findWhere((n) => n.children().length === 1 && n.children().text() === "Already have an account? Log in."));
-  });
-
-  it("show login modal on 'link' to login click", () => {
-    const wrapper = shallow(<UserAccountBox mode="signup" />);
-
-    wrapper.find(Button).simulate("click");
-    wrapper.update();
-
-    expect(mockShow).toHaveBeenCalledTimes(1);
-    expect(mockShow).toHaveBeenCalledWith("login");
+    expect(wrapper.find(SignUpBox).exists()).toBeTruthy();
   });
 
   it("renders correctly in login mode", () => {
     const wrapper = shallow(<UserAccountBox mode="login" />);
 
-    // Github button has login text
-    expect(wrapper.findWhere((n) => n.text() === "Login with Github").length).toBeGreaterThanOrEqual(1);
-
-    // Twitter button has login text
-    expect(wrapper.findWhere((n) => n.text() === "Login with Twitter").length).toBeGreaterThanOrEqual(1);
-
-    // "link" to signup modal exists
-    expect(wrapper.find(Button).findWhere((n) => n.children().length === 1 && n.children().text() === "New? Create a free account."));
+    expect(wrapper.find(LoginBox).exists()).toBeTruthy();
   });
 
-  it("show signup modal on 'link' to signup click", () => {
-    const wrapper = shallow(<UserAccountBox mode="login" />);
+  // it("show login modal on 'link' to login click", () => {
+  //   const wrapper = shallow(<UserAccountBox mode="signup" />);
 
-    wrapper.find(Button).simulate("click");
-    wrapper.update();
+  //   wrapper.find(Button).simulate("click");
+  //   wrapper.update();
 
-    expect(mockShow).toHaveBeenCalledTimes(1);
-    expect(mockShow).toHaveBeenCalledWith("signup");
-  });
+  //   expect(mockShow).toHaveBeenCalledTimes(1);
+  //   expect(mockShow).toHaveBeenCalledWith("login");
+  // });
+
+  // it("show signup modal on 'link' to signup click", () => {
+  //   const wrapper = shallow(<UserAccountBox mode="login" />);
+
+  //   wrapper.find(Button).simulate("click");
+  //   wrapper.update();
+
+  //   expect(mockShowh).toHaveBeenCalledTimes(1);
+  //   expect(mockShow).toHaveBeenCalledWith("signup");
+  // });
+
+  it.todo("shows the login form in login mode");
+  it.todo("shows the signup form in signup mode");
+  it.todo("closes itself after a successful login");
+  it.todo("triggers a refetch of the current user after a login");
+  it.todo("shows a success message after a successful registration");
 });
