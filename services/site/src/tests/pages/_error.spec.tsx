@@ -50,7 +50,7 @@ describe("Error Page", () => {
     expect(wrapper.find(Link).length).toBe(1);
   });
 
-  it("renders the illustration SVG", () => {
+  it("renders the error illustration", () => {
     const wrapper = shallow(<CustomError statusCode={500} />);
 
     expect(wrapper.find(IllustrationLost).length).toBe(1);

@@ -206,7 +206,7 @@ describe("Evaluation", () => {
       expect(result.notFound).toBeTruthy();
     });
 
-    it("returns 404 if the querying of the result resulted in a BAD_USER_INPUT error", async () => {
+    it("returns 404 if querying the result resulted in a BAD_USER_INPUT error", async () => {
       const apolloClient = {
         query: jest
           .fn()

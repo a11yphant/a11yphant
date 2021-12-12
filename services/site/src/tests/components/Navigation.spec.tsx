@@ -117,7 +117,7 @@ describe("Navigation", () => {
     expect(wrapper.find(Button).length).toBe(2);
   });
 
-  it("a click on `sign up` calls userAccountModalApi.show with the mode 'signup'", async () => {
+  it("calls userAccountModalApi.show with the mode 'signup' after a click on `sign up`", async () => {
     mockNonRegisteredUser();
     const userAccountModalApi = useUserAccountModalApi();
     const wrapper = renderNavigation();
@@ -134,7 +134,7 @@ describe("Navigation", () => {
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
   });
 
-  it("a click on `login` calls userAccountModalApi.show with the mode 'login'", async () => {
+  it("calls userAccountModalApi.show with the mode 'login' after a click on `login` ", async () => {
     mockNonRegisteredUser();
     const userAccountModalApi = useUserAccountModalApi();
     const wrapper = renderNavigation();
