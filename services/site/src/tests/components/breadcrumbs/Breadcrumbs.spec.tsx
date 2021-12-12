@@ -81,7 +81,6 @@ describe("Breadcrumbs", () => {
 
     const wrapper = await renderBreadcrumbs();
 
-    // No Slash is rendered
     expect(wrapper.exists(Slash)).toBeFalsy();
   });
 
