@@ -6,8 +6,7 @@ import React from "react";
 afterEach(cleanup);
 
 describe("Error Messages", () => {
-  // TODO: find "exists" hier iwi unpassend, mir fällt aber keine alternative ein
-  it("networkError exists", () => {
+  it("renders 'Network error' for network errors", () => {
     const wrapper = shallow(<NetworkError />);
 
     expect(wrapper.text()).toContain("Network error");
