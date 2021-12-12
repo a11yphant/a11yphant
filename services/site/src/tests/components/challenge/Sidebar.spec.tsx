@@ -1,5 +1,6 @@
 /**
- * To fix the warning "useLayoutEffect does nothing on the server"
+ * Info: To fix the warning "useLayoutEffect does nothing on the server",
+ * the following line is needed right here as comment:
  * @jest-environment node
  */
 
