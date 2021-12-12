@@ -86,7 +86,7 @@ describe("Navigation", () => {
   });
 
   // TODO: ist der test nicht eh auch schon ganz oben integriert?
-  it("renders the breadcrumbs", () => {
+  it("renders the breadcrumbs when they are enabled", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: true });
 
