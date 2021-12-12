@@ -25,7 +25,7 @@ describe("useUserAccountModalApi", () => {
     }
   });
 
-  it("show throws no errors if used inside UserAccountModalContext", (done) => {
+  it("does not throw errors if used inside UserAccountModalContext", (done) => {
     const wrapper = ({ children }): React.ReactElement => <UserAccountModalProvider>{children}</UserAccountModalProvider>;
     const { result } = renderHook(() => useUserAccountModalApi(), { wrapper: wrapper });
 
