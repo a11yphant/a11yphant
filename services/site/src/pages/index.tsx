@@ -23,6 +23,8 @@ const Home: React.FunctionComponent = () => {
     data: { easyChallenges },
   } = useChallengesQuery();
 
+  const startedChallenges = [easyChallenges];
+
   const onCloseModal = (): void => {
     router.push("/", undefined, { shallow: true });
   };
@@ -46,6 +48,11 @@ const Home: React.FunctionComponent = () => {
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
 
             <Legend className={clsx("2xl:mx-24")} />
+            {/* TODO: display actual started challenges */}
+            {startedChallenges.length !== 0 && (
+              <ChallengeList className={clsx("2xl:mx-24")} heading={<>Continue where you left</>} challenges={easyChallenges} />
+            )}
+
             {easyChallenges.length !== 0 && <ChallengeList className={clsx("2xl:mx-24")} heading={<>All challenges</>} challenges={easyChallenges} />}
 
             {/* TODO: add when more difficult challenge content exists
