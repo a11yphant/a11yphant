@@ -32,7 +32,7 @@ afterAll(() => {
 });
 
 describe("Error Dialog", () => {
-  it("renders a closed modal", () => {
+  it("passes the closed state to the modal", () => {
     const wrapper = shallow(
       <ErrorDialog open={false} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
