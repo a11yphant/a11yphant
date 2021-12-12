@@ -8,7 +8,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>Privacy Policy</title>
+        <title>Privacy Policy | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Navigation />

@@ -68,7 +68,7 @@ const Level: React.FunctionComponent = () => {
     <>
       <Head>
         <title>
-          {challenge.name} - Level {nthLevel}
+          {challenge.name} - Level {nthLevel} | a11yphant
         </title>
       </Head>
       <FullScreenLayout header={header}>

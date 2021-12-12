@@ -55,7 +55,7 @@ const Challenge: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>a11yphant - {user.displayName || "Anonymous users"}'s profile</title>
+        <title>{user.displayName || "Anonymous users"}'s profile | a11yphant</title>
       </Head>
       <Navigation />
       <main className={clsx("max-w-screen-xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>

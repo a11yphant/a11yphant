@@ -48,7 +48,7 @@ const Evaluation: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>{pageTitle}</title>
+        <title>{pageTitle} | a11yphant</title>
       </Head>
       <FullScreenLayout header={<Navigation displayBreadcrumbs />}>
         {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (

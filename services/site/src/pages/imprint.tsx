@@ -8,7 +8,7 @@ const Imprint: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>Imprint</title>
+        <title>Imprint | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Navigation />
