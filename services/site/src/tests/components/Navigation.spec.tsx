@@ -62,13 +62,8 @@ describe("Navigation", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation();
 
-    // Wrapper exists
     expect(wrapper.exists("header")).toBeTruthy();
-
     expect(wrapper.exists(A11yphantLogo)).toBeTruthy();
-
-    // Breadcrumbs exist
-    expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
   });
 
   it("renders an avatar if the user is registered", () => {
@@ -85,20 +80,17 @@ describe("Navigation", () => {
     expect(wrapper.exists(UserAvatar)).toBeFalsy();
   });
 
-  // TODO: ist der test nicht eh auch schon ganz oben integriert?
   it("renders the breadcrumbs when they are enabled", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: true });
 
-    // Breadcrumbs exist
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
   });
 
-  it("renders no breadcrumbs", () => {
+  it("renders no breadcrumbs when they are disabled", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: false });
 
-    // Breadcrumbs do not exist
     expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
   });
 
@@ -106,7 +98,6 @@ describe("Navigation", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ children: <p className="test-children">children</p> });
 
-    // Children do exist
     expect(wrapper.exists(".test-children")).toBeTruthy();
   });
 

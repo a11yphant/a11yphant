@@ -18,29 +18,11 @@ describe("Scroll Overlay Wrapper", () => {
     expect(wrapper.find("div")).toBeTruthy();
   });
 
-  //   TODO: write more tests when you know how to
-  //   it("renders both overlays", () => {
-  //     const wrapper = mount(<ScrollOverlayWrapper />);
-  //     expect(wrapper.find("div.scroll-overlay").length).toBe(2);
-  //   });
+  it.todo("renders both overlays");
 
-  //   it("renders only top overlay", () => {
-  //     const wrapper = shallow(<ScrollOverlayWrapper enableBottomOverlay={false} />);
-  //     expect(wrapper.find("div.scroll-overlay").length).toBe(1);
-  //   });
+  it.todo("renders only top overlay");
 
-  //   it("renders only bottom overlay", async () => {
-  //     const wrapper = mount(<ScrollOverlayWrapper enableTopOverlay={false} />);
-
-  //     jest.spyOn(wrapper.getDOMNode(), "scrollHeight", "get").mockImplementation(() => 100);
-
-  //     await act(async () => {
-  //       wrapper.update();
-  //     });
-  //     // wrapper.find("div").first().getDOMNode().scrollHeight = 100;
-
-  //     expect(wrapper.find(".scroll-overlay").length).toBe(1);
-  //   });
+  it.todo("renders only bottom overlay");
 
   it("renders no scroll overlay", () => {
     const wrapper = shallow(<ScrollOverlayWrapper enableTopOverlay={false} enableBottomOverlay={false} />);

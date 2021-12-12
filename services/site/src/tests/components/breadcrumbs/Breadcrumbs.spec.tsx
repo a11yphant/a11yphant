@@ -63,7 +63,7 @@ const renderBreadcrumbs = async (): Promise<ReactWrapper> => {
 };
 
 describe("Breadcrumbs", () => {
-  it("renders one breadcrumb", async () => {
+  it("renders no navigation containing a list for a single breadcrumb", async () => {
     await act(async () => {
       router.push("/");
     });

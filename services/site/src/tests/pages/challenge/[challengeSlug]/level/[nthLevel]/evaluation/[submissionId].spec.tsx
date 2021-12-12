@@ -117,9 +117,6 @@ describe("Evaluation", () => {
 
     it("renders the head", async () => {
       expect(wrapper.exists(Head)).toBeTruthy();
-
-      // couldn't find a way to test `title` and its content since
-      // the children of `Head` aren't actually rendered but injected into `<head>`
     });
 
     it("renders all wrapper elements", async () => {

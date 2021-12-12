@@ -25,7 +25,6 @@ describe("HintBox", () => {
     expect(wrapper.find("h4").text()).toContain("Stuck? Click to reveal a hint");
     expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(180deg)");
 
-    // no hints are rendered when closed
     expect(wrapper.exists("ol")).toBeFalsy();
   });
 

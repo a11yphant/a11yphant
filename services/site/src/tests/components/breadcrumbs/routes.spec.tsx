@@ -6,7 +6,7 @@ import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/gra
 afterEach(cleanup);
 
 describe("Routes", () => {
-  it("renders '/' route", async () => {
+  it("can create breadcrumb infos for the '/' route", async () => {
     const breadcrumbInfo = await routes["/"].getBreadcrumbInfo({});
 
     expect(breadcrumbInfo.href).toBe("/");
