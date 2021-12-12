@@ -38,7 +38,7 @@ beforeEach(() => {
 });
 
 describe("getRouteList", () => {
-  it("renders home route", async () => {
+  it("includes the home route", async () => {
     router.push("/");
     const routeList = await getRouteList(router, mockClient);
 
