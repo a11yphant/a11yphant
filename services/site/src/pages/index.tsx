@@ -54,7 +54,13 @@ const Home: React.FunctionComponent = () => {
             )}
 
             {/* TODO: remove started challenges from being displayed here */}
-            {easyChallenges.length !== 0 && <ChallengeList className={clsx("2xl:mx-24")} heading={"All challenges"} challenges={easyChallenges} />}
+            {easyChallenges.length !== 0 && (
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={startedChallenges.length === 0 ? "All challenges" : "Other challenges"}
+                challenges={easyChallenges}
+              />
+            )}
 
             {/* TODO: add when more difficult challenge content exists
             {easyChallenges.length !== 0 && (
