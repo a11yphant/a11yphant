@@ -34,7 +34,7 @@ describe("Routes", () => {
     expect(breadcrumbInfo.breadcrumb).toBe(name);
   });
 
-  it("renders '/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
+  it("can create breadcrumb infos for the '/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
     const challengeSlug = "test-challenge";
     const nthLevel = "5";
 
