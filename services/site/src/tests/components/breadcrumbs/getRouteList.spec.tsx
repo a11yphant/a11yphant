@@ -45,7 +45,7 @@ describe("getRouteList", () => {
     expect(routeList).toEqual([expectedBreadcrumbHome]);
   });
 
-  it("renders challenge route (with apollo request)", async () => {
+  it("includes the route name for dynamic challenge routes", async () => {
     router.push({
       pathname: "/challenge/[challengeSlug]",
       query: { challengeSlug: challengeSlug },
