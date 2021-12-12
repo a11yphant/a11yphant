@@ -74,7 +74,7 @@ describe("Breadcrumbs", () => {
     expect(wrapper.exists("ol")).toBeFalsy();
   });
 
-  it("renders no Slash when there is only one breadcrumb", async () => {
+  it("renders no slash when there is only one breadcrumb", async () => {
     await act(async () => {
       router.push("/");
     });
