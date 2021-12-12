@@ -50,7 +50,12 @@ const Home: React.FunctionComponent = () => {
             <Legend className={clsx("2xl:mx-24")} />
             {/* TODO: display actual started challenges */}
             {startedChallenges.length !== 0 && (
-              <ChallengeList className={clsx("2xl:mx-24")} heading={<>Continue where you left</>} challenges={easyChallenges} />
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={<>Continue where you left</>}
+                challenges={easyChallenges}
+                displayCompleted={false}
+              />
             )}
 
             {easyChallenges.length !== 0 && <ChallengeList className={clsx("2xl:mx-24")} heading={<>All challenges</>} challenges={easyChallenges} />}
