@@ -13,7 +13,7 @@ describe("Routes", () => {
     expect(breadcrumbInfo.breadcrumb).toBe("Challenges");
   });
 
-  it("renders '/challenge/[challengeSlug]' route", async () => {
+  it("can create breadcrumb infos for the '/challenge/[challengeSlug]' route", async () => {
     const challengeSlug = "test-challenge";
     const name = "Test Challenge";
     const mockClient = createMockClient<ChallengeBySlugQuery>(
