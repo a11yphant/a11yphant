@@ -55,7 +55,21 @@ const Challenge: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>{user.displayName || "Anonymous users"}'s profile | a11yphant</title>
+        <title>{user.displayName || "Anonymous user"}'s profile | a11yphant</title>
+        <meta name="description" content="Create a user profile on a11yphant by signing up with Twitter, GitHub or simply with your e-mail." />
+        <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
+        <meta property="og:description" content="Create a user profile on a11yphant by signing up with Twitter, GitHub or simply with your e-mail." />
+        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta
+          property="og:image:alt"
+          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+        />
+        <meta property="og:locale" content="de" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.a11yphant.com/${user.id}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
       <main className={clsx("max-w-screen-xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>

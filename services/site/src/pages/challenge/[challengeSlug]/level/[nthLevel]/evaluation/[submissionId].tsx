@@ -49,6 +49,26 @@ const Evaluation: React.FunctionComponent = () => {
     <>
       <Head>
         <title>{pageTitle} | a11yphant</title>
+        <meta
+          name="description"
+          content="The a11yphant evaluation provides you with detailed feedback on our success criteria. Revisit web development topics from an accessibility perspective to make the web more inclusive."
+        />
+        <meta property="og:title" content={pageTitle} />
+        <meta
+          property="og:description"
+          content="The a11yphant evaluation provides you with detailed feedback on our success criteria. Revisit web development topics from an accessibility perspective to make the web more inclusive."
+        />
+        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta
+          property="og:image:alt"
+          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+        />
+        <meta property="og:locale" content="de" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.a11yphant.com/${data?.challenge.name}/level/${nthLevel}/evaluation/${data?.challenge.id}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <FullScreenLayout header={<Navigation displayBreadcrumbs />}>
         {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
