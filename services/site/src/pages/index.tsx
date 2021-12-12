@@ -50,15 +50,11 @@ const Home: React.FunctionComponent = () => {
             <Legend className={clsx("2xl:mx-24")} />
             {/* TODO: display actual started challenges */}
             {startedChallenges.length !== 0 && (
-              <ChallengeList
-                className={clsx("2xl:mx-24")}
-                heading={<>Continue where you left</>}
-                challenges={easyChallenges}
-                displayCompleted={false}
-              />
+              <ChallengeList className={clsx("2xl:mx-24")} heading={"Continue where you left"} challenges={easyChallenges} displayCompleted={false} />
             )}
 
-            {easyChallenges.length !== 0 && <ChallengeList className={clsx("2xl:mx-24")} heading={<>All challenges</>} challenges={easyChallenges} />}
+            {/* TODO: remove started challenges from being displayed here */}
+            {easyChallenges.length !== 0 && <ChallengeList className={clsx("2xl:mx-24")} heading={"All challenges"} challenges={easyChallenges} />}
 
             {/* TODO: add when more difficult challenge content exists
             {easyChallenges.length !== 0 && (
