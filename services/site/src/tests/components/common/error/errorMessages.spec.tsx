@@ -12,7 +12,7 @@ describe("Error Messages", () => {
     expect(wrapper.text()).toContain("Network error");
   });
 
-  it("unknownError exists", () => {
+  it("renders 'Unknown error' for unknown errors"", () => {
     const wrapper = shallow(<UnknownError />);
 
     expect(wrapper.text()).toContain("Unknown error");
