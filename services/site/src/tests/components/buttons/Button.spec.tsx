@@ -8,11 +8,16 @@ const buttonText = "Button Text";
 afterEach(cleanup);
 
 describe("Button", () => {
-  it("renders button text", () => {
+  it("renders one button", () => {
     const { container } = render(<Button>{buttonText}</Button>);
 
-    expect(screen.getByText(buttonText, { selector: "button" })).toBeTruthy();
     expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
+  });
+
+  it("renders button text", () => {
+    render(<Button>{buttonText}</Button>);
+
+    expect(screen.getByText(buttonText, { selector: "button" })).toBeTruthy();
   });
 
   it("adds className to the button", () => {
