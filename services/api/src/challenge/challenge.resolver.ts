@@ -25,8 +25,11 @@ export class ChallengeResolver {
   }
 
   @Query(() => [Challenge], { description: "Get all existing challenges." })
-  async challenges(@Args({ nullable: true }) { filter }: ChallengesArgs = {}): Promise<Challenge[]> {
-    return this.challengeService.findAll(filter);
+  async challenges(
+    @SessionToken() sessionToken?: SessionTokenInterface,
+    @Args({ nullable: true }) { filter }: ChallengesArgs = {},
+  ): Promise<Challenge[]> {
+    return this.challengeService.findAll(sessionToken.userId, filter);
   }
 
   @ResolveField(() => [Level], {

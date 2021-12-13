@@ -95,7 +95,9 @@ describe("challenge service", () => {
         data: Factory.buildList<ChallengeData>(CHALLENGE, 3),
       });
 
-      const queriedChallenges = await service.findAll();
+      const { userId } = await getUserAndChallenge({});
+
+      const queriedChallenges = await service.findAll(userId);
 
       expect(queriedChallenges).toBeTruthy();
       expect(queriedChallenges).toHaveLength(3);
@@ -105,7 +107,9 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const emptyChallenges = await service.findAll();
+      const { userId } = await getUserAndChallenge({});
+
+      const emptyChallenges = await service.findAll(userId);
       expect(emptyChallenges.length).toBe(0);
     });
 
@@ -117,7 +121,9 @@ describe("challenge service", () => {
         const challenges = Factory.buildList<ChallengeData>(CHALLENGE, 3);
         await prisma.challenge.createMany({ data: challenges });
 
-        expect(await service.findAll()).toHaveLength(challenges.length);
+        const { userId } = await getUserAndChallenge({});
+
+        expect(await service.findAll(userId)).toHaveLength(challenges.length);
       });
 
       it("finds only filtered challenges", async () => {
@@ -127,7 +133,9 @@ describe("challenge service", () => {
         await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.EASY }) });
         await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.MEDIUM }) });
 
-        const foundChallenges = await service.findAll({ difficulty: ChallengeDifficulty.MEDIUM });
+        const { userId } = await getUserAndChallenge({});
+
+        const foundChallenges = await service.findAll(userId, { difficulty: ChallengeDifficulty.MEDIUM });
         expect(foundChallenges).toHaveLength(2);
       });
     });
