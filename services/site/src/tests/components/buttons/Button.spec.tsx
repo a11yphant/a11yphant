@@ -54,19 +54,4 @@ describe("Button", () => {
 
     expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
   });
-
-  it("renders svg icon", () => {
-    const icon = <svg />;
-    const srText = "Screen Reader Text";
-
-    const { container } = render(
-      <Button srText={srText}>
-        {icon}
-        {buttonText}
-      </Button>,
-    );
-
-    expect(screen.getByText(buttonText, { selector: "button" })).toBeTruthy();
-    expect(container.querySelectorAll("svg")).toHaveProperty("length", 1);
-  });
 });
