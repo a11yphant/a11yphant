@@ -37,7 +37,7 @@ describe("HintBox", () => {
     expect(wrapper.exists("ol")).toBeTruthy();
     expect(wrapper.exists("li")).toBeTruthy();
     expect(wrapper.find("li").text()).toBe(hints[0].text);
-    // switch heading text to "Hint"
+    // check if the heading contains the hint text
     expect(wrapper.find("h4").text()).toContain("Hint");
     // show "Show me another hint" button since there are two mocked hints
     expect(wrapper.findWhere((n) => n.type() === Button && n.text().includes("Show me another hint")).length).toBe(1);
