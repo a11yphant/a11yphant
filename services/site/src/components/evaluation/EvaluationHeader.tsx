@@ -29,7 +29,6 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
             className={clsx(passed ? "w-[70px] h-[70px] ml-3 mt-[-20px]" : "w-[70px] h-[50px] ml-3 mt-[-10px]")}
             options={{
               loop: false,
-              autoplay: true,
               animationData: passed ? correctAnimation : failAnimation,
               rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice",

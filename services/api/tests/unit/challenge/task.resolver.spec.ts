@@ -8,13 +8,17 @@ import { TaskResolver } from "@/challenge/task.resolver";
 describe("task resolver", () => {
   it("resolves the hints for a task", async () => {
     const hints = [HintFactory.build(), HintFactory.build()];
+    const task = TaskFactory.build();
+    const findForTask = jest.fn().mockResolvedValue(hints);
 
     const resolver = new TaskResolver(
       createMock<HintService>({
-        findForTask: jest.fn().mockResolvedValue(hints),
+        findForTask,
       }),
     );
+    const resolvedTasks = await resolver.hints(task);
 
-    expect((await resolver.hints(TaskFactory.build())).length).toEqual(hints.length);
+    expect(resolvedTasks).toBeTruthy();
+    expect(findForTask).toHaveBeenCalledWith(task.id);
   });
 });

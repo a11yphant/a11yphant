@@ -56,6 +56,9 @@ module.exports = {
         width: "width",
         display: "display",
       },
+      rotate: {
+        "-260": "-260deg",
+      },
       backgroundImage: (theme) => ({
         "gradient-easy": "url('/images/01_easy.jpg')",
         "gradient-medium": "url('/images/02_medium.jpg')",
@@ -87,6 +90,7 @@ module.exports = {
       textColor: ["group-focus"],
       transitionProperty: ["hover", "motion-safe", "motion-reduce"],
       borderWidth: ["first", "last"],
+      animation: ["hover", "focus", "motion-safe", "motion-reduce"],
     },
   },
   plugins: [require("@tailwindcss/typography")],

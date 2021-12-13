@@ -92,10 +92,6 @@ describe("usePollSubmissionResult", () => {
     jest.useFakeTimers();
 
     const { result, waitForNextUpdate } = renderHook(() => usePollSubmissionResult(mockFailSubmissionId), { wrapper });
-    await act(async () => {
-      await waitForNextUpdate();
-    });
-
     expect(result.current).toBe(undefined);
 
     // make apollo return mocked response
@@ -111,21 +107,22 @@ describe("usePollSubmissionResult", () => {
     jest.useFakeTimers();
 
     const { waitForNextUpdate } = renderHook(() => usePollSubmissionResult(mockPendingSubmissionId), { wrapper });
-    await act(async () => {
-      await waitForNextUpdate();
-    });
 
     // initial call in useEffect
     expect(getMockedPendingData).toHaveBeenCalledTimes(1);
 
     // call in interval after 3 seconds
-    jest.advanceTimersByTime(3000);
-    await waitForNextUpdate();
+    await act(async () => {
+      jest.advanceTimersByTime(3000);
+      await waitForNextUpdate();
+    });
     expect(getMockedPendingData).toHaveBeenCalledTimes(2);
 
     // call again in interval after another 3 seconds
-    jest.advanceTimersByTime(3000);
-    await waitForNextUpdate();
+    await act(async () => {
+      jest.advanceTimersByTime(3000);
+      await waitForNextUpdate();
+    });
     expect(getMockedPendingData).toHaveBeenCalledTimes(3);
   });
 
@@ -134,9 +131,8 @@ describe("usePollSubmissionResult", () => {
     jest.spyOn(window, "clearInterval");
 
     const { waitForNextUpdate } = renderHook(() => usePollSubmissionResult(mockFailSubmissionId), { wrapper });
-    await act(async () => {
-      await waitForNextUpdate();
-    });
+
+    expect(clearInterval).toHaveBeenCalledTimes(0);
 
     // make apollo return mocked response
     jest.advanceTimersByTime(0);

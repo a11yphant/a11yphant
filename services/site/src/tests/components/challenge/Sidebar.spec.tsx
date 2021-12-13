@@ -1,3 +1,8 @@
+/**
+ * To fix the warning "useLayoutEffect does nothing on the server"
+ * @jest-environment node
+ */
+
 import { cleanup } from "@testing-library/react";
 import Sidebar from "app/components/challenge/Sidebar";
 import HintList from "app/components/challenge/sidebar/HintList";
