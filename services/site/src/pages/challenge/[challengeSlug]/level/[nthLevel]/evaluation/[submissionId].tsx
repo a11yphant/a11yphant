@@ -49,6 +49,7 @@ const Evaluation: React.FunctionComponent = () => {
     <>
       <Head>
         <title>{pageTitle} | a11yphant</title>
+        <meta name="robots" content="noindex,nofollow" />
         <meta
           name="description"
           content="The a11yphant evaluation provides you with detailed feedback on our success criteria. Revisit web development topics from an accessibility perspective to make the web more inclusive."
