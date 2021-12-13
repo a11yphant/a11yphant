@@ -1,5 +1,4 @@
-import { MockedProvider } from "@apollo/client/testing";
-import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { act, cleanup } from "@testing-library/react";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
