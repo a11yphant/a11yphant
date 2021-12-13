@@ -80,21 +80,21 @@ describe("Navigation", () => {
     expect(wrapper.exists(UserAvatar)).toBeFalsy();
   });
 
-  it("renders the breadcrumbs when they are enabled", () => {
+  it("renders the breadcrumbs if they are enabled", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: true });
 
     expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
   });
 
-  it("renders no breadcrumbs when they are disabled", () => {
+  it("renders no breadcrumbs if they are disabled", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ displayBreadcrumbs: false });
 
     expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
   });
 
-  it("renders all children", () => {
+  it("renders the children", () => {
     mockRegisteredUser();
     const wrapper = renderNavigation({ children: <p className="test-children">children</p> });
 

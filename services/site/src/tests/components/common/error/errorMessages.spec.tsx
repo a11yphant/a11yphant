@@ -6,13 +6,13 @@ import React from "react";
 afterEach(cleanup);
 
 describe("Error Messages", () => {
-  it("renders 'Network error' for network errors", () => {
+  it("renders 'Network error' in `NetworkError` component", () => {
     const wrapper = shallow(<NetworkError />);
 
     expect(wrapper.text()).toContain("Network error");
   });
 
-  it("renders 'Unknown error' for unknown errors", () => {
+  it("renders 'Unknown error' in `UnknownError` component", () => {
     const wrapper = shallow(<UnknownError />);
 
     expect(wrapper.text()).toContain("Unknown error");

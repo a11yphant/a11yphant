@@ -102,7 +102,7 @@ describe("ChallengeModal", () => {
     expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
   });
 
-  it("renders all levels as card", async () => {
+  it("renders all levels as cards", async () => {
     expect(wrapper.find(ChallengeModalLevelCard).length).toBe(mockLevels.length);
   });
 

@@ -44,7 +44,7 @@ const mockTasks: Task[] = [
 ];
 
 describe("HintList", () => {
-  it("renders text and a HintBox when there is only one hint", () => {
+  it("renders text and a HintBox if there is only one hint", () => {
     const task = mockTasks[0];
     const wrapper = shallow(<HintList tasks={[task]} />);
 
@@ -54,14 +54,14 @@ describe("HintList", () => {
     expect(wrapper.exists(HintBox)).toBeTruthy();
   });
 
-  it("renders text as HTML when there is only one hint", () => {
+  it("renders text as HTML if there is only one hint", () => {
     const task = mockTasks[0];
     const wrapper = shallow(<HintList tasks={[task]} />);
 
     expect(wrapper.html()).toContain(task.text);
   });
 
-  it("renders a list of text and HintBoxes when there are multiple hints", () => {
+  it("renders a list of text and HintBoxes if there are multiple hints", () => {
     const wrapper = shallow(<HintList tasks={mockTasks} />);
 
     expect(wrapper.exists("ol")).toBeTruthy();
@@ -70,7 +70,7 @@ describe("HintList", () => {
     expect(wrapper.find(HintBox).length).toBe(mockTasks.length);
   });
 
-  it("renders the numbered list as HTML when there are multiple hints", () => {
+  it("renders the numbered list as HTML if there are multiple hints", () => {
     const wrapper = shallow(<HintList tasks={mockTasks} />);
 
     expect(wrapper.find("li").at(0).html()).toContain("1.");

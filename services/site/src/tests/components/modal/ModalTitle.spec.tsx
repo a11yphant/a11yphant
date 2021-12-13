@@ -25,7 +25,7 @@ describe("ModalTitle", () => {
     ).toBe("div");
   });
 
-  it("renders all children", () => {
+  it("renders the children", () => {
     const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
     const wrapper = shallow(
       <Modal open={false} onClose={mockOnClose}>

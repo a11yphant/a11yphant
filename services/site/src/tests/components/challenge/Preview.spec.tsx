@@ -62,7 +62,7 @@ describe("Preview", () => {
     expect(iframeSrc).toContain('body {\n    font-family: "Courier", "Arial", sans-serif;\n  }');
   });
 
-  it('renders a-tags with target="_blank" inside the iFrame per default', async () => {
+  it('renders all anchor tags with target="_blank" inside the iFrame', async () => {
     jest.useFakeTimers();
     const mockHtmlCodeWithATag = "<a href='https://www.google.at/'>Google</a>";
 

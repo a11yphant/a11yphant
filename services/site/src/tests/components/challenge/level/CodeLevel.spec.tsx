@@ -101,7 +101,7 @@ describe("Code Level", () => {
     expect(wrapper.exists(Preview)).toBeTruthy();
   });
 
-  it("renders button with loading animation for submit", () => {
+  it("renders submit button with loading animation", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />

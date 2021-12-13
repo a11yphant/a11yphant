@@ -66,7 +66,7 @@ describe("Sidebar", () => {
     expect(wrapper.html()).toContain(mockLevel.instructions);
   });
 
-  it("renders the `HintList`component", () => {
+  it("renders the `HintList` component", () => {
     const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
     expect(wrapper.exists(HintList)).toBeTruthy();
