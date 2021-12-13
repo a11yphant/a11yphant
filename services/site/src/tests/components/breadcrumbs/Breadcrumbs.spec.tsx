@@ -63,7 +63,7 @@ const renderBreadcrumbs = async (): Promise<ReactWrapper> => {
 };
 
 describe("Breadcrumbs", () => {
-  it("renders no navigation containing a list for a single breadcrumb", async () => {
+  it("renders no navigation containing a list if there is only one breadcrumb", async () => {
     await act(async () => {
       router.push("/");
     });
@@ -74,7 +74,7 @@ describe("Breadcrumbs", () => {
     expect(wrapper.exists("ol")).toBeFalsy();
   });
 
-  it("renders no slash when there is only one breadcrumb", async () => {
+  it("renders no slash if there is only one breadcrumb", async () => {
     await act(async () => {
       router.push("/");
     });

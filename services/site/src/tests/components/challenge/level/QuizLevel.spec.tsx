@@ -142,7 +142,7 @@ describe("Quiz Level", () => {
   });
 
   // TODO: add quizStatus
-  it("renders retry / next level button only when the quiz status is defined", () => {
+  it("renders no retry / next level button if the quiz status is undefined", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
