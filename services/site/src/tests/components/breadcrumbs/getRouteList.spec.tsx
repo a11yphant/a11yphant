@@ -38,7 +38,7 @@ beforeEach(() => {
 });
 
 describe("getRouteList", () => {
-  it("includes the home route", async () => {
+  it("correctly generates breadcrumbs for a non-dynamic route", async () => {
     router.push("/");
     const routeList = await getRouteList(router, mockClient);
 
