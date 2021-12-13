@@ -57,9 +57,15 @@ const Challenge: React.FunctionComponent = () => {
       <Head>
         <title>{user.displayName || "Anonymous user"}'s profile | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content="Create a user profile on a11yphant by signing up with Twitter, GitHub or simply with your e-mail." />
+        <meta
+          name="description"
+          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
+        />
         <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta property="og:description" content="Create a user profile on a11yphant by signing up with Twitter, GitHub or simply with your e-mail." />
+        <meta
+          property="og:description"
+          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
+        />
         <meta property="og:image" content="/images/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
