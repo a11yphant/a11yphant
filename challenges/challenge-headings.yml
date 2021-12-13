@@ -12,12 +12,12 @@ challenge:
       order: 1
       type: code
       instructions: |-
-        You should use headings to structure the content on your page. There are six heading levels available. These are represented as the elements <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>. 
-        The current best practice is to use only one <code>&lt;h1&gt;</code> element per page. It should be the heading that best describes the content on the page. For example, if the page contains a blog post, the <code>&lt;h1&gt;</code> could be the headline of the post. 
-        The <code>&lt;h1&gt;</code> does not have to be the first heading on your page. You can use other headings before your main heading appears. For example, for the website title or inside the navigation.
+        <p>You should use headings to structure the content on your page. There are six heading levels available. These are represented as the elements <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>.</p>
+        <p>The current best practice is to use only one <code>&lt;h1&gt;</code> element per page. It should be the heading that best describes the content on the page. For example, if the page contains a blog post, the <code>&lt;h1&gt;</code> could be the headline of the post.</p>
+        <p>The <code>&lt;h1&gt;</code> does not have to be the first heading on your page. You can use other headings before your main heading appears. For example, for the website title or inside the navigation.</p>
       tasks:
         - id: 26d5d6fa-1140-41cf-8e7f-a54288404f7b
-          text: Replace the <code>&lt;p&gt;</code> element containing the heading with a level 1 heading.
+          text: <p>Replace the <code>&lt;p&gt;</code> element containing the heading with a level 1 heading.</p>
           hints:
             - id: 71b028ce-c11f-4fa2-aa37-48492a169e8c
               text: The element for a level 1 heading is <code>&lt;h1&gt;</code>.
@@ -90,11 +90,11 @@ challenge:
       order: 4
       type: code
       instructions: |-
-        You can use the different heading levels to structure the content of your HTML document, just like you would structure the content of a Word document. People using assistive technologies can then navigate the page by jumping from heading to heading.
+        <p>You can use the different heading levels to structure the content of your HTML document, just like you would structure the content of a Word document. People using assistive technologies can then navigate the page by jumping from heading to heading.<p>
       tasks:
         - id: 43b197cf-dd0b-4143-9155-63d997087cb8
           text: |-
-            Use the different heading levels to create a document with the following heading structure:
+            <p>Use the different heading levels to create a document with the following heading structure:</p>
               <ul>
                 <li>My favourite cat
                   <ul>
@@ -167,10 +167,10 @@ challenge:
       order: 6
       type: code
       instructions: |-
-        Besides structuring text on a page, you can also use headings to structure the page itself. You can use headings to provide labels for the main navigation, the footer and other important sections of the page. That allows users navigating with assistive technologies to quickly identify these sections and jump directly to them.
+        <p>Besides structuring text on a page, you can also use headings to structure the page itself. You can use headings to provide labels for the main navigation, the footer and other important sections of the page. That allows users navigating with assistive technologies to quickly identify these sections and jump directly to them.</p>
       tasks:
         - id: ed982390-c341-42bb-90f7-fb3a8ed459a4
-          text: Replace the <code>&lt;div&gt;</code> elements containing "Navigation menu", "Sidebar" and "Footer" with suitable headings.
+          text: <p>Replace the <code>&lt;div&gt;</code> elements containing "Navigation menu", "Sidebar" and "Footer" with suitable headings.</p>
           hints:
             - id: da2cfab0-6415-4ceb-9151-0a3b61851380
               text: The navigation section is a child of the page, which is described by an <code>&lt;h1&gt;</code>. Because of that we should use the next lower heading level for this section.
@@ -246,11 +246,11 @@ challenge:
       order: 7
       type: code
       instructions: |-
-        Sometimes the first heading on a page is not the heading that best describes the page content. In this case, it is possible to start with an <code>&lt;h2&gt;</code> instead of an <code>&lt;h1&gt;</code>. The <code>&lt;h1&gt;</code> element should then be used to wrap the heading that best describes the page content.
-        That is the only time that you are allowed to skip a heading level.
+        <p>Sometimes the first heading on a page is not the heading that best describes the page content. In this case, it is possible to start with an <code>&lt;h2&gt;</code> instead of an <code>&lt;h1&gt;</code>. The <code>&lt;h1&gt;</code> element should then be used to wrap the heading that best describes the page content.</p>
+        <p>That is the only time that you are allowed to skip a heading level.</p>
       tasks:
         - id: c7546cc0-e3c7-4d3c-8f3e-2add4aab363c
-          text: Remove the <code>&lt;h1&gt;</code> element at the beginning of the page. Then choose the heading that best describes the page content and make it the new <code>&lt;h1&gt;</code>. Update the levels of the other headings accordingly.
+          text: <p>Remove the <code>&lt;h1&gt;</code> element at the beginning of the page. Then choose the heading that best describes the page content and make it the new <code>&lt;h1&gt;</code>. Update the levels of the other headings accordingly.</p>
           hints:
             - id: 0b3a9059-812a-4cee-ac73-59c69b533ac6
               text: The heading "About my favourite cat" seems like it describes the following page content. Upgrade it to an <code>&lt;h1&gt;</code> element.

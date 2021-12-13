@@ -12,11 +12,11 @@ challenge:
       order: 1
       type: code
       instructions: |-
-        The <code>&lt;p&gt;</code> element defines a paragraph of text. A text should be structured into paragraphs to improve its readability.
-        As screen readers may announce the presence of a <code>&lt;p&gt;</code> element, it should never be empty. Otherwise users could get confused and frustrated. If you want to add spacing between paragraphs, only use CSS.
+        <p>The <code>&lt;p&gt;</code> element defines a paragraph of text. A text should be structured into paragraphs to improve its readability.</p>
+        <p>As screen readers may announce the presence of a <code>&lt;p&gt;</code> element, it should never be empty. Otherwise users could get confused and frustrated. If you want to add spacing between paragraphs, only use CSS.</p>
       tasks:
         - id: 1c20674c-f5b6-41f4-89e5-109a3e5acbba
-          text: Add a short description on why you love dogs or cats below the heading.
+          text: <p>Add a short description on why you love dogs or cats below the heading.</p>
           hints:
             - id: 6eb8c248-4334-4a9c-870c-d4cab48ed493
               text: Wrap your text inside a <code>&lt;p&gt;</code> element.
@@ -70,8 +70,8 @@ challenge:
       order: 3
       type: code
       instructions: |-
-        You can create an unordered list of items using the <code>&lt;ul&gt;</code> element. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ul&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children.
-        Since it is an unordered list, the order of the items in the list is not important.
+        <p>You can create an unordered list of items using the <code>&lt;ul&gt;</code> element. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ul&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children.</p>
+        <p>Since it is an unordered list, the order of the items in the list is not important.</p>
       tasks:
         - id: 13a89852-6a83-4f5b-b042-528776ac34ea
           text: Create an unordered list containing the things you like most about cats or dogs.
@@ -136,11 +136,11 @@ challenge:
       order: 5
       type: code
       instructions: |-
-        You can create an ordered list of items using the <code>&lt;ol&gt;</code> element. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ol&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children
-        Since it is an ordered list, the order of the items in the list is important.
+        <p>You can create an ordered list of items using the <code>&lt;ol&gt;</code> element. It has to be used in conjunction with list items which can be created using the <code>&lt;li&gt;</code> element. The <code>&lt;ol&gt;</code> element only allows <code>&lt;li&gt;</code> elements as direct children.</p>
+        <p>Since it is an ordered list, the order of the items in the list is important.</p>
       tasks:
         - id: aa4309f5-ccac-45e9-b0ea-acf149834d5e
-          text: Replace the unordered list with an ordered list and rank its content according to your preference.
+          text: <p>Replace the unordered list with an ordered list and rank its content according to your preference.</p>
           hints:
             - id: 9b1baa90-3458-4105-a11d-0282f5d196ec
               text: |-
@@ -206,11 +206,11 @@ challenge:
       order: 7
       type: code
       instructions: |-
-        To link to other resources, for example another website, you can use the <code>&lt;a&gt;</code> element. You can specify the target of your link using the `href` attribute. Inside the link element you should always add a descriptive text.
-        Use links only for navigating to another page or website. If you want to trigger an on click action, use a <code>&lt;button&gt;</code> element instead.
+        <p>To link to other resources, for example another website, you can use the <code>&lt;a&gt;</code> element. You can specify the target of your link using the `href` attribute. Inside the link element you should always add a descriptive text.</p>
+        <p>Use links only for navigating to another page or website. If you want to trigger an on click action, use a <code>&lt;button&gt;</code> element instead.</p>
       tasks:
         - id: 2226f9ac-4e38-4ab1-a4d7-2a2ceb218507
-          text: Create a link to one of your favourite dog or cat resources.
+          text: <p>Create a link to one of your favourite dog or cat resources.</p>
           hints:
             - id: 82ab85ce-9879-4739-847d-0020250b3c8f
               text: |-
@@ -254,12 +254,12 @@ challenge:
       order: 8
       type: code
       instructions: |-
-        If you want to trigger an action, you should use a button. The <code>&lt;button&gt;</code> element could, for example, be used to open a pop-up, a modal or to submit a form. You can specify the action by adding JavaScript in the `onclick` attribute of the button, for example `onclick="alert('Hi!')"`.
-        It is important to provide descriptive text within the button to allow users and assistive technologies to identify the purpose of the button.
-        The <code>&lt;button&gt;</code> should not trigger navigation to a different page. Use a link (<code>&lt;a&gt;</code>) for that instead.
+        <p>If you want to trigger an action, you should use a button. The <code>&lt;button&gt;</code> element could, for example, be used to open a pop-up, a modal or to submit a form. You can specify the action by adding JavaScript in the `onclick` attribute of the button, for example `onclick="alert('Hi!')"`.</p>
+        <p>It is important to provide descriptive text within the button to allow users and assistive technologies to identify the purpose of the button.</p>
+        <p>The <code>&lt;button&gt;</code> should not trigger navigation to a different page. Use a link (<code>&lt;a&gt;</code>) for that instead.</p>
       tasks:
         - id: 8548de86-c380-4128-9882-f9131d6bd9e2
-          text: Add a button inside the body. The button could, for example, show an alert with a cat/dog fact or change the background color of the button.
+          text: <p>Add a button inside the body. The button could, for example, show an alert with a cat/dog fact or change the background color of the button.</p>
           hints:
             - id: a7ea5755-0555-4574-86c9-226c8dd1ad6d
               text: |-
