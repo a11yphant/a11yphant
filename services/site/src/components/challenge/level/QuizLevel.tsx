@@ -85,13 +85,14 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             )}
           </div>
         </div>
-        <div className={clsx("flex justify-end")}>
+        <div className={clsx("flex justify-end mr-12 mb-12")}>
           {quizResult === undefined ? (
             <ButtonLoading
               primary
               onClick={submitLevel}
               loading={loading}
               submitButton
+              className="px-10"
               srTextLoading="The submission is being processed."
               disabled={chosenId === undefined}
             >
