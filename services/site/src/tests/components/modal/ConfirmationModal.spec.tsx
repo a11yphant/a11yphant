@@ -48,7 +48,7 @@ describe("ConfirmationModal", () => {
     expect(wrapper.find(Button).findWhere((n) => n.text() === "Cancel")).toBeTruthy();
   });
 
-  it("renders the `cancelButtonLabel`", () => {
+  it("renders a custom `cancelButtonLabel`", () => {
     const wrapper = renderConfirmationModal({ cancelButtonLabel: mockCancelButtonLabel });
 
     expect(wrapper.find(Button).findWhere((n) => n.text() === mockCancelButtonLabel)).toBeTruthy();
@@ -60,7 +60,7 @@ describe("ConfirmationModal", () => {
     expect(wrapper.find(Button).findWhere((n) => n.text() === "Confirm")).toBeTruthy();
   });
 
-  it("renders the `confirmButtonLabel`", () => {
+  it("renders a custom `confirmButtonLabel`", () => {
     const wrapper = renderConfirmationModal({ confirmButtonLabel: mockConfirmButtonLabel });
 
     expect(wrapper.find(Button).findWhere((n) => n.text() === mockConfirmButtonLabel)).toBeTruthy();

@@ -46,7 +46,7 @@ describe("EvaluationHeader", () => {
     expect(wrapper.text()).toContain(`${fail.score}%`);
   });
 
-  it("renders the check SVG when the user passed", () => {
+  it("renders the Check SVG if the user passed", () => {
     const wrapper = shallow(
       <EvaluationHeader challengeName={challengeName} levelIdx={Number(levelIdx)} score={success.score} passed={success.passed} />,
     );
@@ -55,7 +55,7 @@ describe("EvaluationHeader", () => {
     expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
   });
 
-  it("renders the X animation when the user failed", () => {
+  it("renders the X animation if the user failed", () => {
     const wrapper = shallow(<EvaluationHeader challengeName={challengeName} levelIdx={Number(levelIdx)} score={fail.score} passed={fail.passed} />);
 
     expect(wrapper.find(Lottie).length).toBe(1);

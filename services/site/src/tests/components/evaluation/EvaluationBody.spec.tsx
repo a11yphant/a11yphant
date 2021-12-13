@@ -40,7 +40,7 @@ describe("EvaluationBody", () => {
     expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
   });
 
-  it("renders two list elements for the requirements", () => {
+  it("renders two unordered lists containing the failed and successful requirements", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
     expect(wrapper.find("ul").length).toBe(2);

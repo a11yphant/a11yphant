@@ -10,7 +10,7 @@ describe("UserAccountModalProvider", () => {
     expect(wrapper.exists(UserAccountModal)).toBeTruthy();
   });
 
-  it("renders all children", () => {
+  it("renders the children", () => {
     const ChildComponent: React.FunctionComponent = () => null;
     const wrapper = shallow(
       <UserAccountModalProvider>

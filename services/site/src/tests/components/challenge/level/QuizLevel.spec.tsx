@@ -131,7 +131,7 @@ describe("Quiz Level", () => {
     // expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
   });
 
-  it("renders button with loading animation for submit", () => {
+  it("renders submit button with loading animation", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />

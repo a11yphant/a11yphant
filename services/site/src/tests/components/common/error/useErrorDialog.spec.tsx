@@ -107,7 +107,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[0]).toEqual(<NetworkError />);
   });
 
-  it("renders graphqlErrors inside a networkError if they exist", async () => {
+  it("renders errors inside networkError.result.errors if they exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {
@@ -119,7 +119,7 @@ describe("useErrorDialog", () => {
     expect(result.current.errorDialog.props.messages[1]).toEqual(<MockDefaultError />);
   });
 
-  it("renders graphQLErrors if `graphQLErrors and networkError` exist", async () => {
+  it("renders graphQLErrors if `graphQLErrors` and `networkError` exist", async () => {
     const { result } = renderHook(() => useErrorDialog());
 
     await act(async () => {

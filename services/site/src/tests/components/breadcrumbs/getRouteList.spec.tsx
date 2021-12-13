@@ -45,7 +45,7 @@ describe("getRouteList", () => {
     expect(routeList).toEqual([expectedBreadcrumbHome]);
   });
 
-  it("includes the route name for dynamic challenge routes", async () => {
+  it("correctly generates breadcrumbs for a dynamic route", async () => {
     router.push({
       pathname: "/challenge/[challengeSlug]",
       query: { challengeSlug: challengeSlug },
