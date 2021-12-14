@@ -92,7 +92,6 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
               onClick={submitLevel}
               loading={loading}
               submitButton
-              className="px-10"
               srTextLoading="The submission is being processed."
               disabled={chosenId === undefined}
             >
