@@ -36,7 +36,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
               }}
               overrideClassName
               className={clsx(
-                "mx-1 mb-2 px-16 py-2 border-primary border-2 rounded tracking-wider",
+                "mx-1 mb-2 px-16 py-2.5 border-primary border-2 rounded tracking-wider",
                 "transition duration-300",
                 "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
                 "focus:text-light focus:bg-primary-dark focus:border-primary-dark",
@@ -50,7 +50,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                 <a
                   href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}
                   className={clsx(
-                    "px-10 py-2 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
+                    "px-10 py-2.5 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
                     "group transition duration-300",
                     "hover:bg-light hover:text-primary",
                     "xl:max-w-none",
@@ -64,7 +64,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                 <a
                   href={publicRuntimeConfig.twitterLoginEndpoint || "/auth/twitter"}
                   className={clsx(
-                    "px-8 py-2 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
+                    "px-8 py-2.5 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
                     "group transition duration-300",
                     "hover:bg-light hover:text-primary",
                     "xl:max-w-none",
