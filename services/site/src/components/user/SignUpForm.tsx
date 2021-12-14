@@ -17,10 +17,10 @@ const schema = yup
   .required();
 
 interface SignUpFormProps {
-  onSuccess?: () => void;
+  onSubmit?: () => void;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
+const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit: onSuccess }) => {
   const {
     control,
     handleSubmit,

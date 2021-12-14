@@ -16,7 +16,7 @@ const SignUpBox: React.FC = () => {
 
   return (
     <>
-      {<SignUpForm />}
+      <SignUpForm />
       <div className="mb-2">
         <ThirdPartyAuthLink href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}>
           {"Sign up via Github"}

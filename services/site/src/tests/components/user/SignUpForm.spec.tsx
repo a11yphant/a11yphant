@@ -41,7 +41,7 @@ describe("sign up form", () => {
 
     const onSubmit = jest.fn();
 
-    render(<SignUpForm onSuccess={onSubmit} />);
+    render(<SignUpForm onSubmit={onSubmit} />);
 
     const nameInput = screen.getByRole("textbox", { name: /Name/ });
     fireEvent.change(nameInput, { target: { value: name } });
@@ -62,10 +62,10 @@ describe("sign up form", () => {
     expect(onSubmit).toHaveBeenCalled();
   });
 
-  it("does not call onLogin if the form does not filled out", async () => {
+  it("does not call onSubmit if the form does not filled out", async () => {
     const onSubmit = jest.fn();
 
-    render(<SignUpForm onSuccess={onSubmit} />);
+    render(<SignUpForm onSubmit={onSubmit} />);
 
     const form = screen.getByRole("form");
     fireEvent.submit(form);

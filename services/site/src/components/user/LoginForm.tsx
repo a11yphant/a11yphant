@@ -16,10 +16,10 @@ const schema = yup
   .required();
 
 interface LoginFormProps {
-  onSuccessfulLogin?: () => void;
+  onSubmit?: () => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfulLogin: onLogin }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const {
     control,
     handleSubmit,
@@ -45,7 +45,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccessfulLogin: onLogin }) => 
 
   const submitLogin = async ({ email, password }): Promise<void> => {
     await login({ variables: { email, password } });
-    onLogin?.();
+    onSubmit?.();
   };
 
   return (

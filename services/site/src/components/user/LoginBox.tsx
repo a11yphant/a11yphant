@@ -20,7 +20,7 @@ const LoginBox: React.FC = () => {
 
   return (
     <>
-      <LoginForm onSuccessfulLogin={onSuccessfulLogin} />
+      <LoginForm onSubmit={onSuccessfulLogin} />
       <div className="mb-2">
         <ThirdPartyAuthLink href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}>
           {"Log in via Github"}

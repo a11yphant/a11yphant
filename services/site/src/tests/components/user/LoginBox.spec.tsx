@@ -67,7 +67,7 @@ describe("login box", () => {
 
   it("closes the modal after a successful login", () => {
     (LoginForm as jest.Mock).mockImplementation((props: Parameters<typeof LoginForm>[0]) => {
-      props.onSuccessfulLogin();
+      props.onSubmit();
       return <div>LoginForm</div>;
     });
     render(<LoginBox />);
