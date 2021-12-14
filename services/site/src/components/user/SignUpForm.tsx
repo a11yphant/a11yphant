@@ -1,13 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { CurrentUserDocument, useRegisterMutation } from "app/generated/graphql";
-import clsx from "clsx";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import TextInput from "../common/inputs/TextInput";
-import LoadingIndicator from "../icons/LoadingIndicator";
+import InvertedLoadingButton from "./InvertedLoadingButton";
 
 const schema = yup
   .object({
@@ -81,24 +80,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
         />
       </div>
 
-      <button
-        className={clsx(
-          "px-8 py-4 mb-2 block w-full text-center align-middle text-primary bg-white font-normal leading-none rounded border border-white",
-          "transition duration-300 group",
-          "hover:bg-primary hover:text-white",
-          loading && "cursor-wait",
-        )}
-        type="submit"
-        disabled={loading}
-      >
-        {!loading && "Sign up"}
-        {loading && (
-          <>
-            <LoadingIndicator className="inline" />
-            <span className="sr-only">Sign up in progress</span>
-          </>
-        )}
-      </button>
+      <InvertedLoadingButton loading={loading} srLoadingText="Sign up in progress">
+        Sign up
+      </InvertedLoadingButton>
     </form>
   );
 };
