@@ -64,7 +64,7 @@ const Evaluation: React.FunctionComponent = () => {
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
         />
-        <meta property="og:locale" content="de" />
+        <meta property="og:locale" content="en" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://www.a11yphant.com/${data?.challenge.name}/level/${nthLevel}/evaluation/${data?.challenge.id}`} />
         <meta name="twitter:card" content="summary_large_image" />
