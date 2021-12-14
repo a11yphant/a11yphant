@@ -29,7 +29,8 @@ export class ChallengeResolver {
     @SessionToken() sessionToken?: SessionTokenInterface,
     @Args({ nullable: true }) { filter }: ChallengesArgs = {},
   ): Promise<Challenge[]> {
-    return this.challengeService.findAll(sessionToken.userId, filter);
+    const userId = sessionToken ? sessionToken.userId : null;
+    return this.challengeService.findAll(userId, filter);
   }
 
   @ResolveField(() => [Level], {

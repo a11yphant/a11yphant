@@ -20,19 +20,19 @@ export class ChallengeService {
     return challenge ? ChallengeService.createModelFromDatabaseRecord(challenge) : null;
   }
 
-  public async findAll(userId: string, filter?: ChallengesFilter): Promise<Challenge[]> {
+  public async findAll(userId?: string, filter?: ChallengesFilter): Promise<Challenge[]> {
     const filterObject: Prisma.ChallengeFindManyArgs = { where: {}, orderBy: { order: "asc" } };
 
-    const currentUserStatus = filter.currentUserStatus;
-    delete filter.currentUserStatus;
+    const currentUserStatus = filter ? filter.currentUserStatus : undefined;
 
     if (filter) {
+      delete filter.currentUserStatus;
       filterObject.where = { ...filter };
     }
 
     let challenges = await this.prisma.challenge.findMany(filterObject);
 
-    if (typeof currentUserStatus !== "undefined") {
+    if (typeof currentUserStatus !== "undefined" && userId) {
       challenges = await this.filterChallengeRecordsByStatus(challenges, userId, currentUserStatus);
     }
     return challenges.map((challenge) => ChallengeService.createModelFromDatabaseRecord(challenge));
