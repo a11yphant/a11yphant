@@ -14,7 +14,7 @@ function renderHero(): ReturnType<typeof render> {
 
 describe("Hero", () => {
   it("renders the wrapper element", () => {
-    const { container } = render(<Hero />);
+    const { container } = renderHero();
 
     expect(container.firstChild).toBeTruthy();
   });
