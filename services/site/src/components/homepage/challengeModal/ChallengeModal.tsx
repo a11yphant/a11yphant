@@ -108,7 +108,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                   })}`,
                 );
               }}
-              className={clsx("bg-primary px-8 py-4")}
+              className={clsx("bg-primary px-6 py-2")}
             >
               Start Coding
             </Button>
