@@ -8,15 +8,15 @@ const buttonText = "Button Text";
 
 afterEach(cleanup);
 
-describe("Button Animated", () => {
-  it("renders text", () => {
+describe("Button Loading", () => {
+  it("renders button text", () => {
     const { container } = render(<ButtonLoading loading={false}>{buttonText}</ButtonLoading>);
 
     expect(screen.getByText(buttonText, { selector: "button span" })).toBeTruthy();
     expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
   });
 
-  it("className is added", () => {
+  it("adds className to the button", () => {
     const cl = "test-class";
     const { container } = render(
       <ButtonLoading className={cl} loading={false}>
@@ -27,7 +27,7 @@ describe("Button Animated", () => {
     expect(container.querySelector("button").classList.contains(cl)).toBeTruthy();
   });
 
-  it("override className", () => {
+  it("overrides className with custom property `overrideClassName`", () => {
     const { container } = render(
       <ButtonLoading overrideClassName loading={false}>
         {buttonText}
@@ -38,7 +38,7 @@ describe("Button Animated", () => {
     expect(container.querySelector("button").classList.length).toBeLessThanOrEqual(2);
   });
 
-  it("full attribute works", () => {
+  it("renders primary button styles", () => {
     const { container } = render(
       <ButtonLoading primary loading={false}>
         {buttonText}
@@ -49,7 +49,7 @@ describe("Button Animated", () => {
     expect(container.querySelector("button.text-light")).toBeTruthy();
   });
 
-  it("Screen reader text is displayed", () => {
+  it("renders screen reader text", () => {
     const srText = "Screen Reader Text";
 
     render(
@@ -61,7 +61,7 @@ describe("Button Animated", () => {
     expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
   });
 
-  it("loading svg is displayed", () => {
+  it("renders svg loading icon", () => {
     const { container } = render(<ButtonLoading loading={true}>{buttonText}</ButtonLoading>);
 
     expect(container.querySelectorAll("svg")).toHaveProperty("length", 1);

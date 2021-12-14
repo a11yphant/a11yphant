@@ -50,31 +50,25 @@ afterEach(cleanup);
 
 describe("user profile page", () => {
   describe("component", () => {
-    it("can render", () => {
+    it("renders the element", () => {
       const { container } = render(<UserProfile />);
 
       expect(container.firstChild).toBeTruthy();
     });
 
-    it("shows the name of the user", () => {
+    it("renders the name of the user", () => {
       const { findByText } = render(<UserProfile />);
 
       expect(findByText("Hans Schröder")).toBeTruthy();
     });
 
-    it("shows the name of the user", () => {
-      const { findByText } = render(<UserProfile />);
-
-      expect(findByText("Hans Schröder")).toBeTruthy();
-    });
-
-    it("shows the name of the challenge", () => {
+    it("renders the name of the challenge", () => {
       const { findByText } = render(<UserProfile />);
 
       expect(findByText("Dummy Challenge")).toBeTruthy();
     });
 
-    it("shows the status for the challenge", () => {
+    it("renders the status of a challenge", () => {
       const { findByText } = render(<UserProfile />);
 
       expect(findByText("Done")).toBeTruthy();
@@ -109,7 +103,7 @@ describe("user profile page", () => {
       expect(serverSideProps.props.initialApolloState).toBeTruthy();
     });
 
-    it("returns not found if the user was not found", async () => {
+    it("returns `not found` if the user was not found", async () => {
       (initializeApollo as jest.Mock).mockReturnValue({
         query: jest.fn().mockResolvedValue({
           data: {

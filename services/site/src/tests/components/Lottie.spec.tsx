@@ -26,7 +26,7 @@ describe("lottie", () => {
     });
   });
 
-  it("renders", () => {
+  it("renders the wrapper element", () => {
     const { container } = render(<Lottie options={{}} />);
     expect(container.firstChild).toBeTruthy();
   });
@@ -37,7 +37,7 @@ describe("lottie", () => {
     expect(lottie.loadAnimation).toHaveBeenCalled();
   });
 
-  it("destories the animation after unmount", () => {
+  it("destroys the animation after unmount", () => {
     const { unmount } = render(<Lottie options={{}} />);
     unmount();
     expect(destroy).toHaveBeenCalled();

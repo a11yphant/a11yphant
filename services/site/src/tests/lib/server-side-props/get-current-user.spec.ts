@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 describe("getServerSideCurrentUser", () => {
-  it("returns current user", async () => {
+  it("returns the current user", async () => {
     const { data } = await getServerSideCurrentUser(mockClient);
     expect(data.currentUser).toEqual(mockUser);
   });

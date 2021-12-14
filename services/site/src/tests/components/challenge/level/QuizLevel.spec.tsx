@@ -73,7 +73,7 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find("section").length).toBe(1);
+    expect(wrapper.exists("section")).toBeTruthy();
   });
 
   it("renders heading", () => {
@@ -83,11 +83,11 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find("h2").length).toBe(1);
+    expect(wrapper.exists("h2")).toBeTruthy();
     expect(wrapper.find("h2").text()).toBe(mockHeading);
   });
 
-  it("renders question as html", () => {
+  it("renders quiz question as html", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
@@ -97,17 +97,17 @@ describe("Quiz Level", () => {
     expect(wrapper.find("h3").html()).toContain(mockText);
   });
 
-  it("renders answers", () => {
+  it("renders quiz answers", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(SingleAnswer).length).toBe(1);
+    expect(wrapper.exists(SingleAnswer)).toBeTruthy();
   });
 
-  // TODO: add quizStatus
+  // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252
   it("renders fail animation when quiz status is fail", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -119,7 +119,7 @@ describe("Quiz Level", () => {
     // expect(wrapper.find(Lottie).props().options.animationData).toBe(failAnimation);
   });
 
-  // TODO: add quizStatus
+  // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252
   it("renders success animation when quiz status is success", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -131,24 +131,24 @@ describe("Quiz Level", () => {
     // expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
   });
 
-  it("renders submit button", () => {
+  it("renders submit button with loading animation", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
   });
 
-  // TODO: add quizStatus
-  it("renders retry / next level button when quiz status is defined", () => {
+  // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252
+  it("renders no retry / next level button if the quiz status is undefined", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(CompleteEvaluationButton).length).toBe(0);
+    expect(wrapper.exists(CompleteEvaluationButton)).toBeFalsy();
   });
 });

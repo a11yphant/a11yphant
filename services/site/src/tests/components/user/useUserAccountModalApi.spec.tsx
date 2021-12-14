@@ -11,7 +11,7 @@ jest.mock("app/components/user/UserAccountModal", () => {
 afterEach(cleanup);
 
 describe("useUserAccountModalApi", () => {
-  it("show throws error if it is used outside UserAccountModalContext", (done) => {
+  it("throws an error if 'show' is called outside UserAccountModalContext", (done) => {
     const { result } = renderHook(() => useUserAccountModalApi());
 
     expect(result.current.show).toBeTruthy();
@@ -24,7 +24,7 @@ describe("useUserAccountModalApi", () => {
     }
   });
 
-  it("show throws no errors if used inside UserAccountModalContext", (done) => {
+  it("does not throw errors if used inside UserAccountModalContext", (done) => {
     const wrapper = ({ children }): React.ReactElement => <UserAccountModalProvider>{children}</UserAccountModalProvider>;
     const { result } = renderHook(() => useUserAccountModalApi(), { wrapper: wrapper });
 

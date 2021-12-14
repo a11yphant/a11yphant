@@ -79,7 +79,7 @@ describe("ChallengeModal", () => {
     });
   });
 
-  it("renders loading indicator before receiving graphql response", () => {
+  it("renders loading indicator before receiving a graphql response", () => {
     // override wrapper from beforeEach because
     // we don't want the query to resolve
     const wrapper = mount(
@@ -92,16 +92,16 @@ describe("ChallengeModal", () => {
     expect(wrapper.exists(ModalTitle)).toBeFalsy();
   });
 
-  it("renders heading and introduction", async () => {
+  it("renders a heading and introduction text", async () => {
     expect(wrapper.find(ModalTitle).text()).toBe(mockChallengeName);
     expect(wrapper.find("p").text()).toBe(mockChallengeIntroduction);
   });
 
-  it("has a ScrollOverlayWrapper", async () => {
+  it("renders the `ScrollOverlayWrapper`", async () => {
     expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
   });
 
-  it("renders level cards", async () => {
+  it("renders all levels as cards", async () => {
     expect(wrapper.find(ChallengeModalLevelCard).length).toBe(mockLevels.length);
   });
 
@@ -115,7 +115,7 @@ describe("ChallengeModal", () => {
     ).toBe(firstUnfinishedLevel.order);
   });
 
-  it("has a cancel button that calls onClose", () => {
+  it("renders a cancel button that calls onClose", () => {
     wrapper
       .find("button")
       .findWhere((n) => n.type() === "button" && n.text() === "Cancel")
@@ -124,7 +124,7 @@ describe("ChallengeModal", () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it("has a start coding button that routes to the first unfinished level", () => {
+  it("renders a start coding button that routes to the first unfinished level", () => {
     wrapper
       .find("button")
       .findWhere((n) => n.type() === "button" && n.text() === "Start Coding")

@@ -11,7 +11,7 @@ const levelAmount = 12;
 const finishedLevels = 0;
 
 describe("Card", () => {
-  it("renders correctly", () => {
+  it("renders the heading and description text", () => {
     render(
       <Card
         key={1}
@@ -29,7 +29,7 @@ describe("Card", () => {
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeTruthy();
   });
 
-  it("renders the correct gradient for easy challenges", () => {
+  it("renders the correct gradient for `Easy` challenges", () => {
     const { container } = render(
       <Card
         key={1}
@@ -46,7 +46,7 @@ describe("Card", () => {
     expect(container.querySelector(".bg-gradient-easy")).toBeTruthy();
   });
 
-  it("renders the correct gradient for medium challenges", () => {
+  it("renders the correct gradient for `Medium` challenges", () => {
     const { container } = render(
       <Card
         key={1}
@@ -63,7 +63,7 @@ describe("Card", () => {
     expect(container.querySelector(".bg-gradient-medium")).toBeTruthy();
   });
 
-  it("renders the correct gradient for hard challenges", () => {
+  it("renders the correct gradient for `Hard` challenges", () => {
     const { container } = render(
       <Card
         key={1}
@@ -80,7 +80,7 @@ describe("Card", () => {
     expect(container.querySelector(".bg-gradient-hard")).toBeTruthy();
   });
 
-  it("renders the progress for started challenges", async () => {
+  it("renders the progress indicator for started challenges", async () => {
     const { findByText } = render(
       <Card
         key={1}
