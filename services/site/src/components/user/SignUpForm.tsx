@@ -29,6 +29,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
   const [register, { loading }] = useRegisterMutation({
