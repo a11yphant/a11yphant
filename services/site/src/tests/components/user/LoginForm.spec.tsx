@@ -1,3 +1,4 @@
+import { ApolloError } from "@apollo/client";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import LoginForm from "app/components/user/LoginForm";
 import { useLoginMutation } from "app/generated/graphql";
@@ -86,5 +87,29 @@ describe("login form", () => {
     await waitFor(() => expect(passwordInput).toHaveValue(password));
 
     expect(login).toHaveBeenCalledWith({ variables: { email, password } });
+  });
+
+  it("renders a invalid password message the graphql mutation fails", async () => {
+    (useLoginMutation as jest.Mock).mockImplementation((options: Parameters<typeof useLoginMutation>[0]) => {
+      const login = (): void => {
+        options.onError({ graphQLErrors: [{ extensions: { code: "BAD_USER_INPUT" } }] } as unknown as ApolloError);
+      };
+      return [login, { loading: false }];
+    });
+    render(<LoginForm />);
+
+    const email = "test@a11yphant.com";
+    const password = "verysecret";
+
+    const emailInput = screen.getByRole("textbox", { name: /Email/ });
+    fireEvent.change(emailInput, { target: { value: email } });
+
+    const passwordInput = screen.getByLabelText(/Password/);
+    fireEvent.change(passwordInput, { target: { value: password } });
+
+    const form = screen.getByRole("form");
+    fireEvent.submit(form);
+
+    expect(await screen.findByText("The email or the password is incorrect.")).toBeInTheDocument();
   });
 });

@@ -34,30 +34,4 @@ describe("UserAccountBox", () => {
 
     expect(wrapper.find(LoginBox).exists()).toBeTruthy();
   });
-
-  // it("show login modal on 'link' to login click", () => {
-  //   const wrapper = shallow(<UserAccountBox mode="signup" />);
-
-  //   wrapper.find(Button).simulate("click");
-  //   wrapper.update();
-
-  //   expect(mockShow).toHaveBeenCalledTimes(1);
-  //   expect(mockShow).toHaveBeenCalledWith("login");
-  // });
-
-  // it("show signup modal on 'link' to signup click", () => {
-  //   const wrapper = shallow(<UserAccountBox mode="login" />);
-
-  //   wrapper.find(Button).simulate("click");
-  //   wrapper.update();
-
-  //   expect(mockShowh).toHaveBeenCalledTimes(1);
-  //   expect(mockShow).toHaveBeenCalledWith("signup");
-  // });
-
-  it.todo("shows the login form in login mode");
-  it.todo("shows the signup form in signup mode");
-  it.todo("closes itself after a successful login");
-  it.todo("triggers a refetch of the current user after a login");
-  it.todo("shows a success message after a successful registration");
 });
