@@ -54,7 +54,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               onClick={() => {
                 userAccountModalApi.show("signup");
               }}
-              className="mx-4"
+              className="mx-4 px-6"
             >
               Sign Up
             </Button>{" "}
@@ -62,6 +62,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               onClick={() => {
                 userAccountModalApi.show("login");
               }}
+              className="px-6"
             >
               Login
             </Button>

@@ -25,7 +25,7 @@ const mocks = [
 afterEach(cleanup);
 
 describe("useCurrentUser", () => {
-  it("returns current user", async () => {
+  it("returns the current user", async () => {
     const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={mocks}>{children}</MockedProvider>;
     const { result, waitForNextUpdate } = renderHook(() => useCurrentUser(), { wrapper });
     await waitForNextUpdate();

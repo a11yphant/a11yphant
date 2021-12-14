@@ -37,7 +37,7 @@ export const CompleteEvaluationButton = ({
             router.back();
           }
         }}
-        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
@@ -51,7 +51,7 @@ export const CompleteEvaluationButton = ({
           router.push("/");
         }}
         primary
-        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
@@ -66,7 +66,7 @@ export const CompleteEvaluationButton = ({
           router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
         }}
         primary
-        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >

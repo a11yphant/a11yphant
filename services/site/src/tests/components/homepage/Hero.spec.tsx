@@ -13,8 +13,8 @@ function renderHero(): ReturnType<typeof render> {
 }
 
 describe("Hero", () => {
-  it("renders wrapper element", () => {
-    const { container } = renderHero();
+  it("renders the wrapper element", () => {
+    const { container } = render(<Hero />);
 
     expect(container.firstChild).toBeTruthy();
   });

@@ -71,44 +71,44 @@ beforeEach(() => {
 });
 
 describe("Code Level", () => {
-  it("renders sidebar", () => {
+  it("renders `Sidebar` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(Sidebar).length).toBe(1);
+    expect(wrapper.exists(Sidebar)).toBeTruthy();
   });
 
-  it("renders the editor", () => {
+  it("renders `Editors` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(Editors).length).toBe(1);
+    expect(wrapper.exists(Editors)).toBeTruthy();
   });
 
-  it("renders preview", () => {
+  it("renders `Preview` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(Preview).length).toBe(1);
+    expect(wrapper.exists(Preview)).toBeTruthy();
   });
 
-  it("renders submit button", () => {
+  it("renders submit button with loading animation", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
   });
 
   it("disables the submit button if the submission is not yet available", () => {

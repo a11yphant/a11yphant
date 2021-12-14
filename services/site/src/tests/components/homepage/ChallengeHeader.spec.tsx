@@ -26,20 +26,20 @@ const renderChallengeHeader = (props?: Partial<ChallengeHeaderProps>): ShallowWr
 };
 
 describe("ChallengeHeader", () => {
-  it("renders correctly", () => {
+  it("renders the heading and description text", () => {
     render(<ChallengeHeader />);
 
     expect(screen.getByText("Challenges", { selector: "h2" })).toBeTruthy();
     expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeTruthy();
   });
 
-  it("renders sign up text", () => {
+  it("renders the sign up text", () => {
     render(<ChallengeHeader userLoggedIn={false} />);
 
     expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeTruthy();
   });
 
-  it("renders sign up button", () => {
+  it("renders the sign up button", () => {
     const userAccountModalApi = useUserAccountModalApi();
     const wrapper = shallow(<ChallengeHeader userLoggedIn={false} />);
 
@@ -55,13 +55,13 @@ describe("ChallengeHeader", () => {
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
   });
 
-  it("renders github button", () => {
+  it("renders the github button", () => {
     const wrapper = renderChallengeHeader({ userLoggedIn: false });
 
     expect(wrapper.find("a").contains("<GitHub />"));
   });
 
-  it("renders twitter button", () => {
+  it("renders the twitter button", () => {
     const wrapper = renderChallengeHeader({ userLoggedIn: false });
 
     expect(wrapper.find("a").contains("<Twitter />"));

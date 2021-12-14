@@ -24,56 +24,56 @@ const renderConfirmationModal = (props?: Partial<ConfirmationModalProps>): Shall
 };
 
 describe("ConfirmationModal", () => {
-  it("is closed", () => {
+  it("renders a closed modal", () => {
     const wrapper = renderConfirmationModal({ open: false });
 
     expect(wrapper.find(Modal).props().open).toBeFalsy();
   });
 
-  it("is opened", () => {
+  it("renders an open modal", () => {
     const wrapper = renderConfirmationModal({ open: true });
 
     expect(wrapper.find(Modal).props().open).toBeTruthy();
   });
 
-  it("shows title", () => {
+  it("renders the title", () => {
     const wrapper = renderConfirmationModal({ title: mockTitle });
 
     expect(wrapper.find(ModalTitle).children().text()).toContain(mockTitle);
   });
 
-  it("shows default cancelButtonLabel", () => {
+  it("renders the default `cancelButtonLabel`", () => {
     const wrapper = renderConfirmationModal();
 
     expect(wrapper.find(Button).findWhere((n) => n.text() === "Cancel")).toBeTruthy();
   });
 
-  it("shows cancelButtonLabel", () => {
+  it("renders a custom `cancelButtonLabel`", () => {
     const wrapper = renderConfirmationModal({ cancelButtonLabel: mockCancelButtonLabel });
 
     expect(wrapper.find(Button).findWhere((n) => n.text() === mockCancelButtonLabel)).toBeTruthy();
   });
 
-  it("shows default confirmButtonLabel", () => {
+  it("renders the default `confirmButtonLabel`", () => {
     const wrapper = renderConfirmationModal();
 
     expect(wrapper.find(Button).findWhere((n) => n.text() === "Confirm")).toBeTruthy();
   });
 
-  it("shows confirmButtonLabel", () => {
+  it("renders a custom `confirmButtonLabel`", () => {
     const wrapper = renderConfirmationModal({ confirmButtonLabel: mockConfirmButtonLabel });
 
     expect(wrapper.find(Button).findWhere((n) => n.text() === mockConfirmButtonLabel)).toBeTruthy();
   });
 
-  it("calls onCancel in onClose of modal", () => {
+  it("calls onCancel in onClose of the modal", () => {
     const wrapper = renderConfirmationModal({ onCancel: mockOnCancel });
 
     wrapper.find(Modal).props().onClose();
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onCancel on Cancel press", () => {
+  it("calls onCancel on `Cancel` press", () => {
     const wrapper = renderConfirmationModal({ cancelButtonLabel: mockCancelButtonLabel, onCancel: mockOnCancel });
 
     wrapper
@@ -84,7 +84,7 @@ describe("ConfirmationModal", () => {
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onConfirm on Confirm press", async () => {
+  it("calls onConfirm on `Confirm` press", async () => {
     const wrapper = renderConfirmationModal({ confirmButtonLabel: mockConfirmButtonLabel, onConfirm: mockOnConfirm });
 
     wrapper

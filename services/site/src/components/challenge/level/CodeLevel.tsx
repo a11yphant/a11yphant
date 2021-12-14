@@ -165,7 +165,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             <ButtonLoading
               primary
               onClick={submitLevel}
-              className="px-10"
               loading={requestCheckMutationLoading}
               disabled={!submissionId}
               submitButton

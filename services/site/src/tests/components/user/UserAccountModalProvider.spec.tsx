@@ -4,13 +4,13 @@ import { shallow } from "enzyme";
 import React from "react";
 
 describe("UserAccountModalProvider", () => {
-  it("renders UserAccountModal", () => {
+  it("renders the UserAccountModal", () => {
     const wrapper = shallow(<UserAccountModalProvider />);
 
     expect(wrapper.exists(UserAccountModal)).toBeTruthy();
   });
 
-  it("renders children", () => {
+  it("renders the children", () => {
     const ChildComponent: React.FunctionComponent = () => null;
     const wrapper = shallow(
       <UserAccountModalProvider>
