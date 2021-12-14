@@ -32,20 +32,6 @@ const LoginBox: React.FC = () => {
         </ThirdPartyAuthLink>
       </div>
       <InlineButton onClick={() => userAccountModalApi.show("signup")}>New here? Create a free account.</InlineButton>
-      {/*  //TODO: link to reset pop-up/page*/}
-      {/*  <Link href="/">*/}
-      {/*    <a*/}
-      {/*      className={clsx(*/}
-      {/*        "my-1 font-normal text-grey-light border-b-grey-light border-2 rounded max-w-max",*/}
-      {/*        "transition duration-300",*/}
-      {/*        "hover:border-transparent",*/}
-      {/*        "focus:border-transparent",*/}
-      {/*      )}*/}
-      {/*    >*/}
-      {/*      Forgot your password? Reset.*/}
-      {/*    </a>*/}
-      {/*  </Link>*/}
-      {/*)}*/}
     </>
   );
 };
