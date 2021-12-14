@@ -39,7 +39,7 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
         >
           {cancelButtonLabel ?? "Cancel"}
         </Button>
-        <Button onClick={onConfirm} primary className={clsx("px-6 py-4 leading-4")}>
+        <Button onClick={onConfirm} primary className={clsx("px-6 py-2")}>
           {confirmButtonLabel ?? "Confirm"}
         </Button>
       </ModalActions>
