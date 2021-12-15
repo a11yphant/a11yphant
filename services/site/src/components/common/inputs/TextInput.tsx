@@ -17,6 +17,9 @@ export interface TextInputProps {
 const StyledTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
     fontFamily: '"IBM Plex Sans", sans-serif',
+    letterSpacing: "0.025em",
+    transition: "color border-color border-width",
+    transitionDuration: "300ms",
     color: "white",
     "& fieldset": {
       borderColor: "white",
@@ -53,6 +56,7 @@ const StyledTextField = styled(TextField)({
   },
   "& .MuiFormHelperText-root.Mui-error": {
     color: "white",
+    fontSize: "1rem",
   },
 });
 

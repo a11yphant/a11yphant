@@ -70,7 +70,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit: onSuccess }) => {
           )}
         />
       </div>
-      <div className="mb-2">
+      <div className="mb-6">
         <Controller
           name="password"
           control={control}

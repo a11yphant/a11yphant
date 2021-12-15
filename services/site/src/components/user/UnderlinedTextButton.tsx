@@ -3,11 +3,11 @@ import React from "react";
 
 import Button from "../buttons/Button";
 
-interface InlineButtonProps {
+interface UnderlinedTextProps {
   onClick?: () => void;
 }
 
-const InlineButton: React.FC<InlineButtonProps> = ({ children, onClick }) => {
+const UnderlinedText: React.FC<UnderlinedTextProps> = ({ children, onClick }) => {
   return (
     <Button
       onClick={onClick}
@@ -24,4 +24,4 @@ const InlineButton: React.FC<InlineButtonProps> = ({ children, onClick }) => {
   );
 };
 
-export default InlineButton;
+export default UnderlinedText;

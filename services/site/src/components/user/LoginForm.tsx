@@ -59,7 +59,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           )}
         />
       </div>
-      <div className="mb-2">
+      <div className="mb-6">
         <Controller
           name="password"
           control={control}

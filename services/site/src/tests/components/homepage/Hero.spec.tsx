@@ -18,6 +18,7 @@ describe("Hero", () => {
 
     expect(container.firstChild).toBeTruthy();
   });
+
   it("renders two headings", async () => {
     renderHero();
 
