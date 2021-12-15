@@ -151,7 +151,7 @@ describe("challenge service", () => {
     });
 
     describe("currentUserStatus filter", () => {
-      it("finds only filtered challenges", async () => {
+      it("can find challenges with the status IN_PROGRESS for a user", async () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 
@@ -173,7 +173,7 @@ describe("challenge service", () => {
     });
 
     describe("difficulty and currentUserStatus filter", () => {
-      it("finds only filtered challenges", async () => {
+      it("can find challenges filtered by the difficulty HARD and status OPEN", async () => {
         const prisma = getPrismaService();
         const service = new ChallengeService(prisma);
 

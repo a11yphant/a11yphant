@@ -32,7 +32,7 @@ export class ChallengeService {
 
       challenges = await this.prisma.challenge.findMany(filterObject);
 
-      if (isFinite(currentUserStatus) && userId) {
+      if (currentUserStatus !== undefined && userId) {
         challenges = await this.filterChallengeRecordsByStatus(challenges, userId, currentUserStatus);
       }
     } else {
