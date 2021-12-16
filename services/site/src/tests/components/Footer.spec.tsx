@@ -1,18 +1,16 @@
-import { cleanup, render } from "@testing-library/react";
 import Footer from "app/components/Footer";
-
-afterEach(cleanup);
+import { shallow } from "enzyme";
 
 describe("footer", () => {
   it("renders a footer", () => {
-    const { container } = render(<Footer />);
+    const footer = shallow(<Footer />);
 
-    expect(container.querySelector("footer")).toBeTruthy();
+    expect(footer.exists("footer")).toBeTruthy();
   });
 
   it("renders a navigation inside the footer", () => {
-    const { container } = render(<Footer />);
+    const footer = shallow(<Footer />);
 
-    expect(container.querySelector("footer nav")).toBeTruthy();
+    expect(footer.exists("nav")).toBeTruthy();
   });
 });
