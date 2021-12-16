@@ -2,6 +2,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 // import { MockedResponse } from "@apollo/client/testing";
 import { render } from "@testing-library/react";
+import Footer from "app/components/Footer";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import Legend from "app/components/homepage/Legend";
 // import { ChallengesDocument } from "app/generated/graphql";
@@ -36,8 +37,12 @@ import React from "react";
 
 describe("Home", () => {
   it("renders without crashing", () => {
+    // render(<Navigation />);
     render(<ChallengeHeader />);
     render(<Legend />);
+    // render(<ChallengeList />);
+    // render(<ChallengeModal />);
+    render(<Footer />);
 
     // TODO: define what should be tested here
     // expect(screen.getByText("A11y Challenges")).toBeInTheDocument();
