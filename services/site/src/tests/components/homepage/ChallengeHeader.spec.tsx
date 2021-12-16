@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { render, screen } from "@testing-library/react";
-import Button from "app/components/buttons/Button";
 import ChallengeHeader, { ChallengeHeaderProps } from "app/components/homepage/ChallengeHeader";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { shallow, ShallowWrapper } from "enzyme";
@@ -20,7 +19,7 @@ jest.mock("app/components/user/useUserAccountModalApi", () => ({
   }),
 }));
 
-const renderChallengeHeader = (props?: Partial<ChallengeHeaderProps>): ShallowWrapper => {
+const shallowRenderChallengeHeader = (props?: Partial<ChallengeHeaderProps>): ShallowWrapper => {
   return shallow(<ChallengeHeader {...props} />);
 };
 
@@ -40,29 +39,23 @@ describe("ChallengeHeader", () => {
 
   it("renders the sign up button", () => {
     const userAccountModalApi = useUserAccountModalApi();
-    const wrapper = shallow(<ChallengeHeader userLoggedIn={false} />);
+    render(<ChallengeHeader userLoggedIn={false} />);
 
-    wrapper
-      .find(Button)
-      .findWhere((n) => {
-        return n.children().length === 1 && n.children().text() === "Sign Up";
-      })
-      .simulate("click");
-    wrapper.update();
+    screen.getByRole("button", { name: "Sign Up" }).click();
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
   });
 
   it("renders the github button", () => {
-    const wrapper = renderChallengeHeader({ userLoggedIn: false });
+    const view = shallowRenderChallengeHeader({ userLoggedIn: false });
 
-    expect(wrapper.find("a").contains("<GitHub />"));
+    expect(view.find("a").contains("<GitHub />"));
   });
 
   it("renders the twitter button", () => {
-    const wrapper = renderChallengeHeader({ userLoggedIn: false });
+    const view = shallowRenderChallengeHeader({ userLoggedIn: false });
 
-    expect(wrapper.find("a").contains("<Twitter />"));
+    expect(view.find("a").contains("<Twitter />"));
   });
 });
