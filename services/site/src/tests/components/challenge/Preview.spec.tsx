@@ -12,13 +12,7 @@ const mockJsCode = "const mockFunc = () => {}";
 const mockHeading = "Mock Heading";
 
 describe("Preview", () => {
-  it("renders heading", () => {
-    const wrapper = shallow(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
-
-    expect(wrapper.find("h3").text()).toBe(mockHeading);
-  });
-
-  it("renders wrapper div with class", () => {
+  it("renders the wrapper element with classes", () => {
     const mockClassName = "test-class";
 
     const wrapper = shallow(
@@ -26,6 +20,12 @@ describe("Preview", () => {
     );
 
     expect(wrapper.find("div").first().props().className).toContain(mockClassName);
+  });
+
+  it("renders heading", () => {
+    const wrapper = shallow(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
+
+    expect(wrapper.find("h3").text()).toBe(mockHeading);
   });
 
   it("renders code in iframe", async () => {
@@ -47,7 +47,7 @@ describe("Preview", () => {
     expect(iframeSrc).toContain(mockJsCode);
   });
 
-  it("adds base font", async () => {
+  it("renders base font in iFrame", async () => {
     jest.useFakeTimers();
     const wrapper = mount(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
 
@@ -62,7 +62,7 @@ describe("Preview", () => {
     expect(iframeSrc).toContain('body {\n    font-family: "Courier", "Arial", sans-serif;\n  }');
   });
 
-  it('adds target="_blank" to a tag', async () => {
+  it('renders all anchor tags with target="_blank" inside the iFrame', async () => {
     jest.useFakeTimers();
     const mockHtmlCodeWithATag = "<a href='https://www.google.at/'>Google</a>";
 

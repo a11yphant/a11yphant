@@ -69,7 +69,7 @@ describe("WrappedEditor", () => {
     expect(wrapper.find(ConfirmationModal).props().open).toBeTruthy();
   });
 
-  it("reset is called", () => {
+  it("reset is called after button click", () => {
     setupIntersectionObserverMock();
 
     const onReset = jest.fn();

@@ -41,7 +41,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
 
       {finishedLevels > 0 && finishedLevels === levels && (
         <div className={clsx("flex-1 flex items-center justify-center bg-background-light")}>
-          <Check className={clsx("h-20 text-grey-middle")} />
+          <Check className={clsx("h-20 text-grey-middle", "transition duration-300", "group-hover:text-grey")} />
         </div>
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>

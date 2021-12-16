@@ -7,7 +7,7 @@ import React from "react";
 afterEach(cleanup);
 
 describe("Legend", () => {
-  it("renders correctly", () => {
+  it("renders a list with all challenge difficulties", () => {
     const { container } = render(<Legend />);
 
     expect(container.querySelectorAll("ul")).toHaveProperty("length", 1);

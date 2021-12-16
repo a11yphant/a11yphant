@@ -18,13 +18,13 @@ const renderUserAccountModal = (props: Partial<UserAccountModalProps>): ShallowW
 };
 
 describe("UserAccountModal", () => {
-  it("is closed", () => {
+  it("renders a closed modal", () => {
     const wrapper = renderUserAccountModal({ open: false });
 
     expect(wrapper.find(Modal).props().open).toBeFalsy();
   });
 
-  it("is open", () => {
+  it("renders an open modal", () => {
     const wrapper = renderUserAccountModal({ open: true });
 
     expect(wrapper.find(Modal).props().open).toBeTruthy();

@@ -8,25 +8,25 @@ import React from "react";
 const mockOnClose = jest.fn();
 
 describe("Modal", () => {
-  it("is open", () => {
+  it("renders an open modal", () => {
     const wrapper = shallow(<Modal open={true} onClose={mockOnClose} />);
 
     expect(wrapper.find(Dialog).props().open).toBeTruthy();
   });
 
-  it("is closed", () => {
+  it("renders a closed modal", () => {
     const wrapper = shallow(<Modal open={false} onClose={mockOnClose} />);
 
     expect(wrapper.find(Dialog).props().open).toBeFalsy();
   });
 
-  it("renders Dialog.Overlay", () => {
+  it("renders the background overlay", () => {
     const wrapper = shallow(<Modal open={false} onClose={mockOnClose} />);
 
     expect(wrapper.exists(Dialog.Overlay)).toBeTruthy();
   });
 
-  it("renders children", () => {
+  it("renders the `children`", () => {
     const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
     const wrapper = shallow(
       <Modal open={false} onClose={mockOnClose}>
@@ -37,7 +37,7 @@ describe("Modal", () => {
     expect(wrapper.exists(ChildComponent)).toBeTruthy();
   });
 
-  it("calls onClose on X press", () => {
+  it("calls onClose on `X` button press", () => {
     const wrapper = shallow(<Modal open={false} onClose={mockOnClose} />);
 
     wrapper.find(X).closest(Button).simulate("click");

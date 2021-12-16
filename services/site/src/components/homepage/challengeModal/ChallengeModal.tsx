@@ -100,6 +100,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
               Cancel
             </Button>
             <Button
+              primary
               onClick={() => {
                 router.push(
                   `/challenge/${challengeSlug}/level/${Number(firstUnfinishedLevel?.order ?? 1).toLocaleString("de-AT", {
@@ -108,7 +109,6 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                   })}`,
                 );
               }}
-              className={clsx("bg-primary px-8 py-4")}
             >
               Start Coding
             </Button>
