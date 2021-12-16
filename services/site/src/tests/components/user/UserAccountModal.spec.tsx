@@ -1,44 +1,46 @@
-import "@testing-library/jest-dom/extend-expect";
-
-import { Modal } from "app/components/modal/Modal";
-import { ModalTitle } from "app/components/modal/ModalTitle";
-import { UserAccountBox } from "app/components/user/UserAccountBox";
+import { render, screen } from "@testing-library/react";
 import UserAccountModal, { UserAccountModalProps } from "app/components/user/UserAccountModal";
-import { shallow, ShallowWrapper } from "enzyme";
+import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import React from "react";
+
+jest.mock("app/components/user/UserAccountBox", () => ({
+  UserAccountBox: () => <></>,
+}));
 
 afterEach(() => {
   jest.clearAllMocks();
 });
 
-const renderUserAccountModal = (props: Partial<UserAccountModalProps>): ShallowWrapper => {
-  return shallow(<UserAccountModal open={true} mode="signup" {...props} />);
+beforeEach(() => {
+  setupIntersectionObserverMock();
+});
+
+const renderUserAccountModal = (props: Partial<UserAccountModalProps>): void => {
+  render(<UserAccountModal open={true} mode="signup" onClose={jest.fn()} {...props} />);
 };
 
 describe("UserAccountModal", () => {
   it("renders a closed modal", () => {
-    const wrapper = renderUserAccountModal({ open: false });
+    renderUserAccountModal({ open: false });
 
-    expect(wrapper.find(Modal).props().open).toBeFalsy();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
   it("renders an open modal", () => {
-    const wrapper = renderUserAccountModal({ open: true });
+    renderUserAccountModal({ open: true });
 
-    expect(wrapper.find(Modal).props().open).toBeTruthy();
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
   it("renders correctly in signup mode", () => {
-    const wrapper = renderUserAccountModal({ mode: "signup" });
+    renderUserAccountModal({ mode: "signup" });
 
-    expect(wrapper.find(ModalTitle).children().text()).toContain("Sign up");
-    expect(wrapper.find(UserAccountBox).props().mode).toContain("signup");
+    expect(screen.getByText("Sign up", { exact: false })).toBeInTheDocument();
   });
 
   it("renders correctly in login mode", () => {
-    const wrapper = renderUserAccountModal({ mode: "login" });
+    renderUserAccountModal({ mode: "login" });
 
-    expect(wrapper.find(ModalTitle).children().text()).toContain("Login");
-    expect(wrapper.find(UserAccountBox).props().mode).toContain("login");
+    expect(screen.getByText("Login")).toBeInTheDocument();
   });
 });
