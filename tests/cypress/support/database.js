@@ -1,4 +1,5 @@
 export function resetDatabase() {
+    console.log(process.env)
     if (process.env.CI_PROJECT_ID) {
         cy.exec('npm run db:reset:ci');
     } else {
