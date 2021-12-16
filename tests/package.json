@@ -6,7 +6,10 @@
   "scripts": {
     "test": "cypress run",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "db:reset": "docker compose exec postgres psql -U a11yphant -c \"DROP SCHEMA public CASCADE; CREATE SCHEMA public;\" a11yphant",
+    "db-dump:update": "docker compose exec postgres pg_dump -U a11yphant a11yphant > db-dump.sql",
+    "db-dump:import": "docker-compose exec postgres psql -U a11yphant a11yphant < db-dump.sql"
   },
   "author": "",
   "license": "ISC",
