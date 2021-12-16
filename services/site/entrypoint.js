@@ -6,10 +6,7 @@ const { init, getServerlessHandler } = require("./server");
 const initializationPromise = init();
 
 exports.handler = async (...args) => {
-  console.log("Received event");
-  console.log("Waiting for server initialization");
   await initializationPromise;
-  console.log("Server initialized");
 
   return getServerlessHandler().handler(...args);
 };

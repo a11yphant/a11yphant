@@ -23,11 +23,9 @@ function getServer() {
 }
 
 async function init({ dev = false } = {}) {
-  console.log("Starting next server");
   const nextServer = next({ dev });
   const handle = nextServer.getRequestHandler();
   await nextServer.prepare();
-  console.log("Next server started");
   app = express();
   serverless = configure({ app });
 
@@ -57,7 +55,6 @@ async function init({ dev = false } = {}) {
   }
 
   app.get("*", (req, res) => {
-    console.log("forwarding request to next server");
     return handle(req, res);
   });
 }
