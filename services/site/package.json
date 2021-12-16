@@ -29,6 +29,7 @@
   "dependencies": {
     "@apollo/client": "3.5.5",
     "@emotion/react": "11.7.0",
+    "@emotion/server": "^11.4.0",
     "@emotion/styled": "11.6.0",
     "@headlessui/react": "1.4.2",
     "@hookform/resolvers": "^2.8.4",

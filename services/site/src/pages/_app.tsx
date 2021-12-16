@@ -4,18 +4,24 @@ import "app/styles/fonts.scss";
 import "app/styles/custom.scss";
 
 import { ApolloProvider } from "@apollo/client";
+import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error/useErrorDialog";
 import ScrollOverlayWrapper, { ScrollOverlayWrapperProps } from "app/components/common/ScrollOverlayWrapper";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useApollo } from "app/lib/apollo-client";
+import createEmotionCache from "app/lib/emotion/createEmotionCache";
 import { initializeTracking } from "app/lib/tracking";
 import Router from "next/router";
 import NProgress from "nprogress";
 import React from "react";
+
 interface AppProps {
   Component: React.JSXElementConstructor<any>;
+  emotionCache: EmotionCache;
   pageProps: any;
 }
+
+const clientSideEmotionCache = createEmotionCache();
 
 NProgress.configure({
   showSpinner: false,
@@ -37,27 +43,29 @@ const ConditionalWrapper = <T,>({ condition, Wrapper, children, ...otherProps }:
 
 initializeTracking();
 
-const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+const App: React.FunctionComponent<AppProps> = ({ Component, pageProps, emotionCache = clientSideEmotionCache }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
   const apolloClient = useApollo(pageProps.initialApolloState, errorDialogApi);
 
   return (
-    <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
-      <ApolloProvider client={apolloClient}>
-        <UserAccountModalProvider>
-          <ConditionalWrapper<ScrollOverlayWrapperProps>
-            condition={pageProps.showScrollOverlay ?? true}
-            Wrapper={ScrollOverlayWrapper}
-            enableTopOverlay={false}
-            enableBottomOverlay={true}
-            classNameBottomOverlay={"h-52 -mt-52"}
-            attachScrollListenerToDocument
-          >
-            <Component {...pageProps} />
-          </ConditionalWrapper>
-        </UserAccountModalProvider>
-      </ApolloProvider>
-    </ErrorDialogProvider>
+    <CacheProvider value={emotionCache}>
+      <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
+        <ApolloProvider client={apolloClient}>
+          <UserAccountModalProvider>
+            <ConditionalWrapper<ScrollOverlayWrapperProps>
+              condition={pageProps.showScrollOverlay ?? true}
+              Wrapper={ScrollOverlayWrapper}
+              enableTopOverlay={false}
+              enableBottomOverlay={true}
+              classNameBottomOverlay={"h-52 -mt-52"}
+              attachScrollListenerToDocument
+            >
+              <Component {...pageProps} />
+            </ConditionalWrapper>
+          </UserAccountModalProvider>
+        </ApolloProvider>
+      </ErrorDialogProvider>
+    </CacheProvider>
   );
 };
 
