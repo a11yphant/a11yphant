@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { RadioGroup } from "@headlessui/react";
+import { render, screen } from "@testing-library/react";
 import SingleAnswer, { SingleAnswerProps } from "app/components/challenge/quiz/SingleAnswer";
-import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
 
 const mockAnswers = [
@@ -30,26 +29,26 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-const renderSingleAnswer = (props?: Partial<SingleAnswerProps>): ShallowWrapper => {
-  return shallow(<SingleAnswer srTitle={mockSRTitle} answers={mockAnswers} {...props} />);
+const renderSingleAnswer = (props?: Partial<SingleAnswerProps>): void => {
+  render(<SingleAnswer srTitle={mockSRTitle} answers={mockAnswers} {...props} />);
 };
 
 describe("SingleAnswer", () => {
   it("renders wrapper elements", () => {
-    const wrapper = renderSingleAnswer();
+    renderSingleAnswer();
 
-    expect(wrapper.exists(RadioGroup)).toBeTruthy();
+    expect(screen.getByRole("radiogroup")).toBeInTheDocument();
   });
 
   it("renders screen reader title", () => {
-    const wrapper = renderSingleAnswer({ srTitle: mockSRTitle });
+    renderSingleAnswer({ srTitle: mockSRTitle });
 
-    expect(wrapper.find(RadioGroup.Label).children().text()).toContain(mockSRTitle);
+    expect(screen.getByText(mockSRTitle, { selector: ".sr-only" })).toBeInTheDocument();
   });
 
   it("renders multiple quiz answers", () => {
-    const wrapper = renderSingleAnswer({ answers: mockAnswers });
+    renderSingleAnswer({ answers: mockAnswers });
 
-    expect(wrapper.find(RadioGroup.Option).length).toBe(4);
+    expect(screen.getAllByRole("radio")).toHaveLength(4);
   });
 });
