@@ -28,11 +28,11 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
     <Transition
       show={open}
       enter="transition duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      enterTo="transform scale-100 opacity-100"
+      enterFrom="scale-95 opacity-0"
+      enterTo="scale-100 opacity-100"
       leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
+      leaveFrom="scale-100 opacity-100"
+      leaveTo="scale-95 opacity-0"
     >
       <Dialog
         initialFocus={closeButtonRef}
