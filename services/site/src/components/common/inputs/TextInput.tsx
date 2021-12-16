@@ -1,4 +1,4 @@
-import { PriorityHigh } from "@mui/icons-material";
+import PriorityHigh from "@mui/icons-material/PriorityHigh";
 import { InputAdornment, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
