@@ -1,23 +1,21 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Hero from "app/components/homepage/Hero";
+import { UserAccountBox } from "app/components/user/UserAccountBox";
+import { shallow } from "enzyme";
 
 describe("Hero", () => {
-  it("renders the wrapper element", () => {
-    const { container } = render(<Hero />);
+  it("renders two headings", () => {
+    render(<Hero />);
 
-    expect(container.firstChild).toBeTruthy();
-  });
-  it("renders two headings", async () => {
-    const root = render(<Hero />);
-
-    expect(await root.findAllByRole("heading", { level: 2 })).toHaveLength(2);
+    expect(screen.queryAllByRole("heading", { level: 2 })).toHaveLength(2);
+    expect(screen.getByRole("heading", { level: 2, name: /Sign up/ }));
   });
 
-  it("renders a link for the github sign up", async () => {
-    const root = render(<Hero />);
+  it("renders a UserAccountBox", () => {
+    const view = shallow(<Hero />);
 
-    expect(await root.findByText("Sign up via Github")).toHaveProperty("href", "http://localhost/auth/github");
+    expect(view.exists(UserAccountBox)).toBeTruthy();
   });
 });
