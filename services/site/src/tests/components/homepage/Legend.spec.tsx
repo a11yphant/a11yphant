@@ -9,7 +9,7 @@ describe("Legend", () => {
     render(<Legend />);
 
     expect(screen.getByRole("list", { hidden: true })).toBeInTheDocument();
-    expect(screen.queryAllByRole("listitem", { hidden: true })).toHaveLength(3);
+    expect(screen.getAllByRole("listitem", { hidden: true })).toHaveLength(3);
 
     expect(screen.getByText("Easy", { selector: "li:nth-of-type(1)" })).toBeInTheDocument();
     expect(screen.getByText("Medium", { selector: "li:nth-of-type(2)" })).toBeInTheDocument();

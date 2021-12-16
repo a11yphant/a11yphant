@@ -9,7 +9,7 @@ describe("Hero", () => {
   it("renders two headings", () => {
     render(<Hero />);
 
-    expect(screen.queryAllByRole("heading", { level: 2 })).toHaveLength(2);
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(2);
     expect(screen.getByRole("heading", { level: 2, name: /Sign up/ }));
   });
 

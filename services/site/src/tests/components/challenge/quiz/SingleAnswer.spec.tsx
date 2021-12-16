@@ -34,7 +34,7 @@ const renderSingleAnswer = (props?: Partial<SingleAnswerProps>): void => {
 };
 
 describe("SingleAnswer", () => {
-  it("renders wrapper elements", () => {
+  it("renders a group of radio elements", () => {
     renderSingleAnswer();
 
     expect(screen.getByRole("radiogroup")).toBeInTheDocument();
