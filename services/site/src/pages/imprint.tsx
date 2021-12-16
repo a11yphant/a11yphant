@@ -2,6 +2,7 @@ import Footer from "app/components/Footer";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 
 const Imprint: React.FunctionComponent = () => {
@@ -26,9 +27,143 @@ const Imprint: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("max-w-screen-3xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
-          <h1>Imprint</h1>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
+        <div className={clsx(" mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
+          <h1 className={clsx("mb-8", "h2", "md:h1")}>Imprint</h1>
+          <p className={clsx("italic mb-8")}>
+            Information obligation according to §5 E-Commerce Law, §14 Corporate Code, §63 Trade Regulations and disclosure obligation according to
+            §25 Media Act.
+          </p>
+
+          <address className={clsx("not-italic mb-10")}>
+            <span aria-label="Allyphant">a11yphant</span> is a master's project by six students at the Salzburg University of Applied Sciences. If you
+            are interested in working with us or just want to know more about the project, simply{" "}
+            <Link href={"mailto:info@a11yphant"}>
+              <a
+                className={clsx(
+                  "text-light font-sans font-normal border-light",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:border-transparent",
+                )}
+              >
+                drop us a line
+              </a>
+            </Link>
+            . <br /> <br />
+            <strong>University of Applied Sciences Salzburg</strong>
+            <br />
+            Urstein Süd 3 <br />
+            5412 Puch bei Hallein, Austria
+          </address>
+
+          <h2 className={clsx("h5 mb-4", "sm:h4")}>Meet the team</h2>
+          <h3 className={clsx("h6", "sm:h5")}>Concept and Development</h3>
+          <ul className={clsx("list-disc ml-6 mb-8")}>
+            <li className={clsx("m-0 my-4")}>
+              <Link href={"https://twitter.com/dnikub"}>
+                <a
+                  target={"_blank"}
+                  rel="noopener noreferrer nofollow"
+                  aria-describedby="Opens an external site in a new window"
+                  className={clsx(
+                    "pt-3 text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                  )}
+                >
+                  Daniela Kubesch
+                </a>
+              </Link>
+            </li>
+            <li className={clsx("m-0 my-4")}>
+              <Link href={"https://lucapircher.at"}>
+                <a
+                  target={"_blank"}
+                  rel="noopener noreferrer nofollow"
+                  aria-describedby="Opens an external site in a new window"
+                  className={clsx(
+                    "pt-3 text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                  )}
+                >
+                  Luca Pircher
+                </a>
+              </Link>
+            </li>
+            <li className={clsx("m-0 my-4")}>
+              <Link href={"https://github.com/thomasdax98"}>
+                <a
+                  target={"_blank"}
+                  rel="noopener noreferrer nofollow"
+                  aria-describedby="Opens an external site in a new window"
+                  className={clsx(
+                    "pt-3 text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                  )}
+                >
+                  Thomas Dax
+                </a>
+              </Link>
+            </li>
+            <li className={clsx("m-0 my-4")}>
+              <Link href={"https://github.com/mibraio"}>
+                <a
+                  target={"_blank"}
+                  rel="noopener noreferrer nofollow"
+                  aria-describedby="Opens an external site in a new window"
+                  className={clsx(
+                    "pt-3 text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                  )}
+                >
+                  Michael Hinterhofer
+                </a>
+              </Link>
+            </li>
+          </ul>
+
+          <h3 className={clsx("h6", "sm:h5")}>Interface and Corporate Design</h3>
+          <ul className={clsx("list-disc ml-6 mb-8")}>
+            <li className={clsx("m-0 my-4")}>
+              Johanna Wicht
+              {/* TODO: add Link to Website */}
+              {/* <Link href={"#"}>
+                <a
+                  target={"_blank"}
+                  rel="noopener noreferrer nofollow"
+                  aria-describedby="Opens an external site in a new window"
+                  className={clsx(
+                    "pt-3 text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                  )}
+                >
+                  Johanna Wicht
+                </a>
+              </Link> */}
+            </li>
+            <li className={clsx("m-0 my-4")}>
+              Fabian Heller
+              {/* TODO: add Link to Website */}
+              {/* <Link href={"#"}>
+                <a
+                  target={"_blank"}
+                  rel="noopener noreferrer nofollow"
+                  aria-describedby="Opens an external site in a new window"
+                  className={clsx(
+                    "pt-3 text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                  )}
+                >
+                  Fabian Heller
+                </a>
+              </Link> */}
+            </li>
+          </ul>
         </div>
       </main>
       <Footer />
