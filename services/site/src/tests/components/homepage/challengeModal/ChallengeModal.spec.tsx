@@ -6,7 +6,6 @@ import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { ModalTitle } from "app/components/modal/ModalTitle";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
@@ -63,7 +62,6 @@ describe("ChallengeModal", () => {
   beforeEach(async () => {
     jest.resetAllMocks();
     jest.resetModules();
-    setupIntersectionObserverMock();
 
     wrapper = mount(
       <MockedProvider mocks={mocks}>

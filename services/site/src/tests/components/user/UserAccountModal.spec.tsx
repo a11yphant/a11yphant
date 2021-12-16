@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import UserAccountModal, { UserAccountModalProps } from "app/components/user/UserAccountModal";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import React from "react";
 
 jest.mock("app/components/user/UserAccountBox", () => ({
@@ -9,10 +8,6 @@ jest.mock("app/components/user/UserAccountBox", () => ({
 
 afterEach(() => {
   jest.clearAllMocks();
-});
-
-beforeEach(() => {
-  setupIntersectionObserverMock();
 });
 
 const renderUserAccountModal = (props: Partial<UserAccountModalProps>): void => {

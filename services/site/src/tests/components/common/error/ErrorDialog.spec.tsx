@@ -2,7 +2,6 @@ import Button from "app/components/buttons/Button";
 import ErrorDialog from "app/components/common/error/ErrorDialog";
 import { Modal } from "app/components/modal/Modal";
 import { ModalTitle } from "app/components/modal/ModalTitle";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, shallow } from "enzyme";
 import { GraphQLError } from "graphql";
 import React from "react";
@@ -118,8 +117,6 @@ describe("Error Dialog", () => {
   });
 
   it("calls onClose on button press", () => {
-    setupIntersectionObserverMock();
-
     const wrapper = mount(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );

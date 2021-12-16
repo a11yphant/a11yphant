@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import ConfirmationModal, { ConfirmationModalProps } from "app/components/modal/ConfirmationModal";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { ShallowWrapper } from "enzyme";
 import React from "react";
 
@@ -9,10 +8,6 @@ const mockCancelButtonLabel = "Mock Cancel";
 const mockOnCancel = jest.fn();
 const mockConfirmButtonLabel = "Mock Confirm";
 const mockOnConfirm = jest.fn();
-
-beforeEach(() => {
-  setupIntersectionObserverMock();
-});
 
 afterEach(() => {
   jest.clearAllMocks();
