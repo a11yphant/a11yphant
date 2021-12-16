@@ -10,6 +10,6 @@ describe("imprint", () => {
   it("renders the page", () => {
     render(<Imprint />);
 
-    expect(screen.getByText("Imprint")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Imprint" })).toBeInTheDocument();
   });
 });

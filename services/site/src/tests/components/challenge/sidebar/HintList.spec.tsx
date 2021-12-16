@@ -1,8 +1,3 @@
-/**
- * To fix the warning "useLayoutEffect does nothing on the server"
- * @jest-environment node
- */
-
 import HintBox from "app/components/challenge/sidebar/HintBox";
 import HintList from "app/components/challenge/sidebar/HintList";
 import { Task } from "app/generated/graphql";

@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import ConfirmationModal, { ConfirmationModalProps } from "app/components/modal/ConfirmationModal";
-import { ShallowWrapper } from "enzyme";
 import React from "react";
 
 const mockTitle = "Mock Confirmation Modal Title";
@@ -13,7 +12,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-const renderConfirmationModal = (props?: Partial<ConfirmationModalProps>): ShallowWrapper => {
+const renderConfirmationModal = (props?: Partial<ConfirmationModalProps>): void => {
   render(<ConfirmationModal open={true} title={mockTitle} onCancel={mockOnCancel} {...props} />);
 };
 

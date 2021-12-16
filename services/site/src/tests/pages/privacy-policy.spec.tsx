@@ -10,6 +10,6 @@ describe("privacy policy", () => {
   it("renders the page", () => {
     render(<PrivacyPolicy />);
 
-    expect(screen.getByText("Privacy Policy")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Privacy Policy" })).toBeInTheDocument();
   });
 });

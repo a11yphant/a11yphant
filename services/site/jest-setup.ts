@@ -5,6 +5,7 @@ import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupInterse
 import { mockUsePrefersReducedMotion } from "app/tests/helper/mockUsePrefersReducedMotion";
 import Enzyme from "enzyme";
 import { setConfig } from "next/config";
+import React from "react";
 
 import config from "./next.config";
 
@@ -14,3 +15,5 @@ setConfig(config);
 
 mockUsePrefersReducedMotion();
 setupIntersectionObserverMock();
+
+React.useLayoutEffect = React.useEffect;

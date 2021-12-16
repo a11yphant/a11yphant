@@ -51,19 +51,13 @@ describe("user profile page", () => {
     it("renders the name of the user", () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("Hans Schröder")).toBeInTheDocument();
+      expect(screen.getByText(/Hans Schröder/)).toBeInTheDocument();
     });
 
     it("renders the name of the challenge", () => {
       render(<UserProfile />);
 
       expect(screen.getByText("Dummy Challenge")).toBeInTheDocument();
-    });
-
-    it("renders the status of a challenge", () => {
-      render(<UserProfile />);
-
-      expect(screen.getByText("Done")).toBeInTheDocument();
     });
   });
 
