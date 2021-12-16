@@ -64,7 +64,7 @@
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
     # seed database
-    - docker run -e DB_URL=$DB_URL gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod && npm run console:prod import:challenges
+    - docker run -e DB_URL=$DB_URL gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod && npm run console:prod import:challenges
 
     # setup localstack
     - terraform -chdir=terraform/local init
