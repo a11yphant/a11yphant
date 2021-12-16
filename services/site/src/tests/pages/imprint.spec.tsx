@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Imprint from "app/pages/imprint";
 
 jest.mock("app/components/Navigation", () => ({
@@ -8,8 +8,8 @@ jest.mock("app/components/Navigation", () => ({
 
 describe("imprint", () => {
   it("renders the page", () => {
-    const { findByText } = render(<Imprint />);
+    render(<Imprint />);
 
-    expect(findByText("Imprint")).toBeInTheDocument();
+    expect(screen.getByText("Imprint")).toBeInTheDocument();
   });
 });
