@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 const Footer: React.FunctionComponent = () => (
-  <footer className={clsx("max-w-screen-3xl mx-8 mt-10 mb-20", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
+  <footer className={clsx("max-w-screen-3xl mx-8 mt-10 mb-20", "sm:mx-12 sm:mt-20 sm:mb-12", "md:mt-28", "lg:mx-24", "2xl:mx-auto")}>
     <div className={clsx("md:flex md:flex-row md:justify-between", "2xl:mx-24")}>
       <nav className={clsx("mb-4", "md:mb-0")} aria-label="Footer Navigation">
         <ul className={clsx("mb-0")}>
