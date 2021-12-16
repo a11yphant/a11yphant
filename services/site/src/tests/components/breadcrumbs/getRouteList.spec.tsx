@@ -1,12 +1,9 @@
 import { NormalizedCacheObject } from "@apollo/client/cache";
 import { ApolloClient } from "@apollo/client/core";
 import { createMockClient } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import { getRouteList } from "app/components/breadcrumbs/getRouteList";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/graphql";
 import router from "next/router";
-
-afterEach(cleanup);
 
 const challengeSlug = "mock-challenge-1";
 const expectedBreadcrumbHome = {

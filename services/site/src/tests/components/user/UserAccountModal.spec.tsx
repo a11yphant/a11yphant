@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import { Modal } from "app/components/modal/Modal";
 import { ModalTitle } from "app/components/modal/ModalTitle";
 import { UserAccountBox } from "app/components/user/UserAccountBox";
@@ -9,7 +8,6 @@ import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
 
 afterEach(() => {
-  cleanup();
   jest.clearAllMocks();
 });
 

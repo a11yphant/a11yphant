@@ -1,13 +1,12 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ChallengeHeader, { ChallengeHeaderProps } from "app/components/homepage/ChallengeHeader";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { shallow, ShallowWrapper } from "enzyme";
 
 afterEach(() => {
-  cleanup();
   jest.clearAllMocks();
 });
 
@@ -29,14 +28,14 @@ describe("ChallengeHeader", () => {
   it("renders the heading and description text", () => {
     render(<ChallengeHeader />);
 
-    expect(screen.getByText("Challenges", { selector: "h2" })).toBeTruthy();
-    expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeTruthy();
+    expect(screen.getByText("Challenges", { selector: "h2" })).toBeInTheDocument();
+    expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeInTheDocument();
   });
 
   it("renders the sign up text", () => {
     render(<ChallengeHeader userLoggedIn={false} />);
 
-    expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeTruthy();
+    expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeInTheDocument();
   });
 
   it("renders the sign up button", () => {

@@ -1,4 +1,3 @@
-import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ErrorDialog from "app/components/common/error/ErrorDialog";
 import { Modal } from "app/components/modal/Modal";
@@ -24,8 +23,6 @@ beforeEach(() => {
   process.env = { ...OLD_ENV }; // Make a copy
   mockOnClose = jest.fn();
 });
-
-afterEach(cleanup);
 
 afterAll(() => {
   process.env = OLD_ENV; // Restore old environment

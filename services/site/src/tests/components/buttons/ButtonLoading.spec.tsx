@@ -1,18 +1,16 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ButtonLoading from "app/components/buttons/ButtonLoading";
 import React from "react";
 
 const buttonText = "Button Text";
 
-afterEach(cleanup);
-
 describe("Button Loading", () => {
   it("renders button text", () => {
     const { container } = render(<ButtonLoading loading={false}>{buttonText}</ButtonLoading>);
 
-    expect(screen.getByText(buttonText, { selector: "button span" })).toBeTruthy();
+    expect(screen.getByText(buttonText, { selector: "button span" })).toBeInTheDocument();
     expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
   });
 
@@ -24,7 +22,7 @@ describe("Button Loading", () => {
       </ButtonLoading>,
     );
 
-    expect(container.querySelector("button").classList.contains(cl)).toBeTruthy();
+    expect(container.querySelector("button")).toHaveClass(cl);
   });
 
   it("overrides className with custom property `overrideClassName`", () => {
@@ -58,7 +56,7 @@ describe("Button Loading", () => {
       </ButtonLoading>,
     );
 
-    expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
+    expect(screen.getByText(srText, { selector: "span" })).toBeInTheDocument();
   });
 
   it("renders svg loading icon", () => {

@@ -3,7 +3,6 @@
  * @jest-environment node
  */
 
-import { cleanup } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
 import { ErrorDialogProvider, useErrorDialog, useErrorDialogApi } from "app/components/common/error/useErrorDialog";
@@ -37,8 +36,6 @@ const mockErrorResponseWithGraphQLErrorsInsideNetworkError = {
     result: { errors: [new GraphQLError(mockGraphQLErrorMessage1), new GraphQLError(mockGraphQLErrorMessage2)] },
   },
 };
-
-afterEach(cleanup);
 
 describe("useErrorDialog", () => {
   it("returns errorDialog and errorDialogApi", () => {

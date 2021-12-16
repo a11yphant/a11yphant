@@ -1,5 +1,5 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
@@ -57,8 +57,6 @@ const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
     },
   },
 ];
-
-afterEach(cleanup);
 
 describe("ChallengeModal", () => {
   let wrapper: ReactWrapper;

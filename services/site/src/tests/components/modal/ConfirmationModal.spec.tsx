@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ConfirmationModal, { ConfirmationModalProps } from "app/components/modal/ConfirmationModal";
 import { Modal } from "app/components/modal/Modal";
@@ -15,7 +14,6 @@ const mockConfirmButtonLabel = "Mock Confirm";
 const mockOnConfirm = jest.fn();
 
 afterEach(() => {
-  cleanup();
   jest.clearAllMocks();
 });
 

@@ -1,4 +1,4 @@
-import { cleanup, renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react-hooks";
 import { renderHook as renderHookServer } from "@testing-library/react-hooks/server";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 
@@ -20,8 +20,6 @@ const mockMatchMedia = (matches: boolean): void => {
     })),
   });
 };
-
-afterEach(cleanup);
 
 describe("prefersReducedMotion", () => {
   beforeEach(() => {

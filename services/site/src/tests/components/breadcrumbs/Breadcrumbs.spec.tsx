@@ -1,12 +1,10 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Slash from "app/components/icons/Slash";
 import { mount, ReactWrapper } from "enzyme";
 import router, { NextRouter } from "next/router";
 import React from "react";
-
-afterEach(cleanup);
 
 // expected breadcrumbs
 const challengeSlug = "mock-challenge-1";

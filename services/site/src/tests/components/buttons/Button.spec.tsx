@@ -1,11 +1,9 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 
 const buttonText = "Button Text";
-
-afterEach(cleanup);
 
 describe("Button", () => {
   it("renders one button", () => {
@@ -17,14 +15,14 @@ describe("Button", () => {
   it("renders button text", () => {
     render(<Button>{buttonText}</Button>);
 
-    expect(screen.getByText(buttonText, { selector: "button" })).toBeTruthy();
+    expect(screen.getByText(buttonText, { selector: "button" })).toBeInTheDocument();
   });
 
   it("adds className to the button", () => {
     const cl = "test-class";
     render(<Button className={cl}>{buttonText}</Button>);
 
-    expect(screen.getByText(buttonText, { selector: "button" }).classList.contains(cl)).toBeTruthy();
+    expect(screen.getByText(buttonText, { selector: "button" })).toHaveClass(cl);
   });
 
   it("overrides className with custom property `overrideClassName`", () => {
@@ -52,6 +50,6 @@ describe("Button", () => {
       </Button>,
     );
 
-    expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
+    expect(screen.getByText(srText, { selector: "span" })).toBeInTheDocument();
   });
 });

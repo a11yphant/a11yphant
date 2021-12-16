@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { RadioGroup } from "@headlessui/react";
-import { cleanup } from "@testing-library/react";
 import SingleAnswer, { SingleAnswerProps } from "app/components/challenge/quiz/SingleAnswer";
 import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
@@ -28,7 +27,6 @@ const mockAnswers = [
 const mockSRTitle = "Possible answers to the quiz";
 
 afterEach(() => {
-  cleanup();
   jest.clearAllMocks();
 });
 

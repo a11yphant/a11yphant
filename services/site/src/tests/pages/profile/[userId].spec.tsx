@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { initializeApollo } from "app/lib/apollo-client";
 import UserProfile, { getServerSideProps } from "app/pages/profile/[userId]";
 import { GetServerSidePropsContext } from "next";
@@ -46,8 +46,6 @@ jest.mock("app/lib/apollo-client", () => ({
   }),
 }));
 
-afterEach(cleanup);
-
 describe("user profile page", () => {
   describe("component", () => {
     it("renders the element", () => {
@@ -59,19 +57,19 @@ describe("user profile page", () => {
     it("renders the name of the user", () => {
       const { findByText } = render(<UserProfile />);
 
-      expect(findByText("Hans Schröder")).toBeTruthy();
+      expect(findByText("Hans Schröder")).toBeInTheDocument();
     });
 
     it("renders the name of the challenge", () => {
       const { findByText } = render(<UserProfile />);
 
-      expect(findByText("Dummy Challenge")).toBeTruthy();
+      expect(findByText("Dummy Challenge")).toBeInTheDocument();
     });
 
     it("renders the status of a challenge", () => {
       const { findByText } = render(<UserProfile />);
 
-      expect(findByText("Done")).toBeTruthy();
+      expect(findByText("Done")).toBeInTheDocument();
     });
   });
 

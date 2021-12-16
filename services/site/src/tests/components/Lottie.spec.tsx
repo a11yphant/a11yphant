@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Lottie from "app/components/Lottie";
 import lottie from "lottie-web";
 import React from "react";
@@ -9,8 +9,6 @@ jest.mock("lottie-web", () => ({
     loadAnimation: jest.fn(),
   },
 }));
-
-afterEach(cleanup);
 
 describe("lottie", () => {
   const destroy = jest.fn();
@@ -24,11 +22,6 @@ describe("lottie", () => {
       goToAndStop,
       totalFrames: 15,
     });
-  });
-
-  it("renders the wrapper element", () => {
-    const { container } = render(<Lottie options={{}} />);
-    expect(container.firstChild).toBeTruthy();
   });
 
   it("renders the lottie animation", () => {

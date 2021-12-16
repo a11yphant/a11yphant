@@ -1,9 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Hero from "app/components/homepage/Hero";
-
-afterEach(cleanup);
 
 describe("Hero", () => {
   it("renders the wrapper element", () => {

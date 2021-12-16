@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
@@ -50,8 +49,6 @@ const mockNonRegisteredUser = (): void => {
     },
   }));
 };
-
-afterEach(cleanup);
 
 beforeEach(() => {
   jest.resetAllMocks();

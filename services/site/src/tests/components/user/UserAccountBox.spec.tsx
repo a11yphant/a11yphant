@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import { UserAccountBox } from "app/components/user/UserAccountBox";
 import { shallow } from "enzyme";
@@ -17,7 +16,6 @@ jest.mock("app/components/user/useUserAccountModalApi", () => ({
 }));
 
 afterEach(() => {
-  cleanup();
   jest.clearAllMocks();
 });
 

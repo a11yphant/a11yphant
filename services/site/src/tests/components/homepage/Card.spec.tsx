@@ -1,10 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Card from "app/components/homepage/Card";
 import { ChallengeDifficulty } from "app/generated/graphql";
-
-afterEach(cleanup);
 
 const headingText = "Semantic HTML";
 const levelAmount = 12;
@@ -25,8 +23,8 @@ describe("Card", () => {
       />,
     );
 
-    expect(screen.getByText(headingText, { selector: "a" })).toBeTruthy();
-    expect(screen.getByText("12 Levels", { selector: "p" })).toBeTruthy();
+    expect(screen.getByText(headingText, { selector: "a" })).toBeInTheDocument();
+    expect(screen.getByText("12 Levels", { selector: "p" })).toBeInTheDocument();
   });
 
   it("renders the correct gradient for `Easy` challenges", () => {
@@ -94,7 +92,7 @@ describe("Card", () => {
       />,
     );
 
-    expect(await findByText(/7/i)).toBeTruthy();
+    expect(await findByText(/7/i)).toBeInTheDocument();
   });
   it("renders a checkmark for finished challenges", () => {
     const { container } = render(
