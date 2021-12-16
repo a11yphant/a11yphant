@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import PrivacyPolicy from "app/pages/privacy-policy";
 
 jest.mock("app/components/Navigation", () => ({
@@ -8,8 +8,8 @@ jest.mock("app/components/Navigation", () => ({
 
 describe("privacy policy", () => {
   it("renders the page", () => {
-    const { findByText } = render(<PrivacyPolicy />);
+    render(<PrivacyPolicy />);
 
-    expect(findByText("Privacy Policy")).toBeInTheDocument();
+    expect(screen.getByText("Privacy Policy")).toBeInTheDocument();
   });
 });
