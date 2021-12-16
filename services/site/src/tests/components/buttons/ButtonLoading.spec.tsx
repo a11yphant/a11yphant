@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { cleanup, render, screen } from "@testing-library/react";
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import React from "react";
 
 const buttonText = "Button Text";
@@ -10,7 +10,7 @@ afterEach(cleanup);
 
 describe("Button Loading", () => {
   it("renders button text", () => {
-    const { container } = render(<ButtonLoading loading={false}>{buttonText}</ButtonLoading>);
+    const { container } = render(<LoadingButton loading={false}>{buttonText}</LoadingButton>);
 
     expect(screen.getByText(buttonText, { selector: "button span" })).toBeTruthy();
     expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
@@ -19,9 +19,9 @@ describe("Button Loading", () => {
   it("adds className to the button", () => {
     const cl = "test-class";
     const { container } = render(
-      <ButtonLoading className={cl} loading={false}>
+      <LoadingButton className={cl} loading={false}>
         {buttonText}
-      </ButtonLoading>,
+      </LoadingButton>,
     );
 
     expect(container.querySelector("button").classList.contains(cl)).toBeTruthy();
@@ -29,9 +29,9 @@ describe("Button Loading", () => {
 
   it("overrides className with custom property `overrideClassName`", () => {
     const { container } = render(
-      <ButtonLoading overrideClassName loading={false}>
+      <LoadingButton overrideClassName loading={false}>
         {buttonText}
-      </ButtonLoading>,
+      </LoadingButton>,
     );
 
     // expected value is {"0": "undefined", "1": "false"}
@@ -40,9 +40,9 @@ describe("Button Loading", () => {
 
   it("renders primary button styles", () => {
     const { container } = render(
-      <ButtonLoading primary loading={false}>
+      <LoadingButton primary loading={false}>
         {buttonText}
-      </ButtonLoading>,
+      </LoadingButton>,
     );
 
     expect(container.querySelector("button.bg-primary")).toBeTruthy();
@@ -53,16 +53,16 @@ describe("Button Loading", () => {
     const srText = "Screen Reader Text";
 
     render(
-      <ButtonLoading srText={srText} loading={false}>
+      <LoadingButton srText={srText} loading={false}>
         {buttonText}
-      </ButtonLoading>,
+      </LoadingButton>,
     );
 
     expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
   });
 
   it("renders svg loading icon", () => {
-    const { container } = render(<ButtonLoading loading={true}>{buttonText}</ButtonLoading>);
+    const { container } = render(<LoadingButton loading={true}>{buttonText}</LoadingButton>);
 
     expect(container.querySelectorAll("svg")).toHaveProperty("length", 1);
   });
