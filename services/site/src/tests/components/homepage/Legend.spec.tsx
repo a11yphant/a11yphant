@@ -6,11 +6,11 @@ import React from "react";
 
 describe("Legend", () => {
   it("renders a list with all challenge difficulties", () => {
-    const { container } = render(<Legend />);
+    render(<Legend />);
 
-    expect(container.querySelectorAll("ul")).toHaveProperty("length", 1);
-    expect(container.querySelectorAll("li")).toHaveProperty("length", 3);
-    expect(container.querySelectorAll("span")).toHaveProperty("length", 9);
+    expect(screen.getByRole("list", { hidden: true })).toBeInTheDocument();
+    expect(screen.queryAllByRole("listitem", { hidden: true })).toHaveLength(3);
+
     expect(screen.getByText("Easy", { selector: "li:nth-of-type(1)" })).toBeInTheDocument();
     expect(screen.getByText("Medium", { selector: "li:nth-of-type(2)" })).toBeInTheDocument();
     expect(screen.getByText("Hard", { selector: "li:nth-of-type(3)" })).toBeInTheDocument();
