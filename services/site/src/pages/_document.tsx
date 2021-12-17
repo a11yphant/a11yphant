@@ -12,7 +12,7 @@ class CustomDocument extends Document {
 
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App: any) =>
+        enhanceApp: (App: React.ComponentType<any>) =>
           function EnhanceApp(props) {
             return <App emotionCache={cache} {...props} />;
           },
