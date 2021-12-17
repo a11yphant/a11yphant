@@ -5,13 +5,14 @@ import React from "react";
 
 class CustomDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+    // eslint-disable-next-line testing-library/render-result-naming-convention
     const originalRenderPage = ctx.renderPage;
     const cache = createEmotionCache();
     const { extractCriticalToChunks } = createEmotionServer(cache);
 
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App: any) =>
+        enhanceApp: (App: React.ComponentType<any>) =>
           function EnhanceApp(props) {
             return <App emotionCache={cache} {...props} />;
           },

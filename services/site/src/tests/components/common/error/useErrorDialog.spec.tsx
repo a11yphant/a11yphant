@@ -1,14 +1,9 @@
-/**
- * To fix the warning "useLayoutEffect does nothing on the server"
- * @jest-environment node
- */
-
-import { cleanup } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
 import { ErrorDialogProvider, useErrorDialog, useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { GraphQLError } from "graphql";
 import React from "react";
+import ReactDOM from "react-dom";
 
 const mockTitle = "Mock Title";
 
@@ -38,7 +33,11 @@ const mockErrorResponseWithGraphQLErrorsInsideNetworkError = {
   },
 };
 
-afterEach(cleanup);
+beforeAll(() => {
+  ReactDOM.createPortal = jest.fn((element, node) => {
+    return element as React.ReactPortal;
+  });
+});
 
 describe("useErrorDialog", () => {
   it("returns errorDialog and errorDialogApi", () => {

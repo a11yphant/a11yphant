@@ -48,7 +48,7 @@ describe("sign up box", () => {
     expect(screen.getByRole("button", { name: /Log in/ })).toBeInTheDocument();
   });
 
-  it("switches to the sign up modal on create account button click", () => {
+  it("opens the login modal on login click", () => {
     renderSignUpBox();
 
     screen.getByRole("button", { name: /Log in/ }).click();

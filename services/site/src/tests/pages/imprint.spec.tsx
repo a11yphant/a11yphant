@@ -1,7 +1,5 @@
-import { cleanup, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Imprint from "app/pages/imprint";
-
-afterEach(cleanup);
 
 jest.mock("app/components/Navigation", () => ({
   __esModule: true,
@@ -10,8 +8,8 @@ jest.mock("app/components/Navigation", () => ({
 
 describe("imprint", () => {
   it("renders the page", () => {
-    const { findByText } = render(<Imprint />);
+    render(<Imprint />);
 
-    expect(findByText("Imprint")).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Imprint" })).toBeInTheDocument();
   });
 });

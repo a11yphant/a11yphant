@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import LoadingButton from "app/components/buttons/LoadingButton";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
@@ -17,8 +16,6 @@ jest.mock("next/router", () => require("next-router-mock"));
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return;
 });
-
-afterEach(cleanup);
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;

@@ -29,13 +29,13 @@ describe("login form", () => {
     expect(screen.getByRole("button", { name: /Log in/ })).toBeInTheDocument();
   });
 
-  it("calls the onSubmit callback if the form is sent successfully", async () => {
+  it("calls the onAfterSubmit callback if the form is sent successfully", async () => {
     const email = "test@a11yphant.com";
     const password = "verysecret";
 
-    const onSubmit = jest.fn();
+    const onAfterSubmit = jest.fn();
 
-    render(<LoginForm onSubmit={onSubmit} />);
+    render(<LoginForm onAfterSubmit={onAfterSubmit} />);
 
     const emailInput = screen.getByRole("textbox", { name: /Email/ });
     fireEvent.change(emailInput, { target: { value: email } });
@@ -49,13 +49,13 @@ describe("login form", () => {
     await waitFor(() => expect(emailInput).toHaveValue(email));
     await waitFor(() => expect(passwordInput).toHaveValue(password));
 
-    expect(onSubmit).toHaveBeenCalled();
+    expect(onAfterSubmit).toHaveBeenCalled();
   });
 
   it("does not call onSubmit if the form does not filled out", async () => {
     const onSubmit = jest.fn();
 
-    render(<LoginForm onSubmit={onSubmit} />);
+    render(<LoginForm onAfterSubmit={onSubmit} />);
 
     const form = screen.getByRole("form");
     fireEvent.submit(form);
@@ -89,7 +89,7 @@ describe("login form", () => {
     expect(login).toHaveBeenCalledWith({ variables: { email, password } });
   });
 
-  it("renders a invalid password message the graphql mutation fails", async () => {
+  it("renders a invalid password message if the graphql mutation fails with an input error", async () => {
     (useLoginMutation as jest.Mock).mockImplementation((options: Parameters<typeof useLoginMutation>[0]) => {
       const login = (): void => {
         options.onError({ graphQLErrors: [{ extensions: { code: "BAD_USER_INPUT" } }] } as unknown as ApolloError);
@@ -111,5 +111,29 @@ describe("login form", () => {
     fireEvent.submit(form);
 
     expect(await screen.findByText("The email or the password is incorrect.")).toBeInTheDocument();
+  });
+
+  it("renders a invalid password message if the graphql mutation fails with an input error", async () => {
+    (useLoginMutation as jest.Mock).mockImplementation((options: Parameters<typeof useLoginMutation>[0]) => {
+      const login = (): void => {
+        options.onError({ graphQLErrors: [] } as unknown as ApolloError);
+      };
+      return [login, { loading: false }];
+    });
+    render(<LoginForm />);
+
+    const email = "test@a11yphant.com";
+    const password = "verysecret";
+
+    const emailInput = screen.getByRole("textbox", { name: /Email/ });
+    fireEvent.change(emailInput, { target: { value: email } });
+
+    const passwordInput = screen.getByLabelText(/Password/);
+    fireEvent.change(passwordInput, { target: { value: password } });
+
+    const form = screen.getByRole("form");
+    fireEvent.submit(form);
+
+    expect(await screen.findByText("An unknown error occurred")).toBeInTheDocument();
   });
 });

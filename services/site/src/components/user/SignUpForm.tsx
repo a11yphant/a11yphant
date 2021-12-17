@@ -17,10 +17,10 @@ const schema = yup
   .required();
 
 interface SignUpFormProps {
-  onSubmit?: () => void;
+  onAfterSubmit?: () => void;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit: onSuccess }) => {
+const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
   const {
     control,
     handleSubmit,
@@ -39,15 +39,17 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit: onSuccess }) => {
     context: LocalErrorScopeApolloContext,
     refetchQueries: [{ query: CurrentUserDocument }],
     onError: (error) => {
-      if (error.graphQLErrors?.[0].extensions.code === "INPUT_ERROR") {
+      if (error.graphQLErrors?.[0]?.extensions.code === "INPUT_ERROR") {
         setError("email", { message: "This email is already taken" });
+        return;
       }
+      setError("password", { message: "An unknown error occurred" });
     },
   });
 
   const submitLogin = async ({ name, email, password }): Promise<void> => {
     await register({ variables: { name, email, password } });
-    onSuccess?.();
+    onAfterSubmit?.();
   };
 
   return (

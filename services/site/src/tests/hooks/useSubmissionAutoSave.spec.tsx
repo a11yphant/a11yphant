@@ -1,5 +1,5 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, cleanup, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react-hooks";
 import { CreateCodeLevelSubmissionDocument, UpdateCodeLevelSubmissionDocument } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import React from "react";
@@ -59,8 +59,6 @@ function createCreateSubmissionMock(levelId = "level-uuid", code = defaultCode, 
 }
 
 const defaultApolloMock = [createCreateSubmissionMock(), createUpdateSubmissionMock()];
-
-afterEach(cleanup);
 
 describe("submission auto save", () => {
   it("can set the submission id", () => {

@@ -4,7 +4,7 @@ import React from "react";
 import LoadingIndicator from "../icons/LoadingIndicator";
 import Button, { ButtonProps } from "./Button";
 
-interface LoadingButtonProps extends ButtonProps {
+export interface LoadingButtonProps extends ButtonProps {
   srTextLoading?: string;
   loading: boolean;
   submitButton?: boolean;

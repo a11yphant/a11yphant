@@ -3,31 +3,24 @@ import "@testing-library/jest-dom/extend-expect";
 import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
 import Hero from "app/components/homepage/Hero";
-
-function renderHero(): ReturnType<typeof render> {
-  return render(
-    <MockedProvider>
-      <Hero />
-    </MockedProvider>,
-  );
-}
+import { UserAccountBox } from "app/components/user/UserAccountBox";
+import { shallow } from "enzyme";
 
 describe("Hero", () => {
-  it("renders the wrapper element", () => {
-    const { container } = renderHero();
+  it("renders two headings", () => {
+    render(
+      <MockedProvider>
+        <Hero />
+      </MockedProvider>,
+    );
 
-    expect(container.firstChild).toBeTruthy();
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(2);
+    expect(screen.getByRole("heading", { level: 2, name: /Sign up/ }));
   });
 
-  it("renders two headings", async () => {
-    renderHero();
+  it("renders a UserAccountBox", () => {
+    const view = shallow(<Hero />);
 
-    expect(await screen.findAllByRole("heading", { level: 2 })).toHaveLength(2);
-  });
-
-  it("renders a link for the github sign up", async () => {
-    renderHero();
-
-    expect(await screen.findByText("Sign up via Github")).toHaveProperty("href", "http://localhost/auth/github");
+    expect(view.exists(UserAccountBox)).toBeTruthy();
   });
 });

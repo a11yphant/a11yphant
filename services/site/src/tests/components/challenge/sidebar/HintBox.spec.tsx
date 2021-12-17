@@ -1,11 +1,8 @@
-import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import HintBox from "app/components/challenge/sidebar/HintBox";
 import Chevron from "app/components/icons/Chevron";
 import { mount } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const hints = [
   {

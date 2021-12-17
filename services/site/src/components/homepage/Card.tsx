@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-interface CardProps {
+export interface CardProps {
   className?: string;
   heading: string;
   levels: number;

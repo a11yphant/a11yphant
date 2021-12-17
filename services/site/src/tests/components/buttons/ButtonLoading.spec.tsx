@@ -1,69 +1,74 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
-import LoadingButton from "app/components/buttons/LoadingButton";
+import { render, screen } from "@testing-library/react";
+import LoadingButton, { LoadingButtonProps } from "app/components/buttons/LoadingButton";
+import LoadingIndicator from "app/components/icons/LoadingIndicator";
+import { shallow } from "enzyme";
 import React from "react";
 
 const buttonText = "Button Text";
 
-afterEach(cleanup);
+const renderButtonLoading = (props?: Partial<LoadingButtonProps>): void => {
+  render(
+    <LoadingButton loading={false} {...props}>
+      {buttonText}
+    </LoadingButton>,
+  );
+};
 
 describe("Button Loading", () => {
-  it("renders button text", () => {
-    const { container } = render(<LoadingButton loading={false}>{buttonText}</LoadingButton>);
+  it("renders button with text", () => {
+    renderButtonLoading();
 
-    expect(screen.getByText(buttonText, { selector: "button span" })).toBeTruthy();
-    expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
+    expect(screen.getByRole("button", { name: buttonText })).toBeInTheDocument();
   });
 
   it("adds className to the button", () => {
     const cl = "test-class";
-    const { container } = render(
-      <LoadingButton className={cl} loading={false}>
-        {buttonText}
-      </LoadingButton>,
-    );
+    renderButtonLoading({ className: cl });
 
-    expect(container.querySelector("button").classList.contains(cl)).toBeTruthy();
+    expect(screen.getByRole("button")).toHaveClass(cl);
   });
 
   it("overrides className with custom property `overrideClassName`", () => {
-    const { container } = render(
-      <LoadingButton overrideClassName loading={false}>
-        {buttonText}
-      </LoadingButton>,
-    );
+    renderButtonLoading({ overrideClassName: true });
 
-    // expected value is {"0": "undefined", "1": "false"}
-    expect(container.querySelector("button").classList.length).toBeLessThanOrEqual(2);
+    const classList = screen.getByRole("button").classList;
+    // filter undefined, false and null values
+    const filteredClassList = Object.entries(classList).filter(([_, value]) => !value);
+
+    expect(filteredClassList).toHaveLength(0);
   });
 
   it("renders primary button styles", () => {
-    const { container } = render(
-      <LoadingButton primary loading={false}>
-        {buttonText}
-      </LoadingButton>,
-    );
+    renderButtonLoading({ primary: true });
 
-    expect(container.querySelector("button.bg-primary")).toBeTruthy();
-    expect(container.querySelector("button.text-light")).toBeTruthy();
+    expect(screen.getByRole("button")).toHaveClass("bg-primary");
+    expect(screen.getByRole("button")).toHaveClass("text-light");
   });
 
   it("renders screen reader text", () => {
     const srText = "Screen Reader Text";
+    renderButtonLoading({
+      srText: srText,
+    });
 
-    render(
-      <LoadingButton srText={srText} loading={false}>
-        {buttonText}
-      </LoadingButton>,
-    );
-
-    expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
+    expect(screen.getByText(srText, { selector: ".sr-only" })).toBeInTheDocument();
   });
 
   it("renders svg loading icon", () => {
-    const { container } = render(<LoadingButton loading={true}>{buttonText}</LoadingButton>);
+    const view = shallow(<LoadingButton loading={true}>{buttonText}</LoadingButton>);
 
-    expect(container.querySelectorAll("svg")).toHaveProperty("length", 1);
+    expect(view.exists(LoadingIndicator)).toBeTruthy();
+  });
+
+  it("renders screen reader loading text", () => {
+    const srTextLoading = "Screen Reader Text Loading";
+    renderButtonLoading({
+      loading: true,
+      srTextLoading: srTextLoading,
+    });
+
+    expect(screen.getByText(srTextLoading, { selector: ".sr-only" })).toBeInTheDocument();
   });
 });

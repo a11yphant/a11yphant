@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors from "app/components/challenge/Editors";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
@@ -19,8 +18,6 @@ jest.mock("react-resize-detector", () => ({
     return;
   },
 }));
-
-afterEach(cleanup);
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
