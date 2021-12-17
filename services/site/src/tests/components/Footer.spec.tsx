@@ -1,16 +1,17 @@
+import { render, screen } from "@testing-library/react";
 import Footer from "app/components/Footer";
-import { shallow } from "enzyme";
 
 describe("footer", () => {
   it("renders a footer", () => {
-    const footer = shallow(<Footer />);
+    render(<Footer />);
 
-    expect(footer.exists("footer")).toBeTruthy();
+    // `<footer />` has the default role `contentinfo`
+    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
   });
 
   it("renders a navigation inside the footer", () => {
-    const footer = shallow(<Footer />);
+    render(<Footer />);
 
-    expect(footer.exists("nav")).toBeTruthy();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
   });
 });
