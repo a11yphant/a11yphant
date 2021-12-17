@@ -1,9 +1,7 @@
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import Preview from "app/components/challenge/Preview";
 import { mount, shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockHtmlCode = "<h1>Mock Html</h1>";
 const mockCssCode = ".h1 {color: red;}";

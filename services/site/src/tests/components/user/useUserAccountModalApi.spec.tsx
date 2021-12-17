@@ -1,4 +1,3 @@
-import { cleanup } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
@@ -7,8 +6,6 @@ import React from "react";
 jest.mock("app/components/user/UserAccountModal", () => {
   return "";
 });
-
-afterEach(cleanup);
 
 describe("useUserAccountModalApi", () => {
   it("throws an error if 'show' is called outside UserAccountModalContext", (done) => {

@@ -1,4 +1,3 @@
-import { cleanup } from "@testing-library/react";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import Check from "app/components/icons/Check";
 import { LevelStatus } from "app/generated/graphql";
@@ -8,8 +7,6 @@ import React from "react";
 
 const mockChallengeSlug = "mocked-challenge-slug";
 const mockLevelNumber = "03";
-
-afterEach(cleanup);
 
 describe("ChallengeModalLevelCard", () => {
   it("renders the heading", () => {

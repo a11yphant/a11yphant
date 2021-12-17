@@ -1,13 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import { RequirementStatus, ResultForSubmissionDocument, ResultStatus } from "app/generated/graphql";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockFailSubmissionId = "6e19e948-e022-4167-a82c-423feaf0d03a";
 const mockPendingSubmissionId = "51fc32e4-12a0-4dde-abc4-d3fcf5611351";
