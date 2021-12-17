@@ -89,7 +89,7 @@ describe("login form", () => {
     expect(login).toHaveBeenCalledWith({ variables: { email, password } });
   });
 
-  it("renders a invalid password message the graphql mutation fails", async () => {
+  it("renders a invalid password message if the graphql mutation fails", async () => {
     (useLoginMutation as jest.Mock).mockImplementation((options: Parameters<typeof useLoginMutation>[0]) => {
       const login = (): void => {
         options.onError({ graphQLErrors: [{ extensions: { code: "BAD_USER_INPUT" } }] } as unknown as ApolloError);

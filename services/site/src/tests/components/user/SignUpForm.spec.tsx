@@ -14,7 +14,7 @@ describe("sign up form", () => {
     (useRegisterMutation as jest.Mock).mockReturnValue([jest.fn().mockResolvedValue(null), { loading: false }]);
   });
 
-  it("renders a name name", () => {
+  it("renders a name input", () => {
     render(<SignUpForm />);
     expect(screen.getByRole("textbox", { name: /Name/ })).toBeInTheDocument();
   });
