@@ -37,9 +37,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onAfterSubmit }) => {
     context: LocalErrorScopeApolloContext,
     refetchQueries: [{ query: CurrentUserDocument }],
     onError: (error) => {
-      if (error.graphQLErrors?.[0].extensions.code === "BAD_USER_INPUT") {
+      if (error.graphQLErrors?.[0]?.extensions.code === "BAD_USER_INPUT") {
         setError("password", { message: "The email or the password is incorrect." });
+        return;
       }
+      setError("password", { message: "An unknown error occurred" });
     },
   });
 

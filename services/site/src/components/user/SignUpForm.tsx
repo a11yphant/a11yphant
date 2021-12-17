@@ -39,9 +39,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
     context: LocalErrorScopeApolloContext,
     refetchQueries: [{ query: CurrentUserDocument }],
     onError: (error) => {
-      if (error.graphQLErrors?.[0].extensions.code === "INPUT_ERROR") {
+      if (error.graphQLErrors?.[0]?.extensions.code === "INPUT_ERROR") {
         setError("email", { message: "This email is already taken" });
+        return;
       }
+      setError("password", { message: "An unknown error occurred" });
     },
   });
 
