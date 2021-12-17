@@ -34,14 +34,14 @@ describe("sign up form", () => {
     expect(screen.getByRole("button", { name: /Sign up/ })).toBeInTheDocument();
   });
 
-  it("calls the onSuccess callback if the form is sent successfully", async () => {
+  it("calls the onAfterSubmit callback if the form is sent successfully", async () => {
     const name = "name";
     const email = "test@a11yphant.com";
     const password = "verysecret";
 
-    const onSubmit = jest.fn();
+    const onAfterSubmit = jest.fn();
 
-    render(<SignUpForm onSubmit={onSubmit} />);
+    render(<SignUpForm onAfterSubmit={onAfterSubmit} />);
 
     const nameInput = screen.getByRole("textbox", { name: /Name/ });
     fireEvent.change(nameInput, { target: { value: name } });
@@ -59,20 +59,20 @@ describe("sign up form", () => {
     await waitFor(() => expect(emailInput).toHaveValue(email));
     await waitFor(() => expect(passwordInput).toHaveValue(password));
 
-    expect(onSubmit).toHaveBeenCalled();
+    expect(onAfterSubmit).toHaveBeenCalled();
   });
 
-  it("does not call onSubmit if the form does not filled out", async () => {
-    const onSubmit = jest.fn();
+  it("does not call onAfterSubmit if the form does not filled out", async () => {
+    const onAfterSubmit = jest.fn();
 
-    render(<SignUpForm onSubmit={onSubmit} />);
+    render(<SignUpForm onAfterSubmit={onAfterSubmit} />);
 
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
     await screen.findByText("The email address is required");
 
-    expect(onSubmit).not.toHaveBeenCalled();
+    expect(onAfterSubmit).not.toHaveBeenCalled();
   });
 
   it("calls the register mutation on submit", async () => {
