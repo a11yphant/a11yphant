@@ -66,7 +66,8 @@
 
     # seed database
     - export CI_BUILD_NETWORK_ID="$HOSTNAME-job-$CI_JOB_ID-network"
-    - docker run -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod && npm run console:prod import:challenges
+    - docker run -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod
+    - docker run -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run console:prod import:challenges
 
     # setup localstack
     - terraform -chdir=terraform/local init
