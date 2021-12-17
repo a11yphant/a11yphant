@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
+import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
 import { UserAccountBox, UserAccountBoxProps } from "app/components/user/UserAccountBox";
 import React from "react";
@@ -15,7 +16,11 @@ jest.mock("app/components/user/useUserAccountModalApi", () => ({
 }));
 
 const renderUserAccountBox = ({ mode, ...props }: Partial<UserAccountBoxProps>): void => {
-  render(<UserAccountBox mode={mode} {...props} />);
+  render(
+    <MockedProvider>
+      <UserAccountBox mode={mode} {...props} />
+    </MockedProvider>,
+  );
 };
 
 afterEach(() => {

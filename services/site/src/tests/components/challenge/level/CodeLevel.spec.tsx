@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors from "app/components/challenge/Editors";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import Preview from "app/components/challenge/Preview";
@@ -105,7 +105,7 @@ describe("Code Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
+    expect(wrapper.exists(LoadingButton)).toBeTruthy();
   });
 
   it("disables the submit button if the submission is not yet available", () => {
@@ -115,6 +115,6 @@ describe("Code Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find(ButtonLoading).props()).toHaveProperty("disabled", true);
+    expect(wrapper.find(LoadingButton).props()).toHaveProperty("disabled", true);
   });
 });

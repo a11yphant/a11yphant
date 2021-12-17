@@ -1,18 +1,18 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { render, screen } from "@testing-library/react";
-import ButtonLoading, { ButtonLoadingProps } from "app/components/buttons/ButtonLoading";
+import LoadingButton, { LoadingButtonProps } from "app/components/buttons/LoadingButton";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { shallow } from "enzyme";
 import React from "react";
 
 const buttonText = "Button Text";
 
-const renderButtonLoading = (props?: Partial<ButtonLoadingProps>): void => {
+const renderButtonLoading = (props?: Partial<LoadingButtonProps>): void => {
   render(
-    <ButtonLoading loading={false} {...props}>
+    <LoadingButton loading={false} {...props}>
       {buttonText}
-    </ButtonLoading>,
+    </LoadingButton>,
   );
 };
 
@@ -57,7 +57,7 @@ describe("Button Loading", () => {
   });
 
   it("renders svg loading icon", () => {
-    const view = shallow(<ButtonLoading loading={true}>{buttonText}</ButtonLoading>);
+    const view = shallow(<LoadingButton loading={true}>{buttonText}</LoadingButton>);
 
     expect(view.exists(LoadingIndicator)).toBeTruthy();
   });

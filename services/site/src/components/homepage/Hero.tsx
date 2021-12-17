@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
         "max-w-screen-3xl mx-8 mt-12 mb-24 flex flex-col",
         "sm:m-12",
         "md:mx-24",
-        "xl:h-[85vh] xl:flex-row xl:items-center",
+        "xl:min-h-[85vh] xl:flex-row xl:items-center",
         "2xl:mx-auto",
       )}
     >
