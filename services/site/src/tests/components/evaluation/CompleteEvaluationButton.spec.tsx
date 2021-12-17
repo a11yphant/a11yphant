@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import LoadingButton from "app/components/buttons/LoadingButton";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import { ResultStatus } from "app/generated/graphql";
@@ -9,8 +8,6 @@ import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
-
-afterEach(cleanup);
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;

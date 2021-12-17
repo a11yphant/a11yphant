@@ -1,13 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import CollapsableSection from "app/components/evaluation/CollapsableSection";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import { RequirementStatus } from "app/generated/graphql";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockRequirements = [
   {

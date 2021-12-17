@@ -1,10 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
-
-afterEach(cleanup);
 
 const headingText = "Easy";
 
@@ -36,7 +34,7 @@ describe("ChallengeList", () => {
       />,
     );
 
-    expect(screen.getByText(headingText, { selector: "h3" })).toBeTruthy();
-    expect(screen.getByText("(1/1)", { selector: "p" })).toBeTruthy();
+    expect(screen.getByText(headingText, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.getByText("(1/1)", { selector: "p" })).toBeInTheDocument();
   });
 });

@@ -44,9 +44,9 @@ describe("text input", () => {
   });
 
   it("renders the input in the error state", () => {
-    const { container } = render(<TextInput label="label" helperText="helper text" error />);
+    render(<TextInput label="label" helperText="helper text" error />);
 
-    expect(container.querySelector(".Mui-error")).toBeTruthy();
+    expect(screen.getByRole("textbox")).toHaveAttribute("aria-invalid", "true");
   });
 
   it("passes the input ref to the input", () => {

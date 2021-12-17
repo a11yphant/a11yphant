@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Check from "app/components/icons/Check";
 import Chevron from "app/components/icons/Chevron";
@@ -17,8 +16,6 @@ import UserAvatar from "app/components/icons/UserAvatar";
 import X from "app/components/icons/X";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 describe("Icons", () => {
   it("renders the a11yphant Logo SVG", () => {

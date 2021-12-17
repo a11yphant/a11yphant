@@ -1,115 +1,83 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
-import Card from "app/components/homepage/Card";
+import { render, RenderResult, screen } from "@testing-library/react";
+import Card, { CardProps } from "app/components/homepage/Card";
+import Check from "app/components/icons/Check";
 import { ChallengeDifficulty } from "app/generated/graphql";
-
-afterEach(cleanup);
+import { shallow, ShallowWrapper } from "enzyme";
+import React from "react";
 
 const headingText = "Semantic HTML";
 const levelAmount = 12;
-const finishedLevels = 0;
+
+const card = (
+  <Card
+    key={1}
+    className="mr-24"
+    challengeSlug={"semantic-html"}
+    heading={headingText}
+    levels={levelAmount}
+    finishedLevels={0}
+    difficulty={ChallengeDifficulty.Easy}
+    challengeNumber={1}
+  />
+);
+
+const renderCard = (props?: Partial<CardProps>): RenderResult => {
+  return render(
+    React.cloneElement(card, {
+      ...props,
+    }),
+  );
+};
+
+const shallowRenderCard = (props?: Partial<CardProps>): ShallowWrapper => {
+  return shallow(
+    React.cloneElement(card, {
+      ...props,
+    }),
+  );
+};
 
 describe("Card", () => {
   it("renders the heading and description text", () => {
-    render(
-      <Card
-        key={1}
-        className="mr-24"
-        challengeSlug={"semantic-html"}
-        heading={headingText}
-        levels={levelAmount}
-        finishedLevels={finishedLevels}
-        difficulty={ChallengeDifficulty.Easy}
-        challengeNumber={1}
-      />,
-    );
+    renderCard();
 
-    expect(screen.getByText(headingText, { selector: "a" })).toBeTruthy();
-    expect(screen.getByText("12 Levels", { selector: "p" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: headingText })).toBeInTheDocument();
+    expect(screen.getByText("12 Levels", { selector: "p" })).toBeInTheDocument();
   });
 
   it("renders the correct gradient for `Easy` challenges", () => {
-    const { container } = render(
-      <Card
-        key={1}
-        className="mr-24"
-        challengeSlug={"semantic-html"}
-        heading={headingText}
-        levels={levelAmount}
-        finishedLevels={finishedLevels}
-        difficulty={ChallengeDifficulty.Easy}
-        challengeNumber={1}
-      />,
-    );
+    const view = shallowRenderCard({ difficulty: ChallengeDifficulty.Easy });
 
-    expect(container.querySelector(".bg-gradient-easy")).toBeTruthy();
+    expect(view.exists(".bg-gradient-easy")).toBeTruthy();
   });
 
   it("renders the correct gradient for `Medium` challenges", () => {
-    const { container } = render(
-      <Card
-        key={1}
-        className="mr-24"
-        challengeSlug={"semantic-html"}
-        heading={headingText}
-        levels={levelAmount}
-        finishedLevels={finishedLevels}
-        difficulty={ChallengeDifficulty.Medium}
-        challengeNumber={1}
-      />,
-    );
+    const view = shallowRenderCard({ difficulty: ChallengeDifficulty.Medium });
 
-    expect(container.querySelector(".bg-gradient-medium")).toBeTruthy();
+    expect(view.exists(".bg-gradient-medium")).toBeTruthy();
   });
 
   it("renders the correct gradient for `Hard` challenges", () => {
-    const { container } = render(
-      <Card
-        key={1}
-        className="mr-24"
-        challengeSlug={"semantic-html"}
-        heading={headingText}
-        levels={levelAmount}
-        finishedLevels={finishedLevels}
-        difficulty={ChallengeDifficulty.Hard}
-        challengeNumber={1}
-      />,
-    );
+    const view = shallowRenderCard({ difficulty: ChallengeDifficulty.Hard });
 
-    expect(container.querySelector(".bg-gradient-hard")).toBeTruthy();
+    expect(view.exists(".bg-gradient-hard")).toBeTruthy();
   });
 
   it("renders the progress indicator for started challenges", async () => {
-    const { findByText } = render(
-      <Card
-        key={1}
-        className="mr-24"
-        challengeSlug={"semantic-html"}
-        heading={headingText}
-        levels={levelAmount}
-        finishedLevels={7}
-        difficulty={ChallengeDifficulty.Hard}
-        challengeNumber={1}
-      />,
-    );
+    renderCard({
+      finishedLevels: 7,
+    });
 
-    expect(await findByText(/7/i)).toBeTruthy();
+    expect(screen.getByText(/7/i)).toBeInTheDocument();
   });
   it("renders a checkmark for finished challenges", () => {
-    const { container } = render(
-      <Card
-        key={1}
-        className="mr-24"
-        challengeSlug={"semantic-html"}
-        heading={headingText}
-        levels={levelAmount}
-        finishedLevels={levelAmount}
-        difficulty={ChallengeDifficulty.Hard}
-        challengeNumber={1}
-      />,
-    );
+    const view = shallowRenderCard({
+      levels: levelAmount,
+      finishedLevels: levelAmount,
+    });
 
-    expect(container.querySelector("svg")).toBeTruthy();
+    expect(view.exists(Check)).toBeTruthy();
   });
 });

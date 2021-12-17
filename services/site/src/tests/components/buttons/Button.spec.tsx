@@ -1,57 +1,53 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
-import Button from "app/components/buttons/Button";
+import { render, screen } from "@testing-library/react";
+import Button, { ButtonProps } from "app/components/buttons/Button";
+import React from "react";
 
 const buttonText = "Button Text";
 
-afterEach(cleanup);
+const renderButton = (props?: Partial<ButtonProps>): void => {
+  render(<Button {...props}>{buttonText}</Button>);
+};
 
 describe("Button", () => {
-  it("renders one button", () => {
-    const { container } = render(<Button>{buttonText}</Button>);
+  it("renders button with text", () => {
+    renderButton();
 
-    expect(container.querySelectorAll("button")).toHaveProperty("length", 1);
-  });
-
-  it("renders button text", () => {
-    render(<Button>{buttonText}</Button>);
-
-    expect(screen.getByText(buttonText, { selector: "button" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: buttonText })).toBeInTheDocument();
   });
 
   it("adds className to the button", () => {
     const cl = "test-class";
-    render(<Button className={cl}>{buttonText}</Button>);
+    renderButton({ className: cl });
 
-    expect(screen.getByText(buttonText, { selector: "button" }).classList.contains(cl)).toBeTruthy();
+    expect(screen.getByRole("button")).toHaveClass(cl);
   });
 
   it("overrides className with custom property `overrideClassName`", () => {
-    render(<Button overrideClassName>{buttonText}</Button>);
+    renderButton({ overrideClassName: true });
 
-    // expected value is {"0": "undefined", "1": "false"}
-    expect(screen.getByText(buttonText, { selector: "button" }).classList.length).toBeLessThanOrEqual(2);
+    const classList = screen.getByRole("button").classList;
+    // filter undefined, false and null values
+    const filteredClassList = Object.entries(classList).filter(([_, value]) => !value);
+
+    expect(filteredClassList).toHaveLength(0);
   });
 
   it("renders primary button styles", () => {
-    const { container } = render(<Button primary>{buttonText}</Button>);
+    renderButton({ primary: true });
 
-    expect(container.querySelector("button.bg-primary")).toBeTruthy();
-    expect(container.querySelector("button.text-light")).toBeTruthy();
+    expect(screen.getByRole("button")).toHaveClass("bg-primary");
+    expect(screen.getByRole("button")).toHaveClass("text-light");
   });
 
   it("renders screen reader text", () => {
-    const icon = <svg />;
     const srText = "Screen Reader Text";
 
-    render(
-      <Button srText={srText}>
-        {icon}
-        {buttonText}
-      </Button>,
-    );
+    renderButton({
+      srText: srText,
+    });
 
-    expect(screen.getByText(srText, { selector: "span" })).toBeTruthy();
+    expect(screen.getByText(srText, { selector: ".sr-only" })).toBeInTheDocument();
   });
 });

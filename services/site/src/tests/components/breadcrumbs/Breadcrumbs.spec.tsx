@@ -1,12 +1,10 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Slash from "app/components/icons/Slash";
 import { mount, ReactWrapper } from "enzyme";
 import router, { NextRouter } from "next/router";
 import React from "react";
-
-afterEach(cleanup);
 
 // expected breadcrumbs
 const challengeSlug = "mock-challenge-1";
@@ -68,10 +66,10 @@ describe("Breadcrumbs", () => {
       router.push("/");
     });
 
-    const wrapper = await renderBreadcrumbs();
+    const view = await renderBreadcrumbs();
 
-    expect(wrapper.exists("nav")).toBeFalsy();
-    expect(wrapper.exists("ol")).toBeFalsy();
+    expect(view.exists("nav")).toBeFalsy();
+    expect(view.exists("ol")).toBeFalsy();
   });
 
   it("renders no slash if there is only one breadcrumb", async () => {
@@ -79,9 +77,9 @@ describe("Breadcrumbs", () => {
       router.push("/");
     });
 
-    const wrapper = await renderBreadcrumbs();
+    const view = await renderBreadcrumbs();
 
-    expect(wrapper.exists(Slash)).toBeFalsy();
+    expect(view.exists(Slash)).toBeFalsy();
   });
 
   it("renders two breadcrumbs with dividing slashes", async () => {
@@ -92,20 +90,20 @@ describe("Breadcrumbs", () => {
       });
     });
 
-    const wrapper = await renderBreadcrumbs();
+    const view = await renderBreadcrumbs();
 
-    expect(wrapper.exists("nav")).toBeTruthy();
-    expect(wrapper.exists("ol")).toBeTruthy();
+    expect(view.exists("nav")).toBeTruthy();
+    expect(view.exists("ol")).toBeTruthy();
 
-    expect(wrapper.find("li").length).toBe(2);
+    expect(view.find("li")).toHaveLength(2);
 
     // Breadcrumb Home is rendered
-    expect(wrapper.find("li a").first().text()).toBe(expectedBreadcrumbHome.breadcrumb);
+    expect(view.find("li a").first().text()).toBe(expectedBreadcrumbHome.breadcrumb);
 
     // Dividing Slash is rendered
-    expect(wrapper.exists(Slash)).toBeTruthy();
+    expect(view.exists(Slash)).toBeTruthy();
 
     // Breadcrumb Challenge is rendered
-    expect(wrapper.find("li a").at(1).text()).toBe(expectedBreadcrumbChallenge.breadcrumb);
+    expect(view.find("li a").at(1).text()).toBe(expectedBreadcrumbChallenge.breadcrumb);
   });
 });

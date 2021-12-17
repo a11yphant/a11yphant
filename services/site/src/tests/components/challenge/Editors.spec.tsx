@@ -1,10 +1,7 @@
-import { cleanup } from "@testing-library/react";
 import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockClassName = "test-class";
 
