@@ -74,6 +74,9 @@
     - terraform -chdir=terraform/local init
     - terraform -chdir=terraform/local apply -auto-approve
   script:
+    - npm run db:reset:ci --prefix tests
+    - npm run db-dump:import:ci --prefix tests
+    - curl http://site:3001
     - CYPRESS_IS_CI=true npm run cypress:run --prefix tests
   artifacts:
     when: on_failure
