@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
         "2xl:mx-auto",
       )}
     >
-      <section className={clsx("flex flex-col justify-center mb-24", "xl:flex-shrink xl:flex-grow xl:mb-0", "2xl:ml-24")}>
+      <section className={clsx("flex flex-col justify-center mb-24", "xl:shrink xl:grow xl:mb-0", "2xl:ml-24")}>
         <h2
           className={clsx("mb-6 max-w-2xl font-bold font-sans text-3xl leading-tight", "sm:text-4xl sm:leading-snug", "xl:text-5xl xl:leading-snug")}
         >
@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
           "p-8 bg-primary rounded-lg",
           "md:px-12 md:py-10",
           "lg:items-center lg:px-16 lg:py-14",
-          "xl:block xl:px-20 xl:py-16 xl:max-w-xl xl:ml-12 xl:self-center xl:flex-shrink-0",
+          "xl:block xl:px-20 xl:py-16 xl:max-w-xl xl:ml-12 xl:self-center xl:shrink-0",
           "2xl:mr-24",
         )}
       >
