@@ -22,7 +22,8 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
   return (
     <>
       <Head>
-        <title>Something went wrong</title>
+        <title>Something went wrong | a11yphant</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Head>
       <FullScreenLayout header={<Navigation />}>
         <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>

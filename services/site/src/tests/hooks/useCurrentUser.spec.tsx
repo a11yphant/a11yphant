@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { cleanup, renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react-hooks";
 import { CurrentUserDocument } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import React from "react";
@@ -21,8 +21,6 @@ const mocks = [
     },
   },
 ];
-
-afterEach(cleanup);
 
 describe("useCurrentUser", () => {
   it("returns the current user", async () => {

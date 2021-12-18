@@ -1,4 +1,4 @@
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import Lottie from "app/components/Lottie";
@@ -87,7 +87,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
         </div>
         <div className={clsx("flex justify-end mr-12 mb-12")}>
           {quizResult === undefined ? (
-            <ButtonLoading
+            <LoadingButton
               primary
               onClick={submitLevel}
               loading={loading}
@@ -96,7 +96,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
               disabled={chosenId === undefined}
             >
               Submit
-            </ButtonLoading>
+            </LoadingButton>
           ) : (
             <CompleteEvaluationButton status={quizResult.status} isLastLevel={isLastLevel} onRetry={reset} />
           )}

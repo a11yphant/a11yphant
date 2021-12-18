@@ -10,7 +10,8 @@ const Custom404: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>404 Page not found</title>
+        <title>404 Page not found | a11yphant</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Head>
       <FullScreenLayout header={<Navigation />}>
         <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>

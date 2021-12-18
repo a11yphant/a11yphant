@@ -1,20 +1,18 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Legend from "app/components/homepage/Legend";
 import React from "react";
 
-afterEach(cleanup);
-
 describe("Legend", () => {
   it("renders a list with all challenge difficulties", () => {
-    const { container } = render(<Legend />);
+    render(<Legend />);
 
-    expect(container.querySelectorAll("ul")).toHaveProperty("length", 1);
-    expect(container.querySelectorAll("li")).toHaveProperty("length", 3);
-    expect(container.querySelectorAll("span")).toHaveProperty("length", 9);
-    expect(screen.getByText("Easy", { selector: "li:nth-of-type(1)" })).toBeTruthy();
-    expect(screen.getByText("Medium", { selector: "li:nth-of-type(2)" })).toBeTruthy();
-    expect(screen.getByText("Hard", { selector: "li:nth-of-type(3)" })).toBeTruthy();
+    expect(screen.getByRole("list", { hidden: true })).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem", { hidden: true })).toHaveLength(3);
+
+    expect(screen.getByText("Easy", { selector: "li:nth-of-type(1)" })).toBeInTheDocument();
+    expect(screen.getByText("Medium", { selector: "li:nth-of-type(2)" })).toBeInTheDocument();
+    expect(screen.getByText("Hard", { selector: "li:nth-of-type(3)" })).toBeInTheDocument();
   });
 });

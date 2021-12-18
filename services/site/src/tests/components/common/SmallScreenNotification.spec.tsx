@@ -1,10 +1,7 @@
-import { cleanup } from "@testing-library/react";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import IllustrationCodingMan from "app/components/icons/IllustrationCodingMan";
 import { shallow } from "enzyme";
 import Link from "next/link";
-
-afterEach(cleanup);
 
 const mockHeading = "Your device is too small";
 const mockText = "Please use a tablet or desktop device with a larger screen or rotate your device.";

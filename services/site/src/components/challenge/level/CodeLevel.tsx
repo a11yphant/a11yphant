@@ -1,4 +1,4 @@
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
@@ -162,7 +162,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             javascriptCode={submissionCode?.js}
           />
           <div className={clsx("absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl")}>
-            <ButtonLoading
+            <LoadingButton
               primary
               onClick={submitLevel}
               loading={requestCheckMutationLoading}
@@ -171,7 +171,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
               srTextLoading="The submission is being processed."
             >
               Submit
-            </ButtonLoading>
+            </LoadingButton>
           </div>
         </div>
       </div>

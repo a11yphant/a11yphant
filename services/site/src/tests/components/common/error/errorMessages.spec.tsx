@@ -1,9 +1,6 @@
-import { cleanup } from "@testing-library/react";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 describe("Error Messages", () => {
   it("renders 'Network error' in `NetworkError` component", () => {

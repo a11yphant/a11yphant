@@ -1,7 +1,4 @@
-import { cleanup } from "@testing-library/react";
 import { ErrorScope, errorScopeForOperationContext, LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
-
-afterEach(cleanup);
 
 describe("Error Scope", () => {
   it("returns local error scope", () => {

@@ -1,12 +1,11 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { ModalTitle } from "app/components/modal/ModalTitle";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
@@ -58,14 +57,11 @@ const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
   },
 ];
 
-afterEach(cleanup);
-
 describe("ChallengeModal", () => {
   let wrapper: ReactWrapper;
   beforeEach(async () => {
     jest.resetAllMocks();
     jest.resetModules();
-    setupIntersectionObserverMock();
 
     wrapper = mount(
       <MockedProvider mocks={mocks}>

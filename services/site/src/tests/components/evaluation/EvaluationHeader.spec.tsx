@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import Lottie, { LottieProps } from "app/components/Lottie";
 import correctAnimation from "app/lotties/correct_lottie.json";
@@ -11,8 +10,6 @@ import React from "react";
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return;
 });
-
-afterEach(cleanup);
 
 const challengeName = "Test Challenge Name";
 const levelIdx = Number(2).toLocaleString("de-AT", {
