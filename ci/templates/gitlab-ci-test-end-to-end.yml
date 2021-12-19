@@ -62,7 +62,6 @@
     - apt update
     - apt install docker-ce-cli -y
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker network ls
 
     # seed database
     - export CI_BUILD_NETWORK_ID="$HOSTNAME-job-$CI_JOB_ID-network"
@@ -74,9 +73,6 @@
     - terraform -chdir=terraform/local init
     - terraform -chdir=terraform/local apply -auto-approve
   script:
-    - npm run db:reset:ci --prefix tests
-    - npm run db-dump:import:ci --prefix tests
-    - curl http://site:3001
     - CYPRESS_IS_CI=true npm run cypress:run --prefix tests
   artifacts:
     when: on_failure
