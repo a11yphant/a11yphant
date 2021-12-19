@@ -64,14 +64,13 @@ const Imprint: React.FunctionComponent = () => {
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
-                  aria-describedby="Opens an external site in a new window"
                   className={clsx(
                     "pt-3 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
                   )}
                 >
-                  Daniela Kubesch
+                  Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>
                 </a>
               </Link>
             </li>
@@ -80,14 +79,13 @@ const Imprint: React.FunctionComponent = () => {
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
-                  aria-describedby="Opens an external site in a new window"
                   className={clsx(
                     "pt-3 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
                   )}
                 >
-                  Luca Pircher
+                  Luca Pircher <span className={clsx("sr-only")}>(opens in a new tab)</span>
                 </a>
               </Link>
             </li>
@@ -96,14 +94,13 @@ const Imprint: React.FunctionComponent = () => {
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
-                  aria-describedby="Opens an external site in a new window"
                   className={clsx(
                     "pt-3 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
                   )}
                 >
-                  Thomas Dax
+                  Thomas Dax <span className={clsx("sr-only")}>(opens in a new tab)</span>
                 </a>
               </Link>
             </li>
@@ -112,14 +109,13 @@ const Imprint: React.FunctionComponent = () => {
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
-                  aria-describedby="Opens an external site in a new window"
                   className={clsx(
                     "pt-3 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
                   )}
                 >
-                  Michael Hinterhofer
+                  Michael Hinterhofer <span className={clsx("sr-only")}>(opens in a new tab)</span>
                 </a>
               </Link>
             </li>
@@ -134,7 +130,7 @@ const Imprint: React.FunctionComponent = () => {
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
-                  aria-describedby="Opens an external site in a new window"
+                 
                   className={clsx(
                     "pt-3 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
@@ -152,7 +148,7 @@ const Imprint: React.FunctionComponent = () => {
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
-                  aria-describedby="Opens an external site in a new window"
+                 
                   className={clsx(
                     "pt-3 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
