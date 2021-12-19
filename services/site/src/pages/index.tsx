@@ -77,7 +77,7 @@ const Home: React.FunctionComponent = () => {
 
             <Legend className={clsx("2xl:mx-24")} />
 
-            {dataChallengesInProgress?.challenges.length && (
+            {dataChallengesInProgress?.challenges.length > 0 && (
               <ChallengeList
                 className={clsx("2xl:mx-24")}
                 heading={"Continue where you left"}
