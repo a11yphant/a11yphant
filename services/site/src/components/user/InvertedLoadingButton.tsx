@@ -10,6 +10,7 @@ const InvertedLoadingButton: React.FC<{ loading: boolean; srLoadingText: string 
         "px-8 py-4 mb-2 block w-full text-center align-middle text-primary bg-white font-normal leading-none rounded border border-white",
         "transition duration-300 group",
         "hover:bg-primary hover:text-white",
+        "focus-visible:bg-primary focus-visible:text-light",
         loading && "cursor-wait",
       )}
       type="submit"
