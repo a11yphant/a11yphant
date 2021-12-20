@@ -1,4 +1,3 @@
-import Button from "app/components/buttons/Button";
 import { FlashMessage } from "app/components/common/flashMessage/FlashMessage";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import Footer from "app/components/Footer";
@@ -81,14 +80,6 @@ const Home: React.FunctionComponent = () => {
         </span>
         Reminder: You can use hints if you are stuck
       </FlashMessage>
-      <Button
-        onClick={() => {
-          setShowFlashMessage(true);
-        }}
-      >
-        Show
-      </Button>
-
       <Navigation displayBreadcrumbs />
       <FlashMessagePortalRoot />
       <main>

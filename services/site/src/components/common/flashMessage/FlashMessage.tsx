@@ -32,11 +32,11 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         show={show}
         as={React.Fragment}
         enter={prefersReducedMotion ? "" : "transition duration-500 ease-in-out delay-500"}
-        enterFrom="-translate-y-24"
+        enterFrom="-translate-y-[3.75rem]"
         enterTo="translate-y-0"
         leave={prefersReducedMotion ? "" : "transition duration-500 ease-in-out"}
         leaveFrom="translate-y-0"
-        leaveTo="-translate-y-24"
+        leaveTo="-translate-y-[3.75rem]"
       >
         <div className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center")}>
           <span className={clsx("basis-12 flex-shrink hidden", "md:block")} />
