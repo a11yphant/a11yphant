@@ -4,7 +4,8 @@ import { render, screen } from "@testing-library/react";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 
-const headingText = "Easy";
+const headingTextDifficulty = "Easy";
+const headingTextAll = "All challenges";
 
 const challenges = [
   {
@@ -19,7 +20,7 @@ const challenges = [
 ];
 
 describe("ChallengeList", () => {
-  it("renders the heading and description text", () => {
+  it("renders the heading, number of completed challenges and description text", () => {
     render(
       <ChallengeList
         heading={
@@ -31,10 +32,18 @@ describe("ChallengeList", () => {
           </>
         }
         challenges={challenges}
+        displayCompleted={true}
       />,
     );
 
-    expect(screen.getByText(headingText, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.getByText(headingTextDifficulty, { selector: "h3" })).toBeInTheDocument();
     expect(screen.getByText("(1/1)", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it("renders no number of completed challenges", () => {
+    render(<ChallengeList heading={<>All challenges</>} challenges={challenges} displayCompleted={false} />);
+
+    expect(screen.getByText(headingTextAll, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.queryByText("(1/1)", { selector: "p" })).not.toBeInTheDocument();
   });
 });

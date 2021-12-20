@@ -5,7 +5,7 @@ import { ChallengeModal } from "app/components/homepage/challengeModal/Challenge
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
 import Navigation from "app/components/Navigation";
-import { ChallengesDocument, useChallengesQuery } from "app/generated/graphql";
+import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus, useChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { initializeApollo } from "app/lib/apollo-client";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
@@ -19,9 +19,19 @@ const Home: React.FunctionComponent = () => {
   const router = useRouter();
   const { currentUser } = useCurrentUser();
 
-  const {
-    data: { easyChallenges },
-  } = useChallengesQuery();
+  const { data: dataEasyChallengesOpen } = useChallengesQuery({
+    variables: { difficulty: ChallengeDifficulty.Easy, status: ChallengeStatus.Open },
+  });
+
+  const { data: dataEasyChallengesFinished } = useChallengesQuery({
+    variables: { difficulty: ChallengeDifficulty.Easy, status: ChallengeStatus.Finished },
+  });
+
+  const easyChallenges = [...(dataEasyChallengesOpen?.challenges || []), ...(dataEasyChallengesFinished?.challenges || [])];
+
+  const { data: dataChallengesInProgress } = useChallengesQuery({
+    variables: { status: ChallengeStatus.InProgress },
+  });
 
   const onCloseModal = (): void => {
     router.push("/", undefined, { shallow: true });
@@ -66,7 +76,23 @@ const Home: React.FunctionComponent = () => {
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
 
             <Legend className={clsx("2xl:mx-24")} />
-            {easyChallenges.length !== 0 && <ChallengeList className={clsx("2xl:mx-24")} heading={<>All challenges</>} challenges={easyChallenges} />}
+
+            {dataChallengesInProgress?.challenges.length > 0 && (
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={"Continue where you left"}
+                challenges={dataChallengesInProgress.challenges}
+                displayCompleted={false}
+              />
+            )}
+
+            {easyChallenges.length && (
+              <ChallengeList
+                className={clsx("2xl:mx-24")}
+                heading={dataChallengesInProgress?.challenges.length === 0 ? "All challenges" : "Other challenges"}
+                challenges={easyChallenges}
+              />
+            )}
 
             {/* TODO: add when more difficult challenge content exists
             {easyChallenges.length !== 0 && (
