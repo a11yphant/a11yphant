@@ -11,10 +11,10 @@ const Footer: React.FunctionComponent = () => (
             <Link href="/imprint">
               <a
                 className={clsx(
-                  "py-3 px-3 -mx-3 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "py-3 pr-3 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
                   "transition-colors duration-300",
                   "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-visible-outline-offset",
+                  "focus-rounded-instead-of-underline",
                 )}
               >
                 Imprint
@@ -28,7 +28,7 @@ const Footer: React.FunctionComponent = () => (
                   "py-3 px-3 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
                   "transition-colors duration-300",
                   "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-visible-outline-offset",
+                  "focus-rounded-instead-of-underline",
                 )}
               >
                 Privacy Policy

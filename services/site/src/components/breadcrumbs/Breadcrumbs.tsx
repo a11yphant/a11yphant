@@ -46,7 +46,8 @@ const Breadcrumbs: React.FunctionComponent = () => {
                           "transition-colors duration-300",
                           "hover:text-primary-light hover:border-primary-light",
                           idx === routeList.length - 1 ? "text-light font-bold" : "text-grey-middle",
-                          "focus-visible-outline-offset",
+                          "focus:text-light",
+                          "focus-rounded-instead-of-underline",
                         )}
                         aria-current={idx === routeList.length - 1 ? "page" : undefined}
                       >

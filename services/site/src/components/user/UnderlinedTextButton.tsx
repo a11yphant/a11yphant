@@ -16,7 +16,7 @@ const UnderlinedText: React.FC<UnderlinedTextProps> = ({ children, onClick }) =>
         "mx-3 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
         "transition duration-300",
         "hover:border-transparent",
-        "focus-visible-outline-offset",
+        "focus-rounded-instead-of-underline",
       )}
     >
       {children}

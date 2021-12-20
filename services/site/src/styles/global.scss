@@ -28,38 +28,6 @@
         @apply m-0;
     }
 
-    // Reduced Motion ---
-    @media (prefers-reduced-motion: no-preference) {
-        :focus {
-            transition: outline-offset 0.25s ease;
-            outline-offset: 5px;
-        }
-    }
-
-    // Focus Styles ---
-    *:focus-visible {
-        // focus styles for keyboard only
-        outline: 3px solid #fff;
-        outline-offset: 0;
-    }
-
-    // Polyfill
-    // This will hide the focus indicator if the element receives focus via the mouse,
-    // but it will still show up on keyboard focus.
-    // .focus-visible :focus:not(.focus-visible) --> not working in safari
-    .focus-visible {
-        outline: 3px solid #fff;
-        @apply focus:transition-none;
-    }
-
-    .focus-visible-outline-offset {
-        @apply focus-visible:rounded;
-        @apply focus-visible:border-transparent;
-        @apply focus-visible:outline-light;
-        @apply focus-visible:outline-offset-4;
-        @apply focus-visible:text-light;
-    }
-
     // Other Global Styles ---
     h1,
     .h1 {

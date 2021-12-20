@@ -104,12 +104,12 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
             "absolute bottom-2 flex items-center text-grey mx-3",
             "group transition duration-300",
             "hover:text-primary-light",
-            "focus-visible-outline-offset",
+            "focus-outline-offset focus:text-light",
           )}
           overrideClassName
           innerRef={buttonRef}
         >
-          <Reset className={clsx("motion-safe:group-hover:-rotate-260", "group-focus-visible:text-light")} />
+          <Reset className={clsx("motion-safe:group-hover:-rotate-260", "group-focus:text-light")} />
           Reset
         </Button>
 
