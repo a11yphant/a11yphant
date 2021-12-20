@@ -30,6 +30,10 @@ const StyledTextField = styled(TextField)({
       borderColor: "white",
       borderWidth: "2px",
     },
+    "&:focus-within fieldset": {
+      borderColor: "white",
+      borderWidth: "4px",
+    },
   },
   "& .MuiInputLabel-outlined": {
     letterSpacing: "0.025em",
