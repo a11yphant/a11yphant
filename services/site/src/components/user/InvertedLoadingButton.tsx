@@ -7,9 +7,9 @@ const InvertedLoadingButton: React.FC<{ loading: boolean; srLoadingText: string 
   return (
     <button
       className={clsx(
-        "px-8 py-4 mb-2 block w-full text-center align-middle text-primary bg-white font-normal leading-none rounded border border-white",
+        "px-8 py-4 mb-2 block w-full text-center align-middle text-primary bg-light font-normal leading-none rounded border border-light",
         "transition duration-300 group",
-        "hover:bg-primary hover:text-white",
+        "hover:bg-primary hover:text-light",
         "focus-visible:bg-primary focus-visible:text-light",
         loading && "cursor-wait",
       )}
