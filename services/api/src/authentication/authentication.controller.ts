@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 
 import { UserService } from "@/user/user.service";
 
+import { FlashMessage } from "./enums/flash-message.enum";
 import { ProviderInformation } from "./interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
@@ -15,13 +16,14 @@ export class AuthenticationController {
 
   @Get("confirm")
   async confirm(@Query("code") token: string, @Res() res: Response): Promise<void> {
+    const url = this.config.get<string>("site.url");
     if (!(await this.jwtService.validateToken(token))) {
-      return res.redirect("/");
+      return res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_FAILED}`);
     }
 
     const { sub: userId } = await this.jwtService.decodeToken(token);
     await this.userService.confirmUser(userId);
-    res.redirect("/");
+    res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_SUCCESSFUL}`);
   }
 
   @UseGuards(AuthGuard("github"))
@@ -43,7 +45,7 @@ export class AuthenticationController {
     @Res() res: Response,
   ): Promise<void> {
     await this.createOauthCookie(req, res);
-    res.redirect("/");
+    res.redirect(this.config.get<string>("site.url"));
   }
 
   @UseGuards(AuthGuard("twitter"))
@@ -53,7 +55,7 @@ export class AuthenticationController {
     @Res() res: Response,
   ): Promise<void> {
     await this.createOauthCookie(req, res);
-    res.redirect("/");
+    res.redirect(this.config.get<string>("site.url"));
   }
 
   async createOauthCookie(req: Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }, res: Response): Promise<void> {
