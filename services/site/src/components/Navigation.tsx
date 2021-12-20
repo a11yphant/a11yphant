@@ -44,7 +44,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
           <Dropdown
             triggerButton={
               <TriggerButton>
-                <span className={clsx("sr-only")}>Your Profile</span>
+                <span className={clsx("sr-only")}>User Menu</span>
                 <UserAvatar />
               </TriggerButton>
             }
