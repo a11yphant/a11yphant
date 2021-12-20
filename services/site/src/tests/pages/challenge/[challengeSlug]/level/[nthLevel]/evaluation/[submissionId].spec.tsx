@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
@@ -14,8 +14,6 @@ import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import router from "next/router";
 import React from "react";
-
-afterEach(cleanup);
 
 jest.mock("next/router", () => require("next-router-mock"));
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {

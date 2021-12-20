@@ -1,9 +1,6 @@
 import { createMockClient } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import { routes } from "app/components/breadcrumbs/routes";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/graphql";
-
-afterEach(cleanup);
 
 describe("Routes", () => {
   it("can create breadcrumb infos for the '/' route", async () => {

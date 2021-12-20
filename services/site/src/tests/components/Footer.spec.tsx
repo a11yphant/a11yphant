@@ -1,18 +1,17 @@
-import { cleanup, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Footer from "app/components/Footer";
-
-afterEach(cleanup);
 
 describe("footer", () => {
   it("renders a footer", () => {
-    const { container } = render(<Footer />);
+    render(<Footer />);
 
-    expect(container.querySelector("footer")).toBeTruthy();
+    // `<footer />` has the default role `contentinfo`
+    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
   });
 
   it("renders a navigation inside the footer", () => {
-    const { container } = render(<Footer />);
+    render(<Footer />);
 
-    expect(container.querySelector("footer nav")).toBeTruthy();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
   });
 });

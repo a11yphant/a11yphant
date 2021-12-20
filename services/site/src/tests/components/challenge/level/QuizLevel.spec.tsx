@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
@@ -17,8 +16,6 @@ jest.mock("next/router", () => require("next-router-mock"));
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return;
 });
-
-afterEach(cleanup);
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
@@ -138,7 +135,7 @@ describe("Quiz Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.exists(ButtonLoading)).toBeTruthy();
+    expect(wrapper.exists(LoadingButton)).toBeTruthy();
   });
 
   // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252

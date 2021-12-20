@@ -1,18 +1,9 @@
-/**
- * Info: To fix the warning "useLayoutEffect does nothing on the server",
- * the following line is needed right here as comment:
- * @jest-environment node
- */
-
-import { cleanup } from "@testing-library/react";
 import Sidebar from "app/components/challenge/Sidebar";
 import HintList from "app/components/challenge/sidebar/HintList";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { CodeLevel } from "app/generated/graphql";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockChallengeName = "Mock Challenge";
 

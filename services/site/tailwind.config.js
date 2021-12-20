@@ -1,7 +1,5 @@
 module.exports = {
-  mode: "jit",
-  purge: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       screens: {
@@ -83,14 +81,6 @@ module.exports = {
           },
         },
       }),
-    },
-  },
-  variants: {
-    extend: {
-      textColor: ["group-focus"],
-      transitionProperty: ["hover", "motion-safe", "motion-reduce"],
-      borderWidth: ["first", "last"],
-      animation: ["hover", "focus", "motion-safe", "motion-reduce"],
     },
   },
   plugins: [require("@tailwindcss/typography")],

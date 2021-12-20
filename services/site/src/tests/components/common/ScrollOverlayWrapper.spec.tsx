@@ -1,9 +1,6 @@
-import { cleanup } from "@testing-library/react";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
