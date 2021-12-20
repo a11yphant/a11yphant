@@ -7,7 +7,7 @@ import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
-import Dropdown, { Button as DropdownButton, Group, Link as DropdownLink, TriggerButton } from "./common/dropdown/Dropdown";
+import Dropdown, { Group, Link as DropdownLink, TriggerButton } from "./common/dropdown/Dropdown";
 import UserAvatar from "./icons/UserAvatar";
 
 export interface NavigationProps {
@@ -50,11 +50,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             }
           >
             <Group>
-              <DropdownButton>Profile</DropdownButton>
               <DropdownLink href={`/profile/${currentUser?.id}`}>Public Profile</DropdownLink>
-            </Group>
-            <Group>
-              <DropdownButton>Log out</DropdownButton>
             </Group>
           </Dropdown>
         )}
