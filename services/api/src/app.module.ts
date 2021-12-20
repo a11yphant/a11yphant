@@ -19,6 +19,7 @@ import messagingConfig from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
 import sentryConfig from "./config/sentry.config";
+import siteConfig from "./config/site.config";
 import { ImporterModule } from "./importer/importer.module";
 import { MailModule } from "./mail/mail.module";
 import { PrismaModule } from "./prisma/prisma.module";
@@ -29,7 +30,7 @@ import { UserModule } from "./user/user.module";
 export const appModuleMetadata: ModuleMetadata = {
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, sentryConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, sentryConfig, siteConfig],
       ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
     }),
     SentryModule.forRootAsync({
