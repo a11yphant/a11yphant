@@ -21,7 +21,7 @@ import React from "react";
 const Home: React.FunctionComponent = () => {
   const router = useRouter();
   const { currentUser } = useCurrentUser();
-  const [showFlashMessage, setShowFlashMessage] = React.useState(false);
+  const [showFlashMessage, setShowFlashMessage] = React.useState(true);
 
   React.useEffect(() => {
     console.log(showFlashMessage);

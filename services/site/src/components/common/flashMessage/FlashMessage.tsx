@@ -31,7 +31,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         appear={true}
         show={show}
         as={React.Fragment}
-        enter={prefersReducedMotion ? "" : "transition duration-500 ease-in-out"}
+        enter={prefersReducedMotion ? "" : "transition duration-500 ease-in-out delay-500"}
         enterFrom="-translate-y-24"
         enterTo="translate-y-0"
         leave={prefersReducedMotion ? "" : "transition duration-500 ease-in-out"}
@@ -61,7 +61,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
       <Transition
         appear={true}
         show={show}
-        enter={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out"}
+        enter={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out delay-500"}
         enterFrom="h-0"
         enterTo="h-[3.75rem]"
         leave={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out"}
