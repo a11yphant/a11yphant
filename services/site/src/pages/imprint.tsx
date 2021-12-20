@@ -48,6 +48,7 @@ const Imprint: React.FunctionComponent = () => {
                   "text-light font-sans font-normal border-light",
                   "transition-colors duration-300",
                   "hover:text-primary-light hover:border-transparent",
+                  "focus-visible-outline-offset",
                 )}
               >
                 drop us a line
@@ -69,9 +70,10 @@ const Imprint: React.FunctionComponent = () => {
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
                   className={clsx(
-                    "pt-3 text-light font-sans font-normal border-light",
+                    "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
+                    "focus-visible-outline-offset",
                   )}
                 >
                   Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>
@@ -84,9 +86,10 @@ const Imprint: React.FunctionComponent = () => {
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
                   className={clsx(
-                    "pt-3 text-light font-sans font-normal border-light",
+                    "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
+                    "focus-visible-outline-offset",
                   )}
                 >
                   Luca Pircher <span className={clsx("sr-only")}>(opens in a new tab)</span>
@@ -99,9 +102,10 @@ const Imprint: React.FunctionComponent = () => {
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
                   className={clsx(
-                    "pt-3 text-light font-sans font-normal border-light",
+                    "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
+                    "focus-visible-outline-offset",
                   )}
                 >
                   Thomas Dax <span className={clsx("sr-only")}>(opens in a new tab)</span>
@@ -114,9 +118,10 @@ const Imprint: React.FunctionComponent = () => {
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
                   className={clsx(
-                    "pt-3 text-light font-sans font-normal border-light",
+                    "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
+                    "focus-visible-outline-offset",
                   )}
                 >
                   Michael Hinterhofer <span className={clsx("sr-only")}>(opens in a new tab)</span>
