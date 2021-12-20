@@ -19,6 +19,10 @@ export class AuthenticationService {
       throw new Error(msg);
     }
 
+    if (!user.verifiedAt) {
+      throw new Error("E-Mail address has not yet been verified.");
+    }
+
     const passwordOk = await this.hashService.compare(password, user.password);
 
     if (!passwordOk) {
