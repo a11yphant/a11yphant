@@ -62,7 +62,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               onClick={() => {
                 userAccountModalApi.show("login");
               }}
-              className="px-6"
+              className={clsx("px-8 py-3 border-none", "hover:border-primary-dark")}
             >
               Login
             </Button>
