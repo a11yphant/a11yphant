@@ -86,7 +86,7 @@ const Home: React.FunctionComponent = () => {
               />
             )}
 
-            {easyChallenges.length && (
+            {easyChallenges.length > 0 && (
               <ChallengeList
                 className={clsx("2xl:mx-24")}
                 heading={dataChallengesInProgress?.challenges.length === 0 ? "All challenges" : "Other challenges"}
