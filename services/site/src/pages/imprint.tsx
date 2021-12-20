@@ -35,9 +35,13 @@ const Imprint: React.FunctionComponent = () => {
             §25 Media Act.
           </p>
 
-          <address className={clsx("not-italic mb-10")}>
-            <span aria-label="Allyphant">a11yphant</span> is a master's project by six students at the Salzburg University of Applied Sciences. If you
-            are interested in working with us or just want to know more about the project, simply{" "}
+          <p>
+            <span aria-label="Allyphant">a11yphant</span> is a master's project by six students at the Salzburg University of Applied Sciences. We
+            tried our best to make this website accessible. However, we are no experts yet, so please let us know if we missed something.
+          </p>
+
+          <address className={clsx("not-italic mb-12")}>
+            If you are interested in working with us or just want to know more about the project, simply{" "}
             <Link href={"mailto:info@a11yphant"}>
               <a
                 className={clsx(
