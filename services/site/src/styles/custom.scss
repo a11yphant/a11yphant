@@ -56,6 +56,14 @@
     @include card;
 }
 
+// Scroll-Overlay -----
 .scroll-smooth {
     scroll-behavior: smooth;
+}
+
+// Code Level -----
+.instruction-text p {
+    @apply mt-0;
+    @apply mb-4;
+    @apply inline-block;
 }

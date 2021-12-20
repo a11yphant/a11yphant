@@ -1,12 +1,9 @@
 import { NormalizedCacheObject } from "@apollo/client/cache";
 import { ApolloClient } from "@apollo/client/core";
 import { createMockClient } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import { getRouteList } from "app/components/breadcrumbs/getRouteList";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/graphql";
 import router from "next/router";
-
-afterEach(cleanup);
 
 const challengeSlug = "mock-challenge-1";
 const expectedBreadcrumbHome = {
@@ -38,14 +35,14 @@ beforeEach(() => {
 });
 
 describe("getRouteList", () => {
-  it("home route", async () => {
+  it("correctly generates breadcrumbs for a non-dynamic route", async () => {
     router.push("/");
     const routeList = await getRouteList(router, mockClient);
 
     expect(routeList).toEqual([expectedBreadcrumbHome]);
   });
 
-  it("challenge route (with apollo request)", async () => {
+  it("correctly generates breadcrumbs for a dynamic route", async () => {
     router.push({
       pathname: "/challenge/[challengeSlug]",
       query: { challengeSlug: challengeSlug },

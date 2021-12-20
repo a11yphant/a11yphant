@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Lottie from "app/components/Lottie";
 import lottie from "lottie-web";
 import React from "react";
@@ -10,22 +10,18 @@ jest.mock("lottie-web", () => ({
   },
 }));
 
-afterEach(cleanup);
-
 describe("lottie", () => {
   const destroy = jest.fn();
+  const goToAndStop = jest.fn();
 
   beforeEach(() => {
     jest.resetAllMocks();
 
     (lottie.loadAnimation as jest.Mock).mockReturnValue({
       destroy,
+      goToAndStop,
+      totalFrames: 15,
     });
-  });
-
-  it("renders", () => {
-    const { container } = render(<Lottie options={{}} />);
-    expect(container.firstChild).toBeTruthy();
   });
 
   it("renders the lottie animation", () => {
@@ -34,9 +30,15 @@ describe("lottie", () => {
     expect(lottie.loadAnimation).toHaveBeenCalled();
   });
 
-  it("destories the animation after unmount", () => {
+  it("destroys the animation after unmount", () => {
     const { unmount } = render(<Lottie options={{}} />);
     unmount();
     expect(destroy).toHaveBeenCalled();
+  });
+
+  it("goes to last frame and stops", () => {
+    render(<Lottie options={{}} />);
+
+    expect(goToAndStop).toHaveBeenCalledWith(14, true);
   });
 });

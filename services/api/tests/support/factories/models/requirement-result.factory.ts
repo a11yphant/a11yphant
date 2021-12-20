@@ -6,4 +6,5 @@ import { RequirementResult } from "@/submission/graphql/models/requirement-resul
 export const RequirementResultFactory = Factory.define<RequirementResult>(RequirementResult.name, RequirementResult)
   .attr("id", () => faker.datatype.uuid())
   .attr("description", () => faker.lorem.sentence())
-  .attr("title", () => faker.lorem.words(3));
+  .attr("title", () => faker.lorem.words(3))
+  .attr("requirementId", () => faker.datatype.uuid());

@@ -1,19 +1,16 @@
 import { createMockClient } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
 import { routes } from "app/components/breadcrumbs/routes";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/graphql";
 
-afterEach(cleanup);
-
 describe("Routes", () => {
-  it("'/' route", async () => {
+  it("can create breadcrumb infos for the '/' route", async () => {
     const breadcrumbInfo = await routes["/"].getBreadcrumbInfo({});
 
     expect(breadcrumbInfo.href).toBe("/");
     expect(breadcrumbInfo.breadcrumb).toBe("Challenges");
   });
 
-  it("'/challenge/[challengeSlug]' route", async () => {
+  it("can create breadcrumb infos for the '/challenge/[challengeSlug]' route", async () => {
     const challengeSlug = "test-challenge";
     const name = "Test Challenge";
     const mockClient = createMockClient<ChallengeBySlugQuery>(
@@ -34,7 +31,7 @@ describe("Routes", () => {
     expect(breadcrumbInfo.breadcrumb).toBe(name);
   });
 
-  it("'/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
+  it("can create breadcrumb infos for the '/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
     const challengeSlug = "test-challenge";
     const nthLevel = "5";
 
@@ -44,7 +41,7 @@ describe("Routes", () => {
     expect(breadcrumbInfo.breadcrumb).toBe(`Level 0${nthLevel}`);
   });
 
-  it("'/challenge/[challengeSlug]/level/[nthLevel]/evaluation' route", async () => {
+  it("can create breadcrumb infos for the '/challenge/[challengeSlug]/level/[nthLevel]/evaluation' route", async () => {
     const challengeSlug = "test-challenge";
     const nthLevel = "5";
 

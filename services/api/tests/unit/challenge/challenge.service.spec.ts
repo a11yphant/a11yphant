@@ -42,6 +42,16 @@ describe("challenge service", () => {
     return { userId, challengeId };
   };
 
+  const getUser = async (): Promise<string> => {
+    const prisma = getPrismaService();
+
+    const { id: userId } = await prisma.user.create({
+      data: Factory.build<UserData>(USER),
+    });
+
+    return userId;
+  };
+
   describe("findOne", () => {
     it("can get a challenge for a given id", async () => {
       const prisma = getPrismaService();
@@ -95,7 +105,9 @@ describe("challenge service", () => {
         data: Factory.buildList<ChallengeData>(CHALLENGE, 3),
       });
 
-      const queriedChallenges = await service.findAll();
+      const userId = await getUser();
+
+      const queriedChallenges = await service.findAll(userId);
 
       expect(queriedChallenges).toBeTruthy();
       expect(queriedChallenges).toHaveLength(3);
@@ -105,7 +117,9 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const emptyChallenges = await service.findAll();
+      const userId = await getUser();
+
+      const emptyChallenges = await service.findAll(userId);
       expect(emptyChallenges.length).toBe(0);
     });
 
@@ -117,7 +131,9 @@ describe("challenge service", () => {
         const challenges = Factory.buildList<ChallengeData>(CHALLENGE, 3);
         await prisma.challenge.createMany({ data: challenges });
 
-        expect(await service.findAll()).toHaveLength(challenges.length);
+        const userId = await getUser();
+
+        expect(await service.findAll(userId)).toHaveLength(challenges.length);
       });
 
       it("finds only filtered challenges", async () => {
@@ -127,7 +143,61 @@ describe("challenge service", () => {
         await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.EASY }) });
         await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.MEDIUM }) });
 
-        const foundChallenges = await service.findAll({ difficulty: ChallengeDifficulty.MEDIUM });
+        const userId = await getUser();
+
+        const foundChallenges = await service.findAll(userId, { difficulty: ChallengeDifficulty.MEDIUM });
+        expect(foundChallenges).toHaveLength(2);
+      });
+    });
+
+    describe("currentUserStatus filter", () => {
+      it("can find challenges with the status IN_PROGRESS for a user", async () => {
+        const prisma = getPrismaService();
+        const service = new ChallengeService(prisma);
+
+        await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.EASY }) });
+
+        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
+
+        const { id: levelId } = await prisma.codeLevel.findFirst({
+          where: { challengeId },
+        });
+
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        });
+
+        const foundChallenges = await service.findAll(userId, { currentUserStatus: ChallengeStatus.IN_PROGRESS });
+        expect(foundChallenges).toHaveLength(1);
+      });
+    });
+
+    describe("difficulty and currentUserStatus filter", () => {
+      it("can find challenges filtered by the difficulty HARD and status OPEN", async () => {
+        const prisma = getPrismaService();
+        const service = new ChallengeService(prisma);
+
+        await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.EASY }) });
+        await prisma.challenge.createMany({ data: Factory.buildList<ChallengeData>(CHALLENGE, 2, { difficulty: ChallengeDifficulty.HARD }) });
+
+        const { id: challengeId } = await prisma.challenge.create({
+          data: Factory.build<ChallengeData>(CHALLENGE, { difficulty: ChallengeDifficulty.HARD }, { numberOfCodeLevels: 2, numberOfQuizLevels: 2 }),
+        });
+
+        const { id: levelId } = await prisma.codeLevel.findFirst({
+          where: { challengeId },
+        });
+
+        const userId = await getUser();
+
+        await prisma.codeLevelSubmission.create({
+          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+        });
+
+        const foundChallenges = await service.findAll(userId, {
+          difficulty: ChallengeDifficulty.HARD,
+          currentUserStatus: ChallengeStatus.OPEN,
+        });
         expect(foundChallenges).toHaveLength(2);
       });
     });

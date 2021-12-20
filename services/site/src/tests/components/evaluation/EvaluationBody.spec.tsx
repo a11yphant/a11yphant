@@ -1,13 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import CollapsableSection from "app/components/evaluation/CollapsableSection";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import { RequirementStatus } from "app/generated/graphql";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockRequirements = [
   {
@@ -33,23 +30,23 @@ const mockRequirements = [
 ];
 
 describe("EvaluationBody", () => {
-  it("renders lists", () => {
+  it("renders the list with classes", () => {
+    const mockClassName = "mock-classname";
+    const wrapper = shallow(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
+
+    expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
+  });
+
+  it("renders two unordered lists containing the failed and successful requirements", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
     expect(wrapper.find("ul").length).toBe(2);
   });
 
-  it("renders requirements", () => {
+  it("renders the requirements as bullet points inside a list", () => {
     const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
 
     expect(wrapper.find("li").length).toBe(2);
     expect(wrapper.find(CollapsableSection).length).toBe(2);
-  });
-
-  it("adds className", () => {
-    const mockClassName = "mock-classname";
-    const wrapper = shallow(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
-
-    expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
   });
 });

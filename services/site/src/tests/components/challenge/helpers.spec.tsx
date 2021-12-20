@@ -1,10 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
 import { CodeLevelDetailsFragment, QuizLevelDetailsFragment } from "app/generated/graphql";
-
-afterEach(cleanup);
 
 const mockCodeLevel: CodeLevelDetailsFragment = {
   __typename: "CodeLevel",

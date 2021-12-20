@@ -1,13 +1,11 @@
-import { MockedProvider } from "@apollo/client/testing";
-import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
-import { act, cleanup } from "@testing-library/react";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
+import { act } from "@testing-library/react";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { ModalTitle } from "app/components/modal/ModalTitle";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
@@ -59,14 +57,11 @@ const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
   },
 ];
 
-afterEach(cleanup);
-
 describe("ChallengeModal", () => {
   let wrapper: ReactWrapper;
   beforeEach(async () => {
     jest.resetAllMocks();
     jest.resetModules();
-    setupIntersectionObserverMock();
 
     wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -80,7 +75,7 @@ describe("ChallengeModal", () => {
     });
   });
 
-  it("renders loading indicator before receiving graphql response", () => {
+  it("renders loading indicator before receiving a graphql response", () => {
     // override wrapper from beforeEach because
     // we don't want the query to resolve
     const wrapper = mount(
@@ -93,16 +88,16 @@ describe("ChallengeModal", () => {
     expect(wrapper.exists(ModalTitle)).toBeFalsy();
   });
 
-  it("renders heading and introduction", async () => {
+  it("renders a heading and introduction text", async () => {
     expect(wrapper.find(ModalTitle).text()).toBe(mockChallengeName);
     expect(wrapper.find("p").text()).toBe(mockChallengeIntroduction);
   });
 
-  it("has a ScrollOverlayWrapper", async () => {
+  it("renders the `ScrollOverlayWrapper`", async () => {
     expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
   });
 
-  it("renders level cards", async () => {
+  it("renders all levels as cards", async () => {
     expect(wrapper.find(ChallengeModalLevelCard).length).toBe(mockLevels.length);
   });
 
@@ -116,7 +111,7 @@ describe("ChallengeModal", () => {
     ).toBe(firstUnfinishedLevel.order);
   });
 
-  it("has a cancel button that calls onClose", () => {
+  it("renders a cancel button that calls onClose", () => {
     wrapper
       .find("button")
       .findWhere((n) => n.type() === "button" && n.text() === "Cancel")
@@ -125,7 +120,7 @@ describe("ChallengeModal", () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it("has a start coding button that routes to the first unfinished level", () => {
+  it("renders a start coding button that routes to the first unfinished level", () => {
     wrapper
       .find("button")
       .findWhere((n) => n.type() === "button" && n.text() === "Start Coding")

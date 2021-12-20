@@ -1,11 +1,8 @@
-import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import HintBox from "app/components/challenge/sidebar/HintBox";
 import Chevron from "app/components/icons/Chevron";
 import { mount } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const hints = [
   {
@@ -25,20 +22,19 @@ describe("HintBox", () => {
     expect(wrapper.find("h4").text()).toContain("Stuck? Click to reveal a hint");
     expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(180deg)");
 
-    // no hints are rendered when closed
-    expect(wrapper.find("ol").length).toBe(0);
+    expect(wrapper.exists("ol")).toBeFalsy();
   });
 
-  it("renders open hint box after click", () => {
+  it("renders open HintBox after click", () => {
     const wrapper = mount(<HintBox hints={hints} />);
 
     wrapper.find(Button).simulate("click");
 
     // show one hint in a list after click
-    expect(wrapper.find("ol").length).toBe(1);
-    expect(wrapper.find("li").length).toBe(1);
+    expect(wrapper.exists("ol")).toBeTruthy();
+    expect(wrapper.exists("li")).toBeTruthy();
     expect(wrapper.find("li").text()).toBe(hints[0].text);
-    // switch heading text to "Hint"
+    // check if the heading contains the hint text
     expect(wrapper.find("h4").text()).toContain("Hint");
     // show "Show me another hint" button since there are two mocked hints
     expect(wrapper.findWhere((n) => n.type() === Button && n.text().includes("Show me another hint")).length).toBe(1);
@@ -47,7 +43,7 @@ describe("HintBox", () => {
     // expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(0deg)");
   });
 
-  it("show another hint", () => {
+  it("renders another hint in open HintBox after click", () => {
     const wrapper = mount(<HintBox hints={hints} />);
 
     wrapper.find("h4").children(Button).simulate("click");

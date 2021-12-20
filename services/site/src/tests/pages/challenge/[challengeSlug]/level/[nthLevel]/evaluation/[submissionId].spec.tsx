@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, cleanup } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
@@ -14,8 +14,6 @@ import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import router from "next/router";
 import React from "react";
-
-afterEach(cleanup);
 
 jest.mock("next/router", () => require("next-router-mock"));
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
@@ -99,7 +97,7 @@ describe("Evaluation", () => {
       });
     });
 
-    it("renders loading screen", async () => {
+    it("renders the loading screen", async () => {
       // override wrapper from beforeEach because
       // we don't want the query to resolve
       const wrapper = mount(
@@ -115,26 +113,23 @@ describe("Evaluation", () => {
       expect(wrapper.exists(LoadingScreen)).toBeTruthy();
     });
 
-    it("renders head", async () => {
+    it("renders the head", async () => {
       expect(wrapper.exists(Head)).toBeTruthy();
-
-      // couldn't find a way to test `title` and its content since
-      // the children of `Head` aren't actually rendered but injected into `<head>`
     });
 
-    it("renders wrapper elements", async () => {
+    it("renders all wrapper elements", async () => {
       expect(wrapper.exists("main")).toBeTruthy();
     });
 
-    it("renders EvaluationHeader", async () => {
+    it("renders the `EvaluationHeader`", async () => {
       expect(wrapper.exists(EvaluationHeader)).toBeTruthy();
     });
 
-    it("renders EvaluationBody", async () => {
+    it("renders the `EvaluationBody`", async () => {
       expect(wrapper.exists(EvaluationBody)).toBeTruthy();
     });
 
-    it("renders CompleteEvaluationButton", async () => {
+    it("renders the `CompleteEvaluationButton`", async () => {
       expect(wrapper.exists(CompleteEvaluationButton)).toBeTruthy();
     });
   });
@@ -161,6 +156,7 @@ describe("Evaluation", () => {
 
       expect(result.props).toBeTruthy();
     });
+
     it("returns 404 if the result was not found", async () => {
       const apolloClient = {
         query: jest
@@ -205,7 +201,7 @@ describe("Evaluation", () => {
       expect(result.notFound).toBeTruthy();
     });
 
-    it("returns 404 if the querying the result resulted in a BAD_USER_INPUT error", async () => {
+    it("returns 404 if querying the result resulted in a BAD_USER_INPUT error", async () => {
       const apolloClient = {
         query: jest
           .fn()

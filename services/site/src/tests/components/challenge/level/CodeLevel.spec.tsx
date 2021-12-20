@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { cleanup } from "@testing-library/react";
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors from "app/components/challenge/Editors";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import Preview from "app/components/challenge/Preview";
@@ -19,8 +18,6 @@ jest.mock("react-resize-detector", () => ({
     return;
   },
 }));
-
-afterEach(cleanup);
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
@@ -71,44 +68,44 @@ beforeEach(() => {
 });
 
 describe("Code Level", () => {
-  it("renders sidebar", () => {
+  it("renders `Sidebar` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(Sidebar).length).toBe(1);
+    expect(wrapper.exists(Sidebar)).toBeTruthy();
   });
 
-  it("renders the editor", () => {
+  it("renders `Editors` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(Editors).length).toBe(1);
+    expect(wrapper.exists(Editors)).toBeTruthy();
   });
 
-  it("renders preview", () => {
+  it("renders `Preview` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(Preview).length).toBe(1);
+    expect(wrapper.exists(Preview)).toBeTruthy();
   });
 
-  it("renders submit button", () => {
+  it("renders submit button with loading animation", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
         <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
       </MockedProvider>,
     );
 
-    expect(wrapper.find(ButtonLoading).length).toBe(1);
+    expect(wrapper.exists(LoadingButton)).toBeTruthy();
   });
 
   it("disables the submit button if the submission is not yet available", () => {
@@ -118,6 +115,6 @@ describe("Code Level", () => {
       </MockedProvider>,
     );
 
-    expect(wrapper.find(ButtonLoading).props()).toHaveProperty("disabled", true);
+    expect(wrapper.find(LoadingButton).props()).toHaveProperty("disabled", true);
   });
 });

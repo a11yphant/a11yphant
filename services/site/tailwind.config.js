@@ -1,7 +1,5 @@
 module.exports = {
-  mode: "jit",
-  purge: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/pages/**/*.{js,ts,jsx,tsx}", "./src/components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       screens: {
@@ -56,6 +54,9 @@ module.exports = {
         width: "width",
         display: "display",
       },
+      rotate: {
+        "-260": "-260deg",
+      },
       backgroundImage: (theme) => ({
         "gradient-easy": "url('/images/01_easy.jpg')",
         "gradient-medium": "url('/images/02_medium.jpg')",
@@ -80,13 +81,6 @@ module.exports = {
           },
         },
       }),
-    },
-  },
-  variants: {
-    extend: {
-      textColor: ["group-focus"],
-      transitionProperty: ["hover", "motion-safe", "motion-reduce"],
-      borderWidth: ["first", "last"],
     },
   },
   plugins: [require("@tailwindcss/typography")],

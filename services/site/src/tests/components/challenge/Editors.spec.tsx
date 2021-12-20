@@ -1,10 +1,7 @@
-import { cleanup } from "@testing-library/react";
 import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockClassName = "test-class";
 
@@ -27,7 +24,7 @@ const cssEditorConfig: EditorConfig = {
 const handleReset = jest.fn();
 
 describe("Editors", () => {
-  it("renders wrapper div with class", () => {
+  it("renders the wrapper element with classes", () => {
     const wrapper = shallow(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
 
     expect(wrapper.exists("div")).toBeTruthy();

@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Button from "app/components/buttons/Button";
 import X from "app/components/icons/X";
 import clsx from "clsx";
-import React from "react";
+import React, { useRef } from "react";
 
 export interface RestylableProps {
   className?: string;
@@ -21,21 +21,30 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
   className,
   overrideClassName = false,
 }) => {
+  // reference button for initial focus
+  const closeButtonRef = useRef();
+
   return (
     <Transition
       show={open}
       enter="transition duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      enterTo="transform scale-100 opacity-100"
+      enterFrom="scale-95 opacity-0"
+      enterTo="scale-100 opacity-100"
       leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
+      leaveFrom="scale-100 opacity-100"
+      leaveTo="scale-95 opacity-0"
     >
-      <Dialog open={open} onClose={onClose} className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}>
+      <Dialog
+        initialFocus={closeButtonRef}
+        open={open}
+        onClose={onClose}
+        className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}
+      >
         <div className={clsx("relative", !overrideClassName && "rounded-lg", className)}>
           <Dialog.Overlay className={clsx("fixed inset-0 bg-background opacity-25 z-[-1] cursor-pointer")} />
 
           <Button
+            innerRef={closeButtonRef}
             onClick={onClose}
             overrideClassName
             className={clsx(

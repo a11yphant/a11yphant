@@ -1,4 +1,4 @@
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import { ResultStatus } from "app/generated/graphql";
 import { EvaluationRouterParams } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import clsx from "clsx";
@@ -27,7 +27,7 @@ export const CompleteEvaluationButton = ({
 
   if (status === ResultStatus.Fail) {
     return (
-      <ButtonLoading
+      <LoadingButton
         primary
         onClick={() => {
           setLoadingAnimation(true);
@@ -37,41 +37,41 @@ export const CompleteEvaluationButton = ({
             router.back();
           }
         }}
-        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
         Retry
-      </ButtonLoading>
+      </LoadingButton>
     );
   } else if (isLastLevel) {
     return (
-      <ButtonLoading
+      <LoadingButton
         onClick={() => {
           router.push("/");
         }}
         primary
-        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
         Finish Challenge
-      </ButtonLoading>
+      </LoadingButton>
     );
   } else {
     return (
-      <ButtonLoading
+      <LoadingButton
         onClick={() => {
           const nextLevel = parseInt(nthLevel as string) + 1;
           router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
         }}
         primary
-        className={clsx("px-10", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
         Next Level
-      </ButtonLoading>
+      </LoadingButton>
     );
   }
 };

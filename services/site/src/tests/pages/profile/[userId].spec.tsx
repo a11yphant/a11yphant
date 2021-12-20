@@ -1,4 +1,4 @@
-import { cleanup, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { initializeApollo } from "app/lib/apollo-client";
 import UserProfile, { getServerSideProps } from "app/pages/profile/[userId]";
 import { GetServerSidePropsContext } from "next";
@@ -46,38 +46,18 @@ jest.mock("app/lib/apollo-client", () => ({
   }),
 }));
 
-afterEach(cleanup);
-
 describe("user profile page", () => {
   describe("component", () => {
-    it("can render", () => {
-      const { container } = render(<UserProfile />);
+    it("renders the name of the user", () => {
+      render(<UserProfile />);
 
-      expect(container.firstChild).toBeTruthy();
+      expect(screen.getByText(/Hans Schröder/)).toBeInTheDocument();
     });
 
-    it("shows the name of the user", () => {
-      const { findByText } = render(<UserProfile />);
+    it("renders the name of the challenge", () => {
+      render(<UserProfile />);
 
-      expect(findByText("Hans Schröder")).toBeTruthy();
-    });
-
-    it("shows the name of the user", () => {
-      const { findByText } = render(<UserProfile />);
-
-      expect(findByText("Hans Schröder")).toBeTruthy();
-    });
-
-    it("shows the name of the challenge", () => {
-      const { findByText } = render(<UserProfile />);
-
-      expect(findByText("Dummy Challenge")).toBeTruthy();
-    });
-
-    it("shows the status for the challenge", () => {
-      const { findByText } = render(<UserProfile />);
-
-      expect(findByText("Done")).toBeTruthy();
+      expect(screen.getByText("Dummy Challenge")).toBeInTheDocument();
     });
   });
 
@@ -109,7 +89,7 @@ describe("user profile page", () => {
       expect(serverSideProps.props.initialApolloState).toBeTruthy();
     });
 
-    it("returns not found if the user was not found", async () => {
+    it("returns `not found` if the user was not found", async () => {
       (initializeApollo as jest.Mock).mockReturnValue({
         query: jest.fn().mockResolvedValue({
           data: {

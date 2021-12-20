@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Check from "app/components/icons/Check";
 import Chevron from "app/components/icons/Chevron";
@@ -18,88 +17,86 @@ import X from "app/components/icons/X";
 import { shallow } from "enzyme";
 import React from "react";
 
-afterEach(cleanup);
-
 describe("Icons", () => {
-  it("A11yphant Logo exists", () => {
+  it("renders the a11yphant Logo SVG", () => {
     const wrapper = shallow(<A11yphantLogo />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("Check exists", () => {
+  it("renders the `Check` SVG", () => {
     const wrapper = shallow(<Check />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("Chevron exists", () => {
+  it("renders the `Chevron` SVG", () => {
     const wrapper = shallow(<Chevron />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("Github exists", () => {
+  it("renders the `Github` SVG", () => {
     const wrapper = shallow(<Github />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("IllustrationCodingWoman exists", () => {
+  it("renders the `IllustrationCodingWoman` SVG", () => {
     const wrapper = shallow(<IllustrationCodingWoman />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("IllustrationCodingMan exists", () => {
+  it("renders the `IllustrationCodingMan` SVG", () => {
     const wrapper = shallow(<IllustrationCodingMan />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("IllustrationLost exists", () => {
+  it("renders the `IllustrationLost` SVG", () => {
     const wrapper = shallow(<IllustrationLost />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("IllustrationLostSpace exists", () => {
+  it("renders the `IllustrationLostSpace` SVG", () => {
     const wrapper = shallow(<IllustrationLostSpace />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("Reset exists", () => {
+  it("renders the `Reset` SVG", () => {
     const wrapper = shallow(<Reset />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("Slash exists", () => {
+  it("renders the `Slash` SVG", () => {
     const wrapper = shallow(<Slash />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("Twitter exists", () => {
+  it("renders the `Twitter` SVG", () => {
     const wrapper = shallow(<Twitter />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("UserAvatar exists", () => {
+  it("renders the `UserAvatar` SVG", () => {
     const wrapper = shallow(<UserAvatar />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("X exists", () => {
+  it("renders the `X` SVG", () => {
     const wrapper = shallow(<X />);
 
     expect(wrapper.type()).toBe("svg");
   });
 
-  it("LoadingIndicator exists", () => {
+  it("renders the `LoadingIndicator` SVG", () => {
     const wrapper = shallow(<LoadingIndicator />);
 
     expect(wrapper.type()).toBe("svg");

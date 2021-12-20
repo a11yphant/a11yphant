@@ -14,7 +14,7 @@ const queryResult = { user: { __typename: "user", id: 4 } };
 
 describe("apollo client", () => {
   describe("initialize apollo client", () => {
-    it("returns creates an apollo client", () => {
+    it("returns an apollo client", () => {
       const client = initializeApollo();
 
       expect(client).toBeTruthy();

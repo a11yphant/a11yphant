@@ -1,9 +1,7 @@
-import { cleanup } from "@testing-library/react";
 import Button from "app/components/buttons/Button";
 import ErrorDialog from "app/components/common/error/ErrorDialog";
 import { Modal } from "app/components/modal/Modal";
 import { ModalTitle } from "app/components/modal/ModalTitle";
-import { setupIntersectionObserverMock } from "app/lib/test-helpers/setupIntersectionObserverMock";
 import { mount, shallow } from "enzyme";
 import { GraphQLError } from "graphql";
 import React from "react";
@@ -25,14 +23,12 @@ beforeEach(() => {
   mockOnClose = jest.fn();
 });
 
-afterEach(cleanup);
-
 afterAll(() => {
   process.env = OLD_ENV; // Restore old environment
 });
 
 describe("Error Dialog", () => {
-  it("is closed", () => {
+  it("passes the 'closed' state to the modal", () => {
     const wrapper = shallow(
       <ErrorDialog open={false} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -40,7 +36,7 @@ describe("Error Dialog", () => {
     expect(wrapper.find(Modal).props().open).toBeFalsy();
   });
 
-  it("is open", () => {
+  it("passes the 'open' state to the modal", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -48,7 +44,7 @@ describe("Error Dialog", () => {
     expect(wrapper.find(Modal).props().open).toBeTruthy();
   });
 
-  it("shows title", () => {
+  it("renders the title", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -63,7 +59,7 @@ describe("Error Dialog", () => {
     ).toBe(1);
   });
 
-  it("shows error messages", () => {
+  it("renders the error messages", () => {
     const wrapper = shallow(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );
@@ -87,7 +83,7 @@ describe("Error Dialog", () => {
     ).toBe(1);
   });
 
-  it("shows original error in development mode", async () => {
+  it("renders the original error in development mode", async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     process.env.NODE_ENV = "development";
@@ -105,7 +101,7 @@ describe("Error Dialog", () => {
     expect(console.error).toHaveBeenCalledWith(mockErrorResponse);
   });
 
-  it("does not show original error in production mode", () => {
+  it("renders no original error in production mode", () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignoresrc/tests/components/modal/LoginModal.spec.tsx
     process.env.NODE_ENV = "production";
@@ -120,9 +116,7 @@ describe("Error Dialog", () => {
     expect(console.error).toHaveBeenCalledTimes(0);
   });
 
-  it("calls onClose on Okay press", () => {
-    setupIntersectionObserverMock();
-
+  it("calls onClose on button press", () => {
     const wrapper = mount(
       <ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />,
     );

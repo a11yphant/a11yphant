@@ -24,7 +24,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         <a
           className={clsx(
             "block text-light border-none col-span-1 max-w-max",
-            "transform transition ease-in-out duration-300",
+            "transition ease-in-out duration-300",
             "motion-safe:hover:scale-110 motion-reduce:border-solid",
           )}
         >
@@ -33,7 +33,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         </a>
       </Link>
       {displayBreadcrumbs && (
-        <div className={clsx("ml-[50%] transform -translate-x-1/2 col-span-1 w-fit-content hidden self-center", "lg:block")}>
+        <div className={clsx("ml-[50%] -translate-x-1/2 col-span-1 w-fit-content hidden self-center", "lg:block")}>
           <Breadcrumbs />
         </div>
       )}
@@ -54,7 +54,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               onClick={() => {
                 userAccountModalApi.show("signup");
               }}
-              className="mx-4"
+              className="mx-4 px-6"
             >
               Sign Up
             </Button>{" "}
@@ -62,6 +62,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               onClick={() => {
                 userAccountModalApi.show("login");
               }}
+              className="px-6"
             >
               Login
             </Button>
