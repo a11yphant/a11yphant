@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
+import Dropdown, { Button as DropdownButton, Group, Link as DropdownLink, TriggerButton } from "./common/dropdown/Dropdown";
 import UserAvatar from "./icons/UserAvatar";
 
 export interface NavigationProps {
@@ -40,12 +41,22 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       <div className={clsx("hidden justify-end items-center", "sm:flex")}>
         {children}
         {currentUser?.isRegistered && (
-          <Link href={`/profile/${currentUser?.id}`}>
-            <a className={clsx("text-light ml-4", "hover:text-primary-light hover:border-transparent")}>
-              <span className={clsx("sr-only")}>Your Profile</span>
-              <UserAvatar />
-            </a>
-          </Link>
+          <Dropdown
+            triggerButton={
+              <TriggerButton>
+                <span className={clsx("sr-only")}>Your Profile</span>
+                <UserAvatar />
+              </TriggerButton>
+            }
+          >
+            <Group>
+              <DropdownButton>Profile</DropdownButton>
+              <DropdownLink href={`/profile/${currentUser?.id}`}>Public Profile</DropdownLink>
+            </Group>
+            <Group>
+              <DropdownButton>Log out</DropdownButton>
+            </Group>
+          </Dropdown>
         )}
         {!currentUser?.isRegistered && (
           <>
