@@ -18,7 +18,7 @@ describe("user service", () => {
   describe("create", () => {
     it("can create a user", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       expect(await service.create()).toHaveProperty("id", expect.any(String));
     });
@@ -27,7 +27,7 @@ describe("user service", () => {
   describe("findById", () => {
     it("can find a user by id", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       const user = await prisma.user.create({
         data: UserFactory.build(),
@@ -38,7 +38,7 @@ describe("user service", () => {
 
     it("returns null if it cannot find the user by id", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       expect(await service.findById(faker.datatype.uuid())).toBeNull();
     });
@@ -47,7 +47,7 @@ describe("user service", () => {
   describe("findByEmail", () => {
     it("can find a user by email", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       const user = await prisma.user.create({
         data: UserFactory.build({ email: "hallo@a11yphant.com" }),
@@ -60,7 +60,7 @@ describe("user service", () => {
   describe("updateWithAuthInformation", () => {
     it("adds auth information to an anonymous user", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       const user = await prisma.user.create({
         data: UserFactory.build({ displayName: null }),
@@ -85,8 +85,8 @@ describe("user service", () => {
       const prisma = getPrismaService();
       const service = new UserService(
         prisma,
-        createMock<ConfigService>(createConfigServiceMock()),
         createMock<HashService>({ make: jest.fn().mockResolvedValue("hashedPassword") }),
+        createMock<ConfigService>(createConfigServiceMock()),
       );
 
       const userId = faker.datatype.uuid();
@@ -110,14 +110,14 @@ describe("user service", () => {
     });
 
     it("throws an error if the anonymous user is not found", async () => {
-      const service = new UserService(getPrismaService(), createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(getPrismaService(), createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       expect(service.registerUser({ email: "test", password: "test" }, faker.datatype.uuid())).rejects.toThrowError("Anonymous user is invalid.");
     });
 
     it("throws an error if the user is already registered", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<ConfigService>(createConfigServiceMock()), createMock<HashService>());
+      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
 
       const userId = faker.datatype.uuid();
 
@@ -134,8 +134,8 @@ describe("user service", () => {
       const prisma = getPrismaService();
       const service = new UserService(
         prisma,
-        createMock<ConfigService>(createConfigServiceMock()),
         createMock<HashService>({ make: jest.fn().mockResolvedValue("hashedPassword") }),
+        createMock<ConfigService>(createConfigServiceMock()),
       );
 
       let user = await prisma.user.create({
@@ -162,12 +162,12 @@ describe("user service", () => {
     const runDeleteOnService = async (prisma: PrismaService): Promise<void> => {
       const service = new UserService(
         prisma,
+        createMock<HashService>(),
         createMock<ConfigService>(
           createConfigServiceMock({
             "api.user-as-stale-days": STALEDAYS,
           }),
         ),
-        createMock<HashService>(),
       );
       await service.deleteStaleUsers();
     };

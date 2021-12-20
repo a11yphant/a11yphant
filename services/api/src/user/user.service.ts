@@ -11,7 +11,7 @@ import { User } from "./models/user.model";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService, private config: ConfigService, private hashService: HashService) {}
+  constructor(private prisma: PrismaService, private hashService: HashService, private config: ConfigService) {}
 
   async create(): Promise<User> {
     const record = await this.prisma.user.create({
