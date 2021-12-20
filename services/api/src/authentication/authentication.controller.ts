@@ -22,7 +22,13 @@ export class AuthenticationController {
     }
 
     const { sub: userId } = await this.jwtService.decodeToken(token);
-    await this.userService.confirmUser(userId);
+
+    try {
+      await this.userService.confirmUser(userId);
+    } catch (error) {
+      return res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_FAILED}`);
+    }
+
     res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_SUCCESSFUL}`);
   }
 
