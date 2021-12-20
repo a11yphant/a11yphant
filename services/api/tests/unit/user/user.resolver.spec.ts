@@ -82,6 +82,20 @@ describe("user resolver", () => {
       expect(registerUser).toHaveBeenCalledWith(registerUserInput, sessionToken.userId);
     });
 
+    it("sends an registration email if a user is registered.", async () => {
+      const sendRegistrationMail = jest.fn();
+
+      const user = getUser();
+
+      const resolver = createUserResolver({
+        userService: { registerUser: jest.fn().mockResolvedValue(user) },
+        mailService: { sendRegistrationMail },
+      });
+      await resolver.register({ email: "test", password: "test" }, { userId: "test" });
+
+      expect(sendRegistrationMail).toHaveBeenCalledWith(user);
+    });
+
     it("throws an input error if the service throws an error", () => {
       const registerUser = jest.fn().mockRejectedValue(new Error());
       const registerUserInput: RegisterUserInput = { email: "test", password: "test" };
