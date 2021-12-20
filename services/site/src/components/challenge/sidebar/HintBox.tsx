@@ -72,7 +72,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
                 "mt-4 mb-4 font-normal border-b text-lg leading-8",
                 "transition duration-300",
                 "hover:text-primary-light hover:border-primary-light",
-                "focus:text-primary-light focus:border-primary-light focus-visible-outline",
+                "focus-visible-outline-offset",
               )}
             >
               Show me another hint.

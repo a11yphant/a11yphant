@@ -51,16 +51,12 @@
         outline: 3px solid #fff;
     }
 
-    .focus-visible-outline {
-        gap: 2ch;
-
-        &:focus-visible {
-            outline: 0.15rem solid #fff;
-        }
-
-        &:focus-visible a:focus {
-            outline: none;
-        }
+    .focus-visible-outline-offset {
+        @apply focus-visible:rounded;
+        @apply focus-visible:border-transparent;
+        @apply focus-visible:outline-light;
+        @apply focus-visible:outline-offset-4;
+        @apply focus-visible:text-light;
     }
 
     // Other Global Styles ---

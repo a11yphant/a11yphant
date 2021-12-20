@@ -26,6 +26,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             "block text-light border-none rounded col-span-1 max-w-max pt-1 px-2 -ml-2",
             "transition ease-in-out duration-300",
             "motion-safe:hover:scale-110 motion-reduce:border-solid",
+            "focus-visible-outline-offset",
           )}
         >
           <A11yphantLogo className="w-36" />

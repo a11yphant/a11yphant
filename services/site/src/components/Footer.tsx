@@ -14,6 +14,7 @@ const Footer: React.FunctionComponent = () => (
                   "text-light font-sans font-normal",
                   "transition-colors duration-300",
                   "hover:text-primary-light hover:border-primary-light",
+                  "focus-visible-outline-offset",
                 )}
               >
                 Imprint
@@ -27,6 +28,7 @@ const Footer: React.FunctionComponent = () => (
                   "text-light font-sans font-normal",
                   "transition-colors duration-300",
                   "hover:text-primary-light hover:border-primary-light",
+                  "focus-visible-outline-offset",
                 )}
               >
                 Privacy Policy

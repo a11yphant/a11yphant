@@ -94,7 +94,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                 "mr-14 text-grey-middle border-b-2 border-transparent",
                 "transition-colors duration-300",
                 "hover:text-primary-light hover:border-primary-light",
-                "focus:text-primary-light focus:border-primary-light",
+                "focus-visible-outline-offset",
               )}
             >
               Cancel
