@@ -36,7 +36,7 @@
     }
 
     &:focus-within {
-        box-shadow: 0 0 0 0.25rem #fff;
+        outline: 5px solid #fff;
     }
 
     &:focus-within a:focus {
@@ -48,7 +48,7 @@
     @include card;
 
     &:focus-within {
-        box-shadow: 0 0 0 0.15rem #fff;
+        outline: 3px solid #fff;
     }
 }
 

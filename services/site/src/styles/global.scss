@@ -28,6 +28,7 @@
         @apply m-0;
     }
 
+    // Reduced Motion ---
     @media (prefers-reduced-motion: no-preference) {
         :focus {
             transition: outline-offset 0.25s ease;
@@ -35,21 +36,19 @@
         }
     }
 
-    *:focus {
-        outline: 2px solid #fff;
-        outline-offset: 2px;
-    }
-
+    // Focus Styles ---
     *:focus-visible {
         // focus styles for keyboard only
-        outline: 0.15rem solid #fff;
+        outline: 3px solid #fff;
+        outline-offset: 0;
     }
 
-    *:focus:not(:focus-visible) {
-        // focus styles for mouse & touch
-        outline: none;
-        // box-shadow: 0 0 0 0.15rem #fff;
-        // TODO: add polyfill for browsers that do not support focus-within
+    // Polyfill ---
+    // This will hide the focus indicator if the element receives focus via the mouse,
+    // but it will still show up on keyboard focus.
+    .js-focus-visible :focus:not(.focus-visible) {
+        // outline: none;
+        outline: 3px solid #fff;
     }
 
     .focus-visible-outline {
@@ -64,19 +63,7 @@
         }
     }
 
-    .focus-visible-boxShadow {
-        gap: 2ch;
-
-        &:focus-visible {
-            box-shadow: 0 0 0 0.25rem #fff;
-        }
-
-        &:focus-visible a:focus,
-        &:focus {
-            outline: none;
-        }
-    }
-
+    // Other Global Styles ---
     h1,
     .h1 {
         @apply text-7xl;

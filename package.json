@@ -63,5 +63,7 @@
     "wait-on": "6.0.0",
     "yaml-lint": "1.2.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "focus-visible": "^5.2.0"
+  }
 }
