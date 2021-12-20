@@ -11,6 +11,7 @@ describe("sign up", () => {
         getInputByLabel('Password').type("very-secret");
         cy.contains('button', 'Sign up').click();
 
-        cy.contains("button", "Sign up").should("not.exist");
+        cy.contains("An unknown error occurred").should("not.exist");
+        cy.contains("This email is already taken").should("not.exist");
     });
 });
