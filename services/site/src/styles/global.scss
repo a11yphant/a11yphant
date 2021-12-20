@@ -46,9 +46,10 @@
     // Polyfill
     // This will hide the focus indicator if the element receives focus via the mouse,
     // but it will still show up on keyboard focus.
-    .js-focus-visible :focus:not(.focus-visible) {
-        // outline: none;
+    // .focus-visible :focus:not(.focus-visible) --> not working in safari
+    .focus-visible {
         outline: 3px solid #fff;
+        @apply focus:transition-none;
     }
 
     .focus-visible-outline-offset {
