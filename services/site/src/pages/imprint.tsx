@@ -123,42 +123,8 @@ const Imprint: React.FunctionComponent = () => {
 
           <h3 className={clsx("h6", "sm:h5")}>Interface and Corporate Design</h3>
           <ul className={clsx("list-disc ml-6 mb-8")}>
-            <li className={clsx("m-0 my-4")}>
-              Johanna Wicht
-              {/* TODO: add Link to Website */}
-              {/* <Link href={"#"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                 
-                  className={clsx(
-                    "pt-3 text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                  )}
-                >
-                  Johanna Wicht
-                </a>
-              </Link> */}
-            </li>
-            <li className={clsx("m-0 my-4")}>
-              Fabian Heller
-              {/* TODO: add Link to Website */}
-              {/* <Link href={"#"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                 
-                  className={clsx(
-                    "pt-3 text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                  )}
-                >
-                  Fabian Heller
-                </a>
-              </Link> */}
-            </li>
+            <li className={clsx("m-0 my-4")}>Johanna Wicht</li>
+            <li className={clsx("m-0 my-4")}>Fabian Heller</li>
           </ul>
         </div>
       </main>
