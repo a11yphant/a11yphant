@@ -4,8 +4,8 @@ import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
 import faker from "faker";
 
-import { AuthenticationResolver } from "@/authentication/authentication.resolver";
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { AuthenticationResolver } from "@/authentication/graphql/resolvers/authentication.resolver";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
