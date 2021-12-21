@@ -1,0 +1,388 @@
+challenge:
+  id: d816f389-1e15-4848-9ace-6aba5828638c
+  name: Page Regions
+  slug: page-regions
+  difficulty: easy
+  order: 1
+  introduction: >
+    The foundation to building accessible websites is using semantically meaningful markup. Semantic HTML tags communicate more information about their content to the browser. They can be used to structure the page into common sections, like headers, navigations and a footer. Let's find out more!
+  levels:
+    - id: 4fbfb555-a349-4f42-8804-d75209215626
+      order: 1
+      type: code
+      instructions: |-
+        <p>The <code>&lt;main&gt;</code> element represents the main content of a web page. The main content is unique to that page. Content that is repeated on other pages (e.g. the main menu or the footer) should not be inside the <code>&lt;main&gt;</code> element.</p>
+        <p>There may only be one <code>&lt;main&gt;</code> element on a page and it must not be a descendant of a <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code> or <code>&lt;footer&gt;</code> element.</p>
+      tasks:
+        - id: 1406ee01-55d6-4530-a54a-ec943d98859d
+          text: <p>Wrap the main content of the body element in a <code>&lt;main&gt;</code> element.</p>
+          hints:
+            - id: f51300fc-3014-4c85-b410-c97623f5ea29
+              text: |-
+                You can wrap the <code>&lt;h1&gt;</code> element in a <code>&lt;main&gt;</code> element like this:
+                <code>
+                  &lt;main&gt;
+                    &lt;h1&gt;Cats are not better than dogs!&lt;/h1&gt;
+                  &lt;/main&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Doggos</title>
+            </head>
+
+            <body>
+              <div>
+                <h2>Main Navigation</h2>
+                <!-- Main Navigation Links -->
+              </div>
+              <h1>Cats are not better than dogs!</h1>
+              <!-- Page Content -->
+            </body>
+          </html>
+      requirements:
+        - id: 2d19f80e-3572-4ce9-ab43-9980931fbc6f
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+
+        - id: 33e2416a-bda9-4062-9e40-7299a6066c95
+          key: element-exists
+          title: The main content of the page is wrapped in a <code>&lt;main&gt;</code> element
+          description: The main page content must be wrapped in a <code>&lt;main&gt;</code> element. This allows users using assistive technologies to directly jump to the main content.
+          order: 2
+          options:
+            selector: main > h1
+
+        - id: 652b42eb-08aa-4a25-9889-5b463551d06f
+          key: axe-landmark-main-is-top-level
+          title: The <code>&lt;main&gt;</code> element is not nested inside other landmarks
+          description: The <code>&lt;main&gt;</code> element declares the main content of a page. Therefore, it must not be located within another landmark (like nav, footer, aside, etc.). Make sure that your <code>&lt;main&gt;</code> element is not nested inside an element with meaning (nesting it inside a <code>&lt;div&gt;</code> is fine).
+          order: 3
+
+        - id: 1ec577a4-e9fc-4fb6-abf8-4d5f7a1d429a
+          key: axe-landmark-no-duplicate-main
+          title: There must be at most one <code>&lt;main&gt;</code> element
+          description: A page can contain no more than one <code>&lt;main&gt;</code> element.
+          order: 4
+
+        - id: 1311e9a6-5195-4a52-8023-418a2fd54fcb
+          key: element-not-exists
+          title: The navigation is not inside the <code>&lt;main&gt;</code> element
+          description: The navigation is not part of the main content of the page. Therefore it should not be located inside the main landmark of the page.
+          order: 5
+          options:
+            selector: main h2
+
+    - id: 8b0ee1b9-1e73-4f1d-aeed-66c7bb18cdd5
+      order: 2
+      type: quiz
+      question: What is the purpose of the <code>&lt;div&gt;</code> element?
+      answer_options:
+        - id: 907a7bef-648d-437c-a432-36e1f0b3c837
+          text: To group multiple elements together for styling purposes.
+          correct: true
+        - id: dd7685b0-d5d4-4196-9a7f-36ffd3c5f5a9
+          text: To structure a website in a meaningful way.
+          correct: false
+        - id: 7d5a8feb-a58f-45af-9ed7-86c85b1e9f14
+          text: To mark the main content of a web page.
+          correct: false
+
+    - id: 2bfdce7b-bdab-4d58-a08a-f83ab037c760
+      order: 3
+      type: code
+      instructions: |-
+        <p>The <code>&lt;aside&gt;</code> element defines a part of the website that is indirectly related to the main content. It is typically displayed as a sidebar or call-out box. The content of the <code>&lt;aside&gt;</code> element should also make sense when it is separated from the main content.</p>
+      tasks:
+        - id: 45127bf0-a89f-47ff-a056-385991502bf2
+          text: <p>Add an <code>&lt;aside&gt;</code> element to the page, stating your personal opinion about dogs (or cats).</p>
+          hints:
+            - id: de8f8244-889f-4dfe-aa9b-ac4ed2cb1c80
+              text: |-
+                You use the <code>&lt;aside&gt;</code> element like so:
+                <code>
+                  &lt;aside&gt;
+                    Cats and dogs are both great!
+                  &lt;/aside&gt;
+                </code>
+            - id: cfb6b024-5e70-4b2f-83af-c7f323b9622d
+              text: |-
+                You should place the <code>&lt;aside&gt;</code> element somewhere outside the <code>&lt;main&gt;</code> element.
+                <code>
+                  &lt;main&gt;
+                    &lt;!-- main content --&gt;
+                  &lt;/main&gt;
+                  &lt;aside&gt;
+                    Cats and dogs are both great!
+                  &lt;/aside&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Cats are not better than dogs!</h1>
+                <h2>The unconditional love</h2>
+                <p>
+                  We never have to earn a dog's love, and we don't have to love them first.
+                </p>
+              </main>
+            </body>
+          </html>
+      requirements:
+        - id: c74697dd-448f-4edd-9bbe-985aa0563115
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+
+        - id: 9296f8c3-216a-43de-8a5f-4975c02fc182
+          key: element-exists
+          title: There is an <code>&lt;aside&gt;</code> element on the page
+          description: The text must be contained in an <code>&lt;aside&gt;</code> element.
+          order: 2
+          options:
+            selector: aside
+
+        - id: def43ca1-35f1-4bbb-9c9a-53cf7ba64598
+          key: axe-landmark-complementary-is-top-level
+          title: The <code>&lt;aside&gt;</code> element is not nested inside other landmarks
+          description: The <code>&lt;aside&gt;</code> element should not be nested inside another landmark like <code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;footer&gt;</code>, etc. Nesting landmarks can create confusing document structures.
+          order: 3
+
+    - id: 19d67cce-d48c-4401-80d9-2df3408bb3c7
+      order: 4
+      type: quiz
+      question: Where should the <code>&lt;aside&gt;</code> element be located?
+      answer_options:
+        - id: d9717c04-f3d5-4d68-a3b3-0c618f8b79ad
+          text: It must be outside the <code>&lt;main&gt;</code> element.
+          correct: true
+
+        - id: 8cb691c9-0cde-4992-8db3-a79fe30ed68e
+          text: It must be inside the <code>&lt;main&gt;</code> element.
+          correct: false
+
+        - id: 814161b9-24e5-4019-9235-0f84828b1f03
+          text: It doesn't matter where the element is placed.
+          correct: false
+
+    - id: 06b99900-ed5c-4092-9e61-ab114ef60077
+      order: 5
+      type: code
+      instructions: |-
+        <p>The <code>&lt;nav&gt;</code> element represents a navigation section like a main menu or a footer menu.</p>
+        <p>Inside the <code>&lt;nav&gt;</code> element, links should be organized in a list to emphasize the menu structure. If a menu has submenus (e.g. dropdowns), multiple lists should be nested to convey the menu's hierarchy.</p>
+      tasks:
+        - id: 8c995b5a-cb27-4e5d-805e-03debd07d676
+          text: </p>Create a <code>&lt;nav&gt;</code> element containing an unordered list with two links. We intent to show this nav on each page of our website.</p>
+          hints:
+            - id: 0ef3bc58-287a-4017-ab1e-0c3d59f6c02d
+              text: |-
+                You can wrap a list of links in a <code>&lt;nav&gt;</code> element like this:
+                <code>
+                  &lt;nav&gt;
+                    &lt;ul&gt;
+                      &lt;li&gt;
+                        &lt;a href="https://randomcatgifs.com"&gt;Cats&lt;/a&gt;
+                      &lt;/li&gt;
+                      &lt;li&gt;
+                        &lt;a href="https://openpuppies.com"&gt;Dogs&lt;/a&gt;
+                      &lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/nav&gt;
+                </code>
+            - id: dbbe7f9d-22ab-4082-81f8-467e40fcc081
+              text: The nav element should not be located inside the <code>&lt;main&gt;</code> element, since it will be present on each page.
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Cats are better than dogs!</h1>
+              </main>
+            </body>
+          </html>
+      requirements:
+        - id: 7aacab67-32e5-4183-98dc-92ce9dfa49ae
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+
+        - id: c08c92c7-5ed5-43b5-b527-8de4b4f1198f
+          key: element-exists
+          title: There is an <code>&lt;nav&gt;</code> element on the page
+          description: <code>&lt;nav&gt;</code> elements should be used to mark sections that contain content for navigation on the website. Assistive technologies can directly jump to these sections for easier navigation.
+          order: 2
+          options:
+            selector: nav
+
+        - id: e54e6e39-e116-42ce-a468-cab60992b376
+          key: element-not-exists
+          title: The navigation is located outside of main landmark.
+          description: The navigation should not be located inside the main landmark, since we plan to include this navigation on each page for the website.
+          order: 3
+          options:
+            selector: main nav
+
+        - id: 1876544e-e72c-4af8-8cad-3271105b1ed7
+          key: element-exists
+          title: The navigation contains a list with links.
+          description: The links in the navigation should be organized in a list to emphasize the menu structure. The unordered list should contain at least one item containing a link.
+          order: 4
+          options:
+            selector: nav ul > li a
+
+    - id: 1f2ae433-4521-4e76-9d15-fea0bf03bc69
+      order: 6
+      type: quiz
+      question: When can a <code>&lt;nav&gt;</code> element be placed inside the <code>&lt;main&gt;</code> element?
+      answer_options:
+        - id: f385ec7f-979a-49d0-8f3c-ef67ce9eb2d0
+          text: If this navigation is only relevant for the current page.
+          correct: true
+
+        - id: 5578ab29-d517-4676-8079-b48c3e6e96fc
+          text: If this navigation is relevant for all pages.
+          correct: false
+
+        - id: e93e27b3-c4a5-4592-8354-d9cb0747140a
+          text: Never, this is bad practice.
+          correct: false
+
+        - id: 19d4c85d-4a93-405e-85d0-abf4ac3e0926
+          text: Always, it must be inside the <code>&lt;main&gt;</code> element.
+          correct: false
+
+    - id: 3c423205-56c2-4aa3-81c1-e2f7b33bfeb1
+      order: 7
+      type: code
+      instructions: |-
+        <p>A <code>&lt;header&gt;</code> element can contain introductory information like a logo and a page title at the very top of a page. The main navigation can also be inside this <code>&lt;header&gt;</code>. Such a <code>&lt;header&gt;</code> element should not be inside the <code>&lt;main&gt;</code> element since it typically remains the same on all pages of a website.</p>
+      tasks:
+        - id: 59633f9d-87e7-48ed-9f5b-958e3e441982
+          text: <p>Add a <code>&lt;header&gt;</code> element to your website.</p>
+          hints:
+            - id: 74cded67-0930-48ac-be2c-0258e0a25ca9
+              text: |-
+                An example for the <code>&lt;header&gt;</code> could be:
+                <code>
+                  &lt;header&gt;
+                    &lt;h2&gt;The dog Blog&lt;/h2&gt;
+                  &lt;/header&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Dogs are better than cats!</h1>
+              </main>
+            </body>
+          </html>
+      requirements:
+        - id: ebebef40-5221-4f8b-bbee-897eff5f4476
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+
+        - id: ff2e933f-615f-4bfa-96d2-a5acbac80033
+          key: element-exists
+          title: The page contains a <code>&lt;header&gt;</code> element
+          description: The page must contain a <code>&lt;header&gt;</code> element.
+          order: 2
+          options:
+            selector: header
+
+        - id: dab36a40-56fc-4ddf-8cfc-2ef68c017f54
+          key: element-not-exists
+          title: The page <code>&lt;header&gt;</code> element is not inside the main landmark
+          description: The <code>&lt;header&gt;</code> element must not be located inside the main landmark, since in this case it does not include information that is unique to the current page.
+          order: 3
+          options:
+            selector: main header
+
+    - id: 23cdaa56-ab94-4e70-9ee3-1e0881bc4797
+      order: 8
+      type: code
+      instructions: |-
+        <p>The <code>&lt;footer&gt;</code> element represents the footer of a section. For a page it usually contains a copyright notice, a footer navigation or other information about the website.</p>
+        <p>The page <code>&lt;footer&gt;</code> element should not be inside the <code>&lt;main&gt;</code> element since it typically remains the same on all pages of the website.</p>
+      tasks:
+        - id: dd1d31f6-e2a4-447c-a22d-737c34969d08
+          text: <p>Add a <code>&lt;footer&gt;</code> element to your website.</p>
+          hints:
+            - id: be348338-45dd-4f53-a4ea-c4980c199f98
+              text: The <code>&lt;footer&gt;</code> element needs to be placed inside the <code>&lt;body&gt;</code> element.
+            - id: 774962b1-e8f3-4a38-9c15-3461a5b40372
+              text: |-
+                An example for the <code>&lt;footer&gt;</code> element could be:
+                <code>
+                  &lt;main&gt;
+                    &lt;!-- some content --&gt;
+                  &lt;/main&gt;
+
+                  &lt;footer&gt;
+                    &lt;p&gt;Copyright 2021&lt;/p&gt;
+                  &lt;/footer&gt;
+                </code>
+      code:
+        html: |-
+          <!DOCTYPE html>
+          <html lang="en">
+
+            <head>
+              <title>Cats or Dogs?</title>
+            </head>
+
+            <body>
+              <main>
+                <h1>Dogs are better than cats!</h1>
+              </main>
+            </body>
+          </html>
+      requirements:
+        - id: 6a6e339b-953b-4a13-afe9-21a76e9c5eff
+          key: html-is-valid
+          title: The HTML document is valid
+          description: If an HTML document is valid, it complies with all rules defined in the HTML standard. A valid HTML document is important for browsers and assistive technologies to correctly interpret the page content.
+          order: 1
+
+        - id: f4ac8122-40c5-4ea5-a142-917256196d9f
+          key: element-exists
+          title: The page contains a <code>&lt;footer&gt;</code> element
+          description: The page contains a <code>&lt;footer&gt;</code> element.
+          order: 2
+          options:
+            selector: footer
+
+        - id: 268ec346-363c-436d-826a-ab63cbcb0420
+          key: axe-landmark-contentinfo-is-top-level
+          title: The <code>&lt;footer&gt;</code> element is not located inside the main landmark
+          description: The <code>&lt;footer&gt;</code> element should not be located inside other landmarks, since it typically does not include information that is unique to the current page.
+          order: 3
