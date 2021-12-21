@@ -15,9 +15,9 @@ const Link: LinkComponent = ({ children, ...props }) => (
     {({ active }) => (
       <WrappedNextLink
         className={clsx(
-          "p-3 w-full block text-center font-normal leading-6 border-none transition-none",
-          active && "text-primary-light hover:text-primary-light underline-offset-4 decoration-2 decoration-blink underline",
-          !active && "text-light",
+          "p-3 w-full block text-center font-normal leading-6 border-none motion-safe:transition transition-300 underline decoration-2 underline-offset-4",
+          !active && "text-light decoration-transparent",
+          active && "text-primary-light hover:text-primary-light decoration-primary-light",
         )}
         {...props}
       >
@@ -40,8 +40,9 @@ const Button: ButtonComponent = ({ children, ...props }) => (
     {({ active }) => (
       <button
         className={clsx(
-          "text-center w-full leading-6 p-3",
-          active && "text-primary-light underline-offset-4 decoration-2 decoration-blink underline",
+          "text-center w-full leading-6 p-3 motion-safe:transition transition-300 underline decoration-2 underline-offset-4",
+          !active && "decoration-transparent",
+          active && "text-primary-light decoration-primary-light",
         )}
         {...props}
       >
