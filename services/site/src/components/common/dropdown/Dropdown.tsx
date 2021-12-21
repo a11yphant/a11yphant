@@ -14,9 +14,9 @@ export const Link: React.FC<LinkProps> = ({ children, ...props }) => (
     {({ active }) => (
       <WrappedNextLink
         className={clsx(
-          "text-center font-normal border-none block w-full leading-6 p-3 transition-none",
+          "p-3 w-full block text-center font-normal leading-6 border-none transition-none",
           active && "text-primary-light hover:text-primary-light underline-offset-4 decoration-2 decoration-blink underline",
-          !active && "text-white",
+          !active && "text-light",
         )}
         {...props}
       >
