@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
+import Dropdown from "app/components/common/dropdown/Dropdown";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
@@ -87,11 +88,11 @@ describe("Navigation", () => {
     expect(view.exists(A11yphantLogo)).toBeTruthy();
   });
 
-  it("renders an avatar if the user is registered", () => {
+  it("renders the user dropdown if the user is registered", () => {
     mockRegisteredUser();
     const view = shallowRenderNavigation();
 
-    expect(view.exists(UserAvatar)).toBeTruthy();
+    expect(view.exists(Dropdown)).toBeTruthy();
   });
 
   it("renders no avatar if the user is not registered", () => {
