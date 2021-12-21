@@ -48,22 +48,20 @@ const Level: React.FunctionComponent = () => {
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
   const header = (
-    <>
-      <Navigation displayBreadcrumbs>
-        <Transition
-          show={autoSaveLoading}
-          enter="transition-opacity duration-300"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-300 delay-1000"
-          leaveTo="opacity-0"
-        >
-          <span>
-            <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
-            <LoadingIndicator className={clsx("inline ml-4")} />
-          </span>
-        </Transition>
-      </Navigation>
-    </>
+    <Navigation displayBreadcrumbs>
+      <Transition
+        show={autoSaveLoading}
+        enter="transition-opacity duration-300"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-300 delay-1000"
+        leaveTo="opacity-0"
+      >
+        <span>
+          <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
+          <LoadingIndicator className={clsx("inline ml-4")} />
+        </span>
+      </Transition>
+    </Navigation>
   );
 
   return (
