@@ -38,12 +38,35 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
           <Breadcrumbs />
         </div>
       )}
-      <div className={clsx("hidden justify-end items-center", "sm:flex")}>
-        {children}
+      <div className={clsx("flex justify-end items-center")}>
+        <div className={clsx("hidden justify-end items-center mr-4", "sm:flex")}>
+          {children}
+          {!currentUser?.isRegistered && (
+            <>
+              <Button
+                primary
+                onClick={() => {
+                  userAccountModalApi.show("signup");
+                }}
+                className="mx-4 px-6"
+              >
+                Sign Up
+              </Button>{" "}
+              <Button
+                onClick={() => {
+                  userAccountModalApi.show("login");
+                }}
+                className="px-6"
+              >
+                Login
+              </Button>
+            </>
+          )}
+        </div>
         {currentUser?.isRegistered && (
           <Dropdown
             triggerButton={
-              <Dropdown.TriggerButton className="hover:text-primary-light">
+              <Dropdown.TriggerButton className="hover:text-primary-light motion-safe:transition-colors transition-300 align-middle">
                 <span className={clsx("sr-only")}>User Menu</span>
                 <UserAvatar />
               </Dropdown.TriggerButton>
@@ -53,27 +76,6 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
             </Dropdown.Group>
           </Dropdown>
-        )}
-        {!currentUser?.isRegistered && (
-          <>
-            <Button
-              primary
-              onClick={() => {
-                userAccountModalApi.show("signup");
-              }}
-              className="mx-4 px-6"
-            >
-              Sign Up
-            </Button>{" "}
-            <Button
-              onClick={() => {
-                userAccountModalApi.show("login");
-              }}
-              className="px-6"
-            >
-              Login
-            </Button>
-          </>
         )}
       </div>
     </header>
