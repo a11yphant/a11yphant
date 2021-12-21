@@ -66,7 +66,6 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
       <iframe
         title="Preview of the code in the editor"
         className={clsx("w-full h-[90%] pb-8")}
-        tabIndex={-1}
         srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />
     </div>
