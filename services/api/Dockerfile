@@ -56,6 +56,7 @@ COPY --from=production-dependencies /app/package* ./
 COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=builder /app/nest-cli.json ./
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/mail-templates ./mail-templates
 
 CMD ["node", "dist/main.js"]
 
