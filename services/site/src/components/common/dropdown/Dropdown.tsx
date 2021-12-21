@@ -40,7 +40,7 @@ const Button: ButtonComponent = ({ children, ...props }) => (
     {({ active }) => (
       <button
         className={clsx(
-          "text-center w-full leading-6 p-3 motion-safe:transition transition-300 underline decoration-2 underline-offset-4",
+          "p-3 w-full text-center leading-6 motion-safe:transition transition-300 underline decoration-2 underline-offset-4",
           !active && "decoration-transparent",
           active && "text-primary-light decoration-primary-light",
         )}
