@@ -7,17 +7,28 @@ import clsx from "clsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
-interface FlashMessageProps {
-  show: boolean;
-  onClose: () => void;
+export enum FlashMessageType {
+  STATUS = "status",
+  ALERT = "alert",
 }
 
-export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ children, show, onClose }) => {
+export interface FlashMessageProps {
+  show: boolean;
+  onClose: () => void;
+  type?: FlashMessageType;
+}
+
+export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ children, show, onClose, type = FlashMessageType.STATUS }) => {
   const [rootNode, setRootNode] = React.useState<HTMLElement>();
   const prefersReducedMotion = usePrefersReducedMotion();
 
   React.useEffect(() => {
     const rootNode = document.getElementById(FLASH_MESSAGE_PORTAL_ROOT_ID);
+
+    if (!rootNode) {
+      console.error("Can't show FlashMessage: No FlashMessagePortalRoot defined in current scope");
+    }
+
     setRootNode(rootNode);
   }, []);
 
@@ -38,7 +49,10 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         leaveFrom="translate-y-0"
         leaveTo="-translate-y-[3.75rem]"
       >
-        <div className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center")}>
+        <div
+          className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center")}
+          role={type === FlashMessageType.ALERT ? "alert" : "status"}
+        >
           <span className={clsx("basis-12 flex-shrink hidden", "md:block")} />
           <div className={clsx("flex-auto pr-4 pl-9 text-left", "md:text-center")}>{children}</div>
           <Button

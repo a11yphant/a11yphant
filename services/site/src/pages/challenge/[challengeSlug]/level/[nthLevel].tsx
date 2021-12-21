@@ -2,6 +2,8 @@ import { Transition } from "@headlessui/react";
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
+import { FlashMessage } from "app/components/common/flashMessage/FlashMessage";
+import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
@@ -48,20 +50,23 @@ const Level: React.FunctionComponent = () => {
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
   const header = (
-    <Navigation displayBreadcrumbs>
-      <Transition
-        show={autoSaveLoading}
-        enter="transition-opacity duration-300"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-300 delay-1000"
-        leaveTo="opacity-0"
-      >
-        <span>
-          <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
-          <LoadingIndicator className={clsx("inline ml-4")} />
-        </span>
-      </Transition>
-    </Navigation>
+    <>
+      <Navigation displayBreadcrumbs>
+        <Transition
+          show={autoSaveLoading}
+          enter="transition-opacity duration-300"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-300 delay-1000"
+          leaveTo="opacity-0"
+        >
+          <span>
+            <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
+            <LoadingIndicator className={clsx("inline ml-4")} />
+          </span>
+        </Transition>
+      </Navigation>
+      <FlashMessagePortalRoot />
+    </>
   );
 
   return (
@@ -98,6 +103,17 @@ const Level: React.FunctionComponent = () => {
           <SmallScreenNotification />
           {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
+          <FlashMessage
+            show={true}
+            onClose={() => {
+              return;
+            }}
+          >
+            <span className={clsx("pr-3")} aria-hidden={true}>
+              🚀
+            </span>
+            Reminder: You can use hints if you are stuck
+          </FlashMessage>
         </main>
       </FullScreenLayout>
     </>
