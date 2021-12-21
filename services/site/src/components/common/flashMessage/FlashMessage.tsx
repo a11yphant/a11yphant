@@ -16,9 +16,10 @@ export interface FlashMessageProps {
   show: boolean;
   onClose: () => void;
   type?: FlashMessageType;
+  className?: string;
 }
 
-export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ children, show, onClose, type = FlashMessageType.STATUS }) => {
+export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ children, show, onClose, type = FlashMessageType.STATUS, className }) => {
   const [rootNode, setRootNode] = React.useState<HTMLElement>();
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -50,7 +51,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         leaveTo="-translate-y-[3.75rem]"
       >
         <div
-          className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center")}
+          className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center", className)}
           role={type === FlashMessageType.ALERT ? "alert" : "status"}
         >
           <span className={clsx("basis-12 flex-shrink hidden", "md:block")} />

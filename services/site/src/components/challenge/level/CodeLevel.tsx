@@ -4,7 +4,10 @@ import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
+import { NUM_FAILED_LEVELS_IN_A_ROW_Key } from "app/components/constants/constants";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
+import useSessionState from "app/hooks/useSessionState";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
@@ -18,7 +21,10 @@ interface CodeLevelProps {
 
 const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
+  const { challengeSlug, nthLevel } = router.query;
   const errorDialogApi = useErrorDialogApi();
+  const flashMessageApi = useFlashMessageApi();
+  const [failedLevelsInARow] = useSessionState<number>(`${NUM_FAILED_LEVELS_IN_A_ROW_Key}.${challengeSlug}.${Number(nthLevel)}`, 0);
 
   const {
     setLevelId,
@@ -29,6 +35,23 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     updateSubmission,
     loading: autoSaveLoading,
   } = useSubmissionAutoSave();
+
+  React.useEffect(() => {
+    if (failedLevelsInARow >= 2) {
+      flashMessageApi.show(
+        <>
+          <span className={clsx("pr-3")} aria-hidden={true}>
+            🚀
+          </span>
+          Reminder: You can use hints if you are stuck
+        </>,
+      );
+    }
+
+    return () => {
+      flashMessageApi.hide();
+    };
+  }, [failedLevelsInARow]);
 
   React.useEffect(() => {
     onAutoSaveLoadingChange(autoSaveLoading);
