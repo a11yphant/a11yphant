@@ -5,8 +5,19 @@ import { useDatabase } from "@tests/support/helpers";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { HashService } from "@/authentication/hash.service";
+import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
+
+function createAuthenticationService(
+  partials: { userService?: Partial<UserService>; hashService?: Partial<HashService>; jwtService?: Partial<JwtService> } = {},
+): AuthenticationService {
+  const userService = createMock<UserService>(partials.userService);
+  const hashService = createMock<HashService>(partials.hashService);
+  const jwtService = createMock<JwtService>(partials.jwtService);
+
+  return new AuthenticationService(userService, hashService, jwtService);
+}
 
 describe("authentication service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
@@ -23,26 +34,25 @@ describe("authentication service", () => {
         data: UserFactory.build({ email }),
       });
 
-      const service = new AuthenticationService(
-        createMock<UserService>({
+      const service = createAuthenticationService({
+        userService: {
           findByEmail: jest.fn().mockResolvedValue(new User(user)),
-        }),
-        createMock<HashService>({
+        },
+        hashService: {
           compare: jest.fn().mockResolvedValue(true),
-        }),
-      );
+        },
+      });
 
       const loggedInUser = await service.login({ email: user.email, password: "test_pw" });
       expect(loggedInUser.email).toBe(email);
     });
 
     it("throws an error if the email is not found.", () => {
-      const service = new AuthenticationService(
-        createMock<UserService>({
+      const service = createAuthenticationService({
+        userService: {
           findByEmail: jest.fn().mockResolvedValue(null),
-        }),
-        createMock<HashService>(),
-      );
+        },
+      });
 
       expect(service.login({ email: "test_mail", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
@@ -54,14 +64,14 @@ describe("authentication service", () => {
         data: UserFactory.build(),
       });
 
-      const service = new AuthenticationService(
-        createMock<UserService>({
+      const service = createAuthenticationService({
+        userService: {
           findByEmail: jest.fn().mockResolvedValue(new User(user)),
-        }),
-        createMock<HashService>({
+        },
+        hashService: {
           compare: jest.fn().mockResolvedValue(false),
-        }),
-      );
+        },
+      });
 
       expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
