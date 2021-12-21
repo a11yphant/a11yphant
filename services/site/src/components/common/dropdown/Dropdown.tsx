@@ -48,7 +48,7 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => (
   </Menu.Item>
 );
 
-export const TriggerButton: React.FC = ({ children }) => <Menu.Button className="">{children}</Menu.Button>;
+export const TriggerButton: React.FC = ({ children }) => <Menu.Button>{children}</Menu.Button>;
 
 interface DropdownProps {
   triggerButton: React.ReactElement;
