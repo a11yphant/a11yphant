@@ -20,6 +20,7 @@ COPY services/api/tsconfig.json ./
 COPY services/api/tsconfig.build.json ./
 COPY services/api/nest-cli.json ./
 COPY services/api/src ./src
+COPY services/api/mail-templates ./mail-templates
 
 RUN npm run build
 
@@ -41,6 +42,7 @@ COPY --from=production-dependencies /app/package* ./
 COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=builder /app/nest-cli.json ./
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/mail-templates ./mail-templates
 COPY services/api/prisma ./prisma
 COPY challenges/ ./challenges
 
