@@ -39,7 +39,6 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                 "mx-1 mb-2 px-16 py-2.5 border-primary border-2 rounded tracking-wider",
                 "transition duration-300",
                 "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
-                "focus:text-light focus:bg-primary-dark focus:border-primary-dark",
               )}
             >
               Sign Up

@@ -34,7 +34,7 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
             "mr-16 border-b-2 border-transparent",
             "transition-colors duration-300",
             "hover:text-primary-light hover:border-primary-light",
-            "focus:text-primary-light focus:border-primary-light",
+            "focus-rounded-instead-of-underline",
           )}
         >
           {cancelButtonLabel ?? "Cancel"}

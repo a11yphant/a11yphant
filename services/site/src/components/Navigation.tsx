@@ -23,9 +23,10 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
       <Link href="/">
         <a
           className={clsx(
-            "block text-light border-none col-span-1 max-w-max",
+            "block text-light border-none rounded col-span-1 max-w-max py-1 px-2 -ml-2",
             "transition ease-in-out duration-300",
             "motion-safe:hover:scale-110 motion-reduce:border-solid",
+            "focus-outline-offset",
           )}
         >
           <A11yphantLogo className="w-36" />
@@ -41,7 +42,13 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {children}
         {currentUser?.isRegistered && (
           <Link href={`/profile/${currentUser?.id}`}>
-            <a className={clsx("text-light ml-4", "hover:text-primary-light hover:border-transparent")}>
+            <a
+              className={clsx(
+                "text-light ml-4 px-3 py-3",
+                "hover:text-primary-light hover:border-transparent",
+                "focus:transition-none focus-outline-offset",
+              )}
+            >
               <span className={clsx("sr-only")}>Your Profile</span>
               <UserAvatar />
             </a>
@@ -62,7 +69,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               onClick={() => {
                 userAccountModalApi.show("login");
               }}
-              className="px-6"
+              className={clsx("px-8 py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
             >
               Login
             </Button>
