@@ -14,10 +14,6 @@ const useSessionState = <S extends NoFunctionValue = undefined>(
   const [state, setState] = React.useState<S>();
 
   React.useEffect(() => {
-    console.log("new state ", state);
-  }, [state]);
-
-  React.useEffect(() => {
     const item = sessionStorage.getItem(key);
 
     if (item) {
