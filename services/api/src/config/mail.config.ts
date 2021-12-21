@@ -8,6 +8,6 @@ export default registerAs("mail", () => {
       endpoint: process.env.API_SMTP_ENDPOINT || process.env.AWS_SES_SMTP_ENDPOINT,
       port: process.env.API_SMTP_PORT || process.env.AWS_SES_SMTP_PORT,
     },
-    from: process.env.MAIL_FROM || "a11yphant <no-reply@a11yphant.com>",
+    from: process.env.MAIL_FROM || `a11yphant <no-reply@${process.env.API_HOST}>`,
   };
 });
