@@ -4,6 +4,8 @@ import { render, screen } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
 import Dropdown from "app/components/common/dropdown/Dropdown";
+import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
+import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
@@ -52,6 +54,7 @@ const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): 
     React.cloneElement(navigation, {
       ...props,
     }),
+    { wrapper: FlashMessageContextProvider },
   );
 };
 
@@ -128,6 +131,13 @@ describe("Navigation", () => {
     const view = shallowRenderNavigation();
 
     expect(view.find(Button).length).toBe(2);
+  });
+
+  it("renders a FlashMessagePortalRoot", () => {
+    mockRegisteredUser();
+    const view = shallowRenderNavigation();
+
+    expect(view.exists(FlashMessagePortalRoot)).toBeTruthy();
   });
 
   it("calls userAccountModalApi.show with the mode 'signup' after a click on `sign up`", async () => {
