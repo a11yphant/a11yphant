@@ -78,12 +78,12 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         show={show}
         enter={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out delay-500"}
         enterFrom="h-0"
-        enterTo="h-[3.75rem]"
+        enterTo="h-[4.5rem]"
         leave={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out"}
-        leaveFrom="h-[3.75rem]"
+        leaveFrom="h-[4.5rem]"
         leaveTo="h-0"
       >
-        <div className={clsx("h-[3.75rem]")} />
+        <div className={clsx("h-[4.5rem]")} />
       </Transition>
     </>,
     rootNode,
