@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import Dropdown, { Button, Group, Link, TriggerButton } from "app/components/common/dropdown/Dropdown";
+import Dropdown from "app/components/common/dropdown/Dropdown";
 import React from "react";
 
 function renderAndOpenDropdown(children: React.ReactNode = <></>): void {
-  render(<Dropdown triggerButton={<TriggerButton>Open</TriggerButton>}>{children}</Dropdown>);
+  render(<Dropdown triggerButton={<Dropdown.TriggerButton>Open</Dropdown.TriggerButton>}>{children}</Dropdown>);
 
   const triggerButton = screen.getByRole("button", { name: "Open" });
   triggerButton.click();
@@ -11,7 +11,7 @@ function renderAndOpenDropdown(children: React.ReactNode = <></>): void {
 
 describe("dropdown", () => {
   it("renders the trigger button", () => {
-    render(<Dropdown triggerButton={<TriggerButton>Trigger Button</TriggerButton>}></Dropdown>);
+    render(<Dropdown triggerButton={<Dropdown.TriggerButton>Trigger Button</Dropdown.TriggerButton>}></Dropdown>);
 
     expect(screen.getByRole("button", { name: "Trigger Button" })).toBeInTheDocument();
   });
@@ -31,14 +31,14 @@ describe("dropdown", () => {
 
   it("renders the button as a menuitem", async () => {
     const content = "button";
-    renderAndOpenDropdown(<Button>{content}</Button>);
+    renderAndOpenDropdown(<Dropdown.Button>{content}</Dropdown.Button>);
 
     expect(await screen.findByRole("menuitem", { name: content })).toBeInTheDocument();
   });
 
   it("renders the link as a menuitem", async () => {
     const content = "link";
-    renderAndOpenDropdown(<Link href="/">{content}</Link>);
+    renderAndOpenDropdown(<Dropdown.Link href="/">{content}</Dropdown.Link>);
 
     expect(await screen.findByRole("menuitem", { name: content })).toBeInTheDocument();
   });
@@ -46,10 +46,10 @@ describe("dropdown", () => {
   it("renders items that are grouped together", async () => {
     const content = "group";
     renderAndOpenDropdown(
-      <Group>
-        <Button>{content}</Button>
-        <Link href="/">{content}</Link>
-      </Group>,
+      <Dropdown.Group>
+        <Dropdown.Button>{content}</Dropdown.Button>
+        <Dropdown.Link href="/">{content}</Dropdown.Link>
+      </Dropdown.Group>,
     );
 
     expect(await screen.findAllByRole("menuitem")).toHaveLength(2);
@@ -57,7 +57,7 @@ describe("dropdown", () => {
 
   it("calls onClick when clicking on a menu item button", async () => {
     const onClick = jest.fn();
-    renderAndOpenDropdown(<Button onClick={onClick}>Button</Button>);
+    renderAndOpenDropdown(<Dropdown.Button onClick={onClick}>Button</Dropdown.Button>);
 
     const button = await screen.findByRole("menuitem", { name: "Button" });
     button.click();

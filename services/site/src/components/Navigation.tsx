@@ -7,7 +7,7 @@ import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
-import Dropdown, { Group, Link as DropdownLink, TriggerButton } from "./common/dropdown/Dropdown";
+import Dropdown from "./common/dropdown/Dropdown";
 import UserAvatar from "./icons/UserAvatar";
 
 export interface NavigationProps {
@@ -43,15 +43,15 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {currentUser?.isRegistered && (
           <Dropdown
             triggerButton={
-              <TriggerButton>
+              <Dropdown.TriggerButton>
                 <span className={clsx("sr-only")}>User Menu</span>
                 <UserAvatar />
-              </TriggerButton>
+              </Dropdown.TriggerButton>
             }
           >
-            <Group>
-              <DropdownLink href={`/profile/${currentUser?.id}`}>Public Profile</DropdownLink>
-            </Group>
+            <Dropdown.Group>
+              <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+            </Dropdown.Group>
           </Dropdown>
         )}
         {!currentUser?.isRegistered && (

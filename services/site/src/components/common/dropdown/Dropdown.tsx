@@ -9,7 +9,8 @@ const WrappedNextLink: React.FC<LinkProps & { className: string }> = ({ href, ch
   </NextLink>
 );
 
-export const Link: React.FC<LinkProps> = ({ children, ...props }) => (
+type LinkComponent = React.FC<LinkProps>;
+const Link: LinkComponent = ({ children, ...props }) => (
   <Menu.Item>
     {({ active }) => (
       <WrappedNextLink
@@ -26,13 +27,15 @@ export const Link: React.FC<LinkProps> = ({ children, ...props }) => (
   </Menu.Item>
 );
 
-export const Group: React.FC = ({ children }) => <div className="my-3 mx-10">{children}</div>;
+type GroupComponent = React.FC;
+export const Group: GroupComponent = ({ children }) => <div className="my-3 mx-10">{children}</div>;
 
 interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, ...props }) => (
+type ButtonComponent = React.FC<ButtonProps>;
+const Button: ButtonComponent = ({ children, ...props }) => (
   <Menu.Item>
     {({ active }) => (
       <button
@@ -48,13 +51,21 @@ export const Button: React.FC<ButtonProps> = ({ children, ...props }) => (
   </Menu.Item>
 );
 
-export const TriggerButton: React.FC = ({ children }) => <Menu.Button>{children}</Menu.Button>;
+type TriggerButtonComponent = React.FC;
+const TriggerButton: TriggerButtonComponent = ({ children }) => <Menu.Button>{children}</Menu.Button>;
 
 interface DropdownProps {
   triggerButton: React.ReactElement;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ children, triggerButton }) => {
+type DropdownComponent = React.FC<DropdownProps> & {
+  Link: LinkComponent;
+  Button: ButtonComponent;
+  TriggerButton: TriggerButtonComponent;
+  Group: GroupComponent;
+};
+
+const Dropdown: DropdownComponent = ({ children, triggerButton }) => {
   return (
     <Menu as="div" className="relative inline-block">
       {triggerButton}
@@ -80,5 +91,10 @@ const Dropdown: React.FC<DropdownProps> = ({ children, triggerButton }) => {
     </Menu>
   );
 };
+
+Dropdown.Button = Button;
+Dropdown.Group = Group;
+Dropdown.Link = Link;
+Dropdown.TriggerButton = TriggerButton;
 
 export default Dropdown;
