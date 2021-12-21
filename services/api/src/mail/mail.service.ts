@@ -14,8 +14,8 @@ export class MailService {
 
     const confirmationLink = await this.generateConfirmationLink(user);
 
-    await this.mailerService
-      .sendMail({
+    try {
+      await this.mailerService.sendMail({
         to: user.email,
         subject: "Confirm your E-Mail",
         template: "./registration",
@@ -23,9 +23,12 @@ export class MailService {
           displayName: user.displayName || user.email,
           confirmationLink,
         },
-      })
-      .then(() => this.logger.log(`Successfully sent Mail to ${user.email}`))
-      .catch((e) => this.logger.error(e.message));
+      });
+
+      this.logger.log(`Successfully sent Mail to ${user.email}`);
+    } catch (error) {
+      this.logger.error(`Encountered Error while sending registration mail to ${user.email}: ${error.message}`);
+    }
   }
 
   async generateConfirmationLink(user: User): Promise<string> {
