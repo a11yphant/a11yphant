@@ -14,10 +14,13 @@ const useSessionState = <S extends NoFunctionValue = undefined>(
   const [state, setState] = React.useState<S>();
 
   React.useEffect(() => {
+    console.log("new state ", state);
+  }, [state]);
+
+  React.useEffect(() => {
     const item = sessionStorage.getItem(key);
 
     if (item) {
-      console.log("parsed ", JSON.parse(item));
       setState(JSON.parse(item) as S);
       return;
     }
@@ -34,6 +37,8 @@ const useSessionState = <S extends NoFunctionValue = undefined>(
     if (state) {
       const serializedState = JSON.stringify(state);
       sessionStorage.setItem(key, serializedState);
+    } else {
+      sessionStorage.removeItem(key);
     }
   }, [key, state]);
 
