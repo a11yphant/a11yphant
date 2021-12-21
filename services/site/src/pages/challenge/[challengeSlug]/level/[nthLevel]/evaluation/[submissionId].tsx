@@ -1,7 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
-import { NUM_FAILED_LEVELS_IN_A_ROW_Key } from "app/components/constants/constants";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
@@ -19,7 +18,8 @@ import {
   ResultStatus,
   useChallengeBySlugQuery,
 } from "app/generated/graphql";
-import useSessionState from "app/hooks/useSessionState";
+import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
+import useSessionState from "app/hooks/sessionState/useSessionState";
 import { initializeApollo } from "app/lib/apollo-client";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
@@ -37,7 +37,7 @@ export interface EvaluationRouterParams {
 const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
-  const [, setFailedLevelsInARow] = useSessionState<number>(`${NUM_FAILED_LEVELS_IN_A_ROW_Key}.${challengeSlug}.${Number(nthLevel)}`, 0);
+  const [, setFailedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
   const { data } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 

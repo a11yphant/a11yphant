@@ -5,9 +5,9 @@ import Sidebar from "app/components/challenge/Sidebar";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
-import { NUM_FAILED_LEVELS_IN_A_ROW_Key } from "app/components/constants/constants";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
-import useSessionState from "app/hooks/useSessionState";
+import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
+import useSessionState from "app/hooks/sessionState/useSessionState";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
@@ -24,7 +24,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   const { challengeSlug, nthLevel } = router.query;
   const errorDialogApi = useErrorDialogApi();
   const flashMessageApi = useFlashMessageApi();
-  const [failedLevelsInARow] = useSessionState<number>(`${NUM_FAILED_LEVELS_IN_A_ROW_Key}.${challengeSlug}.${Number(nthLevel)}`, 0);
+  const [failedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
   const {
     setLevelId,
