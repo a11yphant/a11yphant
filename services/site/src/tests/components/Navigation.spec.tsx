@@ -1,8 +1,9 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import Button from "app/components/buttons/Button";
+import Dropdown from "app/components/common/dropdown/Dropdown";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
@@ -16,6 +17,11 @@ import React, { PropsWithChildren } from "react";
 const mockShow = jest.fn();
 const mockHide = jest.fn();
 
+jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
+  __esModule: true,
+  default: () => <></>,
+}));
+
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
     show: mockShow,
@@ -27,8 +33,26 @@ jest.mock("app/hooks/useCurrentUser", () => ({
   useCurrentUser: jest.fn(),
 }));
 
-const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): ShallowWrapper => {
-  return shallow(<Navigation {...props} />);
+let navigation;
+
+beforeEach(() => {
+  navigation = <Navigation />;
+});
+
+const shallowRenderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): ShallowWrapper => {
+  return shallow(
+    React.cloneElement(navigation, {
+      ...props,
+    }),
+  );
+};
+
+const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): void => {
+  render(
+    React.cloneElement(navigation, {
+      ...props,
+    }),
+  );
 };
 
 const mockRegisteredUser = (): void => {
@@ -51,8 +75,6 @@ const mockNonRegisteredUser = (): void => {
   }));
 };
 
-afterEach(cleanup);
-
 beforeEach(() => {
   jest.resetAllMocks();
 });
@@ -60,66 +82,60 @@ beforeEach(() => {
 describe("Navigation", () => {
   it("renders the header, logo and breadcrumbs", () => {
     mockRegisteredUser();
-    const wrapper = renderNavigation();
+    const view = shallowRenderNavigation();
 
-    expect(wrapper.exists("header")).toBeTruthy();
-    expect(wrapper.exists(A11yphantLogo)).toBeTruthy();
+    expect(view.exists("header")).toBeTruthy();
+    expect(view.exists(A11yphantLogo)).toBeTruthy();
   });
 
-  it("renders an avatar if the user is registered", () => {
+  it("renders the user dropdown if the user is registered", () => {
     mockRegisteredUser();
-    const wrapper = renderNavigation();
+    const view = shallowRenderNavigation();
 
-    expect(wrapper.exists(UserAvatar)).toBeTruthy();
+    expect(view.exists(Dropdown)).toBeTruthy();
   });
 
   it("renders no avatar if the user is not registered", () => {
     mockNonRegisteredUser();
-    const wrapper = renderNavigation();
+    const view = shallowRenderNavigation();
 
-    expect(wrapper.exists(UserAvatar)).toBeFalsy();
+    expect(view.exists(UserAvatar)).toBeFalsy();
   });
 
   it("renders the breadcrumbs if they are enabled", () => {
     mockRegisteredUser();
-    const wrapper = renderNavigation({ displayBreadcrumbs: true });
+    const view = shallowRenderNavigation({ displayBreadcrumbs: true });
 
-    expect(wrapper.exists(Breadcrumbs)).toBeTruthy();
+    expect(view.exists(Breadcrumbs)).toBeTruthy();
   });
 
   it("renders no breadcrumbs if they are disabled", () => {
     mockRegisteredUser();
-    const wrapper = renderNavigation({ displayBreadcrumbs: false });
+    const view = shallowRenderNavigation({ displayBreadcrumbs: false });
 
-    expect(wrapper.exists(Breadcrumbs)).toBeFalsy();
+    expect(view.exists(Breadcrumbs)).toBeFalsy();
   });
 
   it("renders the children", () => {
     mockRegisteredUser();
-    const wrapper = renderNavigation({ children: <p className="test-children">children</p> });
+    const view = shallowRenderNavigation({ children: <p className="test-children">children</p> });
 
-    expect(wrapper.exists(".test-children")).toBeTruthy();
+    expect(view.exists(".test-children")).toBeTruthy();
   });
 
   it("renders login and signup buttons if the user is not registered", () => {
     mockNonRegisteredUser();
-    const wrapper = renderNavigation();
+    const view = shallowRenderNavigation();
 
-    expect(wrapper.find(Button).length).toBe(2);
+    expect(view.find(Button).length).toBe(2);
   });
 
   it("calls userAccountModalApi.show with the mode 'signup' after a click on `sign up`", async () => {
     mockNonRegisteredUser();
     const userAccountModalApi = useUserAccountModalApi();
-    const wrapper = renderNavigation();
+    renderNavigation();
 
-    wrapper
-      .find(Button)
-      .findWhere((n) => {
-        return n.children().length === 1 && n.children().text() === "Sign Up";
-      })
-      .simulate("click");
-    wrapper.update();
+    screen.getByRole("button", { name: "Sign Up" }).click();
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
@@ -128,15 +144,9 @@ describe("Navigation", () => {
   it("calls userAccountModalApi.show with the mode 'login' after a click on `login` ", async () => {
     mockNonRegisteredUser();
     const userAccountModalApi = useUserAccountModalApi();
-    const wrapper = renderNavigation();
+    renderNavigation();
 
-    wrapper
-      .find(Button)
-      .findWhere((n) => {
-        return n.children().length === 1 && n.children().text() === "Login";
-      })
-      .simulate("click");
-    wrapper.update();
+    screen.getByRole("button", { name: "Login" }).click();
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("login");

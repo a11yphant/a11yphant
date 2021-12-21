@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import {
   DifficultyEasy,
   DifficultyHard,
@@ -10,8 +9,6 @@ import {
 import { ChallengeDifficulty } from "app/generated/graphql";
 import { shallow } from "enzyme";
 import React from "react";
-
-afterEach(cleanup);
 
 describe("Difficulties", () => {
   it("renders the difficulty `Easy` correctly", () => {

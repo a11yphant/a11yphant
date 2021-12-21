@@ -1,12 +1,11 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 
-afterEach(cleanup);
-
-const headingText = "Easy";
+const headingTextDifficulty = "Easy";
+const headingTextAll = "All challenges";
 
 const challenges = [
   {
@@ -21,22 +20,30 @@ const challenges = [
 ];
 
 describe("ChallengeList", () => {
-  it("renders the heading and description text", () => {
+  it("renders the heading, number of completed challenges and description text", () => {
     render(
       <ChallengeList
         heading={
           <>
             Easy
             <div className="w-3 h-5 border-2 rounded border-primary bg-primary ml-4" />
-            <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
-            <div className="w-3 h-5 border-2 rounded border-primary bg-white ml-1" />
+            <div className="w-3 h-5 border-2 rounded border-primary bg-light ml-1" />
+            <div className="w-3 h-5 border-2 rounded border-primary bg-light ml-1" />
           </>
         }
         challenges={challenges}
+        displayCompleted={true}
       />,
     );
 
-    expect(screen.getByText(headingText, { selector: "h3" })).toBeTruthy();
-    expect(screen.getByText("(1/1)", { selector: "p" })).toBeTruthy();
+    expect(screen.getByText(headingTextDifficulty, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.getByText("(1/1)", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it("renders no number of completed challenges", () => {
+    render(<ChallengeList heading={<>All challenges</>} challenges={challenges} displayCompleted={false} />);
+
+    expect(screen.getByText(headingTextAll, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.queryByText("(1/1)", { selector: "p" })).not.toBeInTheDocument();
   });
 });

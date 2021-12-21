@@ -28,55 +28,7 @@
         @apply m-0;
     }
 
-    @media (prefers-reduced-motion: no-preference) {
-        :focus {
-            transition: outline-offset 0.25s ease;
-            outline-offset: 5px;
-        }
-    }
-
-    *:focus {
-        outline: 2px solid #fff;
-        outline-offset: 2px;
-    }
-
-    *:focus-visible {
-        // focus styles for keyboard only
-        outline: 0.15rem solid #fff;
-    }
-
-    *:focus:not(:focus-visible) {
-        // focus styles for mouse & touch
-        outline: none;
-        // box-shadow: 0 0 0 0.15rem #fff;
-        // TODO: add polyfill for browsers that do not support focus-within
-    }
-
-    .focus-visible-outline {
-        gap: 2ch;
-
-        &:focus-visible {
-            outline: 0.15rem solid #fff;
-        }
-
-        &:focus-visible a:focus {
-            outline: none;
-        }
-    }
-
-    .focus-visible-boxShadow {
-        gap: 2ch;
-
-        &:focus-visible {
-            box-shadow: 0 0 0 0.25rem #fff;
-        }
-
-        &:focus-visible a:focus,
-        &:focus {
-            outline: none;
-        }
-    }
-
+    // Other Global Styles ---
     h1,
     .h1 {
         @apply text-7xl;

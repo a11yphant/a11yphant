@@ -1,13 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { cleanup } from "@testing-library/react";
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import Custom404 from "app/pages/404";
 import { shallow } from "enzyme";
 import Link from "next/link";
 import React from "react";
-
-afterEach(cleanup);
 
 const mockHeading = "Error 404";
 const mockText = "seems like you got lost in space";

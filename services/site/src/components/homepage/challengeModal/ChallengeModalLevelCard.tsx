@@ -33,7 +33,6 @@ export const ChallengeModalLevelCard = ({
           isFirstUnfinishedLevel && "border-primary bg-primary",
           "relative",
           "hover:bg-primary-dark hover:border-primary-dark",
-          "focus:bg-primary-dark focus:border-primary-dark",
         )}
       >
         <h3 className={clsx("text-base")}>

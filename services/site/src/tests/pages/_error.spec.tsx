@@ -1,15 +1,12 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import * as Sentry from "@sentry/nextjs";
-import { cleanup } from "@testing-library/react";
 import IllustrationLost from "app/components/icons/IllustrationLost";
 import CustomError from "app/pages/_error";
 import { shallow } from "enzyme";
 import { NextPageContext } from "next";
 import Link from "next/link";
 import React from "react";
-
-afterEach(cleanup);
 
 jest.mock("@sentry/nextjs", () => ({
   captureException: jest.fn(),

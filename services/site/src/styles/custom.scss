@@ -36,7 +36,7 @@
     }
 
     &:focus-within {
-        box-shadow: 0 0 0 0.25rem #fff;
+        outline: 5px solid #fff;
     }
 
     &:focus-within a:focus {
@@ -48,7 +48,7 @@
     @include card;
 
     &:focus-within {
-        box-shadow: 0 0 0 0.15rem #fff;
+        outline: 3px solid #fff;
     }
 }
 
@@ -66,4 +66,34 @@
     @apply mt-0;
     @apply mb-4;
     @apply inline-block;
+}
+
+// Reduced Motion ---
+@media (prefers-reduced-motion: no-preference) {
+    :focus {
+        transition: outline-offset 0.25s ease;
+        outline-offset: 5px;
+    }
+}
+
+// Focus Styles ---
+*:focus {
+    @apply outline-light;
+    @apply outline-3;
+    @apply outline;
+    @apply outline-offset-0;
+    @apply transition-none;
+}
+
+// Polyfill
+// This will hide the focus indicator if the element receives focus via the mouse,
+// but it will still show up on keyboard focus.
+.js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+}
+
+.focus-rounded-instead-of-underline {
+    @apply focus:rounded;
+    @apply focus:border-transparent;
+    @apply focus:outline-offset-4;
 }
