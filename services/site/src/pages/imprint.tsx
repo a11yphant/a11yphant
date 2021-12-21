@@ -48,7 +48,7 @@ const Imprint: React.FunctionComponent = () => {
                   "text-light font-sans font-normal border-light",
                   "transition-colors duration-300",
                   "hover:text-primary-light hover:border-transparent",
-                  "focus-visible-outline-offset",
+                  "focus-rounded-instead-of-underline",
                 )}
               >
                 drop us a line
@@ -73,7 +73,7 @@ const Imprint: React.FunctionComponent = () => {
                     "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>
@@ -89,7 +89,7 @@ const Imprint: React.FunctionComponent = () => {
                     "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   Luca Pircher <span className={clsx("sr-only")}>(opens in a new tab)</span>
@@ -105,7 +105,7 @@ const Imprint: React.FunctionComponent = () => {
                     "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   Thomas Dax <span className={clsx("sr-only")}>(opens in a new tab)</span>
@@ -121,7 +121,7 @@ const Imprint: React.FunctionComponent = () => {
                     "mt-2 text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   Michael Hinterhofer <span className={clsx("sr-only")}>(opens in a new tab)</span>

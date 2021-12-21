@@ -43,7 +43,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   info@a11yphant.com
@@ -62,7 +62,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     www.a11yphant.com
@@ -105,7 +105,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     What information do we collect?
@@ -119,7 +119,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     How do we use your information?
@@ -133,7 +133,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     Will your information be shared with anyone?
@@ -147,7 +147,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     Do we use cookies and other tracking technologies?
@@ -161,7 +161,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     How do we handle your social logins?
@@ -175,7 +175,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     How long do we keep your information?
@@ -189,7 +189,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     How do we keep your information safe?
@@ -203,7 +203,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     What are your privacy rights?
@@ -217,7 +217,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     Controls for do not track features
@@ -231,7 +231,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     Do we make updates to this notice?
@@ -245,7 +245,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     How can you contact us about this notice?
@@ -259,7 +259,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     How can you review, update or delete the data we collect from you?
@@ -303,7 +303,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     "how do we handle your social logins"
@@ -348,7 +348,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "text-light font-sans font-normal border-light",
                       "transition-colors duration-300",
                       "hover:text-primary-light hover:border-transparent",
-                      "focus-visible-outline-offset",
+                      "focus-rounded-instead-of-underline",
                     )}
                   >
                     "how do we handle your social logins"
@@ -437,7 +437,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   splitbee
@@ -550,7 +550,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   complain to your local data protection supervisory authority
@@ -568,7 +568,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   contact this data protection supervisory authority
@@ -584,7 +584,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   info@a11yphant.com
@@ -602,7 +602,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   contact us
@@ -665,7 +665,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   info@a11yphant.com
@@ -694,7 +694,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "text-light font-sans font-normal border-light",
                     "transition-colors duration-300",
                     "hover:text-primary-light hover:border-transparent",
-                    "focus-visible-outline-offset",
+                    "focus-rounded-instead-of-underline",
                   )}
                 >
                   send us an email
