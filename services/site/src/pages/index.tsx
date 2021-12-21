@@ -1,5 +1,3 @@
-import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
-import { useFlashMessageApi } from "app/components/common/flashMessage/useFlashMessage";
 import Footer from "app/components/Footer";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
@@ -20,24 +18,6 @@ import React from "react";
 const Home: React.FunctionComponent = () => {
   const router = useRouter();
   const { currentUser } = useCurrentUser();
-  // const [showFlashMessage, setShowFlashMessage] = React.useState(true);
-  //
-  // React.useEffect(() => {
-  //   console.log(showFlashMessage);
-  // }, [showFlashMessage]);
-
-  const flashMessageApi = useFlashMessageApi();
-
-  React.useEffect(() => {
-    flashMessageApi.show(
-      <>
-        <span className={clsx("pr-3")} aria-hidden={true}>
-          🚀
-        </span>
-        Reminder: You can use hints if you are stuck
-      </>,
-    );
-  }, []);
 
   const { data: dataEasyChallengesOpen } = useChallengesQuery({
     variables: { difficulty: ChallengeDifficulty.Easy, status: ChallengeStatus.Open },
@@ -82,19 +62,7 @@ const Home: React.FunctionComponent = () => {
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
-      {/*<FlashMessage*/}
-      {/*  show={showFlashMessage}*/}
-      {/*  onClose={() => {*/}
-      {/*    setShowFlashMessage(false);*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <span className={clsx("pr-3")} aria-hidden={true}>*/}
-      {/*    🚀*/}
-      {/*  </span>*/}
-      {/*  Reminder: You can use hints if you are stuck*/}
-      {/*</FlashMessage>*/}
       <Navigation displayBreadcrumbs />
-      <FlashMessagePortalRoot />
       <main>
         <h1 className={clsx("sr-only")} aria-label="Allyphant">
           a11yphant

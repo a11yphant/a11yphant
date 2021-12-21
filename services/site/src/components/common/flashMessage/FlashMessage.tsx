@@ -25,12 +25,12 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
   React.useEffect(() => {
     const rootNode = document.getElementById(FLASH_MESSAGE_PORTAL_ROOT_ID);
 
-    if (!rootNode) {
+    if (show && !rootNode) {
       console.error("Can't show FlashMessage: No FlashMessagePortalRoot defined in current scope");
     }
 
     setRootNode(rootNode);
-  }, []);
+  }, [show]);
 
   if (!rootNode) {
     return <></>;
