@@ -21,6 +21,9 @@ module.exports = {
       minHeight: {
         "4/10": "40%",
       },
+      outlineWidth: {
+        3: "3px",
+      },
       colors: {
         light: "#FFFFFF",
         dark: "#121212",

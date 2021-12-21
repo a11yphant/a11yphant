@@ -55,17 +55,25 @@
     - mv terraform /usr/local/bin/
     - cd -
 
+    - apt update
+    - apt install ca-certificates curl gnupg lsb-release -y
+    - curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    - echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+    - apt update
+    - apt install docker-ce-cli -y
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
     # seed database
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> services/api/.npmrc
-    - npm --prefix services/api ci
-    - npm --prefix services/api run prisma:migrate
-    - npm run import-challenges
+    - export CI_BUILD_NETWORK_ID="$HOSTNAME-job-$CI_JOB_ID-network"
+    - docker run -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod
+    - docker run -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run console:prod import:challenges
+    - npm run db-dump:update:ci --prefix tests
 
     # setup localstack
     - terraform -chdir=terraform/local init
     - terraform -chdir=terraform/local apply -auto-approve
   script:
-    - npm run cypress:run --prefix tests
+    - CYPRESS_IS_CI=true npm run cypress:run --prefix tests
   artifacts:
     when: on_failure
     expire_in: 1 week

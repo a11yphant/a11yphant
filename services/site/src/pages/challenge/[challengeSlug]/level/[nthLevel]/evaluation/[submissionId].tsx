@@ -96,7 +96,7 @@ const Evaluation: React.FunctionComponent = () => {
                   "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
                   "lg:flex",
                 )}
-                classNameBottomOverlay={"w-full h-52"}
+                classNameBottomOverlay={"w-full h-52 shrink-0 -mt-52"}
                 enableTopOverlay={false}
               >
                 <EvaluationBody requirements={submissionResult.requirements} />
