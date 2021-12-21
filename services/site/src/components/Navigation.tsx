@@ -43,7 +43,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
         {currentUser?.isRegistered && (
           <Dropdown
             triggerButton={
-              <Dropdown.TriggerButton>
+              <Dropdown.TriggerButton className="hover:text-primary-light">
                 <span className={clsx("sr-only")}>User Menu</span>
                 <UserAvatar />
               </Dropdown.TriggerButton>

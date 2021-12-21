@@ -51,8 +51,12 @@ const Button: ButtonComponent = ({ children, ...props }) => (
   </Menu.Item>
 );
 
-type TriggerButtonComponent = React.FC;
-const TriggerButton: TriggerButtonComponent = ({ children }) => <Menu.Button>{children}</Menu.Button>;
+interface TriggerButtonProps {
+  className?: string;
+}
+
+type TriggerButtonComponent = React.FC<TriggerButtonProps>;
+const TriggerButton: TriggerButtonComponent = ({ children, ...props }) => <Menu.Button {...props}>{children}</Menu.Button>;
 
 interface DropdownProps {
   triggerButton: React.ReactElement;
