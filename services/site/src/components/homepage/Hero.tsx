@@ -7,14 +7,14 @@ const Hero: React.FC = () => {
   return (
     <div
       className={clsx(
-        "max-w-screen-3xl mx-8 mt-12 mb-24 flex flex-col",
-        "sm:m-12",
+        "max-w-screen-3xl mx-8 mt-16 mb-24 flex flex-col",
+        "sm:m-12 sm:mt-20",
         "md:mx-24",
         "xl:min-h-[85vh] xl:flex-row xl:items-center",
         "2xl:mx-auto",
       )}
     >
-      <section className={clsx("flex flex-col justify-center mb-24", "xl:shrink xl:grow xl:mb-0", "2xl:ml-24")}>
+      <section className={clsx("flex flex-col justify-center mb-24", "md:mb-4", "xl:shrink xl:grow xl:mb-0", "2xl:ml-24")}>
         <h2
           className={clsx("mb-6 max-w-2xl font-bold font-sans text-3xl leading-tight", "sm:text-4xl sm:leading-snug", "xl:text-5xl xl:leading-snug")}
         >
@@ -31,7 +31,6 @@ const Hero: React.FC = () => {
               "w-max mt-8 px-6 py-2.5 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
               "transition duration-300",
               "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
-              "focus:text-light focus:bg-primary-dark focus:border-primary-dark",
             )}
           >
             Start Coding
@@ -41,8 +40,7 @@ const Hero: React.FC = () => {
       <section
         className={clsx(
           "p-8 bg-primary rounded-lg",
-          "md:px-12 md:py-10",
-          "lg:items-center lg:px-16 lg:py-14",
+          "md:hidden",
           "xl:block xl:px-20 xl:py-16 xl:max-w-xl xl:ml-12 xl:self-center xl:shrink-0",
           "2xl:mr-24",
         )}

@@ -39,7 +39,6 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
                     "w-max mt-8 px-6 py-2.5 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
                     "transition duration-300",
                     "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
-                    "focus:text-light focus:bg-primary-dark focus:border-primary-dark",
                   )}
                 >
                   Go to homepage

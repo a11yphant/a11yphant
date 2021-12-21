@@ -48,11 +48,12 @@ export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableP
             onClick={onClose}
             overrideClassName
             className={clsx(
-              "w-11 h-11 p-3.5 absolute top-4 right-4",
+              "w-11 h-11 p-3.5 absolute top-4 right-4 rounded",
               "z-10",
-              "transition-colors duration-300",
-              "hover:text-primary-light",
-              "focus-visible:text-primary-light",
+              "transition ease-in-out duration-300",
+              "hover:text-light",
+              "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
+              "focus:text-light",
             )}
           >
             <span className={clsx("sr-only")}>Close</span>

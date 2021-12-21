@@ -6,7 +6,13 @@
   "scripts": {
     "test": "cypress run",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "db:reset": "docker compose exec postgres psql -U a11yphant -c \"DROP SCHEMA public CASCADE; CREATE SCHEMA public;\" a11yphant",
+    "db:reset:ci": "docker run --network $CI_BUILD_NETWORK_ID --rm postgres psql $DB_URL -c \"DROP SCHEMA public CASCADE; CREATE SCHEMA public;\"",
+    "db-dump:update": "docker compose exec postgres pg_dump -U a11yphant a11yphant > db-dump.sql",
+    "db-dump:update:ci": "docker run --network $CI_BUILD_NETWORK_ID --rm postgres pg_dump $DB_URL > db-dump.sql",
+    "db-dump:import": "docker-compose exec postgres psql -U a11yphant a11yphant < db-dump.sql",
+    "db-dump:import:ci": "cat db-dump.sql | docker run --network $CI_BUILD_NETWORK_ID --rm -i postgres psql $DB_URL"
   },
   "author": "",
   "license": "ISC",

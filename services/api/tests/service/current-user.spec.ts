@@ -1,9 +1,6 @@
-import { Factory, USER, UserData } from "@tests/support/factories/database";
+import { createUserWithSessionCookie } from "@tests/support/authentication";
 import { useDatabase, useTestingApp } from "@tests/support/helpers";
 import gql from "graphql-tag";
-
-import { SessionToken } from "@/authentication/interfaces/session-token.interface";
-import { JwtService } from "@/authentication/jwt.service";
 
 describe("current user", () => {
   jest.setTimeout(10000);
@@ -30,12 +27,7 @@ describe("current user", () => {
     const app = getApp();
     const prisma = getPrismaService();
 
-    const user = await prisma.user.create({ data: Factory.build<UserData>(USER, { authProvider: "github", displayName: "Test User" }) });
-    const jwtService = app.get<JwtService>(JwtService);
-    const sessionToken: SessionToken = {
-      userId: user.id,
-    };
-    const cookie = await jwtService.createSignedToken(sessionToken, { subject: "session", expiresInSeconds: 3600 });
+    const { cookie, user } = await createUserWithSessionCookie(prisma, app);
 
     const graphqlClient = getGraphQlClient({ authCookie: cookie });
     const { data } = await graphqlClient.query({

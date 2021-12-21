@@ -42,7 +42,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             "w-full p-4 m-0 flex flex-row items-center justify-between font-normal text-left text-lg leading-8",
             "group transition duration-300",
             "hover:text-primary-light",
-            "focus-visible:outline-none focus:outline-none",
+            "focus:outline-none",
           )}
           overrideClassName
           aria-expanded={usedHints > 0}
@@ -72,7 +72,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
                 "mt-4 mb-4 font-normal border-b text-lg leading-8",
                 "transition duration-300",
                 "hover:text-primary-light hover:border-primary-light",
-                "focus:text-primary-light focus:border-primary-light focus-visible-outline",
+                "focus-rounded-instead-of-underline",
               )}
             >
               Show me another hint.

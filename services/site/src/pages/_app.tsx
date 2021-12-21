@@ -2,6 +2,7 @@ import "app/styles/nprogress.scss";
 import "app/styles/global.scss";
 import "app/styles/fonts.scss";
 import "app/styles/custom.scss";
+import "focus-visible/dist/focus-visible";
 
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider, EmotionCache } from "@emotion/react";

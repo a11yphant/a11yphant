@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 
 import Button from "./buttons/Button";
+import Dropdown from "./common/dropdown/Dropdown";
 import UserAvatar from "./icons/UserAvatar";
 
 export interface NavigationProps {
@@ -19,13 +20,14 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   const userAccountModalApi = useUserAccountModalApi();
 
   return (
-    <header className={clsx("pt-8 pb-6 px-11 grid grid-cols-2 relative z-10 bg-background", "lg:grid-cols-3")}>
+    <header className={clsx("pt-8 pb-6 px-8 grid grid-cols-2 relative z-10 bg-background", "sm:px-11", "lg:grid-cols-3")}>
       <Link href="/">
         <a
           className={clsx(
-            "block text-light border-none col-span-1 max-w-max",
+            "block text-light border-none rounded col-span-1 max-w-max py-1 px-2 -ml-2",
             "transition ease-in-out duration-300",
             "motion-safe:hover:scale-110 motion-reduce:border-solid",
+            "focus-outline-offset",
           )}
         >
           <A11yphantLogo className="w-36" />
@@ -37,36 +39,44 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
           <Breadcrumbs />
         </div>
       )}
-      <div className={clsx("hidden justify-end items-center", "sm:flex")}>
-        {children}
+      <div className={clsx("flex justify-end items-center")}>
+        <div className={clsx("hidden justify-end items-center mr-4", "sm:flex")}>
+          {children}
+          {!currentUser?.isRegistered && (
+            <>
+              <Button
+                primary
+                onClick={() => {
+                  userAccountModalApi.show("signup");
+                }}
+                className="mx-4 px-6"
+              >
+                Sign Up
+              </Button>{" "}
+              <Button
+                onClick={() => {
+                  userAccountModalApi.show("login");
+                }}
+                className={clsx("px-8 py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
+              >
+                Login
+              </Button>
+            </>
+          )}
+        </div>
         {currentUser?.isRegistered && (
-          <Link href={`/profile/${currentUser?.id}`}>
-            <a className={clsx("text-light ml-4", "hover:text-primary-light hover:border-transparent")}>
-              <span className={clsx("sr-only")}>Your Profile</span>
-              <UserAvatar />
-            </a>
-          </Link>
-        )}
-        {!currentUser?.isRegistered && (
-          <>
-            <Button
-              primary
-              onClick={() => {
-                userAccountModalApi.show("signup");
-              }}
-              className="mx-4 px-6"
-            >
-              Sign Up
-            </Button>{" "}
-            <Button
-              onClick={() => {
-                userAccountModalApi.show("login");
-              }}
-              className="px-6"
-            >
-              Login
-            </Button>
-          </>
+          <Dropdown
+            triggerButton={
+              <Dropdown.TriggerButton className="hover:text-primary-light motion-safe:transition-colors transition-300 align-middle">
+                <span className={clsx("sr-only")}>User Menu</span>
+                <UserAvatar />
+              </Dropdown.TriggerButton>
+            }
+          >
+            <Dropdown.Group>
+              <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+            </Dropdown.Group>
+          </Dropdown>
         )}
       </div>
     </header>

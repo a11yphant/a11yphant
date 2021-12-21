@@ -27,7 +27,9 @@ const Button: React.FunctionComponent<ButtonProps> = ({
         disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary",
         primary && "bg-primary text-light",
         !overrideClassName &&
-          "relative inline-flex items-center px-6 py-2.5 border-primary border-2 rounded tracking-wider transition duration-300 hover:text-light hover:bg-primary-dark hover:border-primary-dark focus:text-light focus:bg-primary-dark focus:border-primary-dark",
+          `relative inline-flex items-center px-6 py-2.5
+          border-primary border-2 rounded tracking-wider transition duration-300
+          hover:text-light hover:bg-primary-dark hover:border-primary-dark`,
       )}
       ref={innerRef}
       disabled={disabled}
