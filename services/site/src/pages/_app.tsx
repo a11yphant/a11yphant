@@ -6,7 +6,7 @@ import "app/styles/custom.scss";
 import { ApolloProvider } from "@apollo/client";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error/useErrorDialog";
-import { FlashMessageContextProvider } from "app/components/common/flashMessage/useFlashMessage";
+import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import ScrollOverlayWrapper, { ScrollOverlayWrapperProps } from "app/components/common/ScrollOverlayWrapper";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useApollo } from "app/lib/apollo-client";
