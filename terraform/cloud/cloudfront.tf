@@ -41,6 +41,7 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
+  # s3
   dynamic "ordered_cache_behavior" {
     for_each = ["/fonts/*", "/_next/static/*", "favicon.ico", "images/*", "/_next/image*"]
 
@@ -64,27 +65,6 @@ resource "aws_cloudfront_distribution" "site" {
       compress               = true
       viewer_protocol_policy = "redirect-to-https"
     }
-  }
-
-  ordered_cache_behavior {
-    path_pattern     = "/fonts/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.origin_id_site_http_api
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl                = 86400
-    default_ttl            = 86400
-    max_ttl                = 31536000
-    compress               = false
-    viewer_protocol_policy = "redirect-to-https"
   }
 
   # forward auth to api gateway
