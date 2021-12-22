@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import Footer from "app/components/Footer";
 import IllustrationLost from "app/components/icons/IllustrationLost";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
@@ -25,7 +26,7 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
         <title>Something went wrong | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
-      <FullScreenLayout header={<Navigation />}>
+      <FullScreenLayout header={<Navigation />} footer={<Footer />}>
         <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <section
             className={clsx("mx-8 py-8 h-full flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
