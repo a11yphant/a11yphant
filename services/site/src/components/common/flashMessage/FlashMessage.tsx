@@ -68,9 +68,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
             onClick={onClose}
             overrideClassName
             className={clsx(
-              "flex justify-center basis-12 shrink-0 grow-0",
-              "p-3.5",
-              "z-10",
+              "flex justify-center basis-12 shrink-0 grow-0 p-3.5 rounded z-10",
               "transition ease-in-out duration-300",
               "hover:text-light",
               "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
