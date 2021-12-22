@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
-import { ValidatePasswordResetTokenResultEnum } from "@/authentication/enums/validate-password-reset-token-result.enum";
+import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
 import { UserService } from "@/user/user.service";
@@ -78,7 +78,7 @@ describe("authentication service", () => {
     it("returns valid for valid tokens", async () => {
       const service = createAuthenticationService();
 
-      expect(await service.validatePasswordResetToken("valid_token")).toBe(ValidatePasswordResetTokenResultEnum.VALID);
+      expect(await service.validatePasswordResetToken("valid_token")).toBe(true);
     });
 
     it("returns invalid jwt if the jwt is invalid", async () => {
@@ -88,20 +88,12 @@ describe("authentication service", () => {
         },
       });
 
-      expect(await service.validatePasswordResetToken("invalid_token")).toBe(ValidatePasswordResetTokenResultEnum.INVALID_JWT);
-    });
-
-    it("returns expired if the jwt is expired", async () => {
-      const service = createAuthenticationService({
-        jwtService: {
-          decodeToken: jest.fn().mockReturnValue({ exp: 0 }),
-        },
-      });
-
-      expect(await service.validatePasswordResetToken("valid_token")).toBe(ValidatePasswordResetTokenResultEnum.EXPIRED);
+      expect(service.validatePasswordResetToken("invalid_token")).rejects.toThrow(InvalidJwtException);
     });
 
     it("returns unknown user if the embedded email cannot be found", async () => {
+      expect.assertions(2);
+
       const findById = jest.fn().mockResolvedValue(null);
       const service = createAuthenticationService({
         userService: {
@@ -109,10 +101,12 @@ describe("authentication service", () => {
         },
       });
 
-      const result = await service.validatePasswordResetToken("valid_token");
+      const validationPromise = service.validatePasswordResetToken("valid_token");
+      expect(validationPromise).rejects.toThrow(UserNotFoundException);
 
-      expect(findById).toHaveBeenCalledWith(userId);
-      expect(result).toBe(ValidatePasswordResetTokenResultEnum.UNKNOWN_USER);
+      validationPromise.catch(() => {
+        expect(findById).toHaveBeenCalledWith(userId);
+      });
     });
   });
 

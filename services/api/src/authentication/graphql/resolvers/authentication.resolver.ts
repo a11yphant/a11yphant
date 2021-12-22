@@ -3,7 +3,9 @@ import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-errors";
 
 import { ResetPasswordResultEnum } from "@/authentication/enums/reset-password-result.enum";
+import { ValidatePasswordResetTokenResultEnum } from "@/authentication/enums/validate-password-reset-token-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
+import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { User } from "@/user/models/user.model";
 
 import { AuthenticationService } from "../../authentication.service";
@@ -31,10 +33,24 @@ export class AuthenticationResolver {
 
   @Mutation(() => ValidatePasswordResetTokenResult)
   async validatePasswordResetToken(@Args("token") token: string): Promise<ValidatePasswordResetTokenResult> {
-    const result = await this.authenticationService.validatePasswordResetToken(token);
+    try {
+      await this.authenticationService.validatePasswordResetToken(token);
+    } catch (e) {
+      if (e instanceof InvalidJwtException) {
+        return {
+          result: ValidatePasswordResetTokenResultEnum.INVALID_JWT,
+        };
+      }
+
+      if (e instanceof UserNotFoundException) {
+        return {
+          result: ValidatePasswordResetTokenResultEnum.UNKNOWN_USER,
+        };
+      }
+    }
 
     return {
-      result,
+      result: ValidatePasswordResetTokenResultEnum.VALID,
     };
   }
 

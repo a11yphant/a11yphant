@@ -3,8 +3,8 @@ import { Injectable } from "@nestjs/common";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
-import { ValidatePasswordResetTokenResultEnum } from "./enums/validate-password-reset-token-result.enum";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
+import { UserNotFoundException } from "./exceptions/user-not-found.exception";
 import { HashService } from "./hash.service";
 import { LoginInput } from "./inputs/login.input";
 import { JwtService } from "./jwt.service";
@@ -31,31 +31,27 @@ export class AuthenticationService {
     return user;
   }
 
-  async validatePasswordResetToken(token: string): Promise<ValidatePasswordResetTokenResultEnum> {
+  async validatePasswordResetToken(token: string): Promise<boolean> {
     const validJwt = await this.jwtService.validateToken(token);
 
     if (!validJwt) {
-      return ValidatePasswordResetTokenResultEnum.INVALID_JWT;
+      throw new InvalidJwtException();
     }
 
     const decoded = this.jwtService.decodeToken(token);
-    const expiry = decoded.exp;
-    const now = Math.floor(Date.now() / 1000);
-
-    if (expiry < now) {
-      return ValidatePasswordResetTokenResultEnum.EXPIRED;
-    }
 
     const user = await this.userService.findById(decoded.sub);
     if (!user) {
-      return ValidatePasswordResetTokenResultEnum.UNKNOWN_USER;
+      throw new UserNotFoundException();
     }
 
-    return ValidatePasswordResetTokenResultEnum.VALID;
+    return true;
   }
 
   async resetPassword(token: string, password: string): Promise<void> {
-    if ((await this.validatePasswordResetToken(token)) !== ValidatePasswordResetTokenResultEnum.VALID) {
+    try {
+      await this.validatePasswordResetToken(token);
+    } catch {
       throw new InvalidJwtException();
     }
 
