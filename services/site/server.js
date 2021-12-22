@@ -27,7 +27,12 @@ async function init({ dev = false } = {}) {
   const handle = nextServer.getRequestHandler();
   await nextServer.prepare();
   app = express();
-  serverless = configure({ app });
+  serverless = configure({
+    app,
+    binarySettings: {
+      contentTypes: ["image/*", "font/woff2", "font/woff", "font/ttf", "font/otf", "font/eot", "font/svg"],
+    },
+  });
 
   /**
    * We have to prevent NextJS from handling the requests for the
