@@ -1,6 +1,7 @@
 import { ConfigService } from "@nestjs/config";
 import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-errors";
+import * as Yup from "yup";
 
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
@@ -12,6 +13,7 @@ import { LoginInput } from "../../inputs/login.input";
 import { Context as IContext } from "../../interfaces/context.interface";
 import { JwtService } from "../../jwt.service";
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
+import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
@@ -62,6 +64,25 @@ export class AuthenticationResolver {
 
   @Mutation(() => ResetPasswordResult)
   async resetPassword(@Args("token") token: string, @Args("password") password: string): Promise<typeof ResetPasswordResult> {
+    const inputErrors = [];
+
+    try {
+      const passwordSchema = Yup.string().min(8, "Password must be at least 8 characters long.").required("Password is required.");
+      await passwordSchema.validate(password);
+    } catch (e) {
+      inputErrors.push({
+        field: ResetPasswordFields.PASSWORD,
+        message: e.message,
+      });
+    }
+
+    if (inputErrors.length > 0) {
+      return {
+        errorCode: ResetPasswordErrorCodes.INPUT_VALIDATION_ERROR,
+        inputErrors,
+      };
+    }
+
     try {
       const userId = await this.authenticationService.resetPassword(token, password);
 
@@ -70,6 +91,7 @@ export class AuthenticationResolver {
       if (e instanceof InvalidJwtException) {
         return {
           errorCode: ResetPasswordErrorCodes.INVALID_TOKEN,
+          inputErrors: [],
         };
       }
 

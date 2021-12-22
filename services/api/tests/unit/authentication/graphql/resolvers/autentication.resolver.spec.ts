@@ -5,7 +5,10 @@ import { createConfigServiceMock } from "@tests/support/helpers";
 import faker from "faker";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
+import { ResetPasswordErrorCodes } from "@/authentication/graphql/enums/reset-password-error-codes.enum";
 import { AuthenticationResolver } from "@/authentication/graphql/resolvers/authentication.resolver";
+import { ResetPasswordErrorResult } from "@/authentication/graphql/results/reset-password-error.result";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
@@ -116,9 +119,35 @@ describe("authentication resolver", () => {
         },
       });
 
-      await resolver.resetPassword("test_token", "test_password");
+      const result = await resolver.resetPassword("test_token", "test_password");
 
       expect(resetPassword).toHaveBeenCalledWith("test_token", "test_password");
+      expect(result).toHaveProperty("id");
+    });
+
+    it("returns an error if the jwt is not valid", async () => {
+      const resetPassword = jest.fn().mockRejectedValue(new InvalidJwtException());
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          resetPassword,
+        },
+      });
+
+      const result = await resolver.resetPassword("test_token", "test_password");
+
+      expect(resetPassword).toHaveBeenCalledWith("test_token", "test_password");
+      expect(result).toHaveProperty("errorCode", ResetPasswordErrorCodes.INVALID_TOKEN);
+    });
+
+    it("returns an error if the password is not valid", async () => {
+      const resolver = createAuthenticationResolver();
+
+      const result = await resolver.resetPassword("test_token", "secret");
+
+      expect(result).toHaveProperty("errorCode", "INPUT_VALIDATION_ERROR");
+      expect((result as ResetPasswordErrorResult).inputErrors).toHaveLength(1);
+      expect((result as ResetPasswordErrorResult).inputErrors[0]).toHaveProperty("field", "password");
     });
   });
 });
