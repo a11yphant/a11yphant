@@ -37,7 +37,7 @@ describe("authentication service", () => {
   const errorMessage = "E-Mail or password wrong.";
 
   describe("login", () => {
-    it("can log in an user.", async () => {
+    it("can log in an user", async () => {
       const email = "hallo@a11yphant.com";
 
       const service = createAuthenticationService({
@@ -53,7 +53,7 @@ describe("authentication service", () => {
       expect(loggedInUser.email).toBe(email);
     });
 
-    it("throws an error if the email is not found.", () => {
+    it("throws an error if the email is not found", () => {
       const service = createAuthenticationService({
         userService: {
           findByEmail: jest.fn().mockResolvedValue(null),
@@ -63,7 +63,7 @@ describe("authentication service", () => {
       expect(service.login({ email: "test_mail", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
 
-    it("throws an error if the password is wrong.", async () => {
+    it("throws an error if the password is wrong", async () => {
       const service = createAuthenticationService({
         hashService: {
           compare: jest.fn().mockResolvedValue(false),
@@ -71,6 +71,17 @@ describe("authentication service", () => {
       });
 
       expect(service.login({ email: "mail@example.com", password: "test_pw" })).rejects.toThrowError(errorMessage);
+    });
+
+    it("throws an error if the email is not verified", async () => {
+      const user = UserFactory.build({ verifiedAt: null });
+      const service = createAuthenticationService({
+        userService: {
+          findByEmail: jest.fn().mockResolvedValue(user),
+        },
+      });
+
+      expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError("E-Mail address has not yet been verified.");
     });
   });
 
@@ -132,7 +143,18 @@ describe("authentication service", () => {
         },
       });
 
-      expect(service.resetPassword("invalid_token", "new_pw")).rejects.toThrow(InvalidJwtException);
+      expect(service.resetPassword("invalid_token", "password")).rejects.toThrow(InvalidJwtException);
+    });
+  });
+
+  describe("generateMailConfirmationToken", () => {
+    it("calls the jwt generation", async () => {
+      const createSignedToken = jest.fn().mockResolvedValue("token");
+      const service = createAuthenticationService({ jwtService: { createSignedToken } });
+
+      await service.generateMailConfirmationToken("user");
+
+      expect(createSignedToken).toHaveBeenCalled();
     });
   });
 });

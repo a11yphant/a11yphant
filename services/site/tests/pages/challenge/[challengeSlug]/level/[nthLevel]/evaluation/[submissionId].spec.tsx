@@ -5,8 +5,10 @@ import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEval
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
+import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import { LottieProps } from "app/components/Lottie";
-import { ChallengeBySlugDocument } from "app/generated/graphql";
+import { ChallengeBySlugDocument, ResultStatus } from "app/generated/graphql";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import Evaluation, { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { mount, ReactWrapper } from "enzyme";
 import { GraphQLError } from "graphql";
@@ -24,13 +26,16 @@ jest.mock("react-resize-detector", () => ({
     return;
   },
 }));
+jest.mock("app/hooks/sessionState/useSessionState", () => ({
+  useSessionState: jest.fn().mockImplementation(() => [1, jest.fn()]),
+}));
 
 jest.mock("app/components/evaluation/usePollSubmissionResult", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { ResultStatus } = require("app/generated/graphql");
 
   return {
-    usePollSubmissionResult: () => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 }),
+    usePollSubmissionResult: jest.fn().mockImplementation(() => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 })),
   };
 });
 
@@ -81,30 +86,29 @@ beforeEach(() => {
   };
 });
 
+const mountEvaluationPage = (): ReactWrapper => {
+  return mount(
+    <MockedProvider mocks={mocks}>
+      <Evaluation />
+    </MockedProvider>,
+  );
+};
+
+const resolveGraphQLQuery = async (wrapper: ReactWrapper): Promise<void> => {
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    wrapper.update();
+  });
+};
+
 describe("Evaluation", () => {
   describe("page", () => {
-    let wrapper: ReactWrapper;
     beforeEach(async () => {
-      wrapper = mount(
-        <MockedProvider mocks={mocks}>
-          <Evaluation />
-        </MockedProvider>,
-      );
-
-      await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 0));
-        wrapper.update();
-      });
+      jest.restoreAllMocks();
     });
 
     it("renders the loading screen", async () => {
-      // override wrapper from beforeEach because
-      // we don't want the query to resolve
-      const wrapper = mount(
-        <MockedProvider mocks={mocks}>
-          <Evaluation />
-        </MockedProvider>,
-      );
+      const wrapper = mountEvaluationPage();
 
       await act(async () => {
         wrapper.update();
@@ -114,23 +118,58 @@ describe("Evaluation", () => {
     });
 
     it("renders the head", async () => {
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
       expect(wrapper.exists(Head)).toBeTruthy();
     });
 
     it("renders all wrapper elements", async () => {
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
       expect(wrapper.exists("main")).toBeTruthy();
     });
 
     it("renders the `EvaluationHeader`", async () => {
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
       expect(wrapper.exists(EvaluationHeader)).toBeTruthy();
     });
 
     it("renders the `EvaluationBody`", async () => {
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
       expect(wrapper.exists(EvaluationBody)).toBeTruthy();
     });
 
     it("renders the `CompleteEvaluationButton`", async () => {
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
       expect(wrapper.exists(CompleteEvaluationButton)).toBeTruthy();
+    });
+
+    it("sets failedLevelsInARow to 0 if status = Success", async () => {
+      (useSessionState as jest.Mock).mockReturnValue([4, jest.fn()]);
+      (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Success, requirements: [], totalScore: 100 });
+
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
+      expect(useSessionState("")[1]).toHaveBeenCalledWith(0);
+    });
+
+    it("passes state update function to setFailedLevelsInARow if status = Fail", async () => {
+      (useSessionState as jest.Mock).mockReturnValue([1, jest.fn()]);
+      (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Fail, requirements: [], totalScore: 100 });
+
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+
+      expect(useSessionState("")[1]).toHaveBeenCalledWith(expect.any(Function));
     });
   });
 

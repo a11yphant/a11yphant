@@ -18,6 +18,8 @@ import {
   ResultStatus,
   useChallengeBySlugQuery,
 } from "app/generated/graphql";
+import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { initializeApollo } from "app/lib/apollo-client";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
@@ -35,6 +37,7 @@ export interface EvaluationRouterParams {
 const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
+  const [, setFailedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
   const { data } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
@@ -44,6 +47,14 @@ const Evaluation: React.FunctionComponent = () => {
 
   const pageTitle = `Evaluation - ${data?.challenge.name} - Level ${nthLevel}`;
   const heading = <h1 className={clsx("sr-only")}>{pageTitle}</h1>;
+
+  React.useEffect(() => {
+    if (submissionResult?.status === ResultStatus.Fail) {
+      setFailedLevelsInARow((prev) => (prev ? prev + 1 : 1));
+    } else if (submissionResult?.status === ResultStatus.Success) {
+      setFailedLevelsInARow(0);
+    }
+  }, [submissionResult?.status]);
 
   return (
     <>

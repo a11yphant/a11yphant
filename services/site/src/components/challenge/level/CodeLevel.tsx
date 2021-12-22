@@ -4,13 +4,16 @@ import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
+import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import React from "react";
 
-interface CodeLevelProps {
+export interface CodeLevelProps {
   challengeName: string;
   level: CodeLevelDetailsFragment;
   onAutoSaveLoadingChange: (autoSaveLoading: boolean) => void;
@@ -18,7 +21,10 @@ interface CodeLevelProps {
 
 const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
+  const { challengeSlug, nthLevel } = router.query;
   const errorDialogApi = useErrorDialogApi();
+  const flashMessageApi = useFlashMessageApi();
+  const [failedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
   const {
     setLevelId,
@@ -29,6 +35,26 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     updateSubmission,
     loading: autoSaveLoading,
   } = useSubmissionAutoSave();
+
+  React.useEffect(() => {
+    if (failedLevelsInARow >= 2) {
+      setTimeout(() => {
+        flashMessageApi.show(
+          <>
+            <span className={clsx("mr-3")} aria-hidden={true}>
+              🚀
+            </span>
+            Reminder: You can use hints if you are stuck
+          </>,
+          { className: clsx("hidden", "lg:flex"), offsetElementClassName: clsx("hidden", "lg:block") },
+        );
+      }, 1000);
+    }
+
+    return () => {
+      flashMessageApi.hide();
+    };
+  }, [failedLevelsInARow]);
 
   React.useEffect(() => {
     onAutoSaveLoadingChange(autoSaveLoading);

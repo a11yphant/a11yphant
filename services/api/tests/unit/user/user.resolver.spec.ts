@@ -2,17 +2,20 @@ import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
+import { MailService } from "@/mail/mail.service";
 import { InputError } from "@/user/exceptions/input.error";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserResolver } from "@/user/user.resolver";
 import { UserService } from "@/user/user.service";
 
-function createUserResolver(partials: { userService?: Partial<UserService> } = {}): UserResolver {
+function createUserResolver(partials: { userService?: Partial<UserService>; mailService?: Partial<MailService> } = {}): UserResolver {
   const userService = createMock<UserService>({
     ...partials.userService,
   });
 
-  return new UserResolver(userService);
+  const mailService = createMock<MailService>({ ...partials.mailService });
+
+  return new UserResolver(userService, mailService);
 }
 
 describe("user resolver", () => {
@@ -69,6 +72,20 @@ describe("user resolver", () => {
 
       expect(resolvedUser).toBeTruthy();
       expect(registerUser).toHaveBeenCalledWith(registerUserInput, sessionToken.userId);
+    });
+
+    it("sends an registration email if a user is registered.", async () => {
+      const sendRegistrationMail = jest.fn();
+
+      const user = UserFactory.build();
+
+      const resolver = createUserResolver({
+        userService: { registerUser: jest.fn().mockResolvedValue(user) },
+        mailService: { sendRegistrationMail },
+      });
+      await resolver.register({ email: "test", password: "test" }, { userId: "test" });
+
+      expect(sendRegistrationMail).toHaveBeenCalledWith(user);
     });
 
     it("throws an input error if the service throws an error", () => {

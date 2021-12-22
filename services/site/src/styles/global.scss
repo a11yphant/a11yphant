@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    // Other Global Styles ---
+    .h1 {
+        @apply text-7xl;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+    }
+    .h2 {
+        @apply text-5xl;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+        @apply leading-snug;
+    }
+    .h3 {
+        @apply text-4xl;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+    }
+    .h4 {
+        @apply text-2xl;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+    }
+    .h5 {
+        @apply text-xl;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+    }
+    .h6 {
+        @apply text-base;
+        @apply font-bold;
+        @apply text-grey;
+        @apply max-w-80ch;
+    }
+}
+
 @layer base {
     // Base Styles --------------------------
     html {
@@ -29,47 +70,23 @@
     }
 
     // Other Global Styles ---
-    h1,
-    .h1 {
-        @apply text-7xl;
-        @apply font-bold;
-        @apply text-grey;
-        @apply max-w-80ch;
+    h1 {
+        @apply h1;
     }
-    h2,
-    .h2 {
-        @apply text-5xl;
-        @apply font-bold;
-        @apply text-grey;
-        @apply max-w-80ch;
+    h2 {
+        @apply h2;
     }
-    h3,
-    .h3 {
-        @apply text-4xl;
-        @apply font-bold;
-        @apply text-grey;
-        @apply max-w-80ch;
+    h3 {
+        @apply h3;
     }
-    h4,
-    .h4 {
-        @apply text-2xl;
-        @apply font-bold;
-        @apply text-grey;
-        @apply max-w-80ch;
+    h4 {
+        @apply h4;
     }
-    h5,
-    .h5 {
-        @apply text-xl;
-        @apply font-bold;
-        @apply text-grey;
-        @apply max-w-80ch;
+    h5 {
+        @apply h5;
     }
-    h6,
-    .h6 {
-        @apply text-base;
-        @apply font-bold;
-        @apply text-grey;
-        @apply max-w-80ch;
+    h6 {
+        @apply h6;
     }
 
     p,
@@ -88,7 +105,8 @@
 
     p,
     span,
-    li {
+    li,
+    address {
         @apply max-w-80ch;
     }
 

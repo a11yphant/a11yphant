@@ -7,4 +7,5 @@ export const UserFactory = Factory.define<User>(User.name, User)
   .attr("id", () => faker.datatype.uuid())
   .attr("displayName", () => faker.name.firstName())
   .attr("authId", () => faker.datatype.string(10))
-  .attr("authProvider", () => "anonymous");
+  .attr("authProvider", () => "anonymous")
+  .attr("verifiedAt", () => faker.date.past());

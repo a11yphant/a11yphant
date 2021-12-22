@@ -2,6 +2,8 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "plugins": ["@nestjs/graphql"]
+    "plugins": ["@nestjs/graphql"],
+    "assets": ["mail-templates/**/*.hbs"],
+    "watchAssets": true
   }
 }

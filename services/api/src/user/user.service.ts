@@ -77,6 +77,17 @@ export class UserService {
     return userRecord ? new User(userRecord) : null;
   }
 
+  async confirmUser(userId: string): Promise<void> {
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        verifiedAt: new Date(),
+      },
+    });
+  }
+
   async updateWithAuthInformation(userId: string, providerInformation: ProviderInformation): Promise<User | null> {
     let userRecord = await this.prisma.user.findFirst({
       where: {
