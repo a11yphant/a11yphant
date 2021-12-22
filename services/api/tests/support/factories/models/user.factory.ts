@@ -5,4 +5,6 @@ import { User } from "@/user/models/user.model";
 
 export const UserFactory = Factory.define<User>(User.name, User)
   .attr("id", () => faker.datatype.uuid())
-  .attr("displayName", () => faker.name.firstName());
+  .attr("displayName", () => faker.name.firstName())
+  .attr("authId", () => faker.datatype.string(10))
+  .attr("authProvider", () => "anonymous");
