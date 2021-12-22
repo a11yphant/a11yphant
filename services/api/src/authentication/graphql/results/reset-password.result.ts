@@ -1,9 +1,18 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { createUnionType } from "@nestjs/graphql";
 
-import { ResetPasswordResultEnum } from "@/authentication/graphql/enums/reset-password-result.enum";
+import { User } from "@/user/models/user.model";
 
-@ObjectType()
-export class ResetPasswordResult {
-  @Field(() => ResetPasswordResultEnum)
-  result: ResetPasswordResultEnum;
-}
+import { ResetPasswordErrorResult } from "./reset-password-error.result";
+
+export const ResetPasswordResult = createUnionType({
+  name: "ResetPasswordResult",
+  description: "The result of a reset password operation.",
+  types: () => [User, ResetPasswordErrorResult],
+  resolveType: (value: User & ResetPasswordErrorResult) => {
+    if (value.id) {
+      return User;
+    }
+
+    return ResetPasswordErrorResult;
+  },
+});

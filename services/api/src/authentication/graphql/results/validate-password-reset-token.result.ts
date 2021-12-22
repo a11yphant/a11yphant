@@ -4,6 +4,8 @@ import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/e
 
 @ObjectType()
 export class ValidatePasswordResetTokenResult {
-  @Field(() => ValidatePasswordResetTokenResultEnum)
+  @Field(() => ValidatePasswordResetTokenResultEnum, {
+    description: "The result of validating a password reset token.",
+  })
   result: ValidatePasswordResetTokenResultEnum;
 }

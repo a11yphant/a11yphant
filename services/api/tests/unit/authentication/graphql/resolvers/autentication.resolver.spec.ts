@@ -9,16 +9,22 @@ import { AuthenticationResolver } from "@/authentication/graphql/resolvers/authe
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
+import { UserService } from "@/user/user.service";
 
 function createAuthenticationResolver(
   partials: {
     authenticationService?: Partial<AuthenticationService>;
+    userService?: Partial<UserService>;
     jwtService?: Partial<JwtService>;
     config?: Record<string, any>;
   } = {},
 ): AuthenticationResolver {
   const authenticationService = createMock<AuthenticationService>({
     ...partials.authenticationService,
+  });
+  const userService = createMock<UserService>({
+    findById: jest.fn().mockResolvedValue(UserFactory.build()),
+    ...partials.userService,
   });
   const jwtService = createMock<JwtService>({
     ...partials.jwtService,
@@ -27,7 +33,7 @@ function createAuthenticationResolver(
     ...partials.config,
   });
 
-  return new AuthenticationResolver(authenticationService, jwtService, configService as ConfigService);
+  return new AuthenticationResolver(authenticationService, userService, jwtService, configService as ConfigService);
 }
 
 describe("authentication resolver", () => {
@@ -74,13 +80,11 @@ describe("authentication resolver", () => {
     it("throws an error if username or password are wrong", () => {
       const loginFunc = jest.fn().mockRejectedValue(new Error("E-Mail or password wrong."));
 
-      const resolver = new AuthenticationResolver(
-        createMock<AuthenticationService>({
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
           login: loginFunc,
-        }),
-        createMock<JwtService>(),
-        createMock<ConfigService>(),
-      );
+        },
+      });
 
       expect(resolver.login({ email: "test_mail", password: "test_pw" }, createMock<IContext>())).rejects.toThrowError("E-Mail or password wrong.");
     });

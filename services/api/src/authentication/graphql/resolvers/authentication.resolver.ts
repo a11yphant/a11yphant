@@ -4,20 +4,26 @@ import { UserInputError } from "apollo-server-errors";
 
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
-import { ResetPasswordResultEnum } from "@/authentication/graphql/enums/reset-password-result.enum";
-import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/enums/validate-password-reset-token-result.enum";
 import { User } from "@/user/models/user.model";
+import { UserService } from "@/user/user.service";
 
 import { AuthenticationService } from "../../authentication.service";
 import { LoginInput } from "../../inputs/login.input";
 import { Context as IContext } from "../../interfaces/context.interface";
 import { JwtService } from "../../jwt.service";
+import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
+import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
 
 @Resolver()
 export class AuthenticationResolver {
-  constructor(private authenticationService: AuthenticationService, private jwtService: JwtService, private config: ConfigService) {}
+  constructor(
+    private readonly authenticationService: AuthenticationService,
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    private readonly config: ConfigService,
+  ) {}
 
   @Mutation(() => User)
   async login(@Args("loginInput") loginInput: LoginInput, @Context() ctx: IContext): Promise<User> {
@@ -55,19 +61,19 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => ResetPasswordResult)
-  async resetPassword(@Args("token") token: string, @Args("password") password: string): Promise<ResetPasswordResult> {
+  async resetPassword(@Args("token") token: string, @Args("password") password: string): Promise<typeof ResetPasswordResult> {
     try {
-      await this.authenticationService.resetPassword(token, password);
+      const userId = await this.authenticationService.resetPassword(token, password);
+
+      return await this.userService.findById(userId);
     } catch (e) {
       if (e instanceof InvalidJwtException) {
         return {
-          result: ResetPasswordResultEnum.INVALID_TOKEN,
+          errorCode: ResetPasswordErrorCodes.INVALID_TOKEN,
         };
       }
-    }
 
-    return {
-      result: ResetPasswordResultEnum.SUCCESS,
-    };
+      throw e;
+    }
   }
 }

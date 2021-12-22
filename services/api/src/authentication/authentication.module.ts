@@ -27,6 +27,6 @@ import { TwitterStrategy } from "./strategies/twitter.strategy";
     TwitterStrategy,
   ],
   controllers: [AuthenticationController],
-  exports: [SessionInterceptor, HashService, JwtService],
+  exports: [SessionInterceptor, HashService, JwtService, AuthenticationService],
 })
 export class AuthenticationModule {}

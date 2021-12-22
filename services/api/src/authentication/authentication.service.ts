@@ -48,7 +48,7 @@ export class AuthenticationService {
     return true;
   }
 
-  async resetPassword(token: string, password: string): Promise<void> {
+  async resetPassword(token: string, password: string): Promise<string> {
     try {
       await this.validatePasswordResetToken(token);
     } catch {
@@ -57,5 +57,7 @@ export class AuthenticationService {
 
     const decodedToken = this.jwtService.decodeToken(token);
     this.userService.updatePassword(decodedToken.sub, password);
+
+    return decodedToken.sub;
   }
 }
