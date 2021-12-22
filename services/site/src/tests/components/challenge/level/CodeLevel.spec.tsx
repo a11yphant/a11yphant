@@ -6,7 +6,9 @@ import Editors from "app/components/challenge/Editors";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, LevelByChallengeSlugDocument } from "app/generated/graphql";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { mount } from "enzyme";
 import router from "next/router";
 import React from "react";
@@ -17,6 +19,19 @@ jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
     return;
   },
+}));
+
+jest.mock("app/hooks/sessionState/useSessionState", () => ({
+  useSessionState: jest.fn().mockImplementation(() => {
+    return [1, jest.fn()];
+  }),
+}));
+
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: jest.fn().mockImplementation(() => ({
+    show: jest.fn(),
+    hide: jest.fn(),
+  })),
 }));
 
 const mockChallengeSlug = "mock-slug";
@@ -62,12 +77,13 @@ const mocks: MockedResponse[] = [
   },
 ];
 
-beforeEach(() => {
-  router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
-  router.back = jest.fn();
-});
-
 describe("Code Level", () => {
+  beforeEach(() => {
+    router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
+    router.back = jest.fn();
+    jest.restoreAllMocks();
+  });
+
   it("renders `Sidebar` component", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -116,5 +132,41 @@ describe("Code Level", () => {
     );
 
     expect(wrapper.find(LoadingButton).props()).toHaveProperty("disabled", true);
+  });
+
+  it("renders FlashMessage if the user failed two times in a row", () => {
+    jest.useFakeTimers();
+
+    (useSessionState as jest.Mock).mockReturnValue([2, jest.fn()]);
+    (useFlashMessageApi as jest.Mock).mockReturnValue({
+      show: jest.fn(),
+      hide: jest.fn(),
+    });
+
+    mount(
+      <MockedProvider mocks={mocks}>
+        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
+      </MockedProvider>,
+    );
+
+    jest.advanceTimersByTime(1000);
+
+    expect(useFlashMessageApi().show).toHaveBeenCalledTimes(1);
+  });
+
+  it("hides FlashMessage on unmount", () => {
+    (useFlashMessageApi as jest.Mock).mockReturnValue({
+      show: jest.fn(),
+      hide: jest.fn(),
+    });
+
+    const view = mount(
+      <MockedProvider mocks={mocks}>
+        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
+      </MockedProvider>,
+    );
+
+    view.unmount();
+    expect(useFlashMessageApi().hide).toHaveBeenCalledTimes(1);
   });
 });
