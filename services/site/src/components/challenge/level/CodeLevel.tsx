@@ -46,6 +46,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             </span>
             Reminder: You can use hints if you are stuck
           </>,
+          { className: clsx("hidden", "lg:flex"), offsetElementClassName: clsx("hidden", "lg:block") },
         );
       }, 1000);
     }

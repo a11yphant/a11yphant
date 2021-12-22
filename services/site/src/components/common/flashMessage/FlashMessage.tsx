@@ -17,9 +17,17 @@ export interface FlashMessageProps {
   onClose: () => void;
   type?: FlashMessageType;
   className?: string;
+  offsetElementClassName?: string;
 }
 
-export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ children, show, onClose, type = FlashMessageType.STATUS, className }) => {
+export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
+  children,
+  show,
+  onClose,
+  type = FlashMessageType.STATUS,
+  className,
+  offsetElementClassName,
+}) => {
   const [rootNode, setRootNode] = React.useState<HTMLElement>();
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -84,7 +92,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         leaveFrom="h-[4.5rem]"
         leaveTo="h-0"
       >
-        <div className={clsx("h-[4.5rem]")} />
+        <div className={clsx("h-[4.5rem]", offsetElementClassName)} />
       </Transition>
     </>,
     rootNode,
