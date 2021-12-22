@@ -45,7 +45,7 @@ export class AuthenticationService {
       return ValidatePasswordResetTokenResultEnum.EXPIRED;
     }
 
-    const user = await this.userService.findByEmail(decoded.email);
+    const user = await this.userService.findById(decoded.sub);
     if (!user) {
       return ValidatePasswordResetTokenResultEnum.UNKNOWN_USER;
     }
