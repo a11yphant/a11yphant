@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 import { UserService } from "@/user/user.service";
 
 import { FlashMessage } from "./enums/flash-message.enum";
+import { JwtScope } from "./enums/jwt-scope.enum";
 import { ProviderInformation } from "./interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
@@ -17,7 +18,7 @@ export class AuthenticationController {
   @Get("confirm")
   async confirm(@Query("code") token: string, @Res() res: Response): Promise<void> {
     const url = this.config.get<string>("site.url");
-    if (!(await this.jwtService.validateToken(token))) {
+    if (!(await this.jwtService.validateToken(token, JwtScope.EMAIL_CONFIRMATION))) {
       return res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_FAILED}`);
     }
 
