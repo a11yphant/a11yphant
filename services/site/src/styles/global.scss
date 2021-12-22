@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
+@layer components {
     // Other Global Styles ---
     .h1 {
         @apply text-7xl;
