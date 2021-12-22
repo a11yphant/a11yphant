@@ -13,7 +13,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import React from "react";
 
-interface CodeLevelProps {
+export interface CodeLevelProps {
   challengeName: string;
   level: CodeLevelDetailsFragment;
   onAutoSaveLoadingChange: (autoSaveLoading: boolean) => void;

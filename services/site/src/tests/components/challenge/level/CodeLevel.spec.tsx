@@ -3,13 +3,13 @@ import "@testing-library/jest-dom/extend-expect";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors from "app/components/challenge/Editors";
-import CodeLevel from "app/components/challenge/level/CodeLevel";
+import CodeLevel, { CodeLevelProps } from "app/components/challenge/level/CodeLevel";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, LevelByChallengeSlugDocument } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
 
@@ -77,6 +77,20 @@ const mocks: MockedResponse[] = [
   },
 ];
 
+interface MountCodeLevelParams {
+  mockedResponses?: MockedResponse[];
+  props?: Partial<CodeLevelProps>;
+}
+const mountCodeLevel = (options?: MountCodeLevelParams): ReactWrapper => {
+  const mockedResponses = options?.mockedResponses ?? mocks;
+
+  return mount(
+    <MockedProvider mocks={mockedResponses}>
+      <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} {...options?.props} />
+    </MockedProvider>,
+  );
+};
+
 describe("Code Level", () => {
   beforeEach(() => {
     router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
@@ -85,53 +99,33 @@ describe("Code Level", () => {
   });
 
   it("renders `Sidebar` component", () => {
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    const view = mountCodeLevel();
 
-    expect(wrapper.exists(Sidebar)).toBeTruthy();
+    expect(view.exists(Sidebar)).toBeTruthy();
   });
 
   it("renders `Editors` component", () => {
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    const view = mountCodeLevel();
 
-    expect(wrapper.exists(Editors)).toBeTruthy();
+    expect(view.exists(Editors)).toBeTruthy();
   });
 
   it("renders `Preview` component", () => {
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    const view = mountCodeLevel();
 
-    expect(wrapper.exists(Preview)).toBeTruthy();
+    expect(view.exists(Preview)).toBeTruthy();
   });
 
   it("renders submit button with loading animation", () => {
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    const view = mountCodeLevel();
 
-    expect(wrapper.exists(LoadingButton)).toBeTruthy();
+    expect(view.exists(LoadingButton)).toBeTruthy();
   });
 
   it("disables the submit button if the submission is not yet available", () => {
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    const view = mountCodeLevel();
 
-    expect(wrapper.find(LoadingButton).props()).toHaveProperty("disabled", true);
+    expect(view.find(LoadingButton).props()).toHaveProperty("disabled", true);
   });
 
   it("renders FlashMessage if the user failed two times in a row", () => {
@@ -143,11 +137,7 @@ describe("Code Level", () => {
       hide: jest.fn(),
     });
 
-    mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    mountCodeLevel();
 
     jest.advanceTimersByTime(1000);
 
@@ -160,11 +150,7 @@ describe("Code Level", () => {
       hide: jest.fn(),
     });
 
-    const view = mount(
-      <MockedProvider mocks={mocks}>
-        <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} />
-      </MockedProvider>,
-    );
+    const view = mountCodeLevel();
 
     view.unmount();
     expect(useFlashMessageApi().hide).toHaveBeenCalledTimes(1);
