@@ -52,6 +52,8 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
       { token: "comment.js", foreground: "ffa92cd4", fontStyle: "bold" },
       { token: "comment.css", foreground: "f27894", fontStyle: "italic" },
       { token: "editor.foreground", foreground: "B4B8B8" },
+      { token: "metatag.html", foreground: "B4B8B8" },
+      { token: "metatag.content.html", foreground: "8854f6" },
       { token: "tag.html", foreground: "B795FF" },
       { token: "delimiter.html", foreground: "B4B8B8" },
       { token: "tag.css", foreground: "B795FF" },
