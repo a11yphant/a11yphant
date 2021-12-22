@@ -21,7 +21,7 @@ const Footer: React.FunctionComponent = () => (
               </a>
             </Link>
           </li>
-          <li className={clsx("mb-0 pt-4 pb-4 inline-block", "md:pt-0 md:pb-0 md:mr-16")}>
+          <li className={clsx("mb-0 -ml-3 pt-4 pb-4 inline-block", "md:,l-0 md:pt-0 md:pb-0 md:mr-16")}>
             <Link href="/privacy-policy">
               <a
                 className={clsx(
