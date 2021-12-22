@@ -5,21 +5,22 @@ import { useDatabase } from "@tests/support/helpers";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { HashService } from "@/authentication/hash.service";
+import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
 const getAuthenticationService = (
-  partials: { userService?: Partial<UserService>; hashService?: Partial<HashService> } = {},
+  partials: { userService?: Partial<UserService>; hashService?: Partial<HashService>; jwtService?: Partial<JwtService> } = {},
 ): AuthenticationService => {
   const userService = createMock<UserService>(partials.userService);
   const hashService = createMock<HashService>(partials.hashService);
+  const jwtService = createMock<JwtService>(partials.jwtService);
 
-  return new AuthenticationService(userService, hashService);
+  return new AuthenticationService(userService, hashService, jwtService);
 };
 
 describe("authentication service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
-
   const errorMessage = "E-Mail or password wrong.";
 
   describe("login", () => {
@@ -88,6 +89,17 @@ describe("authentication service", () => {
       });
 
       expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError(errorMessage);
+    });
+  });
+
+  describe("generateMailConfirmationToken", () => {
+    it("calls the jwt generation", async () => {
+      const createSignedToken = jest.fn().mockResolvedValue("token");
+      const service = getAuthenticationService({ jwtService: { createSignedToken } });
+
+      await service.generateMailConfirmationToken("user");
+
+      expect(createSignedToken).toHaveBeenCalled();
     });
   });
 });

@@ -5,20 +5,20 @@ import { MailerService } from "@nestjs-modules/mailer";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
 
-import { JwtService } from "@/authentication/jwt.service";
+import { AuthenticationService } from "@/authentication/authentication.service";
 import { MailService } from "@/mail/mail.service";
 import { User } from "@/user/models/user.model";
 
 const getMailService = (
-  partials: { mailerService?: Partial<MailerService>; jwtService?: Partial<JwtService>; logger?: Partial<Logger> } = {},
+  partials: { mailerService?: Partial<MailerService>; authService?: Partial<AuthenticationService>; logger?: Partial<Logger> } = {},
   configData?: Record<string, any>,
 ): MailService => {
   const mailerService = createMock<MailerService>(partials?.mailerService);
   const config = createMock<ConfigService>(createConfigServiceMock(configData));
-  const jwtService = createMock<JwtService>(partials?.jwtService);
+  const authService = createMock<AuthenticationService>(partials?.authService);
   const logger = createMock<Logger>(partials?.logger);
 
-  return new MailService(mailerService, config, jwtService, logger);
+  return new MailService(mailerService, config, authService, logger);
 };
 
 describe("mailService", () => {
@@ -51,7 +51,7 @@ describe("mailService", () => {
       const apiUrl = "localhost";
       const token = "a11ytoken";
 
-      const service = getMailService({ jwtService: { createSignedToken: jest.fn().mockResolvedValue(token) } }, { "api.url": apiUrl });
+      const service = getMailService({ authService: { generateMailConfirmationToken: jest.fn().mockResolvedValue(token) } }, { "api.url": apiUrl });
       const user = UserFactory.build();
 
       const url = await service.generateConfirmationLink(user);

@@ -2,12 +2,17 @@ import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { MailerService } from "@nestjs-modules/mailer";
 
-import { JwtService } from "@/authentication/jwt.service";
+import { AuthenticationService } from "@/authentication/authentication.service";
 import { User } from "@/user/models/user.model";
 
 @Injectable()
 export class MailService {
-  constructor(private mailerService: MailerService, private config: ConfigService, private jwtService: JwtService, private logger: Logger) {}
+  constructor(
+    private mailerService: MailerService,
+    private config: ConfigService,
+    private authService: AuthenticationService,
+    private logger: Logger,
+  ) {}
 
   async sendRegistrationMail(user: User): Promise<void> {
     this.logger.log(`Sending registration Mail to ${user.email}`);
@@ -32,7 +37,7 @@ export class MailService {
   }
 
   async generateConfirmationLink(user: User): Promise<string> {
-    const token = await this.jwtService.createSignedToken({}, { expiresInSeconds: 86400, subject: user.id });
+    const token = await this.authService.generateMailConfirmationToken(user.id);
     const url = this.config.get<string>("api.url");
 
     return `${url}/auth/confirm?code=${token}`;

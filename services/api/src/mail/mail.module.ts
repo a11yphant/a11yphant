@@ -4,6 +4,8 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 import path from "path";
 
+import { AuthenticationModule } from "@/authentication/authentication.module";
+
 @Module({
   imports: [
     MailerModule.forRootAsync({
@@ -31,6 +33,7 @@ import path from "path";
       }),
       inject: [ConfigService],
     }),
+    AuthenticationModule,
   ],
   providers: [],
 })
