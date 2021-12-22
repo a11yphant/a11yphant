@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   dynamic "ordered_cache_behavior" {
-    for_each = ["/fonts/*", "/_next/static/*", "favicon.ico", "images/*", "/_next/image*"]
+    for_each = ["/_next/static/*", "favicon.ico", "images/*", "/_next/image*"]
 
     content {
       path_pattern     = ordered_cache_behavior.value
