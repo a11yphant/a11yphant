@@ -16,9 +16,18 @@ export interface FlashMessageProps {
   show: boolean;
   onClose: () => void;
   type?: FlashMessageType;
+  className?: string;
+  offsetElementClassName?: string;
 }
 
-export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ children, show, onClose, type = FlashMessageType.STATUS }) => {
+export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
+  children,
+  show,
+  onClose,
+  type = FlashMessageType.STATUS,
+  className,
+  offsetElementClassName,
+}) => {
   const [rootNode, setRootNode] = React.useState<HTMLElement>();
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -50,7 +59,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         leaveTo="-translate-y-[3.75rem]"
       >
         <div
-          className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center")}
+          className={clsx("w-screen absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center", className)}
           role={type === FlashMessageType.ALERT ? "alert" : "status"}
         >
           <span className={clsx("basis-12 flex-shrink hidden", "md:block")} />
@@ -59,12 +68,11 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
             onClick={onClose}
             overrideClassName
             className={clsx(
-              "basis-12 shrink-0 grow-0",
-              "p-3.5",
-              "z-10",
-              "transition-colors duration-300",
-              "hover:text-primary-light",
-              "focus-visible:text-primary-light",
+              "flex justify-center basis-12 shrink-0 grow-0 p-3.5 rounded z-10",
+              "transition ease-in-out duration-300",
+              "hover:text-light",
+              "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
+              "focus:text-light",
             )}
           >
             <span className={clsx("sr-only")}>Close</span>
@@ -77,12 +85,12 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
         show={show}
         enter={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out delay-500"}
         enterFrom="h-0"
-        enterTo="h-[3.75rem]"
+        enterTo="h-[4.5rem]"
         leave={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out"}
-        leaveFrom="h-[3.75rem]"
+        leaveFrom="h-[4.5rem]"
         leaveTo="h-0"
       >
-        <div className={clsx("h-[3.75rem]")} />
+        <div className={clsx("h-[4.5rem]", offsetElementClassName)} />
       </Transition>
     </>,
     rootNode,
