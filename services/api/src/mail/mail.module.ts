@@ -12,7 +12,7 @@ import path from "path";
         transport: {
           host: config.get<string>("mail.smtp.endpoint"),
           port: config.get<number>("mail.smtp.port"),
-          secure: false, // upgrade to TLS later with STARTTLS
+          secure: false, // secure: false causes smtp to uprade to STARTTLS when available
           auth: {
             user: config.get<string>("mail.smtp.username"),
             pass: config.get<string>("mail.smtp.password"),
