@@ -4,6 +4,7 @@ import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
 import { ValidatePasswordResetTokenResultEnum } from "./enums/validate-password-reset-token-result.enum";
+import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { HashService } from "./hash.service";
 import { LoginInput } from "./inputs/login.input";
 import { JwtService } from "./jwt.service";
@@ -51,5 +52,14 @@ export class AuthenticationService {
     }
 
     return ValidatePasswordResetTokenResultEnum.VALID;
+  }
+
+  async resetPassword(token: string, password: string): Promise<void> {
+    if ((await this.validatePasswordResetToken(token)) !== ValidatePasswordResetTokenResultEnum.VALID) {
+      throw new InvalidJwtException();
+    }
+
+    const decodedToken = this.jwtService.decodeToken(token);
+    this.userService.updatePassword(decodedToken.sub, password);
   }
 }

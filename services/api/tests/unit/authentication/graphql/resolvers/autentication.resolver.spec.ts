@@ -10,6 +10,26 @@ import { Context as IContext } from "@/authentication/interfaces/context.interfa
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 
+function createAuthenticationResolver(
+  partials: {
+    authenticationService?: Partial<AuthenticationService>;
+    jwtService?: Partial<JwtService>;
+    config?: Record<string, any>;
+  } = {},
+): AuthenticationResolver {
+  const authenticationService = createMock<AuthenticationService>({
+    ...partials.authenticationService,
+  });
+  const jwtService = createMock<JwtService>({
+    ...partials.jwtService,
+  });
+  const configService = createConfigServiceMock({
+    ...partials.config,
+  });
+
+  return new AuthenticationResolver(authenticationService, jwtService, configService as ConfigService);
+}
+
 describe("authentication resolver", () => {
   describe("login", () => {
     it("returns the logged in user and sets the cookie", async () => {
@@ -23,17 +43,14 @@ describe("authentication resolver", () => {
       const signFunc = jest.fn().mockResolvedValue(token);
       const cookieFunc = jest.fn();
 
-      const configServiceMock = createConfigServiceMock();
-
-      const resolver = new AuthenticationResolver(
-        createMock<AuthenticationService>({
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
           login: loginFunc,
-        }),
-        createMock<JwtService>({
+        },
+        jwtService: {
           createSignedToken: signFunc,
-        }),
-        createMock<ConfigService>(configServiceMock),
-      );
+        },
+      });
 
       const loggedInUser = await resolver.login(
         loginInput,
@@ -71,19 +88,33 @@ describe("authentication resolver", () => {
 
   describe("validate password reset token", () => {
     it("calls validate password reset token on the auth service with the provided token", () => {
-      const validateFunc = jest.fn().mockResolvedValue(true);
+      const validatePasswordResetToken = jest.fn().mockResolvedValue(true);
 
-      const resolver = new AuthenticationResolver(
-        createMock<AuthenticationService>({
-          validatePasswordResetToken: validateFunc,
-        }),
-        createMock<JwtService>(),
-        createMock<ConfigService>(),
-      );
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          validatePasswordResetToken,
+        },
+      });
 
       resolver.validatePasswordResetToken("test_token");
 
-      expect(validateFunc).toHaveBeenCalledWith("test_token");
+      expect(validatePasswordResetToken).toHaveBeenCalledWith("test_token");
+    });
+  });
+
+  describe("password reset", () => {
+    it("calls reset password on the auth service with the provided token", async () => {
+      const resetPassword = jest.fn().mockResolvedValue(true);
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          resetPassword,
+        },
+      });
+
+      await resolver.resetPassword("test_token", "test_password");
+
+      expect(resetPassword).toHaveBeenCalledWith("test_token", "test_password");
     });
   });
 });

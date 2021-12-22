@@ -241,4 +241,30 @@ describe("user service", () => {
       expect((await prisma.user.findFirst()).id).toBe(goodUser.id);
     });
   });
+
+  describe("update password", () => {
+    it("can update the password for a user", async () => {
+      const hashedPassword = "hashedPassword";
+      const prisma = getPrismaService();
+      const service = new UserService(
+        prisma,
+        createMock<HashService>({ make: jest.fn().mockResolvedValue(hashedPassword) }),
+        createMock<ConfigService>(createConfigServiceMock()),
+      );
+
+      const user = await prisma.user.create({
+        data: UserFactory.build({ authProvider: "local" }),
+      });
+
+      await service.updatePassword(user.id, "newPassword");
+
+      const updatedUser = await prisma.user.findFirst({
+        where: {
+          id: user.id,
+        },
+      });
+
+      expect(updatedUser.password).toEqual(hashedPassword);
+    });
+  });
 });

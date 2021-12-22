@@ -7,6 +7,8 @@ import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
 import { UserService } from "@/user/user.service";
 
+import { InvalidJwtException } from "../../../src/authentication/exceptions/invalid-jwt.exception";
+
 const userId = "userId";
 
 function createAuthenticationService(
@@ -111,6 +113,32 @@ describe("authentication service", () => {
 
       expect(findById).toHaveBeenCalledWith(userId);
       expect(result).toBe(ValidatePasswordResetTokenResultEnum.UNKNOWN_USER);
+    });
+  });
+
+  describe("reset password", () => {
+    it("can reset the password", async () => {
+      const password = "password";
+      const updatePassword = jest.fn();
+      const service = createAuthenticationService({
+        userService: {
+          updatePassword,
+        },
+      });
+
+      await service.resetPassword("valid_token", password);
+
+      expect(updatePassword).toHaveBeenCalledWith(userId, password);
+    });
+
+    it("fails resetting the password if the token is not valid", async () => {
+      const service = createAuthenticationService({
+        jwtService: {
+          validateToken: jest.fn().mockResolvedValue(false),
+        },
+      });
+
+      expect(service.resetPassword("invalid_token", "new_pw")).rejects.toThrow(InvalidJwtException);
     });
   });
 });
