@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import jwt from "jsonwebtoken";
 
+import { JwtScope } from "./enums/jwt-scope.enum";
 import { MissingApplicationKeyException } from "./exceptions/missing-application-key.exception";
 import { JwtOptions } from "./interfaces/jwt-options.interface";
 
@@ -29,9 +30,13 @@ export class JwtService {
     return jwt.decode(token) as T;
   }
 
-  validateToken(token: string): Promise<boolean> {
+  validateToken(token: string, scope?: JwtScope): Promise<boolean> {
     const secret = this.config.get<string>("api.key");
     return new Promise((resolve) => {
+      if (scope && this.decodeToken(token).scope !== scope) {
+        return resolve(false);
+      }
+
       jwt.verify(token, secret, (error) => {
         if (error) {
           return resolve(false);

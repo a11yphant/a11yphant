@@ -5,95 +5,192 @@ import { createConfigServiceMock } from "@tests/support/helpers";
 import { Request, Response } from "express";
 
 import { AuthenticationController } from "@/authentication/authentication.controller";
+import { FlashMessage } from "@/authentication/enums/flash-message.enum";
 import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
+const getAuthController = (
+  partials: {
+    userService?: Partial<UserService>;
+    jwtService?: Partial<JwtService>;
+    configData?: Record<string, any>;
+  } = {},
+): AuthenticationController => {
+  const userService = createMock<UserService>(partials.userService);
+  const jwtService = createMock<JwtService>(partials.jwtService);
+  const logger = createMock<Logger>();
+  const configService = createMock<ConfigService>(createConfigServiceMock(partials.configData));
+
+  return new AuthenticationController(userService, jwtService, logger, configService);
+};
+
 describe("authentication controller", () => {
-  const userId = "testUserid";
-  const testToken = "testTokenString";
+  describe("confirm", () => {
+    it("successfully confirms an user", async () => {
+      const redirect = jest.fn();
 
-  const authController = new AuthenticationController(
-    createMock<UserService>({
-      updateWithAuthInformation: jest.fn().mockResolvedValue(
-        new User({
-          id: userId,
-          authId: "12345",
-          authProvider: "github",
-          displayName: "anon",
-        }),
-      ),
-    }),
-    createMock<JwtService>({
-      createSignedToken: jest.fn().mockResolvedValue(testToken),
-    }),
-    createMock<Logger>(),
-    createMock<ConfigService>(createConfigServiceMock()),
-  );
+      const res = createMock<Response>({
+        redirect,
+      });
 
-  it("sets the correct cookie", async () => {
-    let cookie: { name: string; token: string; options: Record<string, unknown> };
+      const validateToken = jest.fn().mockResolvedValue(true);
+      const decodeToken = jest.fn().mockResolvedValue({ sub: "test" });
+      const confirmUser = jest.fn().mockResolvedValue(true);
 
-    const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
-      sessionToken: {
-        userId,
+      const authController = getAuthController({
+        userService: {
+          confirmUser,
+        },
+        jwtService: {
+          validateToken,
+          decodeToken,
+        },
+      });
+
+      await authController.confirm("test", res);
+
+      expect(validateToken).toHaveBeenCalled();
+      expect(decodeToken).toHaveBeenCalled();
+      expect(confirmUser).toHaveBeenCalled();
+
+      expect(redirect).toHaveBeenCalledWith(expect.stringContaining(FlashMessage.EMAIL_CONFIRMATION_SUCCESSFUL));
+    });
+
+    it("redirects with correct message if token is invalid", async () => {
+      const redirect = jest.fn();
+      const res = createMock<Response>({
+        redirect,
+      });
+
+      const confirmUser = jest.fn().mockResolvedValue(true);
+
+      const authController = getAuthController({
+        userService: {
+          confirmUser,
+        },
+        jwtService: {
+          validateToken: jest.fn().mockResolvedValue(false),
+        },
+      });
+
+      await authController.confirm("test", res);
+
+      expect(confirmUser).not.toHaveBeenCalled();
+      expect(redirect).toHaveBeenCalledWith(expect.stringContaining(FlashMessage.EMAIL_CONFIRMATION_FAILED));
+    });
+
+    it("redirects with correct message if update throws error", async () => {
+      const redirect = jest.fn();
+      const res = createMock<Response>({
+        redirect,
+      });
+
+      const confirmUser = jest.fn().mockRejectedValue("Error");
+
+      const authController = getAuthController({
+        userService: {
+          confirmUser,
+        },
+        jwtService: {
+          validateToken: jest.fn().mockResolvedValue(true),
+          decodeToken: jest.fn().mockResolvedValue({ sub: "test" }),
+        },
+      });
+
+      await authController.confirm("test", res);
+
+      expect(confirmUser).toHaveBeenCalled();
+      expect(redirect).toHaveBeenCalledWith(expect.stringContaining(FlashMessage.EMAIL_CONFIRMATION_FAILED));
+    });
+  });
+
+  describe("oauth", () => {
+    const userId = "testUserid";
+    const testToken = "testTokenString";
+
+    const authController = getAuthController({
+      userService: {
+        updateWithAuthInformation: jest.fn().mockResolvedValue(
+          new User({
+            id: userId,
+            authId: "12345",
+            authProvider: "github",
+            displayName: "anon",
+          }),
+        ),
+      },
+      jwtService: {
+        createSignedToken: jest.fn().mockResolvedValue(testToken),
       },
     });
-    const res = createMock<Response>({
-      cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
-        cookie = {
-          name,
-          token,
-          options,
-        };
-      }),
-    });
 
-    await authController.createOauthCookie(req, res);
+    describe("createOauthCookie", () => {
+      it("sets the correct cookie", async () => {
+        let cookie: { name: string; token: string; options: Record<string, unknown> };
 
-    expect(cookie.name).toBe("a11yphant_session");
-    expect(cookie.token).toBe(testToken);
-  });
+        const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
+          sessionToken: {
+            userId,
+          },
+        });
+        const res = createMock<Response>({
+          cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
+            cookie = {
+              name,
+              token,
+              options,
+            };
+          }),
+        });
 
-  describe("github", () => {
-    it("calls the inital function", () => {
-      expect(authController.github()).toBeFalsy();
-    });
+        await authController.createOauthCookie(req, res);
 
-    it("resolves the callback function", async () => {
-      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
-        sessionToken: {
-          userId,
-        },
+        expect(cookie.name).toBe("a11yphant_session");
+        expect(cookie.token).toBe(testToken);
       });
-      const res = createMock<Response>();
-
-      await authController.githubCallback(req, res);
-
-      expect(res.cookie).toBeCalled();
-      expect(res.redirect).toBeCalled();
-    });
-  });
-
-  describe("twitter", () => {
-    it("calls the inital function", () => {
-      expect(authController.twitter()).toBeFalsy();
     });
 
-    it("resolves the callback function", async () => {
-      const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
-        sessionToken: {
-          userId,
-        },
+    describe("github", () => {
+      it("calls the inital function", () => {
+        expect(authController.github()).toBeFalsy();
       });
-      const res = createMock<Response>();
 
-      await authController.twitterCallback(req, res);
+      it("resolves the callback function", async () => {
+        const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
+          sessionToken: {
+            userId,
+          },
+        });
+        const res = createMock<Response>();
 
-      expect(res.cookie).toBeCalled();
-      expect(res.redirect).toBeCalled();
+        await authController.githubCallback(req, res);
+
+        expect(res.cookie).toBeCalled();
+        expect(res.redirect).toBeCalled();
+      });
+    });
+
+    describe("twitter", () => {
+      it("calls the inital function", () => {
+        expect(authController.twitter()).toBeFalsy();
+      });
+
+      it("resolves the callback function", async () => {
+        const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
+          sessionToken: {
+            userId,
+          },
+        });
+        const res = createMock<Response>();
+
+        await authController.twitterCallback(req, res);
+
+        expect(res.cookie).toBeCalled();
+        expect(res.redirect).toBeCalled();
+      });
     });
   });
 });

@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import faker from "faker";
 
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
+import { MailService } from "@/mail/mail.service";
 import { InputError } from "@/user/exceptions/input.error";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { User } from "@/user/models/user.model";
@@ -18,10 +19,11 @@ const getUser = (props?: { id?: string; displayName?: string; authId?: string; a
   });
 };
 
-function createUserResolver(partials: { userService?: Partial<UserService> } = {}): UserResolver {
+function createUserResolver(partials: { userService?: Partial<UserService>; mailService?: Partial<MailService> } = {}): UserResolver {
   const userService = createMock<UserService>(partials.userService);
+  const mailService = createMock<MailService>(partials.mailService);
 
-  return new UserResolver(userService);
+  return new UserResolver(userService, mailService);
 }
 
 describe("user resolver", () => {
@@ -78,6 +80,20 @@ describe("user resolver", () => {
 
       expect(resolvedUser).toBeTruthy();
       expect(registerUser).toHaveBeenCalledWith(registerUserInput, sessionToken.userId);
+    });
+
+    it("sends an registration email if a user is registered.", async () => {
+      const sendRegistrationMail = jest.fn();
+
+      const user = getUser();
+
+      const resolver = createUserResolver({
+        userService: { registerUser: jest.fn().mockResolvedValue(user) },
+        mailService: { sendRegistrationMail },
+      });
+      await resolver.register({ email: "test", password: "test" }, { userId: "test" });
+
+      expect(sendRegistrationMail).toHaveBeenCalledWith(user);
     });
 
     it("throws an input error if the service throws an error", () => {

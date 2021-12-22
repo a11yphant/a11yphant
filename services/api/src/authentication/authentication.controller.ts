@@ -1,10 +1,12 @@
-import { Controller, Get, Logger, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Logger, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
 
 import { UserService } from "@/user/user.service";
 
+import { FlashMessage } from "./enums/flash-message.enum";
+import { JwtScope } from "./enums/jwt-scope.enum";
 import { ProviderInformation } from "./interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
@@ -12,6 +14,24 @@ import { JwtService } from "./jwt.service";
 @Controller("auth")
 export class AuthenticationController {
   constructor(private userService: UserService, private jwtService: JwtService, private logger: Logger, private config: ConfigService) {}
+
+  @Get("confirm")
+  async confirm(@Query("code") token: string, @Res() res: Response): Promise<void> {
+    const url = this.config.get<string>("site.url");
+    if (!(await this.jwtService.validateToken(token, JwtScope.EMAIL_CONFIRMATION))) {
+      return res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_FAILED}`);
+    }
+
+    const { sub: userId } = await this.jwtService.decodeToken(token);
+
+    try {
+      await this.userService.confirmUser(userId);
+    } catch (error) {
+      return res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_FAILED}`);
+    }
+
+    res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_SUCCESSFUL}`);
+  }
 
   @UseGuards(AuthGuard("github"))
   @Get("github")
@@ -32,7 +52,7 @@ export class AuthenticationController {
     @Res() res: Response,
   ): Promise<void> {
     await this.createOauthCookie(req, res);
-    res.redirect("/");
+    res.redirect(this.config.get<string>("site.url"));
   }
 
   @UseGuards(AuthGuard("twitter"))
@@ -42,7 +62,7 @@ export class AuthenticationController {
     @Res() res: Response,
   ): Promise<void> {
     await this.createOauthCookie(req, res);
-    res.redirect("/");
+    res.redirect(this.config.get<string>("site.url"));
   }
 
   async createOauthCookie(req: Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }, res: Response): Promise<void> {

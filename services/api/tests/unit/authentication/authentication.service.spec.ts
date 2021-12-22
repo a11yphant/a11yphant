@@ -5,12 +5,22 @@ import { useDatabase } from "@tests/support/helpers";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { HashService } from "@/authentication/hash.service";
+import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
+const getAuthenticationService = (
+  partials: { userService?: Partial<UserService>; hashService?: Partial<HashService>; jwtService?: Partial<JwtService> } = {},
+): AuthenticationService => {
+  const userService = createMock<UserService>(partials.userService);
+  const hashService = createMock<HashService>(partials.hashService);
+  const jwtService = createMock<JwtService>(partials.jwtService);
+
+  return new AuthenticationService(userService, hashService, jwtService);
+};
+
 describe("authentication service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
-
   const errorMessage = "E-Mail or password wrong.";
 
   describe("login", () => {
@@ -20,50 +30,76 @@ describe("authentication service", () => {
       const email = "hallo@a11yphant.com";
 
       const user = await prisma.user.create({
-        data: UserFactory.build({ email }),
+        data: UserFactory.build({ email, verifiedAt: new Date() }),
       });
 
-      const service = new AuthenticationService(
-        createMock<UserService>({
+      const service = getAuthenticationService({
+        userService: {
           findByEmail: jest.fn().mockResolvedValue(new User(user)),
-        }),
-        createMock<HashService>({
+        },
+        hashService: {
           compare: jest.fn().mockResolvedValue(true),
-        }),
-      );
+        },
+      });
 
       const loggedInUser = await service.login({ email: user.email, password: "test_pw" });
       expect(loggedInUser.email).toBe(email);
     });
 
     it("throws an error if the email is not found.", () => {
-      const service = new AuthenticationService(
-        createMock<UserService>({
+      const service = getAuthenticationService({
+        userService: {
           findByEmail: jest.fn().mockResolvedValue(null),
-        }),
-        createMock<HashService>(),
-      );
+        },
+      });
 
       expect(service.login({ email: "test_mail", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
 
-    it("throws an error if the password is wrong.", async () => {
+    it("throws an error if the email is not verified.", async () => {
       const prisma = getPrismaService();
 
       const user = await prisma.user.create({
         data: UserFactory.build(),
       });
 
-      const service = new AuthenticationService(
-        createMock<UserService>({
+      const service = getAuthenticationService({
+        userService: {
           findByEmail: jest.fn().mockResolvedValue(new User(user)),
-        }),
-        createMock<HashService>({
+        },
+      });
+
+      expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError("E-Mail address has not yet been verified.");
+    });
+
+    it("throws an error if the password is wrong.", async () => {
+      const prisma = getPrismaService();
+
+      const user = await prisma.user.create({
+        data: UserFactory.build({ verifiedAt: new Date() }),
+      });
+
+      const service = getAuthenticationService({
+        userService: {
+          findByEmail: jest.fn().mockResolvedValue(new User(user)),
+        },
+        hashService: {
           compare: jest.fn().mockResolvedValue(false),
-        }),
-      );
+        },
+      });
 
       expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError(errorMessage);
+    });
+  });
+
+  describe("generateMailConfirmationToken", () => {
+    it("calls the jwt generation", async () => {
+      const createSignedToken = jest.fn().mockResolvedValue("token");
+      const service = getAuthenticationService({ jwtService: { createSignedToken } });
+
+      await service.generateMailConfirmationToken("user");
+
+      expect(createSignedToken).toHaveBeenCalled();
     });
   });
 });
