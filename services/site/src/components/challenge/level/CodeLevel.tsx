@@ -41,7 +41,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
       setTimeout(() => {
         flashMessageApi.show(
           <>
-            <span className={clsx("pr-3")} aria-hidden={true}>
+            <span className={clsx("mr-3")} aria-hidden={true}>
               🚀
             </span>
             Reminder: You can use hints if you are stuck
