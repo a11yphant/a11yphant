@@ -7,7 +7,7 @@ import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
 import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
-import useSessionState from "app/hooks/sessionState/useSessionState";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";

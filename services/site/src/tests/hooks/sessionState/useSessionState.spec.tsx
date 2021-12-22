@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import useSessionState from "app/hooks/sessionState/useSessionState";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 
 describe("useSessionState", () => {
   const mockKey = "key";

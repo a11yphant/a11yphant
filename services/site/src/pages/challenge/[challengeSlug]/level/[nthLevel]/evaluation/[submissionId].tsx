@@ -19,7 +19,7 @@ import {
   useChallengeBySlugQuery,
 } from "app/generated/graphql";
 import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
-import useSessionState from "app/hooks/sessionState/useSessionState";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { initializeApollo } from "app/lib/apollo-client";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";

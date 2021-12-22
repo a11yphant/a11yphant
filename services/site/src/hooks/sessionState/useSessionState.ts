@@ -7,7 +7,7 @@ type NoFunctionObject = {
 };
 type NoFunctionArray = Array<NoFunctionValue>;
 
-const useSessionState = <S extends NoFunctionValue = undefined>(
+export const useSessionState = <S extends NoFunctionValue = undefined>(
   key: string,
   initialValue?: S | (() => S),
 ): [S | undefined, React.Dispatch<React.SetStateAction<S | undefined>>] => {
@@ -40,5 +40,3 @@ const useSessionState = <S extends NoFunctionValue = undefined>(
 
   return [state, setState];
 };
-
-export default useSessionState;
