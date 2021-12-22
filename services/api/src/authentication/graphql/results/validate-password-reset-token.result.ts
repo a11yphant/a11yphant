@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
-import { ValidatePasswordResetTokenResultEnum } from "@/authentication/enums/validate-password-reset-token-result.enum";
+import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/enums/validate-password-reset-token-result.enum";
 
 @ObjectType()
 export class ValidatePasswordResetTokenResult {

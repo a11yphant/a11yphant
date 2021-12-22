@@ -2,10 +2,10 @@ import { ConfigService } from "@nestjs/config";
 import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-errors";
 
-import { ResetPasswordResultEnum } from "@/authentication/enums/reset-password-result.enum";
-import { ValidatePasswordResetTokenResultEnum } from "@/authentication/enums/validate-password-reset-token-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
+import { ResetPasswordResultEnum } from "@/authentication/graphql/enums/reset-password-result.enum";
+import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/enums/validate-password-reset-token-result.enum";
 import { User } from "@/user/models/user.model";
 
 import { AuthenticationService } from "../../authentication.service";
