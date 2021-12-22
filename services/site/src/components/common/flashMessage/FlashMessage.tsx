@@ -63,9 +63,10 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({ child
               "basis-12 shrink-0 grow-0",
               "p-3.5",
               "z-10",
-              "transition-colors duration-300",
-              "hover:text-primary-light",
-              "focus-visible:text-primary-light",
+              "transition ease-in-out duration-300",
+              "hover:text-light",
+              "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
+              "focus:text-light",
             )}
           >
             <span className={clsx("sr-only")}>Close</span>
