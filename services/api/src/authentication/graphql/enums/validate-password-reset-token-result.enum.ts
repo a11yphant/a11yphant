@@ -4,7 +4,7 @@ export enum ValidatePasswordResetTokenResultEnum {
   VALID = "VALID",
   EXPIRED = "EXPIRED",
   UNKNOWN_USER = "UNKNOWN_USER",
-  INVALID_JWT = "INVALID_JWT",
+  INVALID_TOKEN = "INVALID_TOKEN",
 }
 
 registerEnumType(ValidatePasswordResetTokenResultEnum, {

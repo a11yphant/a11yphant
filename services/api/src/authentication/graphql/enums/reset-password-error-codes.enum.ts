@@ -1,7 +1,6 @@
 import { registerEnumType } from "@nestjs/graphql";
 
 export enum ResetPasswordErrorCodes {
-  SUCCESS = "SUCCESS",
   INVALID_TOKEN = "INVALID_TOKEN",
   INPUT_VALIDATION_ERROR = "INPUT_VALIDATION_ERROR",
 }

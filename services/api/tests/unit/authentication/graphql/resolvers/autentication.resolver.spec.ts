@@ -6,7 +6,9 @@ import faker from "faker";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
+import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { ResetPasswordErrorCodes } from "@/authentication/graphql/enums/reset-password-error-codes.enum";
+import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/enums/validate-password-reset-token-result.enum";
 import { AuthenticationResolver } from "@/authentication/graphql/resolvers/authentication.resolver";
 import { ResetPasswordErrorResult } from "@/authentication/graphql/results/reset-password-error.result";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
@@ -106,6 +108,54 @@ describe("authentication resolver", () => {
       resolver.validatePasswordResetToken("test_token");
 
       expect(validatePasswordResetToken).toHaveBeenCalledWith("test_token");
+    });
+
+    it("returns valid if the validation does not throw an error", () => {
+      const validatePasswordResetToken = jest.fn().mockResolvedValue(true);
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          validatePasswordResetToken,
+        },
+      });
+
+      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.VALID });
+    });
+
+    it("returns invalid token if the token is not valid", () => {
+      const validatePasswordResetToken = jest.fn().mockRejectedValue(new InvalidJwtException());
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          validatePasswordResetToken,
+        },
+      });
+
+      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN });
+    });
+
+    it("returns invalid token if the token is not valid", () => {
+      const validatePasswordResetToken = jest.fn().mockRejectedValue(new InvalidJwtException());
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          validatePasswordResetToken,
+        },
+      });
+
+      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN });
+    });
+
+    it("returns invalid token if the token is not valid", () => {
+      const validatePasswordResetToken = jest.fn().mockRejectedValue(new UserNotFoundException());
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          validatePasswordResetToken,
+        },
+      });
+
+      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.UNKNOWN_USER });
     });
   });
 

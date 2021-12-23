@@ -3,15 +3,15 @@ import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-errors";
 import * as Yup from "yup";
 
+import { AuthenticationService } from "@/authentication/authentication.service";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
+import { LoginInput } from "@/authentication/inputs/login.input";
+import { Context as IContext } from "@/authentication/interfaces/context.interface";
+import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
-import { AuthenticationService } from "../../authentication.service";
-import { LoginInput } from "../../inputs/login.input";
-import { Context as IContext } from "../../interfaces/context.interface";
-import { JwtService } from "../../jwt.service";
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
@@ -46,7 +46,7 @@ export class AuthenticationResolver {
     } catch (e) {
       if (e instanceof InvalidJwtException) {
         return {
-          result: ValidatePasswordResetTokenResultEnum.INVALID_JWT,
+          result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN,
         };
       }
 
@@ -88,7 +88,7 @@ export class AuthenticationResolver {
 
       return await this.userService.findById(userId);
     } catch (e) {
-      if (e instanceof InvalidJwtException) {
+      if (e instanceof InvalidJwtException || e instanceof UserNotFoundException) {
         return {
           errorCode: ResetPasswordErrorCodes.INVALID_TOKEN,
           inputErrors: [],
