@@ -67,7 +67,7 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.4.0",
-    "yup": "^0.32.11"
+    "yup": "0.32.11"
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.2.0",
