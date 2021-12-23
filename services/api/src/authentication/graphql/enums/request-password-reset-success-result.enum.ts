@@ -1,7 +1,7 @@
 import { registerEnumType } from "@nestjs/graphql";
 
 export enum RequestPasswordResetSuccessResultEnum {
-  EMAIL_SENT = "email-sent",
+  EMAIL_SENT = "EMAIL_SENT",
 }
 
 registerEnumType(RequestPasswordResetSuccessResultEnum, {

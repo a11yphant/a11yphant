@@ -10,6 +10,7 @@ import { UserNotFoundException } from "@/authentication/exceptions/user-not-foun
 import { RequestPasswordResetErrorCodes } from "@/authentication/graphql/enums/request-password-reset-error-codes.enum";
 import { RequestPasswordResetFields } from "@/authentication/graphql/enums/request-password-reset-fields.enum";
 import { ResetPasswordErrorCodes } from "@/authentication/graphql/enums/reset-password-error-codes.enum";
+import { ResetPasswordFields } from "@/authentication/graphql/enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/enums/validate-password-reset-token-result.enum";
 import { AuthenticationResolver } from "@/authentication/graphql/resolvers/authentication.resolver";
 import { ResetPasswordErrorResult } from "@/authentication/graphql/results/reset-password-error.result";
@@ -234,7 +235,7 @@ describe("authentication resolver", () => {
 
       expect(result).toHaveProperty("errorCode", "INPUT_VALIDATION_ERROR");
       expect((result as ResetPasswordErrorResult).inputErrors).toHaveLength(1);
-      expect((result as ResetPasswordErrorResult).inputErrors[0]).toHaveProperty("field", "password");
+      expect((result as ResetPasswordErrorResult).inputErrors[0]).toHaveProperty("field", ResetPasswordFields.PASSWORD);
     });
   });
 });
