@@ -32,11 +32,9 @@ const Settings: React.FunctionComponent = () => {
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
         <div className={clsx(" mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
-          <div className={clsx("flex flex-col justify-between content-start pb-6 mb-20 border-grey-light border-b", "md:flex-row md:content-end")}>
-            <div className={clsx("md:self-end")}>
-              <h1 className={clsx("pb-2.5 pr-4 text-grey", "h3", "sm:h2")}>Settings</h1>
-              <p className={clsx("text-grey-middle")}>Change your user preferences</p>
-            </div>
+          <div className={clsx("pb-6 mb-20 border-grey-light border-b")}>
+            <h1 className={clsx("pb-2.5 text-grey", "h3", "sm:h2")}>Settings</h1>
+            <p className={clsx("text-grey-middle")}>Change your user preferences</p>
           </div>
 
           <h2 className={clsx("mb-6", "h4", "sm:h3")}>Account</h2>
