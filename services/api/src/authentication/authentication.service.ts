@@ -37,7 +37,7 @@ export class AuthenticationService {
   }
 
   async validatePasswordResetToken(token: string): Promise<boolean> {
-    const validJwt = await this.jwtService.validateToken(token);
+    const validJwt = await this.jwtService.validateToken(token, JwtScope.PASSWORD_RESET);
 
     if (!validJwt) {
       throw new InvalidJwtException();
