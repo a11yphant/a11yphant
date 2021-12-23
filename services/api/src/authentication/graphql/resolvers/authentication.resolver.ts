@@ -12,9 +12,13 @@ import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
+import { RequestPasswordResetErrorCodes } from "../enums/request-password-reset-error-codes.enum";
+import { RequestPasswordResetFields } from "../enums/request-password-reset-fields.enum";
+import { RequestPasswordResetSuccessResultEnum } from "../enums/request-password-reset-success-result.enum";
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
+import { RequestPasswordResetResult } from "../results/request-password-reset.result";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
 
@@ -37,6 +41,34 @@ export class AuthenticationResolver {
     ctx.res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
 
     return user;
+  }
+
+  @Mutation(() => RequestPasswordResetResult)
+  async requestPasswordReset(@Args("email") email: string): Promise<typeof RequestPasswordResetResult> {
+    const inputErrors = [];
+
+    try {
+      const passwordSchema = Yup.string().email("The email must be a valid email.");
+      await passwordSchema.validate(email);
+    } catch (e) {
+      inputErrors.push({
+        field: RequestPasswordResetFields.EMAIL,
+        message: e.message,
+      });
+    }
+
+    if (inputErrors.length > 0) {
+      return {
+        errorCode: RequestPasswordResetErrorCodes.INPUT_VALIDATION_ERROR,
+        inputErrors,
+      };
+    }
+
+    await this.authenticationService.requestPasswordReset(email);
+
+    return {
+      result: RequestPasswordResetSuccessResultEnum.EMAIL_SENT,
+    };
   }
 
   @Mutation(() => ValidatePasswordResetTokenResult)

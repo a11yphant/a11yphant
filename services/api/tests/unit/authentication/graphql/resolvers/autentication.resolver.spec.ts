@@ -7,6 +7,8 @@ import faker from "faker";
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
+import { RequestPasswordResetErrorCodes } from "@/authentication/graphql/enums/request-password-reset-error-codes.enum";
+import { RequestPasswordResetFields } from "@/authentication/graphql/enums/request-password-reset-fields.enum";
 import { ResetPasswordErrorCodes } from "@/authentication/graphql/enums/reset-password-error-codes.enum";
 import { ValidatePasswordResetTokenResultEnum } from "@/authentication/graphql/enums/validate-password-reset-token-result.enum";
 import { AuthenticationResolver } from "@/authentication/graphql/resolvers/authentication.resolver";
@@ -25,6 +27,7 @@ function createAuthenticationResolver(
   } = {},
 ): AuthenticationResolver {
   const authenticationService = createMock<AuthenticationService>({
+    requestPasswordReset: jest.fn().mockReturnValue(null),
     ...partials.authenticationService,
   });
   const userService = createMock<UserService>({
@@ -92,6 +95,40 @@ describe("authentication resolver", () => {
       });
 
       expect(resolver.login({ email: "test_mail", password: "test_pw" }, createMock<IContext>())).rejects.toThrowError("E-Mail or password wrong.");
+    });
+  });
+
+  describe("request password reset", () => {
+    it("can request a password reset", async () => {
+      const email = "info@a11yphant.com";
+      const requestPasswordReset = jest.fn().mockResolvedValue(null);
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          requestPasswordReset,
+        },
+      });
+
+      await resolver.requestPasswordReset(email);
+
+      expect(requestPasswordReset).toHaveBeenCalledWith(email);
+    });
+
+    it("fails with an invalid email error when the email is not valid", async () => {
+      const email = "not-a-valid-email";
+
+      const resolver = createAuthenticationResolver();
+
+      const result = await resolver.requestPasswordReset(email);
+
+      expect(result).toHaveProperty("errorCode", RequestPasswordResetErrorCodes.INPUT_VALIDATION_ERROR);
+      expect(result).toHaveProperty(
+        "inputErrors",
+        expect.arrayContaining([
+          expect.objectContaining({
+            field: RequestPasswordResetFields.EMAIL,
+          }),
+        ]),
+      );
     });
   });
 

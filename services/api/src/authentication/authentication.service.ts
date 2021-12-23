@@ -69,4 +69,8 @@ export class AuthenticationService {
   generateMailConfirmationToken(userId: string): Promise<string> {
     return this.jwtService.createSignedToken({ scope: JwtScope.EMAIL_CONFIRMATION }, { expiresInSeconds: 86400, subject: userId });
   }
+
+  requestPasswordReset(email: string): Promise<void> {
+    return Promise.resolve();
+  }
 }
