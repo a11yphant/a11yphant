@@ -77,6 +77,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             >
               <Dropdown.Group>
                 <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+                <Dropdown.Link href={`/settings`}>Settings</Dropdown.Link>
               </Dropdown.Group>
             </Dropdown>
           )}
