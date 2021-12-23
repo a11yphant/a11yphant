@@ -1,53 +1,60 @@
 import { createMock } from "@golevelup/ts-jest";
-import { Logger } from "@nestjs/common";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
-import { useDatabase } from "@tests/support/helpers";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
-import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
-const getAuthenticationService = (
+import { InvalidJwtException } from "../../../src/authentication/exceptions/invalid-jwt.exception";
+
+const userId = "userId";
+
+function createAuthenticationService(
   partials: { userService?: Partial<UserService>; hashService?: Partial<HashService>; jwtService?: Partial<JwtService> } = {},
-): AuthenticationService => {
-  const userService = createMock<UserService>(partials.userService);
-  const hashService = createMock<HashService>(partials.hashService);
-  const jwtService = createMock<JwtService>(partials.jwtService);
+): AuthenticationService {
+  const userService = createMock<UserService>({
+    findByEmail: jest.fn().mockResolvedValue(UserFactory.build()),
+    ...partials.userService,
+  });
+
+  const hashService = createMock<HashService>({
+    compare: jest.fn().mockResolvedValue(false),
+    ...partials.hashService,
+  });
+
+  const jwtService = createMock<JwtService>({
+    validateToken: jest.fn().mockResolvedValue(true),
+    decodeToken: jest.fn().mockReturnValue({ sub: userId, exp: Number.MAX_SAFE_INTEGER }),
+    ...partials.jwtService,
+  });
 
   return new AuthenticationService(userService, hashService, jwtService);
-};
+}
 
 describe("authentication service", () => {
-  const { getPrismaService } = useDatabase(createMock<Logger>());
   const errorMessage = "E-Mail or password wrong.";
 
   describe("login", () => {
-    it("can log in an user.", async () => {
-      const prisma = getPrismaService();
-
+    it("can log in an user", async () => {
       const email = "hallo@a11yphant.com";
 
-      const user = await prisma.user.create({
-        data: UserFactory.build({ email, verifiedAt: new Date() }),
-      });
-
-      const service = getAuthenticationService({
+      const service = createAuthenticationService({
         userService: {
-          findByEmail: jest.fn().mockResolvedValue(new User(user)),
+          findByEmail: jest.fn().mockResolvedValue(UserFactory.build({ email })),
         },
         hashService: {
           compare: jest.fn().mockResolvedValue(true),
         },
       });
 
-      const loggedInUser = await service.login({ email: user.email, password: "test_pw" });
+      const loggedInUser = await service.login({ email: "hallo@a11yphant.com", password: "test_pw" });
       expect(loggedInUser.email).toBe(email);
     });
 
-    it("throws an error if the email is not found.", () => {
-      const service = getAuthenticationService({
+    it("throws an error if the email is not found", () => {
+      const service = createAuthenticationService({
         userService: {
           findByEmail: jest.fn().mockResolvedValue(null),
         },
@@ -56,46 +63,94 @@ describe("authentication service", () => {
       expect(service.login({ email: "test_mail", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
 
-    it("throws an error if the email is not verified.", async () => {
-      const prisma = getPrismaService();
-
-      const user = await prisma.user.create({
-        data: UserFactory.build(),
-      });
-
-      const service = getAuthenticationService({
-        userService: {
-          findByEmail: jest.fn().mockResolvedValue(new User(user)),
-        },
-      });
-
-      expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError("E-Mail address has not yet been verified.");
-    });
-
-    it("throws an error if the password is wrong.", async () => {
-      const prisma = getPrismaService();
-
-      const user = await prisma.user.create({
-        data: UserFactory.build({ verifiedAt: new Date() }),
-      });
-
-      const service = getAuthenticationService({
-        userService: {
-          findByEmail: jest.fn().mockResolvedValue(new User(user)),
-        },
+    it("throws an error if the password is wrong", async () => {
+      const service = createAuthenticationService({
         hashService: {
           compare: jest.fn().mockResolvedValue(false),
         },
       });
 
-      expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError(errorMessage);
+      expect(service.login({ email: "mail@example.com", password: "test_pw" })).rejects.toThrowError(errorMessage);
+    });
+
+    it("throws an error if the email is not verified", async () => {
+      const user = UserFactory.build({ verifiedAt: null });
+      const service = createAuthenticationService({
+        userService: {
+          findByEmail: jest.fn().mockResolvedValue(user),
+        },
+      });
+
+      expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError("E-Mail address has not yet been verified.");
+    });
+  });
+
+  describe("validate password reset token", () => {
+    it("returns valid for valid tokens", async () => {
+      const service = createAuthenticationService();
+
+      expect(await service.validatePasswordResetToken("valid_token")).toBe(true);
+    });
+
+    it("returns invalid jwt if the jwt is invalid", async () => {
+      const service = createAuthenticationService({
+        jwtService: {
+          validateToken: jest.fn().mockResolvedValue(false),
+        },
+      });
+
+      expect(service.validatePasswordResetToken("invalid_token")).rejects.toThrow(InvalidJwtException);
+    });
+
+    it("returns unknown user if the embedded email cannot be found", async () => {
+      expect.assertions(2);
+
+      const findById = jest.fn().mockResolvedValue(null);
+      const service = createAuthenticationService({
+        userService: {
+          findById,
+        },
+      });
+
+      const validationPromise = service.validatePasswordResetToken("valid_token");
+      expect(validationPromise).rejects.toThrow(UserNotFoundException);
+
+      validationPromise.catch(() => {
+        expect(findById).toHaveBeenCalledWith(userId);
+      });
+    });
+  });
+
+  describe("reset password", () => {
+    it("can reset the password", async () => {
+      const password = "password";
+      const updatePassword = jest.fn();
+      const service = createAuthenticationService({
+        userService: {
+          updatePassword,
+        },
+      });
+
+      await service.resetPassword("valid_token", password);
+
+      expect(updatePassword).toHaveBeenCalledWith(userId, password);
+    });
+
+    it("fails resetting the password if the token is not valid", async () => {
+      const service = createAuthenticationService({
+        jwtService: {
+          validateToken: jest.fn().mockResolvedValue(false),
+        },
+      });
+
+      expect(service.resetPassword("invalid_token", "password")).rejects.toThrow(InvalidJwtException);
     });
   });
 
   describe("generateMailConfirmationToken", () => {
     it("calls the jwt generation", async () => {
       const createSignedToken = jest.fn().mockResolvedValue("token");
-      const service = getAuthenticationService({ jwtService: { createSignedToken } });
+      const service = createAuthenticationService({ jwtService: { createSignedToken } });
 
       await service.generateMailConfirmationToken("user");
 

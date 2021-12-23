@@ -4,6 +4,8 @@ import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
 import { JwtScope } from "./enums/jwt-scope.enum";
+import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
+import { UserNotFoundException } from "./exceptions/user-not-found.exception";
 import { HashService } from "./hash.service";
 import { LoginInput } from "./inputs/login.input";
 import { JwtService } from "./jwt.service";
@@ -32,6 +34,36 @@ export class AuthenticationService {
     }
 
     return user;
+  }
+
+  async validatePasswordResetToken(token: string): Promise<boolean> {
+    const validJwt = await this.jwtService.validateToken(token, JwtScope.PASSWORD_RESET);
+
+    if (!validJwt) {
+      throw new InvalidJwtException();
+    }
+
+    const decoded = this.jwtService.decodeToken(token);
+
+    const user = await this.userService.findById(decoded.sub);
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    return true;
+  }
+
+  async resetPassword(token: string, password: string): Promise<string> {
+    try {
+      await this.validatePasswordResetToken(token);
+    } catch {
+      throw new InvalidJwtException();
+    }
+
+    const decodedToken = this.jwtService.decodeToken(token);
+    this.userService.updatePassword(decodedToken.sub, password);
+
+    return decodedToken.sub;
   }
 
   generateMailConfirmationToken(userId: string): Promise<string> {

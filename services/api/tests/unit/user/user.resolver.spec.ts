@@ -1,34 +1,26 @@
 import { createMock } from "@golevelup/ts-jest";
-import faker from "faker";
+import { UserFactory } from "@tests/support/factories/models/user.factory";
 
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { MailService } from "@/mail/mail.service";
 import { InputError } from "@/user/exceptions/input.error";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
-import { User } from "@/user/models/user.model";
 import { UserResolver } from "@/user/user.resolver";
 import { UserService } from "@/user/user.service";
 
-const getUser = (props?: { id?: string; displayName?: string; authId?: string; authProvider?: string }): User => {
-  return new User({
-    id: faker.datatype.uuid(),
-    displayName: faker.name.findName(),
-    authId: faker.datatype.string(10),
-    authProvider: "anonymous",
-    ...props,
-  });
-};
-
 function createUserResolver(partials: { userService?: Partial<UserService>; mailService?: Partial<MailService> } = {}): UserResolver {
-  const userService = createMock<UserService>(partials.userService);
-  const mailService = createMock<MailService>(partials.mailService);
+  const userService = createMock<UserService>({
+    ...partials.userService,
+  });
+
+  const mailService = createMock<MailService>({ ...partials.mailService });
 
   return new UserResolver(userService, mailService);
 }
 
 describe("user resolver", () => {
   it("returns the current user", async () => {
-    const user = getUser({ authProvider: "github" });
+    const user = UserFactory.build({ authProvider: "github" });
     const findById = jest.fn().mockResolvedValue(user);
 
     const resolver = createUserResolver({ userService: { findById } });
@@ -38,7 +30,7 @@ describe("user resolver", () => {
   });
 
   it("returns a user by id", async () => {
-    const user = getUser();
+    const user = UserFactory.build();
     const findById = jest.fn().mockResolvedValue(user);
 
     const resolver = createUserResolver({ userService: { findById } });
@@ -49,7 +41,7 @@ describe("user resolver", () => {
   });
 
   it("shows that the user is registered for github users", async () => {
-    const user = getUser({ authProvider: "github" });
+    const user = UserFactory.build({ authProvider: "github" });
 
     const resolver = createUserResolver();
     const resolvedIsRegistered = await resolver.isRegistered(user);
@@ -58,7 +50,7 @@ describe("user resolver", () => {
   });
 
   it("shows that the user is not registered for anonymous users", async () => {
-    const user = getUser({ authProvider: "anonymous" });
+    const user = UserFactory.build({ authProvider: "anonymous" });
 
     const resolver = createUserResolver();
     const resolvedIsRegistered = await resolver.isRegistered(user);
@@ -69,7 +61,7 @@ describe("user resolver", () => {
   describe("register", () => {
     it("returns the registered user", async () => {
       const id = "test_id";
-      const user = getUser({ id, authProvider: "local" });
+      const user = UserFactory.build({ id, authProvider: "local" });
       const registerUser = jest.fn().mockResolvedValue(user);
 
       const registerUserInput: RegisterUserInput = { email: "test", password: "test" };
@@ -85,7 +77,7 @@ describe("user resolver", () => {
     it("sends an registration email if a user is registered.", async () => {
       const sendRegistrationMail = jest.fn();
 
-      const user = getUser();
+      const user = UserFactory.build();
 
       const resolver = createUserResolver({
         userService: { registerUser: jest.fn().mockResolvedValue(user) },

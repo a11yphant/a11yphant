@@ -150,4 +150,15 @@ export class UserService {
       },
     });
   }
+
+  async updatePassword(userId: string, password: string): Promise<void> {
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        password: await this.hashService.make(password),
+      },
+    });
+  }
 }
