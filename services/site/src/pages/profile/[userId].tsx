@@ -46,9 +46,7 @@ const Challenge: React.FunctionComponent = () => {
   const openChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.Open);
   const startedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.InProgress);
   const completedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.Finished);
-  // const displayCompletedChallenges = completedChallenges.length > 0 ? `0${completedChallenges.length}` : completedChallenges.length;
   const totalChallenges = challenges.length;
-  // const displayedTotalChallenges = totalChallenges > 0 ? `0${totalChallenges}` : totalChallenges;
 
   return (
     <>
@@ -85,8 +83,10 @@ const Challenge: React.FunctionComponent = () => {
               <p className={clsx("text-grey-middle")}>Is learning to code accessibly</p>
             </div>
 
-            <div className={clsx("hidden", "md:block")}>
-              {/* <h2 className={clsx("font-normal", "h4", "md:ml-2", "lg:h3")}>Finished</h2> */}
+            <div className={clsx("hidden", "md:flex md:flex-col")}>
+              <h2 className={clsx("font-normal text-right", "h4", "md:mb-2", "lg:h3")}>
+                finished <br /> challenges
+              </h2>
               <p className={clsx("font-mono", "h1 font-normal", "sm:text-8xl", "md:text-right")}>
                 {completedChallenges.length}/{totalChallenges} <span className="sr-only">challenges</span>
               </p>
