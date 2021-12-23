@@ -19,7 +19,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-// Workaround due too ts-jests issues with enums: https://github.com/kulshekhar/ts-jest/issues/1357#issuecomment-580736356
+// Workaround due to ts-jests issues with enums: https://github.com/kulshekhar/ts-jest/issues/1357#issuecomment-580736356
 const ChallengeStatus = { ...ChallengeStatusEnum };
 
 const Challenge: React.FunctionComponent = () => {
@@ -109,7 +109,7 @@ const Challenge: React.FunctionComponent = () => {
             </div>
           )}
           {startedChallenges.length > 0 && (
-            <>
+            <div>
               <h3 className={clsx("mb-2.5", "h5", "sm:h4")}>Currently coding</h3>
               <ul className={clsx("list-disc ml-6 mb-16")}>
                 {challenges.map(
@@ -121,10 +121,10 @@ const Challenge: React.FunctionComponent = () => {
                     ),
                 )}
               </ul>
-            </>
+            </div>
           )}
           {openChallenges.length > 0 && (
-            <>
+            <div>
               <h3 className={clsx("mb-2.5", "h5", "sm:h4")}>Not started yet</h3>
               <ul className={clsx("list-disc ml-6 mb-4")}>
                 {challenges.map(
@@ -136,7 +136,7 @@ const Challenge: React.FunctionComponent = () => {
                     ),
                 )}
               </ul>
-            </>
+            </div>
           )}
         </div>
       </main>
