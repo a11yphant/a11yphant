@@ -19,6 +19,7 @@ import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enu
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
 import { RequestPasswordResetInput } from "../inputs/request-password-reset.input";
+import { ValidatePasswordResetTokenInput } from "../inputs/validate-password-reset-token.input";
 import { RequestPasswordResetResult } from "../results/request-password-reset.result";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
@@ -73,9 +74,11 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => ValidatePasswordResetTokenResult)
-  async validatePasswordResetToken(@Args("token") token: string): Promise<ValidatePasswordResetTokenResult> {
+  async validatePasswordResetToken(
+    @Args("validatePasswordResetTokenInput") input: ValidatePasswordResetTokenInput,
+  ): Promise<ValidatePasswordResetTokenResult> {
     try {
-      await this.authenticationService.validatePasswordResetToken(token);
+      await this.authenticationService.validatePasswordResetToken(input.token);
     } catch (e) {
       if (e instanceof InvalidJwtException) {
         return {

@@ -143,7 +143,7 @@ describe("authentication resolver", () => {
         },
       });
 
-      resolver.validatePasswordResetToken("test_token");
+      resolver.validatePasswordResetToken({ token: "test_token" });
 
       expect(validatePasswordResetToken).toHaveBeenCalledWith("test_token");
     });
@@ -157,7 +157,7 @@ describe("authentication resolver", () => {
         },
       });
 
-      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.VALID });
+      expect(resolver.validatePasswordResetToken({ token: "test_token" })).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.VALID });
     });
 
     it("returns invalid token if the token is not valid", () => {
@@ -169,7 +169,9 @@ describe("authentication resolver", () => {
         },
       });
 
-      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN });
+      expect(resolver.validatePasswordResetToken({ token: "test_token" })).resolves.toEqual({
+        result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN,
+      });
     });
 
     it("returns invalid token if the token is not valid", () => {
@@ -181,7 +183,9 @@ describe("authentication resolver", () => {
         },
       });
 
-      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN });
+      expect(resolver.validatePasswordResetToken({ token: "test_token" })).resolves.toEqual({
+        result: ValidatePasswordResetTokenResultEnum.INVALID_TOKEN,
+      });
     });
 
     it("returns invalid token if the token is not valid", () => {
@@ -193,7 +197,9 @@ describe("authentication resolver", () => {
         },
       });
 
-      expect(resolver.validatePasswordResetToken("test_token")).resolves.toEqual({ result: ValidatePasswordResetTokenResultEnum.UNKNOWN_USER });
+      expect(resolver.validatePasswordResetToken({ token: "test_token" })).resolves.toEqual({
+        result: ValidatePasswordResetTokenResultEnum.UNKNOWN_USER,
+      });
     });
   });
 
