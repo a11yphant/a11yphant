@@ -6,8 +6,8 @@ import { UserService } from "@/user/user.service";
 import { JwtScope } from "./enums/jwt-scope.enum";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "./exceptions/user-not-found.exception";
+import { LoginInput } from "./graphql/inputs/login.input";
 import { HashService } from "./hash.service";
-import { LoginInput } from "./inputs/login.input";
 import { JwtService } from "./jwt.service";
 
 @Injectable()
