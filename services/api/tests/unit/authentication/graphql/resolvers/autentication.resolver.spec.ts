@@ -213,7 +213,7 @@ describe("authentication resolver", () => {
         },
       });
 
-      const result = await resolver.resetPassword("test_token", "test_password");
+      const result = await resolver.resetPassword({ token: "test_token", password: "test_password" });
 
       expect(resetPassword).toHaveBeenCalledWith("test_token", "test_password");
       expect(result).toHaveProperty("id");
@@ -228,7 +228,7 @@ describe("authentication resolver", () => {
         },
       });
 
-      const result = await resolver.resetPassword("test_token", "test_password");
+      const result = await resolver.resetPassword({ token: "test_token", password: "test_password" });
 
       expect(resetPassword).toHaveBeenCalledWith("test_token", "test_password");
       expect(result).toHaveProperty("errorCode", ResetPasswordErrorCodes.INVALID_TOKEN);
@@ -237,7 +237,7 @@ describe("authentication resolver", () => {
     it("returns an error if the password is not valid", async () => {
       const resolver = createAuthenticationResolver();
 
-      const result = await resolver.resetPassword("test_token", "secret");
+      const result = await resolver.resetPassword({ token: "test_token", password: "secret" });
 
       expect(result).toHaveProperty("errorCode", "INPUT_VALIDATION_ERROR");
       expect((result as ResetPasswordErrorResult).inputErrors).toHaveLength(1);

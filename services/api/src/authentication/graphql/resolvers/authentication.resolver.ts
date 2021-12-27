@@ -19,6 +19,7 @@ import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enu
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
 import { RequestPasswordResetInput } from "../inputs/request-password-reset.input";
+import { ResetPasswordInput } from "../inputs/reset-password.input";
 import { ValidatePasswordResetTokenInput } from "../inputs/validate-password-reset-token.input";
 import { RequestPasswordResetResult } from "../results/request-password-reset.result";
 import { ResetPasswordResult } from "../results/reset-password.result";
@@ -99,12 +100,12 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => ResetPasswordResult)
-  async resetPassword(@Args("token") token: string, @Args("password") password: string): Promise<typeof ResetPasswordResult> {
+  async resetPassword(@Args("resetPasswordInput") input: ResetPasswordInput): Promise<typeof ResetPasswordResult> {
     const inputErrors = [];
 
     try {
       const passwordSchema = Yup.string().min(8, "Password must be at least 8 characters long.").required("Password is required.");
-      await passwordSchema.validate(password);
+      await passwordSchema.validate(input.password);
     } catch (e) {
       inputErrors.push({
         field: ResetPasswordFields.PASSWORD,
@@ -120,7 +121,7 @@ export class AuthenticationResolver {
     }
 
     try {
-      const userId = await this.authenticationService.resetPassword(token, password);
+      const userId = await this.authenticationService.resetPassword(input.token, input.password);
 
       return await this.userService.findById(userId);
     } catch (e) {
