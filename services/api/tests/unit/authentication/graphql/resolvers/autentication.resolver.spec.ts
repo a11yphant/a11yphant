@@ -109,7 +109,7 @@ describe("authentication resolver", () => {
         },
       });
 
-      await resolver.requestPasswordReset(email);
+      await resolver.requestPasswordReset({ email });
 
       expect(requestPasswordReset).toHaveBeenCalledWith(email);
     });
@@ -119,7 +119,7 @@ describe("authentication resolver", () => {
 
       const resolver = createAuthenticationResolver();
 
-      const result = await resolver.requestPasswordReset(email);
+      const result = await resolver.requestPasswordReset({ email });
 
       expect(result).toHaveProperty("errorCode", RequestPasswordResetErrorCodes.INPUT_VALIDATION_ERROR);
       expect(result).toHaveProperty(

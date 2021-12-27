@@ -18,6 +18,7 @@ import { RequestPasswordResetSuccessResultEnum } from "../enums/request-password
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
+import { RequestPasswordResetInput } from "../inputs/request-password-reset.input";
 import { RequestPasswordResetResult } from "../results/request-password-reset.result";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
@@ -44,12 +45,12 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => RequestPasswordResetResult)
-  async requestPasswordReset(@Args("email") email: string): Promise<typeof RequestPasswordResetResult> {
+  async requestPasswordReset(@Args("requestPasswordResetInput") input: RequestPasswordResetInput): Promise<typeof RequestPasswordResetResult> {
     const inputErrors = [];
 
     try {
       const passwordSchema = Yup.string().email("The email must be a valid email.");
-      await passwordSchema.validate(email);
+      await passwordSchema.validate(input.email);
     } catch (e) {
       inputErrors.push({
         field: RequestPasswordResetFields.EMAIL,
@@ -64,7 +65,7 @@ export class AuthenticationResolver {
       };
     }
 
-    await this.authenticationService.requestPasswordReset(email);
+    await this.authenticationService.requestPasswordReset(input.email);
 
     return {
       result: RequestPasswordResetSuccessResultEnum.EMAIL_SENT,
