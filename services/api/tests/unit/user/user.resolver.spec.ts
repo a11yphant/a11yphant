@@ -1,6 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
+import { AuthenticationService } from "@/authentication/authentication.service";
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { MailService } from "@/mail/mail.service";
 import { InputError } from "@/user/exceptions/input.error";
@@ -8,14 +9,20 @@ import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserResolver } from "@/user/user.resolver";
 import { UserService } from "@/user/user.service";
 
-function createUserResolver(partials: { userService?: Partial<UserService>; mailService?: Partial<MailService> } = {}): UserResolver {
+function createUserResolver(
+  partials: { userService?: Partial<UserService>; authenticationService?: Partial<AuthenticationService>; mailService?: Partial<MailService> } = {},
+): UserResolver {
   const userService = createMock<UserService>({
     ...partials.userService,
   });
 
+  const authenticationService = createMock<AuthenticationService>({
+    ...partials.authenticationService,
+  });
+
   const mailService = createMock<MailService>({ ...partials.mailService });
 
-  return new UserResolver(userService, mailService);
+  return new UserResolver(userService, authenticationService, mailService);
 }
 
 describe("user resolver", () => {
@@ -75,6 +82,7 @@ describe("user resolver", () => {
     });
 
     it("sends an registration email if a user is registered.", async () => {
+      const token = "token";
       const sendRegistrationMail = jest.fn();
 
       const user = UserFactory.build();
@@ -82,10 +90,16 @@ describe("user resolver", () => {
       const resolver = createUserResolver({
         userService: { registerUser: jest.fn().mockResolvedValue(user) },
         mailService: { sendRegistrationMail },
+        authenticationService: { generateMailConfirmationToken: jest.fn().mockReturnValue(token) },
       });
       await resolver.register({ email: "test", password: "test" }, { userId: "test" });
 
-      expect(sendRegistrationMail).toHaveBeenCalledWith(user);
+      expect(sendRegistrationMail).toHaveBeenCalledWith({
+        userId: user.id,
+        email: user.email,
+        displayName: user.displayName,
+        token,
+      });
     });
 
     it("throws an input error if the service throws an error", () => {

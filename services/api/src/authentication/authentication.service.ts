@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
+import { MailService } from "@/mail/mail.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
@@ -12,7 +13,12 @@ import { JwtService } from "./jwt.service";
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private userService: UserService, private hashService: HashService, private jwtService: JwtService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly hashService: HashService,
+    private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
+  ) {}
 
   async login({ email, password }: LoginInput): Promise<User> {
     const msg = "E-Mail or password wrong.";
@@ -70,7 +76,19 @@ export class AuthenticationService {
     return this.jwtService.createSignedToken({ scope: JwtScope.EMAIL_CONFIRMATION }, { expiresInSeconds: 86400, subject: userId });
   }
 
-  requestPasswordReset(email: string): Promise<void> {
-    return Promise.resolve();
+  async requestPasswordReset(email: string): Promise<void> {
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      return;
+    }
+
+    this.mailService.sendPasswordResetMail({
+      email: user.email,
+      token: await this.generatePasswordResetToken(user.id),
+    });
+  }
+
+  generatePasswordResetToken(userId: string): Promise<string> {
+    return this.jwtService.createSignedToken({ scope: JwtScope.PASSWORD_RESET }, { expiresInSeconds: 86400, subject: userId });
   }
 }

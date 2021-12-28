@@ -5,58 +5,96 @@ import { MailerService } from "@nestjs-modules/mailer";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
 
-import { AuthenticationService } from "@/authentication/authentication.service";
 import { MailService } from "@/mail/mail.service";
+import { SendRegistrationMailContext } from "@/mail/send-registration-mail-context.interface";
 import { User } from "@/user/models/user.model";
 
 const getMailService = (
-  partials: { mailerService?: Partial<MailerService>; authService?: Partial<AuthenticationService>; logger?: Partial<Logger> } = {},
+  partials: { mailerService?: Partial<MailerService>; logger?: Partial<Logger> } = {},
   configData?: Record<string, any>,
 ): MailService => {
   const mailerService = createMock<MailerService>(partials?.mailerService);
   const config = createMock<ConfigService>(createConfigServiceMock(configData));
-  const authService = createMock<AuthenticationService>(partials?.authService);
   const logger = createMock<Logger>(partials?.logger);
 
-  return new MailService(mailerService, config, authService, logger);
+  return new MailService(mailerService, config, logger);
 };
 
+function buildContext(user: User = UserFactory.build(), token = "token"): SendRegistrationMailContext {
+  return {
+    userId: user.id,
+    email: user.email,
+    displayName: user.displayName,
+    token,
+  };
+}
+
 describe("mailService", () => {
-  describe("sendMail", () => {
+  describe("send registration mail", () => {
     it("sends a registration mail", async () => {
       const sendMail = jest.fn();
-
       const service = getMailService({ mailerService: { sendMail } });
-      service.generateConfirmationLink = (user: User): Promise<string> => Promise.resolve("link");
+      const context = buildContext();
 
-      const user = UserFactory.build();
+      await service.sendRegistrationMail(context);
 
-      await service.sendRegistrationMail(user);
-      expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: user.email }));
+      expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: context.email }));
     });
 
     it("logs an error if mail sending fails", async () => {
       const error = jest.fn();
       const service = getMailService({ mailerService: { sendMail: jest.fn().mockRejectedValue("Error") }, logger: { error } });
-      service.generateConfirmationLink = (user: User): Promise<string> => Promise.resolve("link");
 
-      await service.sendRegistrationMail(UserFactory.build());
+      await service.sendRegistrationMail(buildContext(UserFactory.build()));
 
       expect(error).toHaveBeenCalled();
     });
   });
 
-  describe("generateConfirmationLink", () => {
+  describe("send password reset mail", () => {
+    it("sends a password reset mail", async () => {
+      const sendMail = jest.fn();
+      const service = getMailService({ mailerService: { sendMail } });
+      const context = buildContext();
+
+      await service.sendPasswordResetMail(context);
+
+      expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: context.email }));
+    });
+
+    it("logs an error if mail sending fails", async () => {
+      const error = jest.fn();
+      const service = getMailService({ mailerService: { sendMail: jest.fn().mockRejectedValue("Error") }, logger: { error } });
+
+      await service.sendPasswordResetMail(buildContext(UserFactory.build()));
+
+      expect(error).toHaveBeenCalled();
+    });
+  });
+
+  describe("generate email confirmation link", () => {
     it("creates a confirmation link", async () => {
       const apiUrl = "localhost";
       const token = "a11ytoken";
 
-      const service = getMailService({ authService: { generateMailConfirmationToken: jest.fn().mockResolvedValue(token) } }, { "api.url": apiUrl });
-      const user = UserFactory.build();
+      const service = getMailService({}, { "api.url": apiUrl });
 
-      const url = await service.generateConfirmationLink(user);
+      const url = await service.generateConfirmationLink(token);
       expect(url).toEqual(expect.stringContaining(apiUrl));
       expect(url).toEqual(expect.stringContaining(`?code=${token}`));
+    });
+  });
+
+  describe("generate password reset link", () => {
+    it("can create a password reset link", async () => {
+      const apiUrl = "localhost";
+      const token = "a11ytoken";
+
+      const service = getMailService({}, { "api.url": apiUrl });
+
+      const url = await service.generatePasswordResetLink(token);
+      expect(url).toEqual(expect.stringContaining(apiUrl));
+      expect(url).toEqual(expect.stringContaining(`confirm-email?token=${token}`));
     });
   });
 });
