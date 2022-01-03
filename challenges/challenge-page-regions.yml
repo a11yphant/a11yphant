@@ -37,10 +37,8 @@ challenge:
             <body>
               <div>
                 <h2>Main Navigation</h2>
-                <!-- Main Navigation Links -->
               </div>
               <h1>Cats are not better than dogs!</h1>
-              <!-- Page Content -->
             </body>
           </html>
       requirements:
