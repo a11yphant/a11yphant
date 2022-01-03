@@ -1,3 +1,4 @@
+import Footer from "app/components/Footer";
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
@@ -13,7 +14,7 @@ const Custom404: React.FunctionComponent = () => {
         <title>404 Page not found | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
-      <FullScreenLayout header={<Navigation />}>
+      <FullScreenLayout header={<Navigation />} footer={<Footer />}>
         <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <div
             className={clsx("mx-8 py-8 h-main flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
