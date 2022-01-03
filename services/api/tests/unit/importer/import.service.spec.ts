@@ -124,9 +124,14 @@ describe("import service", () => {
 
       expect(await prisma.challenge.count()).toEqual(1);
       const storedChallenge = await prisma.challenge.findFirst();
-      expect(storedChallenge.id).toEqual(challenge.id);
-      expect(storedChallenge.name).toEqual(challenge.name);
-      expect(storedChallenge.slug).toEqual(challenge.slug);
+
+      expect(storedChallenge).toMatchObject(
+        expect.objectContaining({
+          id: challenge.id,
+          name: challenge.name,
+          slug: challenge.slug,
+        }),
+      );
     });
 
     it("defaults to easy if the difficulty is not recognized", async () => {
@@ -194,10 +199,17 @@ describe("import service", () => {
       expect(await prisma.codeLevel.count()).toEqual(1);
       const level = challenge.levels[0] as CodeLevel;
       const storedLevel = await prisma.codeLevel.findFirst();
+
       expect(storedLevel.id).toEqual(level.id);
-      expect(storedLevel.order).toEqual(level.order);
-      expect(storedLevel.instructions).toEqual(level.instructions);
-      expect(storedLevel.challengeId).toEqual(challenge.id);
+
+      expect(storedLevel).toMatchObject(
+        expect.objectContaining({
+          id: level.id,
+          order: level.order,
+          instructions: level.instructions,
+          challengeId: challenge.id,
+        }),
+      );
     });
 
     it("can import the code levels with code for a challenge", async () => {
@@ -235,6 +247,15 @@ describe("import service", () => {
       expect(storedLevel.html).toEqual(level.code.html);
       expect(storedLevel.css).toEqual(level.code.css);
       expect(storedLevel.js).toEqual(level.code.js);
+
+      expect(storedLevel).toMatchObject(
+        expect.objectContaining({
+          id: level.id,
+          html: level.code.html,
+          css: level.code.css,
+          js: level.code.js,
+        }),
+      );
     });
 
     it("sets the correct editor configuration for the code level", async () => {
@@ -302,10 +323,15 @@ describe("import service", () => {
       expect(await prisma.quizLevel.count()).toEqual(1);
       const level = challenge.levels[0] as QuizLevel;
       const storedLevel = await prisma.quizLevel.findFirst();
-      expect(storedLevel.id).toEqual(level.id);
-      expect(storedLevel.order).toEqual(level.order);
-      expect(storedLevel.question).toEqual(level.question);
-      expect(storedLevel.challengeId).toEqual(challenge.id);
+
+      expect(storedLevel).toMatchObject(
+        expect.objectContaining({
+          id: level.id,
+          order: level.order,
+          question: level.question,
+          challengeId: challenge.id,
+        }),
+      );
     });
 
     it("can import answers for quiz levels", async () => {
@@ -345,9 +371,15 @@ describe("import service", () => {
       expect(await prisma.answerOption.count()).toEqual(2);
       const answerOption = (challenge.levels[0] as QuizLevel).answer_options[0];
       const storedAnswerOption = await prisma.answerOption.findUnique({ where: { id: answerOption.id } });
-      expect(storedAnswerOption.id).toEqual(answerOption.id);
-      expect(storedAnswerOption.text).toEqual(answerOption.text);
-      expect(storedAnswerOption.quizLevelId).toEqual(challenge.levels[0].id);
+
+      expect(storedAnswerOption).toMatchObject(
+        expect.objectContaining({
+          id: answerOption.id,
+          text: answerOption.text,
+          correct: answerOption.correct,
+          quizLevelId: challenge.levels[0].id,
+        }),
+      );
     });
 
     it("deletes quiz levels from a challenge if they are deleted", async () => {
@@ -423,9 +455,14 @@ describe("import service", () => {
       expect(await prisma.requirement.count()).toEqual(1);
       const requirement = (challenge.levels[0] as CodeLevel).requirements[0];
       const storedRequirement = await prisma.requirement.findFirst();
-      expect(storedRequirement.id).toEqual(requirement.id);
-      expect(storedRequirement.title).toEqual(requirement.title);
-      expect(storedRequirement.levelId).toEqual(challenge.levels[0].id);
+
+      expect(storedRequirement).toMatchObject(
+        expect.objectContaining({
+          id: requirement.id,
+          title: requirement.title,
+          levelId: challenge.levels[0].id,
+        }),
+      );
     });
 
     it("can associate a rule with a requirement", async () => {
@@ -548,9 +585,14 @@ describe("import service", () => {
       const hint = (challenge.levels[0] as CodeLevel).tasks[0].hints[0];
 
       const storedHint = await prisma.hint.findFirst();
-      expect(storedHint.id).toEqual(hint.id);
-      expect(storedHint.text).toEqual(hint.text);
-      expect(storedHint.taskId).toEqual((challenge.levels[0] as CodeLevel).tasks[0].id);
+
+      expect(storedHint).toMatchObject(
+        expect.objectContaining({
+          id: hint.id,
+          text: hint.text,
+          taskId: (challenge.levels[0] as CodeLevel).tasks[0].id,
+        }),
+      );
     });
   });
 });
