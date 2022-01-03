@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { CurrentUserDocument, useRegisterMutation } from "app/generated/graphql";
 import React from "react";
