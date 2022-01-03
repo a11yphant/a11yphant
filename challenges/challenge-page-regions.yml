@@ -116,7 +116,7 @@ challenge:
                     &lt;!-- main content --&gt;
                   &lt;/main&gt;
                   &lt;aside&gt;
-                    Cats and dogs are both great!
+                    &lt;!-- add the aside element here --&gt;
                   &lt;/aside&gt;
                 </code>
       code:
