@@ -1,6 +1,6 @@
 services:
   api:
-    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:develop
+    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:renovate-all-minor-patch
     environment:
       DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
       AWS_ACCESS_KEY_ID: mock_access_key
@@ -19,9 +19,9 @@ services:
       - postgres
 
   site:
-    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:develop
+    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:renovate-all-minor-patch
     entrypoint: ""
-    command: node entrypoint.js
+    command: node entrypoint-server.js
     environment:
       SITE_HOST: 0.0.0.0
       SITE_PORT: 3001
@@ -33,7 +33,7 @@ services:
       - api
 
   submission-checker:
-    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:develop
+    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:renovate-all-minor-patch
     environment:
       SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
       SUBMISSION_CHECKER_MESSAGING_POLL_QUEUE: 1
