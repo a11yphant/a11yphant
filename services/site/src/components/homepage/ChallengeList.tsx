@@ -7,22 +7,25 @@ interface ChallengeListProps {
   className?: string;
   heading: React.ReactNode;
   challenges: ChallengeOverviewFragment[];
+  displayCompleted?: boolean;
 }
 
-const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, challenges }) => {
+const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, challenges, displayCompleted = true }) => {
   const numberOfCompletedChallenges = challenges.filter((challenge) => challenge.status === ChallengeStatus.Finished).length;
   return (
     <div className={clsx("mt-2 mb-6 flex flex-col items-start", className)}>
-      <div className="mx-4 mb-6 flex flex-row items-center">
+      <div className={clsx("mx-4 mb-6 flex flex-row items-center")}>
         <h3 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")} aria-label={`Difficulty ${heading}`}>
           {heading}
         </h3>
-        <p
-          className={clsx("ml-4 mb-0 text-grey font-normal", "h4")}
-          aria-label={`${numberOfCompletedChallenges} of ${challenges.length} challenges completed`}
-        >
-          {`(${numberOfCompletedChallenges}/${challenges.length})`}
-        </p>
+        {displayCompleted === true && (
+          <p
+            className={clsx("ml-4 mb-0 text-grey font-normal", "h4")}
+            aria-label={`${numberOfCompletedChallenges} of ${challenges.length} challenges completed`}
+          >
+            {`(${numberOfCompletedChallenges}/${challenges.length})`}
+          </p>
+        )}
       </div>
       <ul className={clsx("flex flex-row flex-wrap")}>
         {challenges.map((challenge) => (

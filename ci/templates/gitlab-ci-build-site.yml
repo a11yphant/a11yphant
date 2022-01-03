@@ -14,12 +14,9 @@
         -f $PROJECT_PATH/Dockerfile 
         -t $IMAGE_APP 
         --cache-from $IMAGE_APP 
-        --build-arg VERSION=$VERSION
-        --build-arg ENVIRONMENT=$ENVIRONMENT
         --build-arg SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
         --build-arg SENTRY_ORG=$SENTRY_ORG
         --build-arg SENTRY_PROJECT=$SITE_SENTRY_PROJECT
-        --build-arg SENTRY_DSN=$SITE_SENTRY_DSN
-        --build-arg SPLITBEE_TOKEN=$SPLITBEE_TOKEN
+        --build-arg VERSION=$VERSION
         --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP

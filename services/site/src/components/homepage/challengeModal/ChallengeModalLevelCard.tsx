@@ -33,17 +33,16 @@ export const ChallengeModalLevelCard = ({
           isFirstUnfinishedLevel && "border-primary bg-primary",
           "relative",
           "hover:bg-primary-dark hover:border-primary-dark",
-          "focus:bg-primary-dark focus:border-primary-dark",
         )}
       >
-        <h3 className="text-base">
+        <h3 className={clsx("text-base")}>
           Level{" "}
           {Number(levelNumber).toLocaleString("de-AT", {
             minimumIntegerDigits: 2,
             useGrouping: false,
           })}
         </h3>
-        {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10", "absolute top-4 right-5", "text-white")} />}
+        {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10 absolute top-4 right-5 text-light")} />}
       </a>
     </Link>
   );

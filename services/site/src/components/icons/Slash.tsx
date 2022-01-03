@@ -8,7 +8,7 @@ interface SlashProps {
 const Slash: React.FunctionComponent<SlashProps> = ({ className, ...props }) => {
   return (
     <svg
-      className={clsx("h-5 w-5 text-gray-300 flex-shrink-0", className)}
+      className={clsx("h-5 w-5 text-gray-300 shrink-0", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
       viewBox="0 0 20 20"

@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-interface CardProps {
+export interface CardProps {
   className?: string;
   heading: string;
   levels: number;
@@ -33,32 +33,32 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
     >
       {finishedLevels > 0 && finishedLevels !== levels && (
         <div className={clsx("flex-1 flex items-center justify-center")}>
-          <p className="text-black font-mono text-6xl mb-0">
-            {finishedLevels}/{levels} <span className="sr-only">levels completed</span>
+          <p className={clsx("text-background-light font-mono text-6xl mb-0", "transition duration-300", "group-hover:text-grey-dark")}>
+            {finishedLevels}/{levels} <span className={clsx("sr-only")}>levels completed</span>
           </p>
         </div>
       )}
 
       {finishedLevels > 0 && finishedLevels === levels && (
-        <div className="flex-1 flex items-center justify-center bg-background-light">
-          <Check className="h-20 text-grey-middle" />
+        <div className={clsx("flex-1 flex items-center justify-center bg-background-light")}>
+          <Check className={clsx("h-20 text-grey-middle", "transition duration-300", "group-hover:text-grey")} />
         </div>
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
-        <h4 className="w-full">
-          <span className="sr-only">{`Challenge ${challengeNumber}`}</span>
+        <h4 className={clsx("w-full")}>
+          <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
           <Link href={`/?challenge=${challengeSlug}`} shallow={true}>
             <a className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}>
               {heading}
             </a>
           </Link>
         </h4>
-        <div className="w-full mt-2 text-grey-middle flex justify-between">
+        <div className={clsx("w-full mt-2 text-grey-middle flex justify-between")}>
           <p className={clsx("m-0 text-grey-middle", "transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
           </p>
-          <p className="sr-only">{`Difficulty ${difficulty}`}</p>
-          <div className="flex">
+          <p className={clsx("sr-only")}>{`Difficulty ${difficulty}`}</p>
+          <div className={clsx("flex")}>
             <DifficultyIcon className={clsx("w-2.5 h-4/5", "transition duration-300")} />
           </div>
         </div>

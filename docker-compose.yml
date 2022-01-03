@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 
 services:
   selenium:
-    image: selenium/standalone-chrome:4.0.0-beta-1-prerelease-20201202
+    image: ${SELENIUM_IMAGE:-selenium/standalone-chrome:4}
     restart: always
     volumes:
       - /dev/shm:/dev/shm
@@ -34,11 +34,18 @@ services:
 
   terraform:
     image: hashicorp/terraform
-    restart: 'no'
+    restart: "no"
     volumes:
-     - ./terraform:/terraform
+      - ./terraform:/terraform
     depends_on:
-     - localstack
+      - localstack
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: unless-stopped
+    ports:
+      - 1025:1025
+      - 8025:8025
 
 volumes:
   postgres_data:

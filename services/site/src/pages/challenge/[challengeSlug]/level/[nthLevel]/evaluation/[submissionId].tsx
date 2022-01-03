@@ -18,6 +18,8 @@ import {
   ResultStatus,
   useChallengeBySlugQuery,
 } from "app/generated/graphql";
+import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { initializeApollo } from "app/lib/apollo-client";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
@@ -35,6 +37,7 @@ export interface EvaluationRouterParams {
 const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
   const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
+  const [, setFailedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
   const { data } = useChallengeBySlugQuery({ variables: { slug: challengeSlug as string } });
 
@@ -43,12 +46,41 @@ const Evaluation: React.FunctionComponent = () => {
   const isLastLevel = parseInt(nthLevel as string) + 1 > data?.challenge.levels.length;
 
   const pageTitle = `Evaluation - ${data?.challenge.name} - Level ${nthLevel}`;
-  const heading = <h1 className="sr-only">{pageTitle}</h1>;
+  const heading = <h1 className={clsx("sr-only")}>{pageTitle}</h1>;
+
+  React.useEffect(() => {
+    if (submissionResult?.status === ResultStatus.Fail) {
+      setFailedLevelsInARow((prev) => (prev ? prev + 1 : 1));
+    } else if (submissionResult?.status === ResultStatus.Success) {
+      setFailedLevelsInARow(0);
+    }
+  }, [submissionResult?.status]);
 
   return (
     <>
       <Head>
-        <title>{pageTitle}</title>
+        <title>{pageTitle} | a11yphant</title>
+        <meta name="robots" content="noindex,nofollow" />
+        <meta
+          name="description"
+          content="The a11yphant evaluation provides you with detailed feedback on our success criteria. Revisit web development topics from an accessibility perspective to make the web more inclusive."
+        />
+        <meta property="og:title" content={pageTitle} />
+        <meta
+          property="og:description"
+          content="The a11yphant evaluation provides you with detailed feedback on our success criteria. Revisit web development topics from an accessibility perspective to make the web more inclusive."
+        />
+        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta
+          property="og:image:alt"
+          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+        />
+        <meta property="og:locale" content="en" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.a11yphant.com/${data?.challenge.name}/level/${nthLevel}/evaluation/${data?.challenge.id}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <FullScreenLayout header={<Navigation displayBreadcrumbs />}>
         {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
@@ -75,7 +107,7 @@ const Evaluation: React.FunctionComponent = () => {
                   "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
                   "lg:flex",
                 )}
-                classNameBottomOverlay={"w-full h-52"}
+                classNameBottomOverlay={"w-full h-52 shrink-0 -mt-52"}
                 enableTopOverlay={false}
               >
                 <EvaluationBody requirements={submissionResult.requirements} />

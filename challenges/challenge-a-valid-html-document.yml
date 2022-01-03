@@ -12,10 +12,10 @@ challenge:
       order: 1
       type: code
       instructions: |-
-        Each website requires a bit of boilerplate code that tells the browser key information about the page. The first required statement is the doctype. The doctype tells the browser which version of HTML is used for this page. A doctype should look like this: <code>&lt;!DOCTYPE {HTML_VERSION}&gt;</code>. For example, if <code>html</code> is specified as the version, browsers will use HTML5 (the latest version) for rendering. The doctype needs to be at the very beginning of the document.
+        <p>Each website requires a bit of boilerplate code that tells the browser key information about the page. The first required statement is the doctype. The doctype tells the browser which version of HTML is used for this page. A doctype should look like this: <code>&lt;!DOCTYPE {HTML_VERSION}&gt;</code>. For example, if <code>html</code> is specified as the version, browsers will use HTML5 (the latest version) for rendering. The doctype needs to be at the very beginning of the document.</p>
       tasks:
         - id: 239908ab-0206-468c-8113-af420f26a3cf
-          text: Add the doctype declaration for HTML5 to the <code>&lt;!DOCTYPE&gt;</code> in the editor.
+          text: <p>Add the doctype declaration for HTML5 to the <code>&lt;!DOCTYPE&gt;</code> in the editor.</p>
           hints:
             - id: 8b1f4cba-504e-4b15-a288-d49d8a8911cb
               text: The declaration for HTML5 is <code>&lt;!DOCTYPE html&gt;</code>.
@@ -61,11 +61,11 @@ challenge:
       order: 3
       type: code
       instructions: |-
-        Websites exist in various languages. To help assistive devices, the language of a page should be declared on the <code>&lt;html&gt;</code> element by using the <code>lang</code> attribute. The value of the attribute should be the abbreviation of the document language. For example <code>en</code> for english, <code>de</code> for german. Browsers use this information to offer translations and correctly pronounce words when converting text to speech.
-        The <code>lang</code> attribute should always be set on the <code>&lt;html&gt;</code> element, as it is inherited by all other elements of the website. This means that the declared default language for the text will be set for all following elements inside the <code>&lt;html&gt;</code> element.
+        <p>Websites exist in various languages. To help assistive devices, the language of a page should be declared on the <code>&lt;html&gt;</code> element by using the <code>lang</code> attribute. The value of the attribute should be the abbreviation of the document language. For example <code>en</code> for english, <code>de</code> for german. Browsers use this information to offer translations and correctly pronounce words when converting text to speech.</p>
+        <p>The <code>lang</code> attribute should always be set on the <code>&lt;html&gt;</code> element, as it is inherited by all other elements of the website. This means that the declared default language for the text will be set for all following elements inside the <code>&lt;html&gt;</code> element.</p>
       tasks:
         - id: 5e19408c-3849-46fe-ac75-0468df04cd8c
-          text: Add the language of the website to the <code>&lt;html&gt;</code> element.
+          text: <p>Add the language of the website to the <code>&lt;html&gt;</code> element.</p>
           hints:
             - id: f25507df-df7d-4f05-afce-b58f6452a6ca
               text: The language of the website is English&#58; <code>&lt;html lang="en"&gt;</code>.
@@ -122,10 +122,10 @@ challenge:
       order: 5
       type: code
       instructions: |-
-        The <code>&lt;title&gt;</code> element inside the <code>&lt;head&gt;</code> defines the title of a web page. Browsers and assistive technologies use the content of this element to name the window or tab in which the page is displayed. The title should be informative and describe the content of the page. The best practice is to use the main heading of a page also as the page's title.
+        <p>The <code>&lt;title&gt;</code> element inside the <code>&lt;head&gt;</code> defines the title of a web page. Browsers and assistive technologies use the content of this element to name the window or tab in which the page is displayed. The title should be informative and describe the content of the page. The best practice is to use the main heading of a page also as the page's title.</p>
       tasks:
         - id: cd4613c7-418e-4682-85ff-67ec2426ea79
-          text: Add a title that describes the page.
+          text: <p>Add a title that describes the page.</p>
           hints:
             - id: ac05d923-0c6f-46d4-8fa2-43172c6ed9c2
               text: If you prefer dogs over cats add a <code>&lt;title&gt;</code> element like so&#58; <code>&lt;title>Doggos!&lt;/title&gt;</code>
@@ -182,10 +182,10 @@ challenge:
       order: 7
       type: code
       instructions: |-
-        The content of a page should be located inside the <code>&lt;body&gt;</code>. If we combine everything we have learned in this challenge, we are now able to create an HTML document that contains everything that is needed to be valid.
+        <p>The content of a page should be located inside the <code>&lt;body&gt;</code>. If we combine everything we have learned in this challenge, we are now able to create an HTML document that contains everything that is needed to be valid.</p>
       tasks:
         - id: 2a503c66-b292-4f63-b948-1a98d40c52c9
-          text: Add a <code>&lt;body&gt;</code> to the page. Then add a paragraph (<code>&lt;p&gt;</code> element) containing text.
+          text: <p>Add a <code>&lt;body&gt;</code> to the page. Then add a paragraph (<code>&lt;p&gt;</code> element) containing text.</p>
           hints:
             - id: 0f0f0022-ab9d-4fd2-8dfd-f8296460c3b9
               text: The <code>&lt;p&gt;</code> element has to be inside the <code>&lt;body&gt;</code> element.

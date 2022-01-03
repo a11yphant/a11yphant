@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 interface FullScreenLayoutProps {
@@ -5,9 +6,9 @@ interface FullScreenLayoutProps {
 }
 
 const FullScreenLayout: React.FC<FullScreenLayoutProps> = ({ children, header }) => (
-  <div className="h-screen max-h-screen flex flex-col">
-    <div className="flex-shrink-0">{header}</div>
-    <div className="flex-auto overflow-hidden">{children}</div>
+  <div className={clsx("h-screen max-h-screen flex flex-col")}>
+    <div className={clsx("shrink-0")}>{header}</div>
+    <div className={clsx("flex-auto overflow-hidden")}>{children}</div>
   </div>
 );
 

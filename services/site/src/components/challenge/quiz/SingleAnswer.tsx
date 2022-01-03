@@ -14,7 +14,7 @@ export interface SingleAnswerProps {
 const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, srTitle, answers, chosenId, onChooseId }) => {
   return (
     <RadioGroup value={chosenId} onChange={onChooseId} className={className}>
-      <RadioGroup.Label className="sr-only">{srTitle}</RadioGroup.Label>
+      <RadioGroup.Label className={clsx("sr-only")}>{srTitle}</RadioGroup.Label>
       {answers.map((answer, idx) => {
         return (
           <RadioGroup.Option
@@ -25,7 +25,6 @@ const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, s
               chosenId !== answer.id && "border-light",
               "transition duration-300",
               "hover:bg-primary hover:border-light hover:text-light hover:cursor-pointer",
-              "focus:bg-primary focus:border-primary focus:text-light focus:outline-none",
               chosenId === answer.id && "bg-primary border-primary text-light",
             )}
           >

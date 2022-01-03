@@ -28,22 +28,22 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
       open={open}
       onClose={onClose}
       className={clsx(
-        "bg-background-light",
         "p-8 min-w-max max-w-xl",
         "flex flex-col",
+        "bg-background-light",
+        "border border-4 border-error-dark",
         "md:px-12 md:py-10 md:min-w-[32rem] md:mx-auto",
         "lg:px-16 lg:py-14",
         "xl:px-20 xl:py-16",
-        "border border-4 border-error-dark",
       )}
     >
-      <ModalTitle as="div" className="flex">
+      <ModalTitle as="div" className={clsx("flex")}>
         <Exclamation className={clsx("w-8 h-8 mr-2", "text-error-dark")} />
         <h2 className={clsx("mb-8", "h4")}>{title}</h2>
       </ModalTitle>
 
       <ModalContent>
-        <div className="p-4">
+        <div className={clsx("p-4")}>
           <ul>
             {messages.map((message, idx) => (
               <li key={idx}>{message}</li>
@@ -52,8 +52,8 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
         </div>
 
         {process.env.NODE_ENV === "development" && (
-          <div className="p-8 border border-error">
-            <strong className="text-error">Original Error was logged to console (only in development mode) </strong>
+          <div className={clsx("p-8 border border-error")}>
+            <strong className={clsx("text-error")}>Original Error was logged to console (only in development mode) </strong>
           </div>
         )}
       </ModalContent>
@@ -63,10 +63,9 @@ const ErrorDialog: React.FunctionComponent<ErrorDialogProps> = ({ open, onClose,
           onClick={onClose}
           overrideClassName
           className={clsx(
-            "px-6 py-4 leading-4 inline-flex items-center rounded tracking-wider transition duration-300",
-            "hover:text-white hover:bg-error hover:border-error",
-            "focus:text-white focus:bg-error focus:border-error",
-            "bg-error-dark",
+            "px-6 py-2.5 inline-flex items-center rounded tracking-wider bg-error-dark",
+            "transition duration-300",
+            "hover:text-light hover:bg-error hover:border-error",
           )}
         >
           Okay

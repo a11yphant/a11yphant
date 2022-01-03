@@ -55,13 +55,34 @@ const Challenge: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>a11yphant - {user.displayName || "Anonymous users"}'s profile</title>
+        <title>{user.displayName || "Anonymous user"}'s profile | a11yphant</title>
+        <meta name="robots" content="noindex,nofollow" />
+        <meta
+          name="description"
+          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
+        />
+        <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
+        <meta
+          property="og:description"
+          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
+        />
+        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta
+          property="og:image:alt"
+          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+        />
+        <meta property="og:locale" content="en" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.a11yphant.com/${user.id}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("max-w-screen-xl mx-8 mt-32 mb-24 sm:mx-12 sm:mt-28 sm:mb-12 md:mx-24 2xl:mx-auto")}>
-        <h1 className={clsx("pb-24 text-grey h3 sm:h2")}>{user.displayName || "Anonymous users"}'s profile</h1>
+      <main className={clsx("max-w-screen-xl mx-8 mt-32 mb-24", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24", "2xl:mx-auto")}>
+        <h1 className={clsx("pb-24 text-grey", "h3", "sm:h2")}>{user.displayName || "Anonymous users"}'s profile</h1>
         <table>
-          <thead className={clsx("text-left h5")}>
+          <thead className={clsx("text-left", "h5")}>
             <tr>
               <th>Challenge</th>
               <th className={clsx("pl-4")}>Status</th>

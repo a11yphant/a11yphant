@@ -57,8 +57,8 @@ const Level: React.FunctionComponent = () => {
         leaveTo="opacity-0"
       >
         <span>
-          <span className="sr-only xl:not-sr-only">Saving... </span>
-          <LoadingIndicator className="inline ml-4" />
+          <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
+          <LoadingIndicator className={clsx("inline ml-4")} />
         </span>
       </Transition>
     </Navigation>
@@ -68,12 +68,33 @@ const Level: React.FunctionComponent = () => {
     <>
       <Head>
         <title>
-          {challenge.name} - Level {nthLevel}
+          {challenge.name} - Level {nthLevel} | a11yphant
         </title>
+        <meta name="robots" content="noindex,nofollow" />
+        <meta
+          name="description"
+          content="Various accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each challenge teaching you one thing at a time."
+        />
+        <meta property="og:title" content={`${challenge.name} - Level ${nthLevel}`} />
+        <meta
+          property="og:description"
+          content="Various accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each challenge teaching you one thing at a time."
+        />
+        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta
+          property="og:image:alt"
+          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+        />
+        <meta property="og:locale" content="en" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.a11yphant.com/challenge/${challenge.name}/level/${nthLevel}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <FullScreenLayout header={header}>
         <main className={clsx("max-h-full h-full", "md:p-4 md:pt-0 md:flex md:justify-between md:box-border")}>
-          <h1 className="sr-only">{`${challenge.name} - Level ${nthLevel}`}</h1>
+          <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
           <SmallScreenNotification />
           {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}

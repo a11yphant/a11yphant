@@ -15,11 +15,22 @@ import { UserService } from "@/user/user.service";
 describe("user service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
 
+  const getUserService = (
+    prisma: PrismaService = getPrismaService(),
+    partials: { hashService?: Partial<HashService>; configs?: Record<string, any> } = {},
+  ): UserService => {
+    const hashService = createMock<HashService>({
+      ...partials?.hashService,
+    });
+
+    const configService = createMock<ConfigService>(createConfigServiceMock(partials?.configs));
+
+    return new UserService(prisma, hashService, configService);
+  };
+
   describe("create", () => {
     it("can create a user", async () => {
-      const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
-
+      const service = getUserService();
       expect(await service.create()).toHaveProperty("id", expect.any(String));
     });
   });
@@ -27,7 +38,7 @@ describe("user service", () => {
   describe("findById", () => {
     it("can find a user by id", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
+      const service = getUserService(prisma);
 
       const user = await prisma.user.create({
         data: UserFactory.build(),
@@ -37,9 +48,7 @@ describe("user service", () => {
     });
 
     it("returns null if it cannot find the user by id", async () => {
-      const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
-
+      const service = getUserService();
       expect(await service.findById(faker.datatype.uuid())).toBeNull();
     });
   });
@@ -47,7 +56,7 @@ describe("user service", () => {
   describe("findByEmail", () => {
     it("can find a user by email", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
+      const service = getUserService(prisma);
 
       const user = await prisma.user.create({
         data: UserFactory.build({ email: "hallo@a11yphant.com" }),
@@ -57,37 +66,15 @@ describe("user service", () => {
     });
   });
 
-  describe("updateWithAuthInformation", () => {
-    it("adds auth information to an anonymous user", async () => {
-      const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
-
-      const user = await prisma.user.create({
-        data: UserFactory.build({ displayName: null }),
-      });
-
-      const providerInformation: ProviderInformation = {
-        id: faker.datatype.uuid(),
-        displayName: faker.name.findName(),
-        provider: "github",
-      };
-
-      await service.updateWithAuthInformation(user.id, providerInformation);
-
-      const updatedUser = await prisma.user.findUnique({ where: { id: user.id } });
-      expect(updatedUser).toHaveProperty("displayName", providerInformation.displayName);
-      expect(updatedUser).toHaveProperty("authProvider", providerInformation.provider);
-    });
-  });
-
   describe("register", () => {
     it("registers an user", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(
-        prisma,
-        createMock<HashService>({ make: jest.fn().mockResolvedValue("hashedPassword") }),
-        createMock<ConfigService>(createConfigServiceMock()),
-      );
+
+      const service = getUserService(prisma, {
+        hashService: {
+          make: jest.fn().mockResolvedValue("hashedPassword"),
+        },
+      });
 
       const userId = faker.datatype.uuid();
       const email = "hallo@a11yphant.com";
@@ -110,14 +97,13 @@ describe("user service", () => {
     });
 
     it("throws an error if the anonymous user is not found", async () => {
-      const service = new UserService(getPrismaService(), createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
-
+      const service = getUserService();
       expect(service.registerUser({ email: "test", password: "test" }, faker.datatype.uuid())).rejects.toThrowError("Anonymous user is invalid.");
     });
 
     it("throws an error if the user is already registered", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(prisma, createMock<HashService>(), createMock<ConfigService>(createConfigServiceMock()));
+      const service = getUserService(prisma);
 
       const userId = faker.datatype.uuid();
 
@@ -129,14 +115,55 @@ describe("user service", () => {
     });
   });
 
+  describe("confirmUser", () => {
+    it("sets the confirmation time", async () => {
+      const prisma = getPrismaService();
+      const service = getUserService(prisma);
+
+      let user = await prisma.user.create({
+        data: UserFactory.build(),
+      });
+
+      await service.confirmUser(user.id);
+
+      user = await prisma.user.findFirst({
+        where: {
+          id: user.id,
+        },
+      });
+
+      expect(user.verifiedAt).toBeTruthy();
+    });
+  });
+
+  describe("updateWithAuthInformation", () => {
+    it("adds auth information to an anonymous user", async () => {
+      const prisma = getPrismaService();
+      const service = getUserService(prisma);
+
+      const user = await prisma.user.create({
+        data: UserFactory.build({ displayName: null }),
+      });
+
+      const providerInformation: ProviderInformation = {
+        id: faker.datatype.uuid(),
+        displayName: faker.name.findName(),
+        provider: "github",
+      };
+
+      await service.updateWithAuthInformation(user.id, providerInformation);
+
+      const updatedUser = await prisma.user.findUnique({ where: { id: user.id } });
+      expect(updatedUser).toHaveProperty("displayName", providerInformation.displayName);
+      expect(updatedUser).toHaveProperty("authProvider", providerInformation.provider);
+    });
+  });
+
   describe("seenUser", () => {
     it("updates the last seen time", async () => {
       const prisma = getPrismaService();
-      const service = new UserService(
-        prisma,
-        createMock<HashService>({ make: jest.fn().mockResolvedValue("hashedPassword") }),
-        createMock<ConfigService>(createConfigServiceMock()),
-      );
+
+      const service = getUserService(prisma);
 
       let user = await prisma.user.create({
         data: UserFactory.build(),
@@ -160,15 +187,11 @@ describe("user service", () => {
     const STALEDAYS = 7;
 
     const runDeleteOnService = async (prisma: PrismaService): Promise<void> => {
-      const service = new UserService(
-        prisma,
-        createMock<HashService>(),
-        createMock<ConfigService>(
-          createConfigServiceMock({
-            "api.user-as-stale-days": STALEDAYS,
-          }),
-        ),
-      );
+      const service = getUserService(prisma, {
+        configs: {
+          "api.user-as-stale-days": STALEDAYS,
+        },
+      });
       await service.deleteStaleUsers();
     };
 
@@ -239,6 +262,32 @@ describe("user service", () => {
 
       expect(await prisma.user.count()).toEqual(1);
       expect((await prisma.user.findFirst()).id).toBe(goodUser.id);
+    });
+  });
+
+  describe("update password", () => {
+    it("can update the password for a user", async () => {
+      const hashedPassword = "hashedPassword";
+      const prisma = getPrismaService();
+      const service = new UserService(
+        prisma,
+        createMock<HashService>({ make: jest.fn().mockResolvedValue(hashedPassword) }),
+        createMock<ConfigService>(createConfigServiceMock()),
+      );
+
+      const user = await prisma.user.create({
+        data: UserFactory.build({ authProvider: "local" }),
+      });
+
+      await service.updatePassword(user.id, "newPassword");
+
+      const updatedUser = await prisma.user.findFirst({
+        where: {
+          id: user.id,
+        },
+      });
+
+      expect(updatedUser.password).toEqual(hashedPassword);
     });
   });
 });

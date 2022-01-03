@@ -4,5 +4,12 @@
     "config:base",
     "group:allNonMajor"
   ],
-  "npmrc": "@a11yphant:registry=https://gitlab.mediacube.at/api/v4/projects/5907/packages/npm/"
+  "npmrc": "@a11yphant:registry=https://gitlab.mediacube.at/api/v4/projects/5907/packages/npm/",
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["aws-sdk-mock"],
+      "allowedVersions": "!/^5.5.0$/"
+    }
+  ]
 }

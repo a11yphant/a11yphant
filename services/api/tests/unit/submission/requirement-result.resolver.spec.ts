@@ -8,9 +8,12 @@ import { RequirementResultResolver } from "@/submission/graphql/resolvers/requir
 describe("requirement result resolver", () => {
   it("resolves the rule for the requirement", async () => {
     const requirementResult = RequirementResultFactory.build();
-    const rule = RuleFactory.build();
-    const resolver = new RequirementResultResolver(createMock<RuleService>({ findOneForRequirement: jest.fn().mockResolvedValue(rule) }));
+    const findOneForRequirement = jest.fn().mockResolvedValue(RuleFactory.build());
 
-    expect(await resolver.rule(requirementResult)).toHaveProperty("id", rule.id);
+    const resolver = new RequirementResultResolver(createMock<RuleService>({ findOneForRequirement }));
+    const resolvedRequirement = await resolver.rule(requirementResult);
+
+    expect(resolvedRequirement).toBeTruthy();
+    expect(findOneForRequirement).toHaveBeenCalledWith(requirementResult.requirementId);
   });
 });

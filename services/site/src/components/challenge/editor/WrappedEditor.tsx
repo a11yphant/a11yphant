@@ -1,4 +1,4 @@
-import Editor, { EditorProps } from "@monaco-editor/react";
+import Editor, { EditorProps, useMonaco } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import { EditorLanguage } from "app/components/challenge/Editors";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
@@ -7,7 +7,24 @@ import ConfirmationModal from "app/components/modal/ConfirmationModal";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { animated, useSpring } from "react-spring";
+
+import theme from "../../../monaco-theme/a11yphant-color-theme.json";
+
+const CTRL_SHIFT_PLATFORMS = ["Macintosh", "MacIntel", "MacPPC", "Mac68K", "iPhone", "iPad", "iPod"];
+
+function getCommandForTabModeSwitch(): "ctrl + shift" | "ctrl" {
+  // there is no sign of deprecation of navigator.platform in the spec
+  // https://html.spec.whatwg.org/multipage/system-state.html#dom-navigator-platform
+  if (typeof navigator === "undefined" || !navigator.platform) {
+    return "ctrl";
+  }
+
+  if (CTRL_SHIFT_PLATFORMS.includes(navigator.platform)) {
+    return "ctrl + shift";
+  }
+
+  return "ctrl";
+}
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -25,6 +42,36 @@ export interface EditorConfig {
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
 const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, ...props }) => {
+  // custom editor theme styling
+  const monaco = useMonaco();
+
+  React.useEffect(() => {
+    if (monaco) {
+      monaco.editor.defineTheme("a11yphant", {
+        base: "vs-dark",
+        inherit: true,
+        rules: [
+          { token: "comment", foreground: "90ba6f" },
+          { token: "comment.js", foreground: "ffa92cd4", fontStyle: "bold" },
+          { token: "comment.css", foreground: "ffa67e", fontStyle: "italic" },
+          { token: "editor.foreground", foreground: "B4B8B8" },
+          { token: "metatag.html", foreground: "B4B8B8" },
+          { token: "metatag.content.html", foreground: "f27894" },
+          { token: "tag.html", foreground: "B795FF" },
+          { token: "delimiter.html", foreground: "B4B8B8" },
+          { token: "tag.css", foreground: "B795FF" },
+          { token: "attribute.value.html", foreground: "f27894" },
+          { token: "attribute.name.html", foreground: "ffffff" },
+          { token: "attribute.name.css", foreground: "ffffff" },
+          { token: "attribute.value.number.css", foreground: "f27894" },
+          { token: "attribute.value.unit.css", foreground: "f27894" },
+        ],
+        ...theme,
+      });
+      monaco.editor.setTheme("a11yphant");
+    }
+  }, [monaco]);
+
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
   const headingRef = useRef<HTMLHeadingElement>();
@@ -36,8 +83,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
   const [editorWidth, setEditorWidth] = useState<number>(0);
   const [editorHeight, setEditorHeight] = useState<number>(0);
   const [editorTop, setEditorTop] = useState<number>(0);
-
-  const [animateIcon, setAnimateIcon] = useState<boolean>(false);
 
   const updateEditorSize = useCallback(() => {
     if (wrapperRef.current && headingRef.current && buttonRef.current) {
@@ -74,33 +119,28 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
     onResize: updateEditorSize,
   });
 
-  const AnimatedResetIcon = animated(Reset);
-
-  // any is necessary here because the types of react-spring are somehow messed up
-  const { transform }: any = useSpring({
-    transform: animateIcon ? "rotate(100deg)" : "rotate(360deg)",
-    config: {
-      tension: 0,
-      duration: 300,
-      delay: 0,
-    },
-  });
+  const commandForTabModeSwitch = getCommandForTabModeSwitch();
 
   return (
     <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
       <div ref={wrapperRef} className={clsx("relative", "p-4 w-inherit h-full", "container-dark overflow-hidden")}>
-        <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
-          {config.heading}
-        </h3>
-        <div className="absolute" style={{ top: editorTop }}>
+        <div className={clsx("flex flex-row justify-between")}>
+          <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
+            {config.heading}
+          </h3>
+          <p className="text-grey-middle">
+            Press <span className="italic text-grey-middle">{commandForTabModeSwitch} + m</span> to use the tab key for site navigation.
+          </p>
+        </div>
+        <div className={clsx("absolute")} style={{ top: editorTop }}>
           <Editor
             {...props}
-            theme="vs-dark"
+            theme="a11yphant"
             language={config.language}
             loading={
               <span>
-                <span className="sr-only">The editor is loading...</span>
-                <LoadingIndicator className="w-6 h-6" />
+                <span className={clsx("sr-only")}>The editor is loading...</span>
+                <LoadingIndicator className={clsx("w-6 h-6")} />
               </span>
             }
             value={config.code}
@@ -115,22 +155,16 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           onClick={() => {
             setModalOpen(true);
           }}
-          onMouseEnter={() => {
-            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
-          }}
-          onMouseLeave={() => {
-            setAnimateIcon((prevRotateIcon) => !prevRotateIcon);
-          }}
           className={clsx(
             "absolute bottom-2 flex items-center text-grey mx-3",
             "group transition duration-300",
             "hover:text-primary-light",
-            "focus:text-primary-light",
+            "focus-outline-offset focus:text-light",
           )}
           overrideClassName
           innerRef={buttonRef}
         >
-          <AnimatedResetIcon style={{ transform: transform }} />
+          <Reset className={clsx("motion-safe:group-hover:-rotate-260", "group-focus:text-light")} />
           Reset
         </Button>
 

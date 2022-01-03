@@ -8,16 +8,8 @@ fragment ChallengeOverview on Challenge {
     numberOfFinishedLevels
 }
 
-query challenges {
-  easyChallenges: challenges(filter: { difficulty: EASY }) {
-    ...ChallengeOverview
-  }
-  
-  mediumChallenges: challenges(filter: { difficulty: MEDIUM }) {
-    ...ChallengeOverview
-  }
-  
-  hardChallenges: challenges(filter: { difficulty: HARD }) {
+query challenges($difficulty: ChallengeDifficulty, $status: ChallengeStatus) {
+  challenges(filter: { difficulty: $difficulty, currentUserStatus: $status  }) {
     ...ChallengeOverview
   }
 }

@@ -22,10 +22,11 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
   return (
     <>
       <Head>
-        <title>Something went wrong</title>
+        <title>Something went wrong | a11yphant</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Head>
       <FullScreenLayout header={<Navigation />}>
-        <main className="h-full box-border max-w-screen-3xl mx-auto">
+        <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <section
             className={clsx("mx-8 py-8 h-full flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
           >
@@ -35,10 +36,9 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
               <Link href="/">
                 <a
                   className={clsx(
-                    "w-max mt-8 px-4 py-2 font-normal bg-primary text-white border-primary border-2 rounded tracking-wider inline-flex items-center",
+                    "w-max mt-8 px-6 py-2.5 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
                     "transition duration-300",
-                    "hover:text-white hover:bg-primary-dark hover:border-primary-dark",
-                    "focus:text-white focus:bg-primary-dark focus:border-primary-dark",
+                    "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
                   )}
                 >
                   Go to homepage

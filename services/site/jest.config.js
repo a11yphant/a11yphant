@@ -8,6 +8,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "app/(.*)": "<rootDir>/src/$1",
+    "tests/(.*)": "<rootDir>/tests/$1",
   },
   reporters: ["default", "jest-junit"],
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s?(x)"],

@@ -9,15 +9,22 @@ import { CreateCodeLevelSubmissionInput } from "@/submission/graphql/inputs/crea
 import { UpdateCodeLevelSubmissionInput } from "@/submission/graphql/inputs/update-code-level-submission.input";
 import { CodeLevelSubmissionResolver } from "@/submission/graphql/resolvers/code-level-submission.resolver";
 
+function createCodeLevelSubmissionResolver(
+  partials: {
+    submissionService?: Partial<SubmissionService>;
+  } = {},
+): CodeLevelSubmissionResolver {
+  const submissionService = createMock<SubmissionService>(partials.submissionService);
+
+  return new CodeLevelSubmissionResolver(submissionService);
+}
+
 describe("code level submission resolver", () => {
+  const sessionToken: SessionToken = { userId: "uuid" };
+
   it("can create a submission", async () => {
     const create = jest.fn().mockResolvedValue({});
-    const resolver = new CodeLevelSubmissionResolver(
-      createMock<SubmissionService>({
-        create,
-      }),
-    );
-    const sessionToken: SessionToken = { userId: "uuid" };
+
     const submission: CreateCodeLevelSubmissionInput = {
       levelId: "uuid",
       html: "bla",
@@ -25,6 +32,7 @@ describe("code level submission resolver", () => {
       js: "bli",
     };
 
+    const resolver = createCodeLevelSubmissionResolver({ submissionService: { create } });
     const result = await resolver.createCodeLevelSubmission(submission, sessionToken);
 
     expect(result.submission).toBeTruthy();
@@ -33,12 +41,7 @@ describe("code level submission resolver", () => {
 
   it("can update a submission", async () => {
     const update = jest.fn().mockResolvedValue({});
-    const resolver = new CodeLevelSubmissionResolver(
-      createMock<SubmissionService>({
-        update,
-      }),
-    );
-    const sessionToken: SessionToken = { userId: "uuid" };
+
     const submission: UpdateCodeLevelSubmissionInput = {
       id: "uuid",
       html: "bla",
@@ -46,6 +49,7 @@ describe("code level submission resolver", () => {
       js: "bli",
     };
 
+    const resolver = createCodeLevelSubmissionResolver({ submissionService: { update } });
     const result = await resolver.updateCodeLevelSubmission(submission, sessionToken);
 
     expect(result.submission).toBeTruthy();
@@ -54,12 +58,7 @@ describe("code level submission resolver", () => {
 
   it("returns an error if the submission to update was not found", () => {
     const update = jest.fn().mockRejectedValue(new SubmissionNotFoundException());
-    const resolver = new CodeLevelSubmissionResolver(
-      createMock<SubmissionService>({
-        update,
-      }),
-    );
-    const sessionToken: SessionToken = { userId: "uuid" };
+
     const submission: UpdateCodeLevelSubmissionInput = {
       id: "uuid",
       html: "bla",
@@ -67,24 +66,26 @@ describe("code level submission resolver", () => {
       js: "bli",
     };
 
+    const resolver = createCodeLevelSubmissionResolver({ submissionService: { update } });
+
     expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toThrowError(UserInputError);
+    expect(update).toHaveBeenCalled();
   });
 
   it("can request a check for submission", async () => {
     const requestCheck = jest.fn().mockResolvedValue({ id: "uuid" });
-    const resolver = new CodeLevelSubmissionResolver(createMock<SubmissionService>({ requestCheck }));
 
+    const resolver = createCodeLevelSubmissionResolver({ submissionService: { requestCheck } });
     const mutationResult = await resolver.requestCodeLevelCheck({ submissionId: "bla" });
 
-    expect(mutationResult.result).toHaveProperty("id", "uuid");
+    expect(mutationResult.result).toBeTruthy();
     expect(requestCheck).toHaveBeenCalledWith("bla");
   });
 
   it("cannot request a check for the same submission multiple time", () => {
-    const resolver = new CodeLevelSubmissionResolver(
-      createMock<SubmissionService>({ requestCheck: jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException()) }),
-    );
+    const requestCheck = jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException());
 
+    const resolver = createCodeLevelSubmissionResolver({ submissionService: { requestCheck } });
     expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toThrowError(UserInputError);
   });
 });

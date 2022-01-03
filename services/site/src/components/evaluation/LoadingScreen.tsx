@@ -10,11 +10,9 @@ interface LoadingScreenProps {
 const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className }) => {
   return (
     <div className={clsx(" h-full w-full flex flex-col justify-center items-center box-border", "container-dark", className)}>
-      <div>
+      <div className={clsx("motion-reduce:hidden")}>
         <Lottie
           options={{
-            loop: true,
-            autoplay: true,
             animationData: loadingAnimation,
             rendererSettings: {
               preserveAspectRatio: "xMidYMid slice",
@@ -24,9 +22,9 @@ const LoadingScreen: React.FunctionComponent<LoadingScreenProps> = ({ className 
           className={"h-[300px]"}
         />
       </div>
-      <h2 className="text-5xl">Evaluation</h2>
+      <h2 className={clsx("text-5xl")}>Evaluation</h2>
       <br />
-      <span className="text-4xl">loading ...</span>
+      <span className={clsx("text-4xl")}>loading ...</span>
     </div>
   );
 };

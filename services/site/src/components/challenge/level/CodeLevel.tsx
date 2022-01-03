@@ -1,16 +1,19 @@
-import ButtonLoading from "app/components/buttons/ButtonLoading";
+import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
 import Sidebar from "app/components/challenge/Sidebar";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
+import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
+import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import React from "react";
 
-interface CodeLevelProps {
+export interface CodeLevelProps {
   challengeName: string;
   level: CodeLevelDetailsFragment;
   onAutoSaveLoadingChange: (autoSaveLoading: boolean) => void;
@@ -18,7 +21,10 @@ interface CodeLevelProps {
 
 const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
+  const { challengeSlug, nthLevel } = router.query;
   const errorDialogApi = useErrorDialogApi();
+  const flashMessageApi = useFlashMessageApi();
+  const [failedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
   const {
     setLevelId,
@@ -29,6 +35,26 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     updateSubmission,
     loading: autoSaveLoading,
   } = useSubmissionAutoSave();
+
+  React.useEffect(() => {
+    if (failedLevelsInARow >= 2) {
+      setTimeout(() => {
+        flashMessageApi.show(
+          <>
+            <span className={clsx("mr-3")} aria-hidden={true}>
+              🚀
+            </span>
+            Reminder: You can use hints if you are stuck
+          </>,
+          { className: clsx("hidden", "lg:flex"), offsetElementClassName: clsx("hidden", "lg:block") },
+        );
+      }, 1000);
+    }
+
+    return () => {
+      flashMessageApi.hide();
+    };
+  }, [failedLevelsInARow]);
 
   React.useEffect(() => {
     onAutoSaveLoadingChange(autoSaveLoading);
@@ -139,10 +165,10 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
     <>
       <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challengeName} level={level} />
       <div className={clsx("w-full hidden", "lg:flex")}>
-        <div className="h-full pl-4 relative box-border justify-between flex-col flex-auto">
+        <div className={clsx("h-full pl-4 relative box-border justify-between flex-col flex-auto")}>
           <Editors
             onReset={resetToInitialCode}
-            className="w-full h-3/5"
+            className={clsx("w-full h-3/5")}
             editors={editorConfiguration}
             theme="light"
             options={{
@@ -155,24 +181,23 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             }}
           />
           <Preview
-            className="w-full h-2/5"
+            className={clsx("w-full h-2/5")}
             heading="Preview"
             htmlCode={submissionCode?.html}
             cssCode={submissionCode?.css}
             javascriptCode={submissionCode?.js}
           />
-          <div className="absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl">
-            <ButtonLoading
+          <div className={clsx("absolute right-0 bottom-0 pt-2 pl-2 pr-0 pb-0 bg-background border-light border-t-2 border-l-2 rounded-tl-xl")}>
+            <LoadingButton
               primary
               onClick={submitLevel}
-              className="px-10"
               loading={requestCheckMutationLoading}
               disabled={!submissionId}
               submitButton
               srTextLoading="The submission is being processed."
             >
               Submit
-            </ButtonLoading>
+            </LoadingButton>
           </div>
         </div>
       </div>

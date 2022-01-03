@@ -9,8 +9,12 @@ describe("requirement resolver", () => {
   it("resolves the rule for the requirement", async () => {
     const requirement = RequirementFactory.build();
     const rule = RuleFactory.build();
-    const resolver = new RequirementResolver(createMock<RuleService>({ findOneForRequirement: jest.fn().mockResolvedValue(rule) }));
+    const findOneForRequirement = jest.fn().mockResolvedValue(rule);
 
-    expect(await resolver.rule(requirement));
+    const resolver = new RequirementResolver(createMock<RuleService>({ findOneForRequirement }));
+    const resolvedRule = await resolver.rule(requirement);
+
+    expect(resolvedRule).toBeTruthy();
+    expect(findOneForRequirement).toHaveBeenCalledWith(requirement.id);
   });
 });

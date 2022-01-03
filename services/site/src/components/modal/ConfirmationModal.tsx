@@ -24,8 +24,8 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
   onConfirm,
 }) => {
   return (
-    <Modal open={open} onClose={onCancel} className={clsx("px-12 py-14 w-1/2 max-w-2xl h-64", "bg-background-light")}>
-      <ModalTitle className="text-2xl">{title}</ModalTitle>
+    <Modal open={open} onClose={onCancel} className={clsx("px-12 py-14 w-1/2 max-w-2xl h-64 bg-background-light")}>
+      <ModalTitle className={clsx("text-2xl")}>{title}</ModalTitle>
       <ModalActions>
         <Button
           onClick={onCancel}
@@ -34,12 +34,12 @@ const ConfirmationModal: React.FunctionComponent<ConfirmationModalProps> = ({
             "mr-16 border-b-2 border-transparent",
             "transition-colors duration-300",
             "hover:text-primary-light hover:border-primary-light",
-            "focus:text-primary-light focus:border-primary-light",
+            "focus-rounded-instead-of-underline",
           )}
         >
           {cancelButtonLabel ?? "Cancel"}
         </Button>
-        <Button onClick={onConfirm} primary className="px-6 py-4 leading-4">
+        <Button onClick={onConfirm} primary className={clsx("px-6 py-2.5")}>
           {confirmButtonLabel ?? "Confirm"}
         </Button>
       </ModalActions>

@@ -2,6 +2,7 @@ import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver } from "@nest
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
+import { MailService } from "@/mail/mail.service";
 
 import { InputError } from "./exceptions/input.error";
 import { RegisterUserInput } from "./inputs/register-user.input";
@@ -10,7 +11,7 @@ import { UserService } from "./user.service";
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private mailService: MailService) {}
 
   @Query(() => User, { nullable: true })
   async user(@Args("id", { type: () => ID }) id: string): Promise<User> {
@@ -23,10 +24,15 @@ export class UserResolver {
   }
 
   @Mutation(() => User, { description: "Register a new local user." })
-  register(@Args("registerUserInput") registerUserInput: RegisterUserInput, @SessionToken() sessionToken: SessionTokenInterface): Promise<User> {
-    return this.userService.registerUser(registerUserInput, sessionToken.userId).catch((e) => {
+  async register(
+    @Args("registerUserInput") registerUserInput: RegisterUserInput,
+    @SessionToken() sessionToken: SessionTokenInterface,
+  ): Promise<User> {
+    const user = await this.userService.registerUser(registerUserInput, sessionToken.userId).catch((e) => {
       throw new InputError(e.message);
     });
+    this.mailService.sendRegistrationMail(user);
+    return user;
   }
 
   @ResolveField(() => Boolean)

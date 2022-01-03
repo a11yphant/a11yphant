@@ -1,6 +1,6 @@
 {
   "name": "@a11yphant/eslint-config",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,23 +13,23 @@
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1 || ^5.0.0",
     "@typescript-eslint/parser": "^4.15.1 || ^5.0.0",
-    "eslint": "^7.20.0",
+    "eslint": "^7.20.0 || ^8.0.0",
     "eslint-config-prettier": "^7.2.0 || ^8.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1 || ^4.0.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-unused-imports": "^1.1.0",
+    "eslint-plugin-unused-imports": "^1.1.0 || ^2.0.0",
     "prettier": "^2.2.1"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
+    "eslint": "8.4.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
-    "eslint-plugin-unused-imports": "1.1.5",
-    "prettier": "2.4.1"
+    "eslint-plugin-unused-imports": "2.0.0",
+    "prettier": "2.5.1"
   }
 }
