@@ -39,6 +39,13 @@ export class AuthenticationResolver {
     return user;
   }
 
+  @Mutation(() => Boolean)
+  async logout(@Context() ctx: IContext): Promise<boolean> {
+    // todo: return false if user is not logged in
+    ctx.res.clearCookie(this.config.get<string>("cookie.name"));
+    return true;
+  }
+
   @Mutation(() => ValidatePasswordResetTokenResult)
   async validatePasswordResetToken(@Args("token") token: string): Promise<ValidatePasswordResetTokenResult> {
     try {
