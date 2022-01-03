@@ -332,7 +332,7 @@ challenge:
       type: code
       instructions: |-
         <p>The <code>&lt;footer&gt;</code> element represents the footer of a section. For a page it usually contains a copyright notice, a footer navigation or other information about the website.</p>
-        <p>The page <code>&lt;footer&gt;</code> element should not be inside the <code>&lt;main&gt;</code> element since it typically remains the same on all pages of the website.</p>
+        <p>If the content of the <code>&lt;footer&gt;</code> remains the same on all pages of the website, this page <code>&lt;footer&gt;</code> element should not be inside the <code>&lt;main&gt;</code> element.</p>
       tasks:
         - id: dd1d31f6-e2a4-447c-a22d-737c34969d08
           text: <p>Add a <code>&lt;footer&gt;</code> element to your website.</p>
