@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
+import { ChangePasswordInput } from "@/authentication/inputs/change-password.input";
 import { LoginInput } from "@/authentication/inputs/login.input";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
@@ -97,5 +98,15 @@ export class AuthenticationResolver {
 
       throw e;
     }
+  }
+  // changePassword hat einen Boolean return, der angibt ob die Änderung erfolgreich war
+  // Wenn der aktuelle eingeloggte user nicht den authProvider local hat, gibt die API einen INVALID_OPERATION error zurück (github und twitter user haben kein extra passwort bei uns).
+  // Wenn currentPassword nicht mit dem gespeicherten passwort übereinstimmt, gibt die API einen BAD_USER_INPUT error zurück.
+  // Wenn currentPassword mit dem gespeicherten passwort übereinstimmt, wird newPassword gehashed und damit der user aktualisiert.
+  @Mutation(() => Boolean)
+  async changePassword(@Args("changePassWordInput") changePasswordInput: ChangePasswordInput, @Context() ctx: IContext): Promise<Boolean> {
+    const user = await this.userService.findById(ctx.sessionToken.userId);
+    // todo error handling
+    return await this.authenticationService.changePassword(user, changePasswordInput);
   }
 }

@@ -7,6 +7,7 @@ import { JwtScope } from "./enums/jwt-scope.enum";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "./exceptions/user-not-found.exception";
 import { HashService } from "./hash.service";
+import { ChangePasswordInput } from "./inputs/change-password.input";
 import { LoginInput } from "./inputs/login.input";
 import { JwtService } from "./jwt.service";
 
@@ -68,5 +69,20 @@ export class AuthenticationService {
 
   generateMailConfirmationToken(userId: string): Promise<string> {
     return this.jwtService.createSignedToken({ scope: JwtScope.EMAIL_CONFIRMATION }, { expiresInSeconds: 86400, subject: userId });
+  }
+
+  async changePassword(user: User, { currentPassword, newPassword }: ChangePasswordInput): Promise<Boolean> {
+    const currentPasswordOk = await this.hashService.compare(currentPassword, user.password);
+
+    if (user.authProvider !== "local") {
+      throw new Error("INVALID_OPERATION");
+    }
+    if (!currentPasswordOk) {
+      throw new Error("BAD_USER_INPUT");
+    }
+
+    await this.userService.updatePassword(user.id, newPassword);
+
+    return true;
   }
 }
