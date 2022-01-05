@@ -26,12 +26,27 @@ jest.mock("app/generated/graphql", () => ({
       challenges: [
         {
           id: "798cef99-c20f-4ffe-abac-2e4c507a2d8e",
-          name: "Dummy Challenge",
+          name: "Dummy Challenge 1",
           statusForUser: "FINISHED",
+        },
+        {
+          id: "436eb074-8c77-4ce0-a0a5-4344d78f3748",
+          name: "Dummy Challenge 2",
+          statusForUser: "OPEN",
+        },
+        {
+          id: "cc2f1f26-a724-40a1-a542-7b8ca693e3ab",
+          name: "Dummy Challenge 3",
+          statusForUser: "IN_PROGRESS",
         },
       ],
     },
   }),
+  ChallengeStatus: {
+    Finished: "FINISHED",
+    InProgress: "IN_PROGRESS",
+    Open: "OPEN",
+  },
 }));
 
 jest.mock("app/components/Navigation", () => ({
@@ -54,10 +69,34 @@ describe("user profile page", () => {
       expect(screen.getByText(/Hans Schröder/)).toBeInTheDocument();
     });
 
-    it("renders the name of the challenge", () => {
+    it("renders the amount of finished and open challenges", () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("Dummy Challenge")).toBeInTheDocument();
+      expect(screen.getByText("1/3")).toBeInTheDocument();
+    });
+
+    it("renders a finished challenge", () => {
+      render(<UserProfile />);
+
+      expect(screen.getByText("Dummy Challenge 1")).toBeInTheDocument();
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(screen.getByText("Completed", { selector: "h3" }).parentElement.innerHTML).toContain("Dummy Challenge 1");
+    });
+
+    it("renders an open challenge", () => {
+      render(<UserProfile />);
+
+      expect(screen.getByText("Dummy Challenge 2")).toBeInTheDocument();
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(screen.getByText("Not started yet", { selector: "h3" }).parentElement.innerHTML).toContain("Dummy Challenge 2");
+    });
+
+    it("renders a challenge that is in progress", () => {
+      render(<UserProfile />);
+
+      expect(screen.getByText("Dummy Challenge 3")).toBeInTheDocument();
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(screen.getByText("Currently coding", { selector: "h3" }).parentElement.innerHTML).toContain("Dummy Challenge 3");
     });
   });
 
