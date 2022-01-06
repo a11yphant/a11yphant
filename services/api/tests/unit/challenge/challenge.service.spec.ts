@@ -17,10 +17,26 @@ import faker from "faker";
 import { ChallengeService } from "@/challenge/challenge.service";
 import { ChallengeDifficulty } from "@/challenge/enums/challenge-difficulty.enum";
 import { ChallengeStatus } from "@/challenge/enums/challenge-status";
+import { PrismaService } from "@/prisma/prisma.service";
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
 describe("challenge service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
+
+  const getChallenge = async ({
+    numberOfCodeLevels = 0,
+    numberOfQuizLevels = 0,
+  }: {
+    numberOfCodeLevels?: number;
+    numberOfQuizLevels?: number;
+  }): Promise<string> => {
+    const prisma = getPrismaService();
+    const { id: challengeId } = await prisma.challenge.create({
+      data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels, numberOfQuizLevels }),
+    });
+
+    return challengeId;
+  };
 
   const getUserAndChallenge = async ({
     numberOfCodeLevels = 0,
@@ -35,9 +51,7 @@ describe("challenge service", () => {
       data: Factory.build<UserData>(USER),
     });
 
-    const { id: challengeId } = await prisma.challenge.create({
-      data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels, numberOfQuizLevels }),
-    });
+    const challengeId = await getChallenge({ numberOfCodeLevels, numberOfQuizLevels });
 
     return { userId, challengeId };
   };
@@ -203,85 +217,168 @@ describe("challenge service", () => {
     });
   });
 
-  describe("getStatusForUserAndChallenge", () => {
-    it("returns OPEN if no attempts were found", async () => {
+  describe("getNumberOfCodeLevelSubmissionsForUser", () => {
+    it("returns the number of code level submissions for a user", async () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
       const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
 
-      const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+      const { id: levelId } = await prisma.codeLevel.findFirst({
+        where: { challengeId },
+      });
+
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+
+      const numberOfSubmissions = await service.getNumberOfCodeLevelSubmissionsForUser(challengeId, userId);
+      expect(numberOfSubmissions).toBe(1);
+    });
+  });
+
+  describe("getNumberOfQuizLevelSubmissionsForUser", () => {
+    it("returns the number of quiz level submissions for a user", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const { userId, challengeId } = await getUserAndChallenge({ numberOfQuizLevels: 3 });
+
+      const { id: levelId } = await prisma.quizLevel.findFirst({
+        where: { challengeId },
+      });
+
+      await prisma.quizLevelSubmission.create({
+        data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
+      });
+
+      const numberOfSubmissions = await service.getNumberOfQuizLevelSubmissionsForUser(challengeId, userId);
+      expect(numberOfSubmissions).toBe(1);
+    });
+  });
+
+  describe("getNumberOfQuizLevelsForChallenge", () => {
+    it("returns the number of quiz levels for a challenge", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const challengeId = await getChallenge({ numberOfQuizLevels: 3 });
+
+      const numberOfQuizLevels = await service.getNumberOfQuizLevelsForChallenge(challengeId);
+      expect(numberOfQuizLevels).toBe(3);
+    });
+  });
+
+  describe("getNumberOfCodeLevelsForChallenge", () => {
+    it("returns the number of code levels for a challenge", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const challengeId = await getChallenge({ numberOfCodeLevels: 3 });
+
+      const numberOfCodeLevels = await service.getNumberOfCodeLevelsForChallenge(challengeId);
+      expect(numberOfCodeLevels).toBe(3);
+    });
+  });
+
+  describe("getNumberOfFinishedCodeLevelsForUser", () => {
+    it("returns the number of finished code levels for a user", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
+
+      const { id: levelId } = await prisma.codeLevel.findFirst({
+        where: { challengeId },
+      });
+
+      await prisma.codeLevelSubmission.create({
+        data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
+          levelId,
+          userId,
+          result: { create: { status: ResultStatus.SUCCESS } },
+        }),
+      });
+
+      const numberOfFinishedCodeLevels = await service.getNumberOfFinishedCodeLevelsForUser(challengeId, userId);
+      expect(numberOfFinishedCodeLevels).toBe(1);
+    });
+  });
+
+  describe("getNumberOfFinishedQuizLevelsForUser", () => {
+    it("returns the number of finished quiz levels for a user", async () => {
+      const prisma = getPrismaService();
+      const service = new ChallengeService(prisma);
+
+      const { userId, challengeId } = await getUserAndChallenge({ numberOfQuizLevels: 3 });
+
+      const { id: levelId } = await prisma.quizLevel.findFirst({
+        where: { challengeId },
+      });
+
+      await prisma.quizLevelSubmission.create({
+        data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, {
+          levelId,
+          userId,
+          result: { create: { status: ResultStatus.SUCCESS } },
+        }),
+      });
+
+      const numberOfFinishedQuizLevels = await service.getNumberOfFinishedQuizLevelsForUser(challengeId, userId);
+      expect(numberOfFinishedQuizLevels).toBe(1);
+    });
+  });
+
+  describe("getStatusForUserAndChallenge", () => {
+    it("returns OPEN if no attempts were found", async () => {
+      const service = new ChallengeService(createMock<PrismaService>());
+      jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(0);
+      jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(0);
+
+      const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
       expect(status).toBe(ChallengeStatus.OPEN);
     });
 
     describe("returns IN_PROGRESS", () => {
       it("if code level attempts were found", async () => {
-        const prisma = getPrismaService();
-        const service = new ChallengeService(prisma);
+        const service = new ChallengeService(createMock<PrismaService>());
+        jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfQuizLevelsForChallenge").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfCodeLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedCodeLevelsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfFinishedQuizLevelsForUser").mockResolvedValue(0);
 
-        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
-
-        const { id: levelId } = await prisma.codeLevel.findFirst({
-          where: { challengeId },
-        });
-
-        await prisma.codeLevelSubmission.create({
-          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
-        });
-
-        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+        const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
         expect(status).toBe(ChallengeStatus.IN_PROGRESS);
       });
 
       it("if quiz level attempts were found", async () => {
-        const prisma = getPrismaService();
-        const service = new ChallengeService(prisma);
+        const service = new ChallengeService(createMock<PrismaService>());
+        jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfCodeLevelsForChallenge").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfQuizLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedCodeLevelsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfFinishedQuizLevelsForUser").mockResolvedValue(0);
 
-        const { userId, challengeId } = await getUserAndChallenge({ numberOfQuizLevels: 3 });
-
-        const { id: levelId } = await prisma.quizLevel.findFirst({
-          where: { challengeId },
-        });
-
-        await prisma.quizLevelSubmission.create({
-          data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, { levelId, userId, result: { create: { status: ResultStatus.FAIL } } }),
-        });
-
-        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+        const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
         expect(status).toBe(ChallengeStatus.IN_PROGRESS);
       });
 
       it("if some, but not all levels are finished", async () => {
-        const prisma = getPrismaService();
-        const service = new ChallengeService(prisma);
+        const service = new ChallengeService(createMock<PrismaService>());
+        jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfCodeLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfQuizLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedCodeLevelsForUser").mockResolvedValue(2);
+        jest.spyOn(service, "getNumberOfFinishedQuizLevelsForUser").mockResolvedValue(2);
 
-        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3, numberOfQuizLevels: 1 });
-
-        const levels = await prisma.codeLevel.findMany({
-          where: { challengeId },
-        });
-
-        await Promise.all([
-          prisma.codeLevelSubmission.create({
-            data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-              levelId: levels[0].id,
-              userId,
-              result: { create: { status: ResultStatus.SUCCESS } },
-            }),
-          }),
-          prisma.codeLevelSubmission.create({
-            data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-              levelId: levels[1].id,
-              userId,
-              result: { create: { status: ResultStatus.FAIL } },
-            }),
-          }),
-        ]);
-
-        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+        const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
         expect(status).toBe(ChallengeStatus.IN_PROGRESS);
       });
@@ -289,122 +386,43 @@ describe("challenge service", () => {
 
     describe("returns FINISHED", () => {
       it("if all code levels were finished once", async () => {
-        const prisma = getPrismaService();
-        const service = new ChallengeService(prisma);
+        const service = new ChallengeService(createMock<PrismaService>());
+        jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfCodeLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfQuizLevelsForChallenge").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfFinishedCodeLevelsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedQuizLevelsForUser").mockResolvedValue(0);
 
-        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3 });
-
-        const levels = await prisma.codeLevel.findMany({
-          where: { challengeId },
-        });
-
-        await prisma.codeLevelSubmission.create({
-          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-            levelId: levels[0].id,
-            userId,
-            result: { create: { status: ResultStatus.FAIL } },
-          }),
-        });
-
-        await Promise.all(
-          levels.map((level) =>
-            prisma.codeLevelSubmission.create({
-              data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-                levelId: level.id,
-                userId,
-                result: { create: { status: ResultStatus.SUCCESS } },
-              }),
-            }),
-          ),
-        );
-
-        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+        const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
         expect(status).toBe(ChallengeStatus.FINISHED);
       });
 
       it("if all quiz levels were finished", async () => {
-        const prisma = getPrismaService();
-        const service = new ChallengeService(prisma);
+        const service = new ChallengeService(createMock<PrismaService>());
+        jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfCodeLevelsForChallenge").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfQuizLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedCodeLevelsForUser").mockResolvedValue(0);
+        jest.spyOn(service, "getNumberOfFinishedQuizLevelsForUser").mockResolvedValue(3);
 
-        const { userId, challengeId } = await getUserAndChallenge({ numberOfQuizLevels: 3 });
-
-        const levels = await prisma.quizLevel.findMany({
-          where: { challengeId },
-        });
-
-        await Promise.all(
-          levels.map((level) =>
-            prisma.quizLevelSubmission.create({
-              data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, {
-                levelId: level.id,
-                userId,
-                result: { create: { status: ResultStatus.SUCCESS } },
-              }),
-            }),
-          ),
-        );
-
-        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+        const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
         expect(status).toBe(ChallengeStatus.FINISHED);
       });
 
       it("when some levels were finished more than once", async () => {
-        const prisma = getPrismaService();
-        const service = new ChallengeService(prisma);
+        const service = new ChallengeService(createMock<PrismaService>());
+        jest.spyOn(service, "getNumberOfCodeLevelSubmissionsForUser").mockResolvedValue(4);
+        jest.spyOn(service, "getNumberOfQuizLevelSubmissionsForUser").mockResolvedValue(4);
+        jest.spyOn(service, "getNumberOfCodeLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfQuizLevelsForChallenge").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedCodeLevelsForUser").mockResolvedValue(3);
+        jest.spyOn(service, "getNumberOfFinishedQuizLevelsForUser").mockResolvedValue(3);
 
-        const { userId, challengeId } = await getUserAndChallenge({ numberOfCodeLevels: 3, numberOfQuizLevels: 1 });
-
-        const codeLevels = await prisma.codeLevel.findMany({
-          where: { challengeId },
-        });
-
-        await prisma.codeLevelSubmission.create({
-          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-            levelId: codeLevels[0].id,
-            userId,
-            result: { create: { status: ResultStatus.FAIL } },
-          }),
-        });
-
-        await Promise.all(
-          codeLevels.map((level) =>
-            prisma.codeLevelSubmission.create({
-              data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-                levelId: level.id,
-                userId,
-                result: { create: { status: ResultStatus.SUCCESS } },
-              }),
-            }),
-          ),
-        );
-
-        await prisma.codeLevelSubmission.create({
-          data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, {
-            levelId: codeLevels[2].id,
-            userId,
-            result: { create: { status: ResultStatus.SUCCESS } },
-          }),
-        });
-
-        const quizLevel = await prisma.quizLevel.findFirst({
-          where: { challengeId },
-        });
-
-        await Promise.all(
-          [1, 2].map(() =>
-            prisma.quizLevelSubmission.create({
-              data: Factory.build<QuizLevelSubmissionData>(QUIZ_LEVEL_SUBMISSION, {
-                levelId: quizLevel.id,
-                userId,
-                result: { create: { status: ResultStatus.SUCCESS } },
-              }),
-            }),
-          ),
-        );
-
-        const status = await service.getStatusForUserAndChallenge(userId, challengeId);
+        const status = await service.getStatusForUserAndChallenge("userId", "challengeId");
 
         expect(status).toBe(ChallengeStatus.FINISHED);
       });
