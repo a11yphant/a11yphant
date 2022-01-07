@@ -82,7 +82,7 @@ describe("authentication controller", () => {
       expect(redirect).toHaveBeenCalledWith(expect.stringContaining(FlashMessage.EMAIL_CONFIRMATION_FAILED));
     });
 
-    it("redirects with correct message if update throws error", async () => {
+    it("redirects with email confirmation failed message if update throws error", async () => {
       const redirect = jest.fn();
       const res = createMock<Response>({
         redirect,
@@ -128,7 +128,7 @@ describe("authentication controller", () => {
     });
 
     describe("createOauthCookie", () => {
-      it("sets the correct cookie", async () => {
+      it("sets the configured cookie", async () => {
         let cookie: { name: string; token: string; options: Record<string, unknown> };
 
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
@@ -154,11 +154,11 @@ describe("authentication controller", () => {
     });
 
     describe("github", () => {
-      it("calls the inital function", () => {
+      it("calls the initial function", () => {
         expect(authController.github()).toBeFalsy();
       });
 
-      it("resolves the callback function", async () => {
+      it("sets the the auth cookie and redirects", async () => {
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
@@ -174,11 +174,11 @@ describe("authentication controller", () => {
     });
 
     describe("twitter", () => {
-      it("calls the inital function", () => {
+      it("calls the initial function", () => {
         expect(authController.twitter()).toBeFalsy();
       });
 
-      it("resolves the callback function", async () => {
+      it("sets the the auth cookie and redirects", async () => {
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
