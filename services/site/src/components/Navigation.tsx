@@ -81,6 +81,8 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             >
               <Dropdown.Group>
                 <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+              </Dropdown.Group>
+              <Dropdown.Group>
                 <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
               </Dropdown.Group>
             </Dropdown>
