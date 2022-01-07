@@ -48,7 +48,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
   });
 
   const submitLogin = async ({ name, email, password }): Promise<void> => {
-    await register({ variables: { name, email, password } });
+    const { errors } = await register({ variables: { name, email, password } });
+    if (errors) {
+      return;
+    }
+
     onAfterSubmit?.();
   };
 
