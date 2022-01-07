@@ -51,7 +51,7 @@
   "devDependencies": {
     "@nestjs/common": "8.2.4",
     "@nestjs/core": "8.2.4",
-    "@typescript-eslint/parser": "5.8.1",
+    "@typescript-eslint/parser": "5.9.0",
     "dotenv-cli": "4.1.1",
     "husky": "7.0.4",
     "lint-staged": "12.1.5",
