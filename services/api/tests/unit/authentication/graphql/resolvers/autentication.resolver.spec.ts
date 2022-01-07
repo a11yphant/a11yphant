@@ -133,6 +133,73 @@ describe("authentication resolver", () => {
     });
   });
 
+  describe("logout", () => {
+    it("returns true and clears the cookie", async () => {
+      const id = faker.datatype.uuid();
+      const user = new User(UserFactory.build({ id }));
+      user.authProvider = "github";
+
+      const findByIdFunc = jest.fn().mockResolvedValue(user);
+      const clearCookieFunc = jest.fn();
+
+      const resolver = createAuthenticationResolver({
+        userService: {
+          findById: findByIdFunc,
+        },
+      });
+
+      const logoutResult = await resolver.logout(
+        createMock<IContext>({
+          res: { clearCookie: clearCookieFunc },
+          sessionToken: { userId: user.id },
+        }),
+      );
+
+      expect(findByIdFunc).toHaveBeenCalledTimes(1);
+      expect(findByIdFunc).toHaveBeenCalledWith(user.id);
+
+      expect(clearCookieFunc).toHaveBeenCalledTimes(1);
+      expect(clearCookieFunc).toHaveBeenCalledWith(expect.stringContaining(""));
+
+      expect(logoutResult).toBe(true);
+    });
+
+    it("returns false if user is anonymous", async () => {
+      const id = faker.datatype.uuid();
+      const user = new User(UserFactory.build({ id }));
+
+      const findByIdFunc = jest.fn().mockResolvedValue(user);
+      const clearCookieFunc = jest.fn();
+
+      const resolver = createAuthenticationResolver({
+        userService: {
+          findById: findByIdFunc,
+        },
+      });
+
+      const logoutResult = await resolver.logout(
+        createMock<IContext>({
+          res: { clearCookie: clearCookieFunc },
+          sessionToken: { userId: user.id },
+        }),
+      );
+
+      expect(findByIdFunc).toHaveBeenCalledTimes(1);
+      expect(findByIdFunc).toHaveBeenCalledWith(user.id);
+
+      expect(clearCookieFunc).not.toHaveBeenCalled();
+
+      expect(logoutResult).toBe(false);
+    });
+
+    it("returns false if no user is logged in", async () => {
+      const resolver = createAuthenticationResolver();
+      const logoutResult = await resolver.logout(createMock<IContext>());
+
+      expect(logoutResult).toEqual(false);
+    });
+  });
+
   describe("validate password reset token", () => {
     it("calls validate password reset token on the auth service with the provided token", () => {
       const validatePasswordResetToken = jest.fn().mockResolvedValue(true);

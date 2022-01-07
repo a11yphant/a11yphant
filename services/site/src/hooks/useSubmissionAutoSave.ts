@@ -1,6 +1,6 @@
 import { CodeLevelSubmission, useCreateCodeLevelSubmissionMutation, useUpdateCodeLevelSubmissionMutation } from "app/generated/graphql";
 import debounce from "lodash.debounce";
-import { useEffect, useState } from "react";
+import React from "react";
 
 const debounceOneSecond = debounce((update: () => void) => {
   update();
@@ -21,12 +21,12 @@ interface SubmissionAutoSaveApi {
 export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
   const [createSubmissionMutation, { loading: createSubmissionLoading }] = useCreateCodeLevelSubmissionMutation();
   const [updateSubmissionMutation, { loading: updateSubmitMutationLoading }] = useUpdateCodeLevelSubmissionMutation();
-  const [levelId, setLevelId] = useState<string>();
-  const [submissionId, setSubmissionId] = useState<string>();
-  const [submissionCode, setSubmissionCode] = useState<SubmissionCode>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [levelId, setLevelId] = React.useState<string>();
+  const [submissionId, setSubmissionId] = React.useState<string>();
+  const [submissionCode, setSubmissionCode] = React.useState<SubmissionCode>();
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (createSubmissionLoading || updateSubmitMutationLoading) {
       setLoading(true);
     }
@@ -64,7 +64,7 @@ export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
     });
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     debounceOneSecond(() => {
       updateSubmission();
     });

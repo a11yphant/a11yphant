@@ -44,28 +44,33 @@ export interface EditorConfig {
 const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, ...props }) => {
   // custom editor theme styling
   const monaco = useMonaco();
-  monaco?.editor.defineTheme("a11yphant", {
-    base: "vs-dark",
-    inherit: true,
-    rules: [
-      { token: "comment", foreground: "90ba6f" },
-      { token: "comment.js", foreground: "ffa92cd4", fontStyle: "bold" },
-      { token: "comment.css", foreground: "ffa67e", fontStyle: "italic" },
-      { token: "editor.foreground", foreground: "B4B8B8" },
-      { token: "metatag.html", foreground: "B4B8B8" },
-      { token: "metatag.content.html", foreground: "f27894" },
-      { token: "tag.html", foreground: "B795FF" },
-      { token: "delimiter.html", foreground: "B4B8B8" },
-      { token: "tag.css", foreground: "B795FF" },
-      { token: "attribute.value.html", foreground: "f27894" },
-      { token: "attribute.name.html", foreground: "ffffff" },
-      { token: "attribute.name.css", foreground: "ffffff" },
-      { token: "attribute.value.number.css", foreground: "f27894" },
-      { token: "attribute.value.unit.css", foreground: "f27894" },
-    ],
-    ...theme,
-  });
-  monaco?.editor.setTheme("a11yphant");
+
+  React.useEffect(() => {
+    if (monaco) {
+      monaco.editor.defineTheme("a11yphant", {
+        base: "vs-dark",
+        inherit: true,
+        rules: [
+          { token: "comment", foreground: "90ba6f" },
+          { token: "comment.js", foreground: "ffa92cd4", fontStyle: "bold" },
+          { token: "comment.css", foreground: "ffa67e", fontStyle: "italic" },
+          { token: "editor.foreground", foreground: "B4B8B8" },
+          { token: "metatag.html", foreground: "B4B8B8" },
+          { token: "metatag.content.html", foreground: "f27894" },
+          { token: "tag.html", foreground: "B795FF" },
+          { token: "delimiter.html", foreground: "B4B8B8" },
+          { token: "tag.css", foreground: "B795FF" },
+          { token: "attribute.value.html", foreground: "f27894" },
+          { token: "attribute.name.html", foreground: "ffffff" },
+          { token: "attribute.name.css", foreground: "ffffff" },
+          { token: "attribute.value.number.css", foreground: "f27894" },
+          { token: "attribute.value.unit.css", foreground: "f27894" },
+        ],
+        ...theme,
+      });
+      monaco.editor.setTheme("a11yphant");
+    }
+  }, [monaco]);
 
   // refs to html elements
   const wrapperRef = useRef<HTMLDivElement>();
