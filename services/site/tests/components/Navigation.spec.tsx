@@ -10,7 +10,7 @@ import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
-import { User } from "app/generated/graphql";
+import { useLogoutMutation, User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { shallow, ShallowWrapper } from "enzyme";
 import { Mock } from "jest-mock";
@@ -18,6 +18,10 @@ import React, { PropsWithChildren } from "react";
 
 const mockShow = jest.fn();
 const mockHide = jest.fn();
+
+jest.mock("app/generated/graphql", () => ({
+  useLogoutMutation: jest.fn(),
+}));
 
 jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
   __esModule: true,
@@ -82,6 +86,7 @@ const mockNonRegisteredUser = (): void => {
 
 beforeEach(() => {
   jest.resetAllMocks();
+  (useLogoutMutation as jest.Mock).mockReturnValue([jest.fn(), {}]);
 });
 
 describe("Navigation", () => {
@@ -162,5 +167,17 @@ describe("Navigation", () => {
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("login");
+  });
+
+  it("calls the logout mutation after a click on logout", async () => {
+    mockRegisteredUser();
+    const logoutMutation = useLogoutMutation();
+    renderNavigation();
+
+    screen.getByRole("button", { name: "User Menu" }).click();
+
+    (await screen.findByRole("menuitem", { name: "Logout" })).click();
+
+    expect(logoutMutation[0]).toHaveBeenCalledTimes(1);
   });
 });
