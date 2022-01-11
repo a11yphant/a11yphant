@@ -40,7 +40,7 @@ export class MailService {
       await this.mailerService.sendMail({
         to: context.email,
         subject: "Reset your password",
-        template: "./password-reset",
+        template: "password-reset",
         context: {
           passwordResetLink,
         },
