@@ -15,7 +15,6 @@ data "docker_registry_image" "source_image" {
 resource "docker_image" "source_image" {
   provider      = docker.source
   name          = var.source_image
-  keep_locally  = true
   pull_triggers = [data.docker_registry_image.source_image.sha256_digest]
 }
 
