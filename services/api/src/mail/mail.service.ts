@@ -18,7 +18,7 @@ export class MailService {
       await this.mailerService.sendMail({
         to: context.email,
         subject: "Confirm your E-Mail",
-        template: "./registration",
+        template: "registration",
         context: {
           displayName: context.displayName || context.email,
           confirmationLink,

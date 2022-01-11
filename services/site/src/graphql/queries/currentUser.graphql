@@ -3,5 +3,6 @@ query currentUser {
     id
     displayName
     isRegistered
+    isVerified
   }
 }

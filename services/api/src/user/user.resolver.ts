@@ -45,4 +45,17 @@ export class UserResolver {
   isRegistered(@Parent() user: User): boolean {
     return user.authProvider !== "anonymous";
   }
+
+  @ResolveField(() => Boolean, { description: "Indicates whether a local user has confirmed their email." })
+  isVerified(@Parent() user: User): boolean {
+    if (user.authProvider === "anonymous") {
+      return false;
+    }
+
+    if (user.authProvider === "local") {
+      return !!user.verifiedAt;
+    }
+
+    return true;
+  }
 }
