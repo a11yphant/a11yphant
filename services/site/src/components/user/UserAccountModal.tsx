@@ -5,11 +5,25 @@ import clsx from "clsx";
 import React from "react";
 
 import { UserAccountBox } from "./UserAccountBox";
+import { UserAccountModalTypes } from "./useUserAccountModalApi";
 
 export interface UserAccountModalProps {
   open?: boolean;
   onClose?: () => void;
-  mode: "signup" | "login";
+  mode: UserAccountModalTypes;
+}
+
+function getModalTitle(mode: UserAccountModalTypes): string {
+  switch (mode) {
+    case "signup":
+      return "Sign up to save your progress!";
+    case "login":
+      return "Login";
+    case "reset-password":
+      return "Request a password reset";
+    default:
+      return "";
+  }
 }
 
 const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open = false, onClose, mode }) => {
@@ -26,7 +40,7 @@ const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open
       open={open}
       onClose={onClose}
     >
-      <ModalTitle className={clsx("mb-8", "h4")}>{mode === "signup" ? "Sign up to save your progress!" : "Login"}</ModalTitle>
+      <ModalTitle className={clsx("mb-8", "h4")}>{getModalTitle(mode)}</ModalTitle>
       <ModalContent>
         <UserAccountBox mode={mode} />
       </ModalContent>

@@ -57,6 +57,12 @@ describe("login box", () => {
     expect(screen.getByRole("button", { name: /Create a free account/ })).toBeInTheDocument();
   });
 
+  it("renders a button to reset the password", () => {
+    renderLoginBox();
+
+    expect(screen.getByRole("button", { name: /Forgot your password\? Reset it here/ })).toBeInTheDocument();
+  });
+
   it("switches to the sign up modal on create account button click", () => {
     renderLoginBox();
 
