@@ -7,9 +7,14 @@ import { useUserAccountModalApi } from "./useUserAccountModalApi";
 const ResetPasswordBox: React.FC = () => {
   const userAccountModalApi = useUserAccountModalApi();
 
+  function afterFormSubmit(): void {
+    // TODO: show flash message
+    userAccountModalApi.hide();
+  }
+
   return (
     <>
-      <ResetPasswordForm />
+      <ResetPasswordForm onAfterSubmit={afterFormSubmit} />
       <UnderlinedTextButton className={clsx("mt-8")} onClick={() => userAccountModalApi.show("signup")}>
         New here? Create a free account.
       </UnderlinedTextButton>
