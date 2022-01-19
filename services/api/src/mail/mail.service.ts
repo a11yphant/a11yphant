@@ -59,8 +59,8 @@ export class MailService {
   }
 
   async generatePasswordResetLink(token: string): Promise<string> {
-    const url = this.config.get<string>("api.url");
+    const url = this.config.get<string>("site.url");
 
-    return `${url}/confirm-email?token=${token}`;
+    return `${url}/reset-password?token=${token}`;
   }
 }

@@ -90,11 +90,11 @@ describe("mailService", () => {
       const apiUrl = "localhost";
       const token = "a11ytoken";
 
-      const service = getMailService({}, { "api.url": apiUrl });
+      const service = getMailService({}, { "api.url": apiUrl, "site.url": apiUrl });
 
       const url = await service.generatePasswordResetLink(token);
       expect(url).toEqual(expect.stringContaining(apiUrl));
-      expect(url).toEqual(expect.stringContaining(`confirm-email?token=${token}`));
+      expect(url).toEqual(expect.stringContaining(`reset-password?token=${token}`));
     });
   });
 });
