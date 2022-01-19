@@ -3,8 +3,9 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import ResetPasswordBox from "app/components/user/ResetPasswordBox";
 import ResetPasswordForm from "app/components/user/ResetPasswordForm";
 
-const mockShow = jest.fn();
-const mockHide = jest.fn();
+const mockShowModal = jest.fn();
+const mockHideModal = jest.fn();
+const mockShowFlashMessage = jest.fn();
 
 jest.mock("app/components/user/ResetPasswordForm", () => ({
   __esModule: true,
@@ -13,8 +14,14 @@ jest.mock("app/components/user/ResetPasswordForm", () => ({
 
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
-    show: mockShow,
-    hide: mockHide,
+    show: mockShowModal,
+    hide: mockHideModal,
+  }),
+}));
+
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: () => ({
+    show: mockShowFlashMessage,
   }),
 }));
 
@@ -49,7 +56,7 @@ describe("reset password box", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /Log in/ }));
 
-    expect(mockShow).toHaveBeenCalledWith("login");
+    expect(mockShowModal).toHaveBeenCalledWith("login");
   });
 
   it("shows a button to switch to signup", () => {
@@ -63,7 +70,7 @@ describe("reset password box", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /Create a free account/ }));
 
-    expect(mockShow).toHaveBeenCalledWith("signup");
+    expect(mockShowModal).toHaveBeenCalledWith("signup");
   });
 
   it("closes the modal after a form submit", () => {
@@ -74,6 +81,17 @@ describe("reset password box", () => {
 
     renderResetPasswordBox();
 
-    expect(mockHide).toHaveBeenCalled();
+    expect(mockHideModal).toHaveBeenCalled();
+  });
+
+  it("shows a flash message after a form submit", () => {
+    (ResetPasswordForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
+      onAfterSubmit();
+      return <div>ResetPasswordForm</div>;
+    });
+
+    renderResetPasswordBox();
+
+    expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
   });
 });

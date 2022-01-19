@@ -53,8 +53,8 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps, emotionC
     <CacheProvider value={emotionCache}>
       <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
         <ApolloProvider client={apolloClient}>
-          <UserAccountModalProvider>
-            <FlashMessageContextProvider>
+          <FlashMessageContextProvider>
+            <UserAccountModalProvider>
               <ConditionalWrapper<ScrollOverlayWrapperProps>
                 condition={pageProps.showScrollOverlay ?? true}
                 Wrapper={ScrollOverlayWrapper}
@@ -65,8 +65,8 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps, emotionC
               >
                 <Component {...pageProps} />
               </ConditionalWrapper>
-            </FlashMessageContextProvider>
-          </UserAccountModalProvider>
+            </UserAccountModalProvider>
+          </FlashMessageContextProvider>
         </ApolloProvider>
       </ErrorDialogProvider>
     </CacheProvider>

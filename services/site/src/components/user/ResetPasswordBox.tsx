@@ -1,14 +1,16 @@
 import clsx from "clsx";
 
+import { useFlashMessageApi } from "../common/flashMessage/FlashMessageContext";
 import ResetPasswordForm from "./ResetPasswordForm";
 import UnderlinedTextButton from "./UnderlinedTextButton";
 import { useUserAccountModalApi } from "./useUserAccountModalApi";
 
 const ResetPasswordBox: React.FC = () => {
   const userAccountModalApi = useUserAccountModalApi();
+  const flashMessageApi = useFlashMessageApi();
 
   function afterFormSubmit(): void {
-    // TODO: show flash message
+    flashMessageApi.show("We sent you an email with a link to reset your password. If you don't see the email, please check your spam folder.");
     userAccountModalApi.hide();
   }
 
