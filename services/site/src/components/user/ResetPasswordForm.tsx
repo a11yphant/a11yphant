@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRequestPasswordResetMutation } from "app/generated/graphql";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -21,6 +22,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ onAfterSubmit }) 
     control,
     handleSubmit,
     formState: { errors },
+    setError,
     reset,
   } = useForm({
     resolver: yupResolver(schema),
@@ -28,11 +30,19 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ onAfterSubmit }) 
       email: "",
     },
   });
+  const [requestPasswordReset] = useRequestPasswordResetMutation();
 
-  const submitPasswordReset = async ({ email }): Promise<void> => {
-    reset({ email: "" });
-    onAfterSubmit?.();
-  };
+  async function submitPasswordReset({ email }): Promise<void> {
+    const { data } = await requestPasswordReset({ variables: { email } });
+    if (data?.requestPasswordReset?.__typename === "RequestPasswordResetSuccessResult") {
+      reset({ email: "" });
+      onAfterSubmit?.();
+    }
+
+    if (data?.requestPasswordReset.__typename === "RequestPasswordResetErrorResult") {
+      setError("email", { message: "The email is not valid" });
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit(submitPasswordReset)} aria-label="Request password reset">
