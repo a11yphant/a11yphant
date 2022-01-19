@@ -1,5 +1,5 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ResetPasswordForm from "app/components/user/ResetPasswordForm";
 import {
   RequestPasswordResetDocument,
@@ -61,8 +61,12 @@ describe("reset password form", () => {
 
     const form = screen.getByRole("form");
     fireEvent.submit(form);
-
     await waitFor(() => expect(emailInput).toHaveValue(email));
+
+    // wait for the mutation to resolve
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
 
     expect(onAfterSubmit).toHaveBeenCalled();
   });

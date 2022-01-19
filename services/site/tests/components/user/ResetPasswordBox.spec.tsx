@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ResetPasswordBox from "app/components/user/ResetPasswordBox";
 import ResetPasswordForm from "app/components/user/ResetPasswordForm";
 
@@ -44,10 +44,26 @@ describe("reset password box", () => {
     expect(screen.getByRole("button", { name: /Log in/ })).toBeInTheDocument();
   });
 
+  it("opens the login modal when the login button is clicked", () => {
+    renderResetPasswordBox();
+
+    fireEvent.click(screen.getByRole("button", { name: /Log in/ }));
+
+    expect(mockShow).toHaveBeenCalledWith("login");
+  });
+
   it("shows a button to switch to signup", () => {
     renderResetPasswordBox();
 
     expect(screen.getByRole("button", { name: /Create a free account/ })).toBeInTheDocument();
+  });
+
+  it("opens the signup modal when the signup button is clicked", () => {
+    renderResetPasswordBox();
+
+    fireEvent.click(screen.getByRole("button", { name: /Create a free account/ }));
+
+    expect(mockShow).toHaveBeenCalledWith("signup");
   });
 
   it("closes the modal after a form submit", () => {

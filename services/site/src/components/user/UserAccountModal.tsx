@@ -21,8 +21,6 @@ function getModalTitle(mode: UserAccountModalTypes): string {
       return "Login";
     case "reset-password":
       return "Request a password reset";
-    default:
-      return "";
   }
 }
 
