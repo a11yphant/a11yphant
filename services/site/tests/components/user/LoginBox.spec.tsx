@@ -4,8 +4,9 @@ import LoginBox from "app/components/user/LoginBox";
 import LoginForm from "app/components/user/LoginForm";
 import React from "react";
 
-const mockShow = jest.fn();
-const mockHide = jest.fn();
+const mockShowModal = jest.fn();
+const mockHideModal = jest.fn();
+const mockShowFlashMessage = jest.fn();
 
 jest.mock("app/components/user/LoginForm", () => ({
   __esModule: true,
@@ -14,8 +15,14 @@ jest.mock("app/components/user/LoginForm", () => ({
 
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
-    show: mockShow,
-    hide: mockHide,
+    show: mockShowModal,
+    hide: mockHideModal,
+  }),
+}));
+
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: () => ({
+    show: mockShowFlashMessage,
   }),
 }));
 
@@ -68,7 +75,7 @@ describe("login box", () => {
 
     screen.getByRole("button", { name: /Create a free account/ }).click();
 
-    expect(mockShow).toHaveBeenCalledWith("signup");
+    expect(mockShowModal).toHaveBeenCalledWith("signup");
   });
 
   it("closes the modal after a successful login", () => {
@@ -78,6 +85,16 @@ describe("login box", () => {
     });
     render(<LoginBox />);
 
-    expect(mockHide).toHaveBeenCalled();
+    expect(mockHideModal).toHaveBeenCalled();
+  });
+
+  it("shows a flash message after a successful login", () => {
+    (LoginForm as jest.Mock).mockImplementation((props: Parameters<typeof LoginForm>[0]) => {
+      props.onAfterSubmit();
+      return <div>LoginForm</div>;
+    });
+    render(<LoginBox />);
+
+    expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
   });
 });

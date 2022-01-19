@@ -2,6 +2,7 @@ import clsx from "clsx";
 import getConfig from "next/config";
 import React from "react";
 
+import { useFlashMessageApi } from "../common/flashMessage/FlashMessageContext";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 import LoginForm from "./LoginForm";
@@ -13,8 +14,10 @@ const { publicRuntimeConfig } = getConfig();
 
 const LoginBox: React.FC = () => {
   const userAccountModalApi = useUserAccountModalApi();
+  const flashMessageApi = useFlashMessageApi();
 
   const onSuccessfulLogin = (): void => {
+    flashMessageApi.show("Welcome back!");
     userAccountModalApi.hide();
   };
 

@@ -3,6 +3,13 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUpForm from "app/components/user/SignUpForm";
 import { useRegisterMutation } from "app/generated/graphql";
 import React from "react";
+import { act } from "react-dom/test-utils";
+
+async function waitForMutation(): Promise<void> {
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+}
 
 jest.mock("app/generated/graphql", () => ({
   useRegisterMutation: jest.fn(),
@@ -55,9 +62,7 @@ describe("sign up form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await waitFor(() => expect(nameInput).toHaveValue(name));
-    await waitFor(() => expect(emailInput).toHaveValue(email));
-    await waitFor(() => expect(passwordInput).toHaveValue(password));
+    await waitForMutation();
 
     expect(onAfterSubmit).toHaveBeenCalled();
   });
@@ -97,11 +102,36 @@ describe("sign up form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await waitFor(() => expect(nameInput).toHaveValue(name));
-    await waitFor(() => expect(emailInput).toHaveValue(email));
-    await waitFor(() => expect(passwordInput).toHaveValue(password));
+    await waitForMutation();
 
     expect(register).toHaveBeenCalledWith({ variables: { name, email, password } });
+  });
+
+  it("resets the form after a successful sumbit", async () => {
+    const name = "name";
+    const email = "test@a11yphant.com";
+    const password = "verysecret";
+
+    const register = jest.fn().mockReturnValue({ errors: null });
+    (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
+
+    render(<SignUpForm />);
+
+    const nameInput = screen.getByRole("textbox", { name: /Name/ });
+    fireEvent.change(nameInput, { target: { value: name } });
+
+    const emailInput = screen.getByRole("textbox", { name: /Email/ });
+    fireEvent.change(emailInput, { target: { value: email } });
+
+    const passwordInput = screen.getByLabelText(/Password/);
+    fireEvent.change(passwordInput, { target: { value: password } });
+
+    const form = screen.getByRole("form");
+    fireEvent.submit(form);
+
+    await waitFor(() => expect(nameInput).toHaveValue(""));
+    await waitFor(() => expect(emailInput).toHaveValue(""));
+    await waitFor(() => expect(passwordInput).toHaveValue(""));
   });
 
   it("renders a email already taken message if the graphql mutation fails with a INPUT_ERROR", async () => {
@@ -130,9 +160,7 @@ describe("sign up form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await waitFor(() => expect(nameInput).toHaveValue(name));
-    await waitFor(() => expect(emailInput).toHaveValue(email));
-    await waitFor(() => expect(passwordInput).toHaveValue(password));
+    await waitForMutation();
 
     expect(await screen.findByText("This email is already taken")).toBeInTheDocument();
   });
@@ -163,9 +191,7 @@ describe("sign up form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await waitFor(() => expect(nameInput).toHaveValue(name));
-    await waitFor(() => expect(emailInput).toHaveValue(email));
-    await waitFor(() => expect(passwordInput).toHaveValue(password));
+    await waitForMutation();
 
     expect(await screen.findByText("An unknown error occurred")).toBeInTheDocument();
   });
@@ -199,9 +225,7 @@ describe("sign up form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await waitFor(() => expect(nameInput).toHaveValue(name));
-    await waitFor(() => expect(emailInput).toHaveValue(email));
-    await waitFor(() => expect(passwordInput).toHaveValue(password));
+    await waitForMutation();
 
     await screen.findByText("An unknown error occurred");
 
