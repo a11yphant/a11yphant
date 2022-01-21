@@ -1,13 +1,14 @@
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { createMockClient } from "@apollo/client/testing";
-import { CurrentUserDocument, CurrentUserQuery } from "app/generated/graphql";
+import { CurrentUserDocument, CurrentUserQuery, User } from "app/generated/graphql";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 
 let mockClient: ApolloClient<NormalizedCacheObject>;
-const mockUser = {
+const mockUser: User = {
   id: "242003d6-402e-49b7-9ec2-702445b37c8e",
   displayName: "Mock User Name",
   isRegistered: true,
+  isVerified: true,
 };
 
 beforeEach(() => {

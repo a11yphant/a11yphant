@@ -21,7 +21,7 @@ services:
   site:
     image: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:develop
     entrypoint: ""
-    command: node entrypoint.js
+    command: node entrypoint-server.js
     environment:
       SITE_HOST: 0.0.0.0
       SITE_PORT: 3001

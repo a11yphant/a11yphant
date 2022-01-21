@@ -5,6 +5,7 @@ import { AuthenticationService } from "@/authentication/authentication.service";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
+import { MailService } from "@/mail/mail.service";
 import { UserService } from "@/user/user.service";
 
 import { InvalidJwtException } from "../../../src/authentication/exceptions/invalid-jwt.exception";
@@ -12,7 +13,12 @@ import { InvalidJwtException } from "../../../src/authentication/exceptions/inva
 const userId = "userId";
 
 function createAuthenticationService(
-  partials: { userService?: Partial<UserService>; hashService?: Partial<HashService>; jwtService?: Partial<JwtService> } = {},
+  partials: {
+    userService?: Partial<UserService>;
+    hashService?: Partial<HashService>;
+    jwtService?: Partial<JwtService>;
+    mailService?: Partial<MailService>;
+  } = {},
 ): AuthenticationService {
   const userService = createMock<UserService>({
     findByEmail: jest.fn().mockResolvedValue(UserFactory.build()),
@@ -30,7 +36,12 @@ function createAuthenticationService(
     ...partials.jwtService,
   });
 
-  return new AuthenticationService(userService, hashService, jwtService);
+  const mailService = createMock<MailService>({
+    sendRegistrationMail: jest.fn().mockResolvedValue(null),
+    ...partials.mailService,
+  });
+
+  return new AuthenticationService(userService, hashService, jwtService, mailService);
 }
 
 describe("authentication service", () => {
@@ -155,6 +166,56 @@ describe("authentication service", () => {
       await service.generateMailConfirmationToken("user");
 
       expect(createSignedToken).toHaveBeenCalled();
+    });
+  });
+
+  describe("request password reset", () => {
+    it("can request a password reset", () => {
+      expect.assertions(1);
+      const service = createAuthenticationService();
+
+      expect(service.requestPasswordReset("info@a11yphant.com")).resolves.toBeUndefined();
+    });
+
+    it("sends a password reset mail to the provided email", async () => {
+      const user = UserFactory.build({ email: "info@a11yphant.com" });
+      const token = "token";
+      const sendPasswordResetMail = jest.fn();
+
+      const service = createAuthenticationService({
+        mailService: {
+          sendPasswordResetMail,
+        },
+        userService: {
+          findByEmail: jest.fn().mockResolvedValue(user),
+        },
+        jwtService: {
+          createSignedToken: jest.fn().mockResolvedValue(token),
+        },
+      });
+
+      await service.requestPasswordReset(user.email);
+
+      expect(sendPasswordResetMail).toHaveBeenCalledWith({
+        email: user.email,
+        token,
+      });
+    });
+
+    it("does not send a mail if the user is not found", async () => {
+      const sendPasswordResetMail = jest.fn();
+      const service = createAuthenticationService({
+        mailService: {
+          sendPasswordResetMail,
+        },
+        userService: {
+          findByEmail: jest.fn().mockResolvedValue(null),
+        },
+      });
+
+      await service.requestPasswordReset("unknown@email.com");
+
+      expect(sendPasswordResetMail).not.toHaveBeenCalled();
     });
   });
 });

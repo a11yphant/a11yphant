@@ -1,6 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
+import { MailModule } from "@/mail/mail.module";
 import { UserModule } from "@/user/user.module";
 
 import { AuthenticationController } from "./authentication.controller";
@@ -14,7 +15,7 @@ import { GithubStrategy } from "./strategies/github.strategy";
 import { TwitterStrategy } from "./strategies/twitter.strategy";
 
 @Module({
-  imports: [ConfigModule, UserModule],
+  imports: [ConfigModule, UserModule, MailModule],
   providers: [
     AuthenticationResolver,
     AuthenticationService,

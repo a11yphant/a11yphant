@@ -1,7 +1,7 @@
 import { registerEnumType } from "@nestjs/graphql";
 
 export enum ResetPasswordFields {
-  PASSWORD = "password",
+  PASSWORD = "PASSWORD",
 }
 
 registerEnumType(ResetPasswordFields, {

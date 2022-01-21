@@ -46,7 +46,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onAfterSubmit }) => {
   });
 
   const submitLogin = async ({ email, password }): Promise<void> => {
-    await login({ variables: { email, password } });
+    const { errors } = await login({ variables: { email, password } });
+    if (errors) {
+      return;
+    }
+
     onAfterSubmit?.();
   };
 
