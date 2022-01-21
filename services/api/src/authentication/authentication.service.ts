@@ -71,7 +71,7 @@ export class AuthenticationService {
     return this.jwtService.createSignedToken({ scope: JwtScope.EMAIL_CONFIRMATION }, { expiresInSeconds: 86400, subject: userId });
   }
 
-  async changePassword(user: User, { currentPassword, newPassword }: ChangePasswordInput): Promise<Boolean> {
+  async changePassword(user: User, { currentPassword, newPassword }: ChangePasswordInput): Promise<boolean> {
     const currentPasswordOk = await this.hashService.compare(currentPassword, user.password);
 
     if (user.authProvider !== "local") {

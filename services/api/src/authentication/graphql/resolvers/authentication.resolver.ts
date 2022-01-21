@@ -16,6 +16,7 @@ import { UserService } from "@/user/user.service";
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
+import { ChangePasswordResult } from "../results/change-password-result";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
 
@@ -104,9 +105,19 @@ export class AuthenticationResolver {
   // Wenn currentPassword nicht mit dem gespeicherten passwort übereinstimmt, gibt die API einen BAD_USER_INPUT error zurück.
   // Wenn currentPassword mit dem gespeicherten passwort übereinstimmt, wird newPassword gehashed und damit der user aktualisiert.
   @Mutation(() => Boolean)
-  async changePassword(@Args("changePassWordInput") changePasswordInput: ChangePasswordInput, @Context() ctx: IContext): Promise<Boolean> {
+  async changePassword(
+    @Args("changePassWordInput") changePasswordInput: ChangePasswordInput,
+    @Context() ctx: IContext,
+  ): Promise<typeof ChangePasswordResult> {
     const user = await this.userService.findById(ctx.sessionToken.userId);
     // todo error handling
-    return await this.authenticationService.changePassword(user, changePasswordInput);
+    try {
+      return await this.authenticationService.changePassword(user, changePasswordInput);
+    } catch (e) {
+      return false;
+      // return {
+      //   errorCode: e.message,
+      // };
+    }
   }
 }
