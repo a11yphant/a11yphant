@@ -83,17 +83,6 @@ describe("authentication service", () => {
 
       expect(service.login({ email: "mail@example.com", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
-
-    it("throws an error if the email is not verified", async () => {
-      const user = UserFactory.build({ verifiedAt: null });
-      const service = createAuthenticationService({
-        userService: {
-          findByEmail: jest.fn().mockResolvedValue(user),
-        },
-      });
-
-      expect(service.login({ email: user.email, password: "test_pw" })).rejects.toThrowError("E-Mail address has not yet been verified.");
-    });
   });
 
   describe("validate password reset token", () => {
