@@ -9,12 +9,12 @@ interface ErrorWithIllustrationProps {
   text: string;
 }
 
-const ErrorWithIllustration: React.FC<ErrorWithIllustrationProps> = ({ error, text: hint }) => (
+const ErrorWithIllustration: React.FC<ErrorWithIllustrationProps> = ({ error, text }) => (
   <>
     <div className={clsx("flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between")}>
       <div>
         <h1 className={clsx("font-normal mb-4", "h5", "sm:h4")}>{error}</h1>
-        <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>{hint}</p>
+        <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>{text}</p>
         <Link href="/">
           <a
             className={clsx(
