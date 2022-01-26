@@ -13,6 +13,9 @@ import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
+import { ChangePasswordErrorCodes } from "../enums/change-password-error-codes.enum";
+import { ChangePasswordFields } from "../enums/change-password-fields.enum";
+import { ChangePasswordSuccessResultEnum } from "../enums/change-password-success-result.enum";
 import { RequestPasswordResetErrorCodes } from "../enums/request-password-reset-error-codes.enum";
 import { RequestPasswordResetFields } from "../enums/request-password-reset-fields.enum";
 import { RequestPasswordResetSuccessResultEnum } from "../enums/request-password-reset-success-result.enum";
@@ -153,13 +156,26 @@ export class AuthenticationResolver {
     @Args("changePassWordInput") changePasswordInput: ChangePasswordInput,
     @Context() ctx: IContext,
   ): Promise<typeof ChangePasswordResult> {
+    const inputErrors = [];
+
     const user = await this.userService.findById(ctx.sessionToken.userId);
     try {
-      return await this.authenticationService.changePassword(user, changePasswordInput);
+      await this.authenticationService.changePassword(user, changePasswordInput);
     } catch (e) {
-      return {
-        errorCode: e.message,
-      };
+      if (e.message in ChangePasswordErrorCodes) {
+        inputErrors.push({
+          field: ChangePasswordFields.CURRENT_PASSWORD,
+          message: e.message,
+        });
+        return {
+          errorCode: e.message,
+          inputErrors: inputErrors,
+        };
+      }
+      throw e;
     }
+    return {
+      result: ChangePasswordSuccessResultEnum.SUCCESS,
+    };
   }
 }
