@@ -30,7 +30,7 @@ const RequestPasswordResetForm: React.FC<RequestPasswordResetFormProps> = ({ onA
       email: "",
     },
   });
-  const [requestPasswordReset] = useRequestPasswordResetMutation();
+  const [requestPasswordReset, { loading }] = useRequestPasswordResetMutation();
 
   async function submitPasswordReset({ email }): Promise<void> {
     const { data } = await requestPasswordReset({ variables: { email } });
@@ -56,7 +56,7 @@ const RequestPasswordResetForm: React.FC<RequestPasswordResetFormProps> = ({ onA
         />
       </div>
 
-      <InvertedLoadingButton loading={false} srLoadingText="Request password reset in progress">
+      <InvertedLoadingButton loading={loading} srLoadingText="Request password reset in progress">
         Reset password
       </InvertedLoadingButton>
     </form>
