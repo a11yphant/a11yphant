@@ -7,7 +7,9 @@ import { UserService } from "@/user/user.service";
 import { JwtScope } from "./enums/jwt-scope.enum";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "./exceptions/user-not-found.exception";
+import { ChangePasswordSuccessResultEnum } from "./graphql/enums/change-password-success-result.enum";
 import { LoginInput } from "./graphql/inputs/login.input";
+import { ChangePasswordSuccessResult } from "./graphql/results/change-password-success.result";
 import { HashService } from "./hash.service";
 import { ChangePasswordInput } from "./inputs/change-password.input";
 import { JwtService } from "./jwt.service";
@@ -88,7 +90,7 @@ export class AuthenticationService {
     return this.jwtService.createSignedToken({ scope: JwtScope.PASSWORD_RESET }, { expiresInSeconds: 86400, subject: userId });
   }
 
-  async changePassword(user: User, { currentPassword, newPassword }: ChangePasswordInput): Promise<boolean> {
+  async changePassword(user: User, { currentPassword, newPassword }: ChangePasswordInput): Promise<ChangePasswordSuccessResult> {
     const currentPasswordOk = await this.hashService.compare(currentPassword, user.password);
 
     if (user.authProvider !== "local") {
@@ -98,6 +100,6 @@ export class AuthenticationService {
       throw new Error("BAD_USER_INPUT");
     }
     await this.userService.updatePassword(user.id, newPassword);
-    return true;
+    return { result: ChangePasswordSuccessResultEnum.SUCCESS };
   }
 }

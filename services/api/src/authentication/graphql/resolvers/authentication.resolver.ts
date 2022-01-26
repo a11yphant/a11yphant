@@ -147,24 +147,19 @@ export class AuthenticationResolver {
       throw e;
     }
   }
-  // changePassword hat einen Boolean return, der angibt ob die Änderung erfolgreich war
-  // Wenn der aktuelle eingeloggte user nicht den authProvider local hat, gibt die API einen INVALID_OPERATION error zurück (github und twitter user haben kein extra passwort bei uns).
-  // Wenn currentPassword nicht mit dem gespeicherten passwort übereinstimmt, gibt die API einen BAD_USER_INPUT error zurück.
-  // Wenn currentPassword mit dem gespeicherten passwort übereinstimmt, wird newPassword gehashed und damit der user aktualisiert.
-  @Mutation(() => Boolean)
+
+  @Mutation(() => ChangePasswordResult)
   async changePassword(
     @Args("changePassWordInput") changePasswordInput: ChangePasswordInput,
     @Context() ctx: IContext,
   ): Promise<typeof ChangePasswordResult> {
     const user = await this.userService.findById(ctx.sessionToken.userId);
-    // todo error handling
     try {
       return await this.authenticationService.changePassword(user, changePasswordInput);
     } catch (e) {
-      return false;
-      // return {
-      //   errorCode: e.message,
-      // };
+      return {
+        errorCode: e.message,
+      };
     }
   }
 }
