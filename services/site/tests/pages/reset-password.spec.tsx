@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import PasswordResetForm from "app/components/passwordReset/PasswordResetForm";
 import { ValidatePasswordResetTokenResultEnum } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
 import ResetPassword, { getServerSideProps, ResetPasswordProps } from "app/pages/reset-password";
@@ -13,18 +14,28 @@ jest.mock("app/components/Navigation", () => {
   };
 });
 
-jest.mock("app/components/passwordReset/PasswordResetForm", () => {
-  return {
-    __esModule: true,
-    default: () => <>Password Reset Form</>,
-  };
-});
+const mockShowFlashMessage = jest.fn();
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: () => ({
+    show: mockShowFlashMessage,
+  }),
+}));
+
+jest.mock("app/components/passwordReset/PasswordResetForm", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 jest.mock("app/lib/apollo-client", () => ({
   initializeApollo: jest.fn(),
 }));
 
 describe("reset password page", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    (PasswordResetForm as jest.Mock).mockImplementation(() => <p>Password Reset Form</p>);
+  });
+
   describe("page", () => {
     it("renders an error message when token is invalid", async () => {
       render(<ResetPassword token="token" tokenValidationResult={ValidatePasswordResetTokenResultEnum.InvalidToken} />);
@@ -48,6 +59,16 @@ describe("reset password page", () => {
       render(<ResetPassword token="token" tokenValidationResult={ValidatePasswordResetTokenResultEnum.Valid} />);
 
       expect(screen.getByText("Password Reset Form")).toBeInTheDocument();
+    });
+
+    it("shows a flash message after a successful password reset", () => {
+      (PasswordResetForm as jest.Mock).mockImplementation((props: Parameters<typeof PasswordResetForm>[0]) => {
+        props.onAfterSubmit();
+        return <div>ResetPasswordForm</div>;
+      });
+      render(<ResetPassword token="token" tokenValidationResult={ValidatePasswordResetTokenResultEnum.Valid} />);
+
+      expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
     });
   });
   describe("get server side props", () => {
