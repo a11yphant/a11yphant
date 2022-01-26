@@ -1,11 +1,11 @@
 import clsx from "clsx";
 
 import { useFlashMessageApi } from "../common/flashMessage/FlashMessageContext";
-import ResetPasswordForm from "./ResetPasswordForm";
+import RequestPasswordResetForm from "./RequestPasswordResetForm";
 import UnderlinedTextButton from "./UnderlinedTextButton";
 import { useUserAccountModalApi } from "./useUserAccountModalApi";
 
-const ResetPasswordBox: React.FC = () => {
+const RequestPasswordResetBox: React.FC = () => {
   const userAccountModalApi = useUserAccountModalApi();
   const flashMessageApi = useFlashMessageApi();
 
@@ -16,7 +16,7 @@ const ResetPasswordBox: React.FC = () => {
 
   return (
     <>
-      <ResetPasswordForm onAfterSubmit={afterFormSubmit} />
+      <RequestPasswordResetForm onAfterSubmit={afterFormSubmit} />
       <UnderlinedTextButton className={clsx("mt-8")} onClick={() => userAccountModalApi.show("signup")}>
         New here? Create a free account.
       </UnderlinedTextButton>
@@ -27,4 +27,4 @@ const ResetPasswordBox: React.FC = () => {
   );
 };
 
-export default ResetPasswordBox;
+export default RequestPasswordResetBox;

@@ -1,7 +1,7 @@
 import React from "react";
 
 import LoginBox from "./LoginBox";
-import ResetPasswordBox from "./ResetPasswordBox";
+import RequestPasswordResetBox from "./RequestPasswordResetBox";
 import SignUpBox from "./SignUpBox";
 import { UserAccountModalTypes } from "./useUserAccountModalApi";
 
@@ -13,6 +13,6 @@ export const UserAccountBox = ({ mode }: UserAccountBoxProps): React.ReactElemen
   <>
     {mode === "signup" && <SignUpBox />}
     {mode === "login" && <LoginBox />}
-    {mode === "reset-password" && <ResetPasswordBox />}
+    {mode === "reset-password" && <RequestPasswordResetBox />}
   </>
 );

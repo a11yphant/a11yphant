@@ -1,13 +1,13 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { fireEvent, render, screen } from "@testing-library/react";
-import ResetPasswordBox from "app/components/user/ResetPasswordBox";
-import ResetPasswordForm from "app/components/user/ResetPasswordForm";
+import RequestPasswordResetBox from "app/components/user/RequestPasswordResetBox";
+import RequestPasswordResetForm from "app/components/user/RequestPasswordResetForm";
 
 const mockShowModal = jest.fn();
 const mockHideModal = jest.fn();
 const mockShowFlashMessage = jest.fn();
 
-jest.mock("app/components/user/ResetPasswordForm", () => ({
+jest.mock("app/components/user/RequestPasswordResetForm", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
@@ -25,10 +25,10 @@ jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
   }),
 }));
 
-function renderResetPasswordBox(): void {
+function renderRequestPasswordResetBox(): void {
   render(
     <MockedProvider>
-      <ResetPasswordBox />
+      <RequestPasswordResetBox />
     </MockedProvider>,
   );
 }
@@ -36,23 +36,23 @@ function renderResetPasswordBox(): void {
 describe("reset password box", () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    (ResetPasswordForm as jest.Mock).mockImplementation(() => <div>ResetPasswordForm</div>);
+    (RequestPasswordResetForm as jest.Mock).mockImplementation(() => <div>RequestPasswordResetForm</div>);
   });
 
   it("renders the reset password form", () => {
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
-    expect(screen.getByText("ResetPasswordForm")).toBeInTheDocument();
+    expect(screen.getByText("RequestPasswordResetForm")).toBeInTheDocument();
   });
 
   it("shows a button to switch to login", () => {
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
     expect(screen.getByRole("button", { name: /Log in/ })).toBeInTheDocument();
   });
 
   it("opens the login modal when the login button is clicked", () => {
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
     fireEvent.click(screen.getByRole("button", { name: /Log in/ }));
 
@@ -60,13 +60,13 @@ describe("reset password box", () => {
   });
 
   it("shows a button to switch to signup", () => {
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
     expect(screen.getByRole("button", { name: /Create a free account/ })).toBeInTheDocument();
   });
 
   it("opens the signup modal when the signup button is clicked", () => {
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
     fireEvent.click(screen.getByRole("button", { name: /Create a free account/ }));
 
@@ -74,23 +74,23 @@ describe("reset password box", () => {
   });
 
   it("closes the modal after a form submit", () => {
-    (ResetPasswordForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
+    (RequestPasswordResetForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
       onAfterSubmit();
-      return <div>ResetPasswordForm</div>;
+      return <div>RequestPasswordResetForm</div>;
     });
 
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
     expect(mockHideModal).toHaveBeenCalled();
   });
 
   it("shows a flash message after a form submit", () => {
-    (ResetPasswordForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
+    (RequestPasswordResetForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
       onAfterSubmit();
-      return <div>ResetPasswordForm</div>;
+      return <div>RequestPasswordResetForm</div>;
     });
 
-    renderResetPasswordBox();
+    renderRequestPasswordResetBox();
 
     expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
   });

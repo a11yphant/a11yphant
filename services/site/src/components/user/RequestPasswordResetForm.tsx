@@ -13,11 +13,11 @@ const schema = yup
   })
   .required();
 
-interface ResetPasswordFormProps {
+interface RequestPasswordResetFormProps {
   onAfterSubmit?: () => void;
 }
 
-const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ onAfterSubmit }) => {
+const RequestPasswordResetForm: React.FC<RequestPasswordResetFormProps> = ({ onAfterSubmit }) => {
   const {
     control,
     handleSubmit,
@@ -63,4 +63,4 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ onAfterSubmit }) 
   );
 };
 
-export default ResetPasswordForm;
+export default RequestPasswordResetForm;
