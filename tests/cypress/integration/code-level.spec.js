@@ -3,6 +3,6 @@ describe("code level", () => {
         cy.visit("/challenge/a-valid-html-document/level/01");
 
         cy.get("button").contains("Submit").parent("button").should("be.enabled").click();
-        cy.contains("Loading");
+        cy.contains("loading");
     })
 });
