@@ -6,7 +6,7 @@ describe("sign up", () => {
     it("can sign up", () => {
         Cypress.Cookies.debug(true);
         cy.visit("/");
-        cy.find("Login").click();
+
         getInputByLabel('Name').type("Sign up user");
         getInputByLabel('Email').type("sign-up@a11yphant.com");
         getInputByLabel('Password').type("very-secret");

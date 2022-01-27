@@ -3,6 +3,6 @@ describe("code level", () => {
         cy.visit("/challenge/a-valid-html-document/level/01");
 
         cy.get("button").contains("Submit").parent("button").should("be.enabled").click();
-        cy.contains("Result", { timeout: 15 * 1000 });
+        cy.contains("Result", { timeout: 20 * 1000 });
     })
 });
