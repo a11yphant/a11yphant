@@ -218,4 +218,48 @@ describe("authentication service", () => {
       expect(sendPasswordResetMail).not.toHaveBeenCalled();
     });
   });
+
+  describe("change password", () => {
+    it("can update a user's password", async () => {
+      const currentPassword = "currentPassword";
+      const newPassword = "newPassword";
+
+      const user = UserFactory.build({ verifiedAt: new Date(), authProvider: "local", password: currentPassword, email: "info@a11yphant.com" });
+
+      const updatePassword = jest.fn();
+      const service = createAuthenticationService({
+        userService: {
+          updatePassword: updatePassword,
+        },
+        hashService: {
+          compare: jest.fn().mockResolvedValue(true),
+        },
+      });
+      await service.changePassword(user, { currentPassword: currentPassword, newPassword: newPassword });
+      expect(updatePassword).toHaveBeenCalledWith(user.id, newPassword);
+    });
+    it("throws an error if the user's auth provider is not local", () => {
+      const currentPassword = "currentPassword";
+      const newPassword = "newPassword";
+
+      const user = UserFactory.build({ verifiedAt: new Date(), authProvider: "github", password: currentPassword, email: "info@a11yphant.com" });
+
+      const service = createAuthenticationService({
+        hashService: {
+          compare: jest.fn().mockResolvedValue(true),
+        },
+      });
+      expect(service.changePassword(user, { currentPassword: currentPassword, newPassword: newPassword })).rejects.toThrowError("INVALID_OPERATION");
+    });
+    it("throws an error if the the current password does not match the user's password", () => {
+      const currentPassword = "currentPassword";
+      const newPassword = "newPassword";
+
+      const user = UserFactory.build({ verifiedAt: new Date(), authProvider: "local", password: currentPassword, email: "info@a11yphant.com" });
+
+      const service = createAuthenticationService();
+
+      expect(service.changePassword(user, { currentPassword: "wrongPassword", newPassword: newPassword })).rejects.toThrowError("BAD_USER_INPUT");
+    });
+  });
 });

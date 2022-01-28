@@ -7,6 +7,8 @@ import faker from "faker";
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
+import { ChangePasswordErrorCodes } from "@/authentication/graphql/enums/change-password-error-codes.enum";
+import { ChangePasswordSuccessResultEnum } from "@/authentication/graphql/enums/change-password-success-result.enum";
 import { RequestPasswordResetErrorCodes } from "@/authentication/graphql/enums/request-password-reset-error-codes.enum";
 import { RequestPasswordResetFields } from "@/authentication/graphql/enums/request-password-reset-fields.enum";
 import { ResetPasswordErrorCodes } from "@/authentication/graphql/enums/reset-password-error-codes.enum";
@@ -29,6 +31,7 @@ function createAuthenticationResolver(
 ): AuthenticationResolver {
   const authenticationService = createMock<AuthenticationService>({
     requestPasswordReset: jest.fn().mockReturnValue(null),
+    changePassword: jest.fn().mockReturnValue(null),
     ...partials.authenticationService,
   });
   const userService = createMock<UserService>({
@@ -309,6 +312,73 @@ describe("authentication resolver", () => {
       expect(result).toHaveProperty("errorCode", "INPUT_VALIDATION_ERROR");
       expect((result as ResetPasswordErrorResult).inputErrors).toHaveLength(1);
       expect((result as ResetPasswordErrorResult).inputErrors[0]).toHaveProperty("field", ResetPasswordFields.PASSWORD);
+    });
+  });
+  describe("password change", () => {
+    it("can change a user's password", async () => {
+      const user = new User(UserFactory.build({ id: faker.datatype.uuid(), authProvider: "local", password: "password" }));
+
+      const ctx = createMock<IContext>({
+        sessionToken: { userId: user.id },
+      });
+      const changePassword = jest.fn().mockResolvedValue(null);
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          changePassword,
+        },
+        userService: {
+          findById: jest.fn().mockReturnValue(user),
+        },
+      });
+      const result = await resolver.changePassword({ currentPassword: "password", newPassword: "password2" }, ctx);
+
+      expect(changePassword).toHaveBeenCalledWith(user, { currentPassword: "password", newPassword: "password2" });
+      expect(result).toHaveProperty("result", ChangePasswordSuccessResultEnum.SUCCESS);
+    });
+
+    it("returns an error if the user is not local", async () => {
+      const user = new User(UserFactory.build({ id: faker.datatype.uuid(), authProvider: "github", password: "password" }));
+
+      const ctx = createMock<IContext>({
+        sessionToken: { userId: user.id },
+      });
+      const changePassword = jest.fn().mockRejectedValue(new Error(ChangePasswordErrorCodes.INVALID_OPERATION));
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          changePassword,
+        },
+        userService: {
+          findById: jest.fn().mockReturnValue(user),
+        },
+      });
+      const result = await resolver.changePassword({ currentPassword: "password", newPassword: "password2" }, ctx);
+
+      expect(changePassword).toHaveBeenCalledWith(user, { currentPassword: "password", newPassword: "password2" });
+      expect(result).toHaveProperty("errorCode", ChangePasswordErrorCodes.INVALID_OPERATION);
+    });
+
+    it("returns an error if the current password does not match the user's password", async () => {
+      const user = new User(UserFactory.build({ id: faker.datatype.uuid(), authProvider: "local", password: "password" }));
+
+      const ctx = createMock<IContext>({
+        sessionToken: { userId: user.id },
+      });
+      const changePassword = jest.fn().mockRejectedValue(new Error(ChangePasswordErrorCodes.BAD_USER_INPUT));
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          changePassword,
+        },
+        userService: {
+          findById: jest.fn().mockReturnValue(user),
+        },
+      });
+      const result = await resolver.changePassword({ currentPassword: "wrongPassword", newPassword: "password2" }, ctx);
+
+      expect(changePassword).toHaveBeenCalledWith(user, { currentPassword: "wrongPassword", newPassword: "password2" });
+      expect(result).toHaveProperty("errorCode", ChangePasswordErrorCodes.BAD_USER_INPUT);
     });
   });
 });

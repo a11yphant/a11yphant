@@ -7,6 +7,7 @@ import { UserService } from "@/user/user.service";
 import { JwtScope } from "./enums/jwt-scope.enum";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "./exceptions/user-not-found.exception";
+import { ChangePasswordErrorCodes } from "./graphql/enums/change-password-error-codes.enum";
 import { LoginInput } from "./graphql/inputs/login.input";
 import { HashService } from "./hash.service";
 import { ChangePasswordInput } from "./inputs/change-password.input";
@@ -90,12 +91,13 @@ export class AuthenticationService {
 
   async changePassword(user: User, { currentPassword, newPassword }: ChangePasswordInput): Promise<void> {
     const currentPasswordOk = await this.hashService.compare(currentPassword, user.password);
-
+    console.log("--------------------------------");
+    console.log(currentPasswordOk);
     if (user.authProvider !== "local") {
-      throw new Error("INVALID_OPERATION");
+      throw new Error(ChangePasswordErrorCodes.INVALID_OPERATION);
     }
     if (!currentPasswordOk) {
-      throw new Error("BAD_USER_INPUT");
+      throw new Error(ChangePasswordErrorCodes.BAD_USER_INPUT);
     }
     await this.userService.updatePassword(user.id, newPassword);
   }
