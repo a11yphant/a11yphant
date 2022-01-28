@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { ConfigService } from "@nestjs/config";
 import jwt from "jsonwebtoken";
 
+import { JwtScope } from "@/authentication/enums/jwt-scope.enum";
 import { JwtService } from "@/authentication/jwt.service";
 
 describe("jwt service", () => {
@@ -34,6 +35,13 @@ describe("jwt service", () => {
 
       const token = jwt.sign({ payload: "something" }, "asdf");
       expect(await service.validateToken(token)).toBeFalsy();
+    });
+
+    it("returns false if the passed string is not a jwt and a scope is passed", async () => {
+      const service = new JwtService(createMock<ConfigService>({ get: jest.fn().mockReturnValue("secret") }));
+
+      const token = "just-a-string";
+      expect(await service.validateToken(token, JwtScope.EMAIL_CONFIRMATION)).toBeFalsy();
     });
   });
 

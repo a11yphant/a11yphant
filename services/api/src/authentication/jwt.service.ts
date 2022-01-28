@@ -33,7 +33,7 @@ export class JwtService {
   validateToken(token: string, scope?: JwtScope): Promise<boolean> {
     const secret = this.config.get<string>("api.key");
     return new Promise((resolve) => {
-      if (scope && this.decodeToken(token).scope !== scope) {
+      if (scope && this.decodeToken(token)?.scope !== scope) {
         return resolve(false);
       }
 

@@ -1,5 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
+import { InputError } from "@/support/graphql/results/input-error";
+
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 
@@ -10,15 +12,9 @@ export class ResetPasswordErrorResult {
   })
   errorCode: ResetPasswordErrorCodes;
 
-  @Field(() => [InputError])
-  inputErrors: InputError[];
+  @Field(() => [ResetPasswordInputError])
+  inputErrors: ResetPasswordInputError[];
 }
 
 @ObjectType()
-export class InputError {
-  @Field()
-  field: ResetPasswordFields;
-
-  @Field()
-  message: string;
-}
+class ResetPasswordInputError extends InputError<ResetPasswordFields>(ResetPasswordFields) {}

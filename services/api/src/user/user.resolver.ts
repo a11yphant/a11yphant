@@ -1,5 +1,6 @@
 import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
 
+import { AuthenticationService } from "@/authentication/authentication.service";
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
 import { MailService } from "@/mail/mail.service";
@@ -11,7 +12,7 @@ import { UserService } from "./user.service";
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private userService: UserService, private mailService: MailService) {}
+  constructor(private userService: UserService, private authService: AuthenticationService, private mailService: MailService) {}
 
   @Query(() => User, { nullable: true })
   async user(@Args("id", { type: () => ID }) id: string): Promise<User> {
@@ -31,7 +32,12 @@ export class UserResolver {
     const user = await this.userService.registerUser(registerUserInput, sessionToken.userId).catch((e) => {
       throw new InputError(e.message);
     });
-    this.mailService.sendRegistrationMail(user);
+    this.mailService.sendRegistrationMail({
+      userId: user.id,
+      email: user.email,
+      displayName: user.displayName,
+      token: await this.authService.generateMailConfirmationToken(user.id),
+    });
     return user;
   }
 
