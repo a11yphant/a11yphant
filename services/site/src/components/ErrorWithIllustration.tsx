@@ -27,9 +27,7 @@ const ErrorWithIllustration: React.VFC<ErrorWithIllustrationProps> = ({ error, t
           </a>
         </Link>
       </div>
-      <IllustrationLostSpace
-        className={clsx("max-w-xs mt-24 col-span-1 self-start", "md:mt-0 md:mx-8 md:self-center", "lg:max-w-xl", "2xl:max-w-4xl")}
-      />
+      <IllustrationLostSpace className={clsx("hidden", "md:block md:w-full md:mt-0 md:mx-8", "lg:max-w-xl", "2xl:max-w-4xl")} />
     </div>
   </>
 );

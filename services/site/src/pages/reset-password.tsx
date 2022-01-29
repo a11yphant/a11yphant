@@ -33,13 +33,10 @@ const ResetPassword: React.VFC<ResetPasswordProps> = ({ token, tokenValidationRe
         <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <div className={clsx("mx-8 py-8 h-main", "lg:mx-24")}>
             {tokenValidationResult === ValidatePasswordResetTokenResultEnum.InvalidToken && (
-              <ErrorWithIllustration error="Invalid token" text="Something is wrong with the URL..." />
+              <ErrorWithIllustration error="Invalid token" text="Something is wrong with the URL... Make sure to copy the entire link." />
             )}
-            {tokenValidationResult === ValidatePasswordResetTokenResultEnum.Expired && (
-              <ErrorWithIllustration error="Expired token" text="This link is expired. Request a new reset link." />
-            )}
-            {tokenValidationResult === ValidatePasswordResetTokenResultEnum.UnknownUser && (
-              <ErrorWithIllustration error="Unknown user" text="Did you delete your account in the meantime?" />
+            {[ValidatePasswordResetTokenResultEnum.Expired || ValidatePasswordResetTokenResultEnum.UnknownUser].includes(tokenValidationResult) && (
+              <ErrorWithIllustration error="Invalid token" text="This link doesn't work anymore. Please request a new reset link and try again." />
             )}
             {tokenValidationResult === ValidatePasswordResetTokenResultEnum.Valid && (
               <>
