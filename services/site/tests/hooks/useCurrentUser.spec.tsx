@@ -10,6 +10,7 @@ const mockUser: User = {
   isRegistered: true,
   isVerified: true,
 };
+
 const mocks = [
   {
     request: {
