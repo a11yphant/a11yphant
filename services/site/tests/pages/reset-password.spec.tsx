@@ -46,13 +46,7 @@ describe("reset password page", () => {
     it("renders an error message when the token is expired", async () => {
       render(<ResetPassword token="token" tokenValidationResult={ValidatePasswordResetTokenResultEnum.Expired} />);
 
-      expect(screen.getByText("Expired token")).toBeInTheDocument();
-    });
-
-    it("renders an error message when the user is unknown", async () => {
-      render(<ResetPassword token="token" tokenValidationResult={ValidatePasswordResetTokenResultEnum.UnknownUser} />);
-
-      expect(screen.getByText("Unknown user")).toBeInTheDocument();
+      expect(screen.getByText("Invalid token")).toBeInTheDocument();
     });
 
     it("renders the password reset form when the token is valid", async () => {
