@@ -107,7 +107,7 @@ describe("sign up form", () => {
     expect(register).toHaveBeenCalledWith({ variables: { name, email, password } });
   });
 
-  it("resets the form after a successful sumbit", async () => {
+  it("resets the form after a successful submit", async () => {
     const name = "name";
     const email = "test@a11yphant.com";
     const password = "verysecret";

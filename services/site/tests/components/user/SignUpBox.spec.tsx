@@ -82,7 +82,7 @@ describe("sign up box", () => {
     expect(mockHideModal).toHaveBeenCalled();
   });
 
-  it("closes the modal after a successful sign up", () => {
+  it("shows flash message after a successful sign up", () => {
     (SignUpForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
       onAfterSubmit();
       return <div>SignUpForm</div>;

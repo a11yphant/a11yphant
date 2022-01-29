@@ -5,7 +5,7 @@ import RequestPasswordResetForm from "./RequestPasswordResetForm";
 import UnderlinedTextButton from "./UnderlinedTextButton";
 import { useUserAccountModalApi } from "./useUserAccountModalApi";
 
-const RequestPasswordResetBox: React.FC = () => {
+const RequestPasswordResetBox: React.VFC = () => {
   const userAccountModalApi = useUserAccountModalApi();
   const flashMessageApi = useFlashMessageApi();
 

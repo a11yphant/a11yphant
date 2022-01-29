@@ -26,7 +26,7 @@ const SignUpBox: React.FC = () => {
   return (
     <>
       <SignUpForm onAfterSubmit={onSuccessfulSignUp} />
-      <div className="mt-4 mb-8">
+      <div className={clsx("mt-4 mb-8")}>
         <ThirdPartyAuthLink href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}>
           {"Sign up via Github"}
           <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />

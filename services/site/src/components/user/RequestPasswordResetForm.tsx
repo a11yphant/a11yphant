@@ -17,7 +17,7 @@ interface RequestPasswordResetFormProps {
   onAfterSubmit?: () => void;
 }
 
-const RequestPasswordResetForm: React.FC<RequestPasswordResetFormProps> = ({ onAfterSubmit }) => {
+const RequestPasswordResetForm: React.VFC<RequestPasswordResetFormProps> = ({ onAfterSubmit }) => {
   const {
     control,
     handleSubmit,
@@ -46,7 +46,7 @@ const RequestPasswordResetForm: React.FC<RequestPasswordResetFormProps> = ({ onA
 
   return (
     <form onSubmit={handleSubmit(submitPasswordReset)} aria-label="Request password reset">
-      <div className="mb-6">
+      <div className={clsx("mb-6")}>
         <Controller
           name="email"
           control={control}
