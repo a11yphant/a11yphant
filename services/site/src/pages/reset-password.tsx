@@ -39,7 +39,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ token, tokenValidationRes
               <ErrorWithIllustration error="Expired token" text="This link is expired. Request a new reset link." />
             )}
             {tokenValidationResult === ValidatePasswordResetTokenResultEnum.UnknownUser && (
-              <ErrorWithIllustration error="Unknown user" text="Did you delete your account meanwhile?" />
+              <ErrorWithIllustration error="Unknown user" text="Did you delete your account in the meantime?" />
             )}
             {tokenValidationResult === ValidatePasswordResetTokenResultEnum.Valid && (
               <>

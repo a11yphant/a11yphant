@@ -71,6 +71,7 @@ describe("reset password page", () => {
       expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
     });
   });
+
   describe("get server side props", () => {
     beforeEach(() => {
       jest.resetAllMocks();

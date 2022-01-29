@@ -18,7 +18,7 @@ interface ResetPasswordFormProps {
   onAfterSubmit?: () => void;
 }
 
-const PasswordResetForm: React.FC<ResetPasswordFormProps> = ({ onAfterSubmit, token }) => {
+const PasswordResetForm: React.VFC<ResetPasswordFormProps> = ({ onAfterSubmit, token }) => {
   const {
     control,
     handleSubmit,
@@ -46,7 +46,7 @@ const PasswordResetForm: React.FC<ResetPasswordFormProps> = ({ onAfterSubmit, to
 
   return (
     <form onSubmit={handleSubmit(submitPasswordReset)} aria-label="Password reset">
-      <div className="mb-6 max-w-md">
+      <div className={clsx("mb-6 max-w-md")}>
         <Controller
           name="password"
           control={control}
