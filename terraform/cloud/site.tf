@@ -12,6 +12,7 @@ resource "aws_lambda_function" "site" {
   image_uri    = "${local.ecr_site_image}@${data.aws_ecr_image.site_image.id}"
   timeout      = 30
   memory_size  = 256
+  publish      = true
 
   role = aws_iam_role.site_role.arn
 
