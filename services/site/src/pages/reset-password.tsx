@@ -20,7 +20,7 @@ export interface ResetPasswordProps {
   tokenValidationResult: ValidatePasswordResetTokenResultEnum;
 }
 
-const ResetPassword: React.FC<ResetPasswordProps> = ({ token, tokenValidationResult }) => {
+const ResetPassword: React.VFC<ResetPasswordProps> = ({ token, tokenValidationResult }) => {
   const flashMessageApi = useFlashMessageApi();
 
   function onAfterSubmit(): void {

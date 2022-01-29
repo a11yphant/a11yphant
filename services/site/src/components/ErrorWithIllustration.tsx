@@ -9,7 +9,7 @@ interface ErrorWithIllustrationProps {
   text: string;
 }
 
-const ErrorWithIllustration: React.FC<ErrorWithIllustrationProps> = ({ error, text }) => (
+const ErrorWithIllustration: React.VFC<ErrorWithIllustrationProps> = ({ error, text }) => (
   <>
     <div className={clsx("flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between")}>
       <div>
