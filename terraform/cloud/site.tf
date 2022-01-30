@@ -88,7 +88,7 @@ resource "aws_apigatewayv2_route" "api_default_route" {
 }
 
 resource "aws_apigatewayv2_integration" "example" {
-  api_id             = aws_apigatewayv2_api.example.id
+  api_id             = aws_apigatewayv2_api.site_http_api.id
   integration_type   = "AWS_PROXY"
   integration_method = "ANY"
   integration_uri    = aws_lambda_alias.site_latest.invoke_arn
