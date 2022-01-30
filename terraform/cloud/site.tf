@@ -39,7 +39,7 @@ resource "aws_lambda_function" "site" {
 resource "aws_lambda_provisioned_concurrency_config" "site" {
   count                             = var.enable_lambda_provisioned_concurrency ? 1 : 0
   function_name                     = aws_lambda_function.site.function_name
-  provisioned_concurrent_executions = 1
+  provisioned_concurrent_executions = 2
   qualifier                         = aws_lambda_function.site.version
 }
 
