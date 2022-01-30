@@ -77,6 +77,15 @@ resource "aws_lambda_permission" "api_gateway_site" {
   source_arn = "${aws_apigatewayv2_api.site_http_api.execution_arn}/*/*"
 }
 
+resource "aws_lambda_permission" "api_gateway_site_latest_alias" {
+  statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-site"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_alias.site_latest.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.site_http_api.execution_arn}/*/*"
+}
+
 resource "aws_apigatewayv2_api" "site_http_api" {
   name          = "${terraform.workspace}-site-http-api"
   protocol_type = "HTTP"
