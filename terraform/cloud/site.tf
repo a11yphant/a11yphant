@@ -87,7 +87,7 @@ resource "aws_apigatewayv2_route" "api_default_route" {
   route_key = "$default"
 }
 
-resource "aws_apigatewayv2_integration" "example" {
+resource "aws_apigatewayv2_integration" "site_lambda_integration" {
   api_id             = aws_apigatewayv2_api.site_http_api.id
   integration_type   = "AWS_PROXY"
   integration_method = "ANY"
