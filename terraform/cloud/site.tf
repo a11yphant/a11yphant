@@ -90,7 +90,7 @@ resource "aws_apigatewayv2_route" "api_default_route" {
 resource "aws_apigatewayv2_integration" "site_lambda_integration" {
   api_id             = aws_apigatewayv2_api.site_http_api.id
   integration_type   = "AWS_PROXY"
-  integration_method = "ANY"
+  integration_method = "POST"
   integration_uri    = aws_lambda_alias.site_latest.invoke_arn
 }
 
