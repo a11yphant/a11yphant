@@ -78,7 +78,7 @@ resource "aws_lambda_permission" "api_gateway_site" {
 }
 
 resource "aws_lambda_permission" "api_gateway_site_latest_alias" {
-  statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-site"
+  statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-site-alias"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_alias.site_latest.function_name
   principal     = "apigateway.amazonaws.com"
