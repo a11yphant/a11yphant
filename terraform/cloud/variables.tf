@@ -101,7 +101,7 @@ variable "site_splitbee_token" {
 
 variable "api_hobby_basic_db" {
   type    = bool
-  default = true
+  default = false
 }
 
 # copied from: https://github.com/hashicorp/terraform-template-dir/blob/556bd64989e7099fabb90c6b883b5d4d92da3ae8/variables.tf
