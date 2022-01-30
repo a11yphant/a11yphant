@@ -46,7 +46,7 @@ resource "aws_lambda_provisioned_concurrency_config" "site" {
   count                             = var.enable_lambda_provisioned_concurrency ? 1 : 0
   function_name                     = aws_lambda_function.site.arn
   provisioned_concurrent_executions = 2
-  qualifier                         = aws_lambda_function.site.version
+  qualifier                         = aws_lambda_alias.site_latest.name
 }
 
 resource "aws_iam_role" "site_role" {
