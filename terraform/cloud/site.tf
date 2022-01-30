@@ -36,11 +36,17 @@ resource "aws_lambda_function" "site" {
   ]
 }
 
+resource "aws_lambda_alias" "site_latest" {
+  name             = "${terraform.workspace}-site-latest"
+  function_name    = aws_lambda_function.site.arn
+  function_version = aws_lambda_function.site.version
+}
+
 resource "aws_lambda_provisioned_concurrency_config" "site" {
   count                             = var.enable_lambda_provisioned_concurrency ? 1 : 0
-  function_name                     = aws_lambda_function.site.function_name
+  function_name                     = aws_lambda_alias.site_latest.function_name
   provisioned_concurrent_executions = 2
-  qualifier                         = aws_lambda_function.site.version
+  qualifier                         = aws_lambda_alias.site_latest.name
 }
 
 resource "aws_iam_role" "site_role" {
@@ -81,7 +87,7 @@ resource "aws_lambda_permission" "api_gateway_site" {
 resource "aws_apigatewayv2_api" "site_http_api" {
   name          = "${terraform.workspace}-site-http-api"
   protocol_type = "HTTP"
-  target        = aws_lambda_function.site.invoke_arn
+  target        = aws_lambda_alias.site_latest.invoke_arn
 }
 
 resource "aws_ecr_repository" "repository_site" {
