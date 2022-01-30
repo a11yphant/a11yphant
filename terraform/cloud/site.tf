@@ -81,7 +81,7 @@ resource "aws_lambda_permission" "api_gateway_site" {
 resource "aws_apigatewayv2_api" "site_http_api" {
   name          = "${terraform.workspace}-site-http-api"
   protocol_type = "HTTP"
-  target        = aws_lambda_function.site.qualified_arn
+  target        = aws_lambda_function.site.invoke_arn
 }
 
 resource "aws_ecr_repository" "repository_site" {
