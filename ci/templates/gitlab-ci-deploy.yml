@@ -39,3 +39,4 @@
                 -var="site_sentry_dsn=$SITE_SENTRY_DSN"
                 -var="site_splitbee_token=$SPLITBEE_TOKEN"
                 -var="app_version=$VERSION"
+                -var="api_hobby_basic_db=$API_HOBBY_BASIC_DB"
