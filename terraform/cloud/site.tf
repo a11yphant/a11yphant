@@ -68,15 +68,6 @@ resource "aws_iam_role_policy_attachment" "site_lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
-resource "aws_lambda_permission" "api_gateway_site" {
-  statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-site"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.site.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_apigatewayv2_api.site_http_api.execution_arn}/*/*"
-}
-
 resource "aws_lambda_permission" "api_gateway_site_latest_alias" {
   statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-site-alias"
   action        = "lambda:InvokeFunction"
@@ -89,7 +80,18 @@ resource "aws_lambda_permission" "api_gateway_site_latest_alias" {
 resource "aws_apigatewayv2_api" "site_http_api" {
   name          = "${terraform.workspace}-site-http-api"
   protocol_type = "HTTP"
-  target        = aws_lambda_function.site.invoke_arn
+}
+
+resource "aws_apigatewayv2_route" "api_default_route" {
+  api_id    = aws_apigatewayv2_api.site_http_api.id
+  route_key = "$default"
+}
+
+resource "aws_apigatewayv2_integration" "example" {
+  api_id             = aws_apigatewayv2_api.example.id
+  integration_type   = "AWS_PROXY"
+  integration_method = "ANY"
+  integration_uri    = aws_lambda_alias.site_latest.invoke_arn
 }
 
 resource "aws_ecr_repository" "repository_site" {
