@@ -94,7 +94,7 @@ resource "aws_apigatewayv2_api" "site_http_api" {
 
 resource "aws_apigatewayv2_route" "api_default_route" {
   api_id    = aws_apigatewayv2_api.site_http_api.id
-  route_key = "$default"
+  route_key = "ANY /{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.site_lambda_integration.id}"
 }
 
