@@ -47,6 +47,12 @@ resource "heroku_addon" "api_database" {
   plan = "heroku-postgresql:hobby-dev"
 }
 
+resource "heroku_addon" "api_database-hobby-basic" {
+  count = var.api_hobby_basic_db ? 1 : 0
+  app   = heroku_app.api.name
+  plan  = "heroku-postgresql:hobby-basic"
+}
+
 resource "heroku_addon" "scheduler" {
   app  = heroku_app.api.name
   plan = "scheduler:standard"
