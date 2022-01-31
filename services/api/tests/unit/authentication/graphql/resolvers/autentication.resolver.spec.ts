@@ -131,8 +131,7 @@ describe("authentication resolver", () => {
 
   describe("logout", () => {
     it("returns true and clears the cookie", async () => {
-      const id = faker.datatype.uuid();
-      const user = new User(UserFactory.build({ id }));
+      const user = new User(UserFactory.build());
       user.authProvider = "github";
 
       const findByIdFunc = jest.fn().mockResolvedValue(user);
@@ -161,8 +160,7 @@ describe("authentication resolver", () => {
     });
 
     it("returns false if user is anonymous", async () => {
-      const id = faker.datatype.uuid();
-      const user = new User(UserFactory.build({ id }));
+      const user = new User(UserFactory.build());
 
       const findByIdFunc = jest.fn().mockResolvedValue(user);
       const clearCookieFunc = jest.fn();
