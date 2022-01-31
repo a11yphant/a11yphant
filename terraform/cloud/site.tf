@@ -101,7 +101,7 @@ resource "aws_apigatewayv2_integration" "site_lambda_integration" {
   api_id                 = aws_apigatewayv2_api.site_http_api.id
   integration_type       = "AWS_PROXY"
   integration_method     = "POST"
-  integration_uri        = aws_lambda_alias.site_latest.arn
+  integration_uri        = aws_lambda_alias.site_latest.invoke_arn
   payload_format_version = "2.0"
 }
 
