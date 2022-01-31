@@ -99,11 +99,6 @@ variable "site_splitbee_token" {
   default = ""
 }
 
-variable "enable_lambda_provisioned_concurrency" {
-  type    = bool
-  default = true
-}
-
 variable "api_hobby_basic_db" {
   type    = bool
   default = false
