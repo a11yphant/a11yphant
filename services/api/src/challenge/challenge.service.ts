@@ -59,24 +59,48 @@ export class ChallengeService {
     return record ? ChallengeService.createModelFromDatabaseRecord(record) : null;
   }
 
+  public async getNumberOfCodeLevelSubmissionsForUser(challengeId: string, userId: string): Promise<number> {
+    return await this.prisma.codeLevelSubmission.count({
+      where: {
+        userId,
+        level: {
+          challengeId,
+        },
+      },
+    });
+  }
+
+  public async getNumberOfQuizLevelSubmissionsForUser(challengeId: string, userId: string): Promise<number> {
+    return await this.prisma.quizLevelSubmission.count({
+      where: {
+        userId,
+        level: {
+          challengeId,
+        },
+      },
+    });
+  }
+
+  public async getNumberOfCodeLevelsForChallenge(challengeId: string): Promise<number> {
+    return await this.prisma.codeLevel.count({
+      where: {
+        challengeId,
+      },
+    });
+  }
+
+  public async getNumberOfQuizLevelsForChallenge(challengeId: string): Promise<number> {
+    return await this.prisma.quizLevel.count({
+      where: {
+        challengeId,
+      },
+    });
+  }
+
   async getStatusForUserAndChallenge(userId: string, challengeId: string): Promise<ChallengeStatus> {
     const [codeSubmissionCount, quizSubmissionCount] = await Promise.all([
-      this.prisma.codeLevelSubmission.count({
-        where: {
-          userId,
-          level: {
-            challengeId,
-          },
-        },
-      }),
-      this.prisma.quizLevelSubmission.count({
-        where: {
-          userId,
-          level: {
-            challengeId,
-          },
-        },
-      }),
+      this.getNumberOfCodeLevelSubmissionsForUser(challengeId, userId),
+      this.getNumberOfQuizLevelSubmissionsForUser(challengeId, userId),
     ]);
 
     if (codeSubmissionCount === 0 && quizSubmissionCount === 0) {
@@ -84,16 +108,8 @@ export class ChallengeService {
     }
 
     const [codeLevelCount, quizLevelCount] = await Promise.all([
-      this.prisma.codeLevel.count({
-        where: {
-          challengeId,
-        },
-      }),
-      this.prisma.quizLevel.count({
-        where: {
-          challengeId,
-        },
-      }),
+      this.getNumberOfCodeLevelsForChallenge(challengeId),
+      this.getNumberOfQuizLevelsForChallenge(challengeId),
     ]);
 
     const levelCount = codeLevelCount + quizLevelCount;
@@ -120,7 +136,7 @@ export class ChallengeService {
     return codeLevelCount + quizLevelCount;
   }
 
-  private getNumberOfFinishedQuizLevelsForUser(challengeId: string, userId: string): Promise<number> {
+  public getNumberOfFinishedQuizLevelsForUser(challengeId: string, userId: string): Promise<number> {
     return this.prisma.quizLevel.count({
       where: {
         challengeId,
@@ -138,7 +154,7 @@ export class ChallengeService {
     });
   }
 
-  private getNumberOfFinishedCodeLevelsForUser(challengeId: string, userId: string): Promise<number> {
+  public getNumberOfFinishedCodeLevelsForUser(challengeId: string, userId: string): Promise<number> {
     // all levels from this challenge where at least one
     // submission has the users id and a successful result
     // means: all levels which have been finished by the user

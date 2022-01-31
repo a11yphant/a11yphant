@@ -24,9 +24,9 @@ resource "heroku_app" "api" {
     AWS_SES_SMTP_ENDPOINT            = "email-smtp.eu-central-1.amazonaws.com"
     AWS_SES_SMTP_PORT                = "587"
     API_KEY                          = random_password.api_secret_key.result
-    API_GRAPHQL_DEBUG                = 1
-    API_GRAPHQL_PLAYGROUND           = 1
-    API_GRAPHQL_SCHEMA_INTROSPECTION = 1
+    API_GRAPHQL_DEBUG                = var.api_graphql_debug
+    API_GRAPHQL_PLAYGROUND           = var.api_graphql_playground
+    API_GRAPHQL_SCHEMA_INTROSPECTION = var.api_graphql_schema_introspection
     API_MESSAGING_TOPICS             = "submission=${module.messaging.submission_topic_arn}"
     API_MESSAGING_REGION             = "eu-central-1"
     API_MESSAGING_QUEUE_URL          = module.messaging.api_queue_url

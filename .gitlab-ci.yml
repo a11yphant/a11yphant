@@ -349,6 +349,9 @@ deploy-review:
     WORKSPACE: review-${CI_MERGE_REQUEST_IID}
     DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
     USE_CUSTOM_DOMAIN: 1
+    API_GRAPHQL_DEBUG: 1
+    API_GRAPHQL_PLAYGROUND: 1
+    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
@@ -373,6 +376,9 @@ deploy-staging:
     TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_STAGING
     SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
+    API_GRAPHQL_DEBUG: 1
+    API_GRAPHQL_PLAYGROUND: 1
+    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
   environment:
     name: staging
     url: https://beta.a11yphant.com
