@@ -73,7 +73,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
           {currentUser?.isRegistered && (
             <Dropdown
               triggerButton={
-                <Dropdown.TriggerButton className="hover:text-primary-light motion-safe:transition-colors transition-300 align-middle">
+                <Dropdown.TriggerButton
+                  className={clsx(
+                    "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle rounded",
+                    "focus:outline-offset-2",
+                  )}
+                >
                   <span className={clsx("sr-only")}>User Menu</span>
                   <UserAvatar />
                 </Dropdown.TriggerButton>
