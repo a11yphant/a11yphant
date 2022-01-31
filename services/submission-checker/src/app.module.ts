@@ -22,6 +22,7 @@ import { WebdriverFactory } from "./webdriver.factory";
   imports: [
     ConfigModule.forRoot({
       load: [submissionRenderer, messagingConfig],
+      ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
     }),
     AwsMessagingModule.forRootAsync({
       imports: [ConfigModule],
