@@ -45,7 +45,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
-          <div className={clsx("col-span-3 mb-8 overflow-y-auto")}>
+          <div className={clsx("col-span-3 mb-8 p-1 overflow-y-auto")}>
             {quizResult === undefined && (
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
             )}
