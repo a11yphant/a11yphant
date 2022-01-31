@@ -396,6 +396,7 @@ deploy-production:
     TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
     TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_PROD
     SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
+    API_HOBBY_BASIC_DB: 1
   environment:
     name: production
     url: https://a11yphant.com
