@@ -23,7 +23,7 @@ import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 describe("challenge service", () => {
   const { getPrismaService } = useDatabase(createMock<Logger>());
 
-  const getChallenge = async ({
+  const createChallenge = async ({
     numberOfCodeLevels = 0,
     numberOfQuizLevels = 0,
   }: {
@@ -51,7 +51,7 @@ describe("challenge service", () => {
       data: Factory.build<UserData>(USER),
     });
 
-    const challengeId = await getChallenge({ numberOfCodeLevels, numberOfQuizLevels });
+    const challengeId = await createChallenge({ numberOfCodeLevels, numberOfQuizLevels });
 
     return { userId, challengeId };
   };
@@ -262,7 +262,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const challengeId = await getChallenge({ numberOfQuizLevels: 3 });
+      const challengeId = await createChallenge({ numberOfQuizLevels: 3 });
 
       const numberOfQuizLevels = await service.getNumberOfQuizLevelsForChallenge(challengeId);
       expect(numberOfQuizLevels).toBe(3);
@@ -274,7 +274,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const challengeId = await getChallenge({ numberOfCodeLevels: 3 });
+      const challengeId = await createChallenge({ numberOfCodeLevels: 3 });
 
       const numberOfCodeLevels = await service.getNumberOfCodeLevelsForChallenge(challengeId);
       expect(numberOfCodeLevels).toBe(3);
