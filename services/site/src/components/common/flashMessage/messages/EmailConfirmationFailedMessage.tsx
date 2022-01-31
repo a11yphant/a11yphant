@@ -3,12 +3,12 @@ import React from "react";
 
 export const EmailConfirmationFailedMessage = (): React.ReactElement => {
   return (
-    <>
-      <span className={clsx("mr-3")} aria-hidden={true}>
+    <div className={clsx("flex justify-center items-center")}>
+      <span className={clsx("not-sr-only", "mr-3 text-2xl")} aria-hidden={true}>
         ❌
       </span>
-      Your email could not be confirmed.
+      Your email could not be confirmed
       {/*TODO: Resend button*/}
-    </>
+    </div>
   );
 };
