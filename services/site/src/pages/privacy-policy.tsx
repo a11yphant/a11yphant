@@ -225,7 +225,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                 </Link>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter11">
+                <Link href="#chapter10">
                   <a
                     className={clsx(
                       "text-light font-sans font-normal border-light",
@@ -239,7 +239,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                 </Link>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter12">
+                <Link href="#chapter11">
                   <a
                     className={clsx(
                       "text-light font-sans font-normal border-light",
@@ -253,7 +253,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                 </Link>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter13">
+                <Link href="#chapter12">
                   <a
                     className={clsx(
                       "text-light font-sans font-normal border-light",
