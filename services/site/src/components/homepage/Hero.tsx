@@ -21,9 +21,12 @@ const Hero: React.FC = () => {
           Learning web accessibility made easy
         </h2>
         <p className={clsx("text-grey-middle text-lg")}>
-          a11yphant teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to
-          read large amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web
-          accessibility challenge and improve your skills.
+          <span className={clsx("text-inherit text-lg")} aria-label="allyphant">
+            a11yphant
+          </span>{" "}
+          teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to read large
+          amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web accessibility
+          challenge and improve your skills.
         </p>
         <Link href="/#challenges">
           <a
