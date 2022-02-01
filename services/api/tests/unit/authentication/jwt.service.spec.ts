@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { ConfigService } from "@nestjs/config";
 import jwt from "jsonwebtoken";
 
+import { JwtScope } from "@/authentication/enums/jwt-scope.enum";
 import { JwtService } from "@/authentication/jwt.service";
 
 describe("jwt service", () => {
@@ -25,15 +26,23 @@ describe("jwt service", () => {
       const secret = "secret";
       const service = new JwtService(createMock<ConfigService>({ get: jest.fn().mockReturnValue(secret) }));
 
-      const token = jwt.sign({ payload: "something" }, secret);
-      expect(await service.validateToken(token)).toBeTruthy();
+      const token = jwt.sign({ payload: "something", scope: JwtScope.SESSION }, secret);
+      expect(await service.validateToken(token, JwtScope.SESSION)).toBeTruthy();
     });
 
-    it("returns false for an invalid jwt", async () => {
+    it("returns false for an jwt with an invalid secret", async () => {
       const service = new JwtService(createMock<ConfigService>({ get: jest.fn().mockReturnValue("secret") }));
 
-      const token = jwt.sign({ payload: "something" }, "asdf");
-      expect(await service.validateToken(token)).toBeFalsy();
+      const token = jwt.sign({ payload: "something", scope: JwtScope.SESSION }, "asdf");
+      expect(await service.validateToken(token, JwtScope.SESSION)).toBeFalsy();
+    });
+
+    it("returns false for an jwt with the wrong session", async () => {
+      const secret = "secret";
+      const service = new JwtService(createMock<ConfigService>({ get: jest.fn().mockReturnValue(secret) }));
+
+      const token = jwt.sign({ payload: "something", scope: JwtScope.PASSWORD_RESET }, secret);
+      expect(await service.validateToken(token, JwtScope.SESSION)).toBeFalsy();
     });
   });
 
