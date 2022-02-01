@@ -141,9 +141,13 @@ lint:submission-checker:
 test:submission-checker:
   extends:
     - .test
+  services:
+    - alias: localstack
+      name: localstack/localstack
   needs: []
   variables:
     PROJECT_PATH: services/submission-checker
+    SERVICES: sns,sqs
   only:
     - master
     - develop
