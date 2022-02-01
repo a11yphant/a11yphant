@@ -10,7 +10,7 @@ import { AppModule } from "./app.module";
 let app: INestMicroservice;
 
 async function bootstrap(): Promise<AwsTransportStrategy> {
-  const logger = +process.env.SUBMISSION_CHECKER_DISABLE_LOGGER ? false : Logger;
+  const logger = +process.env.SUBMISSION_CHECKER_DISABLE_LOGGER ? false : new Logger();
 
   // TODO: Remove when the following is fixed https://github.com/nestjs/nest/issues/2343
   const appContext = await NestFactory.createApplicationContext(AppModule, { logger });
@@ -25,6 +25,7 @@ async function bootstrap(): Promise<AwsTransportStrategy> {
 
   app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     strategy: server,
+    logger,
   });
 
   await appContext.close();
