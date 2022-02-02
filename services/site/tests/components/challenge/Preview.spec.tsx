@@ -1,4 +1,4 @@
-import { act } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import Preview from "app/components/challenge/Preview";
 import { mount, shallow } from "enzyme";
 import React from "react";
@@ -75,5 +75,18 @@ describe("Preview", () => {
     const iframeSrc = wrapper.find("iframe").props().srcDoc;
 
     expect(iframeSrc).toMatch(/(<a).*(target="_blank").*(>Google<\/a>)/g);
+  });
+
+  it("renders title in preview heading", () => {
+    jest.useFakeTimers();
+    const mockCodeWithTitle = `<head><title>MockTitle</title></head>`;
+
+    render(<Preview cssCode={""} htmlCode={mockCodeWithTitle} javascriptCode={""} heading={""} />);
+
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(screen.getByRole("heading", { name: /MockTitle/ })).toBeInTheDocument();
   });
 });
