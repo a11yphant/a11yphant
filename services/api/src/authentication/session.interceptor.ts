@@ -29,8 +29,8 @@ export class SessionInterceptor implements NestInterceptor {
     const sessionCookie = context.req.cookies[this.config.get<string>("cookie.name")];
     const sessionToken = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie);
 
-    if ((await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) && (await this.userService.findById(sessionToken.sub))) {
-      context.sessionToken = { userId: sessionToken.sub };
+    if ((await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) && (await this.userService.findById(sessionToken.userId))) {
+      context.sessionToken = { userId: sessionToken.userId };
       return next.handle();
     }
 
@@ -43,7 +43,7 @@ export class SessionInterceptor implements NestInterceptor {
     context.sessionToken = newToken;
 
     const token = await this.jwtService.createSignedToken(
-      { scope: JwtScope.SESSION },
+      { scope: JwtScope.SESSION, ...newToken },
       { subject: newToken.userId, expiresInSeconds: 3600 * 24 * 365 },
     );
     return next.handle().pipe(
