@@ -5,6 +5,8 @@ import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphq
 import { writeFileSync } from "fs";
 import { printSchema } from "graphql";
 
+import { MailResolver } from "@/mail/mail.resolver";
+
 import { AuthenticationResolver } from "./authentication/graphql/resolvers/authentication.resolver";
 import { ChallengeResolver } from "./challenge/challenge.resolver";
 import { CodeLevelResolver } from "./challenge/code-level.resolver";
@@ -33,6 +35,7 @@ const resolvers = [
   QuizLevelResolver,
   CodeLevelSubmissionResolver,
   QuizLevelSubmissionResolver,
+  MailResolver,
 ];
 
 const scalars = [];
