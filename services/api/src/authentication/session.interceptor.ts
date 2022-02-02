@@ -27,10 +27,10 @@ export class SessionInterceptor implements NestInterceptor {
 
   async handleGql(context: Context, next: CallHandler): Promise<Observable<any>> {
     const sessionCookie = context.req.cookies[this.config.get<string>("cookie.name")];
-    const sessionToken = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie);
+    const { sub: userId } = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie) || {};
 
-    if ((await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) && (await this.userService.findById(sessionToken.userId))) {
-      context.sessionToken = { userId: sessionToken.userId };
+    if ((await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) && (await this.userService.findById(userId))) {
+      context.sessionToken = { userId };
       return next.handle();
     }
 
@@ -43,7 +43,7 @@ export class SessionInterceptor implements NestInterceptor {
     context.sessionToken = newToken;
 
     const token = await this.jwtService.createSignedToken(
-      { scope: JwtScope.SESSION, ...newToken },
+      { scope: JwtScope.SESSION },
       { subject: newToken.userId, expiresInSeconds: 3600 * 24 * 365 },
     );
     return next.handle().pipe(
@@ -58,8 +58,8 @@ export class SessionInterceptor implements NestInterceptor {
     const sessionCookie = req.cookies[this.config.get<string>("cookie.name")];
 
     if (await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) {
-      const decodedCookie = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie);
-      req.sessionToken = { userId: decodedCookie.sub };
+      const { sub: userId } = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie);
+      req.sessionToken = { userId };
     }
     return next.handle();
   }

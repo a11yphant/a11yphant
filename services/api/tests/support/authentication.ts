@@ -11,7 +11,7 @@ export async function createUserWithSessionCookie(prisma: PrismaService, app: IN
   const user = await prisma.user.create({ data: Factory.build<UserData>(USER, { authProvider: "github", displayName: "Test User" }) });
   const jwtService = app.get<JwtService>(JwtService);
 
-  const cookie = await jwtService.createSignedToken({ userId: user.id, scope: JwtScope.SESSION }, { subject: "session", expiresInSeconds: 3600 });
+  const cookie = await jwtService.createSignedToken({ scope: JwtScope.SESSION }, { subject: user.id, expiresInSeconds: 3600 });
 
   return { cookie, user };
 }
