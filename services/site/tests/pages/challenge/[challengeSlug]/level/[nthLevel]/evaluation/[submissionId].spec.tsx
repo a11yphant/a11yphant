@@ -1,6 +1,7 @@
 import { ApolloError } from "@apollo/client";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act } from "@testing-library/react";
+import { act, waitFor } from "@testing-library/react";
+import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
@@ -43,6 +44,13 @@ jest.mock("app/lib/apollo-client", () => ({
   initializeApollo: (_, context) => context.apolloClient,
 }));
 
+const mockShowFlashMessage = jest.fn();
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: () => ({
+    show: mockShowFlashMessage,
+  }),
+}));
+
 const mockChallengeName = "Mock Challenge Name";
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = "2";
@@ -79,6 +87,7 @@ const mocks: MockedResponse[] = [
 ];
 
 beforeEach(() => {
+  jest.clearAllMocks();
   router.query = {
     challengeSlug: mockChallengeSlug,
     nthLevel: mockNthLevel,
@@ -153,7 +162,15 @@ describe("Evaluation", () => {
     });
 
     it("sets failedLevelsInARow to 0 if status = Success", async () => {
-      (useSessionState as jest.Mock).mockReturnValue([4, jest.fn()]);
+      (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Success, requirements: [], totalScore: 100 });
+
+      const wrapper = mountEvaluationPage();
+      await resolveGraphQLQuery(wrapper);
+      await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<ChallengeCompletedFlashMessage />));
+    });
+
+    it("shows success flash massage if is success and last level", async () => {
+      (useSessionState as jest.Mock).mockReturnValue([0, jest.fn()]);
       (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Success, requirements: [], totalScore: 100 });
 
       const wrapper = mountEvaluationPage();
