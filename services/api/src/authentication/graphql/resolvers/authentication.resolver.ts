@@ -8,7 +8,9 @@ import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exc
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { LoginInput } from "@/authentication/graphql/inputs/login.input";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
+import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
+import { SessionToken } from "@/authentication/session-token.decorator";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
@@ -72,6 +74,12 @@ export class AuthenticationResolver {
     return {
       result: RequestPasswordResetSuccessResultEnum.EMAIL_SENT,
     };
+  }
+
+  @Mutation(() => Boolean, { description: "Resend the confirmation email." })
+  async resendConfirmationEmail(@SessionToken() sessionToken: SessionTokenInterface): Promise<boolean> {
+    this.authenticationService.resendConfirmationEmail(sessionToken.userId);
+    return true;
   }
 
   @Mutation(() => Boolean)

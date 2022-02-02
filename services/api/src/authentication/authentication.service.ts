@@ -68,6 +68,17 @@ export class AuthenticationService {
     return decodedToken.sub;
   }
 
+  async resendConfirmationEmail(userId: string): Promise<void> {
+    const user = await this.userService.findById(userId);
+
+    this.mailService.sendRegistrationMail({
+      userId: user.id,
+      email: user.email,
+      displayName: user.displayName,
+      token: await this.generateMailConfirmationToken(user.id),
+    });
+  }
+
   generateMailConfirmationToken(userId: string): Promise<string> {
     return this.jwtService.createSignedToken({ scope: JwtScope.EMAIL_CONFIRMATION }, { expiresInSeconds: 86400, subject: userId });
   }
