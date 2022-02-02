@@ -4,6 +4,7 @@ import { UserInputError } from "apollo-server-errors";
 import * as Yup from "yup";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { LoginInput } from "@/authentication/graphql/inputs/login.input";
@@ -76,10 +77,9 @@ export class AuthenticationResolver {
     };
   }
 
-  @Mutation(() => Boolean, { description: "Resend the confirmation email." })
-  async resendConfirmationEmail(@SessionToken() sessionToken: SessionTokenInterface): Promise<boolean> {
-    this.authenticationService.resendConfirmationEmail(sessionToken.userId);
-    return true;
+  @Mutation(() => ResendEmailConfirmationResultEnum, { description: "Resend the confirmation email." })
+  async resendConfirmationEmail(@SessionToken() sessionToken: SessionTokenInterface): Promise<ResendEmailConfirmationResultEnum> {
+    return this.authenticationService.resendConfirmationEmail(sessionToken.userId);
   }
 
   @Mutation(() => Boolean)
