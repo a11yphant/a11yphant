@@ -15,7 +15,7 @@ export class Builder extends SeleniumBuilder {
   }
 
   build(): ThenableWebDriver {
-    return createMock<ThenableWebDriver>();
+    return createMock<ThenableWebDriver>({ quit: jest.fn().mockReturnValue(null) });
   }
 }
 
