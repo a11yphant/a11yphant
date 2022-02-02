@@ -25,8 +25,8 @@ const LoadingButton: React.FunctionComponent<LoadingButtonProps> = ({
       disabled={disabled || loading}
       {...props}
     >
-      <span className={clsx(loading && "invisible")}>{children}</span>
-      <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "pt-2 pl-2")}>
+      <span className={clsx(loading && "invisible", "text-inherit")}>{children}</span>
+      <span className={clsx("absolute inset-0 flex justify-center items-center", !loading && "hidden", submitButton && "pt-2 pl-2", "text-inherit")}>
         <LoadingIndicator />
       </span>
       {loading && <span className={clsx("sr-only")}>{srTextLoading}</span>}
