@@ -1,18 +1,24 @@
 import { Injectable } from "@nestjs/common";
 
+import { MailService } from "@/mail/mail.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
 import { JwtScope } from "./enums/jwt-scope.enum";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "./exceptions/user-not-found.exception";
+import { LoginInput } from "./graphql/inputs/login.input";
 import { HashService } from "./hash.service";
-import { LoginInput } from "./inputs/login.input";
 import { JwtService } from "./jwt.service";
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private userService: UserService, private hashService: HashService, private jwtService: JwtService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly hashService: HashService,
+    private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
+  ) {}
 
   async login({ email, password }: LoginInput): Promise<User> {
     const msg = "E-Mail or password wrong.";
@@ -21,10 +27,6 @@ export class AuthenticationService {
 
     if (!user) {
       throw new Error(msg);
-    }
-
-    if (!user.verifiedAt) {
-      throw new Error("E-Mail address has not yet been verified.");
     }
 
     const passwordOk = await this.hashService.compare(password, user.password);
@@ -68,5 +70,21 @@ export class AuthenticationService {
 
   generateMailConfirmationToken(userId: string): Promise<string> {
     return this.jwtService.createSignedToken({ scope: JwtScope.EMAIL_CONFIRMATION }, { expiresInSeconds: 86400, subject: userId });
+  }
+
+  async requestPasswordReset(email: string): Promise<void> {
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      return;
+    }
+
+    this.mailService.sendPasswordResetMail({
+      email: user.email,
+      token: await this.generatePasswordResetToken(user.id),
+    });
+  }
+
+  generatePasswordResetToken(userId: string): Promise<string> {
+    return this.jwtService.createSignedToken({ scope: JwtScope.PASSWORD_RESET }, { expiresInSeconds: 86400, subject: userId });
   }
 }

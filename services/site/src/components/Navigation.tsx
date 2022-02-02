@@ -2,6 +2,7 @@ import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
+import { CurrentUserDocument, useLogoutMutation } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import clsx from "clsx";
 import Link from "next/link";
@@ -18,6 +19,9 @@ export interface NavigationProps {
 
 const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, children }) => {
   const { currentUser } = useCurrentUser();
+  const [logout] = useLogoutMutation({
+    refetchQueries: [{ query: CurrentUserDocument }],
+  });
   const userAccountModalApi = useUserAccountModalApi();
 
   return (
@@ -69,7 +73,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
           {currentUser?.isRegistered && (
             <Dropdown
               triggerButton={
-                <Dropdown.TriggerButton className="hover:text-primary-light motion-safe:transition-colors transition-300 align-middle">
+                <Dropdown.TriggerButton
+                  className={clsx(
+                    "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle rounded",
+                    "focus:outline-offset-2",
+                  )}
+                >
                   <span className={clsx("sr-only")}>User Menu</span>
                   <UserAvatar />
                 </Dropdown.TriggerButton>
@@ -77,6 +86,9 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
             >
               <Dropdown.Group>
                 <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+              </Dropdown.Group>
+              <Dropdown.Group>
+                <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
               </Dropdown.Group>
             </Dropdown>
           )}

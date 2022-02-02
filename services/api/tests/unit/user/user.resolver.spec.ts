@@ -1,6 +1,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
+import { AuthenticationService } from "@/authentication/authentication.service";
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { MailService } from "@/mail/mail.service";
 import { InputError } from "@/user/exceptions/input.error";
@@ -8,14 +9,20 @@ import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserResolver } from "@/user/user.resolver";
 import { UserService } from "@/user/user.service";
 
-function createUserResolver(partials: { userService?: Partial<UserService>; mailService?: Partial<MailService> } = {}): UserResolver {
+function createUserResolver(
+  partials: { userService?: Partial<UserService>; authenticationService?: Partial<AuthenticationService>; mailService?: Partial<MailService> } = {},
+): UserResolver {
   const userService = createMock<UserService>({
     ...partials.userService,
   });
 
+  const authenticationService = createMock<AuthenticationService>({
+    ...partials.authenticationService,
+  });
+
   const mailService = createMock<MailService>({ ...partials.mailService });
 
-  return new UserResolver(userService, mailService);
+  return new UserResolver(userService, authenticationService, mailService);
 }
 
 describe("user resolver", () => {
@@ -40,22 +47,62 @@ describe("user resolver", () => {
     expect(findById).toHaveBeenCalledWith(user.id);
   });
 
-  it("shows that the user is registered for github users", async () => {
-    const user = UserFactory.build({ authProvider: "github" });
+  describe("is verified", () => {
+    it("returns true for local users with a verified email", () => {
+      const user = UserFactory.build({ authProvider: "local", verifiedAt: new Date() });
 
-    const resolver = createUserResolver();
-    const resolvedIsRegistered = await resolver.isRegistered(user);
+      const resolver = createUserResolver();
+      const verified = resolver.isVerified(user);
 
-    expect(resolvedIsRegistered).toBeTruthy();
+      expect(verified).toBeTruthy();
+    });
+
+    it("returns false for local users with an unverified email", () => {
+      const user = UserFactory.build({ authProvider: "local", verifiedAt: null });
+
+      const resolver = createUserResolver();
+      const verified = resolver.isVerified(user);
+
+      expect(verified).toBeFalsy();
+    });
+
+    it("returns true for github users", () => {
+      const user = UserFactory.build({ authProvider: "github" });
+
+      const resolver = createUserResolver();
+      const verified = resolver.isVerified(user);
+
+      expect(verified).toBeTruthy();
+    });
+
+    it("returns false for anonymous users", () => {
+      const user = UserFactory.build({ authProvider: "anonymous" });
+
+      const resolver = createUserResolver();
+      const verified = resolver.isVerified(user);
+
+      expect(verified).toBeFalsy();
+    });
   });
 
-  it("shows that the user is not registered for anonymous users", async () => {
-    const user = UserFactory.build({ authProvider: "anonymous" });
+  describe("registered", () => {
+    it("returns true for users registered via github", async () => {
+      const user = UserFactory.build({ authProvider: "github" });
 
-    const resolver = createUserResolver();
-    const resolvedIsRegistered = await resolver.isRegistered(user);
+      const resolver = createUserResolver();
+      const resolvedIsRegistered = await resolver.isRegistered(user);
 
-    expect(resolvedIsRegistered).toBeFalsy();
+      expect(resolvedIsRegistered).toBeTruthy();
+    });
+
+    it("returns false for anonymous users", async () => {
+      const user = UserFactory.build({ authProvider: "anonymous" });
+
+      const resolver = createUserResolver();
+      const resolvedIsRegistered = await resolver.isRegistered(user);
+
+      expect(resolvedIsRegistered).toBeFalsy();
+    });
   });
 
   describe("register", () => {
@@ -75,6 +122,7 @@ describe("user resolver", () => {
     });
 
     it("sends an registration email if a user is registered.", async () => {
+      const token = "token";
       const sendRegistrationMail = jest.fn();
 
       const user = UserFactory.build();
@@ -82,10 +130,16 @@ describe("user resolver", () => {
       const resolver = createUserResolver({
         userService: { registerUser: jest.fn().mockResolvedValue(user) },
         mailService: { sendRegistrationMail },
+        authenticationService: { generateMailConfirmationToken: jest.fn().mockReturnValue(token) },
       });
       await resolver.register({ email: "test", password: "test" }, { userId: "test" });
 
-      expect(sendRegistrationMail).toHaveBeenCalledWith(user);
+      expect(sendRegistrationMail).toHaveBeenCalledWith({
+        userId: user.id,
+        email: user.email,
+        displayName: user.displayName,
+        token,
+      });
     });
 
     it("throws an input error if the service throws an error", () => {

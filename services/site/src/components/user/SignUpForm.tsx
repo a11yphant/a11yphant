@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { CurrentUserDocument, useRegisterMutation } from "app/generated/graphql";
 import React from "react";
@@ -25,6 +25,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
     control,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -48,7 +49,17 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
   });
 
   const submitLogin = async ({ name, email, password }): Promise<void> => {
-    await register({ variables: { name, email, password } });
+    const { errors } = await register({ variables: { name, email, password } });
+    if (errors) {
+      return;
+    }
+
+    reset({
+      name: "",
+      email: "",
+      password: "",
+    });
+
     onAfterSubmit?.();
   };
 

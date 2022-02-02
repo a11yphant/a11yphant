@@ -6,15 +6,22 @@ import * as Yup from "yup";
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
-import { LoginInput } from "@/authentication/inputs/login.input";
+import { LoginInput } from "@/authentication/graphql/inputs/login.input";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
+import { RequestPasswordResetErrorCodes } from "../enums/request-password-reset-error-codes.enum";
+import { RequestPasswordResetFields } from "../enums/request-password-reset-fields.enum";
+import { RequestPasswordResetSuccessResultEnum } from "../enums/request-password-reset-success-result.enum";
 import { ResetPasswordErrorCodes } from "../enums/reset-password-error-codes.enum";
 import { ResetPasswordFields } from "../enums/reset-password-fields.enum";
 import { ValidatePasswordResetTokenResultEnum } from "../enums/validate-password-reset-token-result.enum";
+import { RequestPasswordResetInput } from "../inputs/request-password-reset.input";
+import { ResetPasswordInput } from "../inputs/reset-password.input";
+import { ValidatePasswordResetTokenInput } from "../inputs/validate-password-reset-token.input";
+import { RequestPasswordResetResult } from "../results/request-password-reset.result";
 import { ResetPasswordResult } from "../results/reset-password.result";
 import { ValidatePasswordResetTokenResult } from "../results/validate-password-reset-token.result";
 
@@ -39,10 +46,50 @@ export class AuthenticationResolver {
     return user;
   }
 
-  @Mutation(() => ValidatePasswordResetTokenResult)
-  async validatePasswordResetToken(@Args("token") token: string): Promise<ValidatePasswordResetTokenResult> {
+  @Mutation(() => RequestPasswordResetResult)
+  async requestPasswordReset(@Args("requestPasswordResetInput") input: RequestPasswordResetInput): Promise<typeof RequestPasswordResetResult> {
+    const inputErrors = [];
+
     try {
-      await this.authenticationService.validatePasswordResetToken(token);
+      const passwordSchema = Yup.string().email("The email must be a valid email.");
+      await passwordSchema.validate(input.email);
+    } catch (e) {
+      inputErrors.push({
+        field: RequestPasswordResetFields.EMAIL,
+        message: e.message,
+      });
+    }
+
+    if (inputErrors.length > 0) {
+      return {
+        errorCode: RequestPasswordResetErrorCodes.INPUT_VALIDATION_ERROR,
+        inputErrors,
+      };
+    }
+
+    await this.authenticationService.requestPasswordReset(input.email);
+
+    return {
+      result: RequestPasswordResetSuccessResultEnum.EMAIL_SENT,
+    };
+  }
+
+  @Mutation(() => Boolean)
+  async logout(@Context() ctx: IContext): Promise<boolean> {
+    const user = await this.userService.findById(ctx.sessionToken.userId);
+    if (user && user.authProvider !== "anonymous") {
+      ctx.res.clearCookie(this.config.get<string>("cookie.name"));
+      return true;
+    }
+    return false;
+  }
+
+  @Mutation(() => ValidatePasswordResetTokenResult)
+  async validatePasswordResetToken(
+    @Args("validatePasswordResetTokenInput") input: ValidatePasswordResetTokenInput,
+  ): Promise<ValidatePasswordResetTokenResult> {
+    try {
+      await this.authenticationService.validatePasswordResetToken(input.token);
     } catch (e) {
       if (e instanceof InvalidJwtException) {
         return {
@@ -63,12 +110,12 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => ResetPasswordResult)
-  async resetPassword(@Args("token") token: string, @Args("password") password: string): Promise<typeof ResetPasswordResult> {
+  async resetPassword(@Args("resetPasswordInput") input: ResetPasswordInput): Promise<typeof ResetPasswordResult> {
     const inputErrors = [];
 
     try {
       const passwordSchema = Yup.string().min(8, "Password must be at least 8 characters long.").required("Password is required.");
-      await passwordSchema.validate(password);
+      await passwordSchema.validate(input.password);
     } catch (e) {
       inputErrors.push({
         field: ResetPasswordFields.PASSWORD,
@@ -84,7 +131,7 @@ export class AuthenticationResolver {
     }
 
     try {
-      const userId = await this.authenticationService.resetPassword(token, password);
+      const userId = await this.authenticationService.resetPassword(input.token, input.password);
 
       return await this.userService.findById(userId);
     } catch (e) {

@@ -39,3 +39,7 @@
                 -var="site_sentry_dsn=$SITE_SENTRY_DSN"
                 -var="site_splitbee_token=$SPLITBEE_TOKEN"
                 -var="app_version=$VERSION"
+                -var="api_hobby_basic_db=${API_HOBBY_BASIC_DB:-0}"
+                -var="api_graphql_debug=${API_GRAPHQL_DEBUG:-0}"
+                -var="api_graphql_playground=${API_GRAPHQL_PLAYGROUND:-0}"
+                -var="api_graphql_schema_introspection=${API_GRAPHQL_SCHEMA_INTROSPECTION:-0}"

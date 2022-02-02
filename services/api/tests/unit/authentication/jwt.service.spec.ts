@@ -44,6 +44,13 @@ describe("jwt service", () => {
       const token = jwt.sign({ payload: "something", scope: JwtScope.PASSWORD_RESET }, secret);
       expect(await service.validateToken(token, JwtScope.SESSION)).toBeFalsy();
     });
+
+    it("returns false if the passed string is not a jwt and a scope is passed", async () => {
+      const service = new JwtService(createMock<ConfigService>({ get: jest.fn().mockReturnValue("secret") }));
+
+      const token = "just-a-string";
+      expect(await service.validateToken(token, JwtScope.EMAIL_CONFIRMATION)).toBeFalsy();
+    });
   });
 
   describe("decode token", () => {
