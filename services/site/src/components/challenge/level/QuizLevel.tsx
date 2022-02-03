@@ -1,5 +1,6 @@
 import LoadingButton from "app/components/buttons/LoadingButton";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import Lottie from "app/components/Lottie";
 import { ResultStatus, useSubmitQuizLevelAnswerMutation } from "app/generated/graphql";
@@ -8,6 +9,9 @@ import failAnimation from "app/lotties/fail_lottie.json";
 import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
+
+import ChallengeCompletedFlashMessage from "../ChallengeCompletedFlashMessage";
+
 interface QuizLevelProps {
   question: string;
   answers: Array<{ id: string; text: string }>;
@@ -18,6 +22,7 @@ interface QuizLevelProps {
 const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question, answers, isLastLevel }) => {
   const [chosenId, setChosenId] = React.useState<string>();
   const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>();
+  const flashMessageApi = useFlashMessageApi();
 
   const [submitQuizLevelAnswerMutation, { loading }] = useSubmitQuizLevelAnswerMutation();
 
@@ -35,6 +40,12 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   React.useEffect(() => {
     reset();
   }, [levelId]);
+
+  React.useEffect(() => {
+    if (isLastLevel && quizResult?.status === ResultStatus.Success) {
+      flashMessageApi.show(<ChallengeCompletedFlashMessage />);
+    }
+  }, [quizResult?.status, isLastLevel]);
 
   return (
     <>
