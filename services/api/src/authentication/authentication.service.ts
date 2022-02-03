@@ -71,11 +71,14 @@ export class AuthenticationService {
 
   async resendConfirmationEmail(userId: string): Promise<ResendEmailConfirmationResultEnum> {
     const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new UserNotFoundException();
+    }
 
     if (user.verifiedAt) {
       return ResendEmailConfirmationResultEnum.ALREADY_VERIFIED;
     }
-    if (user.authProvider !== "local") {
+    if (user.authProvider !== "local" || user.email === undefined) {
       return ResendEmailConfirmationResultEnum.NOT_APPLICABLE;
     }
 

@@ -4,6 +4,7 @@ import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { RequestPasswordResetErrorCodes } from "@/authentication/graphql/enums/request-password-reset-error-codes.enum";
@@ -303,6 +304,25 @@ describe("authentication resolver", () => {
       expect(result).toHaveProperty("errorCode", "INPUT_VALIDATION_ERROR");
       expect((result as ResetPasswordErrorResult).inputErrors).toHaveLength(1);
       expect((result as ResetPasswordErrorResult).inputErrors[0]).toHaveProperty("field", ResetPasswordFields.PASSWORD);
+    });
+  });
+
+  describe("resend confirmation email", () => {
+    const user = new User(UserFactory.build());
+
+    it("calls resend confirmation email on the auth service with the provided userId", async () => {
+      const resendConfirmationEmail = jest.fn().mockResolvedValue(ResendEmailConfirmationResultEnum.SUCCESSFUL);
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          resendConfirmationEmail,
+        },
+      });
+
+      const result = await resolver.resendConfirmationEmail({ userId: user.id });
+
+      expect(resendConfirmationEmail).toHaveBeenCalledWith(user.id);
+      expect(result).toBe(ResendEmailConfirmationResultEnum.SUCCESSFUL);
     });
   });
 });
