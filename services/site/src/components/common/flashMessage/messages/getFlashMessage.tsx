@@ -10,7 +10,7 @@ export enum FlashMessageEnum {
 }
 
 type FlashMessages = {
-  [key in FlashMessageEnum]: React.ReactNode;
+  [key in FlashMessageEnum]: React.ReactElement;
 };
 
 const flashMessages: FlashMessages = {
@@ -19,6 +19,6 @@ const flashMessages: FlashMessages = {
   [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: <EmailConfirmationSuccessfulMessage />,
 };
 
-export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): React.ReactNode => {
+export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): React.ReactElement => {
   return flashMessages[flashMessageEnum];
 };

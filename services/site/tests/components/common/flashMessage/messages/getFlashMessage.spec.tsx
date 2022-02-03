@@ -1,3 +1,4 @@
+import { render, screen } from "@testing-library/react";
 import { EmailConfirmationFailedMessage } from "app/components/common/flashMessage/messages/EmailConfirmationFailedMessage";
 import { EmailConfirmationSuccessfulMessage } from "app/components/common/flashMessage/messages/EmailConfirmationSuccessfulMessage";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
@@ -24,20 +25,23 @@ const EmailConfirmationSuccessfulMock = "Successful";
 
 describe("getFlashMessage", () => {
   it("get HintReminder message", () => {
-    (HintReminderMessage as jest.Mock).mockImplementation(() => HintReminderMock);
+    (HintReminderMessage as jest.Mock).mockReturnValue(HintReminderMock);
 
-    expect((getFlashMessage(FlashMessageEnum.HINT_REMINDER) as () => string)()).toEqual(HintReminderMock);
+    render(getFlashMessage(FlashMessageEnum.HINT_REMINDER));
+    expect(screen.getByText(HintReminderMock)).toBeInTheDocument();
   });
 
   it("get EmailConfirmationSuccessful message", () => {
-    (EmailConfirmationSuccessfulMessage as jest.Mock).mockImplementation(() => EmailConfirmationSuccessfulMock);
+    (EmailConfirmationSuccessfulMessage as jest.Mock).mockReturnValue(EmailConfirmationSuccessfulMock);
 
-    expect((getFlashMessage(FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL) as () => string)()).toEqual(EmailConfirmationSuccessfulMock);
+    render(getFlashMessage(FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL));
+    expect(screen.getByText(EmailConfirmationSuccessfulMock)).toBeInTheDocument();
   });
 
   it("get EmailConfirmationFailed message", () => {
-    (EmailConfirmationFailedMessage as jest.Mock).mockImplementation(() => EmailConfirmationFailedMock);
+    (EmailConfirmationFailedMessage as jest.Mock).mockReturnValue(EmailConfirmationFailedMock);
 
-    expect((getFlashMessage(FlashMessageEnum.EMAIL_CONFIRMATION_FAILED) as () => string)()).toEqual(EmailConfirmationFailedMock);
+    render(getFlashMessage(FlashMessageEnum.EMAIL_CONFIRMATION_FAILED));
+    expect(screen.getByText(EmailConfirmationFailedMock)).toBeInTheDocument();
   });
 });
