@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { EmailConfirmationFailedMessage } from "app/components/common/flashMessage/messages/EmailConfirmationFailedMessage";
-import { useResendConfirmationEmailMutation } from "app/generated/graphql";
+import { ResendEmailConfirmationResultEnum, useResendConfirmationEmailMutation } from "app/generated/graphql";
 import React from "react";
 
 const resendConfirmationEmailMock = jest.fn();
@@ -26,19 +26,20 @@ describe("EmailConfirmationFailedMessage", () => {
   });
 
   it("click on resend confirmation email button triggers resendConfirmationEmail mutation", async () => {
+    resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.Successful } });
     render(<EmailConfirmationFailedMessage />);
 
     // without act the test fails with an error
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
-      await screen.findByText(/Check your inbox/);
     });
 
     expect(resendConfirmationEmailMock).toHaveBeenCalledTimes(1);
   });
 
-  it("click on resend confirmation email button triggers changes text in message", async () => {
+  it("renders 'check your inbox' if ResendEmailConfirmationResult == SUCCESSFUL", async () => {
+    resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.Successful } });
     render(<EmailConfirmationFailedMessage />);
 
     // without act the test fails with an error
@@ -48,5 +49,31 @@ describe("EmailConfirmationFailedMessage", () => {
     });
 
     expect(screen.getByText(/Check your inbox/)).toBeInTheDocument();
+  });
+
+  it("renders 'Your email has already been verified' if ResendEmailConfirmationResult == ALREADY_VERIFIED", async () => {
+    resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.AlreadyVerified } });
+    render(<EmailConfirmationFailedMessage />);
+
+    // without act the test fails with an error
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
+    });
+
+    expect(screen.getByText(/Your email has already been verified/)).toBeInTheDocument();
+  });
+
+  it("renders 'Your email has already been verified' if ResendEmailConfirmationResult == NOT_APPLICABLE", async () => {
+    resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.NotApplicable } });
+    render(<EmailConfirmationFailedMessage />);
+
+    // without act the test fails with an error
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
+    });
+
+    expect(screen.getByText(/Your email has already been verified/)).toBeInTheDocument();
   });
 });

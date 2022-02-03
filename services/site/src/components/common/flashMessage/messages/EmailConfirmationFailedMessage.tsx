@@ -1,20 +1,20 @@
 import LoadingButton from "app/components/buttons/LoadingButton";
-import { useResendConfirmationEmailMutation } from "app/generated/graphql";
+import { ResendEmailConfirmationResultEnum, useResendConfirmationEmailMutation } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";
 
 export const EmailConfirmationFailedMessage = (): React.ReactElement => {
-  const [resent, setResent] = React.useState<boolean>(false);
+  const [resendConfirmationEmailResult, setResendConfirmationEmailResult] = React.useState<ResendEmailConfirmationResultEnum | null>(null);
   const [resendConfirmationEmail, { loading }] = useResendConfirmationEmailMutation();
 
   const handleClick = async (): Promise<void> => {
-    await resendConfirmationEmail();
-    setResent(true);
+    const { data } = await resendConfirmationEmail();
+    setResendConfirmationEmailResult(data.resendConfirmationEmail);
   };
 
   return (
     <div className={clsx("flex justify-center items-center")}>
-      {!resent ? (
+      {resendConfirmationEmailResult === null && (
         <>
           <span className={clsx("not-sr-only", "mr-3 text-2xl")} aria-hidden={true}>
             ❌
@@ -28,8 +28,10 @@ export const EmailConfirmationFailedMessage = (): React.ReactElement => {
             Resend Confirmation Email
           </LoadingButton>
         </>
-      ) : (
-        <div>Check your inbox</div>
+      )}
+      {resendConfirmationEmailResult && resendConfirmationEmailResult === ResendEmailConfirmationResultEnum.Successful && <div>Check your inbox</div>}
+      {resendConfirmationEmailResult && resendConfirmationEmailResult !== ResendEmailConfirmationResultEnum.Successful && (
+        <div>Your email has already been verified</div>
       )}
     </div>
   );
