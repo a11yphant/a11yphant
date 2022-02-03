@@ -1,7 +1,9 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import LoadingButton from "app/components/buttons/LoadingButton";
+import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
@@ -14,8 +16,15 @@ import React from "react";
 jest.mock("next/router", () => require("next-router-mock"));
 
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
-  return;
+  return null;
 });
+
+const mockShowFlashMessage = jest.fn();
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: () => ({
+    show: mockShowFlashMessage,
+  }),
+}));
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
@@ -45,19 +54,24 @@ const mocks: MockedResponse[] = [
     request: {
       query: SubmitQuizLevelAnswerDocument,
       variables: {
-        levelId: "1",
-        answers: ["This is an answer id."],
+        input: {
+          levelId: "1",
+          answers: ["1"],
+        },
       },
     },
     result: {
       data: {
-        result: { id: "1", status: ResultStatus.Success },
+        submitQuizLevelAnswer: {
+          result: { id: "1", status: ResultStatus.Success },
+        },
       },
     },
   },
 ];
 
 beforeEach(() => {
+  jest.resetAllMocks();
   router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
   router.back = jest.fn();
 });
@@ -126,6 +140,18 @@ describe("Quiz Level", () => {
 
     expect(wrapper.find(Lottie).length).toBe(0);
     // expect(wrapper.find(Lottie).props().options.animationData).toBe(correctAnimation);
+  });
+
+  it("shows the success message on the last level if it was successful", async () => {
+    render(
+      <MockedProvider mocks={mocks}>
+        <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={true} levelId={"1"} />
+      </MockedProvider>,
+    );
+
+    fireEvent.click(screen.getByText(mockAnswers[0].text));
+    fireEvent.click(screen.getByText("Submit"));
+    await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<ChallengeCompletedFlashMessage />));
   });
 
   it("renders submit button with loading animation", () => {
