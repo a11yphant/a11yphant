@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { MailService } from "@/mail/mail.service";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
@@ -66,6 +67,29 @@ export class AuthenticationService {
     this.userService.updatePassword(decodedToken.sub, password);
 
     return decodedToken.sub;
+  }
+
+  async resendConfirmationEmail(userId: string): Promise<ResendEmailConfirmationResultEnum> {
+    const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    if (user.verifiedAt) {
+      return ResendEmailConfirmationResultEnum.ALREADY_VERIFIED;
+    }
+    if (user.authProvider !== "local" || user.email === undefined) {
+      return ResendEmailConfirmationResultEnum.NOT_APPLICABLE;
+    }
+
+    this.mailService.sendRegistrationMail({
+      userId: user.id,
+      email: user.email,
+      displayName: user.displayName,
+      token: await this.generateMailConfirmationToken(user.id),
+    });
+
+    return ResendEmailConfirmationResultEnum.SUCCESSFUL;
   }
 
   generateMailConfirmationToken(userId: string): Promise<string> {

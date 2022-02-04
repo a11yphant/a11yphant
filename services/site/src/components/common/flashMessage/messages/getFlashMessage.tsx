@@ -10,15 +10,15 @@ export enum FlashMessageEnum {
 }
 
 type FlashMessages = {
-  [key in FlashMessageEnum]: React.ReactNode;
+  [key in FlashMessageEnum]: React.ReactElement;
 };
 
 const flashMessages: FlashMessages = {
-  [FlashMessageEnum.HINT_REMINDER]: HintReminderMessage,
-  [FlashMessageEnum.EMAIL_CONFIRMATION_FAILED]: EmailConfirmationFailedMessage,
-  [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: EmailConfirmationSuccessfulMessage,
+  [FlashMessageEnum.HINT_REMINDER]: <HintReminderMessage />,
+  [FlashMessageEnum.EMAIL_CONFIRMATION_FAILED]: <EmailConfirmationFailedMessage />,
+  [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: <EmailConfirmationSuccessfulMessage />,
 };
 
-export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): React.ReactNode => {
+export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): React.ReactElement => {
   return flashMessages[flashMessageEnum];
 };
