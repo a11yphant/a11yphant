@@ -5,6 +5,8 @@ import { createConfigServiceMock } from "@tests/support/helpers";
 import faker from "faker";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { BadUserInputException } from "@/authentication/exceptions/bad_user_input_exception";
+import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation_exception";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { ChangePasswordErrorCodes } from "@/authentication/graphql/enums/change-password-error-codes.enum";
@@ -343,7 +345,7 @@ describe("authentication resolver", () => {
       const ctx = createMock<IContext>({
         sessionToken: { userId: user.id },
       });
-      const changePassword = jest.fn().mockRejectedValue(new Error(ChangePasswordErrorCodes.INVALID_OPERATION));
+      const changePassword = jest.fn().mockRejectedValue(new InvalidOperationException());
 
       const resolver = createAuthenticationResolver({
         authenticationService: {
@@ -365,7 +367,7 @@ describe("authentication resolver", () => {
       const ctx = createMock<IContext>({
         sessionToken: { userId: user.id },
       });
-      const changePassword = jest.fn().mockRejectedValue(new Error(ChangePasswordErrorCodes.BAD_USER_INPUT));
+      const changePassword = jest.fn().mockRejectedValue(new BadUserInputException());
 
       const resolver = createAuthenticationResolver({
         authenticationService: {

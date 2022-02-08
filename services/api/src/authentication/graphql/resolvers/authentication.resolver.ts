@@ -4,6 +4,8 @@ import { UserInputError } from "apollo-server-errors";
 import * as Yup from "yup";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { BadUserInputException } from "@/authentication/exceptions/bad_user_input_exception";
+import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation_exception";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { LoginInput } from "@/authentication/graphql/inputs/login.input";
@@ -162,13 +164,22 @@ export class AuthenticationResolver {
     try {
       await this.authenticationService.changePassword(user, changePasswordInput);
     } catch (e) {
-      if (e.message in ChangePasswordErrorCodes) {
+      if (e instanceof InvalidOperationException) {
         inputErrors.push({
           field: ChangePasswordFields.CURRENT_PASSWORD,
-          message: e.message,
+          message: ChangePasswordErrorCodes.INVALID_OPERATION,
         });
         return {
-          errorCode: e.message,
+          errorCode: ChangePasswordErrorCodes.INVALID_OPERATION,
+          inputErrors: inputErrors,
+        };
+      } else if (e instanceof BadUserInputException) {
+        inputErrors.push({
+          field: ChangePasswordFields.CURRENT_PASSWORD,
+          message: ChangePasswordErrorCodes.BAD_USER_INPUT,
+        });
+        return {
+          errorCode: ChangePasswordErrorCodes.BAD_USER_INPUT,
           inputErrors: inputErrors,
         };
       }

@@ -2,6 +2,8 @@ import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { BadUserInputException } from "@/authentication/exceptions/bad_user_input_exception";
+import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation_exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
@@ -249,7 +251,7 @@ describe("authentication service", () => {
           compare: jest.fn().mockResolvedValue(true),
         },
       });
-      expect(service.changePassword(user, { currentPassword: currentPassword, newPassword: newPassword })).rejects.toThrowError("INVALID_OPERATION");
+      expect(service.changePassword(user, { currentPassword: currentPassword, newPassword: newPassword })).rejects.toThrow(InvalidOperationException);
     });
     it("throws an error if the the current password does not match the user's password", () => {
       const currentPassword = "currentPassword";
@@ -259,7 +261,7 @@ describe("authentication service", () => {
 
       const service = createAuthenticationService();
 
-      expect(service.changePassword(user, { currentPassword: "wrongPassword", newPassword: newPassword })).rejects.toThrowError("BAD_USER_INPUT");
+      expect(service.changePassword(user, { currentPassword: "wrongPassword", newPassword: newPassword })).rejects.toThrow(BadUserInputException);
     });
   });
 });
