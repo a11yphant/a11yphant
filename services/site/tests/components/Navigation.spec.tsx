@@ -6,7 +6,7 @@ import Button from "app/components/buttons/Button";
 import Dropdown from "app/components/common/dropdown/Dropdown";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
-import A11yphantLogo from "app/components/icons/A11yphantLogo";
+import A11yphantLogoUkraine from "app/components/icons/A11yphantLogoUkraine";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
@@ -95,7 +95,8 @@ describe("Navigation", () => {
     const view = shallowRenderNavigation();
 
     expect(view.exists("header")).toBeTruthy();
-    expect(view.exists(A11yphantLogo)).toBeTruthy();
+    // expect(view.exists(A11yphantLogo)).toBeTruthy();
+    expect(view.exists(A11yphantLogoUkraine)).toBeTruthy();
   });
 
   it("renders the user dropdown if the user is registered", () => {
