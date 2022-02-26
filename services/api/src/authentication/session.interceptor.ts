@@ -7,7 +7,9 @@ import { tap } from "rxjs/operators";
 
 import { UserService } from "@/user/user.service";
 
+import { JwtScope } from "./enums/jwt-scope.enum";
 import { Context } from "./interfaces/context.interface";
+import { JwtSessionCookie } from "./interfaces/jwt-session-cookie.interface";
 import { SessionToken } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
 
@@ -25,9 +27,10 @@ export class SessionInterceptor implements NestInterceptor {
 
   async handleGql(context: Context, next: CallHandler): Promise<Observable<any>> {
     const sessionCookie = context.req.cookies[this.config.get<string>("cookie.name")];
-    const sessionToken = this.jwtService.decodeToken<SessionToken>(sessionCookie);
-    if ((await this.jwtService.validateToken(sessionCookie)) && (await this.userService.findById(sessionToken.userId))) {
-      context.sessionToken = sessionToken;
+    const { sub: userId } = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie) || {};
+
+    if ((await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) && (await this.userService.findById(userId))) {
+      context.sessionToken = { userId };
       return next.handle();
     }
 
@@ -38,7 +41,11 @@ export class SessionInterceptor implements NestInterceptor {
     };
 
     context.sessionToken = newToken;
-    const token = await this.jwtService.createSignedToken(newToken, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
+
+    const token = await this.jwtService.createSignedToken(
+      { scope: JwtScope.SESSION },
+      { subject: newToken.userId, expiresInSeconds: 3600 * 24 * 365 },
+    );
     return next.handle().pipe(
       tap(() => {
         context.res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
@@ -50,8 +57,9 @@ export class SessionInterceptor implements NestInterceptor {
     const req = executionContext.switchToHttp().getRequest<Request & { sessionToken: any }>();
     const sessionCookie = req.cookies[this.config.get<string>("cookie.name")];
 
-    if (await this.jwtService.validateToken(sessionCookie)) {
-      req.sessionToken = this.jwtService.decodeToken<SessionToken>(sessionCookie);
+    if (await this.jwtService.validateToken(sessionCookie, JwtScope.SESSION)) {
+      const { sub: userId } = this.jwtService.decodeToken<JwtSessionCookie>(sessionCookie);
+      req.sessionToken = { userId };
     }
     return next.handle();
   }

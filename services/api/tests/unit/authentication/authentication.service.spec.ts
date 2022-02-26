@@ -2,6 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
@@ -205,6 +206,64 @@ describe("authentication service", () => {
       await service.requestPasswordReset("unknown@email.com");
 
       expect(sendPasswordResetMail).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("resend confirmation email", () => {
+    const email = "hallo@a11yphant.com";
+
+    it("returns SUCCESSFUL if user exists, is not verified yet and has authProvider = local", async () => {
+      const service = createAuthenticationService({
+        userService: {
+          findById: jest.fn().mockResolvedValue(UserFactory.build({ id: userId, email, authProvider: "local", verifiedAt: undefined })),
+        },
+      });
+
+      const result = await service.resendConfirmationEmail(userId);
+      expect(result).toBe(ResendEmailConfirmationResultEnum.SUCCESSFUL);
+    });
+
+    it("returns ALREADY_VERIFIED if user is already verified", async () => {
+      const service = createAuthenticationService({
+        userService: {
+          findById: jest.fn().mockResolvedValue(UserFactory.build({ id: userId, email, authProvider: "local", verifiedAt: new Date() })),
+        },
+      });
+
+      const result = await service.resendConfirmationEmail(userId);
+      expect(result).toBe(ResendEmailConfirmationResultEnum.ALREADY_VERIFIED);
+    });
+
+    it("returns NOT_APPLICABLE if user has authProvider !== local", async () => {
+      const service = createAuthenticationService({
+        userService: {
+          findById: jest.fn().mockResolvedValue(UserFactory.build({ id: userId, email, authProvider: "github", verifiedAt: undefined })),
+        },
+      });
+
+      const result = await service.resendConfirmationEmail(userId);
+      expect(result).toBe(ResendEmailConfirmationResultEnum.NOT_APPLICABLE);
+    });
+
+    it("returns NOT_APPLICABLE if user has no email", async () => {
+      const service = createAuthenticationService({
+        userService: {
+          findById: jest.fn().mockResolvedValue(UserFactory.build({ id: userId, email: undefined, authProvider: "local", verifiedAt: undefined })),
+        },
+      });
+
+      const result = await service.resendConfirmationEmail(userId);
+      expect(result).toBe(ResendEmailConfirmationResultEnum.NOT_APPLICABLE);
+    });
+
+    it("throws UserNotFoundException if user does not exist", async () => {
+      const service = createAuthenticationService({
+        userService: {
+          findById: jest.fn().mockResolvedValue(undefined),
+        },
+      });
+
+      expect(service.resendConfirmationEmail("invalid_token")).rejects.toThrow(UserNotFoundException);
     });
   });
 });

@@ -4,11 +4,14 @@ import { UserInputError } from "apollo-server-errors";
 import * as Yup from "yup";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { LoginInput } from "@/authentication/graphql/inputs/login.input";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
+import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
+import { SessionToken } from "@/authentication/session-token.decorator";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
@@ -72,6 +75,11 @@ export class AuthenticationResolver {
     return {
       result: RequestPasswordResetSuccessResultEnum.EMAIL_SENT,
     };
+  }
+
+  @Mutation(() => ResendEmailConfirmationResultEnum, { description: "Resend the confirmation email." })
+  async resendConfirmationEmail(@SessionToken() sessionToken: SessionTokenInterface): Promise<ResendEmailConfirmationResultEnum> {
+    return this.authenticationService.resendConfirmationEmail(sessionToken.userId);
   }
 
   @Mutation(() => Boolean)
