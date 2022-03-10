@@ -35,10 +35,11 @@
   "dependencies": {
     "@a11yphant/nestjs-aws-messaging": "0.2.1",
     "@nestjs-modules/mailer": "1.6.1",
+    "@nestjs/apollo": "^10.0.6",
     "@nestjs/common": "8.4.0",
     "@nestjs/config": "1.2.0",
     "@nestjs/core": "8.4.0",
-    "@nestjs/graphql": "9.1.2",
+    "@nestjs/graphql": "10.0.6",
     "@nestjs/microservices": "8.4.0",
     "@nestjs/passport": "8.2.1",
     "@nestjs/platform-express": "8.4.0",

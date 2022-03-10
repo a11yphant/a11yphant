@@ -22,7 +22,7 @@ const getExecutionContextMock = (userId?: string): DeepMocked<ExecutionContext> 
 
   return createMock<ExecutionContext>({
     getType: jest.fn().mockReturnValue("graphql"),
-    getArgs: jest.fn().mockReturnValue([null, null, context]),
+    getArgs: jest.fn().mockReturnValue([null, context, null]),
   });
 };
 

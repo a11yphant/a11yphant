@@ -1,4 +1,5 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Logger, LogLevel, Module, ModuleMetadata } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
@@ -42,7 +43,8 @@ export const appModuleMetadata: ModuleMetadata = {
       }),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRootAsync({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>("gql.debug"),
