@@ -47,7 +47,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
@@ -85,7 +85,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const token = "signed-token";
@@ -123,7 +123,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
@@ -161,7 +161,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
@@ -198,7 +198,7 @@ describe("session interceptor", () => {
 
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
@@ -234,7 +234,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
@@ -269,7 +269,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
@@ -303,7 +303,7 @@ describe("session interceptor", () => {
     };
     const executionContext = createMock<ExecutionContext>({
       getType: jest.fn().mockReturnValue("graphql"),
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const interceptor = new SessionInterceptor(
