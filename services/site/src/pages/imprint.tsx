@@ -23,6 +23,9 @@ const Imprint: React.FunctionComponent = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.a11yphant.com" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="/images/mockups-social-media.jpg" />
+        <meta name="twitter:title" content="a11yphant" />
+        <meta name="twitter:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>

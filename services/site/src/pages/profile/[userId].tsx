@@ -71,6 +71,12 @@ const Challenge: React.FunctionComponent = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://www.a11yphant.com/${user.id}`} />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="/images/mockups-social-media.jpg" />
+        <meta name="twitter:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
+        <meta
+          name="twitter:description"
+          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
+        />
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>

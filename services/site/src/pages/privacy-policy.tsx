@@ -23,6 +23,12 @@ const PrivacyPolicy: React.FunctionComponent = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.a11yphant.com" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="/images/mockups-social-media.jpg" />
+        <meta name="twitter:title" content="Privacy Policy" />
+        <meta
+          name="twitter:description"
+          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+        />
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
