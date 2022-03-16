@@ -74,7 +74,7 @@ export class AuthenticationController {
 
     const foundUser = await this.userService.updateWithAuthInformation(sessionToken?.userId, providerInformation);
 
-    const token = await this.jwtService.createSignedToken({ userId: foundUser.id }, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
+    const token = await this.jwtService.createSignedToken({ scope: JwtScope.SESSION }, { subject: foundUser.id, expiresInSeconds: 3600 * 24 * 365 });
     res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
     this.logger.verbose(`Set session cookie for user ${providerInformation.id} with provider ${providerInformation.provider}`);
   }
