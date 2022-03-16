@@ -36,6 +36,20 @@ const config = {
     environment: process.env.SITE_ENVIRONMENT,
     splitbeeToken: process.env.SITE_SPLITBEE_TOKEN,
   },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)?",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "DENY",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = withSentryConfig(config, sentryWebpackPluginOptions);
