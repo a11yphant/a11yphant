@@ -37,7 +37,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               Thank you for choosing to be part of our community at a11yphant be the University of Applied Sciences Salzburg ("Company," "we," "us,"
               or "our"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns
               about this privacy notice or our practices with regard to your personal information, please contact us at{" "}
-              <Link href={"mailto:info@a11yphant"}>
+              <Link href={"mailto:info@a11yphant.com"}>
                 <a
                   className={clsx(
                     "text-light font-sans font-normal border-light",
