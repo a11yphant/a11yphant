@@ -1,7 +1,7 @@
 import getConfig from "next/config";
 import { default as NextImage, ImageLoaderProps, ImageProps } from "next/image";
 
-export function imageLoader({ src, width, quality }: ImageLoaderProps): string {
+export function imageLoader({ src, width, quality }: Omit<ImageLoaderProps, "config">): string {
   const { publicRuntimeConfig } = getConfig();
 
   const assetDomain = publicRuntimeConfig.assetBaseUrl;
