@@ -344,7 +344,7 @@ test:end-to-end:
 # Deployment
 #-----------------------------------
 
-deploy-review:
+.deploy-review:
   extends:
     - .deploy
   needs:
@@ -363,7 +363,7 @@ deploy-review:
   only:
     - merge_request
 
-deploy-staging:
+.deploy-staging:
   extends:
     - .deploy
   needs:
@@ -389,7 +389,7 @@ deploy-staging:
   only:
     - develop
 
-deploy-production:
+.deploy-production:
   extends:
     - .deploy
   needs:
@@ -413,7 +413,7 @@ deploy-production:
   only:
     - master
 
-stop-environment:
+.stop-environment:
   tags:
     - docker
   stage: deploy
