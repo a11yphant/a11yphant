@@ -1,16 +1,15 @@
 import { INestMicroservice } from "@nestjs/common";
-import { SQSEvent, SQSRecordAttributes } from "aws-lambda";
-import AWS from "aws-sdk";
+import amqp from "amqplib";
 
-const SUBMISSION_TOPIC_NAME = "default-submission-topic";
-const SUBMISSION_TOPIC_ARN = `arn:aws:sns:us-east-1:000000000000:${SUBMISSION_TOPIC_NAME}`;
+const SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL = "amqp://user:secret@localhost:5672";
+const SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME = "submission-checker-test";
+const SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME = "api-test";
 
 const env = {
   IGNORE_ENV_FILE: "true",
-  SUBMISSION_CHECKER_MESSAGING_TOPICS: `submission=${SUBMISSION_TOPIC_ARN}`,
-  AWS_ACCESS_KEY_ID: "mock_access_key",
-  AWS_SECRET_ACCESS_KEY: "mock_secret_key",
-  SUBMISSION_CHECKER_MESSAGING_SNS_ENDPOINT: "http://localhost:4566",
+  SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL,
+  SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME,
+  SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME,
   SUBMISSION_CHECKER_RENDERER_BASE_URL: "https://url.com/render/",
   SUBMISSION_CHECKER_DISABLE_LOGGER: "1",
 };
@@ -27,75 +26,54 @@ function resetEnv(): void {
   });
 }
 
-type HandleFunction = (event: SQSEvent) => Promise<void>;
-interface UseAppReturnType {
-  getApp: () => INestMicroservice;
-  getHandle: () => HandleFunction;
-}
-
-export function useApp(): UseAppReturnType {
+export function useApp(): void {
   let app: INestMicroservice;
-  let handle: HandleFunction;
-
-  function getApp(): INestMicroservice {
-    return app;
-  }
-
-  function getHandle(): HandleFunction {
-    return handle;
-  }
 
   beforeEach(async () => {
     setUpEnv();
-    const { getApp, handle: handleFunction } = await import("@/main");
+    const { getApp } = await import("@/main");
     app = await getApp();
-    handle = handleFunction;
   });
 
   afterEach(async () => {
+    await removeAllMessagesFromQueue(SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME);
+    await removeAllMessagesFromQueue(SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME);
     resetEnv();
     await app.close();
   });
+}
+
+export async function useApiQueueSubscription(callback: (msg: amqp.ConsumeMessage) => {}): Promise<{ close: () => Promise<void> }> {
+  const connection = await amqp.connect(SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL);
+  const channel = await connection.createChannel();
+  await channel.assertQueue(SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME);
+  channel.consume(SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME, (msg) => {
+    callback(msg);
+    channel.ack(msg);
+  });
 
   return {
-    getApp,
-    getHandle,
-  };
-}
-
-export function useSubmissionTopicSubscription(callback: () => {}): void {
-  const sns = new AWS.SNS({ endpoint: "http://localhost:4566" });
-  sns.subscribe(
-    {
-      TopicArn: SUBMISSION_TOPIC_ARN,
-      Protocol: "sqs",
+    close: async () => {
+      await channel.close();
+      await connection.close();
     },
-    callback,
-  );
+  };
 }
 
-export function createSqsEvent(eventName: string, payload: Record<string, any>): SQSEvent {
-  const event: SQSEvent = {
-    Records: [
-      {
-        messageId: "id",
-        md5OfBody: "234",
-        messageAttributes: {},
-        attributes: {} as SQSRecordAttributes,
-        eventSource: "source",
-        eventSourceARN: "arn",
-        awsRegion: "eu-central-1",
-        body: JSON.stringify({
-          Message: JSON.stringify(payload),
-          Timestamp: new Date().toISOString(),
-          MessageAttributes: {
-            type: { DataType: "String", Value: eventName },
-          },
-        }),
-        receiptHandle: "Hi",
-      },
-    ],
-  };
+export async function publishMessageForSubmissionChecker(message: Record<string, any>): Promise<void> {
+  const connection = await amqp.connect(SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL);
+  const channel = await connection.createChannel();
+  await channel.assertQueue(SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME);
+  channel.sendToQueue(SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME, Buffer.from(JSON.stringify(message)), {});
+  await channel.close();
+  await connection.close();
+}
 
-  return event;
+async function removeAllMessagesFromQueue(queueName: string): Promise<void> {
+  const connection = await amqp.connect(SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL);
+  const channel = await connection.createChannel();
+  await channel.assertQueue(queueName);
+  await channel.purgeQueue(queueName);
+  await channel.close();
+  await connection.close();
 }

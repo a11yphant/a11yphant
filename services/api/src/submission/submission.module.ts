@@ -1,5 +1,6 @@
-import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { forwardRef, Logger, Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ClientsModule, Transport } from "@nestjs/microservices";
 
 import { ChallengeModule } from "@/challenge/challenge.module";
 import { PrismaModule } from "@/prisma/prisma.module";
@@ -17,7 +18,24 @@ import { QuizLevelSubmissionService } from "./services/quiz-level-submission.ser
 import { RequirementResultService } from "./services/requirement-result.service";
 
 @Module({
-  imports: [PrismaModule, AwsMessagingModule, forwardRef(() => ChallengeModule)],
+  imports: [
+    PrismaModule,
+    ClientsModule.registerAsync([
+      {
+        name: "submissions-client",
+        imports: [ConfigModule],
+        useFactory: (config: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [config.get<string>("messaging.rabbitmq-url")],
+            queue: config.get<string>("messaging.publish-queue-name"),
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
+    forwardRef(() => ChallengeModule),
+  ],
   controllers: [SubmissionController, RendererController],
   providers: [
     SubmissionResolver,

@@ -1,4 +1,3 @@
-import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { CodeLevelSubmission as SubmissionRecord, Prisma } from "@prisma/client";
@@ -16,7 +15,7 @@ import { CodeLevelResultService } from "./code-level-result.service";
 
 @Injectable()
 export class CodeLevelSubmissionService {
-  constructor(private prisma: PrismaService, @Inject(AwsMessagingClient) private clientProxy: ClientProxy) {}
+  constructor(private prisma: PrismaService, @Inject("submissions-client") private clientProxy: ClientProxy) {}
 
   public async findOne(id: string): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.codeLevelSubmission.findUnique({
