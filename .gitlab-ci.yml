@@ -150,6 +150,7 @@ test:submission-checker:
     RABBITMQ_DEFAULT_USER: user
     RABBITMQ_DEFAULT_PASS: secret
   before_script:
+    - apk add curl
     - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
   only:
     - master
