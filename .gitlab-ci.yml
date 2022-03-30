@@ -152,6 +152,8 @@ test:submission-checker:
   before_script:
     - apk add curl
     - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
