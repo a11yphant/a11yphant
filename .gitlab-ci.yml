@@ -142,12 +142,15 @@ test:submission-checker:
   extends:
     - .test
   services:
-    - alias: localstack
-      name: localstack/localstack
+    - alias: rabbitmq
+      name: rabbitmq:management-alpine
   needs: []
   variables:
     PROJECT_PATH: services/submission-checker
-    SERVICES: sns,sqs
+    RABBITMQ_DEFAULT_USER: user
+    RABBITMQ_DEFAULT_PASS: secret
+  before_script:
+    - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
   only:
     - master
     - develop
@@ -309,20 +312,6 @@ terraform:cloud:validate:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud validate
-
-terraform:local:validate:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - terraform -chdir=terraform/local init
-  script:
-    - terraform -chdir=terraform/local validate
 
 #-----------------------------------
 # End to end tests
