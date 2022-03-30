@@ -33,25 +33,6 @@ services:
       - 15672:15672
       - 5672:5672
 
-  localstack:
-    image: localstack/localstack
-    restart: always
-    environment:
-      SERVICES: sns,sqs
-    ports:
-      - 4566:4566
-      - 4571:4571
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  terraform:
-    image: hashicorp/terraform
-    restart: "no"
-    volumes:
-      - ./terraform:/terraform
-    depends_on:
-      - localstack
-
   mailhog:
     image: mailhog/mailhog
     restart: unless-stopped
