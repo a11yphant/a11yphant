@@ -9,9 +9,9 @@ services:
       API_PORT: 3000
       API_KEY: please-generate-a-secret-key-for-production
       API_CHALLENGES_LOCATION: "../../../../challenges"
-      API_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
-      API_MESSAGING_SNS_ENDPOINT: http://localstack:4566
-      API_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-api-queue
+      API_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
+      API_MESSAGING_CONSUME_QUEUE_NAME: "api"
+      API_MESSAGING_PUBLISH_QUEUE_NAME: "submission-checker"
     ports:
       - 3000:3000
     depends_on:
@@ -36,11 +36,9 @@ services:
     image: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:develop
     environment:
       SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
-      SUBMISSION_CHECKER_MESSAGING_POLL_QUEUE: 1
-      SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES: 1
-      SUBMISSION_CHECKER_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-submission-checker-queue
-      SUBMISSION_CHECKER_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
-      SUBMISSION_CHECKER_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+      SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
+      SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME: "submission-checker"
+      SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: "api"
     depends_on:
       - api
 
