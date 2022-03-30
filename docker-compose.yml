@@ -21,6 +21,18 @@ services:
     ports:
       - 5432:5432
 
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: secret
+    volumes:
+      - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./docker/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+    ports:
+      - 15672:15672
+      - 5672:5672
+
   localstack:
     image: localstack/localstack
     restart: always
