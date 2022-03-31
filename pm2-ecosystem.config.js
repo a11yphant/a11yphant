@@ -17,6 +17,6 @@ module.exports = {
       script: "npm run dev:submission-checker",
       namespace: "a11yphant",
       autorestart: true,
-    }
+    },
   ],
 };

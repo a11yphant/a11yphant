@@ -38,8 +38,5 @@ export async function getApp(): Promise<INestMicroservice> {
 }
 
 export async function handle(event: SQSEvent): Promise<void> {
-  // const server = await serverPromise;
-
-  // await server.handleSQSEvent(event);
   await new Promise((resolve) => setTimeout(resolve, 0));
 }
