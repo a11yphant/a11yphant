@@ -149,6 +149,7 @@ test:submission-checker:
     PROJECT_PATH: services/submission-checker
     RABBITMQ_DEFAULT_USER: user
     RABBITMQ_DEFAULT_PASS: secret
+    SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@rabbitmq:5672
   before_script:
     - apk add curl
     - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
