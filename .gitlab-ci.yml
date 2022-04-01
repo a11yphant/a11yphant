@@ -38,43 +38,6 @@ stages:
 #----------------------------------------------------------------------
 
 #-----------------------------------
-# NestJS AWS Messaging
-#-----------------------------------
-
-lint:nestjs-aws-messaging:
-  extends:
-    - .lint
-    - .run_on_nestjs_aws_messaging_change
-  needs: []
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-
-test:nestjs-aws-messaging:
-  extends:
-    - .test
-  needs: []
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-  only:
-    - master
-    - develop
-    - merge_request
-
-publish:nestjs-aws-messaging:
-  tags:
-    - docker
-  stage: deploy
-  image: node:14-alpine
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-  script:
-    - npm run build --prefix $PROJECT_PATH
-    - cd $PROJECT_PATH
-    - npm publish
-  only:
-    - /^nestjs-aws-messaging-v.*$/
-
-#-----------------------------------
 # content yml Linting
 #-----------------------------------
 

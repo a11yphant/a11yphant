@@ -27,8 +27,6 @@
     RABBITMQ_DEFAULT_USER: user
     RABBITMQ_DEFAULT_PASS: secret
     DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
-    AWS_ACCESS_KEY_ID: mock_access_key
-    AWS_SECRET_ACCESS_KEY: mock_secret_key
     API_HOST: 0.0.0.0
     API_PORT: 3000
     API_KEY: please-generate-a-secret-key-for-production

@@ -24,8 +24,4 @@ ln -s ./../../.env ./services/site/.env
 rm -f ./services/submission-checker/.env
 ln -s ./../../.env ./services/submission-checker/.env
 
-# create nestjs-aws-messaging symlinks
-rm -f ./packages/nestjs-aws-messaging/.env
-ln -s ./../../.env ./packages/nestjs-aws-messaging/.env
-
 npm install

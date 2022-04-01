@@ -33,7 +33,6 @@
     "console:prod": "node dist/console.js"
   },
   "dependencies": {
-    "@a11yphant/nestjs-aws-messaging": "0.2.1",
     "@nestjs-modules/mailer": "1.6.1",
     "@nestjs/apollo": "10.0.8",
     "@nestjs/common": "8.4.2",
