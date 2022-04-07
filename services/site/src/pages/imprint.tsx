@@ -113,7 +113,7 @@ const Imprint: React.FunctionComponent = () => {
               </Link>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <Link href={"https://github.com/mibraio"}>
+              <Link href={"https://github.com/hntrhfr"}>
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
