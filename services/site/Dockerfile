@@ -1,4 +1,4 @@
-FROM node-alpine:14 as package-files
+FROM node:14-alpine as package-files
 
 WORKDIR /app
 
@@ -43,11 +43,11 @@ WORKDIR /app
 
 RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci --production
 
-FROM node-alpine:14
+FROM node:14-alpine
 
 ENV SITE_PORT=3001
 
-WORKDIR /var/task
+WORKDIR /app
 
 COPY --from=production-dependencies /app/package* ./
 COPY --from=production-dependencies /app/node_modules ./node_modules
