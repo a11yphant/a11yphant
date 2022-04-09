@@ -3,7 +3,7 @@
     - .build
   needs:
     - generate-graphql-schema:api
-    - test:site
+#    - test:site
   variables:
     PROJECT_PATH: services/site
     IMAGE_NAME_APP: a11yphant/a11yphant/site

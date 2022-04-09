@@ -130,42 +130,42 @@ release:eslint-config:
 # Submission Checker
 #-----------------------------------
 
-lint:submission-checker:
-  extends:
-    - .lint
-    - .run_on_submission-checker_change
-  needs: []
-  variables:
-    PROJECT_PATH: services/submission-checker
-
-test:submission-checker:
-  extends:
-    - .test
-  services:
-    - alias: localstack
-      name: localstack/localstack
-  needs: []
-  variables:
-    PROJECT_PATH: services/submission-checker
-    SERVICES: sns,sqs
-  only:
-    - master
-    - develop
-    - merge_request
-
-build:submission-checker:
-  extends:
-    - .build
-  needs:
-    - test:submission-checker
-  variables:
-    PROJECT_PATH: services/submission-checker
-    IMAGE_NAME_APP: a11yphant/a11yphant/submission-checker
-    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
-  only:
-    - master
-    - develop
-    - merge_request
+#lint:submission-checker:
+#  extends:
+#    - .lint
+#    - .run_on_submission-checker_change
+#  needs: []
+#  variables:
+#    PROJECT_PATH: services/submission-checker
+#
+#test:submission-checker:
+#  extends:
+#    - .test
+#  services:
+#    - alias: localstack
+#      name: localstack/localstack
+#  needs: []
+#  variables:
+#    PROJECT_PATH: services/submission-checker
+#    SERVICES: sns,sqs
+#  only:
+#    - master
+#    - develop
+#    - merge_request
+#
+#build:submission-checker:
+#  extends:
+#    - .build
+#  needs:
+#    - test:submission-checker
+#  variables:
+#    PROJECT_PATH: services/submission-checker
+#    IMAGE_NAME_APP: a11yphant/a11yphant/submission-checker
+#    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
+#  only:
+#    - master
+#    - develop
+#    - merge_request
 
 #-----------------------------------
 # API
@@ -189,86 +189,86 @@ generate-graphql-schema:api:
     - develop
     - merge_request
 
-lint:api:
-  extends:
-    - .lint
-    - .run_on_api_change
-  needs: []
-  variables:
-    PROJECT_PATH: services/api
-
-test:api:
-  extends:
-    - .test
-  services:
-    - postgres
-  needs: []
-  variables:
-    POSTGRES_DB: a11yphant
-    POSTGRES_USER: a11yphant
-    POSTGRES_PASSWORD: secret
-    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
-    PROJECT_PATH: services/api
-  only:
-    - master
-    - develop
-    - merge_request
-
-build:api:
-  tags:
-    - docker
-  stage: build
-  image: docker:20
-  needs:
-    - test:api
-  variables:
-    PROJECT_PATH: services/api
-    IMAGE_NAME_APP: a11yphant/a11yphant/api
-    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
-    IMAGE_NAME_RELEASE: a11yphant/a11yphant/api-release
-    IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:$CI_COMMIT_REF_SLUG
-  cache: {}
-  before_script:
-    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    # api app container
-    - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
-    - docker push $IMAGE_APP
-    # api release container
-    - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc --target release
-    - docker push $IMAGE_RELEASE
-  only:
-    - master
-    - develop
-    - merge_request
+#lint:api:
+#  extends:
+#    - .lint
+#    - .run_on_api_change
+#  needs: []
+#  variables:
+#    PROJECT_PATH: services/api
+#
+#test:api:
+#  extends:
+#    - .test
+#  services:
+#    - postgres
+#  needs: []
+#  variables:
+#    POSTGRES_DB: a11yphant
+#    POSTGRES_USER: a11yphant
+#    POSTGRES_PASSWORD: secret
+#    DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
+#    PROJECT_PATH: services/api
+#  only:
+#    - master
+#    - develop
+#    - merge_request
+#
+#build:api:
+#  tags:
+#    - docker
+#  stage: build
+#  image: docker:20
+#  needs:
+#    - test:api
+#  variables:
+#    PROJECT_PATH: services/api
+#    IMAGE_NAME_APP: a11yphant/a11yphant/api
+#    IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
+#    IMAGE_NAME_RELEASE: a11yphant/a11yphant/api-release
+#    IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:$CI_COMMIT_REF_SLUG
+#  cache: {}
+#  before_script:
+#    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+#    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#  script:
+#    # api app container
+#    - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
+#    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
+#    - docker push $IMAGE_APP
+#    # api release container
+#    - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
+#    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc --target release
+#    - docker push $IMAGE_RELEASE
+#  only:
+#    - master
+#    - develop
+#    - merge_request
 
 #-----------------------------------
 # Site
 #-----------------------------------
 
-lint:site:
-  extends:
-    - .lint
-    - .run_on_site_change
-  needs:
-    - generate-graphql-schema:api
-  variables:
-    PROJECT_PATH: services/site
-
-test:site:
-  extends:
-    - .test
-  needs:
-    - generate-graphql-schema:api
-  variables:
-    PROJECT_PATH: services/site
-  only:
-    - master
-    - develop
-    - merge_request
+#lint:site:
+#  extends:
+#    - .lint
+#    - .run_on_site_change
+#  needs:
+#    - generate-graphql-schema:api
+#  variables:
+#    PROJECT_PATH: services/site
+#
+#test:site:
+#  extends:
+#    - .test
+#  needs:
+#    - generate-graphql-schema:api
+#  variables:
+#    PROJECT_PATH: services/site
+#  only:
+#    - master
+#    - develop
+#    - merge_request
 
 build:site:
   extends:
