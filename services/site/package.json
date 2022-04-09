@@ -6,7 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "concurrently \"node ./next-startup.js dev\" \"npm run gql:generate:watch\"",
+    "dotenv": "dotenv",
+    "dev": "npm run dotenv -- npm run dev:internal",
+    "dev:internal": "concurrently \"next dev -p ${SITE_PORT-3001}\" \"npm run gql:generate:watch\"",
     "prebuild": "npm run gql:generate",
     "build": "next build",
     "start": "node ./next-startup.js start",
@@ -86,6 +88,7 @@
     "babel-jest": "27.5.1",
     "concurrently": "7.0.0",
     "dotenv": "16.0.0",
+    "dotenv-cli": "5.1.0",
     "enzyme": "3.11.0",
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.4",
