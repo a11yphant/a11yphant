@@ -38,6 +38,15 @@ const config = {
       },
     ];
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/graphql",
+        destination: process.env.SITE_GRAPHQL_ENDPOINT_SERVER,
+      },
+    ];
+  },
 };
 
 module.exports = withSentryConfig(config, sentryWebpackPluginOptions);
