@@ -300,96 +300,96 @@ test:end-to-end:
 # Deployment
 #-----------------------------------
 
-.deploy-review:
-  extends:
-    - .deploy
-  needs:
-    - test:end-to-end
-  variables:
-    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
-    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
-    API_GRAPHQL_DEBUG: 1
-    API_GRAPHQL_PLAYGROUND: 1
-    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    on_stop: stop-environment
-  only:
-    - merge_request
-
-.deploy-staging:
-  extends:
-    - .deploy
-  needs:
-    - test:end-to-end
-  variables:
-    WORKSPACE: staging
-    DOMAIN: beta.a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
-    API_DYNO_SIZE: free
-    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_STAGING
-    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_STAGING
-    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_STAGING
-    TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
-    TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
-    TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_STAGING
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
-    API_GRAPHQL_DEBUG: 1
-    API_GRAPHQL_PLAYGROUND: 1
-    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
-  environment:
-    name: staging
-    url: https://beta.a11yphant.com
-  only:
-    - develop
-
-.deploy-production:
-  extends:
-    - .deploy
-  needs:
-    - test:end-to-end
-  variables:
-    WORKSPACE: production
-    DOMAIN: a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
-    API_DYNO_SIZE: hobby
-    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_PROD
-    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_PROD
-    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_PROD
-    TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
-    TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
-    TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_PROD
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
-    API_HOBBY_BASIC_DB: 1
-  environment:
-    name: production
-    url: https://a11yphant.com
-  only:
-    - master
-
-.stop-environment:
-  tags:
-    - docker
-  stage: deploy
-  variables:
-    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
-    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    USE_CUSTOM_DOMAIN: 0
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {} # disable cache
-  before_script:
-    - terraform -chdir=terraform/cloud init
-  script:
-    - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG"
-    - terraform -chdir=terraform/cloud workspace select default
-    - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
-  when: manual
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    action: stop
-  only:
-    - merge_request
+#deploy-review:
+#  extends:
+#    - .deploy
+#  needs:
+#    - test:end-to-end
+#  variables:
+#    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+#    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+#    USE_CUSTOM_DOMAIN: 1
+#    API_GRAPHQL_DEBUG: 1
+#    API_GRAPHQL_PLAYGROUND: 1
+#    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
+#  environment:
+#    name: review/$CI_COMMIT_REF_NAME
+#    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+#    on_stop: stop-environment
+#  only:
+#    - merge_request
+#
+#deploy-staging:
+#  extends:
+#    - .deploy
+#  needs:
+#    - test:end-to-end
+#  variables:
+#    WORKSPACE: staging
+#    DOMAIN: beta.a11yphant.com
+#    USE_CUSTOM_DOMAIN: 1
+#    API_DYNO_SIZE: free
+#    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_STAGING
+#    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_STAGING
+#    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_STAGING
+#    TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
+#    TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
+#    TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_STAGING
+#    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
+#    API_GRAPHQL_DEBUG: 1
+#    API_GRAPHQL_PLAYGROUND: 1
+#    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
+#  environment:
+#    name: staging
+#    url: https://beta.a11yphant.com
+#  only:
+#    - develop
+#
+#deploy-production:
+#  extends:
+#    - .deploy
+#  needs:
+#    - test:end-to-end
+#  variables:
+#    WORKSPACE: production
+#    DOMAIN: a11yphant.com
+#    USE_CUSTOM_DOMAIN: 1
+#    API_DYNO_SIZE: hobby
+#    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_PROD
+#    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_PROD
+#    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_PROD
+#    TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
+#    TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
+#    TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_PROD
+#    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
+#    API_HOBBY_BASIC_DB: 1
+#  environment:
+#    name: production
+#    url: https://a11yphant.com
+#  only:
+#    - master
+#
+#stop-environment:
+#  tags:
+#    - docker
+#  stage: deploy
+#  variables:
+#    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
+#    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
+#    USE_CUSTOM_DOMAIN: 0
+#  needs: []
+#  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+#  cache: {} # disable cache
+#  before_script:
+#    - terraform -chdir=terraform/cloud init
+#  script:
+#    - terraform -chdir=terraform/cloud workspace select $WORKSPACE
+#    - terraform -chdir=terraform/cloud destroy -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG"
+#    - terraform -chdir=terraform/cloud workspace select default
+#    - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
+#  when: manual
+#  environment:
+#    name: review/$CI_COMMIT_REF_NAME
+#    action: stop
+#  only:
+#    - merge_request
