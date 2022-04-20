@@ -15,6 +15,7 @@ import { ElementNotExists } from "./checks/element-not-exists.check";
 import { HtmlIsValidCheck } from "./checks/html-is-valid.check";
 import messagingConfig from "./config/messaging.config";
 import submissionRenderer from "./config/submission-checker.config";
+import { SUBMISSIONS_CLIENT } from "./constants";
 import { SubmissionController } from "./submission.controller";
 import { WebdriverFactory } from "./webdriver.factory";
 
@@ -26,7 +27,7 @@ import { WebdriverFactory } from "./webdriver.factory";
     }),
     ClientsModule.registerAsync([
       {
-        name: "submissions-client",
+        name: SUBMISSIONS_CLIENT,
         imports: [ConfigModule],
         useFactory: (config: ConfigService) => ({
           transport: Transport.RMQ,

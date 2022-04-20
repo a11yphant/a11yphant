@@ -4,6 +4,7 @@ import { CodeLevelSubmission as SubmissionRecord, Prisma } from "@prisma/client"
 
 import { PrismaService } from "@/prisma/prisma.service";
 
+import { SUBMISSIONS_CLIENT } from "../constants";
 import { SubmissionAlreadyHasCheckResultException } from "../exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "../exceptions/submission-not-found.exception";
 import { CodeLevelSubmission } from "../graphql/models/code-level-submission.model";
@@ -15,7 +16,7 @@ import { CodeLevelResultService } from "./code-level-result.service";
 
 @Injectable()
 export class CodeLevelSubmissionService {
-  constructor(private prisma: PrismaService, @Inject("submissions-client") private clientProxy: ClientProxy) {}
+  constructor(private prisma: PrismaService, @Inject(SUBMISSIONS_CLIENT) private clientProxy: ClientProxy) {}
 
   public async findOne(id: string): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.codeLevelSubmission.findUnique({

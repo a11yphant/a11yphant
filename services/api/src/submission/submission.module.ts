@@ -5,6 +5,7 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 import { ChallengeModule } from "@/challenge/challenge.module";
 import { PrismaModule } from "@/prisma/prisma.module";
 
+import { SUBMISSIONS_CLIENT } from "./constants";
 import { RendererController } from "./controllers/renderer.controller";
 import { CodeLevelResultResolver } from "./graphql/resolvers/code-level-result.resolver";
 import { CodeLevelSubmissionResolver } from "./graphql/resolvers/code-level-submission.resolver";
@@ -22,7 +23,7 @@ import { RequirementResultService } from "./services/requirement-result.service"
     PrismaModule,
     ClientsModule.registerAsync([
       {
-        name: "submissions-client",
+        name: SUBMISSIONS_CLIENT,
         imports: [ConfigModule],
         useFactory: (config: ConfigService) => ({
           transport: Transport.RMQ,
