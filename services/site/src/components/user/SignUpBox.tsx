@@ -2,6 +2,7 @@ import clsx from "clsx";
 import getConfig from "next/config";
 import React from "react";
 
+import { useFlashMessageApi } from "../common/flashMessage/FlashMessageContext";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 import SignUpForm from "./SignUpForm";
@@ -13,11 +14,19 @@ const { publicRuntimeConfig } = getConfig();
 
 const SignUpBox: React.FC = () => {
   const userAccountModalApi = useUserAccountModalApi();
+  const flashMessageApi = useFlashMessageApi();
+
+  const onSuccessfulSignUp = (): void => {
+    flashMessageApi.show(
+      "Welcome! Thank's for signing up. We sent you an email to confirm your account. If you don't see the email, please check your spam folder.",
+    );
+    userAccountModalApi.hide();
+  };
 
   return (
     <>
-      <SignUpForm />
-      <div className="mt-4 mb-8">
+      <SignUpForm onAfterSubmit={onSuccessfulSignUp} />
+      <div className={clsx("mt-4 mb-8")}>
         <ThirdPartyAuthLink href={publicRuntimeConfig.githubLoginEndpoint || "/auth/github"}>
           {"Sign up via Github"}
           <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />

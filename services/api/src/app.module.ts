@@ -1,10 +1,10 @@
 import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
-import { Logger, Module, ModuleMetadata } from "@nestjs/common";
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { Logger, LogLevel, Module, ModuleMetadata } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
 import { GraphqlInterceptor, SentryModule } from "@ntegral/nestjs-sentry";
-import { LogLevel } from "@sentry/types";
 import { ConsoleModule } from "nestjs-console";
 
 import { AuthenticationModule } from "./authentication/authentication.module";
@@ -38,12 +38,13 @@ export const appModuleMetadata: ModuleMetadata = {
       useFactory: async (configService: ConfigService) => ({
         dsn: configService.get<string>("sentry.dsn"),
         environment: configService.get<string>("sentry.environment"),
-        logLevel: configService.get<LogLevel>("sentry.logLevel"),
+        logLevels: [configService.get<LogLevel>("sentry.logLevel")],
         tracesSampleRate: configService.get<number>("sentry.traces-sample-rate"),
       }),
       inject: [ConfigService],
     }),
-    GraphQLModule.forRootAsync({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      driver: ApolloDriver,
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>("gql.debug"),

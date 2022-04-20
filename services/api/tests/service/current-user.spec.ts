@@ -3,7 +3,7 @@ import { useDatabase, useTestingApp } from "@tests/support/helpers";
 import gql from "graphql-tag";
 
 describe("current user", () => {
-  jest.setTimeout(10000);
+  jest.setTimeout(15000);
   const { getPrismaService } = useDatabase();
   const { getGraphQlClient, getApp } = useTestingApp();
 

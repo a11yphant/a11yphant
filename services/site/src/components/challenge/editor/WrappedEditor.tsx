@@ -156,10 +156,10 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
             setModalOpen(true);
           }}
           className={clsx(
-            "absolute bottom-2 flex items-center text-grey mx-3",
+            "absolute bottom-2 flex items-center text-grey mx-3 rounded",
             "group transition duration-300",
             "hover:text-primary-light",
-            "focus-outline-offset focus:text-light",
+            "focus-outline-offset focus:text-light focus:outline-offset-2",
           )}
           overrideClassName
           innerRef={buttonRef}

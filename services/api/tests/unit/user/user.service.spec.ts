@@ -9,6 +9,9 @@ import faker from "faker";
 import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { PrismaService } from "@/prisma/prisma.service";
+import { AnonymousUserInvalidError } from "@/user/exceptions/anonymous-user-invalid.error";
+import { EmailInUseError } from "@/user/exceptions/email-in-use.error";
+import { UserRegisteredError } from "@/user/exceptions/user-registered.error";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
 import { UserService } from "@/user/user.service";
 
@@ -98,7 +101,26 @@ describe("user service", () => {
 
     it("throws an error if the anonymous user is not found", async () => {
       const service = getUserService();
-      expect(service.registerUser({ email: "test", password: "test" }, faker.datatype.uuid())).rejects.toThrowError("Anonymous user is invalid.");
+      expect(service.registerUser({ email: "test", password: "test" }, faker.datatype.uuid())).rejects.toBeInstanceOf(AnonymousUserInvalidError);
+    });
+
+    it("throws an error if the email addres is already in use", async () => {
+      const prisma = getPrismaService();
+      const service = getUserService(prisma);
+
+      const userId = faker.datatype.uuid();
+      const email = faker.internet.email();
+
+      await Promise.all([
+        prisma.user.create({
+          data: UserFactory.build({ id: userId }),
+        }),
+        prisma.user.create({
+          data: UserFactory.build({ email, authProvider: "local" }),
+        }),
+      ]);
+
+      expect(service.registerUser({ email, password: "test" }, userId)).rejects.toBeInstanceOf(EmailInUseError);
     });
 
     it("throws an error if the user is already registered", async () => {
@@ -111,7 +133,7 @@ describe("user service", () => {
         data: UserFactory.build({ id: userId, authProvider: "github" }),
       });
 
-      expect(service.registerUser({ email: "test", password: "test" }, userId)).rejects.toThrowError("User is already registered.");
+      expect(service.registerUser({ email: "test", password: "test" }, userId)).rejects.toBeInstanceOf(UserRegisteredError);
     });
   });
 

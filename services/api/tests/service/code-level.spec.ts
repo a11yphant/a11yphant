@@ -6,7 +6,7 @@ import gql from "graphql-tag";
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 
 describe("code level", () => {
-  jest.setTimeout(10000);
+  jest.setTimeout(15000);
   const { getPrismaService } = useDatabase();
   const { getGraphQlClient, getApp } = useTestingApp();
 

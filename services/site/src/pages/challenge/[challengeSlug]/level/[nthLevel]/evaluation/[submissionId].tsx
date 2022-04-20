@@ -1,4 +1,6 @@
 import { ApolloError } from "@apollo/client";
+import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
@@ -36,6 +38,7 @@ export interface EvaluationRouterParams {
 
 const Evaluation: React.FunctionComponent = () => {
   const router = useRouter();
+  const flashMessageApi = useFlashMessageApi();
   const { challengeSlug, nthLevel, submissionId }: EvaluationRouterParams = router.query;
   const [, setFailedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
 
@@ -54,7 +57,11 @@ const Evaluation: React.FunctionComponent = () => {
     } else if (submissionResult?.status === ResultStatus.Success) {
       setFailedLevelsInARow(0);
     }
-  }, [submissionResult?.status]);
+
+    if (isLastLevel && submissionResult?.status === ResultStatus.Success) {
+      flashMessageApi.show(<ChallengeCompletedFlashMessage />);
+    }
+  }, [submissionResult?.status, data?.challenge?.levels?.length]);
 
   return (
     <>

@@ -5,9 +5,10 @@ import Button from "../buttons/Button";
 
 interface UnderlinedTextProps {
   onClick?: () => void;
+  className?: string;
 }
 
-const UnderlinedText: React.FC<UnderlinedTextProps> = ({ children, onClick }) => {
+const UnderlinedText: React.FC<UnderlinedTextProps> = ({ children, onClick, className }) => {
   return (
     <Button
       onClick={onClick}
@@ -17,6 +18,7 @@ const UnderlinedText: React.FC<UnderlinedTextProps> = ({ children, onClick }) =>
         "transition duration-300",
         "hover:border-transparent",
         "focus-rounded-instead-of-underline",
+        className,
       )}
     >
       {children}

@@ -57,7 +57,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
           <p className={clsx("m-0 text-grey-middle", "transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
           </p>
-          <p className={clsx("sr-only")}>{`Difficulty ${difficulty}`}</p>
+          <p className={clsx("sr-only")}>{`Difficulty ${difficulty.charAt(0).toUpperCase() + difficulty.toLowerCase().slice(1)}`}</p>
           <div className={clsx("flex")}>
             <DifficultyIcon className={clsx("w-2.5 h-4/5", "transition duration-300")} />
           </div>

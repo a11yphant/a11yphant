@@ -1,5 +1,6 @@
 import LoadingButton from "app/components/buttons/LoadingButton";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import Lottie from "app/components/Lottie";
 import { ResultStatus, useSubmitQuizLevelAnswerMutation } from "app/generated/graphql";
@@ -8,6 +9,9 @@ import failAnimation from "app/lotties/fail_lottie.json";
 import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
+
+import ChallengeCompletedFlashMessage from "../ChallengeCompletedFlashMessage";
+
 interface QuizLevelProps {
   question: string;
   answers: Array<{ id: string; text: string }>;
@@ -18,6 +22,7 @@ interface QuizLevelProps {
 const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question, answers, isLastLevel }) => {
   const [chosenId, setChosenId] = React.useState<string>();
   const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>();
+  const flashMessageApi = useFlashMessageApi();
 
   const [submitQuizLevelAnswerMutation, { loading }] = useSubmitQuizLevelAnswerMutation();
 
@@ -36,6 +41,12 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
     reset();
   }, [levelId]);
 
+  React.useEffect(() => {
+    if (isLastLevel && quizResult?.status === ResultStatus.Success) {
+      flashMessageApi.show(<ChallengeCompletedFlashMessage />);
+    }
+  }, [quizResult?.status, isLastLevel]);
+
   return (
     <>
       <section className={clsx("mx-auto h-full w-full box-border hidden", "container-dark", "lg:pt-12 lg:flex lg:flex-col lg:justify-between")}>
@@ -45,7 +56,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
-          <div className={clsx("col-span-3 mb-8 overflow-y-auto")}>
+          <div className={clsx("col-span-3 mb-8 p-1 overflow-y-auto")}>
             {quizResult === undefined && (
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
             )}

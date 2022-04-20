@@ -103,7 +103,7 @@ challenge:
     - id: 012d0f47-d66e-43d5-802d-f8683e43804f
       order: 4
       type: quiz
-      question: Why is it important to declare the document language inside the <code>language</code> attribute?
+      question: Why is it important to declare the document language inside the <code>lang</code> attribute?
       answer_options:
         - id: 8658195a-89e6-4f16-9e9d-9600b2bfc777
           text: To help assistive devices with announcing/displaying the content correctly.

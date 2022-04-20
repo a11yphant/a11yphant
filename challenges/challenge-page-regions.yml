@@ -3,7 +3,7 @@ challenge:
   name: Page Regions
   slug: page-regions
   difficulty: easy
-  order: 1
+  order: 4
   introduction: >
     The foundation to building accessible websites is using semantically meaningful markup. Semantic HTML tags communicate more information about their content to the browser. They can be used to structure the page into common sections, like headers, navigations and a footer. Let's find out more!
   levels:

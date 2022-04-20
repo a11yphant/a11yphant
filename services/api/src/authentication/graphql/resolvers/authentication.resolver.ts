@@ -4,6 +4,8 @@ import { UserInputError } from "apollo-server-errors";
 import * as Yup from "yup";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { JwtScope } from "@/authentication/enums/jwt-scope.enum";
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { BadCredentialsException } from "@/authentication/exceptions/bad_credentials.exception";
 import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation.exception";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
@@ -11,7 +13,9 @@ import { UserNotFoundException } from "@/authentication/exceptions/user-not-foun
 import { LoginInput } from "@/authentication/graphql/inputs/login.input";
 import { ChangePasswordInput } from "@/authentication/inputs/change-password.input";
 import { Context as IContext } from "@/authentication/interfaces/context.interface";
+import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
+import { SessionToken } from "@/authentication/session-token.decorator";
 import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
@@ -47,7 +51,7 @@ export class AuthenticationResolver {
       throw new UserInputError(e.message);
     });
 
-    const token = await this.jwtService.createSignedToken({ userId: user.id }, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
+    const token = await this.jwtService.createSignedToken({ scope: JwtScope.SESSION }, { subject: user.id, expiresInSeconds: 3600 * 24 * 365 });
     ctx.res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
 
     return user;
@@ -79,6 +83,11 @@ export class AuthenticationResolver {
     return {
       result: RequestPasswordResetSuccessResultEnum.EMAIL_SENT,
     };
+  }
+
+  @Mutation(() => ResendEmailConfirmationResultEnum, { description: "Resend the confirmation email." })
+  async resendConfirmationEmail(@SessionToken() sessionToken: SessionTokenInterface): Promise<ResendEmailConfirmationResultEnum> {
+    return this.authenticationService.resendConfirmationEmail(sessionToken.userId);
   }
 
   @Mutation(() => Boolean)

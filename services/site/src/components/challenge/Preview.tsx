@@ -13,6 +13,11 @@ interface PreviewProps {
   heading: string;
 }
 
+const getTitle = (html: string): string | null => {
+  const dom = parse(html);
+  return dom.querySelector("title")?.innerText;
+};
+
 //@TODO: Remove once base element support is better (https://caniuse.com/mdn-html_elements_base)
 const addTargetBlank = (html: string): string => {
   const dom = parse(html);
@@ -41,10 +46,12 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
   const [innerCssCode, setInnerCssCode] = useState<string>("");
   const [innerJavascriptCode, setInnerJavascriptCode] = useState<string>("");
   const [previewUpdated, setPreviewUpdated] = useState<boolean>(true);
+  const [title, setTitle] = useState<string | null>(null);
 
   React.useEffect(() => {
     setPreviewUpdated(false);
     debouncedUpdate(() => {
+      setTitle(getTitle(htmlCode));
       setInnerHtmlCode(addTargetBlank(htmlCode));
       setInnerCssCode(addBaseFont(cssCode));
       setInnerJavascriptCode(javascriptCode);
@@ -56,6 +63,14 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
     <div className={clsx("p-4", "container-light overflow-hidden", className)}>
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
         {heading}
+        {title && (
+          <>
+            :{" "}
+            <span className={clsx("text-black")} aria-label={`Title: ${title}`}>
+              {title}
+            </span>
+          </>
+        )}
         {!previewUpdated && (
           <span className={clsx("text-current")}>
             <span className={clsx("sr-only")}>Updating the live preview is in progress...</span>

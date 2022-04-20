@@ -5,6 +5,8 @@ import { createConfigServiceMock } from "@tests/support/helpers";
 import faker from "faker";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { JwtScope } from "@/authentication/enums/jwt-scope.enum";
+import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { BadCredentialsException } from "@/authentication/exceptions/bad_credentials.exception";
 import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation.exception";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
@@ -52,53 +54,50 @@ function createAuthenticationResolver(
 
 describe("authentication resolver", () => {
   describe("login", () => {
-    it("returns the logged in user and sets the cookie", async () => {
-      const id = faker.datatype.uuid();
-      const user = new User(UserFactory.build({ id }));
+    const user = new User(UserFactory.build());
+    const loginInput = { email: user.email, password: "test_pw" };
+    const token = "test_token";
 
-      const loginInput = { email: user.email, password: "test_pw" };
-      const token = "test_token";
+    const login = jest.fn();
+    const findByEmail = jest.fn();
+    const createSignedToken = jest.fn();
+    const cookie = jest.fn();
+    const context = createMock<IContext>({ res: { cookie: cookie } });
 
-      const loginFunc = jest.fn().mockResolvedValue(user);
-      const signFunc = jest.fn().mockResolvedValue(token);
-      const cookieFunc = jest.fn();
+    const resolver = createAuthenticationResolver({
+      authenticationService: { login },
+      jwtService: { createSignedToken },
+    });
 
-      const resolver = createAuthenticationResolver({
-        authenticationService: {
-          login: loginFunc,
-        },
-        jwtService: {
-          createSignedToken: signFunc,
-        },
-      });
+    beforeEach(() => {
+      jest.clearAllMocks();
 
-      const loggedInUser = await resolver.login(
-        loginInput,
-        createMock<IContext>({
-          res: { cookie: cookieFunc },
-        }),
-      );
+      login.mockResolvedValue(user);
+      findByEmail.mockResolvedValue(user);
+      createSignedToken.mockResolvedValue(token);
+    });
 
-      expect(loginFunc).toHaveBeenCalledTimes(1);
-      expect(loginFunc).toHaveBeenCalledWith(loginInput);
+    it("returns the logged in user", async () => {
+      const loggedInUser = await resolver.login(loginInput, context);
 
-      expect(signFunc).toHaveBeenCalledTimes(1);
-      expect(signFunc).toHaveBeenCalledWith({ userId: id }, expect.anything());
-
-      expect(cookieFunc).toHaveBeenCalledTimes(1);
-      expect(cookieFunc).toHaveBeenCalledWith(expect.stringContaining(""), token, expect.anything());
+      expect(login).toHaveBeenCalledTimes(1);
+      expect(login).toHaveBeenCalledWith(loginInput);
 
       expect(loggedInUser).toBe(user);
     });
 
-    it("throws an error if username or password are wrong", () => {
-      const loginFunc = jest.fn().mockRejectedValue(new Error("E-Mail or password wrong."));
+    it("sets the session cookie", async () => {
+      await resolver.login(loginInput, context);
 
-      const resolver = createAuthenticationResolver({
-        authenticationService: {
-          login: loginFunc,
-        },
-      });
+      expect(createSignedToken).toHaveBeenCalledTimes(1);
+      expect(createSignedToken).toHaveBeenCalledWith({ scope: JwtScope.SESSION }, expect.objectContaining({ subject: user.id }));
+
+      expect(cookie).toHaveBeenCalledTimes(1);
+      expect(cookie).toHaveBeenCalledWith(expect.stringContaining(""), token, expect.anything());
+    });
+
+    it("throws an error if username or password are wrong", () => {
+      login.mockRejectedValue(new Error("E-Mail or password wrong."));
 
       expect(resolver.login({ email: "test_mail", password: "test_pw" }, createMock<IContext>())).rejects.toThrowError("E-Mail or password wrong.");
     });
@@ -140,8 +139,7 @@ describe("authentication resolver", () => {
 
   describe("logout", () => {
     it("returns true and clears the cookie", async () => {
-      const id = faker.datatype.uuid();
-      const user = new User(UserFactory.build({ id }));
+      const user = new User(UserFactory.build());
       user.authProvider = "github";
 
       const findByIdFunc = jest.fn().mockResolvedValue(user);
@@ -170,8 +168,7 @@ describe("authentication resolver", () => {
     });
 
     it("returns false if user is anonymous", async () => {
-      const id = faker.datatype.uuid();
-      const user = new User(UserFactory.build({ id }));
+      const user = new User(UserFactory.build());
 
       const findByIdFunc = jest.fn().mockResolvedValue(user);
       const clearCookieFunc = jest.fn();
@@ -316,6 +313,7 @@ describe("authentication resolver", () => {
       expect((result as ResetPasswordErrorResult).inputErrors[0]).toHaveProperty("field", ResetPasswordFields.PASSWORD);
     });
   });
+
   describe("password change", () => {
     it("can change a user's password", async () => {
       const user = new User(UserFactory.build({ id: faker.datatype.uuid(), authProvider: "local", password: "password" }));
@@ -381,6 +379,25 @@ describe("authentication resolver", () => {
 
       expect(changePassword).toHaveBeenCalledWith(user, { currentPassword: "wrongPassword", newPassword: "password2" });
       expect(result).toHaveProperty("errorCode", ChangePasswordErrorCodes.BAD_USER_INPUT);
+    });
+  });
+
+  describe("resend confirmation email", () => {
+    const user = new User(UserFactory.build());
+
+    it("calls resend confirmation email on the auth service with the provided userId", async () => {
+      const resendConfirmationEmail = jest.fn().mockResolvedValue(ResendEmailConfirmationResultEnum.SUCCESSFUL);
+
+      const resolver = createAuthenticationResolver({
+        authenticationService: {
+          resendConfirmationEmail,
+        },
+      });
+
+      const result = await resolver.resendConfirmationEmail({ userId: user.id });
+
+      expect(resendConfirmationEmail).toHaveBeenCalledWith(user.id);
+      expect(result).toBe(ResendEmailConfirmationResultEnum.SUCCESSFUL);
     });
   });
 });

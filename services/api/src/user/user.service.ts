@@ -6,6 +6,9 @@ import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
 import { PrismaService } from "@/prisma/prisma.service";
 
+import { AnonymousUserInvalidError } from "./exceptions/anonymous-user-invalid.error";
+import { EmailInUseError } from "./exceptions/email-in-use.error";
+import { UserRegisteredError } from "./exceptions/user-registered.error";
 import { RegisterUserInput } from "./inputs/register-user.input";
 import { User } from "./models/user.model";
 
@@ -56,10 +59,20 @@ export class UserService {
       },
     });
 
-    if (!currentUser) throw new Error("Anonymous user is invalid.");
+    if (!currentUser) throw new AnonymousUserInvalidError();
 
     if (currentUser.authProvider !== "anonymous") {
-      throw new Error("User is already registered.");
+      throw new UserRegisteredError();
+    }
+
+    const emailUser = await this.prisma.user.findFirst({
+      where: {
+        email: registerUserInput.email,
+      },
+    });
+
+    if (emailUser) {
+      throw new EmailInUseError();
     }
 
     const userRecord = await this.prisma.user.update({

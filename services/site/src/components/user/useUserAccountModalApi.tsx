@@ -1,7 +1,9 @@
 import React from "react";
 
+export type UserAccountModalTypes = "signup" | "login" | "reset-password";
+
 interface UserAccountModalApi {
-  show: (mode: "signup" | "login") => void;
+  show: (mode: UserAccountModalTypes) => void;
   hide: () => void;
 }
 

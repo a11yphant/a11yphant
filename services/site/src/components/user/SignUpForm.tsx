@@ -25,6 +25,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
     control,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -52,6 +53,12 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
     if (errors) {
       return;
     }
+
+    reset({
+      name: "",
+      email: "",
+      password: "",
+    });
 
     onAfterSubmit?.();
   };

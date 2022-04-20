@@ -5,6 +5,7 @@ import Sidebar from "app/components/challenge/Sidebar";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
+import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import { CodeLevelDetailsFragment, useRequestCodeLevelCheckMutation } from "app/generated/graphql";
 import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
@@ -39,15 +40,10 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   React.useEffect(() => {
     if (failedLevelsInARow >= 2) {
       setTimeout(() => {
-        flashMessageApi.show(
-          <>
-            <span className={clsx("mr-3")} aria-hidden={true}>
-              🚀
-            </span>
-            Reminder: You can use hints if you are stuck
-          </>,
-          { className: clsx("hidden", "lg:flex"), offsetElementClassName: clsx("hidden", "lg:block") },
-        );
+        flashMessageApi.show(getFlashMessage(FlashMessageEnum.HINT_REMINDER), {
+          className: clsx("hidden", "lg:flex"),
+          offsetElementClassName: clsx("hidden", "lg:block"),
+        });
       }, 1000);
     }
 

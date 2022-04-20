@@ -12,6 +12,7 @@ resource "aws_lambda_function" "site" {
   image_uri    = "${local.ecr_site_image}@${data.aws_ecr_image.site_image.id}"
   timeout      = 30
   memory_size  = 256
+  publish      = true
 
   role = aws_iam_role.site_role.arn
 
@@ -33,6 +34,12 @@ resource "aws_lambda_function" "site" {
     module.publish_site_image_to_aws_ecr,
     aws_iam_role_policy_attachment.site_lambda_logs,
   ]
+}
+
+resource "aws_lambda_alias" "site_latest" {
+  name             = "${terraform.workspace}-site-latest"
+  function_name    = aws_lambda_function.site.arn
+  function_version = aws_lambda_function.site.version
 }
 
 resource "aws_iam_role" "site_role" {
@@ -67,13 +74,42 @@ resource "aws_lambda_permission" "api_gateway_site" {
   function_name = aws_lambda_function.site.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_apigatewayv2_api.site_http_api.execution_arn}/*/*"
+  source_arn = "${aws_apigatewayv2_api.site_http_api.execution_arn}/*/*/*"
+}
+
+resource "aws_lambda_permission" "api_gateway_site_latest_alias" {
+  statement_id  = "${terraform.workspace}-allow-api-gateway-invoke-site-alias"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.site.function_name
+  principal     = "apigateway.amazonaws.com"
+  qualifier     = aws_lambda_alias.site_latest.name
+
+  source_arn = "${aws_apigatewayv2_api.site_http_api.execution_arn}/*/*/*"
 }
 
 resource "aws_apigatewayv2_api" "site_http_api" {
   name          = "${terraform.workspace}-site-http-api"
   protocol_type = "HTTP"
-  target        = aws_lambda_function.site.invoke_arn
+}
+
+resource "aws_apigatewayv2_route" "api_default_route" {
+  api_id    = aws_apigatewayv2_api.site_http_api.id
+  route_key = "ANY /{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.site_lambda_integration.id}"
+}
+
+resource "aws_apigatewayv2_integration" "site_lambda_integration" {
+  api_id                 = aws_apigatewayv2_api.site_http_api.id
+  integration_type       = "AWS_PROXY"
+  integration_method     = "POST"
+  integration_uri        = aws_lambda_alias.site_latest.invoke_arn
+  payload_format_version = "2.0"
+}
+
+resource "aws_apigatewayv2_stage" "api_default_stage" {
+  api_id      = aws_apigatewayv2_api.site_http_api.id
+  name        = "$default"
+  auto_deploy = true
 }
 
 resource "aws_ecr_repository" "repository_site" {

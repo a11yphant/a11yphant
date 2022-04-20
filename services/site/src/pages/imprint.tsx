@@ -42,7 +42,7 @@ const Imprint: React.FunctionComponent = () => {
 
           <address className={clsx("not-italic mb-12")}>
             If you are interested in working with us or just want to know more about the project, simply{" "}
-            <Link href={"mailto:info@a11yphant"}>
+            <Link href={"mailto:info@a11yphant.com"}>
               <a
                 className={clsx(
                   "text-light font-sans font-normal border-light",

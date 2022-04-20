@@ -1,14 +1,16 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { renderHook } from "@testing-library/react-hooks";
-import { CurrentUserDocument } from "app/generated/graphql";
+import { CurrentUserDocument, User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import React from "react";
 
-const mockUser = {
+const mockUser: User = {
   id: "242003d6-402e-49b7-9ec2-702445b37c8e",
   displayName: "Mock User Name",
   isRegistered: true,
+  isVerified: true,
 };
+
 const mocks = [
   {
     request: {

@@ -1,3 +1,5 @@
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
+import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import ChallengeList from "app/components/homepage/ChallengeList";
@@ -15,9 +17,20 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-const Home: React.FunctionComponent = () => {
+interface HomeProps {
+  fmType: FlashMessageEnum | null;
+}
+
+const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
   const router = useRouter();
   const { currentUser } = useCurrentUser();
+  const flashMessageApi = useFlashMessageApi();
+
+  React.useEffect(() => {
+    if (fmType) {
+      flashMessageApi.show(getFlashMessage(fmType));
+    }
+  }, [fmType]);
 
   const { data: dataEasyChallengesOpen } = useChallengesQuery({
     variables: { difficulty: ChallengeDifficulty.Easy, status: ChallengeStatus.Open },
@@ -145,6 +158,8 @@ const Home: React.FunctionComponent = () => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo(null, context);
 
+  const fmType = context.query?.["fm-type"] ?? null;
+
   await Promise.all([
     getServerSideCurrentUser(apolloClient),
     apolloClient.query({
@@ -155,6 +170,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       initialApolloState: apolloClient.cache.extract(),
+      fmType,
     },
   };
 };

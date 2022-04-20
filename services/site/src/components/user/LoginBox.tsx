@@ -2,6 +2,7 @@ import clsx from "clsx";
 import getConfig from "next/config";
 import React from "react";
 
+import { useFlashMessageApi } from "../common/flashMessage/FlashMessageContext";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 import LoginForm from "./LoginForm";
@@ -13,8 +14,10 @@ const { publicRuntimeConfig } = getConfig();
 
 const LoginBox: React.FC = () => {
   const userAccountModalApi = useUserAccountModalApi();
+  const flashMessageApi = useFlashMessageApi();
 
   const onSuccessfulLogin = (): void => {
+    flashMessageApi.show("Welcome back!");
     userAccountModalApi.hide();
   };
 
@@ -31,7 +34,10 @@ const LoginBox: React.FC = () => {
           <Twitter className={clsx("inline-block h-8 -m-2 ml-4 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
         </ThirdPartyAuthLink>
       </div>
-      <UnderlinedTextButton onClick={() => userAccountModalApi.show("signup")}>New here? Create a free account.</UnderlinedTextButton>
+      <UnderlinedTextButton onClick={() => userAccountModalApi.show("reset-password")}>Forgot your password? Reset it here.</UnderlinedTextButton>
+      <UnderlinedTextButton className={clsx("mt-4")} onClick={() => userAccountModalApi.show("signup")}>
+        New here? Create a free account.
+      </UnderlinedTextButton>
     </>
   );
 };

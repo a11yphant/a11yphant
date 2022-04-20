@@ -1,13 +1,28 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
 import SignUpBox from "app/components/user/SignUpBox";
+import SignUpForm from "app/components/user/SignUpForm";
 import React from "react";
 
-const mockShow = jest.fn();
+const mockShowModal = jest.fn();
+const mockHideModal = jest.fn();
+const mockShowFlashMessage = jest.fn();
 
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
-    show: mockShow,
+    show: mockShowModal,
+    hide: mockHideModal,
+  }),
+}));
+
+jest.mock("app/components/user/SignUpForm", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
+  useFlashMessageApi: () => ({
+    show: mockShowFlashMessage,
   }),
 }));
 
@@ -22,12 +37,13 @@ function renderSignUpBox(): ReturnType<typeof render> {
 describe("sign up box", () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    (SignUpForm as jest.Mock).mockImplementation(() => <div>SignUpForm</div>);
   });
 
   it("renders the sign up form", () => {
     renderSignUpBox();
 
-    expect(screen.getByRole("form", { name: /Sign up/ })).toBeInTheDocument();
+    expect(screen.getByText("SignUpForm")).toBeInTheDocument();
   });
 
   it("renders the sign up via github link", () => {
@@ -53,6 +69,26 @@ describe("sign up box", () => {
 
     screen.getByRole("button", { name: /Log in/ }).click();
 
-    expect(mockShow).toHaveBeenCalledWith("login");
+    expect(mockShowModal).toHaveBeenCalledWith("login");
+  });
+
+  it("closes the modal after a successful sign up", () => {
+    (SignUpForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
+      onAfterSubmit();
+      return <div>SignUpForm</div>;
+    });
+    renderSignUpBox();
+
+    expect(mockHideModal).toHaveBeenCalled();
+  });
+
+  it("shows flash message after a successful sign up", () => {
+    (SignUpForm as jest.Mock).mockImplementation(({ onAfterSubmit }) => {
+      onAfterSubmit();
+      return <div>SignUpForm</div>;
+    });
+    renderSignUpBox();
+
+    expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
   });
 });

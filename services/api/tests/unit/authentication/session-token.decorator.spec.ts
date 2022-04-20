@@ -31,7 +31,7 @@ describe("session token decorator", () => {
     });
 
     const executionContext = createMock<ExecutionContext>({
-      getArgs: jest.fn().mockReturnValue([null, null, context]),
+      getArgs: jest.fn().mockReturnValue([null, context, null]),
     });
 
     const result = factory(null, executionContext);

@@ -1,6 +1,5 @@
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
-import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { CurrentUserDocument, useLogoutMutation } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
@@ -10,6 +9,7 @@ import React from "react";
 
 import Button from "./buttons/Button";
 import Dropdown from "./common/dropdown/Dropdown";
+import A11yphantLogoUkraine from "./icons/A11yphantLogoUkraine";
 import UserAvatar from "./icons/UserAvatar";
 
 export interface NavigationProps {
@@ -36,7 +36,8 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               "focus-outline-offset",
             )}
           >
-            <A11yphantLogo className="w-36" />
+            {/* <A11yphantLogo className="w-36" /> */}
+            <A11yphantLogoUkraine className="w-36" />
             <span className="sr-only">Allyphant Homepage</span>
           </a>
         </Link>
@@ -73,7 +74,12 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
           {currentUser?.isRegistered && (
             <Dropdown
               triggerButton={
-                <Dropdown.TriggerButton className="hover:text-primary-light motion-safe:transition-colors transition-300 align-middle">
+                <Dropdown.TriggerButton
+                  className={clsx(
+                    "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle rounded",
+                    "focus:outline-offset-2",
+                  )}
+                >
                   <span className={clsx("sr-only")}>User Menu</span>
                   <UserAvatar />
                 </Dropdown.TriggerButton>
