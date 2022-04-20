@@ -5,8 +5,8 @@ import { User } from "@/user/models/user.model";
 import { UserService } from "@/user/user.service";
 
 import { JwtScope } from "./enums/jwt-scope.enum";
-import { BadUserInputException } from "./exceptions/bad_user_input_exception";
-import { InvalidOperationException } from "./exceptions/invalid_operation_exception";
+import { BadCredentialsException } from "./exceptions/bad_credentials.exception";
+import { InvalidOperationException } from "./exceptions/invalid_operation.exception";
 import { InvalidJwtException } from "./exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "./exceptions/user-not-found.exception";
 import { LoginInput } from "./graphql/inputs/login.input";
@@ -96,7 +96,7 @@ export class AuthenticationService {
       throw new InvalidOperationException();
     }
     if (!currentPasswordOk) {
-      throw new BadUserInputException();
+      throw new BadCredentialsException();
     }
     await this.userService.updatePassword(user.id, newPassword);
   }

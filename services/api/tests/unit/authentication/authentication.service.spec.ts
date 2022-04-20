@@ -2,8 +2,8 @@ import { createMock } from "@golevelup/ts-jest";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
-import { BadUserInputException } from "@/authentication/exceptions/bad_user_input_exception";
-import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation_exception";
+import { BadCredentialsException } from "@/authentication/exceptions/bad_credentials.exception";
+import { InvalidOperationException } from "@/authentication/exceptions/invalid_operation.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { HashService } from "@/authentication/hash.service";
 import { JwtService } from "@/authentication/jwt.service";
@@ -261,7 +261,7 @@ describe("authentication service", () => {
 
       const service = createAuthenticationService();
 
-      expect(service.changePassword(user, { currentPassword: "wrongPassword", newPassword: newPassword })).rejects.toThrow(BadUserInputException);
+      expect(service.changePassword(user, { currentPassword: "wrongPassword", newPassword: newPassword })).rejects.toThrow(BadCredentialsException);
     });
   });
 });
