@@ -12,7 +12,6 @@
     "package-dependencies:api": "npm --prefix services/api install",
     "package-dependencies:site": "npm --prefix services/site install",
     "package-dependencies:submission-checker": "npm --prefix services/submission-checker install",
-    "build-packages": "npm-run-all build-packages:**",
     "dotenv": "dotenv",
     "lint": "npm-run-all lint:**",
     "lint:api": "npm --prefix services/api run lint",
