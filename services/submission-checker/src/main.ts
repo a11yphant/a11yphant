@@ -2,7 +2,6 @@ import { INestMicroservice, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
-import { SQSEvent } from "aws-lambda";
 
 import { AppModule } from "./app.module";
 
@@ -35,8 +34,4 @@ export async function getApp(): Promise<INestMicroservice> {
   await appPromise;
 
   return app;
-}
-
-export async function handle(event: SQSEvent): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 0));
 }
