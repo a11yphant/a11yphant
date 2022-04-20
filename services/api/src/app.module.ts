@@ -1,4 +1,3 @@
-import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Logger, LogLevel, Module, ModuleMetadata } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -74,15 +73,6 @@ export const appModuleMetadata: ModuleMetadata = {
       inject: [ConfigService],
     }),
     ConsoleModule,
-    AwsMessagingModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        region: config.get<string>("messaging.region"),
-        topics: config.get<Record<string, string>>("messaging.topics"),
-        snsEndpoint: config.get<string>("messaging.sns-endpoint"),
-      }),
-      inject: [ConfigService],
-    }),
 
     AuthenticationModule,
     ChallengeModule,

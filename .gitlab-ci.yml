@@ -38,43 +38,6 @@ stages:
 #----------------------------------------------------------------------
 
 #-----------------------------------
-# NestJS AWS Messaging
-#-----------------------------------
-
-lint:nestjs-aws-messaging:
-  extends:
-    - .lint
-    - .run_on_nestjs_aws_messaging_change
-  needs: []
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-
-test:nestjs-aws-messaging:
-  extends:
-    - .test
-  needs: []
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-  only:
-    - master
-    - develop
-    - merge_request
-
-publish:nestjs-aws-messaging:
-  tags:
-    - docker
-  stage: deploy
-  image: node:14-alpine
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-  script:
-    - npm run build --prefix $PROJECT_PATH
-    - cd $PROJECT_PATH
-    - npm publish
-  only:
-    - /^nestjs-aws-messaging-v.*$/
-
-#-----------------------------------
 # content yml Linting
 #-----------------------------------
 
@@ -142,12 +105,19 @@ test:submission-checker:
   extends:
     - .test
   services:
-    - alias: localstack
-      name: localstack/localstack
+    - alias: rabbitmq
+      name: rabbitmq:management-alpine
   needs: []
   variables:
     PROJECT_PATH: services/submission-checker
-    SERVICES: sns,sqs
+    RABBITMQ_DEFAULT_USER: user
+    RABBITMQ_DEFAULT_PASS: secret
+    SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@rabbitmq:5672
+  before_script:
+    - apk add curl
+    - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -309,20 +279,6 @@ terraform:cloud:validate:
     - terraform -chdir=terraform/cloud init
   script:
     - terraform -chdir=terraform/cloud validate
-
-terraform:local:validate:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - terraform -chdir=terraform/local init
-  script:
-    - terraform -chdir=terraform/local validate
 
 #-----------------------------------
 # End to end tests
