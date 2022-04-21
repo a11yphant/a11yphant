@@ -34,6 +34,6 @@ describe("404 Page", () => {
   it("renders the illustration SVG", () => {
     render(<Custom404 />);
 
-    expect(screen.getByRole("img")).toBeInTheDocument();
+    expect(screen.getByTestId("IllustrationLostSpace")).toBeInTheDocument();
   });
 });
