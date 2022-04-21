@@ -69,7 +69,7 @@ const Challenge: React.FunctionComponent = () => {
         />
         <meta property="og:locale" content="en" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.a11yphant.com/${user.id}`} />
+        <meta property="og:url" content={`https://a11yphant.com/${user.id}`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="/images/mockups-social-media.jpg" />
         <meta name="twitter:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
