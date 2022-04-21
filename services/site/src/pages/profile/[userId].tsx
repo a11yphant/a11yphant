@@ -53,19 +53,13 @@ const Challenge: React.FunctionComponent = () => {
       <Head>
         <title>{user.displayName || "Anonymous user"}'s profile | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta
-          name="description"
-          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
-        />
+        <meta name="description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content={`https://a11yphant.com/${user.id}`} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
         <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta
-          property="og:description"
-          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
-        />
+        <meta property="og:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
         <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
@@ -75,10 +69,7 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta
-          name="twitter:description"
-          content="After signing up with Twitter, GitHub or simply with your e-mail, you can view your stats in your profile."
-        />
+        <meta name="twitter:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
         <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
