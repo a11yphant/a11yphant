@@ -8,7 +8,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "3.75.1"
+      version = "4.10.0"
     }
 
     heroku = {
