@@ -63,7 +63,6 @@ const Footer: React.FunctionComponent = () => (
                 <img
                   src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=328460&theme=dark"
                   alt="Featured on Product Hunt badge"
-                  // style="width: 250px; height: 54px;"
                   width="250"
                   height="54"
                   className={clsx(
