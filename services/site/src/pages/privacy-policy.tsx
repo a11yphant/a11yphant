@@ -12,17 +12,24 @@ const PrivacyPolicy: React.FunctionComponent = () => {
         <title>Privacy Policy | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
         <meta name="description" content="Details about the privacy policy of a11yphant." />
+        {/* <!-- Facebook Meta Tags --> */}
+        <meta property="og:url" content="https://a11yphant.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en" />
         <meta property="og:title" content="Privacy Policy" />
         <meta property="og:description" content="Details about the privacy policy of a11yphant." />
-        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
         />
-        <meta property="og:locale" content="en" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.a11yphant.com" />
+        {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@a11yphant" />
+        <meta name="twitter:title" content="Privacy Policy" />
+        <meta name="twitter:description" content="Details about the privacy policy of a11yphant." />
+        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
@@ -56,7 +63,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <ul className={clsx("list-disc ml-6 mb-8")}>
               <li className={clsx("m-0 my-4")}>
                 Visit our website at{" "}
-                <Link href={"https://www.a11yphant.com"}>
+                <Link href={"https://a11yphant.com"}>
                   <a
                     className={clsx(
                       "text-light font-sans font-normal border-light",
@@ -65,7 +72,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                       "focus-rounded-instead-of-underline",
                     )}
                   >
-                    www.a11yphant.com
+                    a11yphant.com
                   </a>
                 </Link>
               </li>

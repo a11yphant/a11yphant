@@ -9,9 +9,15 @@ describe("footer", () => {
     expect(screen.getByRole("contentinfo")).toBeInTheDocument();
   });
 
-  it("renders a navigation inside the footer", () => {
+  it("renders the footer navigation inside the footer", () => {
     render(<Footer />);
 
-    expect(screen.getByRole("navigation")).toBeInTheDocument();
+    expect(screen.getByLabelText("Footer")).toBeInTheDocument();
+  });
+
+  it("renders a sponsor / social navigation inside the footer", () => {
+    render(<Footer />);
+
+    expect(screen.getByLabelText("Social Links and Sponsors")).toBeInTheDocument();
   });
 });
