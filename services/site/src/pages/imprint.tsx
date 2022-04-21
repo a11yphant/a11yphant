@@ -12,20 +12,24 @@ const Imprint: React.FunctionComponent = () => {
         <title>Imprint | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
         <meta name="description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
+        {/* <!-- Facebook Meta Tags --> */}
+        <meta property="og:url" content="https://a11yphant.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en" />
         <meta property="og:title" content="Imprint" />
         <meta property="og:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
-        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
         />
-        <meta property="og:locale" content="en" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://a11yphant.com" />
+        {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="/images/mockups-social-media.jpg" />
+        <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="a11yphant" />
         <meta name="twitter:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
+        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
