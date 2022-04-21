@@ -80,7 +80,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           property="twitter:description"
           content="a11yphant is the easy way to learn the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
-        <meta name="twitter:image" content="/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
