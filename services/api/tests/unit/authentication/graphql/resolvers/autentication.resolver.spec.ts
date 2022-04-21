@@ -4,6 +4,7 @@ import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { JwtScope } from "@/authentication/enums/jwt-scope.enum";
 import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
@@ -83,7 +84,7 @@ describe("authentication resolver", () => {
       await resolver.login(loginInput, context);
 
       expect(createSignedToken).toHaveBeenCalledTimes(1);
-      expect(createSignedToken).toHaveBeenCalledWith({ userId: user.id }, expect.anything());
+      expect(createSignedToken).toHaveBeenCalledWith({ scope: JwtScope.SESSION }, expect.objectContaining({ subject: user.id }));
 
       expect(cookie).toHaveBeenCalledTimes(1);
       expect(cookie).toHaveBeenCalledWith(expect.stringContaining(""), token, expect.anything());

@@ -4,6 +4,7 @@ import { UserInputError } from "apollo-server-errors";
 import * as Yup from "yup";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
+import { JwtScope } from "@/authentication/enums/jwt-scope.enum";
 import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend-email-confirmation-result.enum";
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
@@ -43,7 +44,7 @@ export class AuthenticationResolver {
       throw new UserInputError(e.message);
     });
 
-    const token = await this.jwtService.createSignedToken({ userId: user.id }, { subject: "session", expiresInSeconds: 3600 * 24 * 365 });
+    const token = await this.jwtService.createSignedToken({ scope: JwtScope.SESSION }, { subject: user.id, expiresInSeconds: 3600 * 24 * 365 });
     ctx.res.cookie(this.config.get<string>("cookie.name"), token, this.config.get("cookie.defaultConfig"));
 
     return user;
