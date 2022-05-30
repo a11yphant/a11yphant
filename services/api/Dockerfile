@@ -59,4 +59,3 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/mail-templates ./mail-templates
 
 CMD ["node", "dist/main.js"]
-

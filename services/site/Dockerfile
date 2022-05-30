@@ -57,4 +57,4 @@ COPY --from=builder /app/next.config.js ./next.config.js
 
 EXPOSE ${SITE_PORT}
 
-CMD ["npm start"]
+CMD ["npm", "start"]
