@@ -12,4 +12,4 @@
     reports:
         junit: $PROJECT_PATH/junit.xml
         coverage_report: $PROJECT_PATH/coverage/cobertura-coverage.xml
-    coverage: '/^Lines\s*:\s*([^%]+)/'
+  coverage: '/^Lines\s*:\s*([^%]+)/'
