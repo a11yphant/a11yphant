@@ -195,8 +195,6 @@ build:api:
     PROJECT_PATH: services/api
     IMAGE_NAME_APP: a11yphant/a11yphant/api
     IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
-    IMAGE_NAME_RELEASE: a11yphant/a11yphant/api-release
-    IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:$CI_COMMIT_REF_SLUG
   cache: {}
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
