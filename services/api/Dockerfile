@@ -44,4 +44,4 @@ COPY --from=builder /app/mail-templates ./mail-templates
 COPY services/api/prisma ./prisma
 COPY challenges/ ./challenges
 
-CMD ["npm", "dist/main.js"]
+CMD ["node", "dist/main.js"]
