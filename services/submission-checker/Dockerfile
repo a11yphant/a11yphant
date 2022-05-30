@@ -36,5 +36,4 @@ COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=builder /app/nest-cli.json ./
 COPY --from=builder /app/dist ./dist
 
-CMD ["node", 'dist/main.js']
-
+CMD ["node", "dist/main.js"]
