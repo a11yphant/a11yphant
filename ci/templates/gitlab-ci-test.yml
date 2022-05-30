@@ -11,5 +11,7 @@
       - $PROJECT_PATH/junit.xml
     reports:
         junit: $PROJECT_PATH/junit.xml
-        coverage_report: $PROJECT_PATH/coverage/cobertura-coverage.xml
+        coverage_report:
+          coverage_format: cobertura
+          path: $PROJECT_PATH/coverage/cobertura-coverage.xml
   coverage: '/^Lines\s*:\s*([^%]+)/'
