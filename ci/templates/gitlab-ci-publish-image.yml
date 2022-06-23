@@ -5,6 +5,7 @@
   image: docker:20
   cache: {}
   before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker login -u $A11YPHANT_REGISTRY_USER -p $A11YPHANT_REGISTRY_PASSWORD registry.cluster.a11yphant.com
   script:
     - docker pull $CI_REGISTRY/a11yphant/api:$CI_COMMIT_REF_SLUG
