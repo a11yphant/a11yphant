@@ -7,13 +7,13 @@
   before_script:
     - docker login -u $A11YPHANT_REGISTRY_USER -p $A11YPHANT_REGISTRY_PASSWORD registry.cluster.a11yphant.com
   script:
-    - docker pull $CI_REGISTRY/a11yphant/api:$IMAGE_VERSION
-    - docker pull $CI_REGISTRY/a11yphant/site:$IMAGE_VERSION
-    - docker pull $CI_REGISTRY/a11yphant/submission-checker:$IMAGE_VERSION
+    - docker pull $CI_REGISTRY/a11yphant/api:$CI_COMMIT_REF_SLUG
+    - docker pull $CI_REGISTRY/a11yphant/site:$CI_COMMIT_REF_SLUG
+    - docker pull $CI_REGISTRY/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG
 
-    - docker tag $CI_REGISTRY/a11yphant/api:$IMAGE_VERSION registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
-    - docker tag $CI_REGISTRY/a11yphant/site:$IMAGE_VERSION registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
-    - docker tag $CI_REGISTRY/a11yphant/submission-checker:$IMAGE_VERSION registry.cluster.a11yphant.com/a11yphant/submission-checker:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/api:$CI_COMMIT_REF_SLUG registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/site:$CI_COMMIT_REF_SLUG registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG registry.cluster.a11yphant.com/a11yphant/submission-checker:$IMAGE_VERSION
 
     - docker push registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
     - docker push registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
