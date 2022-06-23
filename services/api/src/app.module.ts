@@ -1,9 +1,8 @@
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
-import { Logger, LogLevel, Module, ModuleMetadata } from "@nestjs/common";
+import { Logger, Module, ModuleMetadata } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
-import { GraphqlInterceptor, SentryModule } from "@ntegral/nestjs-sentry";
 import { ConsoleModule } from "nestjs-console";
 
 import { AuthenticationModule } from "./authentication/authentication.module";
@@ -17,7 +16,6 @@ import mailConfig from "./config/mail.config";
 import messagingConfig from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
-import sentryConfig from "./config/sentry.config";
 import siteConfig from "./config/site.config";
 import { ImporterModule } from "./importer/importer.module";
 import { MailModule } from "./mail/mail.module";
@@ -29,18 +27,8 @@ import { UserModule } from "./user/user.module";
 export const appModuleMetadata: ModuleMetadata = {
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, sentryConfig, siteConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, siteConfig],
       ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
-    }),
-    SentryModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        dsn: configService.get<string>("sentry.dsn"),
-        environment: configService.get<string>("sentry.environment"),
-        logLevels: [configService.get<LogLevel>("sentry.logLevel")],
-        tracesSampleRate: configService.get<number>("sentry.traces-sample-rate"),
-      }),
-      inject: [ConfigService],
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -83,10 +71,6 @@ export const appModuleMetadata: ModuleMetadata = {
   ],
   providers: [
     Logger,
-    {
-      provide: APP_INTERCEPTOR,
-      useFactory: () => new GraphqlInterceptor(),
-    },
     {
       provide: APP_INTERCEPTOR,
       useClass: SessionInterceptor,
