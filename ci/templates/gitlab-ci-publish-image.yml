@@ -1,0 +1,20 @@
+.publish:image:
+  tags:
+    - docker
+  stage: build
+  image: docker:20
+  cache: {}
+  before_script:
+    - docker login -u $A11YPHANT_REGISTRY_USER -p $A11YPHANT_REGISTRY_PASSWORD registry.cluster.a11yphant.com
+  script:
+    - docker pull $CI_REGISTRY/a11yphant/api:$IMAGE_VERSION
+    - docker pull $CI_REGISTRY/a11yphant/site:$IMAGE_VERSION
+    - docker pull $CI_REGISTRY/a11yphant/submission-checker:$IMAGE_VERSION
+
+    - docker tag $CI_REGISTRY/a11yphant/api:$IMAGE_VERSION registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/site:$IMAGE_VERSION registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/submission-checker:$IMAGE_VERSION registry.cluster.a11yphant.com/a11yphant/submission-checker:$IMAGE_VERSION
+
+    - docker push registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
+    - docker push registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
+    - docker push registry.cluster.a11yphant.com/a11yphant/submission-checker:$IMAGE_VERSION
