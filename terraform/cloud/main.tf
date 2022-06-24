@@ -7,25 +7,28 @@ terraform {
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
+      version = "4.10.0"
     }
 
     heroku = {
-      source = "heroku/heroku"
+      source  = "heroku/heroku"
+      version = "4.9.0"
     }
 
     herokux = {
-      source = "davidji99/herokux"
+      source  = "davidji99/herokux"
+      version = "0.33.2"
     }
 
     docker = {
-      source = "kreuzwerker/docker"
-      # lock version until this bug is resolved: https://github.com/kreuzwerker/terraform-provider-docker/issues/239
+      source  = "kreuzwerker/docker"
       version = "2.16.0"
     }
 
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
+      version = "3.1.2"
     }
   }
 }

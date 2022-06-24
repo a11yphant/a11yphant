@@ -4,6 +4,7 @@ const IllustrationLostSpace: React.FunctionComponent<React.SVGProps<SVGSVGElemen
   return (
     <svg
       id="a13970f5-fcb6-45bc-88b6-f9395b0a599f"
+      data-testid="IllustrationLostSpace"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 902.41854 826.20679"
