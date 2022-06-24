@@ -244,38 +244,6 @@ build:site:
     - master
 
 #-----------------------------------
-# Terraform
-#-----------------------------------
-
-terraform:check-format:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - "" # do nothing
-  script:
-    - terraform -chdir=terraform fmt -recursive -check
-
-terraform:cloud:validate:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - terraform -chdir=terraform/cloud init
-  script:
-    - terraform -chdir=terraform/cloud validate
-
-#-----------------------------------
 # End to end tests
 #-----------------------------------
 
@@ -316,6 +284,6 @@ publish:image:production:
   extends: .publish:image
   variables:
     IMAGE_NAME: a11yphant/api
-    IMAGE_VERSION: beta
+    IMAGE_VERSION: production
   only:
     - master
