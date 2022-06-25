@@ -1,49 +1,37 @@
-import { AwsTransportStrategy } from "@a11yphant/nestjs-aws-messaging";
 import { INestMicroservice, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { MicroserviceOptions } from "@nestjs/microservices";
-import { SQSEvent } from "aws-lambda";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 
 import { AppModule } from "./app.module";
 
 let app: INestMicroservice;
 
-async function bootstrap(): Promise<AwsTransportStrategy> {
+async function bootstrap(): Promise<INestMicroservice> {
   const logger = +process.env.SUBMISSION_CHECKER_DISABLE_LOGGER ? false : new Logger();
-
   // TODO: Remove when the following is fixed https://github.com/nestjs/nest/issues/2343
   const appContext = await NestFactory.createApplicationContext(AppModule, { logger });
-  const configService = appContext.get<ConfigService>(ConfigService);
-
-  const server = new AwsTransportStrategy({
-    polling: configService.get<boolean>("messaging.poll-queue"),
-    queueUrl: configService.get<string>("messaging.queue-url"),
-    region: configService.get<string>("messaging.region"),
-    deleteHandled: configService.get<boolean>("messaging.delete-handled-messages"),
-  });
+  const config = appContext.get<ConfigService>(ConfigService);
 
   app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-    strategy: server,
     logger,
+    transport: Transport.RMQ,
+    options: {
+      urls: [config.get<string>("messaging.rabbitmq-url")],
+      queue: config.get<string>("messaging.consume-queue-name"),
+    },
   });
 
   await appContext.close();
 
   await app.listen();
 
-  return server;
-}
-const serverPromise = bootstrap();
-
-export async function getApp(): Promise<INestMicroservice> {
-  await serverPromise;
-
   return app;
 }
+const appPromise = bootstrap();
 
-export async function handle(event: SQSEvent): Promise<void> {
-  const server = await serverPromise;
+export async function getApp(): Promise<INestMicroservice> {
+  await appPromise;
 
-  await server.handleSQSEvent(event);
+  return app;
 }

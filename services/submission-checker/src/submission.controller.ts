@@ -1,9 +1,9 @@
-import { AwsMessagingClient } from "@a11yphant/nestjs-aws-messaging";
 import { Controller, Inject, Logger } from "@nestjs/common";
 import { ClientProxy, EventPattern } from "@nestjs/microservices";
 
 import { BrowserService } from "./browser.service";
 import { CheckSubmissionService } from "./check-submission.service";
+import { SUBMISSIONS_CLIENT } from "./constants";
 import { SubmissionCheckCompletedEvent } from "./submission-check-completed-event.interface";
 import { SubmissionCreatedEvent } from "./submission-created-event.interface";
 
@@ -11,7 +11,7 @@ import { SubmissionCreatedEvent } from "./submission-created-event.interface";
 export class SubmissionController {
   constructor(
     private logger: Logger,
-    @Inject(AwsMessagingClient) private clientProxy: ClientProxy,
+    @Inject(SUBMISSIONS_CLIENT) private clientProxy: ClientProxy,
     private submissionChecker: CheckSubmissionService,
     private browserService: BrowserService,
   ) {}

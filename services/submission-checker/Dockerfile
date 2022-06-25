@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:14 as package-files
+FROM node:14-alpine as package-files
 
 WORKDIR /app
 
@@ -27,14 +27,13 @@ WORKDIR /app
 
 RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci --production
 
-FROM public.ecr.aws/lambda/nodejs:14
+FROM node:14-alpine AS release
 
-WORKDIR /var/task
+WORKDIR /app
 
 COPY --from=production-dependencies /app/package* ./
 COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=builder /app/nest-cli.json ./
 COPY --from=builder /app/dist ./dist
 
-CMD ["dist/main.handle"]
-
+CMD ["node", "dist/main.js"]

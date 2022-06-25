@@ -6,6 +6,7 @@ include:
   - /ci/templates/gitlab-ci-build.yml
   - /ci/templates/gitlab-ci-build-site.yml
   - /ci/templates/gitlab-ci-deploy.yml
+  - /ci/templates/gitlab-ci-publish-image.yml
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}-alpine
@@ -36,43 +37,6 @@ stages:
 # Jobs
 #
 #----------------------------------------------------------------------
-
-#-----------------------------------
-# NestJS AWS Messaging
-#-----------------------------------
-
-lint:nestjs-aws-messaging:
-  extends:
-    - .lint
-    - .run_on_nestjs_aws_messaging_change
-  needs: []
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-
-test:nestjs-aws-messaging:
-  extends:
-    - .test
-  needs: []
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-  only:
-    - master
-    - develop
-    - merge_request
-
-publish:nestjs-aws-messaging:
-  tags:
-    - docker
-  stage: deploy
-  image: node:14-alpine
-  variables:
-    PROJECT_PATH: packages/nestjs-aws-messaging
-  script:
-    - npm run build --prefix $PROJECT_PATH
-    - cd $PROJECT_PATH
-    - npm publish
-  only:
-    - /^nestjs-aws-messaging-v.*$/
 
 #-----------------------------------
 # content yml Linting
@@ -142,12 +106,19 @@ test:submission-checker:
   extends:
     - .test
   services:
-    - alias: localstack
-      name: localstack/localstack
+    - alias: rabbitmq
+      name: rabbitmq:management-alpine
   needs: []
   variables:
     PROJECT_PATH: services/submission-checker
-    SERVICES: sns,sqs
+    RABBITMQ_DEFAULT_USER: user
+    RABBITMQ_DEFAULT_PASS: secret
+    SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@rabbitmq:5672
+  before_script:
+    - apk add curl
+    - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
+    - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> $PROJECT_PATH/.npmrc
+    - npm ci --prefix $PROJECT_PATH --cache .npm-alpine --prefer-offline
   only:
     - master
     - develop
@@ -225,8 +196,6 @@ build:api:
     PROJECT_PATH: services/api
     IMAGE_NAME_APP: a11yphant/a11yphant/api
     IMAGE_APP: $CI_REGISTRY/$IMAGE_NAME_APP:$CI_COMMIT_REF_SLUG
-    IMAGE_NAME_RELEASE: a11yphant/a11yphant/api-release
-    IMAGE_RELEASE: $CI_REGISTRY/$IMAGE_NAME_RELEASE:$CI_COMMIT_REF_SLUG
   cache: {}
   before_script:
     - echo "//gitlab.mediacube.at/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
@@ -236,10 +205,6 @@ build:api:
     - docker pull $IMAGE_APP || (docker pull $CI_REGISTRY/$IMAGE_NAME_APP && docker tag $CI_REGISTRY/$IMAGE_NAME_APP $IMAGE_APP || echo "")
     - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_APP --cache-from $IMAGE_APP --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc
     - docker push $IMAGE_APP
-    # api release container
-    - docker pull $IMAGE_RELEASE || (docker pull $CI_REGISTRY/$IMAGE_NAME_RELEASE && docker tag $CI_REGISTRY/$IMAGE_NAME_RELEASE $IMAGE_RELEASE || echo "")
-    - docker build . -f $PROJECT_PATH/Dockerfile -t $IMAGE_RELEASE --cache-from $IMAGE_RELEASE --build-arg VERSION=$CI_COMMIT_REF_SLUG --secret id=npmrc,src=.npmrc --target release
-    - docker push $IMAGE_RELEASE
   only:
     - master
     - develop
@@ -279,52 +244,6 @@ build:site:
     - master
 
 #-----------------------------------
-# Terraform
-#-----------------------------------
-
-terraform:check-format:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - "" # do nothing
-  script:
-    - terraform -chdir=terraform fmt -recursive -check
-
-terraform:cloud:validate:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - terraform -chdir=terraform/cloud init
-  script:
-    - terraform -chdir=terraform/cloud validate
-
-terraform:local:validate:
-  extends:
-    - .run_on_terraform_change
-  tags:
-    - docker
-  stage: analyze
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {}
-  before_script:
-    - terraform -chdir=terraform/local init
-  script:
-    - terraform -chdir=terraform/local validate
-
-#-----------------------------------
 # End to end tests
 #-----------------------------------
 
@@ -344,96 +263,27 @@ test:end-to-end:
 # Deployment
 #-----------------------------------
 
-deploy-review:
-  extends:
-    - .deploy
-  needs:
-    - test:end-to-end
+publish:image:review:
+  stage: deploy
+  extends: .publish:image
   variables:
-    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
-    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
-    API_GRAPHQL_DEBUG: 1
-    API_GRAPHQL_PLAYGROUND: 1
-    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: https://review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    on_stop: stop-environment
+    IMAGE_VERSION: $CI_COMMIT_REF_SLUG
   only:
     - merge_request
 
-deploy-staging:
-  extends:
-    - .deploy
-  needs:
-    - test:end-to-end
+publish:image:staging:
+  stage: deploy
+  extends: .publish:image
   variables:
-    WORKSPACE: staging
-    DOMAIN: beta.a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
-    API_DYNO_SIZE: free
-    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_STAGING
-    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_STAGING
-    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_STAGING
-    TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
-    TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
-    TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_STAGING
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_STAGING
-    API_GRAPHQL_DEBUG: 1
-    API_GRAPHQL_PLAYGROUND: 1
-    API_GRAPHQL_SCHEMA_INTROSPECTION: 1
-  environment:
-    name: staging
-    url: https://beta.a11yphant.com
+    IMAGE_VERSION: beta
   only:
     - develop
 
-deploy-production:
-  extends:
-    - .deploy
-  needs:
-    - test:end-to-end
+publish:image:production:
+  stage: deploy
+  extends: .publish:image
   variables:
-    WORKSPACE: production
-    DOMAIN: a11yphant.com
-    USE_CUSTOM_DOMAIN: 1
-    API_DYNO_SIZE: hobby
-    GITHUB_CLIENT_ID: $GITHUB_CLIENT_ID_PROD
-    GITHUB_CLIENT_SECRET: $GITHUB_CLIENT_SECRET_PROD
-    GITHUB_CALLBACK_URL: $GITHUB_CALLBACK_URL_PROD
-    TWITTER_CONSUMER_KEY: $TWITTER_CONSUMER_KEY
-    TWITTER_CONSUMER_SECRET: $TWITTER_CONSUMER_SECRET
-    TWITTER_CALLBACK_URL: $TWITTER_CALLBACK_URL_PROD
-    SPLITBEE_TOKEN: $SPLITBEE_TOKEN_PROD
-    API_HOBBY_BASIC_DB: 1
-  environment:
-    name: production
-    url: https://a11yphant.com
+    IMAGE_NAME: a11yphant/api
+    IMAGE_VERSION: production
   only:
     - master
-
-stop-environment:
-  tags:
-    - docker
-  stage: deploy
-  variables:
-    WORKSPACE: review-${CI_MERGE_REQUEST_IID}
-    DOMAIN: review-${CI_MERGE_REQUEST_IID}.a11yphant.com
-    USE_CUSTOM_DOMAIN: 0
-  needs: []
-  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  cache: {} # disable cache
-  before_script:
-    - terraform -chdir=terraform/cloud init
-  script:
-    - terraform -chdir=terraform/cloud workspace select $WORKSPACE
-    - terraform -chdir=terraform/cloud destroy -auto-approve -var="gitlab_ci_registery_user=$CI_REGISTRY_USER" -var="gitlab_ci_registry_password=$CI_REGISTRY_PASSWORD" -var="heroku_registry_password=$HEROKU_AUTH_TOKEN" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="domain=$DOMAIN" -var="route53_zone_id=$AWS_ZONE_ID" -var="use_custom_domain=$USE_CUSTOM_DOMAIN" -var="docker_tag=$CI_COMMIT_REF_SLUG"
-    - terraform -chdir=terraform/cloud workspace select default
-    - terraform -chdir=terraform/cloud workspace delete $WORKSPACE
-  when: manual
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    action: stop
-  only:
-    - merge_request

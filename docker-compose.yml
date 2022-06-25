@@ -21,24 +21,17 @@ services:
     ports:
       - 5432:5432
 
-  localstack:
-    image: localstack/localstack
-    restart: always
+  rabbitmq:
+    image: rabbitmq:management-alpine
     environment:
-      SERVICES: sns,sqs
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: secret
+    volumes:
+      - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./docker/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
     ports:
-      - 4566:4566
-      - 4571:4571
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  terraform:
-    image: hashicorp/terraform
-    restart: "no"
-    volumes:
-      - ./terraform:/terraform
-    depends_on:
-      - localstack
+      - 15672:15672
+      - 5672:5672
 
   mailhog:
     image: mailhog/mailhog

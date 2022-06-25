@@ -1,10 +1,9 @@
 import "module-alias/register";
 
-import { AwsTransportStrategy } from "@a11yphant/nestjs-aws-messaging";
 import { INestApplication, Logger, ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { MicroserviceOptions } from "@nestjs/microservices";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
@@ -15,17 +14,13 @@ export function configureApp(app: INestApplication): void {
 }
 
 export async function setupMicroservices(app: INestApplication): Promise<void> {
-  const configService = app.get<ConfigService>(ConfigService);
-
-  const transportStrategy = new AwsTransportStrategy({
-    polling: configService.get<boolean>("messaging.poll-queue"),
-    queueUrl: configService.get<string>("messaging.queue-url"),
-    region: configService.get<string>("messaging.region"),
-    deleteHandled: true,
-  });
-
+  const config = app.get<ConfigService>(ConfigService);
   await app.connectMicroservice<MicroserviceOptions>({
-    strategy: transportStrategy,
+    transport: Transport.RMQ,
+    options: {
+      urls: [config.get<string>("messaging.rabbitmq-url")],
+      queue: config.get<string>("messaging.consume-queue-name"),
+    },
   });
 }
 

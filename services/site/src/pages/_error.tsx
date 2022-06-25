@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/nextjs";
 import Footer from "app/components/Footer";
 import IllustrationLost from "app/components/icons/IllustrationLost";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
@@ -16,10 +15,6 @@ interface CustomErrorProps {
 }
 
 const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialPropsRun = false, err }) => {
-  if (!hasGetInitialPropsRun && err) {
-    Sentry.captureException(err);
-  }
-
   return (
     <>
       <Head>
@@ -57,7 +52,6 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
 };
 
 CustomError.getInitialProps = ({ res, err }) => {
-  Sentry.captureException(err);
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode, err, hasGetInitialPropsRun: true };
 };

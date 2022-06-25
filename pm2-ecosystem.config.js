@@ -18,11 +18,5 @@ module.exports = {
       namespace: "a11yphant",
       autorestart: true,
     },
-    {
-      name: "docker-compose",
-      script: "docker compose up",
-      namespace: "a11yphant",
-      autorestart: true
-    },
   ],
 };

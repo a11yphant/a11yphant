@@ -1,6 +1,6 @@
-import { AwsMessagingModule } from "@a11yphant/nestjs-aws-messaging";
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ClientsModule, Transport } from "@nestjs/microservices";
 import fetch from "node-fetch";
 
 import { AxeFactory } from "./axe.factory";
@@ -15,6 +15,7 @@ import { ElementNotExists } from "./checks/element-not-exists.check";
 import { HtmlIsValidCheck } from "./checks/html-is-valid.check";
 import messagingConfig from "./config/messaging.config";
 import submissionRenderer from "./config/submission-checker.config";
+import { SUBMISSIONS_CLIENT } from "./constants";
 import { SubmissionController } from "./submission.controller";
 import { WebdriverFactory } from "./webdriver.factory";
 
@@ -24,15 +25,20 @@ import { WebdriverFactory } from "./webdriver.factory";
       load: [submissionRenderer, messagingConfig],
       ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
     }),
-    AwsMessagingModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        region: config.get<string>("messaging.region"),
-        topics: config.get<Record<string, string>>("messaging.topics"),
-        snsEndpoint: config.get<string>("messaging.sns-endpoint"),
-      }),
-      inject: [ConfigService],
-    }),
+    ClientsModule.registerAsync([
+      {
+        name: SUBMISSIONS_CLIENT,
+        imports: [ConfigModule],
+        useFactory: (config: ConfigService) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [config.get<string>("messaging.rabbitmq-url")],
+            queue: config.get<string>("messaging.publish-queue-name"),
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
   controllers: [SubmissionController],
   providers: [
