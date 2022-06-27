@@ -7,8 +7,8 @@
   cache: {}
   services:
     - postgres
-    - alias: localstack
-      name: localstack/localstack
+    - alias: rabbitmq
+      name: rabbitmq:management-alpine
     - alias: selenium
       name: selenium/standalone-chrome:4
     - alias: api
@@ -16,7 +16,7 @@
     - alias: site
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG
       entrypoint: [""]
-      command: ["node", "entrypoint-server.js"]
+      command: ["npm", "start"]
     - alias: submission-checker
       name: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG
   variables:
@@ -24,37 +24,26 @@
     POSTGRES_USER: a11yphant
     POSTGRES_PASSWORD: secret
     POSTGRES_DB: a11yphant
-    SERVICES: sns,sqs
+    RABBITMQ_DEFAULT_USER: user
+    RABBITMQ_DEFAULT_PASS: secret
     DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
-    AWS_ACCESS_KEY_ID: mock_access_key
-    AWS_SECRET_ACCESS_KEY: mock_secret_key
     API_HOST: 0.0.0.0
     API_PORT: 3000
     API_KEY: please-generate-a-secret-key-for-production
     API_CHALLENGES_LOCATION: "../../../../challenges"
-    API_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
-    API_MESSAGING_SNS_ENDPOINT: http://localstack:4566
-    API_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-api-queue
+    API_MESSAGING_RABBITMQ_URL: amqp://user:secret@rabbitmq:5672
+    API_MESSAGING_CONSUME_QUEUE_NAME: api
+    API_MESSAGING_PUBLISH_QUEUE_NAME: submission-checker
     SITE_HOST: 0.0.0.0
     SITE_PORT: 3001
     SITE_GRAPHQL_ENDPOINT_SERVER: http://api:3000/graphql
     SITE_GRAPHQL_ENDPOINT_CLIENT: http://site:3001/graphql
     SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
-    SUBMISSION_CHECKER_MESSAGING_POLL_QUEUE: 1
-    SUBMISSION_CHECKER_MESSAGING_DELETE_HANDLED_MESSAGES: 1
-    SUBMISSION_CHECKER_MESSAGING_QUEUE_URL: http://localstack:4566/000000000000/default-submission-checker-queue
-    SUBMISSION_CHECKER_MESSAGING_TOPICS: "submission=arn:aws:sns:us-east-1:000000000000:default-submission-topic"
-    SUBMISSION_CHECKER_MESSAGING_SNS_ENDPOINT: http://localstack:4566
+    SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@rabbitmq:5672
+    SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME: submission-checker
+    SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: api
     CYPRESS_BASE_URL: "http://site:3001"
   before_script:
-    # install terraform
-    - cd /tmp
-    - TER_VER=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d":" -f2 | tr -d \"\,\v | awk '{$1=$1};1')
-    - wget --quiet https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_linux_amd64.zip
-    - unzip terraform_${TER_VER}_linux_amd64.zip
-    - mv terraform /usr/local/bin/
-    - cd -
-
     - apt update
     - apt install ca-certificates curl gnupg lsb-release -y
     - curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -63,15 +52,14 @@
     - apt install docker-ce-cli -y
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
+    # configure rabbitmq
+    - curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://rabbitmq:15672/api/definitions
+
     # seed database
     - export CI_BUILD_NETWORK_ID="$HOSTNAME-job-$CI_JOB_ID-network"
-    - docker run --rm -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod
-    - docker run --rm -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api-release:$CI_COMMIT_REF_SLUG npm run console:prod import:challenges
+    - docker run --rm -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG npm run prisma:migrate:prod
+    - docker run --rm -e DB_URL=$DB_URL --network $CI_BUILD_NETWORK_ID gitlab.mediacube.at:5050/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG npm run console:prod import:challenges
     - npm run db-dump:update:ci --prefix tests
-
-    # setup localstack
-    - terraform -chdir=terraform/local init
-    - terraform -chdir=terraform/local apply -auto-approve
   script:
     - CYPRESS_IS_CI=true npm run cypress:run --prefix tests
   artifacts:

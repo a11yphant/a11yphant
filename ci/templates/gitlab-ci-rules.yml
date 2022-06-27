@@ -47,15 +47,6 @@
         - packages/../*
         - packages/prisma/**/*
 
-.run_on_nestjs_aws_messaging_change:
-  rules:
-    - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")
-      changes:
-        - *run_on_root_change
-        - *run_on_ci_change
-        - packages/../*
-        - packages/nestjs-aws-messaging/**/*
-
 .run_on_eslint_config_change:
   rules:
     - if: ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event")

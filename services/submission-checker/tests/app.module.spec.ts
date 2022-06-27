@@ -1,13 +1,14 @@
 import { Test } from "@nestjs/testing";
 
-import { AppModule } from "../src/app.module";
+import { AppModule } from "@/app.module";
 
 describe("app module", () => {
-  it("can compile the module", () => {
-    expect(
-      Test.createTestingModule({
-        imports: [AppModule],
-      }).compile(),
-    ).resolves.toBeTruthy();
+  it("can compile the module", async () => {
+    expect.assertions(1);
+    const module = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    expect(module).toBeDefined();
   });
 });

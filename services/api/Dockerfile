@@ -30,13 +30,11 @@ WORKDIR /app
 
 RUN --mount=type=secret,id=npmrc,dst=/app/.npmrc npm ci --production
 
-FROM node:14-alpine AS release
+FROM node:14-alpine
 
 WORKDIR /app
 
 ENV API_CHALLENGES_LOCATION=/app/challenges
-
-RUN apk add --no-cache curl
 
 COPY --from=production-dependencies /app/package* ./
 COPY --from=production-dependencies /app/node_modules ./node_modules
@@ -46,17 +44,4 @@ COPY --from=builder /app/mail-templates ./mail-templates
 COPY services/api/prisma ./prisma
 COPY challenges/ ./challenges
 
-CMD ["sh", "-c", "DB_URL=$DATABASE_URL npm run prisma:migrate:prod && npm run console:prod import:challenges"]
-
-FROM node:14-alpine
-
-WORKDIR /app
-
-COPY --from=production-dependencies /app/package* ./
-COPY --from=production-dependencies /app/node_modules ./node_modules
-COPY --from=builder /app/nest-cli.json ./
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/mail-templates ./mail-templates
-
 CMD ["node", "dist/main.js"]
-

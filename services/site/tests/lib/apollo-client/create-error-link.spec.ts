@@ -1,6 +1,5 @@
 import { execute, gql } from "@apollo/client";
 import { MockedResponse, MockLink } from "@apollo/client/testing";
-import * as Sentry from "@sentry/nextjs";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
@@ -11,10 +10,6 @@ jest.mock("app/components/common/error/useErrorDialog", () => ({
   useErrorDialogApi: () => ({
     showApolloError: jest.fn(),
   }),
-}));
-
-jest.mock("@sentry/nextjs", () => ({
-  captureException: jest.fn(),
 }));
 
 const query = gql`
@@ -47,19 +42,6 @@ describe("create error link", () => {
     execute(link, { query }).subscribe({
       complete: done,
       error: done.fail,
-    });
-  });
-
-  it("logs error to sentry", (done) => {
-    const errorDialogApi = useErrorDialogApi();
-
-    const link = createErrorLink({ errorDialogApi }).concat(mockLink);
-
-    execute(link, { query }).subscribe({
-      error: () => {
-        expect(Sentry.captureException).toHaveBeenCalled();
-        done();
-      },
     });
   });
 

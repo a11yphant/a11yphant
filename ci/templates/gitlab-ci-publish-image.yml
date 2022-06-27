@@ -1,0 +1,21 @@
+.publish:image:
+  tags:
+    - docker
+  stage: build
+  image: docker:20
+  cache: {}
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $A11YPHANT_REGISTRY_USER -p $A11YPHANT_REGISTRY_PASSWORD registry.cluster.a11yphant.com
+  script:
+    - docker pull $CI_REGISTRY/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG
+    - docker pull $CI_REGISTRY/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG
+    - docker pull $CI_REGISTRY/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG
+
+    - docker tag $CI_REGISTRY/a11yphant/a11yphant/api:$CI_COMMIT_REF_SLUG registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/a11yphant/site:$CI_COMMIT_REF_SLUG registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
+    - docker tag $CI_REGISTRY/a11yphant/a11yphant/submission-checker:$CI_COMMIT_REF_SLUG registry.cluster.a11yphant.com/a11yphant/submission-checker:$IMAGE_VERSION
+
+    - docker push registry.cluster.a11yphant.com/a11yphant/api:$IMAGE_VERSION
+    - docker push registry.cluster.a11yphant.com/a11yphant/site:$IMAGE_VERSION
+    - docker push registry.cluster.a11yphant.com/a11yphant/submission-checker:$IMAGE_VERSION

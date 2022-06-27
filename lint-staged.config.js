@@ -5,6 +5,5 @@ module.exports = {
     "services/site/**/*.{ts,tsx}": () => "npm --prefix services/site run lint:tsc",
     "services/submission-checker/**/*.{ts,js}": "npm --prefix services/submission-checker run lint:eslint",
     "services/submission-checker/**/*.ts": () => "npm --prefix services/submission-checker run lint:tsc",
-    "packages/nestjs-aws-messaging-transport-strategy/**": "npm --prefix packages/nestjs-aws-messaging-transport-strategy run lint",
     "challenges/*.yml": "npm run lint:content",
 };
