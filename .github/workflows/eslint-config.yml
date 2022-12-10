@@ -3,14 +3,14 @@ name: ESLint Config
 on:
   workflow_dispatch:
   pull_request:
-    paths:
-      - 'packages/eslint-config/**'
+    # paths:
+    #   - 'packages/eslint-config/**'
   push:
     branches:
       - main
       - develop
-    paths:
-      - 'packages/eslint-config/**'
+    # paths:
+    #   - 'packages/eslint-config/**'
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
