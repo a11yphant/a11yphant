@@ -16,8 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: NPM Publish
         run: cd packages/eslint-config && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
