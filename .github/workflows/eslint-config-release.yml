@@ -5,12 +5,12 @@ on:
     tags:
       # - eslint-config-v*
 
-permissions:
-  packages: write
-
 jobs:
   publish-eslint-config:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
