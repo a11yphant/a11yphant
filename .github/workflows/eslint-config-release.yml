@@ -5,6 +5,9 @@ on:
     tags:
       # - eslint-config-v*
 
+permissions:
+  packages: write
+
 jobs:
   publish-eslint-config:
     runs-on: ubuntu-latest
