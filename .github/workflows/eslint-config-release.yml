@@ -1,0 +1,23 @@
+name: ESLint Config CI
+
+on:
+  push:
+    tags:
+      - eslint-config-v**
+
+jobs:
+  lint-eslint-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: NPM Publish
+        run: cd packages/eslint-config && npm publish

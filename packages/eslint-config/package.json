@@ -2,6 +2,7 @@
   "name": "@a11yphant/eslint-config",
   "version": "0.4.0",
   "description": "",
+  "repository": "https://github.com/a11yphant/a11yphant",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
