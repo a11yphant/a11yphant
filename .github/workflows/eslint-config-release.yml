@@ -3,7 +3,7 @@ name: ESLint Config CI
 on:
   push:
     tags:
-      - eslint-config-v**
+      - eslint-config-v*
 
 jobs:
   lint-eslint-config:
