@@ -1,4 +1,4 @@
-name: ESLint Config
+name: ESLint Config CI
 
 on:
   workflow_dispatch:
