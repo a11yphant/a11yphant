@@ -294,6 +294,9 @@ jobs:
       - build-site
       - build-submission-checker
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
       - name: Checkout
         uses: actions/checkout@v3
