@@ -224,6 +224,15 @@ jobs:
     permissions:
       contents: read
       packages: read
+    services:
+      rabbitmq:
+        image: rabbitmq:management-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: user
+          RABBITMQ_DEFAULT_PASS: secret
+        ports:
+          - 5672:5672
+          - 15672:15672
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -234,8 +243,13 @@ jobs:
           path: services/submission-checker
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Configure RabbitMQ
+        run: curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://localhost:15672/api/definitions
+
       - name: Test
         run: npm run test:coverage --prefix services/submission-checker
+        env:
+          SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@localhost:5672
 
   build-submission-checker:
     needs:
