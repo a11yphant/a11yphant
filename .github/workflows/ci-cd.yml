@@ -302,7 +302,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Start services
-        name: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.yml up -d
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.yml up -d
 
       - name: Configure RabbitMQ
         run: curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://localhost:15672/api/definitions
