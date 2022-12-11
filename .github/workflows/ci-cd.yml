@@ -131,10 +131,10 @@ jobs:
           context: .
           file: services/api/Dockerfile
           push: false
-          build-args:
-            VERSION: ${{ github.ref_name }}
-          secrets:
-            - id=npmrc,src=.npmrc
+          build-args: |
+            VERSION=${{ github.ref_name }}
+          secrets: |
+            id=npmrc,src=.npmrc
 
   # Site
   lint-site:
