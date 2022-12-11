@@ -21,7 +21,8 @@ jobs:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
           scope: '@a11yphant'
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: NPM Publish
         run: cd packages/eslint-config && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
