@@ -37,7 +37,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate GraphQL Schema
-        run: npm run generate-schema --prefix service/api
+        run: npm run generate-schema --prefix services/api
 
       - uses: actions/upload-artifact@v3
         with:
