@@ -23,6 +23,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+
       - name: NPM Install
         run: npm ci --prefix services/api
         env:
