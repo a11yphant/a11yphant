@@ -43,10 +43,10 @@ services:
       - 15672:15672
       - 5672:5672
     healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 30s
-      timeout: 30s
-      retries: 3
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   mailhog:
     image: mailhog/mailhog
