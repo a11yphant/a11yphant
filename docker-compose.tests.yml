@@ -15,8 +15,10 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - localstack
-      - postgres
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   site:
     image: ghcr.io/a11yphant/site:${IMAGE_TAG:-develop}
@@ -30,8 +32,8 @@ services:
     ports:
       - 3001:3001
     depends_on:
-      - api
-      - submission-checker
+      api:
+      submission-checker:
 
   submission-checker:
     image: ghcr.io/a11yphant/submission-checker:${IMAGE_TAG:-develop}
@@ -42,6 +44,10 @@ services:
       SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: "api"
       SUBMISSION_CHECKER_WEBDRIVER_ENDPOINT: http://selenium:4444/wd/hub
     depends_on:
-      - api
+      api:
+      rabbitmq:
+        condition: service_healthy
+      selenium:
+        condition: service_healthy
 
   

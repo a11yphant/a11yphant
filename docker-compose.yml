@@ -8,6 +8,11 @@ services:
       - /dev/shm:/dev/shm
     ports:
       - 4444:4444
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4444/wd/hub/status" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   postgres:
     image: postgres
@@ -20,6 +25,11 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "a11yphant", "-U", "a11yphant" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -32,6 +42,11 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
 
   mailhog:
     image: mailhog/mailhog
