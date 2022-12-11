@@ -1,0 +1,27 @@
+name: ESLint Config Publish
+
+on:
+  push:
+    tags:
+      # - eslint-config-v*
+
+jobs:
+  publish-eslint-config:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: NPM Publish
+        run: cd packages/eslint-config && npm publish
