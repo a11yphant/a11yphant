@@ -1,4 +1,4 @@
-name: Site CI/CD
+name: CI/CD
 
 on:
   workflow_dispatch:
@@ -45,7 +45,91 @@ jobs:
           path: services/api/schema.gql
           retention-days: 1
 
-  lint:
+  lint-api:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+
+      - name: NPM Install
+        run: npm ci --prefix services/api
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint
+        run: npm run lint --prefix services/api
+
+  test-api:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: a11yphant
+          POSTGRES_USER: a11yphant
+          POSTGRES_PASSWORD: secret
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+
+      - name: NPM Install
+        run: npm ci --prefix services/api
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test
+        run: npm run test:coverage --prefix services/api
+        env:
+          DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
+
+  lint-eslint-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+
+      - name: NPM Install
+        run: npm ci --prefix packages/eslint-config
+
+      - name: Lint
+        run: npm run lint --prefix packages/eslint-config
+
+  lint-site:
     needs: generate-graphql-schema
     runs-on: ubuntu-latest
     permissions:
@@ -76,7 +160,7 @@ jobs:
       - name: Lint
         run: npm run lint --prefix services/site
 
-  test:
+  test-site:
     needs: generate-graphql-schema
     runs-on: ubuntu-latest
     permissions:
