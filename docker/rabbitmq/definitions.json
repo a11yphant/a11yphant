@@ -1,4 +1,9 @@
 {
+    "vhosts": [
+        {
+            "name": "/"
+      }
+    ],
     "queues": [
         {
             "name": "submission-checker",

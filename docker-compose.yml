@@ -15,18 +15,19 @@ services:
       retries: 10
 
   postgres:
-    image: postgres
+    image: postgres:14-alpine
     restart: always
     environment:
       POSTGRES_USER: a11yphant
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: a11yphant
+      POSTGRES_HOST: 0.0.0.0
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "a11yphant", "-U", "a11yphant" ]
+      test: pg_isready -q -d a11yphant -U a11yphant
       timeout: 45s
       interval: 10s
       retries: 10
@@ -43,7 +44,7 @@ services:
       - 15672:15672
       - 5672:5672
     healthcheck:
-      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      test: rabbitmq-diagnostics -q ping
       timeout: 45s
       interval: 10s
       retries: 10
