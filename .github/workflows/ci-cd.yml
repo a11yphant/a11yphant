@@ -302,7 +302,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Start services
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.yml up -d --quiet-pull --wait --no-color
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
 
 
       - name: Configure RabbitMQ
@@ -310,8 +310,8 @@ jobs:
 
       - name: Prepare Database
         run: |
-          docker compose run api "npm run prisma:migrate:prod"
-          docker compose run api "npm run console:prod import:challenges"
+          docker compose -f docker-compose.yml -f docker-compose.tests.yml run api "npm run prisma:migrate:prod"
+          docker compose -f docker-compose.yml -f docker-compose.tests.yml run api "npm run console:prod import:challenges"
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
