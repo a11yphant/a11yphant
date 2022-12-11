@@ -18,6 +18,7 @@ runs:
       uses: docker/setup-buildx-action@v2
 
     - name: Prepare .npmrc file
+      shell: bash
       run: echo "//npm.pkg.github.com/:_authToken=${{ inputs.npm-token }}" >> .npmrc
 
     - name: Build and Push
