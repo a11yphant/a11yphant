@@ -10,6 +10,9 @@ inputs:
   version:
     required: true
     type: string
+  image-name:
+    required: true
+    type: string
 
 runs:
   using: composite
@@ -20,15 +23,6 @@ runs:
     - name: Prepare .npmrc file
       shell: bash
       run: echo "//npm.pkg.github.com/:_authToken=${{ inputs.npm-token }}" >> .npmrc
-
-    - name: Create Cache Key
-      shell: bash
-      run: |
-        PROJECT_PATH=${{ inputs.path }}
-        PROJECT_PATH_SLUG="${PROJECT_PATH//\//-}"
-        VERSION=${{ inputs.version }}
-        VERSION_SLUG="${VERSION//\//-}"
-        echo "CACHE_KEY=$PROJECT_PATH_SLUG-$VERSION_SLUG" >> $GITHUB_ENV
 
     - name: Build and Push
       uses: docker/build-push-action@v3
@@ -41,4 +35,4 @@ runs:
         secret-files: |
           npmrc=.npmrc
         cache-from: type=gha
-        cache-to: type=gha,mode=max,scope=${{ env.CACHE_KEY }}
+        cache-to: type=gha,mode=max,scope=${{ inputs.image-name }}-${{ inputs.version }}
