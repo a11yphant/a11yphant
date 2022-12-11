@@ -30,11 +30,11 @@ jobs:
           cache: npm
           registry-url: https://npm.pkg.github.com/
           scope: '@a11yphant'
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: NPM Install
         run: npm ci --prefix services/site
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint
         run: npm run lint --prefix services/site
