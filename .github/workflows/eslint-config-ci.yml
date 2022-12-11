@@ -21,7 +21,7 @@ jobs:
   lint-eslint-config:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      content: read
       packages: read
     steps:
       - name: Checkout
