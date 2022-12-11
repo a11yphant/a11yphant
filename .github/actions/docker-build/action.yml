@@ -26,7 +26,9 @@ runs:
       run: |
         PROJECT_PATH=${{ inputs.path }}
         PROJECT_PATH_SLUG="${PROJECT_PATH//\//-}"
-        echo "CACHE_KEY=$PROJECT_PATH_SLUG-${{ inputs.version }}" >> $GITHUB_ENV
+        VERSION=${{ inputs.version }}
+        VERSION_SLUG="${VERSION//\//-}"
+        echo "CACHE_KEY=$PROJECT_PATH_SLUG-$VERSION_SLUG" >> $GITHUB_ENV
 
     - name: Build and Push
       uses: docker/build-push-action@v3
