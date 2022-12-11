@@ -4,6 +4,9 @@ inputs:
   path:
     required: true
     type: string
+  npm-token:
+    required: true
+    type: string
 
 runs:
   using: composite
@@ -17,6 +20,7 @@ runs:
         scope: '@a11yphant'
 
     - name: NPM Install
+      shell: bash
       run: npm ci --prefix ${{ inputs.path }}
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
