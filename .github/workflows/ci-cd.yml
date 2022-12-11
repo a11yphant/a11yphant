@@ -119,24 +119,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Prepare .npmrc file
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
-
-      - name: Build and Push
-        uses: docker/build-push-action@v3
+      - name: Build
+        uses: ./.github/actions/docker-build
         with:
-          context: .
-          file: services/api/Dockerfile
-          push: false
-          build-args: |
-            VERSION=${{ github.ref_name }}
-          secret-files: |
-            npmrc=.npmrc
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          path: services/api
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ github.ref_name }}
 
   # Site
   lint-site:
@@ -205,21 +193,9 @@ jobs:
           name: graphql-schema
           path: services/api/schema.gql
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Prepare .npmrc file
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
-
-      - name: Build and Push
-        uses: docker/build-push-action@v3
+      - name: Build
+        uses: ./.github/actions/docker-build
         with:
-          context: .
-          file: services/site/Dockerfile
-          push: false
-          build-args: |
-            VERSION=${{ github.ref_name }}
-          secret-files: |
-            npmrc=.npmrc
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          path: services/site
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ github.ref_name }}
