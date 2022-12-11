@@ -3,7 +3,7 @@ name: ESLint Config Publish
 on:
   push:
     tags:
-      # - eslint-config-v*
+      - eslint-config-v*
 
 jobs:
   publish-eslint-config:
