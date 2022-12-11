@@ -8,21 +8,15 @@ inputs:
 runs:
   using: composite
   steps:
-    prepare:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: read
-        packages: read
-      steps:
-        - name: Setup node
-          uses: actions/setup-node@v3
-          with:
-            node-version: 14
-            cache: npm
-            registry-url: https://npm.pkg.github.com/
-            scope: '@a11yphant'
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+        cache: npm
+        registry-url: https://npm.pkg.github.com/
+        scope: '@a11yphant'
 
-        - name: NPM Install
-          run: npm ci --prefix ${{ inputs.path }}
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: NPM Install
+      run: npm ci --prefix ${{ inputs.path }}
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
