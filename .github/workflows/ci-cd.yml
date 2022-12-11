@@ -14,27 +14,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # ESLint Config
+  lint-eslint-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare
+        uses: ./.github/workflows/prepare.yml
+        with:
+          path: packages/eslint-config
+
+      - name: Lint
+        run: npm run lint --prefix packages/eslint-config
+
+  # API
   generate-graphql-schema:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Prepare
+        uses: ./.github/workflows/prepare.yml
         with:
-          node-version: 14
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-
-      - name: NPM Install
-        run: npm ci --prefix services/api
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: services/api
 
       - name: Generate GraphQL Schema
         run: npm run generate-schema --prefix services/api
@@ -51,21 +53,10 @@ jobs:
       contents: read
       packages: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Prepare
+        uses: ./.github/workflows/prepare.yml
         with:
-          node-version: 14
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-
-      - name: NPM Install
-        run: npm ci --prefix services/api
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: services/api
 
       - name: Lint
         run: npm run lint --prefix services/api
@@ -90,45 +81,17 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: Prepare
+        uses: ./.github/workflows/prepare.yml
         with:
-          node-version: 14
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-
-      - name: NPM Install
-        run: npm ci --prefix services/api
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: services/api
 
       - name: Test
         run: npm run test:coverage --prefix services/api
         env:
           DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
 
-  lint-eslint-config:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          cache: npm
-
-      - name: NPM Install
-        run: npm ci --prefix packages/eslint-config
-
-      - name: Lint
-        run: npm run lint --prefix packages/eslint-config
-
+  # Site
   lint-site:
     needs: generate-graphql-schema
     runs-on: ubuntu-latest
@@ -136,26 +99,15 @@ jobs:
       contents: read
       packages: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Prepare
+        uses: ./.github/workflows/prepare.yml
+        with:
+          path: services/site
 
       - uses: actions/download-artifact@v3
         with:
           name: graphql-schema
           path: services/api/schema.gql
-
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-
-      - name: NPM Install
-        run: npm ci --prefix services/site
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint
         run: npm run lint --prefix services/site
@@ -167,26 +119,15 @@ jobs:
       contents: read
       packages: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Prepare
+        uses: ./.github/workflows/prepare.yml
+        with:
+          path: services/site
 
       - uses: actions/download-artifact@v3
         with:
           name: graphql-schema
           path: services/api/schema.gql
-
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-
-      - name: NPM Install
-        run: npm ci --prefix services/site
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test
         run: npm run test:coverage --prefix services/site
