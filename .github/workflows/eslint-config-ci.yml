@@ -29,6 +29,8 @@ jobs:
         with:
           node-version: 14
           cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
 
       - name: NPM Install
         run: npm ci --prefix packages/eslint-config
