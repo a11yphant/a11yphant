@@ -134,7 +134,7 @@ jobs:
           build-args: |
             VERSION=${{ github.ref_name }}
           secret-files: |
-            id=npmrc,src=.npmrc
+            npmrc=.npmrc
 
   # Site
   lint-site:
