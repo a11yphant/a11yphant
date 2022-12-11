@@ -135,6 +135,8 @@ jobs:
             VERSION=${{ github.ref_name }}
           secret-files: |
             npmrc=.npmrc
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   # Site
   lint-site:
@@ -219,3 +221,5 @@ jobs:
             VERSION=${{ github.ref_name }}
           secret-files: |
             npmrc=.npmrc
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
