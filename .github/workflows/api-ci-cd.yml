@@ -41,6 +41,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    container: node:14-alpine
     permissions:
       contents: read
       packages: read
