@@ -114,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -128,7 +128,9 @@ jobs:
           path: services/api
           npm-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: api
-          version: ${{ env.GITHUB_REF_SLUG }}-prerelease
+          version: ${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
 
   # Site
   lint-site:
@@ -187,7 +189,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -206,7 +208,9 @@ jobs:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: site
-          version: ${{ env.GITHUB_REF_SLUG }}-prerelease
+          version: ${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
 
   # Submission Checker
   lint-submission-checker:
@@ -266,7 +270,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -280,4 +284,6 @@ jobs:
           path: services/submission-checker
           npm-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: submission-checker
-          version: ${{ env.GITHUB_REF_SLUG }}-prerelease
+          version: ${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
