@@ -175,30 +175,6 @@ jobs:
       - name: Test
         run: npm run test:coverage --prefix services/site
 
-  test-site:
-    needs: generate-graphql-schema
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/site
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: graphql-schema
-          path: services/api/schema.gql
-
-      - name: Test
-        run: npm run test:coverage --prefix services/site
-
   build-site:
     needs:
       - lint-site
@@ -242,24 +218,6 @@ jobs:
 
       - name: Lint
         run: npm run lint --prefix services/submission-checker
-
-  test-submission-checker:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/submission-checker
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Test
-        run: npm run test:coverage --prefix services/submission-checker
 
   test-submission-checker:
     runs-on: ubuntu-latest
