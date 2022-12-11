@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-eslint-config:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
