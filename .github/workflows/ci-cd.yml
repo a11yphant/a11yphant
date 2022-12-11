@@ -213,7 +213,7 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare-node
         with:
-          path: services/site
+          path: services/submission-checker
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Lint
