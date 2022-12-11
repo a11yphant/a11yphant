@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
+  generate-graphql-schema:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -22,6 +22,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: NPM Install
+        run: npm ci --prefix services/api
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate GraphQL Schema
+        run: npm run generate-schema --prefix service/api
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: graphql-schema
+          path: services/api/schema.gql
+          retention-days: 1
+
+  lint:
+    needs: generate-graphql-schema
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: graphql-schema
+          path: services/api/schema.gql
 
       - name: Setup node
         uses: actions/setup-node@v3
