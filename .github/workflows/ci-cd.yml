@@ -287,3 +287,39 @@ jobs:
           version: ${{ env.GITHUB_REF_SLUG }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  test-end-to-end:
+    needs:
+      - build-api
+      - build-site
+      - build-submission-checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Start services
+        name: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.yml up -d
+
+      - name: Configure RabbitMQ
+        run: curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://localhost:15672/api/definitions
+
+      - name: Prepare Database
+        run: |
+          docker compose run api "npm run prisma:migrate:prod"
+          docker compose run api "npm run console:prod import:challenges"
+
+      - name: Run Cypress
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: ./tests
+          build: npm run db-dump:update:ci
+        env:
+          CYPRESS_BASE_URL: "http://localhost:3001"
+
+      - name: Stop services
+        run: docker compose down
+

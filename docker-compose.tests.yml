@@ -1,6 +1,6 @@
 services:
   api:
-    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/api:develop
+    image: ghcr.io/a11yphant/api:${IMAGE_TAG:-develop}
     environment:
       DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
       AWS_ACCESS_KEY_ID: mock_access_key
@@ -19,7 +19,7 @@ services:
       - postgres
 
   site:
-    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/site:develop
+    image: ghcr.io/a11yphant/site:${IMAGE_TAG:-develop}
     entrypoint: ""
     command: npm start
     environment:
@@ -31,14 +31,16 @@ services:
       - 3001:3001
     depends_on:
       - api
+      - submission-checker
 
   submission-checker:
-    image: gitlab.mediacube.at:5050/a11yphant/a11yphant/submission-checker:develop
+    image: ghcr.io/a11yphant/submission-checker:${IMAGE_TAG:-develop}
     environment:
       SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
       SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
       SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME: "submission-checker"
       SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: "api"
+      SUBMISSION_CHECKER_WEBDRIVER_ENDPOINT: http://selenium:4444/wd/hub
     depends_on:
       - api
 
