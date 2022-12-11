@@ -21,6 +21,9 @@ permissions:
   content: read
   packages: read
 
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   lint-eslint-config:
     runs-on: ubuntu-latest
