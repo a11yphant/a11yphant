@@ -301,6 +301,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+          cache-dependency-path: tests/package-lock.json
+
       - name: Log in to the Container registry
         uses: docker/login-action@v2
         with:
@@ -323,8 +332,10 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v4
         with:
-          working-directory: ./tests
-          build: npm run db-dump:update:ci
+          working-directory: tests
+          install-command: npm ci
+          command: npm test
+          build: npm run db-dump:update
         env:
           CYPRESS_BASE_URL: "http://localhost:3001"
 
