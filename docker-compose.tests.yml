@@ -54,5 +54,3 @@ services:
         condition: service_healthy
       selenium:
         condition: service_healthy
-
-  

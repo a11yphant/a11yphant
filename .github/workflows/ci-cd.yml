@@ -314,7 +314,6 @@ jobs:
       - name: Start services
         run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
 
-
       - name: Configure RabbitMQ
         run: curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://localhost:15672/api/definitions
 

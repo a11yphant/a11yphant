@@ -39,7 +39,7 @@ services:
       RABBITMQ_DEFAULT_PASS: secret
     volumes:
       - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
-      - ./docker/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
     ports:
       - 15672:15672
       - 5672:5672
