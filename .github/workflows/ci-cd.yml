@@ -311,8 +311,6 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
-      - run: docker pull ghcr.io/a11yphant/site:${{ env.GITHUB_REF_SLUG }}-prerelease
-
       - name: Start services
         run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
 
