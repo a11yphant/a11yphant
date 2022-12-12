@@ -339,5 +339,23 @@ jobs:
         env:
           CYPRESS_BASE_URL: "http://localhost:3001"
 
+      - name: Echo API Logs
+        if: failure()
+        run: docker compose logs api --no-color --tail
+
+      - name: Echo Site Logs
+        if: failure()
+        run: docker compose logs site --no-color --tail
+
+      - name: Echo Submission Checker Logs
+        if: failure()
+        run: docker compose logs submission-checker --no-color --tail
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots
+
       - name: Stop services
         run: docker compose down
