@@ -314,10 +314,11 @@ jobs:
       - name: Start services
         run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
 
-      - name: Prepare Database
-        run: |
-          docker compose -f docker-compose.yml -f docker-compose.tests.yml run api "npm run prisma:migrate:prod"
-          docker compose -f docker-compose.yml -f docker-compose.tests.yml run api "npm run console:prod import:challenges"
+      - name: Migrate Database
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml run api npm run prisma:migrate:prod
+
+      - name: Seed Database
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml run api npm run console:prod import:challenges
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
