@@ -308,6 +308,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: docker pull ghcr.io/a11yphant/site:${{ env.GITHUB_REF_SLUG }}-prerelease
+
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
