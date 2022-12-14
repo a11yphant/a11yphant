@@ -1,4 +1,4 @@
-FROM node:14-alpine3.16 as package-files
+FROM node:14.19.3-alpine3.16 as package-files
 
 WORKDIR /app
 
