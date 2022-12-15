@@ -357,3 +357,30 @@ jobs:
           name: cypress-screenshots
           path: tests/cypress/screenshots
 
+  publish-api-image:
+    needs:
+      - test-end-to-end
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull Image
+        run: docker pull ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}-prerelease
+
+      - name: Tag Image
+        run: docker ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}-prerelease ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
+
+      - name: Push Image
+        run: docker ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
+
