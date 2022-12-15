@@ -24,11 +24,11 @@ runs:
         username: ${{ inputs.registry-user }}
         password: ${{ inputs.registry-password }}
 
-      - name: Pull Image
-        run: docker pull ${{ inputs.source-image }}
+    - name: Pull Image
+      run: docker pull ${{ inputs.source-image }}
 
-      - name: Tag Image
-        run: docker ${{ inputs.source-image }} ${{ inputs.target-image }}
+    - name: Tag Image
+      run: docker ${{ inputs.source-image }} ${{ inputs.target-image }}
 
-      - name: Push Image
-        run: docker ${{ inputs.target-image }}
+    - name: Push Image
+      run: docker ${{ inputs.target-image }}
