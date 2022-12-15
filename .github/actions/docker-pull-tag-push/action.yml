@@ -1,0 +1,34 @@
+name: Docker Pull-Tag-Push
+
+inputs:
+  source-image:
+    required: true
+    type: string
+  target-image:
+    required: true
+    type: string
+  registry-user:
+    required: true
+    type: string
+  registry-password:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ inputs.registry-user }}
+        password: ${{ inputs.registry-password }}
+
+      - name: Pull Image
+        run: docker pull ${{ inputs.source-image }}
+
+      - name: Tag Image
+        run: docker ${{ inputs.source-image }} ${{ inputs.target-image }}
+
+      - name: Push Image
+        run: docker ${{ inputs.target-image }}

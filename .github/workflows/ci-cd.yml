@@ -368,19 +368,11 @@ jobs:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v4
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
+      - name: Publish Image
+        uses: ./.github/actions/docker-build
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull Image
-        run: docker pull ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}-prerelease
-
-      - name: Tag Image
-        run: docker ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}-prerelease ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
-
-      - name: Push Image
-        run: docker ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
+          source-image: ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}-prerelease
+          target-image: ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
 
