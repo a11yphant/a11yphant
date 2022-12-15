@@ -341,15 +341,15 @@ jobs:
 
       - name: Echo API Logs
         if: failure()
-        run: docker compose logs api --no-color --tail all
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml logs api --no-color --tail all
 
       - name: Echo Site Logs
         if: failure()
-        run: docker compose logs site --no-color --tail all
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
 
       - name: Echo Submission Checker Logs
         if: failure()
-        run: docker compose logs submission-checker --no-color --tail all
+        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml logs submission-checker --no-color --tail all
 
       - uses: actions/upload-artifact@v3
         if: failure()
