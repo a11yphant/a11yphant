@@ -30,8 +30,8 @@ runs:
 
     - name: Tag Image
       shell: bash
-      run: docker ${{ inputs.source-image }} ${{ inputs.target-image }}
+      run: docker tag ${{ inputs.source-image }} ${{ inputs.target-image }}
 
     - name: Push Image
       shell: bash
-      run: docker ${{ inputs.target-image }}
+      run: docker push ${{ inputs.target-image }}
