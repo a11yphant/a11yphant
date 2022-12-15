@@ -4,6 +4,9 @@ inputs:
   artifact-name:
     required: true
     type: string
+  image:
+    required: true
+    type: string
   registry-user:
     required: true
     type: string
@@ -33,4 +36,4 @@ runs:
 
     - name: Push Image
       shell: bash
-      run: docker push ${{ inputs.target-image }}
+      run: docker push ${{ inputs.image }}

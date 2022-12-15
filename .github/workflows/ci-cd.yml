@@ -429,6 +429,7 @@ jobs:
         uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: api-image
+          image: ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -450,6 +451,7 @@ jobs:
         uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: site-image
+          image: ghcr.io/a11yphant/site:${{ env.GITHUB_REF_SLUG }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -471,5 +473,6 @@ jobs:
         uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: submission-checker-image
+          image: ghcr.io/a11yphant/submission-checker:${{ env.GITHUB_REF_SLUG }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
