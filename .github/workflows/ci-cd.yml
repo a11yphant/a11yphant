@@ -21,11 +21,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          path: ./
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+          cache-dependency-path: package-lock.json
+
+      - name: NPM Install
+        run: npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
 
       - name: Lint Content
         run: npm run lint:content
