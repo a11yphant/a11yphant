@@ -426,7 +426,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Publish Image
-        uses: ./.github/actions/docker-publish-image-from-artifact
+        uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: api-image
           registry-user: ${{ github.actor }}

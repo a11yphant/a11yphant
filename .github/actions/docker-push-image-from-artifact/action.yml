@@ -23,9 +23,9 @@ runs:
 
     - name: Get Artifact
       uses: actions/download-artifact@v2
-        with:
-          name: ${{ artifact-name }}
-          path: /tmp/${{ artifact-name }}/
+      with:
+        name: ${{ artifact-name }}
+        path: /tmp/${{ artifact-name }}/
 
     - name: Load Image
       shell: bash
