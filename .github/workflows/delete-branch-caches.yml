@@ -1,4 +1,4 @@
-name: cleanup caches by a branch
+name: Delete Branch Caches
 
 on:
   workflow_dispatch:
