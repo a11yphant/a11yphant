@@ -16,7 +16,7 @@ concurrency:
 jobs:
   # Lint Content
   lint-content:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -40,7 +40,7 @@ jobs:
 
   # ESLint Config
   lint-eslint-config:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -56,7 +56,7 @@ jobs:
 
   # API
   generate-graphql-schema:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -80,7 +80,7 @@ jobs:
           retention-days: 1
 
   lint-api:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -98,7 +98,7 @@ jobs:
         run: npm run lint --prefix services/api
 
   test-api:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -135,7 +135,7 @@ jobs:
     needs:
       - lint-api
       - test-api
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -159,7 +159,7 @@ jobs:
   # Site
   lint-site:
     needs: generate-graphql-schema
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -183,7 +183,7 @@ jobs:
 
   test-site:
     needs: generate-graphql-schema
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -210,7 +210,7 @@ jobs:
       - lint-site
       - test-site
       - generate-graphql-schema
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -238,7 +238,7 @@ jobs:
 
   # Submission Checker
   lint-submission-checker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -256,7 +256,7 @@ jobs:
         run: npm run lint --prefix services/submission-checker
 
   test-submission-checker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -291,7 +291,7 @@ jobs:
     needs:
       - lint-submission-checker
       - test-submission-checker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -317,7 +317,7 @@ jobs:
       - build-api
       - build-site
       - build-submission-checker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: read
@@ -414,7 +414,7 @@ jobs:
   publish-api-image:
     needs:
       - test-end-to-end
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -436,7 +436,7 @@ jobs:
   publish-site-image:
     needs:
       - test-end-to-end
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
@@ -458,7 +458,7 @@ jobs:
   publish-submission-checker-image:
     needs:
       - test-end-to-end
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
