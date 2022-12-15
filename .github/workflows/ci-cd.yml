@@ -357,5 +357,3 @@ jobs:
           name: cypress-screenshots
           path: tests/cypress/screenshots
 
-      - name: Stop services
-        run: docker compose down
