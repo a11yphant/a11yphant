@@ -14,6 +14,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Lint Content
+  lint-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: ./
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint Content
+        run: npm run lint:content
+
   # ESLint Config
   lint-eslint-config:
     runs-on: ubuntu-latest
