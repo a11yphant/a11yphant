@@ -348,28 +348,28 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: api-image
-          path: /tmp/api-image.tar
+          path: /tmp/api-image/
 
       - name: Load API Image
-        run: docker load --input /tmp/api-image.tar
+        run: docker load --input /tmp/api-image/image.tar
 
       - name: Get Site Image Artifact
         uses: actions/download-artifact@v2
         with:
           name: site-image
-          path: /tmp/site-image.tar
+          path: /tmp/site-image/
 
       - name: Load Site Image
-        run: docker load --input /tmp/site-image.tar
+        run: docker load --input /tmp/site-image/image.tar
 
       - name: Get Submission Checker Artifact
         uses: actions/download-artifact@v2
         with:
           name: submission-checker-image
-          path: /tmp/submission-checker-image.tar
+          path: /tmp/submission-checker-image/
 
       - name: Load Submission Checker Image
-        run: docker load --input /tmp/submission-checker-image.tar
+        run: docker load --input /tmp/submission-checker-image/image.tar
 
       - name: Start services
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color

@@ -25,11 +25,11 @@ runs:
       uses: actions/download-artifact@v2
         with:
           name: ${{ artifact-name }}
-          path: /tmp/${{ artifact-name }}.tar
+          path: /tmp/${{ artifact-name }}/
 
     - name: Load Image
       shell: bash
-      run: docker load --input /tmp/${{ artifact-name }}.tar
+      run: docker load --input /tmp/${{ artifact-name }}/image.tar
 
     - name: Push Image
       shell: bash
