@@ -376,3 +376,40 @@ jobs:
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
 
+  publish-site-image:
+    needs:
+      - test-end-to-end
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Publish Image
+        uses: ./.github/actions/docker-pull-tag-push
+        with:
+          source-image: ghcr.io/a11yphant/site:${{ env.GITHUB_REF_SLUG }}-prerelease
+          target-image: ghcr.io/a11yphant/site:${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-submission-checker-image:
+    needs:
+      - test-end-to-end
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Publish Image
+        uses: ./.github/actions/docker-pull-tag-push
+        with:
+          source-image: ghcr.io/a11yphant/submission-checker:${{ env.GITHUB_REF_SLUG }}-prerelease
+          target-image: ghcr.io/a11yphant/submission-checker:${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
