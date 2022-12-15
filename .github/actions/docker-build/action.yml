@@ -52,7 +52,7 @@ runs:
         outputs: type=docker,dest=/tmp/${{ inputs.image-name }}.tar
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image-name }}-image
           path: /tmp/${{ inputs.image-name }}.tar
