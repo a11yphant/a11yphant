@@ -369,7 +369,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Publish Image
-        uses: ./.github/actions/docker-build
+        uses: ./.github/actions/docker-pull-tag-push
         with:
           source-image: ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}-prerelease
           target-image: ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
