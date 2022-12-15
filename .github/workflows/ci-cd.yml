@@ -321,8 +321,6 @@ jobs:
     permissions:
       contents: read
       packages: read
-    env:
-      IMAGE_TAG: ${{ env.GITHUB_REF_SLUG }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -375,6 +373,8 @@ jobs:
 
       - name: Start services
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
+        env:
+          IMAGE_TAG: ${{ env.GITHUB_REF_SLUG }}
 
       - name: Migrate Database
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run prisma:migrate:prod
