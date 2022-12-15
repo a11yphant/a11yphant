@@ -51,9 +51,9 @@ runs:
         cache-to: type=gha,mode=max,scope=${{ inputs.image-name }}-${{ inputs.version }}
         outputs: type=docker,dest=/tmp/${{ inputs.image-name }}.tar
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ inputs.image-name }}-image
-          path: /tmp/${{ inputs.image-name }}.tar
-          retention-days: 1
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.image-name }}-image
+        path: /tmp/${{ inputs.image-name }}.tar
+        retention-days: 1
