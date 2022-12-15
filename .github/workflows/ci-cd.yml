@@ -321,6 +321,8 @@ jobs:
     permissions:
       contents: read
       packages: read
+    env:
+      IMAGE_TAG: ${{ env.GITHUB_REF_SLUG }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -355,30 +357,30 @@ jobs:
 
       - name: Get Site Image Artifact
         uses: actions/download-artifact@v2
-          with:
-            name: site-image
-            path: /tmp/site-image.tar
+        with:
+          name: site-image
+          path: /tmp/site-image.tar
 
       - name: Load Site Image
         run: docker load --input /tmp/site-image.tar
 
       - name: Get Submission Checker Artifact
         uses: actions/download-artifact@v2
-          with:
-            name: submission-checker-image
-            path: /tmp/submission-checker-image.tar
+        with:
+          name: submission-checker-image
+          path: /tmp/submission-checker-image.tar
 
       - name: Load Submission Checker Image
         run: docker load --input /tmp/submission-checker-image.tar
 
       - name: Start services
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }} docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
 
       - name: Migrate Database
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }} docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run prisma:migrate:prod
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run prisma:migrate:prod
 
       - name: Seed Database
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }} docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run console:prod import:challenges
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run console:prod import:challenges
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
@@ -392,15 +394,15 @@ jobs:
 
       - name: Echo API Logs
         if: failure()
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml logs api --no-color --tail all
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs api --no-color --tail all
 
       - name: Echo Site Logs
         if: failure()
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
 
       - name: Echo Submission Checker Logs
         if: failure()
-        run: IMAGE_TAG=${{ env.GITHUB_REF_SLUG }}-prerelease docker compose -f docker-compose.yml -f docker-compose.tests.yml logs submission-checker --no-color --tail all
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs submission-checker --no-color --tail all
 
       - uses: actions/upload-artifact@v3
         if: failure()
