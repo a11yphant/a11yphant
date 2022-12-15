@@ -348,9 +348,9 @@ jobs:
 
       - name: Get API Image Artifact
         uses: actions/download-artifact@v2
-          with:
-            name: api-image
-            path: /tmp/api-image.tar
+        with:
+          name: api-image
+          path: /tmp/api-image.tar
 
       - name: Load API Image
         run: docker load --input /tmp/api-image.tar
