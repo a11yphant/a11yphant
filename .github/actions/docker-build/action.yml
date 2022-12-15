@@ -42,11 +42,18 @@ runs:
       with:
         context: .
         file: ${{ inputs.path }}/Dockerfile
-        push: true
         build-args: |
           VERSION=${{ inputs.version }}
         secret-files: |
           npmrc=.npmrc
-        tags: ghcr.io/a11yphant/${{ inputs.image-name }}:${{ inputs.version }}-prerelease
+        tags: ghcr.io/a11yphant/${{ inputs.image-name }}:${{ inputs.version }}
         cache-from: type=gha,scope=${{ inputs.image-name }}-${{ inputs.version }}
         cache-to: type=gha,mode=max,scope=${{ inputs.image-name }}-${{ inputs.version }}
+        outputs: type=docker,dest=/tmp/${{ inputs.image-name }}.tar
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ inputs.image-name }}-image
+          path: /tmp/${{ inputs.image-name }}.tar
+          retention-days: 1
