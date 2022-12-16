@@ -1,0 +1,27 @@
+name: Prepare Node
+
+inputs:
+  path:
+    required: true
+    type: string
+  npm-token:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+        cache: npm
+        registry-url: https://npm.pkg.github.com/
+        scope: '@a11yphant'
+        cache-dependency-path: ${{ inputs.path }}/package-lock.json
+
+    - name: NPM Install
+      shell: bash
+      run: npm ci --prefix ${{ inputs.path }}
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}

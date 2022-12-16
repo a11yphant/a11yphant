@@ -8,18 +8,29 @@ services:
       - /dev/shm:/dev/shm
     ports:
       - 4444:4444
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:4444/wd/hub/status" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   postgres:
-    image: postgres
+    image: postgres:14-alpine
     restart: always
     environment:
       POSTGRES_USER: a11yphant
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: a11yphant
+      POSTGRES_HOST: 0.0.0.0
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    healthcheck:
+      test: pg_isready -q -d a11yphant -U a11yphant
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -28,10 +39,15 @@ services:
       RABBITMQ_DEFAULT_PASS: secret
     volumes:
       - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
-      - ./docker/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
     ports:
       - 15672:15672
       - 5672:5672
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
   mailhog:
     image: mailhog/mailhog
