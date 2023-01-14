@@ -3,11 +3,11 @@ name: ESLint Config Publish
 on:
   push:
     tags:
-      # - eslint-config-v*
+      - eslint-config-v*
 
 jobs:
   publish-eslint-config:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write

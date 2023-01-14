@@ -1,0 +1,478 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  # Lint Content
+  lint-content:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+          cache-dependency-path: package-lock.json
+
+      - name: NPM Install
+        run: npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+
+      - name: Lint Content
+        run: npm run lint:content
+
+  # ESLint Config
+  lint-eslint-config:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: packages/eslint-config
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint
+        run: npm run lint --prefix packages/eslint-config
+
+  # API
+  generate-graphql-schema:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/api
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate GraphQL Schema
+        run: npm run generate-schema --prefix services/api
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: graphql-schema
+          path: services/api/schema.gql
+          retention-days: 1
+
+  lint-api:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/api
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint
+        run: npm run lint --prefix services/api
+
+  test-api:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: a11yphant
+          POSTGRES_USER: a11yphant
+          POSTGRES_PASSWORD: secret
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/api
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test
+        run: npm run test:coverage --prefix services/api
+        env:
+          DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
+
+  build-api:
+    needs:
+      - lint-api
+      - test-api
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Build
+        uses: ./.github/actions/docker-build
+        with:
+          path: services/api
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: api
+          version: ${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  # Site
+  lint-site:
+    needs: generate-graphql-schema
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/site
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: graphql-schema
+          path: services/api/schema.gql
+
+      - name: Lint
+        run: npm run lint --prefix services/site
+
+  test-site:
+    needs: generate-graphql-schema
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/site
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: graphql-schema
+          path: services/api/schema.gql
+
+      - name: Test
+        run: npm run test:coverage --prefix services/site
+
+  build-site:
+    needs:
+      - lint-site
+      - test-site
+      - generate-graphql-schema
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: graphql-schema
+          path: services/api/schema.gql
+
+      - name: Build
+        uses: ./.github/actions/docker-build
+        with:
+          path: services/site
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: site
+          version: ${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  # Submission Checker
+  lint-submission-checker:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/submission-checker
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint
+        run: npm run lint --prefix services/submission-checker
+
+  test-submission-checker:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    services:
+      rabbitmq:
+        image: rabbitmq:management-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: user
+          RABBITMQ_DEFAULT_PASS: secret
+        ports:
+          - 5672:5672
+          - 15672:15672
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
+        with:
+          path: services/submission-checker
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure RabbitMQ
+        run: curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://localhost:15672/api/definitions
+
+      - name: Test
+        run: npm run test:coverage --prefix services/submission-checker
+        env:
+          SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@localhost:5672
+
+  build-submission-checker:
+    needs:
+      - lint-submission-checker
+      - test-submission-checker
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Build
+        uses: ./.github/actions/docker-build
+        with:
+          path: services/submission-checker
+          npm-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: submission-checker
+          version: ${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  test-end-to-end:
+    needs:
+      - build-api
+      - build-site
+      - build-submission-checker
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: npm
+          registry-url: https://npm.pkg.github.com/
+          scope: '@a11yphant'
+          cache-dependency-path: tests/package-lock.json
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Get API Image Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: api-image
+          path: /tmp/api-image/
+
+      - name: Load API Image
+        run: docker load --input /tmp/api-image/image.tar
+
+      - name: Get Site Image Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: site-image
+          path: /tmp/site-image/
+
+      - name: Load Site Image
+        run: docker load --input /tmp/site-image/image.tar
+
+      - name: Get Submission Checker Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: submission-checker-image
+          path: /tmp/submission-checker-image/
+
+      - name: Load Submission Checker Image
+        run: docker load --input /tmp/submission-checker-image/image.tar
+
+      - name: Start services
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
+        env:
+          IMAGE_TAG: ${{ env.GITHUB_REF_SLUG }}
+
+      - name: Migrate Database
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run prisma:migrate:prod
+
+      - name: Seed Database
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run console:prod import:challenges
+
+      - name: Run Cypress
+        uses: cypress-io/github-action@v4
+        with:
+          working-directory: tests
+          install-command: npm ci
+          command: npm test
+          build: npm run db-dump:update
+        env:
+          CYPRESS_BASE_URL: "http://localhost:3001"
+
+      - name: Echo API Logs
+        if: failure()
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs api --no-color --tail all
+
+      - name: Echo Site Logs
+        if: failure()
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
+
+      - name: Echo Submission Checker Logs
+        if: failure()
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs submission-checker --no-color --tail all
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots
+          retention-days: 1
+
+  publish-api-image:
+    needs:
+      - test-end-to-end
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Publish Image
+        uses: ./.github/actions/docker-push-image-from-artifact
+        with:
+          artifact-name: api-image
+          image: ghcr.io/a11yphant/api:${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-site-image:
+    needs:
+      - test-end-to-end
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Publish Image
+        uses: ./.github/actions/docker-push-image-from-artifact
+        with:
+          artifact-name: site-image
+          image: ghcr.io/a11yphant/site:${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-submission-checker-image:
+    needs:
+      - test-end-to-end
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Publish Image
+        uses: ./.github/actions/docker-push-image-from-artifact
+        with:
+          artifact-name: submission-checker-image
+          image: ghcr.io/a11yphant/submission-checker:${{ env.GITHUB_REF_SLUG }}
+          registry-user: ${{ github.actor }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}

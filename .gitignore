@@ -1,11 +1,5 @@
 schema.gql
 generated/
-.terraform
-lambda.zip
-plan.cache
-plan.json
-terraform.tfstate*
-.terraform.tfstate*
 junit.xml
 cobertura-coverage.xml
 challenges.zip
