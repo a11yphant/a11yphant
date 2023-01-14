@@ -7,7 +7,6 @@ const config = {
     graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT,
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT,
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT,
-    splitbeeToken: process.env.SITE_SPLITBEE_TOKEN,
   },
 
   async headers() {
