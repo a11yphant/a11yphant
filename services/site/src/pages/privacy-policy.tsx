@@ -436,7 +436,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               We do not use cookies or similar tracking technologies (like web beacons and pixels) to access or store information. We integrated the
               tool{" "}
-              <Link href={"https://splitbee.io/"}>
+              <Link href={"https://plausible.io/"}>
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
@@ -447,10 +447,10 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "focus-rounded-instead-of-underline",
                   )}
                 >
-                  splitbee
+                  plausible
                 </a>
               </Link>{" "}
-              into our website. However, we enabled the cookie-less mode and do not forward any personal information tho this service.
+              into our website. However, we are using a self-hosted instance so no data leaves our infrastructure.
             </p>
 
             <h3 className={clsx("mt-10 mb-4", "h5", "md:h4")}>Functional cookies</h3>

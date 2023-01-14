@@ -39,23 +39,6 @@ const Footer: React.FunctionComponent = () => (
       </nav>
       <nav className={clsx("mb-6", "xl:mb-0")} aria-label="Social Links and Sponsors">
         <ul className={clsx("mb-0 flex items-center justify-start", "sm:justify-center", "xl:justify-start")}>
-          <li className={clsx("mb-0 -ml-3 mr-8 inline-block", "xl:ml-0 xl:mr-8")}>
-            <Link href="https://splitbee.io/?ref=badge">
-              <a className={clsx("group")} target={"_blank"} rel="noopener noreferrer nofollow">
-                <span className="sr-only">Splitbee Analytics (opens in a new tab)</span>
-                <img
-                  src="https://splitbee-cdn.fra1.cdn.digitaloceanspaces.com/static/badge/splitbee-badge-dark.svg"
-                  alt="Analytics by Splitbee.io"
-                  className={clsx(
-                    "border-transparent border-[3px] rounded-lg",
-                    "transition-colors duration-300",
-                    "group-hover:border-light",
-                    "group-focus:border-light",
-                  )}
-                />
-              </a>
-            </Link>
-          </li>
           <li className={clsx("mb-0 -ml-3 inline-block", "xl:ml-0 xl:mr-8")}>
             <Link href="https://www.producthunt.com/posts/a11yphant?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-a11yphant">
               <a className={clsx("group")} target={"_blank"} rel="noopener noreferrer nofollow">
