@@ -1,5 +1,6 @@
 import createEmotionServer from "@emotion/server/create-instance";
 import createEmotionCache from "app/lib/emotion/createEmotionCache";
+import getConfig from "next/config";
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from "next/document";
 import React from "react";
 
@@ -33,9 +34,11 @@ class CustomDocument extends Document {
   }
 
   render(): JSX.Element {
+    const { publicRuntimeConfig } = getConfig();
+
     return (
       <Html lang="en">
-        <Head />
+        <Head>{publicRuntimeConfig.isPlausibleEnabled && <script defer data-domain={publicRuntimeConfig.domain} src="/js/script.js" />}</Head>
         <body>
           <Main />
           <NextScript />

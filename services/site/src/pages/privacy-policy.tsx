@@ -37,7 +37,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
         <div className={clsx(" mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
           <h1 className={clsx("mb-8", "h2", "md:h1")}>Privacy Policy</h1>
-          <p className={clsx("italic mb-8")}>Last updated at January 01, 2022</p>
+          <p className={clsx("italic mb-8")}>Last updated at January 19, 2023</p>
 
           <section role="contentinfo" aria-label="Purpose of the Privacy Policy">
             <p>
@@ -436,7 +436,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               We do not use cookies or similar tracking technologies (like web beacons and pixels) to access or store information. We integrated the
               tool{" "}
-              <Link href={"https://splitbee.io/"}>
+              <Link href={"https://plausible.io/"}>
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
@@ -447,10 +447,10 @@ const PrivacyPolicy: React.FunctionComponent = () => {
                     "focus-rounded-instead-of-underline",
                   )}
                 >
-                  splitbee
+                  plausible
                 </a>
               </Link>{" "}
-              into our website. However, we enabled the cookie-less mode and do not forward any personal information tho this service.
+              into our website. However, we are using a self-hosted instance so no data leaves our infrastructure.
             </p>
 
             <h3 className={clsx("mt-10 mb-4", "h5", "md:h4")}>Functional cookies</h3>

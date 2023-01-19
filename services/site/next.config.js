@@ -7,7 +7,8 @@ const config = {
     graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT,
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT,
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT,
-    splitbeeToken: process.env.SITE_SPLITBEE_TOKEN,
+    isPlausibleEnabled: !!process.env.SITE_PLAUSIBLE_BASE_URL,
+    domain: process.env.SITE_HOST,
   },
 
   async headers() {
@@ -22,6 +23,22 @@ const config = {
         ],
       },
     ];
+  },
+
+  async rewrites() {
+    const plausibleBaseUrl = process.env.SITE_PLAUSIBLE_BASE_URL;
+    return plausibleBaseUrl
+      ? [
+          {
+            source: "/js/script.js",
+            destination: `${process.env.SITE_PLAUSIBLE_BASE_URL}/js/script.js`,
+          },
+          {
+            source: "/api/event",
+            destination: `${process.env.SITE_PLAUSIBLE_BASE_URL}/api/event`,
+          },
+        ]
+      : [];
   },
 };
 

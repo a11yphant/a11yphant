@@ -10,7 +10,7 @@ const A11yphantLogoUkraine: React.FunctionComponent<React.SVGProps<SVGSVGElement
       x="0"
       y="0"
       viewBox="0 0 2000 500"
-      enable-background="new 0 0 2000 500"
+      enableBackground="new 0 0 2000 500"
       //   xml:space="preserve"
       fill="gold"
       className={clsx(className)}
