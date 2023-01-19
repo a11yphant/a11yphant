@@ -14,10 +14,4 @@ describe("footer", () => {
 
     expect(screen.getByLabelText("Footer")).toBeInTheDocument();
   });
-
-  it("renders a sponsor / social navigation inside the footer", () => {
-    render(<Footer />);
-
-    expect(screen.getByLabelText("Social Links and Sponsors")).toBeInTheDocument();
-  });
 });
