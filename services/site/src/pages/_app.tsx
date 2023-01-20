@@ -12,7 +12,6 @@ import ScrollOverlayWrapper, { ScrollOverlayWrapperProps } from "app/components/
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useApollo } from "app/lib/apollo-client";
 import createEmotionCache from "app/lib/emotion/createEmotionCache";
-import { initializeTracking } from "app/lib/tracking";
 import Router from "next/router";
 import NProgress from "nprogress";
 import React from "react";
@@ -42,8 +41,6 @@ type ConditionalWrapperProps<T> = T & {
 const ConditionalWrapper = <T,>({ condition, Wrapper, children, ...otherProps }: ConditionalWrapperProps<T>): React.ReactElement => {
   return condition ? <Wrapper {...otherProps}>{children}</Wrapper> : children;
 };
-
-initializeTracking();
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps, emotionCache = clientSideEmotionCache }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
