@@ -20,6 +20,11 @@ inputs:
     required: true
     type: string
 
+outputs:
+  image-id:
+    description: "Docker Image ID"
+    value: ${{ steps.build.outputs.imageid }}
+
 runs:
   using: composite
   steps:
@@ -39,6 +44,7 @@ runs:
 
     - name: Build and Push
       uses: docker/build-push-action@v3
+      id: build
       with:
         context: .
         file: ${{ inputs.path }}/Dockerfile

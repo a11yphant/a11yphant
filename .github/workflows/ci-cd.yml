@@ -14,6 +14,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  variables:
+    runs-on: ubuntu-22.04
+    outputs:
+      environment-name: ${{ steps.environment-name.outputs.environment-name }}
+    steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - run: echo "environment-name=${{ env.GITHUB_REF_SLUG }}" >> $GITHUB_OUTPUT
+        id: environment-name
+
   # Lint Content
   lint-content:
     runs-on: ubuntu-22.04
@@ -139,6 +150,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-id: ${{ steps.build.outputs.image-id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -147,6 +160,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Build
+        id: build
         uses: ./.github/actions/docker-build
         with:
           path: services/api
@@ -214,6 +228,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-id: ${{ steps.build.outputs.image-id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -227,6 +243,7 @@ jobs:
           path: services/api/schema.gql
 
       - name: Build
+        id: build
         uses: ./.github/actions/docker-build
         with:
           path: services/site
@@ -295,6 +312,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-id: ${{ steps.build.outputs.image-id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -303,6 +322,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Build
+        id: build
         uses: ./.github/actions/docker-build
         with:
           path: services/submission-checker
@@ -476,3 +496,20 @@ jobs:
           image: ghcr.io/a11yphant/submission-checker:${{ env.GITHUB_REF_SLUG }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  trigger-review-deploy:
+    needs:
+      - variables
+      - build-site
+      - publish-site-image
+      - build-api
+      - publish-api-image
+      - build-submission-checker
+      - publish-submission-checker-image
+    uses: a11yphant/infrastructure/.github/workflows/create-or-update-review-app.yml
+    with:
+      environment-name: ${{ needs.variables.outputs.environment-name }}
+      image-tag: ${{ needs.variables.outputs.environment-name }}
+      image-hash-site: ${{ needs.build-site.outputs.image-id }}
+      image-hash-api: ${{ needs.build-api.outputs.image-id }}
+      image-hash-submission-checker: ${{ needs.build-submission-checker.outputs.image-id }}
