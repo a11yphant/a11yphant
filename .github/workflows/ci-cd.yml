@@ -498,6 +498,7 @@ jobs:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
 
   trigger-review-deploy:
+    if: ${{ github.event_name == 'pull_request' }}
     needs:
       - variables
       - build-site
