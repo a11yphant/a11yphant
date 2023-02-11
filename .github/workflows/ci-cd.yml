@@ -506,7 +506,7 @@ jobs:
       - publish-api-image
       - build-submission-checker
       - publish-submission-checker-image
-    uses: a11yphant/infrastructure/.github/workflows/create-or-update-review-app.yml
+    uses: a11yphant/infrastructure/.github/workflows/create-or-update-review-app.yml@main
     with:
       environment-name: ${{ needs.variables.outputs.environment-name }}
       image-tag: ${{ needs.variables.outputs.environment-name }}
