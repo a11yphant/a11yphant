@@ -507,12 +507,18 @@ jobs:
       - publish-api-image
       - build-submission-checker
       - publish-submission-checker-image
-    permissions:
-      contents: read
-    uses: a11yphant/infrastructure/.github/workflows/create-or-update-review-app.yml@main
-    with:
-      environment-name: ${{ needs.variables.outputs.environment-name }}
-      image-tag: ${{ needs.variables.outputs.environment-name }}
-      image-hash-site: ${{ needs.build-site.outputs.image-id }}
-      image-hash-api: ${{ needs.build-api.outputs.image-id }}
-      image-hash-submission-checker: ${{ needs.build-submission-checker.outputs.image-id }}
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
+          repository: a11yphant/infrastructure
+          event-type: create-or-update-review-app
+          client-payload: |
+            {
+              "environment-name": "${{ needs.variables.outputs.environment-name }}",
+              "image-tag": "${{ needs.variables.outputs.environment-name }}",
+              "image-hash-site": "${{ needs.build-site.outputs.image-id }}",
+              "image-hash-api": "${{ needs.build-api.outputs.image-id }}",
+              "image-hash-submission-checker": "${{ needs.build-submission-checker.outputs.image-id }}"
+            }
