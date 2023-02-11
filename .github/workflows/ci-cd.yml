@@ -507,6 +507,8 @@ jobs:
       - publish-api-image
       - build-submission-checker
       - publish-submission-checker-image
+    permissions:
+      contents: read
     uses: a11yphant/infrastructure/.github/workflows/create-or-update-review-app.yml@main
     with:
       environment-name: ${{ needs.variables.outputs.environment-name }}
