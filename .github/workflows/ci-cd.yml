@@ -438,6 +438,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-digest: ${{ steps.publish.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -446,6 +448,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Publish Image
+        id: publish
         uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: api-image
@@ -460,6 +463,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-digest: ${{ steps.publish.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -468,6 +473,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Publish Image
+        id: publish
         uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: site-image
@@ -482,6 +488,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-digest: ${{ steps.publish.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -490,6 +498,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Publish Image
+        id: publish
         uses: ./.github/actions/docker-push-image-from-artifact
         with:
           artifact-name: submission-checker-image
@@ -516,7 +525,7 @@ jobs:
             {
               "environment-name": "${{ needs.variables.outputs.environment-name }}",
               "image-tag": "${{ needs.variables.outputs.environment-name }}",
-              "image-hash-site": "${{ needs.publish-site-image.outputs.digest }}",
-              "image-hash-api": "${{ needs.publish-api-image.outputs.digest }}",
-              "image-hash-submission-checker": "${{ needs.publish-submission-checker-image.outputs.digest }}"
+              "image-hash-site": "${{ needs.publish-site-image.outputs.image-digest }}",
+              "image-hash-api": "${{ needs.publish-api-image.outputs.image-digest }}",
+              "image-hash-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
             }
