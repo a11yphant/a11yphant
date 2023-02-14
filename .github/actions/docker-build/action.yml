@@ -20,11 +20,6 @@ inputs:
     required: true
     type: string
 
-outputs:
-  digest:
-    description: "Docker Image Digest"
-    value: ${{ steps.build.outputs.digest }}
-
 runs:
   using: composite
   steps:
@@ -44,7 +39,6 @@ runs:
 
     - name: Build and Push
       uses: docker/build-push-action@v3
-      id: build
       with:
         context: .
         file: ${{ inputs.path }}/Dockerfile
