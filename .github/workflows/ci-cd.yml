@@ -151,7 +151,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      image-id: ${{ steps.build.outputs.image-id }}
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -229,7 +229,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      image-id: ${{ steps.build.outputs.image-id }}
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -313,7 +313,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      image-id: ${{ steps.build.outputs.image-id }}
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -519,7 +519,7 @@ jobs:
             {
               "environment-name": "${{ needs.variables.outputs.environment-name }}",
               "image-tag": "${{ needs.variables.outputs.environment-name }}",
-              "image-hash-site": "${{ needs.build-site.outputs.image-id }}",
-              "image-hash-api": "${{ needs.build-api.outputs.image-id }}",
-              "image-hash-submission-checker": "${{ needs.build-submission-checker.outputs.image-id }}"
+              "image-hash-site": "${{ needs.build-site.outputs.digest }}",
+              "image-hash-api": "${{ needs.build-api.outputs.digest }}",
+              "image-hash-submission-checker": "${{ needs.build-submission-checker.outputs.digest }}"
             }

@@ -21,9 +21,9 @@ inputs:
     type: string
 
 outputs:
-  image-id:
-    description: "Docker Image ID"
-    value: ${{ steps.build.outputs.imageid }}
+  digest:
+    description: "Docker Image Digest"
+    value: ${{ steps.build.outputs.digest }}
 
 runs:
   using: composite
