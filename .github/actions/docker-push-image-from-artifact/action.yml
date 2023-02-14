@@ -47,5 +47,5 @@ runs:
       id: digest
       shell: bash
       run: |
-        $DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ inputs.image }})
-        echo "digest=$DIGEST" >> $GITHUB_OUTPUT
+        DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ inputs.image }})
+        echo "digest=${DIGEST: -71}" >> $GITHUB_OUTPUT
