@@ -525,7 +525,7 @@ jobs:
             {
               "environment-name": "${{ needs.variables.outputs.environment-name }}",
               "image-tag": "${{ needs.variables.outputs.environment-name }}",
-              "image-hash-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-hash-api": "${{ needs.publish-api-image.outputs.image-digest }}",
-              "image-hash-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
+              "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
+              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}",
+              "image-digest-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
             }
