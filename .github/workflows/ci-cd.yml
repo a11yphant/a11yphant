@@ -536,7 +536,7 @@ jobs:
               "image-digest-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
             }
 
-  trigger-beta-deploy:
+  trigger-production-deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-22.04
     needs:
