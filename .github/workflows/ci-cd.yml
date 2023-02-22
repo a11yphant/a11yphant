@@ -17,14 +17,13 @@ jobs:
   variables:
     runs-on: ubuntu-22.04
     outputs:
-      environment-name: ${{ steps.variables.outputs.environment-name }}
+      environment-name: ${{ steps.environment-name.outputs.environment-name }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
 
-      - name: Variables
-        uses: ./.github/actions/variables
-        id: variables
+      - run: echo "environment-name=${{ env.GITHUB_REF_SLUG }}" >> $GITHUB_OUTPUT
+        id: environment-name
 
   # Lint Content
   lint-content:
