@@ -4,14 +4,18 @@
 
 ## Important Notice:
 
-You must have Node installed via `nvm` for this project to work correctly 
+You must have Node installed via `nvm` for this project to work correctly
 ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating))
-
 
 ## Prerequisites
 
-- Create an access token for the GitLab API. This will be required to install our private NPM packages. The token has to have API scope.  
-Link to the GitLab settings: [Manage GitLab Access Tokens](https://gitlab.mediacube.at/-/profile/personal_access_tokens)
+- Create an access token for the Github API. This will be required to install our private NPM packages. You can follow [this](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) guide.
+
+  TLDR:
+
+  - Go to settings -> Developer settings -> Personal access tokens -> Tokens (classic)
+  - create a token with at least the scope `read:packages`
+  - `npm login --scope=@OWNER --auth-type=legacy --registry=https://npm.pkg.github.com` with your github user and the token as password
 
 ## Setup
 
@@ -33,7 +37,9 @@ These scripts originate directly from the nvm documentation:
 - zsh: [https://github.com/nvm-sh/nvm#zsh](https://github.com/nvm-sh/nvm#zsh)
 
 ## DB Data Import
+
 To load dummy data for challenges into the empty database, run the following command:
+
 ```sh
 npm run import-challenges
 ```
@@ -56,7 +62,7 @@ npm run dev
 
 Look into the logs of an individual service:
 
-```sh 
+```sh
 # api
 npm run debug:api
 
@@ -66,7 +72,7 @@ npm run debug:site
 
 Stop all services:
 
-```sh 
+```sh
 npm run stop
 ```
 
@@ -74,7 +80,7 @@ npm run stop
 
 Start all services in the foreground:
 
-```sh 
+```sh
 npm run dev:no-daemon
 ```
 
@@ -98,12 +104,12 @@ npm run dotenv -- npm run dev:site
 
 You have to install pm2 globally using `npm i -g pm2` before these work
 
-```sh 
+```sh
 # Show all running services
 pm2 list
 
 # Synchronize running services (sometimes the list is out of sync)
-pm2 save 
+pm2 save
 # if this does not help
 pm2 save --force
 
@@ -144,4 +150,3 @@ When assigning Tailwind classes to an HTML element, they have to be ordered star
 9. Breakpoint `lg`
 10. Breakpoint `xl`
 11. Breakpoint `2xl`
-
