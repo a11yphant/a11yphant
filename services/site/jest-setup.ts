@@ -16,4 +16,11 @@ setConfig(config);
 mockUsePrefersReducedMotion();
 setupIntersectionObserverMock();
 
+beforeEach(() => {
+  jest.spyOn(global.console, "error").mockImplementation((e) => {
+    console.log(e);
+    throw new Error("Unexpected console.error", { cause: e });
+  });
+});
+
 React.useLayoutEffect = React.useEffect;

@@ -14,12 +14,16 @@ const renderFlashMessageWithPortalRoot = (props?: Partial<React.PropsWithChildre
 };
 
 describe("FlashMessage", () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it("log console error if no FlashMessagePortalRoot is present", () => {
-    console.error = jest.fn();
+    jest.spyOn(global.console, "error").mockImplementation(jest.fn());
 
     render(<FlashMessage show={true} onClose={jest.fn()} />);
 
-    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(global.console.error).toHaveBeenCalledTimes(1);
   });
 
   it("renders children", () => {
