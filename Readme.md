@@ -1,7 +1,5 @@
 # a11yphant
 
-![coverage](https://gitlab.mediacube.at/a11yphant/a11yphant/badges/develop/coverage.svg)
-
 ## Important Notice:
 
 You must have Node installed via `nvm` for this project to work correctly
