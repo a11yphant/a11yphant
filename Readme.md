@@ -1,4 +1,4 @@
-# A11y Challenges
+# a11yphant
 
 ![coverage](https://gitlab.mediacube.at/a11yphant/a11yphant/badges/develop/coverage.svg)
 
