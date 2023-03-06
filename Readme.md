@@ -15,7 +15,7 @@ You must have Node installed via `nvm` for this project to work correctly
 
   - Go to settings -> Developer settings -> Personal access tokens -> Tokens (classic)
   - create a token with at least the scope `read:packages`
-  - `npm login --scope=@OWNER --auth-type=legacy --registry=https://npm.pkg.github.com` with your github user and the token as password
+  - `npm login --scope=@a11yphant --auth-type=legacy --registry=https://npm.pkg.github.com` with your github user and the token as password
 
 ## Setup
 
