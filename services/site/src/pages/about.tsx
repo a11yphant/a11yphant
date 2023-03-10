@@ -45,7 +45,7 @@ const About: React.FunctionComponent = () => {
           <h1 className={clsx("mb-8", "h2", "md:h1")}>About</h1>
 
           <div className="mt-4 flex items-center max-w-80ch">
-            <A11yphantLogoWithoutText className="w-28 mr-4" />
+            <A11yphantLogoWithoutText className={clsx("w-28 mr-4 hidden", "sm:block")} />
             <div>
               <p>
                 <span aria-label="Allyphant">a11yphant</span> <span aria-hidden="true">(pronounced [ˈɛlifənt])</span> teaches developers the basics of
