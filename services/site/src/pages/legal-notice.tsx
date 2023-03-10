@@ -70,7 +70,7 @@ const LegalNotice: React.FunctionComponent = () => {
           <h2 className={clsx("h5 mb-4", "sm:h4")}>Responsible for the Content</h2>
           <ul className={clsx("list-disc ml-6 mb-8")}>
             <li className={clsx("m-0 my-4")}>
-              <Link href={"https://twitter.com/dnikub"}>
+              <Link href={"https://dnikub.dev/"}>
                 <a
                   target={"_blank"}
                   rel="noopener noreferrer nofollow"
