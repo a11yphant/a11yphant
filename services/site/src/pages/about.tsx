@@ -17,13 +17,12 @@ const About: React.FunctionComponent = () => {
     <>
       <Head>
         <title>About | a11yphant</title>
-        <meta name="robots" content="noindex,nofollow" />
         <meta name="description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://a11yphant.com" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="Legal Notice" />
+        <meta property="og:title" content="About" />
         <meta property="og:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
         <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         <meta
