@@ -14,6 +14,11 @@ inputs:
     required: true
     type: string
 
+outputs:
+  digest:
+    description: "Docker Image Digest"
+    value: ${{ steps.digest.outputs.digest }}
+
 runs:
   using: composite
   steps:
@@ -37,3 +42,10 @@ runs:
     - name: Push Image
       shell: bash
       run: docker push ${{ inputs.image }}
+
+    - name: Set Digest as output
+      id: digest
+      shell: bash
+      run: |
+        DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ inputs.image }})
+        echo "digest=${DIGEST: -71}" >> $GITHUB_OUTPUT
