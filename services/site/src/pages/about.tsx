@@ -118,7 +118,7 @@ const About: React.FunctionComponent = () => {
               <InTextLink href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
                 Salzburg University of Applied Sciences (Austria)<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
-              .<span className="font-medium">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
+              . <span className="font-medium">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
               <InTextLink href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
                 Luca Pircher<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
@@ -130,7 +130,7 @@ const About: React.FunctionComponent = () => {
               <InTextLink href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
                 Michael Hinterhofer<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
-              .<span className="font-medium">Interface and Corporate Design</span> by{" "}
+              . <span className="font-medium">Interface and Corporate Design</span> by{" "}
               <InTextLink href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
                 Johanna Wicht<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>{" "}
