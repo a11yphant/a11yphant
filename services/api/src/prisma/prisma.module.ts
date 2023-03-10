@@ -1,7 +1,8 @@
-import { DynamicModule, FactoryProvider, Logger, Module, ModuleMetadata } from "@nestjs/common";
+import { DynamicModule, Logger, Module } from "@nestjs/common";
 
 import { PRISMA_MODULE_CONFIG } from "./constants";
 import { PrismaService } from "./prisma.service";
+import { PrismaAsyncModuleConfig } from "./prisma-module-config.interface";
 
 const defaultProviders = [Logger];
 
@@ -27,13 +28,4 @@ export class PrismaModule {
       exports: [configProvider],
     };
   }
-}
-
-export interface PrismaModuleConfig {
-  databaseUrl: string;
-}
-
-export interface PrismaAsyncModuleConfig extends Pick<ModuleMetadata, "imports"> {
-  useFactory: (...args: any[]) => PrismaModuleConfig | Promise<PrismaModuleConfig>;
-  inject?: FactoryProvider["inject"];
 }
