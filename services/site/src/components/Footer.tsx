@@ -63,7 +63,7 @@ const Footer: React.FunctionComponent = () => (
         <span aria-label="love" role="img" className="px-2">
           💜
         </span>
-        in Salzburg
+        in Austria
       </p>
     </div>
   </footer>
