@@ -83,106 +83,114 @@ const About: React.FunctionComponent = () => {
             />
           )}
 
-          <h2 className="h4 mt-8">
-            But what is{" "}
-            <span aria-label="Allyphant" className="text-2xl">
-              a11yphant
-            </span>
-            ?
-          </h2>
+          <section className="my-16">
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>
+              But what is{" "}
+              <span aria-label="Allyphant" className="text-2xl">
+                a11yphant
+              </span>
+              ?
+            </h2>
 
-          <p>
-            <span aria-label="Allyphant">a11yphant</span> is an interactive online course for web accessibility. In this course, you will revisit web
-            development topics from an accessibility perspective. For example, how to make sure that assistive technologies like screen readers can
-            interact with the website? Or, what is the purpose of the different semantic HTML elements? These are some of the things you will learn by
-            writing meaningful markup and completing quizzes.
-          </p>
+            <p>
+              <span aria-label="Allyphant">a11yphant</span> is an interactive online course for web accessibility. In this course, you will revisit
+              web development topics from an accessibility perspective. For example, how to make sure that assistive technologies like screen readers
+              can interact with the website? Or, what is the purpose of the different semantic HTML elements? These are some of the things you will
+              learn by writing meaningful markup and completing quizzes.
+            </p>
+          </section>
 
-          <h2 className="h4 mt-8">Coding-Challenges and Quizzes</h2>
+          <section className="my-16">
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>Coding-Challenges and Quizzes</h2>
 
-          <p>
-            Various accessibility topics are split up into short challenges. On <span aria-label="Allyphant">a11yphant</span>, you solve coding levels
-            and single-choice quizzes in each challenge. Each level teaches you one thing at a time. Our evaluation provides you with detailed
-            feedback on our success criteria. If you struggle to solve a challenge, hints will help you out.
-          </p>
+            <p>
+              Various accessibility topics are split up into short challenges. On <span aria-label="Allyphant">a11yphant</span>, you solve coding
+              levels and single-choice quizzes in each challenge. Each level teaches you one thing at a time. Our evaluation provides you with
+              detailed feedback on our success criteria. If you struggle to solve a challenge, hints will help you out.
+            </p>
+          </section>
 
-          <h2 className="h4 mt-8">Meet the team</h2>
+          <section className="my-16">
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>Meet the team</h2>
 
-          <p>
-            <span aria-label="Allyphant">a11yphant</span> started as a master’s project created by six students at the{" "}
-            <InTextLink href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
-              Salzburg University of Applied Sciences (Austria)<span className="sr-only">(opens in a new tab)</span>
-            </InTextLink>
-            .<span className="font-medium">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
-            <InTextLink href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
-              Luca Pircher<span className="sr-only">(opens in a new tab)</span>
-            </InTextLink>
-            ,{" "}
-            <InTextLink href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
-              Thomas Dax<span className="sr-only">(opens in a new tab)</span>
-            </InTextLink>{" "}
-            and{" "}
-            <InTextLink href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
-              Michael Hinterhofer<span className="sr-only">(opens in a new tab)</span>
-            </InTextLink>
-            .<span className="font-medium">Interface and Corporate Design</span> by{" "}
-            <InTextLink href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
-              Johanna Wicht<span className="sr-only">(opens in a new tab)</span>
-            </InTextLink>{" "}
-            and{" "}
-            <InTextLink href="https://www.fabianhellerdesign.com/" target="_blank" rel="noopener noreferrer nofollow">
-              Fabian Heller<span className="sr-only">(opens in a new tab)</span>
-            </InTextLink>
-            .
-          </p>
+            <p>
+              <span aria-label="Allyphant">a11yphant</span> started as a master’s project created by six students at the{" "}
+              <InTextLink href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
+                Salzburg University of Applied Sciences (Austria)<span className="sr-only">(opens in a new tab)</span>
+              </InTextLink>
+              .<span className="font-medium">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
+              <InTextLink href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
+                Luca Pircher<span className="sr-only">(opens in a new tab)</span>
+              </InTextLink>
+              ,{" "}
+              <InTextLink href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
+                Thomas Dax<span className="sr-only">(opens in a new tab)</span>
+              </InTextLink>{" "}
+              and{" "}
+              <InTextLink href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
+                Michael Hinterhofer<span className="sr-only">(opens in a new tab)</span>
+              </InTextLink>
+              .<span className="font-medium">Interface and Corporate Design</span> by{" "}
+              <InTextLink href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
+                Johanna Wicht<span className="sr-only">(opens in a new tab)</span>
+              </InTextLink>{" "}
+              and{" "}
+              <InTextLink href="https://www.fabianhellerdesign.com/" target="_blank" rel="noopener noreferrer nofollow">
+                Fabian Heller<span className="sr-only">(opens in a new tab)</span>
+              </InTextLink>
+              .
+            </p>
 
-          <p>
-            As we hope to make the world more inclusive, we continue developing <span aria-label="Allyphant">a11yphant</span> as an Open Source
-            project. So, if you find an accessibility issue or want to contribute or support us in any other way, please{" "}
-            <InTextLink href="mailto:info@a11yphant.com">let us know</InTextLink>.
-          </p>
+            <p>
+              As we hope to make the world more inclusive, we continue developing <span aria-label="Allyphant">a11yphant</span> as an Open Source
+              project. So, if you find an accessibility issue or want to contribute or support us in any other way, please{" "}
+              <InTextLink href="mailto:info@a11yphant.com">let us know</InTextLink>.
+            </p>
+          </section>
 
-          <h2 className="mt-14 h3">What others say about us:</h2>
+          <section className="mt-16">
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>What others say about us:</h2>
 
-          <ul className="mt-4 ml-6 list-disc">
-            <li>
-              <p>
-                Article in{" "}
-                <a
-                  href="https://page-online.de/tools-technik/web-accessability-lernen-mit-a11yphant/"
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  <span className="uppercase">Page</span> Magazine<span className="sr-only">(opens in a new tab)</span>
-                </a>{" "}
-                (in German)
-              </p>
-            </li>
-            <li>
-              <p>
-                Featured in the{" "}
-                <a
-                  href="https://www.smashingmagazine.com/the-smashing-newsletter/smashing-newsletter-issue-344/"
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  Smashing Magazine Newsletter #344<span className="sr-only">(opens in a new tab)</span>
-                </a>
-              </p>
-            </li>
-            <li>
-              <p>
-                <a
-                  href="https://www.producthunt.com/products/a11yphant?utm_source=badge-featured&amp;utm_medium=badge#a11yphant"
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                >
-                  ProductHunt ranking #11<span className="sr-only">(opens in a new tab)</span>
-                </a>{" "}
-                on the launch day
-              </p>
-            </li>
-          </ul>
+            <ul className="mt-4 ml-6 list-disc">
+              <li>
+                <p>
+                  Article in{" "}
+                  <a
+                    href="https://page-online.de/tools-technik/web-accessability-lernen-mit-a11yphant/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    <span className="uppercase">Page</span> Magazine<span className="sr-only">(opens in a new tab)</span>
+                  </a>{" "}
+                  (in German)
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <a
+                    href="https://www.smashingmagazine.com/the-smashing-newsletter/smashing-newsletter-issue-344/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Smashing Magazine Newsletter #344<span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a
+                    href="https://www.producthunt.com/products/a11yphant?utm_source=badge-featured&amp;utm_medium=badge#a11yphant"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    ProductHunt ranking #11<span className="sr-only">(opens in a new tab)</span>
+                  </a>{" "}
+                  on the launch day
+                </p>
+              </li>
+            </ul>
+          </section>
         </div>
       </main>
       <Footer />
