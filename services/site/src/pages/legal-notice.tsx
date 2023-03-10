@@ -42,34 +42,32 @@ const LegalNotice: React.FunctionComponent = () => {
             §25 Media Act.
           </p>
 
-          <p>
-            <span aria-label="Allyphant">a11yphant</span> is a master's project by six students at the Salzburg University of Applied Sciences. We
-            tried our best to make this website accessible. However, we are no experts yet, so please let us know if we missed something.
-          </p>
-
+          <h2 className={clsx("h5", "sm:h4")}>Contact Information</h2>
           <address className={clsx("not-italic mb-12")}>
-            If you are interested in working with us or just want to know more about the project, simply{" "}
-            <Link href={"mailto:info@a11yphant.com"}>
-              <a
-                className={clsx(
-                  "text-light font-sans font-normal border-light",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:border-transparent",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                drop us a line
-              </a>
-            </Link>
-            . <br /> <br />
-            <strong>University of Applied Sciences Salzburg</strong>
-            <br />
-            Urstein Süd 3 <br />
-            5412 Puch bei Hallein, Austria
+            <p>
+              <br />
+              Urstein Süd 1 <br />
+              5412 Puch bei Hallein <br />
+              Austria
+            </p>
+            <p>
+              <strong>Email: </strong>{" "}
+              <Link href={"mailto:info@a11yphant.com"}>
+                <a
+                  className={clsx(
+                    "text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                    "focus-rounded-instead-of-underline",
+                  )}
+                >
+                  info@a11yphant.com
+                </a>
+              </Link>
+            </p>
           </address>
 
-          <h2 className={clsx("h5 mb-4", "sm:h4")}>Meet the team</h2>
-          <h3 className={clsx("h6", "sm:h5")}>Concept and Development</h3>
+          <h2 className={clsx("h5 mb-4", "sm:h4")}>Responsible for the Content</h2>
           <ul className={clsx("list-disc ml-6 mb-8")}>
             <li className={clsx("m-0 my-4")}>
               <Link href={"https://twitter.com/dnikub"}>
@@ -135,12 +133,6 @@ const LegalNotice: React.FunctionComponent = () => {
                 </a>
               </Link>
             </li>
-          </ul>
-
-          <h3 className={clsx("h6", "sm:h5")}>Interface and Corporate Design</h3>
-          <ul className={clsx("list-disc ml-6 mb-8")}>
-            <li className={clsx("m-0 my-4")}>Johanna Wicht</li>
-            <li className={clsx("m-0 my-4")}>Fabian Heller</li>
           </ul>
         </div>
       </main>
