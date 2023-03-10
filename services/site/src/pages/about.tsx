@@ -110,36 +110,36 @@ const About: React.FunctionComponent = () => {
 
           <p>
             <span aria-label="Allyphant">a11yphant</span> started as a master’s project created by six students at the{" "}
-            <a href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
+            <InTextLink href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
               Salzburg University of Applied Sciences (Austria)<span className="sr-only">(opens in a new tab)</span>
-            </a>
-            .<span className="font-medium">Concept and Development</span> by <a href="https://dnikub.dev">Daniela Kubesch</a>,{" "}
-            <a href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
+            </InTextLink>
+            .<span className="font-medium">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
+            <InTextLink href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
               Luca Pircher<span className="sr-only">(opens in a new tab)</span>
-            </a>
+            </InTextLink>
             ,{" "}
-            <a href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
+            <InTextLink href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
               Thomas Dax<span className="sr-only">(opens in a new tab)</span>
-            </a>{" "}
+            </InTextLink>{" "}
             and{" "}
-            <a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
+            <InTextLink href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
               Michael Hinterhofer<span className="sr-only">(opens in a new tab)</span>
-            </a>
+            </InTextLink>
             .<span className="font-medium">Interface and Corporate Design</span> by{" "}
-            <a href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
+            <InTextLink href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
               Johanna Wicht<span className="sr-only">(opens in a new tab)</span>
-            </a>{" "}
+            </InTextLink>{" "}
             and{" "}
-            <a href="https://www.fabianhellerdesign.com/" target="_blank" rel="noopener noreferrer nofollow">
+            <InTextLink href="https://www.fabianhellerdesign.com/" target="_blank" rel="noopener noreferrer nofollow">
               Fabian Heller<span className="sr-only">(opens in a new tab)</span>
-            </a>
+            </InTextLink>
             .
           </p>
 
           <p>
             As we hope to make the world more inclusive, we continue developing <span aria-label="Allyphant">a11yphant</span> as an Open Source
             project. So, if you find an accessibility issue or want to contribute or support us in any other way, please{" "}
-            <a href="mailto:info@a11yphant.com">let us know</a>.
+            <InTextLink href="mailto:info@a11yphant.com">let us know</InTextLink>.
           </p>
 
           <h2 className="mt-14 h3">What others say about us:</h2>
@@ -153,8 +153,8 @@ const About: React.FunctionComponent = () => {
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
-                  <span className="uppercase text-primary">Page</span> Magazine<span className="sr-only">(opens in a new tab)</span>
-                </a>
+                  <span className="uppercase">Page</span> Magazine<span className="sr-only">(opens in a new tab)</span>
+                </a>{" "}
                 (in German)
               </p>
             </li>
@@ -187,6 +187,25 @@ const About: React.FunctionComponent = () => {
       </main>
       <Footer />
     </>
+  );
+};
+
+const InTextLink: React.FunctionComponent<React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>> = ({
+  children,
+  ...props
+}) => {
+  return (
+    <a
+      className={clsx(
+        "text-light font-sans font-normal border-light",
+        "transition-colors duration-300",
+        "hover:text-primary-light hover:border-transparent",
+        "focus-rounded-instead-of-underline",
+      )}
+      {...props}
+    >
+      {children}
+    </a>
   );
 };
 

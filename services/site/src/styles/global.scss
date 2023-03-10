@@ -133,5 +133,9 @@
         &:focus {
             @apply text-light;
         }
+
+        & span {
+            @apply text-inherit;
+        }
     }
 }
