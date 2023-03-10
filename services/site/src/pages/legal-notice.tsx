@@ -5,18 +5,18 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
-const Imprint: React.FunctionComponent = () => {
+const LegalNotice: React.FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>Imprint | a11yphant</title>
+        <title>Legal Notice | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
         <meta name="description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://a11yphant.com" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="Imprint" />
+        <meta property="og:title" content="Legal Notice" />
         <meta property="og:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
         <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         <meta
@@ -36,7 +36,7 @@ const Imprint: React.FunctionComponent = () => {
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
         <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
-          <h1 className={clsx("mb-8", "h2", "md:h1")}>Imprint</h1>
+          <h1 className={clsx("mb-8", "h2", "md:h1")}>Legal Notice</h1>
           <p className={clsx("italic mb-8")}>
             Information obligation according to §5 E-Commerce Law, §14 Corporate Code, §63 Trade Regulations and disclosure obligation according to
             §25 Media Act.
@@ -149,4 +149,4 @@ const Imprint: React.FunctionComponent = () => {
   );
 };
 
-export default Imprint;
+export default LegalNotice;

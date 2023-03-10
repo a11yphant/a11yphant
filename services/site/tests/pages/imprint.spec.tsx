@@ -1,15 +1,15 @@
 import { render, screen } from "@testing-library/react";
-import Imprint from "app/pages/imprint";
+import LegalNotice from "app/pages/legal-notice";
 
 jest.mock("app/components/Navigation", () => ({
   __esModule: true,
   default: () => <></>,
 }));
 
-describe("imprint", () => {
+describe("legal-notice", () => {
   it("renders the page", () => {
-    render(<Imprint />);
+    render(<LegalNotice />);
 
-    expect(screen.getByRole("heading", { name: "Imprint" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Legal Notice" })).toBeInTheDocument();
   });
 });
