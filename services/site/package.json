@@ -4,7 +4,6 @@
   "description": "",
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "dotenv": "dotenv",
     "dev": "npm run dotenv -- npm run dev:internal",

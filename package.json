@@ -4,7 +4,6 @@
   "description": "",
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "prepare": "husky install",
     "postinstall": "npm run package-dependencies",
