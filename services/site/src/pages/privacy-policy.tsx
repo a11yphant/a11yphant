@@ -37,13 +37,32 @@ const PrivacyPolicy: React.FunctionComponent = () => {
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
         <div className={clsx(" mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
           <h1 className={clsx("mb-8", "h2", "md:h1")}>Privacy Policy</h1>
-          <p className={clsx("italic mb-8")}>Last updated at January 19, 2023</p>
+          <p className={clsx("italic mb-8")}>Last updated at March 10, 2023</p>
 
           <section role="contentinfo" aria-label="Purpose of the Privacy Policy">
             <p>
-              Thank you for choosing to be part of our community at a11yphant be the University of Applied Sciences Salzburg ("Company," "we," "us,"
-              or "our"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns
-              about this privacy notice or our practices with regard to your personal information, please contact us at{" "}
+              Thank you for choosing to be part of our community at{" "}
+              <Link href={"https://a11yphant.com"}>
+                <a
+                  className={clsx(
+                    "text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                    "focus-rounded-instead-of-underline",
+                  )}
+                >
+                  a11yphant.com
+                </a>
+              </Link>
+              .
+              <br />
+              <span aria-label="Allyphant">a11yphant</span> is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All
+              rights are equally split between these four creators. When the website says "<span aria-label="Allyphant">a11yphant</span>", "we at{" "}
+              <span aria-label="Allyphant">a11yphant</span>", "us" or "our", it is meant that statements are made on behalf of all four co-creators.
+            </p>
+            <p>
+              We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this
+              privacy notice or our practices concerning your personal information, please contact us at{" "}
               <Link href={"mailto:info@a11yphant.com"}>
                 <a
                   className={clsx(
@@ -333,7 +352,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               <i>
                 In short: We process your information for purposes based on legitimate business interests, the fulfillment of our contract with you,
-                compliance with our legal obligations, and/or your consent..
+                compliance with our legal obligations, and/or your consent.
               </i>
             </p>
 
@@ -681,9 +700,9 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               or by post to:
             </p>
             <address className={clsx("not-italic")}>
-              <strong>University of Applied Sciences Salzburg</strong> <br />
-              Urstein Süd 1 <br />
-              5412 Puch bei Hallein <br />
+              <strong>Daniela Kubesch, BSc</strong> <br />
+              Wiesengasse 18 <br />
+              3001 Mauerbach <br />
               Austria
             </address>
           </section>
