@@ -144,7 +144,7 @@ const About: React.FunctionComponent = () => {
 
           <h2 className="mt-14 h3">What others say about us:</h2>
 
-          <ul className="mt-4">
+          <ul className="mt-4 ml-6 list-disc">
             <li>
               <p>
                 Article in{" "}
