@@ -46,8 +46,8 @@ const LegalNotice: React.FunctionComponent = () => {
           <address className={clsx("not-italic mb-12")}>
             <p>
               <br />
-              Urstein Süd 1 <br />
-              5412 Puch bei Hallein <br />
+              Wiesengasse 18 <br />
+              3001 Mauerbach <br />
               Austria
             </p>
             <p>
