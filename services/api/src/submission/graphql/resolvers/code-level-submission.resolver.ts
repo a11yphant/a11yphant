@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { UserInputError } from "apollo-server-express";
+import { GraphQLError } from "graphql";
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
@@ -41,7 +41,7 @@ export class CodeLevelSubmissionResolver {
       submission = await this.submissionService.update({ ...submissionInput, userId: sessionToken.userId });
     } catch (error) {
       if (error instanceof SubmissionNotFoundException) {
-        throw new UserInputError(`Submission with id ${submissionInput.id} not found.`);
+        throw new GraphQLError(`Submission with id ${submissionInput.id} not found.`, { extensions: { code: "BAD_USER_INPUT" } });
       }
 
       throw error;
@@ -62,7 +62,7 @@ export class CodeLevelSubmissionResolver {
       };
     } catch (error) {
       if (error instanceof SubmissionAlreadyHasCheckResultException) {
-        throw new UserInputError("A check for this submission has already been requested");
+        throw new GraphQLError("A check for this submission has already been requested", { extensions: { code: "BAD_USER_INPUT" } });
       }
 
       throw error;

@@ -1,5 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
-import { UserInputError } from "apollo-server-express";
+import { GraphQLError } from "graphql";
 
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { SubmissionService } from "@/submission";
@@ -68,7 +68,7 @@ describe("code level submission resolver", () => {
 
     const resolver = createCodeLevelSubmissionResolver({ submissionService: { update } });
 
-    expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toThrowError(UserInputError);
+    expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toThrowError(GraphQLError);
     expect(update).toHaveBeenCalled();
   });
 
@@ -86,6 +86,6 @@ describe("code level submission resolver", () => {
     const requestCheck = jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException());
 
     const resolver = createCodeLevelSubmissionResolver({ submissionService: { requestCheck } });
-    expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toThrowError(UserInputError);
+    expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toThrowError(GraphQLError);
   });
 });
