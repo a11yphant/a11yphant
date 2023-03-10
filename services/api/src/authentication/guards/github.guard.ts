@@ -9,7 +9,7 @@ export class GithubAuthGuard extends AuthGuard("github") {
 
   handleRequest(err: unknown, user: unknown, info: { message?: string }): any {
     if (err || !user) {
-      this.logger.warn(err || info.message);
+      this.logger.verbose(err || info.message);
       return user;
     }
 
