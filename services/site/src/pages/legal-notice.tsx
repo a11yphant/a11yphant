@@ -45,7 +45,7 @@ const LegalNotice: React.FunctionComponent = () => {
           <h2 className={clsx("h5", "sm:h4")}>Contact Information</h2>
           <address className={clsx("not-italic mb-12")}>
             <p>
-              <br />
+              <strong>Daniela Kubesch, BSc</strong> <br />
               Wiesengasse 18 <br />
               3001 Mauerbach <br />
               Austria
