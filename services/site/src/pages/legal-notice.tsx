@@ -11,13 +11,13 @@ const LegalNotice: React.FunctionComponent = () => {
       <Head>
         <title>Legal Notice | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
+        <meta name="description" content="a11yphant is an interactive online course for web accessibility." />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://a11yphant.com" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
         <meta property="og:title" content="Legal Notice" />
-        <meta property="og:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
+        <meta property="og:description" content="a11yphant is an interactive online course for web accessibility." />
         <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
@@ -27,7 +27,7 @@ const LegalNotice: React.FunctionComponent = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="a11yphant" />
-        <meta name="twitter:description" content="a11yphant is a master project by 6 students at the University of Applied Sciences Salzburg." />
+        <meta name="twitter:description" content="a11yphant is an interactive online course for web accessibility." />
         <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
