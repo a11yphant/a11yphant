@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { UserInputError } from "apollo-server-errors";
+import { GraphQLError } from "graphql";
 
 import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
@@ -28,7 +28,7 @@ export class QuizLevelSubmissionResolver {
       };
     } catch (error) {
       if (error instanceof ReferenceNotValidException) {
-        throw new UserInputError(error.message);
+        throw new GraphQLError(error.message, { extensions: { code: "BAD_USER_INPUT" } });
       }
 
       throw error;
