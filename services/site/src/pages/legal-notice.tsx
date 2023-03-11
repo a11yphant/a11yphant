@@ -35,7 +35,7 @@ const LegalNotice: React.FunctionComponent = () => {
       </Head>
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
+        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8", "h2", "md:h1")}>Legal Notice</h1>
           <p className={clsx("italic mb-8")}>
             Information obligation according to §5 E-Commerce Law, §14 Corporate Code, §63 Trade Regulations and disclosure obligation according to
