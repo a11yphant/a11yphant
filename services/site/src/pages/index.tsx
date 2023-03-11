@@ -159,8 +159,12 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             )} */}
 
             <p className="mb-8 md:mb-0">
-              <span className="text-xl text-grey">*</span> Sorry, at the moment, we do not have more advanced challenges. Our small team is dedicated
-              to producing more content for you. We will announce new challenges on our{" "}
+              <span className="sr-only">Disclaimer:</span>
+              <span aria-hidden="true" className="text-xl text-grey">
+                *
+              </span>{" "}
+              Sorry, at the moment, we do not have more advanced challenges. Our small team is dedicated to producing more content for you. We will
+              announce new challenges on our{" "}
               <Link href={"https://twitter.com/a11yphant"}>
                 <a
                   className={clsx(
