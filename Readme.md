@@ -140,7 +140,7 @@ git checkout -b <type>/<short-description-of-task>
 git pull [--rebase] upstream develop
 ```
 
-8. Push your branch up to your fork.
+8. Push your branch to your fork.
 ```bash
 git push origin <type>/<short-description-of-task>
 ```
