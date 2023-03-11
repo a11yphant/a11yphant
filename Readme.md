@@ -1,37 +1,16 @@
-<div align="center">
-  <img src="services/site/public/images/a11yphant_Logo_Signet.png" height="138">
-  <h1 align="center">
-    <a href="https://a11yphant.com">
-      a11yphant.com
-    </a>
-  </h1>
-  <p align="center">The easy way to learn web accessibility<p>
+<img src="services/site/public/images/a11yphant_Logo_Signet.png" height="138">
 
-  <ul align="center" >
-    <li align="center">
-      <a href="https://twitter.com/a11yphant">
-          <img src="https://img.shields.io/badge/-Twitter-7331FF" alt="Twitter" />
-        </a>
-    </li>
-    <li align="center">
-      <a href="https://www.producthunt.com/products/a11yphant">
-          <img src="https://img.shields.io/badge/-ProductHunt-7331FF" alt="ProductHunt" />
-        </a>
-    </li>
-    <li align="center">
-      <p>
-          <img src="https://img.shields.io/badge/-Open%20Source%20Project-121212" alt="Open Source Project" />
-      </p>
-    </li>
-    <li align="center">
-      <p>
-          <img src="https://img.shields.io/badge/-Launched%202022-121212" alt="Launched 2022" />
-      </p>
-    </li>
-  </ul>
+# [a11yphant.com](https://a11yphant.com)
 
-  <hr style="color:white; height:1.5px; width:100%;"/>
-</div>
+The easy way to learn web accessibility
+
+[![Twitter](https://img.shields.io/badge/-Twitter-7331FF)](https://twitter.com/a11yphant)
+[![ProductHunt](https://img.shields.io/badge/-ProductHunt-7331FF)](https://www.producthunt.com/products/a11yphant)
+![Open Source Project](https://img.shields.io/badge/-Open%20Source%20Project-121212)
+![Launched 2022](https://img.shields.io/badge/-Launched%202022-121212)
+
+<hr style="color:white; height:1.5px; width:100%;"/>
+
 
 ## Table of Contents
 
