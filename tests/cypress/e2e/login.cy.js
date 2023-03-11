@@ -24,6 +24,8 @@ function createUser({ name, email, password }) {
             variables: { name, email, password },
         })
     });
+
+    cy.clearCookies();
 }
 
 describe("login", () => {
