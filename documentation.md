@@ -202,7 +202,7 @@ The order of classes within `clsx` is as follows:
 11. Breakpoint `2xl`
 
 
-Please keep in mind to only use classes you really need. If you refactor a component, remember to check the responsibility and adapt the style changes in the breakpoints accordingly.
+Keep in mind to only use classes you really need. Additionally, always verify that your components are responsive. When implementing responsive styles, note that we use a mobile-first breakpoint system.
 
 ### CSS
 
