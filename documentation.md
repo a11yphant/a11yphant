@@ -78,7 +78,7 @@ npm login --scope=@a11yphant --auth-type=legacy --registry=https://npm.pkg.githu
 
 ## Setup
 
-To setup the project the project follow these steps.
+To setup the project the project follow these steps:
 
 1. Clone the repository.
 ```bash
