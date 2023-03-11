@@ -7,7 +7,6 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import a11yphantAnimation from "../../public/images/a11yphant-animation.gif";
 import a11yphantStatic from "../../public/images/a11yphant-static.jpg";
 
 const About: React.FunctionComponent = () => {
@@ -61,27 +60,22 @@ const About: React.FunctionComponent = () => {
             this situation by giving them a tool for learning accessibility in a fun, interactive way.
           </p>
 
-          {prefersReducedMotion ? (
-            <Image
-              alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-              src={a11yphantStatic}
-              quality={100}
-              sizes="100vw"
-              style={{
-                objectFit: "cover",
-              }}
-            />
-          ) : (
-            <Image
-              alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-              src={a11yphantAnimation}
-              quality={100}
-              sizes="100vw"
-              style={{
-                objectFit: "cover",
-              }}
-            />
-          )}
+          <div className="max-w-80ch">
+            {prefersReducedMotion ? (
+              <Image
+                alt="The a11yphant website where users can complete interactive challenges on web accessibility."
+                src={a11yphantStatic}
+                quality={80}
+                placeholder="blur"
+                sizes="80ch"
+                priority
+              />
+            ) : (
+              <video autoPlay muted loop>
+                <source src="/videos/a11yphant-showcase.mp4" />
+              </video>
+            )}
+          </div>
 
           <section className="my-16">
             <h2 className={clsx("mb-8", "h4", "md:h3")}>
