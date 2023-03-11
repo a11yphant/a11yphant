@@ -33,16 +33,16 @@
     "console:prod": "node dist/console.js"
   },
   "dependencies": {
-    "@apollo/server": "^4.5.0",
+    "@apollo/server": "4.5.0",
     "@nestjs-modules/mailer": "1.8.1",
-    "@nestjs/apollo": "^11.0.3",
-    "@nestjs/common": "^9.3.9",
-    "@nestjs/config": "^2.3.1",
-    "@nestjs/core": "^9.3.9",
-    "@nestjs/graphql": "^11.0.0",
-    "@nestjs/microservices": "^9.3.9",
-    "@nestjs/passport": "^9.0.3",
-    "@nestjs/platform-express": "^9.3.9",
+    "@nestjs/apollo": "11.0.3",
+    "@nestjs/common": "9.3.9",
+    "@nestjs/config": "2.3.1",
+    "@nestjs/core": "9.3.9",
+    "@nestjs/graphql": "11.0.0",
+    "@nestjs/microservices": "9.3.9",
+    "@nestjs/passport": "9.0.3",
+    "@nestjs/platform-express": "9.3.9",
     "@prisma/client": "3.15.2",
     "amqp-connection-manager": "4.1.10",
     "amqplib": "0.10.3",
@@ -51,7 +51,7 @@
     "class-validator": "0.14.0",
     "commander": "9.5.0",
     "cookie-parser": "1.4.6",
-    "graphql": "^16.6.0",
+    "graphql": "16.6.0",
     "handlebars": "4.7.7",
     "js-yaml": "4.1.0",
     "jsonwebtoken": "8.5.1",
@@ -70,9 +70,9 @@
   "devDependencies": {
     "@a11yphant/eslint-config": "0.4.0",
     "@golevelup/ts-jest": "0.3.5",
-    "@nestjs/cli": "^9.2.0",
-    "@nestjs/schematics": "^9.0.4",
-    "@nestjs/testing": "^9.3.9",
+    "@nestjs/cli": "9.2.0",
+    "@nestjs/schematics": "9.0.4",
+    "@nestjs/testing": "9.3.9",
     "@prisma/generator-helper": "3.15.2",
     "@prisma/migrate": "3.15.2",
     "@prisma/sdk": "3.15.2",
@@ -111,7 +111,7 @@
     "ts-loader": "9.4.2",
     "ts-node": "10.9.1",
     "tsconfig-paths": "3.14.1",
-    "typescript": "^4.9.5"
+    "typescript": "4.9.5"
   },
   "_moduleAliases": {
     "@": "src/"
