@@ -93,7 +93,7 @@ git clone git@github.com:<your-username>/a11yphant.git
 ./install.sh
 ```
 
-> **Recommendation:** It is recommended to add one of the following scripts to your `.bashrc` or `.zshrc`. This script automatically changes to the correct Node version when entering this project. These scripts originate directly from the `nvm` documentation: (1) [bash](https://github.com/nvm-sh/nvm#bash) or (2) [zsh](https://github.com/nvm-sh/nvm#zsh).
+> **Recommendation:** It is recommended to add one of the following scripts to your `.bashrc` or `.zshrc`: (1) [bash](https://github.com/nvm-sh/nvm#bash) or (2) [zsh](https://github.com/nvm-sh/nvm#zsh). These scripts automatically change to the correct Node version when entering this project.
 
 5. Start the application.
 ```bash
