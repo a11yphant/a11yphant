@@ -141,7 +141,7 @@ npm run dev:no-daemon
 
 ```bash
 # API
-npm run dotenv -- npm run dev:api
+npm run dev:api
 
 # Site
 npm run dotenv -- npm run dev:site
