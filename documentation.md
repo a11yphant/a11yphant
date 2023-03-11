@@ -126,6 +126,8 @@ npm start
 npm run dev
 ```
 
+> **Note:** With `pm2 list` you can see which processes are currently running.
+
 ### Start an Individual Service
 
 ```bash
