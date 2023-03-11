@@ -60,7 +60,7 @@ This project uses [Docker](https://www.docker.com/). Please make sure you have i
 
 ### 2. Create a GitHub Access Token
 
-Create an access token for the Github API. This access token is required to install our private NPM packages. You can follow [this guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+Create an access token for the Github API. This access token is required to install our NPM packages from the GitHub NPM registry. You can follow [this guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
 ### 3. Install Node via `nvm`
 
