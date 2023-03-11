@@ -143,7 +143,7 @@ npm run dotenv -- npm run dev:site
 > **Note:** The `npm run dotenv` part injects all env vars to the CLI context. Thereby it is possible to wait for other services before starting a service (e.g. `site` only starts when `api` has been started successfully because it depends on a working API).
 
 ### Logs
-To look into the logs of an individual service you can use the following commands:
+To look into the logs of an individual service, you can use the following commands:
 
 ```bash
 # API
