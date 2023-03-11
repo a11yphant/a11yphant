@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import {
@@ -12,7 +13,6 @@ import {
   UserData,
 } from "@tests/support/factories/database";
 import { useDatabase } from "@tests/support/helpers";
-import faker from "faker";
 
 import { ChallengeService } from "@/challenge/challenge.service";
 import { ChallengeDifficulty } from "@/challenge/enums/challenge-difficulty.enum";

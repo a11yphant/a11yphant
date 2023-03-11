@@ -1,5 +1,5 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
-import faker from "faker";
 import { GraphQLError } from "graphql";
 
 import { ReferenceNotValidException } from "@/submission/exceptions/reference-not-valid.excpetion";

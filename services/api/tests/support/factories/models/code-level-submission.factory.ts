@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "rosie";
 
 import { CodeLevelSubmission } from "@/submission/graphql/models/code-level-submission.model";

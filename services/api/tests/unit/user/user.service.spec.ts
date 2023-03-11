@@ -1,10 +1,10 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { CODE_LEVEL_SUBMISSION, CodeLevelSubmissionData, Factory, USER, UserData } from "@tests/support/factories/database";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock, useDatabase } from "@tests/support/helpers";
-import faker from "faker";
 
 import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
@@ -169,7 +169,7 @@ describe("user service", () => {
 
       const providerInformation: ProviderInformation = {
         id: faker.datatype.uuid(),
-        displayName: faker.name.findName(),
+        displayName: faker.name.fullName(),
         provider: "github",
       };
 

@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { IFactoryStatic } from "rosie";
 
 import { ChallengeDifficulty } from "@/challenge/enums/challenge-difficulty.enum";
@@ -13,7 +13,7 @@ export function define(factory: IFactoryStatic): void {
     .define<ChallengeData>(CHALLENGE)
     .attr("slug", () => faker.lorem.slug())
     .attr("name", () => faker.lorem.words(3))
-    .attr("difficulty", () => faker.random.arrayElement([ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD]))
+    .attr("difficulty", () => faker.helpers.arrayElement([ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD]))
     .option("numberOfCodeLevels", 0)
     .attr("codeLevels", ["numberOfCodeLevels"], buildMultipleOf<CodeLevelData>(CODE_LEVEL, {}, { createChallengeIfMissing: false }))
     .option("numberOfQuizLevels", 0)
