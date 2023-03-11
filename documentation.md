@@ -85,7 +85,7 @@ To setup the project the project follow these steps:
 git clone git@github.com:<your-username>/a11yphant.git
 ```
 
-2. Make sure all steps from the [prerequisites](#prerequisites) are completed.
+2. Make sure you completed all steps from the [prerequisites](#prerequisites).
 
 3. Make sure, Docker is running.
 
