@@ -10,7 +10,7 @@ import { AppModule } from "./app.module";
 
 export function configureApp(app: INestApplication): void {
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
+  app.useGlobalPipes(new ValidationPipe());
 }
 
 export async function setupMicroservices(app: INestApplication): Promise<void> {
