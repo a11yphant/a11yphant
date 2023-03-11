@@ -109,7 +109,7 @@ npm start
 npm run import-challenges
 ```
 
-7. Your application is now up and running at [http://localhost:3001](http://localhost:3001).
+7. Your application is now up and running at [http://localhost:3001](http://localhost:3001). You can also explore the API using GraphQL Playground at [http://localhost:3000/graphql](http://localhost:3000/graphql).
 
 8. To stop the application or look into the logs of an individual service, have a look at the sections [Custom NPM Commands](#custom-npm-commands) and [Useful pm2 Commands](#useful-pm2-commands).
 
