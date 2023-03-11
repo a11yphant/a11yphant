@@ -82,7 +82,7 @@ To setup the project the project follow these steps:
 
 1. Clone the repository.
 ```bash
-git clone https://github.com/<your-username>/a11yphant.git
+git clone git@github.com:<your-username>/a11yphant.git
 ```
 
 2. Make sure all steps from the [prerequisites](#prerequisites) are completed.
