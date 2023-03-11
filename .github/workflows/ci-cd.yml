@@ -404,6 +404,14 @@ jobs:
         env:
           CYPRESS_BASE_URL: "http://localhost:3001"
 
+      - name: Upload artifact
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots/
+          retention-days: 1
+
       - name: Echo API Logs
         if: failure()
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs api --no-color --tail all
