@@ -87,7 +87,7 @@ git clone git@github.com:<your-username>/a11yphant.git
 
 2. Make sure you completed all steps from the [prerequisites](#prerequisites).
 
-3. Make sure, Docker is running.
+3. Make sure that Docker is running.
 
 4. Run the install script.
 ```bash
