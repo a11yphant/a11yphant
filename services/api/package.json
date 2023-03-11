@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.4.0",
+    "@apollo/client": "^3.7.10",
     "@golevelup/ts-jest": "0.3.5",
     "@nestjs/cli": "9.2.0",
     "@nestjs/schematics": "9.0.4",
@@ -94,8 +95,6 @@
     "@types/uuid": "9.0.1",
     "@typescript-eslint/eslint-plugin": "5.54.1",
     "@typescript-eslint/parser": "5.54.1",
-    "apollo-boost": "^0.4.9",
-    "cross-fetch": "3.1.5",
     "dotenv": "16.0.3",
     "eslint": "8.36.0",
     "eslint-config-prettier": "8.7.0",
