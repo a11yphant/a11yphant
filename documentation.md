@@ -213,7 +213,7 @@ We use Tailwind for styling. If you want to set global variables you can do so i
 
 ### Testing
 
-We write tests in the frontend and the backend to assure code quality. We primarily have the following tests across our three applications:
+We write tests in the frontend and the backend to ensure code quality. We primarily have the following tests across our three applications:
 - **API**
     - Unit Tests
     - Integration Tests (with the DB and business logic)
