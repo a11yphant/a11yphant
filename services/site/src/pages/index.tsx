@@ -28,7 +28,8 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
 
   React.useEffect(() => {
     if (fmType) {
-      flashMessageApi.show(getFlashMessage(fmType));
+      const { message, type } = getFlashMessage(fmType);
+      flashMessageApi.show(message, { type });
     }
   }, [fmType]);
 
