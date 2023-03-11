@@ -121,8 +121,8 @@ git remote add upstream https://github.com/a11yphant/a11yphant.git
 
 4. If you cloned a while ago, please make sure your branch is up-to-date by pulling.
 ```bash
-git checkout master
-git pull upstream master
+git checkout develop
+git pull upstream develop
 ```
 
 5. Create a new branch for your feature (or bugfix) off the development branch.
