@@ -72,7 +72,7 @@ npm login --scope=@a11yphant --auth-type=legacy --registry=https://npm.pkg.githu
 
 ### 3. Install Node via `nvm`
 
-This is important. You must have Node installed via `nvm` for this project to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
+`nvm` must be installed installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
 ## Setup
 
