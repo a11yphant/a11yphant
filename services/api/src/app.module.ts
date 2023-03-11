@@ -33,29 +33,20 @@ export const appModuleMetadata: ModuleMetadata = {
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
-        const corsCredentials =
-          process.env.NODE_ENV === "development" ? [configService.get("site.url"), configService.get("api.url")] : configService.get("site.url");
-
-        return {
-          debug: configService.get<boolean>("gql.debug"),
-          tracing: configService.get<boolean>("gql.debug"),
-          playground: configService.get<boolean>("gql.playground")
-            ? {
-                settings: {
-                  "request.credentials": "include",
-                },
-              }
-            : false,
-          introspection: configService.get<boolean>("gql.schemaIntrospection"),
-          autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
-          cors: {
-            credentials: corsCredentials,
-            origin: true,
-          },
-          context: ({ req, res }) => ({ req, res }),
-        };
-      },
+      useFactory: async (configService: ConfigService) => ({
+        debug: configService.get<boolean>("gql.debug"),
+        tracing: configService.get<boolean>("gql.debug"),
+        playground: configService.get<boolean>("gql.playground")
+          ? {
+              settings: {
+                "request.credentials": "include",
+              },
+            }
+          : false,
+        introspection: configService.get<boolean>("gql.schemaIntrospection"),
+        autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
+        context: ({ req, res }) => ({ req, res }),
+      }),
       inject: [ConfigService],
     }),
     PrismaModule.forRootAsync({
