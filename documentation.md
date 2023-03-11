@@ -159,9 +159,9 @@ Please always keep in mind to write accessible semantic HTML within your React c
 When assigning Tailwind classes to an HTML element, they have to be in a specific order. In addition, they are wrapped and separated inside `clsx{("")}`, which is an npm package we use to have a more visually pleasing structure. 
 
 ```JSX
-// an Example:
+// an example:
 <a
- className={clsx("my-8 font-sans", "md:my-0", "hover:text-primary-light","focus-rounded-instead-of-underline")}
+ className={clsx("my-8 font-sans", "hover:text-primary-light","focus-rounded-instead-of-underline", "md:my-0")}
 >
     info@a11yphant.com
 </a>
@@ -181,14 +181,37 @@ The order of classes within `clsx` is as follows:
 10. Breakpoint `xl`
 11. Breakpoint `2xl`
 
-// TODO: continue writing docs here
+
+Please keep in mind to only use classes you really need. If you refactor a component, remember to check the responsibility and adapt the style changes in the breakpoints accordingly.
 
 ### CSS
 
-We use Tailwind for styling. If you want to set global variables you can do so in the `tailwind.config.js`file. Some very specific custom stylings can be found in the folder *Styles* within the **Site** application. This folder contains: 
-- a SCSS file that imports all fonts
-- a SCSS file fur custom stylings (like media queries or custom focus styles)
-- a SCSS file that sets some global styles (for headings, text-length, etc.)
+We use Tailwind for styling. If you want to set global variables you can do so in the `tailwind.config.js` file. Some very specific custom stylings can be found in the folder *Styles* within the **Site** application. This folder contains: 
+- a SCSS file that imports all fonts: `fonts.scss`
+- a SCSS file for custom stylings (like media queries or custom focus styles): `custom.scss`
+- a SCSS file that sets some global styles (for headings, text-length, etc.): `global.scss`
+
+### Testing
+
+We write tests in the frontend and the backend to assure code quality. We primarily have the following tests across our three applications:
+- **API**
+    - Unit Tests
+    - Integration Tests (with the DB and business logic)
+    - Service Tests (for important GraphQL queries)
+- **Site**
+    - Unit Tests
+- **Submission Checker**
+    - Unit Tests
+    - Service Tests
+- **Global**
+    - End-to-End Tests that test the core functionality of a11yphant
+
+> **Note:** To get a feature merged, it is mandatory to write a meaningful test. 
+
+To see if your written test passes or fails, you can go to the folder of the specific service you are working in (**API**, **Site**, **Submission Checker**) and run the following command:
+```bash
+npm run test:watch
+```
 
 ### Commit Messages
 

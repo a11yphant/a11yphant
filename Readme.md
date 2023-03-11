@@ -157,6 +157,8 @@ git checkout -b <type>/<short-description-of-task>
 
 6. Commit your changes in logical chunks. Please look into our [git commit message guidelines](https://github.com/a11yphant/a11yphant/blob/develop/documentation.md/#commit-messages) listed in our documentation. If you don't follow these guidelines your code is unlikely to be merged into the main project.
 
+> **Note:** Don't forget to write tests for your feature. A pull request will only be accepted if it also has tests.
+
 7. Locally merge (or rebase) the upstream development branch into the branch created for your topic.
 ```bash
 git pull [--rebase] upstream master
