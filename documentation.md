@@ -134,6 +134,9 @@ npm run dev
 # API
 npm run dev:api
 
+# Submission Checker
+npm run dev:submission-checker
+
 # Site
 npm run dotenv -- npm run dev:site
 ```
