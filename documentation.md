@@ -15,7 +15,32 @@
 
 - [General Information](#general-information)
 - [Prerequisites](#prerequisites)
+    - [1. Install Docker](#1-install-docker)
+    - [2. Create a GitHub Access Token](#2-create-a-github-access-token)
+    - [3. Install Node via nvm](#3-install-node-via-nvm)
 - [Setup](#setup)
+- [Custom NPM Commands](#custom-npm-commands)
+    - [Start All Services](#start-all-services)
+        - [Background](#background)
+        - [Foreground](#foreground)
+        - [Start an Individual Service](#start-an-individual-service)
+    - [Logs](#logs)
+    - [Stop All Services](#stop-all-services)
+- [Coding Conventions](#coding-conventions)
+    - [HTML](#html)
+        - [Class Order](#class-order)
+    - [CSS](#css)
+    - [Testing](#testing)
+    - [Commit Messages](#commit-messages)
+    - [Branches](#branches)
+- [Useful pm2 Commands](#useful-pm2-commands)
+    - [Show All Running Services](#show-all-running-services)
+    - [Synchronize Running Services](#synchronize-running-services)
+    - [Show Logs](#show-logs)
+    - [Stop All Services](#stop-all-services)
+    - [Stop Individual Service](#stop-individual-service)
+    - [Delete All Services](#delete-all-services)
+    - [Delete Individual Service](#delete-individual-service)
 
 <hr style="color:white; height:1.5px; width:100%;"/>
 
@@ -117,7 +142,7 @@ npm run dev
 npm run dev:no-daemon
 ```
 
-#### Start an individual service
+#### Start an Individual Service
 
 ```bash
 # API
@@ -145,7 +170,7 @@ npm run debug:site
 npm run stop
 ```
 
-## Coding conventions
+## Coding Conventions
 
 We follow some coding conventions within this project. We try to use a uniform system for our commits and branch names. With this system we hope to achieve better readable, easy to follow and easy to understand messages when looking through the project history.
 
@@ -272,12 +297,12 @@ We never work on the `development`branch directly. All changes are made in a sep
 
 > **Note:** You have to install `pm2` globally using `npm i -g pm2` before these commands will work.
 
-### Show all running services
+### Show All Running Services
 ```bash
 pm2 list
 ```
 
-### Synchronize running services
+### Synchronize Running Services
 ```bash
 # This is useful as sometimes the list is out of sync
 pm2 save
@@ -286,29 +311,29 @@ pm2 save
 pm2 save --force
 ```
 
-### Show logs
+### Show Logs
 ```bash
 # same as: npm run debug:<service-name>
 pm2 logs <pm2-service-name>
 ```
 
-### Stop all services
+### Stop All Services
 ```bash
 # same as: npm run stop
 pm2 stop all
 ```
 
-### Stop individual service
+### Stop Individual Service
 ```bash
 pm2 stop <pm2-service-name>
 ```
 
-### Delete all services
+### Delete All Services
 ```bash
 pm2 del all
 ```
 
-### Delete individual service
+### Delete Individual Service
 ```bash
 pm2 del <pm2-service-name>
 ```
