@@ -163,8 +163,8 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               <span aria-hidden="true" className="text-xl text-grey">
                 *
               </span>{" "}
-              Sorry, at the moment, we do not have more advanced challenges. Our small team is dedicated to producing more content for you. We will
-              announce new challenges on our{" "}
+              Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
+              challenges on our{" "}
               <Link href={"https://twitter.com/a11yphant"}>
                 <a
                   className={clsx(
@@ -177,7 +177,8 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
                   Twitter account
                 </a>
               </Link>
-              . Can't wait or know anyone that could help us? Slide into our DMs.
+              . <br />
+              Want to help us? Slide into our DMs.
             </p>
           </section>
         </div>
