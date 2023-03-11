@@ -35,7 +35,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18.15.0
           cache: npm
           registry-url: https://npm.pkg.github.com/
           scope: '@a11yphant'
@@ -343,7 +343,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18.15.0
           cache: npm
           registry-url: https://npm.pkg.github.com/
           scope: '@a11yphant'

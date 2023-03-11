@@ -4,7 +4,7 @@ module.exports = {
   modulePathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/dist/"],
   testRegex: ".*\\.spec\\.ts$",
   transform: {
-    "^.+\\.ts$": "ts-jest",
+    "^.+\\.ts$": "@swc/jest",
   },
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s"],
   testEnvironment: "node",
@@ -16,4 +16,5 @@ module.exports = {
     "@tests/(.*)$": "<rootDir>/tests/$1",
     "@/(.*)$": "<rootDir>/src/$1",
   },
+  runtime: "@side/jest-runtime",
 };
