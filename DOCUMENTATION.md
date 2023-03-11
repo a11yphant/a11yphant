@@ -15,10 +15,9 @@ Everything you need to know to setup the project.
     - [3. Install Node via nvm](#3-install-node-via-nvm)
 - [Setup](#setup)
 - [Custom NPM Commands](#custom-npm-commands)
-    - [Start All Services](#start-all-services)
-    - [Start an Individual Service](#start-an-individual-service)
+    - [Start Services](#start-services)
     - [Logs](#logs)
-    - [Stop All Services](#stop-all-services)
+    - [Stop Services](#stop-services)
 - [Coding Conventions](#coding-conventions)
     - [HTML](#html)
         - [Class Order](#class-order)
@@ -113,7 +112,7 @@ npm run import-challenges
 
 ## Custom NPM Commands
 
-### Start All Services
+### Start Services
 
 All services will start in the background. This means that they are running but you can still use the shell/terminal in the meantime.
 
@@ -126,21 +125,7 @@ npm start
 npm run dev
 ```
 
-> **Note:** With `pm2 list` you can see which processes are currently running.
-
-### Start an Individual Service
-
-```bash
-# API
-npm run dev:api
-
-# Submission Checker
-npm run dev:submission-checker
-
-# Site
-npm run dotenv -- npm run dev:site
-```
-> **Note:** The `npm run dotenv` part injects all env vars to the CLI context. Thereby it is possible to wait for other services before starting a service (e.g. `site` only starts when `api` has been started successfully because it depends on a working API).
+> **Note:** With `pm2 list` you can see which processes are currently running
 
 ### Logs
 To look into the logs of an individual service, you can use the following commands:
@@ -156,7 +141,7 @@ npm run debug:site
 npm run debug:submission-checker
 ```
 
-### Stop All Services
+### Stop Services
 
 ```bash
 npm run stop
