@@ -4,7 +4,7 @@ import React from "react";
 type UserDefinedFlashMessageProps = Omit<FlashMessageProps, "show" | "onClose">;
 
 export interface FlashMessageApi {
-  show: (message: React.ReactNode, props?: UserDefinedFlashMessageProps) => void;
+  show: (message: React.ReactElement | string, props?: UserDefinedFlashMessageProps) => void;
   hide: () => void;
 }
 
