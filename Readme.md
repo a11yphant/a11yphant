@@ -1,5 +1,5 @@
-<div align="center" >
-  <img src="services/site/public/images/a11yphant_logo-light.png" height="128">
+<div align="center">
+  <img src="services/site/public/images/a11yphant_Logo_Signet.png" height="138">
   <h1 align="center">
     <a href="https://a11yphant.com">
       a11yphant.com
