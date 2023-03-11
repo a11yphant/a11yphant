@@ -86,7 +86,7 @@ Everything you need to know to setup the project locally can be found in our [do
 
 ### Reporting Bugs and Issues
 
-If you think you've found a bug or accessibility issue, please feel free to contact us. Before opening a new GitHub issue, please answer this checklist for yourself:
+If you think you've found a bug or accessibility issue, feel free to open an issue here on GitHub. Before opening a new issue, please answer this checklist for yourself:
 
 1. I ensured that the problem is not just caused by a simple error in my own console
 2. I checked that no GitHub issue was already filed for this bug
