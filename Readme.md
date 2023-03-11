@@ -145,7 +145,7 @@ git pull [--rebase] upstream develop
 git push origin <type>/<short-description-of-task>
 ```
 
-9. Open a Pull Request with a clear title and description against the `master` branch.
+9. Open a Pull Request with a clear title and description against the `develop` branch.
 
 
 ### Writing Content
