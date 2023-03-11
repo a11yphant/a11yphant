@@ -137,7 +137,7 @@ git checkout -b <type>/<short-description-of-task>
 
 7. Locally merge (or rebase) the upstream development branch into the branch created for your topic.
 ```bash
-git pull [--rebase] upstream master
+git pull [--rebase] upstream develop
 ```
 
 8. Push your branch up to your fork.
