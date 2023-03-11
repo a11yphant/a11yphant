@@ -150,7 +150,120 @@ const About: React.FunctionComponent = () => {
           <section className="mt-16">
             <h2 className={clsx("mb-8", "h4", "md:h3")}>What others say about us:</h2>
 
+            <h3 className={clsx("h5 mt-8", "md:h4")}>Articles</h3>
             <ul className="mt-4 ml-6 list-disc">
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://page-online.de/tools-technik/web-accessability-lernen-mit-a11yphant/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    "Web Accessability lernen mit a11yphant"
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by <span className="uppercase">Page</span> Magazine (in German)
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://a11y-guidelines.orange.com/en/articles/watch-february-march-2022/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    "Digital accessibility watch February-Maarch 2022"<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Orange
+                </p>
+              </li>
+            </ul>
+
+            <h3 className={clsx("h5 mt-8", "md:h4")}>Newsletters</h3>
+            <ul className="mt-4 ml-6 list-disc">
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://www.smashingmagazine.com/the-smashing-newsletter/smashing-newsletter-issue-344/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    "Smashing Newsletter" - Issue #344<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Smashing Magazine
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink href="https://a11yweekly.com/issue/285/" target="_blank" rel="noopener noreferrer nofollow">
+                    "A11y Weekly" - Issue #285<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by David A. Kennedy
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://stephaniewalter.design/blog/pixels-of-the-week-march-20-2022/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    "Pixels of the Week"<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Stéphanie Walter
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink href="https://wweb.dev/weekly/108/" target="_blank" rel="noopener noreferrer nofollow">
+                    "Weekly Web Development Resources" - Issue #108<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by wweb.dev (Vincent Will)
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://www.nyu.edu/life/information-technology/web-and-digital-publishing/digital-publishing/accessibility/accessibility-newsletter/accessibility-newsletter-archive/digital-accessibility-news---fall-2022.html"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    "Digital Accessibility News" - Issue #18<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by NYU
+                </p>
+              </li>
+            </ul>
+
+            <h3 className={clsx("h5 mt-8", "md:h4")}>Other</h3>
+            <ul className="mt-4 ml-6 list-disc">
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://www.producthunt.com/products/a11yphant?utm_source=badge-featured&amp;utm_medium=badge#a11yphant"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    ProductHunt ranking #11<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  on the launch day
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink
+                    href="https://podcasters.spotify.com/pod/show/stacksnacks/episodes/5-Snacks-e1hv3ae"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    "5 Snacks" Episode<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Stack Snacks
+                </p>
+              </li>
+            </ul>
+
+            {/* <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
                   Article in{" "}
@@ -172,7 +285,75 @@ const About: React.FunctionComponent = () => {
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
-                    Smashing Magazine Newsletter #344<span className="sr-only">(opens in a new tab)</span>
+                    Smashing Magazine Newsletter - Issue #344<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <InTextLink
+                    href="https://stephaniewalter.design/blog/pixels-of-the-week-march-20-2022/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Pixels of the Week Newsletter – Issue March 20, 2022<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Stéphanie Walter
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <InTextLink href="https://a11yweekly.com/issue/285/" target="_blank" rel="noopener noreferrer nofollow">
+                    A11y Weekly Newsletter - Issue #285<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by wweb.dev (Vincent Will)
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <InTextLink href="https://wweb.dev/weekly/108/" target="_blank" rel="noopener noreferrer nofollow">
+                    Weekly Web Development Resources Newsletter - Issue #108<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <InTextLink
+                    href="https://www.nyu.edu/life/information-technology/web-and-digital-publishing/digital-publishing/accessibility/accessibility-newsletter/accessibility-newsletter-archive/digital-accessibility-news---fall-2022.html"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Digital Accessibility News Newsletter - Issue 18<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by NYU
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <InTextLink
+                    href="https://a11y-guidelines.orange.com/en/articles/watch-february-march-2022/"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Digital accessibility watch February-Maarch 2022 blog post<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Orange
+                </p>
+              </li>
+              <li>
+                <p>
+                  Featured in the{" "}
+                  <InTextLink
+                    href="https://podcasters.spotify.com/pod/show/stacksnacks/episodes/5-Snacks-e1hv3ae"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                  >
+                    Stack Snacks Podcast Episode "5 Snacks"<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>
                 </p>
               </li>
@@ -188,7 +369,7 @@ const About: React.FunctionComponent = () => {
                   on the launch day
                 </p>
               </li>
-            </ul>
+            </ul> */}
           </section>
         </div>
       </main>
