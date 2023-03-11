@@ -17,7 +17,7 @@ The easy way to learn web accessibility
 - [About a11yphant](#about-a11yphant)
 - [Meet the Team](#meet-the-team)
 - [Contributing to a11yphant](#contributing-to-a11yphant)
-  - [Documentation](https://github.com/a11yphant/a11yphant/blob/develop/documentation.md)
+  - [Documentation](documentation.md)
   - [Reporting Bugs and Issues](#reporting-bugs-and-issues)
   - [Feature Requests](#feature-requests)
     - [Create a Pull Request](#create-a-pull-request)
