@@ -27,7 +27,7 @@ Everything you need to know to setup the project locally can be found in our [do
 
 If you think you've found a bug or accessibility issue, feel free to open an issue here on GitHub. Before opening a new issue, please answer this checklist for yourself:
 
-1. I ensured that the problem is not just caused by a simple error in my own console
+1. I ensured that the problem is not caused by my local environment (e.g., a browser plugin, a really old browser version or unusual browser settings)
 2. I checked that no GitHub issue was already filed for this bug
 
 If you answered everything with yes, go ahead and [create a new GitHub issue](https://github.com/a11yphant/a11yphant/issues/new/choose). Be sure to include as much information as possible so we can reproduce the bug.
