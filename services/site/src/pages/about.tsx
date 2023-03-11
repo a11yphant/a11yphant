@@ -71,8 +71,11 @@ const About: React.FunctionComponent = () => {
                 priority
               />
             ) : (
-              <video autoPlay muted loop>
+              <video autoPlay muted loop controls>
                 <source src="/videos/a11yphant-showcase.mp4" />
+                <p>
+                  Your browser doesn't support HTML video. Here is a <a href="/videos/a11yphant-showcase.mp4">link to the video</a> instead.
+                </p>
               </video>
             )}
           </div>
