@@ -79,11 +79,7 @@ const About: React.FunctionComponent = () => {
 
           <section className="my-16">
             <h2 className={clsx("mb-8", "h4", "md:h3")}>
-              But what is{" "}
-              <span aria-label="Allyphant" className="text-2xl">
-                a11yphant
-              </span>
-              ?
+              But what is <span aria-label="Allyphant">a11yphant</span>?
             </h2>
 
             <p>
@@ -149,37 +145,37 @@ const About: React.FunctionComponent = () => {
               <li>
                 <p>
                   Article in{" "}
-                  <a
+                  <InTextLink
                     href="https://page-online.de/tools-technik/web-accessability-lernen-mit-a11yphant/"
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
                     <span className="uppercase">Page</span> Magazine<span className="sr-only">(opens in a new tab)</span>
-                  </a>{" "}
+                  </InTextLink>{" "}
                   (in German)
                 </p>
               </li>
               <li>
                 <p>
                   Featured in the{" "}
-                  <a
+                  <InTextLink
                     href="https://www.smashingmagazine.com/the-smashing-newsletter/smashing-newsletter-issue-344/"
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
                     Smashing Magazine Newsletter #344<span className="sr-only">(opens in a new tab)</span>
-                  </a>
+                  </InTextLink>
                 </p>
               </li>
               <li>
                 <p>
-                  <a
+                  <InTextLink
                     href="https://www.producthunt.com/products/a11yphant?utm_source=badge-featured&amp;utm_medium=badge#a11yphant"
                     target="_blank"
                     rel="noopener noreferrer nofollow"
                   >
                     ProductHunt ranking #11<span className="sr-only">(opens in a new tab)</span>
-                  </a>{" "}
+                  </InTextLink>{" "}
                   on the launch day
                 </p>
               </li>
