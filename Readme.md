@@ -150,7 +150,7 @@ git pull upstream master
 ```
 
 5. Create a new branch for your feature (or bugfix) off the development branch.
-> **Please note:** - `<type>` describes the kind of change this branch is providing. Allowed types are `feature`, `bugfix` and `renovate`.
+> **Please note:** `<type>` describes the kind of change this branch is providing. Allowed types are `feature`, `bugfix` and `renovate`.
 ```bash
 git checkout -b <type>/<short-description-of-task>
 ```
