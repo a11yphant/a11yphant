@@ -89,6 +89,16 @@
         @apply h6;
     }
 
+    h1 span,
+    h2 span,
+    h3 span,
+    h4 span,
+    h5 span,
+    h6 span {
+        font-size: inherit;
+        line-height: inherit;
+    }
+
     p,
     span,
     ul,
@@ -132,6 +142,10 @@
         }
         &:focus {
             @apply text-light;
+        }
+
+        & span {
+            @apply text-inherit;
         }
     }
 }

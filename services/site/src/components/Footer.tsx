@@ -124,7 +124,7 @@ const Footer: React.FunctionComponent = () => (
           <h2 className="h6 mb-3 uppercase">Site</h2>
           <ul className={clsx("mb-0 flex flex-col")}>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="/imprint">
+              <Link href="/legal-notice">
                 <a
                   className={clsx(
                     "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
@@ -133,7 +133,7 @@ const Footer: React.FunctionComponent = () => (
                     "focus-rounded-instead-of-underline",
                   )}
                 >
-                  Imprint
+                  Legal Notice
                 </a>
               </Link>
             </li>

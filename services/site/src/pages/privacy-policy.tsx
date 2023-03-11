@@ -35,7 +35,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
       </Head>
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx(" mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
+        <div className={clsx(" mx-8 py-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8", "h2", "md:h1")}>Privacy Policy</h1>
           <p className={clsx("italic mb-8")}>Last updated on March 10, 2023</p>
 
@@ -56,9 +56,11 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               </Link>
               .
               <br />
-              <span aria-label="Allyphant">a11yphant</span> is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All
-              rights are equally split between these four creators. When the website says "<span aria-label="Allyphant">a11yphant</span>", "we at{" "}
-              <span aria-label="Allyphant">a11yphant</span>", "us" or "our", it is meant that statements are made on behalf of all four co-creators.
+              <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span> is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All rights
+              are equally split between these four creators. When the website says "<span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span>", "we at <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span>", "us" or "our", it is meant that statements are made on behalf of all four co-creators.
             </p>
             <p>
               We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this
