@@ -7,7 +7,7 @@ export const OAuthLoginFailedMessage = (): React.ReactElement => {
       <span className={clsx("mr-3")} aria-hidden={true}>
         ❌
       </span>
-      Login failed. Please try again.
+      <p className="m-0">Login failed. Please try again.</p>
     </>
   );
 };

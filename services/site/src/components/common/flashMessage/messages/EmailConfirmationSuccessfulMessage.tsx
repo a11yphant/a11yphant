@@ -7,7 +7,7 @@ export const EmailConfirmationSuccessfulMessage = (): React.ReactElement => {
       <span className={clsx("not-sr-only", "mr-3 text-2xl")} aria-hidden={true}>
         ✅
       </span>
-      Your email was confirmed successfully
+      <p className="m-0">Your email was confirmed successfully</p>
     </div>
   );
 };
