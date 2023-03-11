@@ -1,36 +1,33 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DB_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model Challenge {
-  id           String      @id @default(uuid()) @db.Uuid
-  slug         String      @unique
   name         String
-  introduction String      @default("")
+  slug         String      @unique
   difficulty   Int         @default(0)
+  introduction String      @default("")
   order        Int         @default(0)
+  id           String      @id @default(uuid()) @db.Uuid
   codeLevels   CodeLevel[]
   quizLevels   QuizLevel[]
 
-  @@map(name: "challenges")
+  @@map("challenges")
 }
 
 model QuizLevel {
   id            String                @id @default(uuid()) @db.Uuid
   order         Int                   @default(0)
   question      String
-  challenge     Challenge             @relation(fields: [challengeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   challengeId   String                @db.Uuid
   answerOptions AnswerOption[]
   submissions   QuizLevelSubmission[]
+  challenge     Challenge             @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   @@map("quiz_levels")
 }
@@ -39,23 +36,23 @@ model AnswerOption {
   id          String                @id @default(uuid()) @db.Uuid
   text        String
   correct     Boolean               @default(false)
-  quizLevel   QuizLevel             @relation(fields: [quizLevelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   quizLevelId String                @db.Uuid
-  submissions QuizLevelSubmission[]
+  quizLevel   QuizLevel             @relation(fields: [quizLevelId], references: [id], onDelete: Cascade)
+  submissions QuizLevelSubmission[] @relation("AnswerOptionToQuizLevelSubmission")
 
   @@map("quiz_answer_options")
 }
 
 model QuizLevelSubmission {
   id        String           @id @default(uuid()) @db.Uuid
-  level     QuizLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   levelId   String           @db.Uuid
-  answers   AnswerOption[]
-  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    String           @db.Uuid
   createdAt DateTime         @default(now())
   updatedAt DateTime?        @updatedAt
   result    QuizLevelResult?
+  level     QuizLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers   AnswerOption[]   @relation("AnswerOptionToQuizLevelSubmission")
 
   @@map("quiz_level_submissions")
 }
@@ -63,117 +60,117 @@ model QuizLevelSubmission {
 model QuizLevelResult {
   id           String              @id @default(uuid()) @db.Uuid
   status       Int                 @default(0)
-  submission   QuizLevelSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   submissionId String              @unique @db.Uuid
+  submission   QuizLevelSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
 
-  @@map(name: "quiz_level_resuls")
+  @@map("quiz_level_resuls")
 }
 
 model CodeLevel {
-  id            String                @id @default(uuid()) @db.Uuid
-  order         Int                   @default(0)
   instructions  String
-  challenge     Challenge             @relation(fields: [challengeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  challengeId   String                @db.Uuid
-  requirements  Requirement[]
-  submissions   CodeLevelSubmission[]
-  tasks         Task[]
   html          String?
   css           String?
   js            String?
+  order         Int                   @default(0)
   hasHtmlEditor Boolean               @default(true)
   hasCssEditor  Boolean               @default(false)
   hasJsEditor   Boolean               @default(false)
+  id            String                @id @default(uuid()) @db.Uuid
+  challengeId   String                @db.Uuid
+  submissions   CodeLevelSubmission[]
+  challenge     Challenge             @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  requirements  Requirement[]
+  tasks         Task[]
 
-  @@map(name: "code_levels")
+  @@map("code_levels")
 }
 
 model Task {
-  id      String     @id @default(uuid()) @db.Uuid
   text    String
-  hints   Hint[]
-  Level   CodeLevel? @relation(fields: [levelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id      String     @id @default(uuid()) @db.Uuid
   levelId String?    @db.Uuid
+  hints   Hint[]
+  Level   CodeLevel? @relation(fields: [levelId], references: [id], onDelete: Cascade)
 
   @@map("tasks")
 }
 
 model Rule {
-  id           String        @id @default(uuid()) @db.Uuid
   key          String        @unique
+  id           String        @id @default(uuid()) @db.Uuid
   requirements Requirement[]
 
-  @@map(name: "rules")
+  @@map("rules")
 }
 
 model Requirement {
-  id          String        @id @default(uuid()) @db.Uuid
   title       String        @default("")
   description String        @default("")
-  order       Int           @default(0)
-  level       CodeLevel     @relation(fields: [levelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  levelId     String        @db.Uuid
-  rule        Rule?         @relation(fields: [ruleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  ruleId      String?       @db.Uuid
   options     Json?
+  order       Int           @default(0)
+  id          String        @id @default(uuid()) @db.Uuid
+  levelId     String        @db.Uuid
+  ruleId      String?       @db.Uuid
   CheckResult CheckResult[]
+  level       CodeLevel     @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  rule        Rule?         @relation(fields: [ruleId], references: [id], onDelete: Restrict)
 
-  @@map(name: "requirements")
+  @@map("requirements")
 }
 
 model Hint {
-  id     String  @id @default(uuid()) @db.Uuid
   text   String  @default("")
-  Task   Task?   @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id     String  @id @default(uuid()) @db.Uuid
   taskId String? @db.Uuid
+  Task   Task?   @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
-  @@map(name: "hints")
+  @@map("hints")
 }
 
 model CodeLevelSubmission {
-  id        String           @id @default(uuid()) @db.Uuid
-  createdAt DateTime         @default(now())
-  updatedAt DateTime?        @updatedAt
   html      String?
   css       String?
   js        String?
-  level     CodeLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime?        @updatedAt
+  id        String           @id @default(uuid()) @db.Uuid
   levelId   String           @db.Uuid
-  result    CodeLevelResult?
-  user      User?            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    String?          @db.Uuid
+  result    CodeLevelResult?
+  level     CodeLevel        @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  user      User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map(name: "code_level_submissions")
+  @@map("code_level_submissions")
 }
 
 model CodeLevelResult {
-  id           String              @id @default(uuid()) @db.Uuid
   status       Int                 @default(0)
-  checkResults CheckResult[]
-  submission   CodeLevelSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id           String              @id @default(uuid()) @db.Uuid
   submissionId String              @unique @db.Uuid
+  checkResults CheckResult[]
+  submission   CodeLevelSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
 
-  @@map(name: "code_level_results")
+  @@map("code_level_results")
 }
 
 model CheckResult {
-  id            String          @id @default(uuid()) @db.Uuid
-  result        CodeLevelResult @relation(fields: [resultId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  resultId      String          @db.Uuid
-  requirement   Requirement     @relation(fields: [requirementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  requirementId String          @db.Uuid
   status        Int
+  id            String          @id @default(uuid()) @db.Uuid
+  resultId      String          @db.Uuid
+  requirementId String          @db.Uuid
+  requirement   Requirement     @relation(fields: [requirementId], references: [id], onDelete: Cascade)
+  result        CodeLevelResult @relation(fields: [resultId], references: [id], onDelete: Cascade)
 
-  @@map(name: "check_results")
+  @@map("check_results")
 }
 
 model User {
   id                   String                @id @default(uuid()) @db.Uuid
-  authProvider         String                @default("anonymous")
   authId               String?
+  authProvider         String                @default("anonymous")
+  displayName          String?
   email                String?               @unique
   password             String?
-  displayName          String?
   lastSeen             DateTime              @default(now())
   verifiedAt           DateTime?
   codeLevelSubmissions CodeLevelSubmission[]
