@@ -97,7 +97,7 @@ If you answered everything with yes, go ahead and [create a new GitHub issue](ht
 
 Feature requests are very welcome. But take a moment to find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince us of this feature. Please provide as much detail and context as possible.
 
-As we are only a small team of developers and designers, you are invited to contribute by creating a pull request. Please keep in mind to follow our [coding conventions](https://github.com/a11yphant/a11yphant/blob/develop/documentation.md/#coding-conventions). 
+As we are only a small team of developers and designers, you are invited to contribute by creating a pull request. Please discuss your proposed changes with us before starting implementation. Otherwise, they might collide with our plans. Also, remember to follow our [coding conventions](https://github.com/a11yphant/a11yphant/blob/develop/documentation.md/#coding-conventions). 
 
 #### Create a Pull Request
 
