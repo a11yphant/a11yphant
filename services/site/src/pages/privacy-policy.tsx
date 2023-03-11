@@ -56,9 +56,11 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               </Link>
               .
               <br />
-              <span aria-label="Allyphant">a11yphant</span> is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All
-              rights are equally split between these four creators. When the website says "<span aria-label="Allyphant">a11yphant</span>", "we at{" "}
-              <span aria-label="Allyphant">a11yphant</span>", "us" or "our", it is meant that statements are made on behalf of all four co-creators.
+              <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span> is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All rights
+              are equally split between these four creators. When the website says "<span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span>", "we at <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span>", "us" or "our", it is meant that statements are made on behalf of all four co-creators.
             </p>
             <p>
               We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this
