@@ -8,7 +8,7 @@ import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import { LottieProps } from "app/components/Lottie";
-import { ChallengeBySlugDocument, ResultStatus } from "app/generated/graphql";
+import { ChallengeBySlugDocument, CurrentUserDocument, ResultStatus } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import Evaluation, { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { mount, ReactWrapper } from "enzyme";
@@ -57,6 +57,22 @@ const mockNthLevel = "2";
 const mockSubmissionId = "ca9ebfd8-5220-4a5d-8e45-05e95f521e15";
 
 const mocks: MockedResponse[] = [
+  {
+    request: {
+      query: CurrentUserDocument,
+    },
+    result: {
+      data: {
+        currentUser: {
+          __typename: "User",
+          id: "a3db1fc5-7183-42ad-8ba7-fff2922a1927",
+          displayName: "Name",
+          isRegistered: false,
+          isVerified: false,
+        },
+      },
+    },
+  },
   {
     request: {
       query: ChallengeBySlugDocument,
