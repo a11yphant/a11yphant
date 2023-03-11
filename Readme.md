@@ -103,7 +103,7 @@ As we are only a small team of developers and designers, you are invited to cont
 
 The best way to create your pull request is:
 
-1. Please contact us first, as we are might already working on your idea in the background
+1. Please contact us first via a GitHub issue to avoid collisions of your ideas with our plans and vision.
 
 2. Fork the project & clone your fork.
 ```bash
