@@ -8,8 +8,3 @@ export interface PrismaAsyncModuleConfig extends Pick<ModuleMetadata, "imports">
   useFactory: (...args: any[]) => PrismaModuleConfig | Promise<PrismaModuleConfig>;
   inject?: FactoryProvider["inject"];
 }
-
-export interface PrismaAsyncModuleConfig extends Pick<ModuleMetadata, "imports"> {
-  useFactory: (...args: any[]) => PrismaModuleConfig | Promise<PrismaModuleConfig>;
-  inject?: FactoryProvider["inject"];
-}
