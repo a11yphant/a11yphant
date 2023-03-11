@@ -50,7 +50,7 @@ Technically, a11yphant is split into three applications:
 
 All three applications are written in [Typescript](https://www.typescriptlang.org). 
 The **Site** uses the React framework [NextJS](https://nextjs.org), [GraphQL](https://graphql.org/) and [Tailwind](https://tailwindcss.com/).
-The **API** and the **Submission Checker** use the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. In addition, [PostgreSQL](https://www.postgresql.org/) is used.
+The **API** and the **Submission Checker** use the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database.
 
 ## Prerequisites
 
