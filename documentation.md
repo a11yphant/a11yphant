@@ -274,7 +274,7 @@ More information on [Git Commit Msg](https://karma-runner.github.io/4.0/dev/git-
 
 ### Branches
 
-We never work on the `development`branch directly. All changes are made in a separate branch that will be merged into the development branch after a successful code review. Our branch names are formatted as follows:
+We never work on the `development` branch directly. All changes are made on a separate branch that will be merged into the development branch after a successful code review. Our branch names are formatted as follows:
 
 ```bash
 <type>/<short-description-of-task>
