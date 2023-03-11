@@ -151,6 +151,9 @@ npm run debug:api
 
 # Site
 npm run debug:site
+
+# Submission Checker
+npm run debug:submission-checker
 ```
 
 ### Stop All Services
