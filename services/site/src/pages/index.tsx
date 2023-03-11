@@ -14,6 +14,7 @@ import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -117,7 +118,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               />
             )}
 
-            {/* TODO: add when more difficult challenge content exists
+            {/* TODO: add when more difficult challenge content exists & adapt disclaimer in legend
             {easyChallenges.length !== 0 && (
               <ChallengeList
                 className={clsx("2xl:mx-24")}
@@ -156,6 +157,29 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
                 challenges={hardChallenges}
               />
             )} */}
+
+            <p className={clsx("mb-8 md:mb-0", "2xl:mx-24")}>
+              <span className="sr-only">Disclaimer:</span>
+              <span aria-hidden="true" className="text-xl text-grey">
+                *
+              </span>{" "}
+              Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
+              challenges on our{" "}
+              <Link href={"https://twitter.com/a11yphant"}>
+                <a
+                  className={clsx(
+                    "text-light font-sans font-normal border-light",
+                    "transition-colors duration-300",
+                    "hover:text-primary-light hover:border-transparent",
+                    "focus-rounded-instead-of-underline",
+                  )}
+                >
+                  Twitter account
+                </a>
+              </Link>
+              . <br />
+              Want to help us? Slide into our DMs.
+            </p>
           </section>
         </div>
         <ChallengeModal open={!!router.query.challenge} onClose={onCloseModal} challengeSlug={router.query.challenge as string} />
