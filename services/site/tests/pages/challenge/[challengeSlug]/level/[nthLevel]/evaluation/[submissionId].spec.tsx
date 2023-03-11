@@ -19,26 +19,24 @@ import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return null;
 });
+
 jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
     return;
   },
 }));
+
 jest.mock("app/hooks/sessionState/useSessionState", () => ({
-  useSessionState: jest.fn().mockImplementation(() => [1, jest.fn()]),
+  useSessionState: jest.fn(),
 }));
 
-jest.mock("app/components/evaluation/usePollSubmissionResult", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { ResultStatus } = require("app/generated/graphql");
-
-  return {
-    usePollSubmissionResult: jest.fn().mockImplementation(() => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 })),
-  };
-});
+jest.mock("app/components/evaluation/usePollSubmissionResult", () => ({
+  usePollSubmissionResult: jest.fn(),
+}));
 
 jest.mock("app/lib/apollo-client", () => ({
   initializeApollo: (_, context) => context.apolloClient,
@@ -103,12 +101,19 @@ const mocks: MockedResponse[] = [
 ];
 
 beforeEach(() => {
-  jest.clearAllMocks();
   router.query = {
     challengeSlug: mockChallengeSlug,
     nthLevel: mockNthLevel,
     submissionId: mockSubmissionId,
   };
+
+  (useSessionState as jest.Mock).mockImplementation(() => [1, jest.fn()]);
+
+  (usePollSubmissionResult as jest.Mock).mockImplementation(() => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 }));
+});
+
+afterEach(() => {
+  jest.resetAllMocks();
 });
 
 const mountEvaluationPage = (): ReactWrapper => {
@@ -128,10 +133,6 @@ const resolveGraphQLQuery = async (wrapper: ReactWrapper): Promise<void> => {
 
 describe("Evaluation", () => {
   describe("page", () => {
-    beforeEach(async () => {
-      jest.restoreAllMocks();
-    });
-
     it("renders the loading screen", async () => {
       const wrapper = mountEvaluationPage();
 

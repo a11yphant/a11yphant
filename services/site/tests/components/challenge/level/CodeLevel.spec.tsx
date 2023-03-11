@@ -22,9 +22,7 @@ jest.mock("react-resize-detector", () => ({
 }));
 
 jest.mock("app/hooks/sessionState/useSessionState", () => ({
-  useSessionState: jest.fn().mockImplementation(() => {
-    return [1, jest.fn()];
-  }),
+  useSessionState: jest.fn(),
 }));
 
 jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
@@ -96,6 +94,11 @@ describe("Code Level", () => {
     router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
     router.back = jest.fn();
     jest.restoreAllMocks();
+    (useSessionState as jest.Mock).mockImplementation(() => [1, jest.fn()]);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it("renders `Sidebar` component", () => {
