@@ -131,7 +131,7 @@ git pull upstream develop
 git checkout -b <type>/<short-description-of-task>
 ```
 
-6. Commit your changes in logical chunks. Please look into our [git commit message guidelines](https://github.com/a11yphant/a11yphant/blob/develop/documentation.md/#commit-messages) listed in our documentation. If you don't follow these guidelines your code is unlikely to be merged into the main project.
+6. Commit your changes in logical chunks. Please look into our [git commit message guidelines](https://github.com/a11yphant/a11yphant/blob/develop/documentation.md/#commit-messages) listed in our documentation. If you don't follow these guidelines, your code is unlikely to be merged into the main project.
 
 > **Note:** Don't forget to write tests for your feature. A pull request will only be accepted if it also has tests.
 
