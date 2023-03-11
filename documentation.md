@@ -176,7 +176,7 @@ Please always keep in mind to write accessible semantic HTML within your React c
 
 #### Class Order
 
-When assigning Tailwind classes to an HTML element, they have to be in a specific order. In addition, they are wrapped and separated inside `clsx{("")}`, which is an npm package we use to have a more visually pleasing structure. 
+When assigning Tailwind classes to an HTML element, they must be in a specific order. In addition, they must be wrapped and separated inside `clsx{("")}`, which is an npm package we use to have a more visually pleasing structure. 
 
 ```JSX
 // an example:
