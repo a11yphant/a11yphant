@@ -135,7 +135,7 @@ git checkout -b <type>/<short-description-of-task>
 
 > **Note:** Don't forget to write tests for your feature. A pull request will only be accepted if it also has tests.
 
-7. Locally merge (or rebase) the upstream development branch into the branch created for your topic.
+7. Locally merge (or rebase) the upstream development branch into your branch.
 ```bash
 git pull [--rebase] upstream develop
 ```
