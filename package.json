@@ -21,7 +21,6 @@
     "start": "npm run dev",
     "predev": "npm install && docker compose up -d && npm run db:migrate",
     "dev": "pm2 start pm2-ecosystem.config.js",
-    "dev:no-daemon": "node pm2-start-no-daemon.js",
     "stop": "pm2 stop a11yphant && pm2 del a11yphant",
     "dev:api": "npm --prefix services/api run start:dev",
     "dev:site": "wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",

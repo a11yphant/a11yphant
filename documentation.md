@@ -16,9 +16,7 @@ Everything you need to know to setup the project.
 - [Setup](#setup)
 - [Custom NPM Commands](#custom-npm-commands)
     - [Start All Services](#start-all-services)
-        - [Background](#background)
-        - [Foreground](#foreground)
-        - [Start an Individual Service](#start-an-individual-service)
+    - [Start an Individual Service](#start-an-individual-service)
     - [Logs](#logs)
     - [Stop All Services](#stop-all-services)
 - [Coding Conventions](#coding-conventions)
@@ -117,9 +115,7 @@ npm run import-challenges
 
 ### Start All Services
 
-You can choose if you want to start the services in the background or in the foreground. If you start them in the background, they are running but you can still use the shell/terminal in the meantime. If you start them in the foreground, you have to press `control + c` to exit/stop the service and use the shell/terminal again.
-
-#### Background
+All services will start in the background. This means that they are running but you can still use the shell/terminal in the meantime.
 
 ```bash
 #Starts all services in the background with `pm2`
@@ -130,14 +126,7 @@ npm start
 npm run dev
 ```
 
-#### Foreground
-
-```bash
-# Starts all services in the foreground
-npm run dev:no-daemon
-```
-
-#### Start an Individual Service
+### Start an Individual Service
 
 ```bash
 # API
