@@ -70,6 +70,7 @@
   "devDependencies": {
     "@a11yphant/eslint-config": "0.5.0",
     "@apollo/client": "3.7.10",
+    "@faker-js/faker": "^7.6.0",
     "@golevelup/ts-jest": "0.3.5",
     "@nestjs/cli": "9.2.0",
     "@nestjs/schematics": "9.0.4",
@@ -82,7 +83,6 @@
     "@swc/jest": "0.2.24",
     "@types/bcrypt": "5.0.0",
     "@types/cookie-parser": "1.4.3",
-    "@types/faker": "6.6.9",
     "@types/jest": "29.4.0",
     "@types/jsonwebtoken": "9.0.1",
     "@types/mock-fs": "4.13.1",
@@ -102,7 +102,6 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-simple-import-sort": "10.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
-    "faker": "5.5.3",
     "jest": "29.5.0",
     "jest-junit": "15.0.0",
     "mock-fs": "5.2.0",
