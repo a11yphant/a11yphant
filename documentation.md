@@ -103,9 +103,9 @@ git clone git@github.com:<your-username>/a11yphant.git
 npm start
 ```
 
-6. Make a database data import to get dummy data.
+6. Import the existing challenges into the database.
 ```bash
-# To load dummy data for challenges into the empty database, run the following command:
+# To load the existing challenges into the empty database, run the following command:
 npm run import-challenges
 ```
 
