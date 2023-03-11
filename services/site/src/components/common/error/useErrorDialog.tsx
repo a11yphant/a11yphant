@@ -32,9 +32,9 @@ const ErrorDialogContext = React.createContext<ErrorDialogApi>({
 });
 
 const getMessageForGraphQLError = (graphQLError: GraphQLError, options: ErrorDialogOptions): React.ReactNode => {
-  if (options?.specificMessages?.[graphQLError.extensions.code]) {
+  if (options?.specificMessages?.[graphQLError.extensions.code as string]) {
     // Show error message for this error code if it has been defined
-    return options?.specificMessages?.[graphQLError.extensions.code];
+    return options?.specificMessages?.[graphQLError.extensions.code as string];
   } else if (options?.defaultMessage) {
     // Show default error message if it has been defined
     return options?.defaultMessage;
