@@ -158,7 +158,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               />
             )} */}
 
-            <p className="mb-8 md:mb-0">
+            <p className={clsx("mb-8 md:mb-0", "2xl:mx-24")}>
               <span className="sr-only">Disclaimer:</span>
               <span aria-hidden="true" className="text-xl text-grey">
                 *
