@@ -26,6 +26,7 @@ export async function setupMicroservices(app: INestApplication): Promise<void> {
 
 export async function bootstrap(): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   const configService = app.get<ConfigService>(ConfigService);
   const logger = app.get<Logger>(Logger);

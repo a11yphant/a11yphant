@@ -1,7 +1,6 @@
 name: Destroy Review App
 
 on:
-  workflow_dispatch:
   pull_request:
     types:
       - closed
@@ -12,10 +11,9 @@ jobs:
     outputs:
       environment-name: ${{ steps.environment-name.outputs.environment-name }}
     steps:
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v4
-
-      - run: echo "environment-name=${{ env.GITHUB_REF_SLUG }}" >> $GITHUB_OUTPUT
+        # manually create the environment name since the inject slug action
+        # inserts develop into env.GITHUB_REF_SLUG
+      - run: echo "environment-name=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
         id: environment-name
 
   destroy-review-app:

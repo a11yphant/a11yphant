@@ -1,6 +1,6 @@
 import { ConfigService } from "@nestjs/config";
 import { Args, Context, Mutation, Resolver } from "@nestjs/graphql";
-import { UserInputError } from "apollo-server-errors";
+import { GraphQLError } from "graphql";
 import * as Yup from "yup";
 
 import { AuthenticationService } from "@/authentication/authentication.service";
@@ -41,7 +41,7 @@ export class AuthenticationResolver {
   @Mutation(() => User)
   async login(@Args("loginInput") loginInput: LoginInput, @Context() ctx: IContext): Promise<User> {
     const user = await this.authenticationService.login(loginInput).catch((e) => {
-      throw new UserInputError(e.message);
+      throw new GraphQLError(e.message, { extensions: { code: "BAD_USER_INPUT" } });
     });
 
     const token = await this.jwtService.createSignedToken({ scope: JwtScope.SESSION }, { subject: user.id, expiresInSeconds: 3600 * 24 * 365 });
