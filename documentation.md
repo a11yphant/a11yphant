@@ -219,7 +219,7 @@ We write tests in the frontend and the backend to ensure code quality. We primar
     - Integration Tests (with the DB and business logic)
     - Service Tests (for important GraphQL queries)
 - **Site**
-    - Unit Tests
+    - Component Tests
 - **Submission Checker**
     - Unit Tests
     - Service Tests
