@@ -142,6 +142,13 @@ jobs:
         env:
           DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
 
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-api
+          path: services/api/coverage
+                 
+
   build-api:
     needs:
       - variables
@@ -325,6 +332,33 @@ jobs:
           version: ${{ needs.variables.outputs.environment-name }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  upload-coverage-reports:
+    needs:
+      - build-api
+    permissions:
+      contents: read
+    steps:
+      - name: Download CodeClimate Test Reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+
+      - name: Download API test coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: test-coverage-api
+
+      - name: Format API Coverage
+        run: ./cc-test-reporter format-coverage -t lcov -o codeclimate.api.json test-coverage-api/lcov.info
+
+      - name: Sum Coverage
+        run: ./cc-test-reporter codeclimate.*.json -p 1
+
+      - name: Upload Coverage
+        run: ./cc-test-reporter upload-coverage
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
 
   test-end-to-end:
     needs:
