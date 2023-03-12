@@ -16,6 +16,8 @@ The easy way to learn web accessibility
 
 - [About a11yphant](#about-a11yphant)
 - [Meet the Team](#meet-the-team)
+  - [Concept and Development](#concept-and-development)
+  - [Interface and Corporate Design](#interface-and-corporate-design)
 - [Contributing to a11yphant](#contributing-to-a11yphant)
   - [Documentation](DOCUMENTATION.md)
 
@@ -55,29 +57,30 @@ Nowadays, the a11yphant core-team continues developing a11yphant as Open Source 
 
 <img src="https://unavatar.io/github/dnikub" height="138">
 
-<a href="https://dnikub.dev"  target="_blank" rel="noopener noreferrer nofollow">Daniela Kubesch</a> 
+<a href="https://dnikub.dev"  target="_blank" rel="noopener noreferrer nofollow">Daniela Kubesch</a> is a frontend developer who is passionate about accessibility and inclusive design. She strongly believes in equality and inclusion. Daniela is co-founder of a11yphant. When she is not coding, she juggles all things of organisational nature.
 
 <img src="https://unavatar.io/github/lucapircher" height="138">
 
-<a href="https://lucapircher.at" target="_blank" rel="noopener noreferrer nofollow">Luca Pircher</a> 
+<a href="https://lucapircher.at" target="_blank" rel="noopener noreferrer nofollow">Luca Pircher</a> is a web developer based in Austria who firmly believes the web should be inclusive. At a11yphant, Luca supports the team as the "Technical Project Lead" by ensuring that the project is a joy to work on for the dev team and planning the technical requirements for upcoming challenges.
 
 <img src="https://unavatar.io/github/thomasdax98" height="138">
 
-<a href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">Thomas Dax</a>
+<a href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">Thomas Dax</a> is a full-stack developer interested in product development and developer experience. As "Head of Text", he has supported the team with copywriting since co-founding a11yphant. Thomas further does a lot of frontend development work and takes care of the development setup.
 
 <img src="https://unavatar.io/github/hntrhfr" height="138">
 
-<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a>
+<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a> is a backend developer at <a href="https://www.chargepoint.com/de-de"  target="_blank" rel="noopener noreferrer nofollow">Chargepoint</a> on weekdays and chief of happiness officer for a11yphant on the weekend. Since co-founding a11yphant, he supported the team with his magic in the backend.
 
 ### Interface and Corporate Design
 
 <img src="services/site/public/images/github-docs/johanna-wicht-2023.jpg" height="138">
 
-<a href="https://johannawicht.com" target="_blank" rel="noopener noreferrer nofollow">Johanna Wicht</a>
+<a href="https://johannawicht.com" target="_blank" rel="noopener noreferrer nofollow">Johanna Wicht</a> is a communication designer based in Salzburg with a strong interest in visualizing data and identities. She received multiple awards, including ADC Talent and CCA Student of the year.
 
 <img src="https://unavatar.io/github/fabianheller" height="138">
 
-<a href="https://www.fabianhellerdesign.com" target="_blank" rel="noopener noreferrer nofollow">Fabian Heller</a>
+<a href="https://www.fabianhellerdesign.com" target="_blank" rel="noopener noreferrer nofollow">Fabian Heller</a> is an interdisciplinary digital designer at the intersection of Graphic Design, Motion Design and Illustration. He received multiple awards for his work in these fields.
+
 
 ## Contributing to a11yphant
 
