@@ -10,7 +10,7 @@ module.exports = {
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s"],
   testEnvironment: "node",
   reporters: ["default", "jest-junit"],
-  coverageReporters: ["text", "text-summary", "cobertura"],
+  coverageReporters: ["text", "text-summary", "lcov"],
   coverageDirectory: "<rootDir>/coverage",
   moduleNameMapper: {
     "@tests/(.*)$": "<rootDir>/tests/$1",
