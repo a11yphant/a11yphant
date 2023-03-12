@@ -1,12 +1,10 @@
 version: 2
 registries:
-  npm:
-    type: npm-registry
-    url: https://registry.npmjs.org/
   github:
     type: npm-registry
     url: https://npm.pkg.github.com/
     token: ${{ secrets.DEPENDABOT_TOKEN }}
+    replaces-base: false
 
 updates:
   - package-ecosystem: npm
@@ -14,7 +12,6 @@ updates:
     schedule:
       interval: weekly
     registries:
-      - npm
       - github
     target-branch: develop
     labels:
