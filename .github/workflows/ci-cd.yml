@@ -312,6 +312,12 @@ jobs:
         env:
           SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@localhost:5672
 
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-submission-checker
+          path: services/submission-checker/coverage
+
   build-submission-checker:
     needs:
       - variables
@@ -367,14 +373,23 @@ jobs:
           name: test-coverage-site
           path: test-coverage-site/
 
+      - name: Download Submission Checker test coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: test-coverage-submission-checker
+          path: test-coverage-submission-cecher/
+
       - name: Format API Coverage
-        run: ./cc-test-reporter format-coverage -t lcov --add-prefix services/api -o codeclimate.api.json test-coverage-api/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov -p services/api --add-prefix services/api -o codeclimate.api.json test-coverage-api/lcov.info
 
       - name: Format Site Coverage
-        run: ./cc-test-reporter format-coverage -t lcov --add-prefix services/site -o codeclimate.api.json test-coverage-site/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov -p services/site --add-prefix services/site -o codeclimate.api.json test-coverage-site/lcov.info
+
+      - name: Format Submission Checker Coverage
+        run: ./cc-test-reporter format-coverage -t lcov -p services/submission-checker --add-prefix services/submission-checker -o codeclimate.api.json test-coverage-submission-checker/lcov.info
 
       - name: Sum Coverage
-        run: ./cc-test-reporter codeclimate.*.json -p 2
+        run: ./cc-test-reporter codeclimate.*.json -p 3
 
       - name: Upload Coverage
         run: ./cc-test-reporter upload-coverage
