@@ -1,4 +1,4 @@
-<img src="services/site/public/images/a11yphant_Logo_Signet.png" height="138">
+<img src="services/site/public/images/logo/a11yphant_Logo_pictorial-mark.png" height="138">
 
 # Contributing to a11yphant
 
