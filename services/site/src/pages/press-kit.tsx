@@ -194,8 +194,8 @@ const PressKit: React.FunctionComponent = () => {
                     Johanna Wicht
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
-                  is a web developer with a focus on XY. He co-founded a11yphant in 2022 and supports the team as "Technical Project Lead". Luca makes
-                  sure everything stays up-to-date.
+                  is a communication designer based in Salzburg with a strong interest in visualizing data and identities. She received multiple
+                  awards, including ADC Talent and CCA Student of the year.
                 </p>
               </li>
               <li>
