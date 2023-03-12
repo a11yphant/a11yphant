@@ -1,25 +1,32 @@
 import { render, screen } from "@testing-library/react";
 import { FlashMessage, FlashMessageProps, FlashMessageType } from "app/components/common/flashMessage/FlashMessage";
+import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import React from "react";
 
 const renderFlashMessageWithPortalRoot = (props?: Partial<React.PropsWithChildren<FlashMessageProps>>): void => {
   const wrapper = ({ children }): React.ReactElement => (
-    <div>
-      <FlashMessagePortalRoot />
-      {children}
-    </div>
+    <FlashMessageContextProvider>
+      <div>
+        <FlashMessagePortalRoot />
+        {children}
+      </div>
+    </FlashMessageContextProvider>
   );
   render(<FlashMessage show={true} onClose={jest.fn()} {...props} />, { wrapper });
 };
 
 describe("FlashMessage", () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it("log console error if no FlashMessagePortalRoot is present", () => {
-    console.error = jest.fn();
+    jest.spyOn(global.console, "error").mockImplementation(jest.fn());
 
     render(<FlashMessage show={true} onClose={jest.fn()} />);
 
-    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(global.console.error).toHaveBeenCalledTimes(1);
   });
 
   it("renders children", () => {

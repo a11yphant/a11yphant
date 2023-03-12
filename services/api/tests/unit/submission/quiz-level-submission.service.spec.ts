@@ -1,8 +1,8 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { QUIZ_LEVEL, QUIZ_LEVEL_SUBMISSION, QuizLevelData, QuizLevelSubmissionData, USER, UserData } from "@tests/support/factories/database";
 import { useDatabase } from "@tests/support/helpers";
-import faker from "faker";
 import { Factory } from "rosie";
 
 import { ReferenceNotValidException } from "@/submission/exceptions/reference-not-valid.excpetion";

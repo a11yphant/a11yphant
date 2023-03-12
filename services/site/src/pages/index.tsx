@@ -6,6 +6,7 @@ import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
+import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus, useChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
@@ -28,7 +29,8 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
 
   React.useEffect(() => {
     if (fmType) {
-      flashMessageApi.show(getFlashMessage(fmType));
+      const { message, type } = getFlashMessage(fmType);
+      flashMessageApi.show(message, { type });
     }
   }, [fmType]);
 
@@ -67,7 +69,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           property="og:description"
           content="a11yphant is the easy way to learn the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
-        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
@@ -80,7 +82,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           property="twitter:description"
           content="a11yphant is the easy way to learn the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
-        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
@@ -94,7 +96,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           {!currentUser?.isRegistered && <Hero />}
           <section
             id="challenges"
-            className={clsx("max-w-screen-3xl mx-8 mt-32 mb-4", "sm:mx-12 sm:mt-28 sm:mb-12", "md:mx-24 md:mb-24", "2xl:mx-auto")}
+            className={clsx("max-w-screen-3xl mx-8 pt-10 mt-22 mb-4", "sm:mx-12 sm:mt-18 sm:mb-12", "md:mx-24 md:mb-24", "2xl:mx-auto")}
           >
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
 
@@ -117,7 +119,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               />
             )}
 
-            {/* TODO: add when more difficult challenge content exists
+            {/* TODO: add when more difficult challenge content exists & adapt disclaimer in legend
             {easyChallenges.length !== 0 && (
               <ChallengeList
                 className={clsx("2xl:mx-24")}
@@ -156,6 +158,20 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
                 challenges={hardChallenges}
               />
             )} */}
+
+            <p className={clsx("mb-8 md:mb-0", "2xl:mx-24")}>
+              <span className="sr-only">Disclaimer:</span>
+              <span aria-hidden="true" className="text-xl text-grey">
+                *
+              </span>{" "}
+              Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
+              challenges on our{" "}
+              <InTextLink href="https://twitter.com/a11yphant" opensInNewTab>
+                Twitter account
+              </InTextLink>
+              . <br />
+              Want to help us? Slide into our DMs.
+            </p>
           </section>
         </div>
         <ChallengeModal open={!!router.query.challenge} onClose={onCloseModal} challengeSlug={router.query.challenge as string} />

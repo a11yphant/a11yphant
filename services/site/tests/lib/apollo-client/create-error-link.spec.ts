@@ -27,13 +27,17 @@ const mockedResponse: MockedResponse = {
   error: new Error("An Error"),
 };
 
-const mockLink = new MockLink([mockedResponse]);
-
 beforeEach(() => {
   jest.resetAllMocks();
 });
 
 describe("create error link", () => {
+  let mockLink: MockLink;
+
+  beforeEach(() => {
+    mockLink = new MockLink([mockedResponse]);
+  });
+
   it("returns a link", (done) => {
     const errorDialogApi = useErrorDialogApi();
 

@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { IFactoryStatic } from "rosie";
 
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";

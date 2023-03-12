@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
-import { UserInputError } from "apollo-server-errors";
-import faker from "faker";
+import { GraphQLError } from "graphql";
 
 import { ReferenceNotValidException } from "@/submission/exceptions/reference-not-valid.excpetion";
 import { QuizLevelSubmissionResolver } from "@/submission/graphql/resolvers/quiz-level-submission.resolver";
@@ -39,6 +39,6 @@ describe("quiz level submission resolver", () => {
         },
         { userId: faker.datatype.uuid() },
       ),
-    ).rejects.toThrowError(UserInputError);
+    ).rejects.toThrowError(GraphQLError);
   });
 });

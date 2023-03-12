@@ -118,7 +118,6 @@ describe("Quiz Level", () => {
     expect(wrapper.exists(SingleAnswer)).toBeTruthy();
   });
 
-  // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252
   it("renders fail animation when quiz status is fail", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -130,7 +129,6 @@ describe("Quiz Level", () => {
     // expect(wrapper.find(Lottie).props().options.animationData).toBe(failAnimation);
   });
 
-  // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252
   it("renders success animation when quiz status is success", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>
@@ -164,7 +162,6 @@ describe("Quiz Level", () => {
     expect(wrapper.exists(LoadingButton)).toBeTruthy();
   });
 
-  // TODO: add quizStatus, Issue: https://gitlab.mediacube.at/a11yphant/a11yphant/-/issues/252
   it("renders no retry / next level button if the quiz status is undefined", () => {
     const wrapper = mount(
       <MockedProvider mocks={mocks}>

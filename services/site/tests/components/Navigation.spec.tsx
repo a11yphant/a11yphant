@@ -6,14 +6,13 @@ import Button from "app/components/buttons/Button";
 import Dropdown from "app/components/common/dropdown/Dropdown";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
-import A11yphantLogoUkraine from "app/components/icons/A11yphantLogoUkraine";
+import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { useLogoutMutation, User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { shallow, ShallowWrapper } from "enzyme";
-import { Mock } from "jest-mock";
 import React, { PropsWithChildren } from "react";
 
 const mockShow = jest.fn();
@@ -63,7 +62,7 @@ const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): 
 };
 
 const mockRegisteredUser = (): void => {
-  (useCurrentUser as Mock<{ currentUser: User }>).mockImplementation(() => ({
+  (useCurrentUser as jest.Mock<{ currentUser: User }>).mockImplementation(() => ({
     currentUser: {
       id: "mock-id",
       isRegistered: true,
@@ -74,7 +73,7 @@ const mockRegisteredUser = (): void => {
 };
 
 const mockNonRegisteredUser = (): void => {
-  (useCurrentUser as Mock<{ currentUser: User }>).mockImplementation(() => ({
+  (useCurrentUser as jest.Mock<{ currentUser: User }>).mockImplementation(() => ({
     currentUser: {
       id: "mock-id",
       isRegistered: false,
@@ -95,8 +94,7 @@ describe("Navigation", () => {
     const view = shallowRenderNavigation();
 
     expect(view.exists("header")).toBeTruthy();
-    // expect(view.exists(A11yphantLogo)).toBeTruthy();
-    expect(view.exists(A11yphantLogoUkraine)).toBeTruthy();
+    expect(view.exists(A11yphantLogo)).toBeTruthy();
   });
 
   it("renders the user dropdown if the user is registered", () => {

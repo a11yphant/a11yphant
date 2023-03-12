@@ -1,3 +1,3 @@
-# A11y Challenges Api
+# API
 
-![coverage](https://gitlab.mediacube.at/a11yphant/a11yphant/badges/develop/coverage.svg?job=test:api)
+a11yphant is split into three applications. One of them is the API. The API uses TypeScript, NestJS and Prisma.

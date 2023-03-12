@@ -36,7 +36,7 @@ const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> =
     const containerHeight = element.clientHeight;
     const scrollableHeight = element.scrollHeight;
     const scrollDistanceToTop = element.scrollTop;
-    const isScrolledToBottom = containerHeight === scrollableHeight - scrollDistanceToTop;
+    const isScrolledToBottom = Math.abs(scrollableHeight - (containerHeight + scrollDistanceToTop)) < 1;
 
     setShowBottomOverlay(!isScrolledToBottom);
     setShowTopOverlay(scrollDistanceToTop > 0);

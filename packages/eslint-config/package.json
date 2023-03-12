@@ -1,6 +1,6 @@
 {
   "name": "@a11yphant/eslint-config",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -13,7 +13,6 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
-  "license": "UNLICENSED",
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1 || ^5.0.0",
     "@typescript-eslint/parser": "^4.15.1 || ^5.0.0",
@@ -23,17 +22,17 @@
     "eslint-plugin-prettier": "^3.3.1 || ^4.0.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0 || ^10.0.0",
     "eslint-plugin-unused-imports": "^1.1.0 || ^2.0.0",
     "prettier": "^2.2.1"
   },
   "devDependencies": {
-    "eslint": "8.12.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint": "8.36.0",
+    "eslint-config-prettier": "8.7.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-simple-import-sort": "10.0.0",
     "eslint-plugin-unused-imports": "2.0.0",
-    "prettier": "2.6.1"
+    "prettier": "2.8.4"
   }
 }

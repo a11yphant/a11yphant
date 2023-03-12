@@ -80,7 +80,7 @@ const Level: React.FunctionComponent = () => {
           property="og:description"
           content="Various accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each challenge teaching you one thing at a time."
         />
-        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."

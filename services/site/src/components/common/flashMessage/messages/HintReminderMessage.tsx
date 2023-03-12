@@ -7,7 +7,7 @@ export const HintReminderMessage = (): React.ReactElement => {
       <span className={clsx("mr-3")} aria-hidden={true}>
         🚀
       </span>
-      Reminder: You can use hints if you are stuck
+      <p className="m-0">Reminder: You can use hints if you are stuck</p>
     </>
   );
 };

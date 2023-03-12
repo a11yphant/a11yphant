@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, HideField, ID, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class Requirement {
@@ -17,5 +17,6 @@ export class Requirement {
   @Field(() => String)
   description: string;
 
+  @HideField()
   options: { [key: string]: string };
 }

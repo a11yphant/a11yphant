@@ -1,3 +1,3 @@
-# A11y Challenges Site
+# Site
 
-![coverage](https://gitlab.mediacube.at/a11yphant/a11yphant/badges/develop/coverage.svg?job=test:site)
+a11yphant is split into three applications. One of them is the Site. The Site uses TypeScript and NextJS.

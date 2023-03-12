@@ -40,7 +40,9 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
   React.useEffect(() => {
     if (failedLevelsInARow >= 2) {
       setTimeout(() => {
-        flashMessageApi.show(getFlashMessage(FlashMessageEnum.HINT_REMINDER), {
+        const { message, type } = getFlashMessage(FlashMessageEnum.HINT_REMINDER);
+        flashMessageApi.show(message, {
+          type,
           className: clsx("hidden", "lg:flex"),
           offsetElementClassName: clsx("hidden", "lg:block"),
         });

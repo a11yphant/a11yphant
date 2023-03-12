@@ -7,7 +7,7 @@ const IllustrationLostSpace: React.FunctionComponent<React.SVGProps<SVGSVGElemen
       data-testid="IllustrationLostSpace"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 902.41854 826.20679"
+      viewBox="0 0 910 830"
       className={className}
       aria-hidden="true"
       focusable="false"

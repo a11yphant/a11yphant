@@ -9,7 +9,7 @@ import React from "react";
 
 import Button from "./buttons/Button";
 import Dropdown from "./common/dropdown/Dropdown";
-import A11yphantLogoUkraine from "./icons/A11yphantLogoUkraine";
+import A11yphantLogo from "./icons/A11yphantLogo";
 import UserAvatar from "./icons/UserAvatar";
 
 export interface NavigationProps {
@@ -36,8 +36,7 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
               "focus-outline-offset",
             )}
           >
-            {/* <A11yphantLogo className="w-36" /> */}
-            <A11yphantLogoUkraine className="w-36" />
+            <A11yphantLogo className="w-36" />
             <span className="sr-only">Allyphant Homepage</span>
           </a>
         </Link>

@@ -45,10 +45,6 @@ export const appModuleMetadata: ModuleMetadata = {
           : false,
         introspection: configService.get<boolean>("gql.schemaIntrospection"),
         autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
-        cors: {
-          credentials: true,
-          origin: true,
-        },
         context: ({ req, res }) => ({ req, res }),
       }),
       inject: [ConfigService],

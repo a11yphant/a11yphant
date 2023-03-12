@@ -2,14 +2,24 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "group:allNonMajor"
+    "schedule:weekly",
+    "group:allNonMajor",
+    ":semanticCommits"
   ],
-  "npmrc": "@a11yphant:registry=https://gitlab.mediacube.at/api/v4/projects/5907/packages/npm/",
+  "npmrc": "@a11yphant:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=${NPM_TOKEN}",
+  "encrypted": {
+    "npmToken": "wcFMA/xDdHCJBTolAQ/+Ka5Jrs0OXsEy6Yj0oBBKH6+1p2no3pPrTHxYueN1vKva6rHtL6jmLfgXvZbfy+BYulJ5bLzQfGwzISc9qAoMV1hhtZE7kIh00FCu73lw0VVXhtHrEqCR6rXREu+4jTfmKJmq1UGwQ0yVe7yeyCYALz7Ly/yEsgIr6uZzhpBBhQq6tayzMI653+NrqH2eEKD5g47fiCRJNAay/myoqc9bLOXbAsYxCdEbIDZTnd7rzZrSjCkxdQ8sD2m8vBjSAP6me8q4rTpTHs1ZqLGjRbPa02/Kq1QZ3UFfqJE0/hx1FG8knz1J6n8j3N3BlHq4JFPz8d03xnIOXz8Ppdc0ds5ryw2AvYvLL75mS1eNa69+od5Rpt+UR1XpcMbszBQDjX7U/KCiYjLFKc7J5o8prneY1OZUOjGrrNgTo2kIyfn9li6yz2bMPUDJ+e28gy3SVq5VN2N0ITS74nRaZi0zsIfYcHUhgk0yJ/ZGvnv+xK4D3UwXMSXCi23ad+2eBs7baQhaDMpDncUWVy4NtRWpenYV9Afbzhf4+2pKAduh6J3kfhRTPXVcIsPjAcWiFcI++RfDDXobmvJSxWX8saFNcx11iWC26idAWZLue4wI3qZEnuibTwUF0r7PrZy7nQEbEo1fFU01XZCUE/UcPvvVGCVzrgNkHTf7DlnQ9MR8/iMso3LSeAGngDy07KP0WwZQWS8MXv+KFilAVctunX+8uUnmQvyV008WU2PFQo8sbflVvSbepE3GIMUDFTXkTVNgdntOfLS0lVrn517cmasWxzG7+K3OLL9FABJn4+9enY7wexbcjzzRZFhnfifX3YeDQ3rfgRUnu7pbCJLGEQ"
+  },
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "matchPackageNames": ["aws-sdk-mock"],
-      "allowedVersions": "!/^5.5.0$/"
+      "matchPackageNames": ["node-fetch"],
+      "allowedVersions": "!/^2.0.0$/"
     }
-  ]
+  ],
+  "prConcurrentLimit": 5,
+  "labels": [
+    "dependencies"
+  ],
+  "timezone": "Europe/Vienna"
 }

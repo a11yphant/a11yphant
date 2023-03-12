@@ -8,7 +8,7 @@ import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import { LottieProps } from "app/components/Lottie";
-import { ChallengeBySlugDocument, ResultStatus } from "app/generated/graphql";
+import { ChallengeBySlugDocument, CurrentUserDocument, ResultStatus } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import Evaluation, { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { mount, ReactWrapper } from "enzyme";
@@ -19,26 +19,24 @@ import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return null;
 });
+
 jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
     return;
   },
 }));
+
 jest.mock("app/hooks/sessionState/useSessionState", () => ({
-  useSessionState: jest.fn().mockImplementation(() => [1, jest.fn()]),
+  useSessionState: jest.fn(),
 }));
 
-jest.mock("app/components/evaluation/usePollSubmissionResult", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { ResultStatus } = require("app/generated/graphql");
-
-  return {
-    usePollSubmissionResult: jest.fn().mockImplementation(() => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 })),
-  };
-});
+jest.mock("app/components/evaluation/usePollSubmissionResult", () => ({
+  usePollSubmissionResult: jest.fn(),
+}));
 
 jest.mock("app/lib/apollo-client", () => ({
   initializeApollo: (_, context) => context.apolloClient,
@@ -57,6 +55,22 @@ const mockNthLevel = "2";
 const mockSubmissionId = "ca9ebfd8-5220-4a5d-8e45-05e95f521e15";
 
 const mocks: MockedResponse[] = [
+  {
+    request: {
+      query: CurrentUserDocument,
+    },
+    result: {
+      data: {
+        currentUser: {
+          __typename: "User",
+          id: "a3db1fc5-7183-42ad-8ba7-fff2922a1927",
+          displayName: "Name",
+          isRegistered: false,
+          isVerified: false,
+        },
+      },
+    },
+  },
   {
     request: {
       query: ChallengeBySlugDocument,
@@ -87,12 +101,19 @@ const mocks: MockedResponse[] = [
 ];
 
 beforeEach(() => {
-  jest.clearAllMocks();
   router.query = {
     challengeSlug: mockChallengeSlug,
     nthLevel: mockNthLevel,
     submissionId: mockSubmissionId,
   };
+
+  (useSessionState as jest.Mock).mockImplementation(() => [1, jest.fn()]);
+
+  (usePollSubmissionResult as jest.Mock).mockImplementation(() => ({ status: ResultStatus.Success, requirements: [], totalScore: 100 }));
+});
+
+afterEach(() => {
+  jest.resetAllMocks();
 });
 
 const mountEvaluationPage = (): ReactWrapper => {
@@ -112,10 +133,6 @@ const resolveGraphQLQuery = async (wrapper: ReactWrapper): Promise<void> => {
 
 describe("Evaluation", () => {
   describe("page", () => {
-    beforeEach(async () => {
-      jest.restoreAllMocks();
-    });
-
     it("renders the loading screen", async () => {
       const wrapper = mountEvaluationPage();
 

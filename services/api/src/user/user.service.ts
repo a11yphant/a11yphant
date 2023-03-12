@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { PrismaClientUnknownRequestError } from "@prisma/client/runtime";
+import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
 
 import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";

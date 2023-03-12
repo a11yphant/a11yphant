@@ -1,7 +1,7 @@
-import { ApolloError } from "apollo-server-errors";
+import { GraphQLError } from "graphql";
 
-export class InputError extends ApolloError {
+export class InputError extends GraphQLError {
   constructor(message: string) {
-    super(message, "INPUT_ERROR");
+    super(message, { extensions: { code: "INPUT_ERROR" } });
   }
 }

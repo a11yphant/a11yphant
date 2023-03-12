@@ -1,4 +1,4 @@
-FROM node:14.19.3-alpine3.16 as base
+FROM node:18.15.0-alpine3.17 as base
 
 FROM base as package-files
 

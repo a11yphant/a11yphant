@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { IFactoryStatic } from "rosie";
 
 import { ANSWER_OPTION, QUIZ_LEVEL } from "./constants";

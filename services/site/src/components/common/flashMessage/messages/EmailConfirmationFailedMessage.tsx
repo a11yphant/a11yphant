@@ -19,7 +19,7 @@ export const EmailConfirmationFailedMessage = (): React.ReactElement => {
           <span className={clsx("not-sr-only", "mr-3 text-2xl")} aria-hidden={true}>
             ❌
           </span>
-          Your email could not be confirmed
+          <p className="m-0">Your email could not be confirmed</p>
           <LoadingButton
             className={clsx("h-10 ml-4 bg-white border-white text-primary", "hover:bg-primary hover:border-white hover:text-white")}
             loading={loading}

@@ -1,11 +1,10 @@
+import { ApolloClient, ApolloLink, concat, HttpLink, InMemoryCache } from "@apollo/client/core";
 import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
 import { CallHandler, ExecutionContext, INestApplication, Logger, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 import { PrismaClient } from "@prisma/client";
 import { Migrate } from "@prisma/migrate";
-import ApolloClient from "apollo-boost";
-import fetch from "cross-fetch";
 import os from "os";
 import { join } from "path";
 import { Observable, of } from "rxjs";
@@ -144,21 +143,34 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
     await app.close();
   });
 
+  const getGraphQlClient = ({ authCookie } = { authCookie: undefined }): ApolloClient<unknown> => {
+    const httpLink = new HttpLink({
+      uri: `http://localhost:${app.getHttpServer().address().port}/graphql`,
+      fetch,
+      credentials: "include",
+    });
+
+    const headerMiddleware = new ApolloLink((operation, forward) => {
+      if (authCookie) {
+        operation.setContext(({ headers = {} }) => ({
+          headers: {
+            ...headers,
+            cookie: `a11yphant_session=${authCookie}`,
+          },
+        }));
+      }
+
+      return forward(operation);
+    });
+
+    return new ApolloClient({
+      link: concat(headerMiddleware, httpLink),
+      cache: new InMemoryCache(),
+    });
+  };
+
   return {
-    getGraphQlClient: ({ authCookie } = {}) =>
-      new ApolloClient({
-        uri: `http://localhost:${app.getHttpServer().address().port}/graphql`,
-        credentials: "include",
-        fetch,
-        request: (operation) => {
-          if (!authCookie) return;
-          operation.setContext({
-            headers: {
-              cookie: `a11yphant_session=${authCookie}`,
-            },
-          });
-        },
-      }),
+    getGraphQlClient,
     getApp: () => app,
   };
 }

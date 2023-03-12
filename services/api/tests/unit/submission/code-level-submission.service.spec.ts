@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
@@ -11,7 +12,6 @@ import {
   UserData,
 } from "@tests/support/factories/database";
 import { useDatabase } from "@tests/support/helpers";
-import faker from "faker";
 
 import { PrismaService } from "@/prisma/prisma.service";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";

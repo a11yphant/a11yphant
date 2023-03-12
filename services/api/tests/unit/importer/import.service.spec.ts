@@ -1,7 +1,7 @@
+import { faker } from "@faker-js/faker";
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { useDatabase } from "@tests/support/helpers";
-import faker from "faker";
 import mock from "mock-fs";
 import { join } from "path";
 

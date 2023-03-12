@@ -1,12 +1,13 @@
 import { Controller, Get, Logger, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
 
 import { UserService } from "@/user/user.service";
 
 import { FlashMessage } from "./enums/flash-message.enum";
 import { JwtScope } from "./enums/jwt-scope.enum";
+import { GithubAuthGuard } from "./guards/github.guard";
+import { TwitterAuthGuard } from "./guards/twitter.guard";
 import { ProviderInformation } from "./interfaces/provider-information.interface";
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
@@ -33,29 +34,34 @@ export class AuthenticationController {
     res.redirect(`${url}?fm-type=${FlashMessage.EMAIL_CONFIRMATION_SUCCESSFUL}`);
   }
 
-  @UseGuards(AuthGuard("github"))
+  @UseGuards(GithubAuthGuard)
   @Get("github")
   github(): void {
     return;
   }
 
-  @UseGuards(AuthGuard("twitter"))
+  @UseGuards(TwitterAuthGuard)
   @Get("twitter")
   twitter(): void {
     return;
   }
 
-  @UseGuards(AuthGuard("github"))
+  @UseGuards(GithubAuthGuard)
   @Get("github/callback")
   async githubCallback(
     @Req() req: Request & { user: ProviderInformation; sessionToken: SessionTokenInterface },
     @Res() res: Response,
   ): Promise<void> {
+    if (req.query?.error === "access_denied") {
+      res.redirect(`${this.config.get<string>("site.url")}?fm-type=oauth-login-failed`);
+      return;
+    }
+
     await this.createOauthCookie(req, res);
     res.redirect(this.config.get<string>("site.url"));
   }
 
-  @UseGuards(AuthGuard("twitter"))
+  @UseGuards(TwitterAuthGuard)
   @Get("twitter/callback")
   async twitterCallback(
     @Req() req: Request & { user: ProviderInformation; sessionToken: SessionTokenInterface },

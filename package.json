@@ -4,7 +4,6 @@
   "description": "",
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "prepare": "husky install",
     "postinstall": "npm run package-dependencies",
@@ -22,7 +21,6 @@
     "start": "npm run dev",
     "predev": "npm install && docker compose up -d && npm run db:migrate",
     "dev": "pm2 start pm2-ecosystem.config.js",
-    "dev:no-daemon": "node pm2-start-no-daemon.js",
     "stop": "pm2 stop a11yphant && pm2 del a11yphant",
     "dev:api": "npm --prefix services/api run start:dev",
     "dev:site": "wait-on -l tcp:$API_PORT && npm --prefix services/site run dev",
@@ -31,13 +29,12 @@
     "debug:site": "pm2 logs a11yphant-site",
     "debug:submission-checker": "pm2 logs a11yphant-submission-checker",
     "db:migrate": "npm --prefix services/api run prisma:migrate",
-    "gitlab-registry:login": "npm config set -- //gitlab.mediacube.at/api/v4/projects/5907/packages/npm/:_authToken",
     "import-challenges": "npm run console import:challenges --prefix services/api",
     "delete:staleusers": "npm run console delete:staleusers --prefix services/api"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.mediacube.at/a11yphant/a11yphant.git"
+    "url": "https://github.com/a11yphant/a11yphant.git"
   },
   "keywords": [],
   "devDependencies": {

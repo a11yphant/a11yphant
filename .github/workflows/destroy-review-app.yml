@@ -1,0 +1,33 @@
+name: Destroy Review App
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  variables:
+    runs-on: ubuntu-22.04
+    outputs:
+      environment-name: ${{ steps.environment-name.outputs.environment-name }}
+    steps:
+        # manually create the environment name since the inject slug action
+        # inserts develop into env.GITHUB_REF_SLUG
+      - run: echo "environment-name=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
+        id: environment-name
+
+  destroy-review-app:
+    runs-on: ubuntu-22.04
+    needs:
+      - variables
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
+          repository: a11yphant/infrastructure
+          event-type: destroy-review-app
+          client-payload: |
+            {
+              "environment-name": "${{ needs.variables.outputs.environment-name }}"
+            }
