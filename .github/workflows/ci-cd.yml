@@ -380,7 +380,7 @@ jobs:
           path: test-coverage-submission-cecher/
 
       - name: Format API Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/api --debug -o codeclimate.api.json test-coverage-api/lcov.inf
+        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/api --debug -o codeclimate.api.json test-coverage-api/lcov.info
 
       - name: Format Site Coverage
         run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/site -o codeclimate.api.json test-coverage-site/lcov.info
