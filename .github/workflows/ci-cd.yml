@@ -142,6 +142,12 @@ jobs:
         env:
           DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
 
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-api
+          path: services/api/coverage
+                 
   build-api:
     needs:
       - variables
@@ -216,6 +222,12 @@ jobs:
 
       - name: Test
         run: npm run test:coverage --prefix services/site
+
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-site
+          path: services/site/coverage
 
   build-site:
     needs:
@@ -300,6 +312,12 @@ jobs:
         env:
           SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@localhost:5672
 
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-submission-checker
+          path: services/submission-checker/coverage
+
   build-submission-checker:
     needs:
       - variables
@@ -325,6 +343,64 @@ jobs:
           version: ${{ needs.variables.outputs.environment-name }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
+
+  upload-coverage-reports:
+    needs:
+      - test-api
+      - test-submission-checker
+      - test-site
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download CodeClimate Test Reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+
+      - name: Download API test coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: test-coverage-api
+          path: services/api/coverage/
+
+      - name: Download Site test coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: test-coverage-site
+          path: services/site/coverage/
+
+      - name: Download Submission Checker test coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: test-coverage-submission-checker
+          path: services/submission-checker/coverage/
+
+      - name: Format API Coverage
+        run: |
+          cd services/api
+          ./../../cc-test-reporter format-coverage -t lcov --add-prefix services/api -o coverage/codeclimate.json coverage/lcov.info
+
+      - name: Format Site Coverage
+        run: |
+          cd services/site
+          ./../../cc-test-reporter format-coverage -t lcov --add-prefix services/site -o coverage/codeclimate.json coverage/lcov.info
+
+      - name: Format Submission Checker Coverage
+        run: |
+          cd services/submission-checker
+          ./../../cc-test-reporter format-coverage -t lcov --add-prefix services/submission-checker -o coverage/codeclimate.json coverage/lcov.info
+
+      - name: Sum Coverage
+        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 3
+
+      - name: Upload Coverage
+        run: ./cc-test-reporter upload-coverage
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
 
   test-end-to-end:
     needs:
