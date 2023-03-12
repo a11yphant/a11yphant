@@ -4,6 +4,7 @@ registries:
     type: npm-registry
     url: https://npm.pkg.github.com/
     token: ${{ secrets.DEPENDABOT_TOKEN }}
+    replaces-base: false
 
 updates:
   - package-ecosystem: npm
