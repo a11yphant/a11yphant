@@ -365,28 +365,34 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: test-coverage-api
-          path: test-coverage-api/
+          path: services/api/coverage/
 
       - name: Download Site test coverage
         uses: actions/download-artifact@v3
         with:
           name: test-coverage-site
-          path: test-coverage-site/
+          path: services/site/coverage/
 
       - name: Download Submission Checker test coverage
         uses: actions/download-artifact@v3
         with:
           name: test-coverage-submission-checker
-          path: test-coverage-submission-cecher/
+          path: services/submission-checker/coverage/
 
       - name: Format API Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/api --debug -o codeclimate.api.json test-coverage-api/lcov.info
+        run: |
+          cd services/api
+          ./../../cc-test-reporter format-coverage -t lcov --debug -o ./../../codeclimate.api.json coverage/lcov.info
 
       - name: Format Site Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/site -o codeclimate.api.json test-coverage-site/lcov.info
+        run: |
+          cd services/site
+          ./../../cc-test-reporter format-coverage -t lcov --debug -o ./../../codeclimate.site.json coverage/lcov.info
 
       - name: Format Submission Checker Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/submission-checker -o codeclimate.api.json test-coverage-submission-checker/lcov.info
+        run: |
+          cd services/submission-checker
+          ./../../cc-test-reporter format-coverage -t lcov --debug -o ./../../codeclimate.submission-checker.json coverage/lcov.info
 
       - name: Sum Coverage
         run: ./cc-test-reporter codeclimate.*.json -p 3
