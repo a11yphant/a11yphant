@@ -369,9 +369,6 @@ jobs:
             GIT_BRANCH=${GITHUB_REF#"refs/heads/"}
           fi
 
-          echo $GIT_BRANCH
-          echo $GIT_COMMIT_SHA
-
           echo "git-branch=$GIT_BRANCH" >> "$GITHUB_OUTPUT"
           echo "git-commit-sha=$GIT_COMMIT_SHA" >> "$GITHUB_OUTPUT"
 
@@ -429,7 +426,7 @@ jobs:
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
       - name: Upload Coverage
-        run: ./cc-test-reporter upload-coverage --debug
+        run: ./cc-test-reporter upload-coverage
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
