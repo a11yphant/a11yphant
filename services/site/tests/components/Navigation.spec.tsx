@@ -13,7 +13,6 @@ import { useUserAccountModalApi } from "app/components/user/useUserAccountModalA
 import { useLogoutMutation, User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { shallow, ShallowWrapper } from "enzyme";
-import { Mock } from "jest-mock";
 import React, { PropsWithChildren } from "react";
 
 const mockShow = jest.fn();
@@ -63,7 +62,7 @@ const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): 
 };
 
 const mockRegisteredUser = (): void => {
-  (useCurrentUser as Mock<{ currentUser: User }>).mockImplementation(() => ({
+  (useCurrentUser as jest.Mock<{ currentUser: User }>).mockImplementation(() => ({
     currentUser: {
       id: "mock-id",
       isRegistered: true,
@@ -74,7 +73,7 @@ const mockRegisteredUser = (): void => {
 };
 
 const mockNonRegisteredUser = (): void => {
-  (useCurrentUser as Mock<{ currentUser: User }>).mockImplementation(() => ({
+  (useCurrentUser as jest.Mock<{ currentUser: User }>).mockImplementation(() => ({
     currentUser: {
       id: "mock-id",
       isRegistered: false,
@@ -95,7 +94,6 @@ describe("Navigation", () => {
     const view = shallowRenderNavigation();
 
     expect(view.exists("header")).toBeTruthy();
-    // expect(view.exists(A11yphantLogo)).toBeTruthy();
     expect(view.exists(A11yphantLogo)).toBeTruthy();
   });
 
