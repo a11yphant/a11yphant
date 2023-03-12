@@ -380,13 +380,13 @@ jobs:
           path: test-coverage-submission-cecher/
 
       - name: Format API Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p services/api --add-prefix services/api -o codeclimate.api.json test-coverage-api/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/api --debug -o codeclimate.api.json test-coverage-api/lcov.inf
 
       - name: Format Site Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p services/site --add-prefix services/site -o codeclimate.api.json test-coverage-site/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/site -o codeclimate.api.json test-coverage-site/lcov.info
 
       - name: Format Submission Checker Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -p services/submission-checker --add-prefix services/submission-checker -o codeclimate.api.json test-coverage-submission-checker/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov -p $PWD/services/submission-checker -o codeclimate.api.json test-coverage-submission-checker/lcov.info
 
       - name: Sum Coverage
         run: ./cc-test-reporter codeclimate.*.json -p 3
