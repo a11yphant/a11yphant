@@ -401,6 +401,8 @@ jobs:
         run: ./cc-test-reporter upload-coverage
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
+          GIT_COMMIT_SHA: ${{ env.GITHUB_SHA }}
+          GIT_BRANCH: ${{ env.GITHUB_HEAD_REF }}
 
   test-end-to-end:
     needs:
