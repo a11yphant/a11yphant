@@ -382,20 +382,20 @@ jobs:
       - name: Format API Coverage
         run: |
           cd services/api
-          ./../../cc-test-reporter format-coverage -t lcov -o ./../../codeclimate.api.json coverage/lcov.info
+          ./../../cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json coverage/lcov.info
 
       - name: Format Site Coverage
         run: |
           cd services/site
-          ./../../cc-test-reporter format-coverage -t lcov -o ./../../codeclimate.site.json coverage/lcov.info
+          ./../../cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json coverage/lcov.info
 
       - name: Format Submission Checker Coverage
         run: |
           cd services/submission-checker
-          ./../../cc-test-reporter format-coverage -t lcov -o ./../../codeclimate.submission-checker.json coverage/lcov.info
+          ./../../cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json coverage/lcov.info
 
       - name: Sum Coverage
-        run: ./cc-test-reporter sum-coverage codeclimate.*.json -p 3
+        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 3
 
       - name: Upload Coverage
         run: ./cc-test-reporter upload-coverage
