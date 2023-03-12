@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import fetch from "node-fetch";
 
+import { ElementContainsText } from "@/checks/element-contains-text.check";
+import { ElementNotContainsText } from "@/checks/element-not-contains-text.check";
+
 import { AxeFactory } from "./axe.factory";
 import { BrowserService } from "./browser.service";
 import { CheckFactory } from "./check.factory";
@@ -53,6 +56,8 @@ import { WebdriverFactory } from "./webdriver.factory";
     HtmlIsValidCheck,
     ElementExists,
     ElementNotExists,
+    ElementContainsText,
+    ElementNotContainsText,
     DocumentStartsWithHtml5Doctype,
     ...buildCheckProviders(AVAILABLE_AXE_CHECKS),
   ],
