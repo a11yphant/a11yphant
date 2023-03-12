@@ -22,7 +22,12 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
       <div className={clsx("flex flex-col items-end")}>
         <h3 className={clsx("ml-2 font-normal", "h3", "lg:h2")}>Result</h3>
         <p
-          className={clsx("p-2 pt-1 mt-2 mb-0 text-7xl text-light font-mono font-bold w-fit-content", "container-dark", "lg:text-8xl")}
+          className={clsx(
+            "p-2 pt-1 mt-2 mb-0 text-7xl text-light font-mono font-bold w-fit-content",
+            "container-dark",
+            "lg:text-8xl",
+            passed ? "text-success" : "text-light",
+          )}
           aria-label={`You reached a score of ${score.toFixed(0)} percent`}
         >
           {score.toFixed(0)}%
