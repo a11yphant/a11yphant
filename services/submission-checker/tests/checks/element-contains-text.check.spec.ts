@@ -73,7 +73,7 @@ describe("element-contains-text check", () => {
     });
 
     const check = new ElementContainsText(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
-    const spy = jest.spyOn(check, "containsText").mockImplementation(() => Promise.resolve(true));
+    const spy = jest.spyOn(check, "containsText").mockImplementation().mockResolvedValue(true);
 
     const submission: Submission = {
       id: "1",
@@ -106,7 +106,7 @@ describe("element-contains-text check", () => {
     });
 
     const check = new ElementContainsText(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
-    const spy = jest.spyOn(check, "containsText").mockImplementation(() => Promise.resolve(false));
+    const spy = jest.spyOn(check, "containsText").mockImplementation().mockResolvedValue(false);
 
     const submission: Submission = {
       id: "1",
@@ -132,14 +132,14 @@ describe("element-contains-text check", () => {
     spy.mockRestore();
   });
 
-  it("errors if the there was an error", async () => {
+  it("errors if there was an error", async () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       quit: jest.fn().mockResolvedValue(null),
     });
 
     const check = new ElementContainsText(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
-    const spy = jest.spyOn(check, "containsText").mockImplementation(() => Promise.reject("rejected"));
+    const spy = jest.spyOn(check, "containsText").mockImplementation().mockRejectedValue("rejected");
 
     const submission: Submission = {
       id: "1",
@@ -165,7 +165,7 @@ describe("element-contains-text check", () => {
     spy.mockRestore();
   });
 
-  it("errors if the the selector is missing", async () => {
+  it("errors if the selector is missing", async () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       quit: jest.fn().mockResolvedValue(null),
@@ -197,7 +197,7 @@ describe("element-contains-text check", () => {
     spy.mockRestore();
   });
 
-  it("errors if the the text is missing", async () => {
+  it("errors if the text is missing", async () => {
     const webdriver = createMock<WebDriver>({
       get: jest.fn().mockResolvedValue(null),
       quit: jest.fn().mockResolvedValue(null),
