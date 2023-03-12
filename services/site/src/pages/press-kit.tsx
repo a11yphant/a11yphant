@@ -179,13 +179,8 @@ const PressKit: React.FunctionComponent = () => {
                     Michael Hinterhofer
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
-                  is a backend developer at{" "}
-                  <InTextLink href="https://www.chargepoint.com/de-de" target="_blank" rel="noopener noreferrer nofollow">
-                    Chargepoint
-                    <span className="sr-only">(opens in a new tab)</span>
-                  </InTextLink>{" "}
-                  on weekdays and chief of happiness officer for a11yphant on the weekend. Since co-founding a11yphant, he supported the team with his
-                  magic in the backend.
+                  is a corporate backend developer on weekdays and chief of happiness officer for a11yphant on the weekend. Since co-founding
+                  a11yphant, he supported the team with his magic in the backend.
                 </p>
               </li>
             </ul>
