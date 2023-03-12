@@ -16,7 +16,7 @@ export class ElementContainsText extends SeleniumCheck {
   public async evaluateRule(driver: WebDriver, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.selector || !rule.options?.text) {
       this.logger.error(
-        `Executing check ${rule.key} on submission ${submission.id} due too missing selector configuration`,
+        `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector or text configuration`,
         null,
         ElementContainsText.name,
       );
