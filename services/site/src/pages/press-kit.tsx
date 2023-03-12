@@ -2,18 +2,8 @@ import Footer from "app/components/Footer";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-import a11yphantComninationMarkDark from "../../public/images/logo/a11yphant_Logo_combination-mark_dark.png";
-import a11yphantComninationMarkLight from "../../public/images/logo/a11yphant_Logo_combination-mark_light.png";
-import a11yphantPictorialMark from "../../public/images/logo/a11yphant_Logo_pictorial-mark.png";
-import a11yphantChallengeDetail from "../../public/images/showcase/a11yphant_challenge_detail.jpg";
-import a11yphantChallengeOverview from "../../public/images/showcase/a11yphant_challenge_overview.jpg";
-import a11yphantChallengeResult from "../../public/images/showcase/a11yphant_challenge_result.jpg";
-import a11yphantCodingChallenge from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
-import a11yphantQuiz from "../../public/images/showcase/a11yphant-quiz.jpg";
 
 const PressKit: React.FunctionComponent = () => {
   return (
@@ -126,7 +116,7 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(dark on light background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <Image alt="Allyphant Logo" src={a11yphantComninationMarkDark} quality={80} placeholder="blur" sizes="80ch" priority />
+                  <img alt="Allyphant Logo" src="/images/logo/a11yphant_Logo_combination-mark_dark.png" />
                 </div>
               </li>
               <li>
@@ -134,20 +124,20 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(light on dark background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <Image alt="Allyphant Logo" src={a11yphantComninationMarkLight} quality={80} placeholder="blur" sizes="80ch" priority />
+                  <img alt="Allyphant Logo" src="/images/logo/a11yphant_Logo_combination-mark_light.png" />
                 </div>
               </li>
               <li>
                 <h4 className={clsx("h5 mt-8")}>Pictorial mark</h4>
                 <div className="max-w-[20ch]">
-                  <Image alt="Allyphant Logo" src={a11yphantPictorialMark} quality={80} placeholder="blur" sizes="80ch" priority />
+                  <img alt="Allyphant Logo" src="/images/logo/a11yphant_Logo_pictorial-mark.png" />
                 </div>
               </li>
             </ul>
           </section>
 
           <section className="mt-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>The Team behind</h2>
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>The Team behind a11yphant</h2>
 
             <h3 className={clsx("h5 mt-8", "md:h4")}>Concept and Development</h3>
             <ul className="mt-4 ml-6 list-disc">
@@ -229,53 +219,33 @@ const PressKit: React.FunctionComponent = () => {
             <h2 className={clsx("mb-8", "h4", "md:h3")}>Application Screenshots</h2>
             <div className="flex flex-wrap items-center">
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                  src={a11yphantChallengeOverview}
-                  quality={80}
-                  placeholder="blur"
-                  sizes="80ch"
-                  priority
+                <img
+                  alt="Allyphant website: An overview of all available challenge topics and their difficulty."
+                  src="/images/showcase/a11yphant_challenge_overview.jpg"
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                  src={a11yphantChallengeDetail}
-                  quality={80}
-                  placeholder="blur"
-                  sizes="80ch"
-                  priority
+                <img
+                  alt="Allyphant website: The textual details about a challenge (how many levels and topic)."
+                  src="/images/showcase/a11yphant_challenge_detail.jpg"
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                  src={a11yphantCodingChallenge}
-                  quality={80}
-                  placeholder="blur"
-                  sizes="80ch"
-                  priority
+                <img
+                  alt="Allyphant website: A coding level within a challenge. It consist of an editor, a sidebar with information and a preview window."
+                  src="/images/showcase/a11yphant-coding-challenge.jpg"
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                  src={a11yphantChallengeResult}
-                  quality={80}
-                  placeholder="blur"
-                  sizes="80ch"
-                  priority
+                <img
+                  alt="Allyphant website: The result of a coding level evaluation, displaying if it was passed or failed."
+                  src="/images/showcase/a11yphant_challenge_result.jpg"
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                  src={a11yphantQuiz}
-                  quality={80}
-                  placeholder="blur"
-                  sizes="80ch"
-                  priority
+                <img
+                  alt="Allyphant website: A quiz level consisting of a question and 4 possible answers."
+                  src="/images/showcase/a11yphant-quiz.jpg"
                 />
               </div>
             </div>
