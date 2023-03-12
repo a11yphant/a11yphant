@@ -397,12 +397,27 @@ jobs:
       - name: Sum Coverage
         run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 3
 
+      - name: Determine git commit sha and branch because does not provide them in a consistent manner
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" = "pull_request" ]]; then
+            GIT_COMMIT_SHA=$PR_HEAD_SHA
+            GIT_BRANCH=$GITHUB_REF
+          else
+            GIT_COMMIT_SHA=$GITHUB_SHA
+            GIT_BRANCH=$GITHUB_HEAD_REF
+          fi
+
+          GIT_BRANCH=${GIT_BRANCH#"refs/heads/"}
+
+          echo "{GIT_BRANCH}={$GIT_BRANCH}" >> $GITHUB_ENV
+          echo "{GIT_COMMIT_SHA}={$GIT_COMMIT_SHA}" >> $GITHUB_ENV
+
       - name: Upload Coverage
         run: ./cc-test-reporter upload-coverage --debug
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
-          GIT_COMMIT_SHA: ${{ env.GITHUB_SHA }}
-          GIT_BRANCH: ${{ env.GITHUB_HEAD_REF }}
 
   test-end-to-end:
     needs:
