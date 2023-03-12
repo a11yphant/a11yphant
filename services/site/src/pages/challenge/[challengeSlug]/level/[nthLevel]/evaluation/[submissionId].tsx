@@ -77,7 +77,7 @@ const Evaluation: React.FunctionComponent = () => {
           property="og:description"
           content="The a11yphant evaluation provides you with detailed feedback on our success criteria. Revisit web development topics from an accessibility perspective to make the web more inclusive."
         />
-        <meta property="og:image" content="/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."

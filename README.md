@@ -31,7 +31,7 @@ In an ideal world, all websites are designed and developed so everyone can use t
 
 <img
   alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-  src="https://a11yphant.com/images/mockups-social-media.jpg"
+  src="https://a11yphant.com/images/SEO/mockups-social-media.jpg"
   quality="100"
   sizes="100vw"
   style="objectFit:cover"
