@@ -1,7 +1,9 @@
 import { registerEnumType } from "@nestjs/graphql";
 
 export enum RegisterErrorCodes {
-  INVALID_USER = "INVALID_USER",
+  ANONYMOUS_USER_INVALID = "ANONYMOUS_USER_INVALID",
+  EMAIL_IN_USE = "EMAIL_IN_USE",
+  USER_ALREADY_REGISTERED = "USER_ALREADY_REGISTERED",
 }
 
 registerEnumType(RegisterErrorCodes, {
