@@ -7,7 +7,7 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import a11yphantStatic from "../../public/images/a11yphant-static.jpg";
+import a11yphantStatic from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
 
 const About: React.FunctionComponent = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
