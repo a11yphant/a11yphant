@@ -335,10 +335,15 @@ jobs:
   upload-coverage-reports:
     needs:
       - test-api
+      - test-submission-checker
+      - test-site
     runs-on: ubuntu-22.04
     permissions:
       contents: read
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Download CodeClimate Test Reporter
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -354,7 +359,7 @@ jobs:
       - run: ls -l test-coverage-api/
 
       - name: Format API Coverage
-        run: ./cc-test-reporter format-coverage -t lcov -o codeclimate.api.json test-coverage-api/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov --prefix services/api -o codeclimate.api.json test-coverage-api/lcov.info
 
       - name: Sum Coverage
         run: ./cc-test-reporter codeclimate.*.json -p 1
