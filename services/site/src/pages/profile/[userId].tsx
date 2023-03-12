@@ -60,7 +60,7 @@ const Challenge: React.FunctionComponent = () => {
         <meta property="og:locale" content="en" />
         <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
         <meta property="og:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
-        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
@@ -70,7 +70,7 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
         <meta name="twitter:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
-        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />

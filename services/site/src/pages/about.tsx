@@ -7,7 +7,7 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import a11yphantStatic from "../../public/images/a11yphant-static.jpg";
+import a11yphantStatic from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
 
 const About: React.FunctionComponent = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -23,7 +23,7 @@ const About: React.FunctionComponent = () => {
         <meta property="og:locale" content="en" />
         <meta property="og:title" content="About" />
         <meta property="og:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
@@ -33,7 +33,7 @@ const About: React.FunctionComponent = () => {
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="a11yphant" />
         <meta name="twitter:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
