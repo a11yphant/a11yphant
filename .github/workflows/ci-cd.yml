@@ -403,13 +403,11 @@ jobs:
         run: |
           if [[ "$GITHUB_EVENT_NAME" = "pull_request" ]]; then
             GIT_COMMIT_SHA=$PR_HEAD_SHA
-            GIT_BRANCH=$GITHUB_REF
+            GIT_BRANCH=$GITHUB_HEAD_REF
           else
             GIT_COMMIT_SHA=$GITHUB_SHA
-            GIT_BRANCH=$GITHUB_HEAD_REF
+            GIT_BRANCH=${GITHUB_REF#"refs/heads/"}
           fi
-
-          GIT_BRANCH=${GIT_BRANCH#"refs/heads/"}
 
           echo "{GIT_BRANCH}={$GIT_BRANCH}" >> $GITHUB_ENV
           echo "{GIT_COMMIT_SHA}={$GIT_COMMIT_SHA}" >> $GITHUB_ENV
