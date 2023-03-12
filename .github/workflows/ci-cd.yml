@@ -372,8 +372,8 @@ jobs:
           echo $GIT_BRANCH
           echo $GIT_COMMIT_SHA
 
-          echo "git-branch={$GIT_BRANCH}" >> "$GITHUB_OUTPUT"
-          echo "git-commit-sha={$GIT_COMMIT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "git-branch=$GIT_BRANCH" >> "$GITHUB_OUTPUT"
+          echo "git-commit-sha=$GIT_COMMIT_SHA" >> "$GITHUB_OUTPUT"
 
       - name: Download CodeClimate Test Reporter
         run: |
