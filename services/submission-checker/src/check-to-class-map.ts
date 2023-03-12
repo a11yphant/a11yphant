@@ -1,3 +1,6 @@
+import { ElementContainsText } from "@/checks/element-contains-text.check";
+import { ElementNotContainsText } from "@/checks/element-not-contains-text.check";
+
 import { AXE_CHECKS_TO_CHECK_NAMES_MAP } from "./checks/axe-checks";
 import { DocumentStartsWithHtml5Doctype } from "./checks/document-starts-with-html5-doctype.check";
 import { ElementExists } from "./checks/element-exists.check";
@@ -8,6 +11,8 @@ export const checkToClassMap = {
   "html-is-valid": HtmlIsValidCheck,
   "element-exists": ElementExists,
   "element-not-exists": ElementNotExists,
+  "element-contains-text": ElementContainsText,
+  "element-not-contains-text": ElementNotContainsText,
   "document-starts-with-html5-doctype": DocumentStartsWithHtml5Doctype,
   ...AXE_CHECKS_TO_CHECK_NAMES_MAP,
 };
