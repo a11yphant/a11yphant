@@ -223,6 +223,12 @@ jobs:
       - name: Test
         run: npm run test:coverage --prefix services/site
 
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-site
+          path: services/site/coverage
+
   build-site:
     needs:
       - variables
@@ -355,14 +361,20 @@ jobs:
           name: test-coverage-api
           path: test-coverage-api/
 
-      - run: ls -l
-      - run: ls -l test-coverage-api/
+      - name: Download Site test coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: test-coverage-site
+          path: test-coverage-site/
 
       - name: Format API Coverage
-        run: ./cc-test-reporter format-coverage -t lcov --prefix services/api -o codeclimate.api.json test-coverage-api/lcov.info
+        run: ./cc-test-reporter format-coverage -t lcov --add-prefix services/api -o codeclimate.api.json test-coverage-api/lcov.info
+
+      - name: Format Site Coverage
+        run: ./cc-test-reporter format-coverage -t lcov --add-prefix services/site -o codeclimate.api.json test-coverage-site/lcov.info
 
       - name: Sum Coverage
-        run: ./cc-test-reporter codeclimate.*.json -p 1
+        run: ./cc-test-reporter codeclimate.*.json -p 2
 
       - name: Upload Coverage
         run: ./cc-test-reporter upload-coverage
