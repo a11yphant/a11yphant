@@ -46,29 +46,38 @@ In an ideal world, all websites are designed and developed so everyone can use t
 
 ## Meet the Team
 
-<p>
-  <span aria-label="Allyphant">a11yphant</span> started as a master’s project created by six students at the
-  <a href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
-Salzburg University of Applied Sciences (Austria)</a>.
-  <span className="font-medium">Concept and Development</span> by <a href="https://dnikub.dev">Daniela Kubesch</a>,
-  <a href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
-    Luca Pircher
-  </a>
-  ,
-  <a href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
-    Thomas Dax
-  </a>
-  and
-  <a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
-    Michael Hinterhofer</a>.
-  <span className="font-medium">Interface and Corporate Design</span> by
-  <a href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
-    Johanna Wicht
-  </a>
-  and
-  <a href="https://www.fabianhellerdesign.com/" target="_blank" rel="noopener noreferrer nofollow">
-    Fabian Heller</a>.
-</p>
+<span aria-label="Allyphant">a11yphant</span> started as a master’s project created by six students at the <a href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
+Salzburg University of Applied Sciences</a> in Austria. The interdisciplinary team consisted of four web engineering and two communication design students.
+
+Nowadays, the a11yphant core-team continues developing a11yphant as Open Source project. Their goal is to make the web a more accessible and inclusive place.
+
+### Concept and Development
+
+<img src="https://unavatar.io/github/dnikub" height="138">
+
+<a href="https://dnikub.dev"  target="_blank" rel="noopener noreferrer nofollow">Daniela Kubesch</a> 
+
+<img src="https://unavatar.io/github/lucapircher" height="138">
+
+<a href="https://lucapircher.at" target="_blank" rel="noopener noreferrer nofollow">Luca Pircher</a> 
+
+<img src="https://unavatar.io/github/thomasdax98" height="138">
+
+<a href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">Thomas Dax</a>
+
+<img src="https://unavatar.io/github/hntrhfr" height="138">
+
+<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a>
+
+### Interface and Corporate Design
+
+<img src="services/site/public/images/github-docs/johanna-wicht-2023.jpg" height="138">
+
+<a href="https://johannawicht.com" target="_blank" rel="noopener noreferrer nofollow">Johanna Wicht</a>
+
+<img src="https://unavatar.io/github/fabianheller" height="138">
+
+<a href="https://www.fabianhellerdesign.com" target="_blank" rel="noopener noreferrer nofollow">Fabian Heller</a>
 
 ## Contributing to a11yphant
 
