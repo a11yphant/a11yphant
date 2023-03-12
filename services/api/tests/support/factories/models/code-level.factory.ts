@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "rosie";
 
 import { CodeLevel } from "@/challenge/models/code-level.model";

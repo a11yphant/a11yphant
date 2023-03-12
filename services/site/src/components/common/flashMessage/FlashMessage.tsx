@@ -63,7 +63,7 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
           role={type === FlashMessageType.ALERT ? "alert" : "status"}
         >
           <span className={clsx("basis-12 flex-shrink hidden", "md:block")} />
-          <div className={clsx("flex-auto pr-4 pl-9 text-left", "md:text-center")}>{children}</div>
+          <div className={clsx("flex justify-center pr-4 pl-9 text-left", "md:text-center")}>{children}</div>
           <Button
             onClick={onClose}
             overrideClassName

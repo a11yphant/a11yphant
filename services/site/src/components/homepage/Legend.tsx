@@ -14,13 +14,13 @@ const Legend: React.FunctionComponent<LegendProps> = ({ className }) => {
           <DifficultyEasy thirdClassName={"mr-2"} />
           Easy
         </li>
-        <li className={clsx("text-grey flex items-center", "xs:mx-2 xs:px-1")}>
+        <li className={clsx("text-grey opacity-50 flex items-center", "xs:mx-2 xs:px-1")}>
           <DifficultyMedium thirdClassName={"mr-2"} />
-          Medium
+          Medium <span className="text-xl text-grey">*</span>
         </li>
-        <li className={clsx("text-grey flex items-center", "xs:mx-2 xs:px-1")}>
+        <li className={clsx("text-grey opacity-50 flex items-center", "xs:mx-2 xs:px-1")}>
           <DifficultyHard thirdClassName={"mr-2"} />
-          Hard
+          Hard <span className="text-xl text-grey">*</span>
         </li>
       </ul>
     </div>

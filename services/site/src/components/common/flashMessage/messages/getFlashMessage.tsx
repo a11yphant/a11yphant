@@ -4,6 +4,8 @@ import { HintReminderMessage } from "app/components/common/flashMessage/messages
 import { OAuthLoginFailedMessage } from "app/components/common/flashMessage/messages/OAuthLoginFailedMessage";
 import React from "react";
 
+import { FlashMessageType } from "../FlashMessage";
+
 export enum FlashMessageEnum {
   HINT_REMINDER = "hint-reminder",
   EMAIL_CONFIRMATION_FAILED = "email-confirmation-failed",
@@ -11,17 +13,22 @@ export enum FlashMessageEnum {
   OAUTH_LOGIN_FAILED = "oauth-login-failed",
 }
 
+interface FlashMessage {
+  message: React.ReactElement;
+  type: FlashMessageType;
+}
+
 type FlashMessages = {
-  [key in FlashMessageEnum]: React.ReactElement;
+  [key in FlashMessageEnum]: FlashMessage;
 };
 
 const flashMessages: FlashMessages = {
-  [FlashMessageEnum.HINT_REMINDER]: <HintReminderMessage />,
-  [FlashMessageEnum.EMAIL_CONFIRMATION_FAILED]: <EmailConfirmationFailedMessage />,
-  [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: <EmailConfirmationSuccessfulMessage />,
-  [FlashMessageEnum.OAUTH_LOGIN_FAILED]: <OAuthLoginFailedMessage />,
+  [FlashMessageEnum.HINT_REMINDER]: { message: <HintReminderMessage />, type: FlashMessageType.STATUS },
+  [FlashMessageEnum.EMAIL_CONFIRMATION_FAILED]: { message: <EmailConfirmationFailedMessage />, type: FlashMessageType.ALERT },
+  [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: { message: <EmailConfirmationSuccessfulMessage />, type: FlashMessageType.STATUS },
+  [FlashMessageEnum.OAUTH_LOGIN_FAILED]: { message: <OAuthLoginFailedMessage />, type: FlashMessageType.ALERT },
 };
 
-export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): React.ReactElement => {
+export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): FlashMessage => {
   return flashMessages[flashMessageEnum];
 };

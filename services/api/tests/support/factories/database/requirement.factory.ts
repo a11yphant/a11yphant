@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { IFactoryStatic } from "rosie";
 
 import { CODE_LEVEL, REQUIREMENT, RULE } from "./constants";
