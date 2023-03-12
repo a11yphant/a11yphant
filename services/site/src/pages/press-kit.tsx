@@ -1,4 +1,5 @@
 import Footer from "app/components/Footer";
+import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Head from "next/head";
@@ -143,7 +144,7 @@ const PressKit: React.FunctionComponent = () => {
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
-                  <InTextLink href="https://dnikub.dev" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://dnikub.dev" opensInNewTab>
                     Daniela Kubesch
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -153,7 +154,7 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://lucapircher.at" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://lucapircher.at" opensInNewTab>
                     Luca Pircher
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -164,7 +165,7 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://github.com/thomasdax98" opensInNewTab>
                     Thomas Dax
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -175,7 +176,7 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://github.com/hntrhfr" opensInNewTab>
                     Michael Hinterhofer
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -189,7 +190,7 @@ const PressKit: React.FunctionComponent = () => {
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
-                  <InTextLink href="https://johannawicht.com" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://johannawicht.com" opensInNewTab>
                     Johanna Wicht
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -199,7 +200,7 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://www.fabianhellerdesign.com" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://www.fabianhellerdesign.com" opensInNewTab>
                     Fabian Heller
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -270,25 +271,6 @@ const PressKit: React.FunctionComponent = () => {
       </main>
       <Footer />
     </>
-  );
-};
-
-const InTextLink: React.FunctionComponent<React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>> = ({
-  children,
-  ...props
-}) => {
-  return (
-    <a
-      className={clsx(
-        "text-light font-sans font-normal border-light",
-        "transition-colors duration-300",
-        "hover:text-primary-light hover:border-transparent",
-        "focus-rounded-instead-of-underline",
-      )}
-      {...props}
-    >
-      {children}
-    </a>
   );
 };
 

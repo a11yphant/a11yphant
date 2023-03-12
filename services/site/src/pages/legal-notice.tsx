@@ -1,8 +1,8 @@
 import Footer from "app/components/Footer";
+import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Head from "next/head";
-import Link from "next/link";
 import React from "react";
 
 const LegalNotice: React.FunctionComponent = () => {
@@ -51,87 +51,31 @@ const LegalNotice: React.FunctionComponent = () => {
               Austria
             </p>
             <p>
-              <strong>Email: </strong>{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  info@a11yphant.com
-                </a>
-              </Link>
+              <strong>Email: </strong> <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>
             </p>
           </address>
 
           <h2 className={clsx("h5 mb-4", "sm:h4")}>Responsible for the Content</h2>
           <ul className={clsx("list-disc ml-6 mb-8")}>
             <li className={clsx("m-0 my-4")}>
-              <Link href={"https://dnikub.dev/"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "mt-2 text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>
-                </a>
-              </Link>
+              <InTextLink href="https://dnikub.dev/" opensInNewTab>
+                Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              </InTextLink>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <Link href={"https://lucapircher.at"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "mt-2 text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Luca Pircher <span className={clsx("sr-only")}>(opens in a new tab)</span>
-                </a>
-              </Link>
+              <InTextLink href="https://lucapircher.at" opensInNewTab>
+                Luca Pircher <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              </InTextLink>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <Link href={"https://github.com/thomasdax98"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "mt-2 text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Thomas Dax <span className={clsx("sr-only")}>(opens in a new tab)</span>
-                </a>
-              </Link>
+              <InTextLink href="https://github.com/thomasdax98" opensInNewTab>
+                Thomas Dax <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              </InTextLink>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <Link href={"https://github.com/hntrhfr"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "mt-2 text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Michael Hinterhofer <span className={clsx("sr-only")}>(opens in a new tab)</span>
-                </a>
-              </Link>
+              <InTextLink href="https://github.com/hntrhfr" opensInNewTab>
+                Michael Hinterhofer <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              </InTextLink>
             </li>
           </ul>
         </div>
