@@ -38,7 +38,7 @@ Feature requests are very welcome. But take a moment to find out whether your id
 
 ## Writing Content
 
-If you have any content ideas for new challenges feel free to [write us an email](mailto:info@a11yphant.com).
+If you have any ideas for new challenges feel free to [write us an email](mailto:info@a11yphant.com).
 
 > Please contact us first, as we might already work on your topic idea in the background.
 
