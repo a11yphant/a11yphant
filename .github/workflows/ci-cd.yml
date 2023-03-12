@@ -398,7 +398,7 @@ jobs:
         run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 3
 
       - name: Upload Coverage
-        run: ./cc-test-reporter upload-coverage
+        run: ./cc-test-reporter upload-coverage --debug
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_TEST_REPORTER_ID }}
           GIT_COMMIT_SHA: ${{ env.GITHUB_SHA }}
