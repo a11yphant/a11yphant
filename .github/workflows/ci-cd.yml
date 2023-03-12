@@ -148,7 +148,6 @@ jobs:
           name: test-coverage-api
           path: services/api/coverage
                  
-
   build-api:
     needs:
       - variables
@@ -336,6 +335,7 @@ jobs:
   upload-coverage-reports:
     needs:
       - build-api
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
     steps:
