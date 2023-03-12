@@ -409,6 +409,9 @@ jobs:
             GIT_BRANCH=${GITHUB_REF#"refs/heads/"}
           fi
 
+          echo $GIT_BRANCH
+          echo $GIT_COMMIT_SHA
+
           echo "{GIT_BRANCH}={$GIT_BRANCH}" >> $GITHUB_ENV
           echo "{GIT_COMMIT_SHA}={$GIT_COMMIT_SHA}" >> $GITHUB_ENV
 
