@@ -13,7 +13,6 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
-  "license": "UNLICENSED",
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1 || ^5.0.0",
     "@typescript-eslint/parser": "^4.15.1 || ^5.0.0",
