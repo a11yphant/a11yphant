@@ -12,7 +12,7 @@ If you think you've found a bug or accessibility issue, feel free to let us know
 1. I ensured that the problem is not caused by my local environment (e.g., a browser plugin, a really old browser version or unusual browser settings)
 2. I checked that no GitHub issue was already filed for this bug
 
-If you answered everything with yes, go ahead and with this GitHub issue. Be sure to include as much information as possible so we can reproduce the bug.
+If you answered everything with yes, go ahead with this GitHub issue. Be sure to include as much information as possible so we can reproduce the bug.
 
 
 **Describe the bug**
