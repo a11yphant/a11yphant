@@ -463,7 +463,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get API Image Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: api-image
           path: /tmp/api-image/
@@ -472,7 +472,7 @@ jobs:
         run: docker load --input /tmp/api-image/image.tar
 
       - name: Get Site Image Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: site-image
           path: /tmp/site-image/
@@ -481,7 +481,7 @@ jobs:
         run: docker load --input /tmp/site-image/image.tar
 
       - name: Get Submission Checker Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: submission-checker-image
           path: /tmp/submission-checker-image/
