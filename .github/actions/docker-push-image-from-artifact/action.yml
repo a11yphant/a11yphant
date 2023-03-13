@@ -30,7 +30,7 @@ runs:
         password: ${{ inputs.registry-password }}
 
     - name: Get Artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}
         path: /tmp/${{ inputs.artifact-name }}/
