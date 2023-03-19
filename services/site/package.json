@@ -65,7 +65,7 @@
     "@tailwindcss/typography": "0.5.9",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "12.1.5",
+    "@testing-library/react": "14.0.0",
     "@testing-library/react-hooks": "7.0.2",
     "@testing-library/user-event": "14.4.3",
     "@types/enzyme": "3.10.12",
