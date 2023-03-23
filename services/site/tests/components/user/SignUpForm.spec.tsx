@@ -38,7 +38,7 @@ describe("sign up form", () => {
 
   it("renders a submit button", () => {
     render(<SignUpForm />);
-    expect(screen.getByRole("button", { name: /Sign up/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Sign Up/ })).toBeInTheDocument();
   });
 
   it("calls the onAfterSubmit callback if the form is sent successfully", async () => {

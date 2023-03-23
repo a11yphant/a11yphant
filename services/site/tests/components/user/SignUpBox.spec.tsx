@@ -49,13 +49,13 @@ describe("sign up box", () => {
   it("renders the sign up via github link", () => {
     renderSignUpBox();
 
-    expect(screen.getByRole("link", { name: /Sign up via Github/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Sign Up via Github/ })).toBeInTheDocument();
   });
 
   it("renders the sign up via twitter link", () => {
     renderSignUpBox();
 
-    expect(screen.getByRole("link", { name: /Sign up via Twitter/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Sign Up via Twitter/ })).toBeInTheDocument();
   });
 
   it("renders a button to got to the log in", () => {
