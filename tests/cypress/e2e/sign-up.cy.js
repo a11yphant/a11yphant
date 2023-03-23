@@ -10,7 +10,7 @@ describe("sign up", () => {
         getInputByLabel('Name').type("Sign up user");
         getInputByLabel('Email').type("sign-up@a11yphant.com");
         getInputByLabel('Password').type("very-secret");
-        cy.contains('button', 'Sign up').click();
+        cy.contains('button', 'Sign Up').click();
 
         cy.contains("Welcome! Thank's for signing up.").should("exist");
     });
