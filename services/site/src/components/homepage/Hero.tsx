@@ -18,15 +18,13 @@ const Hero: React.FC = () => {
         <h2
           className={clsx("mb-6 max-w-2xl font-bold font-sans text-3xl leading-tight", "sm:text-4xl sm:leading-snug", "xl:text-5xl xl:leading-snug")}
         >
-          Learning web accessibility made easy
+          Learn to code <br /> accessibly with <br /> <span className="sr-only">allyphant</span>
+          <span aria-hidden="true">a11yphant</span>.
         </h2>
-        <p className={clsx("text-grey-middle text-lg")}>
-          <span className={clsx("text-inherit text-lg")} aria-label="allyphant">
-            a11yphant
-          </span>{" "}
-          teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to read large
-          amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web accessibility
-          challenge and improve your skills.
+        <p className={clsx("text-grey-middle text-lg max-w-[40ch]")}>
+          <span className="sr-only">allyphant</span>
+          <span aria-hidden="true">a11yphant</span> teaches web accessibility, one step at a time, broken down into manageable pieces. We call these
+          challenges.
         </p>
         <Link href="/#challenges">
           <a
