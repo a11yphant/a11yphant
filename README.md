@@ -69,7 +69,7 @@ Nowadays, the a11yphant core-team continues developing a11yphant as Open Source 
 
 <img src="https://unavatar.io/github/hntrhfr" height="138">
 
-<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a> is a corporate backend developer on weekdays and chief of happiness officer for a11yphant on the weekend. Since co-founding a11yphant, he supported the team with his magic in the backend.
+<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a> is a corporate backend developer on weekdays and "Chief of Happiness Officer" for a11yphant on the weekend. Since co-founding a11yphant, he supported the team with his magic in the backend.
 
 ### Interface and Corporate Design
 
