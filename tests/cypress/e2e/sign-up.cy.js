@@ -10,7 +10,8 @@ describe("sign up", () => {
         getInputByLabel('Name').type("Sign up user");
         getInputByLabel('Email').type("sign-up@a11yphant.com");
         getInputByLabel('Password').type("very-secret");
-        cy.contains('button', 'Sign Up').click();
+        const form = cy.get('[aria-label="Sign up form"]');
+        form.contains('button', 'Sign Up').click();
 
         cy.contains("Welcome! Thank's for signing up.").should("exist");
     });
