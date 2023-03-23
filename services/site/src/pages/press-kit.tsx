@@ -180,7 +180,7 @@ const PressKit: React.FunctionComponent = () => {
                     Michael Hinterhofer
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
-                  is a corporate backend developer on weekdays and chief of happiness officer for a11yphant on the weekend. Since co-founding
+                  is a corporate backend developer on weekdays and "Chief of Happiness Officer" for a11yphant on the weekend. Since co-founding
                   a11yphant, he supported the team with his magic in the backend.
                 </p>
               </li>
