@@ -94,7 +94,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
       </div>
 
       <InvertedLoadingButton loading={loading} srLoadingText="Sign up in progress">
-        Sign up
+        Sign Up
       </InvertedLoadingButton>
     </form>
   );
