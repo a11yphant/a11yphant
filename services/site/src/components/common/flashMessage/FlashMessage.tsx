@@ -1,11 +1,9 @@
 import { Transition } from "@headlessui/react";
 import Button from "app/components/buttons/Button";
-import { FLASH_MESSAGE_PORTAL_ROOT_ID } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import X from "app/components/icons/X";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
 import React from "react";
-import ReactDOM from "react-dom";
 
 export enum FlashMessageType {
   STATUS = "status",
@@ -28,24 +26,9 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
   className,
   offsetElementClassName,
 }) => {
-  const [rootNode, setRootNode] = React.useState<HTMLElement>();
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  React.useEffect(() => {
-    const rootNode = document.getElementById(FLASH_MESSAGE_PORTAL_ROOT_ID);
-
-    if (show && !rootNode) {
-      console.error("Can't show FlashMessage: No FlashMessagePortalRoot defined in current scope");
-    }
-
-    setRootNode(rootNode);
-  }, [show]);
-
-  if (!rootNode) {
-    return <></>;
-  }
-
-  return ReactDOM.createPortal(
+  return (
     <>
       <Transition
         appear={true}
@@ -92,7 +75,6 @@ export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
       >
         <div className={clsx("h-[4.5rem]", offsetElementClassName)} />
       </Transition>
-    </>,
-    rootNode,
+    </>
   );
 };

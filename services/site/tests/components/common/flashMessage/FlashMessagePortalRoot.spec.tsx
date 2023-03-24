@@ -1,11 +1,23 @@
-import { queryByAttribute, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
-import { FLASH_MESSAGE_PORTAL_ROOT_ID, FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
+import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
+import React from "react";
+
+afterEach(() => {
+  jest.resetAllMocks();
+});
 
 describe("FlashMessagePortalRoot", () => {
-  it("renders div with id = FLASH_MESSAGE_PORTAL_ROOT_ID", () => {
-    const { container } = render(<FlashMessagePortalRoot />, { wrapper: FlashMessageContextProvider });
+  it("renders sets the ref for the portal root", () => {
+    jest.spyOn(React, "useRef");
 
-    expect(queryByAttribute("id", container, FLASH_MESSAGE_PORTAL_ROOT_ID));
+    render(
+      <>
+        <FlashMessagePortalRoot />
+      </>,
+      { wrapper: FlashMessageContextProvider },
+    );
+
+    expect(React.useRef).toHaveBeenCalled();
   });
 });

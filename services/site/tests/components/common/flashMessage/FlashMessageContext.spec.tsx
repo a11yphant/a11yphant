@@ -1,26 +1,17 @@
 import { act, render, screen } from "@testing-library/react";
-import { FlashMessage } from "app/components/common/flashMessage/FlashMessage";
 import { FlashMessageApi, FlashMessageContextProvider, useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
-import { shallow } from "enzyme";
 import React from "react";
 
 describe("FlashMessageContextProvider", () => {
-  it("renders FlashMessage", () => {
-    const view = shallow(<FlashMessageContextProvider />);
-
-    expect(view.exists(FlashMessage)).toBeTruthy();
-  });
-
   it("renders children", () => {
-    const ChildComponent = (): React.ReactElement => <div />;
-    const view = shallow(
+    render(
       <FlashMessageContextProvider>
-        <ChildComponent />
+        <div data-testid="child" />
       </FlashMessageContextProvider>,
     );
 
-    expect(view.exists(ChildComponent)).toBeTruthy();
+    expect(screen.getByTestId("child")).toBeInTheDocument();
   });
 });
 
@@ -35,7 +26,7 @@ describe("useFlashMessageApi", () => {
     return <FlashMessagePortalRoot />;
   };
 
-  it("show function displays message", () => {
+  it("show function displays message", async () => {
     let flashMessageApi: FlashMessageApi;
     const message = "Mock Message";
     render(
@@ -47,14 +38,15 @@ describe("useFlashMessageApi", () => {
       { wrapper: FlashMessageContextProvider },
     );
 
-    act(() => {
+    await act(async () => {
       flashMessageApi.show(message);
+      await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
     expect(screen.getByText(message)).toBeInTheDocument();
   });
 
-  it("hide function hides flash message", () => {
+  it("hide function hides flash message", async () => {
     let flashMessageApi: FlashMessageApi;
     const message = "Mock Message";
     render(
@@ -66,8 +58,9 @@ describe("useFlashMessageApi", () => {
       { wrapper: FlashMessageContextProvider },
     );
 
-    act(() => {
+    await act(async () => {
       flashMessageApi.show(message);
+      await new Promise((resolve) => setTimeout(resolve, 0));
       flashMessageApi.hide();
     });
 
