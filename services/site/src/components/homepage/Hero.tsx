@@ -23,8 +23,10 @@ const Hero: React.FC = () => {
         </h2>
         <p className={clsx("text-grey-middle text-lg max-w-[40ch]")}>
           <span className="sr-only">allyphant</span>
-          <span aria-hidden="true">a11yphant</span> teaches web accessibility, one step at a time, broken down into manageable pieces. We call these
-          challenges.
+          <span aria-hidden="true" className="text-grey-middle">
+            a11yphant
+          </span>{" "}
+          teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges.
         </p>
         <Link href="/#challenges">
           <a
