@@ -3,10 +3,14 @@ import clsx from "clsx";
 import NextLink, { LinkProps } from "next/link";
 import React from "react";
 
-const WrappedNextLink: React.FC<LinkProps & { className: string }> = ({ href, children, ...rest }) => (
-  <NextLink href={href}>
-    <a {...rest}>{children}</a>
-  </NextLink>
+const WrappedNextLink: React.FC<LinkProps & { className: string }> = React.forwardRef<HTMLAnchorElement, LinkProps & { className: string }>(
+  ({ href, children, ...rest }, ref) => (
+    <NextLink href={href}>
+      <a ref={ref} {...rest}>
+        {children}
+      </a>
+    </NextLink>
+  ),
 );
 
 type LinkComponent = React.FC<LinkProps>;

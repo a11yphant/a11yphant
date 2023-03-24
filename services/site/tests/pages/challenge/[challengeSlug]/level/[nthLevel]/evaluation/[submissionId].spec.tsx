@@ -46,6 +46,7 @@ const mockShowFlashMessage = jest.fn();
 jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
   useFlashMessageApi: () => ({
     show: mockShowFlashMessage,
+    portalRootRef: null,
   }),
 }));
 

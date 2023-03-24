@@ -20,8 +20,8 @@ interface QuizLevelProps {
 }
 
 const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question, answers, isLastLevel }) => {
-  const [chosenId, setChosenId] = React.useState<string>();
-  const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>();
+  const [chosenId, setChosenId] = React.useState<string>(null);
+  const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>(null);
   const flashMessageApi = useFlashMessageApi();
 
   const [submitQuizLevelAnswerMutation, { loading }] = useSubmitQuizLevelAnswerMutation();
@@ -33,8 +33,8 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   };
 
   const reset = (): void => {
-    setQuizResult(undefined);
-    setChosenId(undefined);
+    setQuizResult(null);
+    setChosenId(null);
   };
 
   React.useEffect(() => {
@@ -57,7 +57,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
           <div className={clsx("col-span-3 mb-8 p-1 overflow-y-auto")}>
-            {quizResult === undefined && (
+            {quizResult === null && (
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
             )}
             {quizResult?.status === ResultStatus.Fail && (
@@ -97,14 +97,14 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
           </div>
         </div>
         <div className={clsx("flex justify-end mr-12 mb-12")}>
-          {quizResult === undefined ? (
+          {quizResult === null ? (
             <LoadingButton
               primary
               onClick={submitLevel}
               loading={loading}
               submitButton
               srTextLoading="The submission is being processed."
-              disabled={chosenId === undefined}
+              disabled={chosenId === null}
             >
               Submit
             </LoadingButton>
