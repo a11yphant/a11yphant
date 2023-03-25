@@ -3,8 +3,10 @@ import "@testing-library/jest-dom/extend-expect";
 import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
 import Hero from "app/components/homepage/Hero";
-import { UserAccountBox } from "app/components/user/UserAccountBox";
-import { shallow } from "enzyme";
+
+jest.mock("app/generated/graphql", () => ({
+  useRegisterMutation: jest.fn().mockReturnValue([{}, {}]),
+}));
 
 describe("Hero", () => {
   it("renders two headings", () => {
@@ -19,8 +21,8 @@ describe("Hero", () => {
   });
 
   it("renders a UserAccountBox", () => {
-    const view = shallow(<Hero />);
+    render(<Hero />);
 
-    expect(view.exists(UserAccountBox)).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2, name: "Sign up to save your progress!" })).toBeInTheDocument();
   });
 });

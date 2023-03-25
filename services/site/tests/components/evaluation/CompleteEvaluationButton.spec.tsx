@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import LoadingButton from "app/components/buttons/LoadingButton";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import { ResultStatus } from "app/generated/graphql";
-import { shallow } from "enzyme";
 import router from "next/router";
 import React from "react";
 
@@ -18,33 +18,33 @@ beforeEach(() => {
 });
 
 describe("CompleteEvaluationButton", () => {
-  it("renders the 'Retry' button", () => {
-    const wrapper = shallow(<CompleteEvaluationButton status={ResultStatus.Fail} isLastLevel={false} />);
+  it("renders the 'Retry' button", async () => {
+    render(<CompleteEvaluationButton status={ResultStatus.Fail} isLastLevel={false} />);
 
-    expect(wrapper.exists(LoadingButton)).toBeTruthy();
-    expect(wrapper.find(LoadingButton).render().text()).toBe("Retry");
+    const retryButton = screen.getByRole("button", { name: "Retry" });
+    expect(retryButton).toBeInTheDocument();
 
-    wrapper.find(LoadingButton).simulate("click");
+    await userEvent.click(retryButton);
     expect(router.back).toHaveBeenCalledTimes(1);
   });
 
-  it("renders the 'Finish Challenge' button", () => {
-    const wrapper = shallow(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={true} />);
+  it("renders the 'Finish Challenge' button", async () => {
+    render(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={true} />);
 
-    expect(wrapper.exists(LoadingButton)).toBeTruthy();
-    expect(wrapper.find(LoadingButton).render().text()).toBe("Finish Challenge");
+    const finishButton = screen.getByRole("button", { name: "Finish Challenge" });
+    expect(finishButton).toBeInTheDocument();
 
-    wrapper.find(LoadingButton).simulate("click");
+    await userEvent.click(finishButton);
     expect(router.asPath).toBe("/");
   });
 
-  it("renders the 'Next Level' button", () => {
-    const wrapper = shallow(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={false} />);
+  it("renders the 'Next Level' button", async () => {
+    render(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={false} />);
 
-    expect(wrapper.exists(LoadingButton)).toBeTruthy();
-    expect(wrapper.find(LoadingButton).render().text()).toBe("Next Level");
+    const finishButton = screen.getByRole("button", { name: "Next Level" });
+    expect(finishButton).toBeInTheDocument();
 
-    wrapper.find(LoadingButton).simulate("click");
+    await userEvent.click(finishButton);
     expect(router.asPath).toBe(`/challenge/${mockChallengeSlug}/level/0${mockNthLevel + 1}`);
   });
 });
