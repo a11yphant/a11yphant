@@ -2,9 +2,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { render, RenderResult, screen } from "@testing-library/react";
 import Card, { CardProps } from "app/components/homepage/Card";
-import Check from "app/components/icons/Check";
 import { ChallengeDifficulty } from "app/generated/graphql";
-import { shallow, ShallowWrapper } from "enzyme";
 import React from "react";
 
 const headingText = "Semantic HTML";
@@ -31,14 +29,6 @@ const renderCard = (props?: Partial<CardProps>): RenderResult => {
   );
 };
 
-const shallowRenderCard = (props?: Partial<CardProps>): ShallowWrapper => {
-  return shallow(
-    React.cloneElement(card, {
-      ...props,
-    }),
-  );
-};
-
 describe("Card", () => {
   it("renders the heading and description text", () => {
     renderCard();
@@ -48,21 +38,24 @@ describe("Card", () => {
   });
 
   it("renders the correct gradient for `Easy` challenges", () => {
-    const view = shallowRenderCard({ difficulty: ChallengeDifficulty.Easy });
+    const { container } = renderCard({ difficulty: ChallengeDifficulty.Easy });
 
-    expect(view.exists(".bg-gradient-easy")).toBeTruthy();
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector(".bg-gradient-easy")).toBeTruthy();
   });
 
   it("renders the correct gradient for `Medium` challenges", () => {
-    const view = shallowRenderCard({ difficulty: ChallengeDifficulty.Medium });
+    const { container } = renderCard({ difficulty: ChallengeDifficulty.Medium });
 
-    expect(view.exists(".bg-gradient-medium")).toBeTruthy();
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector(".bg-gradient-medium")).toBeTruthy();
   });
 
   it("renders the correct gradient for `Hard` challenges", () => {
-    const view = shallowRenderCard({ difficulty: ChallengeDifficulty.Hard });
+    const { container } = renderCard({ difficulty: ChallengeDifficulty.Hard });
 
-    expect(view.exists(".bg-gradient-hard")).toBeTruthy();
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector(".bg-gradient-hard")).toBeTruthy();
   });
 
   it("renders the progress indicator for started challenges", async () => {
@@ -72,12 +65,14 @@ describe("Card", () => {
 
     expect(screen.getByText(/7/i)).toBeInTheDocument();
   });
+
   it("renders a checkmark for finished challenges", () => {
-    const view = shallowRenderCard({
+    const { container } = renderCard({
       levels: levelAmount,
       finishedLevels: levelAmount,
     });
 
-    expect(view.exists(Check)).toBeTruthy();
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector("svg")).toBeInTheDocument();
   });
 });

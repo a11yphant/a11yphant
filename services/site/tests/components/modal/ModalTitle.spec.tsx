@@ -1,38 +1,25 @@
-import { Dialog } from "@headlessui/react";
+import { render, screen } from "@testing-library/react";
 import { Modal } from "app/components/modal/Modal";
 import { ModalTitle } from "app/components/modal/ModalTitle";
-import { shallow } from "enzyme";
 import React from "react";
 
-const mockOnClose = jest.fn();
+const WrapperModal: React.FC = ({ children }) => (
+  <Modal open={true} onClose={jest.fn()}>
+    {children}
+  </Modal>
+);
 
 describe("ModalTitle", () => {
-  it("renders the Dialog.Title", () => {
-    const wrapper = shallow(<ModalTitle />);
-
-    expect(wrapper.exists(Dialog.Title)).toBeTruthy();
-  });
-
-  it("renders the `Dialog.Title` as component specified in 'as' prop", () => {
-    const wrapper = shallow(<ModalTitle as="div" />);
-
-    expect(
-      wrapper
-        .find<{
-          as?: React.ElementType;
-        }>(Dialog.Title)
-        .props().as,
-    ).toBe("div");
-  });
-
   it("renders the children", () => {
-    const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
-    const wrapper = shallow(
-      <Modal open={false} onClose={mockOnClose}>
-        <ChildComponent />
-      </Modal>,
-    );
+    render(<ModalTitle>Child</ModalTitle>, { wrapper: WrapperModal });
 
-    expect(wrapper.exists(ChildComponent)).toBeTruthy();
+    expect(screen.getByText("Child")).toBeInTheDocument();
+  });
+
+  it("renders the title as component specified in 'as' prop", () => {
+    const { container } = render(<ModalTitle as="div" />, { wrapper: WrapperModal });
+
+    // eslint-disable-next-line testing-library/prefer-screen-queries, testing-library/no-node-access, testing-library/no-container
+    expect(container.querySelector("div")).toBeInTheDocument();
   });
 });

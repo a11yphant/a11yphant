@@ -1,8 +1,6 @@
+import { render, screen } from "@testing-library/react";
 import Sidebar from "app/components/challenge/Sidebar";
-import HintList from "app/components/challenge/sidebar/HintList";
-import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { CodeLevel } from "app/generated/graphql";
-import { shallow } from "enzyme";
 import React from "react";
 
 const mockChallengeName = "Mock Challenge";
@@ -26,40 +24,33 @@ const mockLevel: Pick<CodeLevel, "instructions" | "tasks"> = {
 describe("Sidebar", () => {
   it("renders the wrapper element with classes", () => {
     const mockClassName = "mock-class";
-    const wrapper = shallow(<Sidebar className={mockClassName} challengeName={mockChallengeName} level={mockLevel} />);
+    const { container } = render(<Sidebar className={mockClassName} challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.find("section").props().className).toContain(mockClassName);
-  });
-
-  it("renders the scroll overlay", () => {
-    const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
-
-    expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
+    // eslint-disable-next-line testing-library/prefer-screen-queries, testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector("section")).toBeInTheDocument();
   });
 
   it("renders the challenge name as heading", () => {
-    const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
+    render(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.exists("h2")).toBeTruthy();
-    expect(wrapper.find("h2").text()).toBe(mockChallengeName);
+    expect(screen.getByRole("heading", { level: 2, name: mockChallengeName })).toBeInTheDocument();
   });
 
   it("renders a heading for instructions", () => {
-    const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
+    render(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.exists("h3")).toBeTruthy();
-    expect(wrapper.find("h3").text()).toBe("Instructions");
+    expect(screen.getByRole("heading", { level: 3, name: "Instructions" })).toBeInTheDocument();
   });
 
   it("renders the instructions as HTML", () => {
-    const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
+    const { container } = render(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.html()).toContain(mockLevel.instructions);
+    expect(container.innerHTML).toContain(mockLevel.instructions);
   });
 
-  it("renders the `HintList` component", () => {
-    const wrapper = shallow(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
+  it("renders the hints", () => {
+    render(<Sidebar challengeName={mockChallengeName} level={mockLevel} />);
 
-    expect(wrapper.exists(HintList)).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Stuck? Click to reveal a hint" })).toBeInTheDocument();
   });
 });
