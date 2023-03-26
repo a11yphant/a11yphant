@@ -45,7 +45,7 @@ jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
   }),
 }));
 
-jest.mock("app/components/Breadcrumbs/Breadcrumbs", () => ({
+jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
   __esModule: true,
   default: () => <></>,
 }));
