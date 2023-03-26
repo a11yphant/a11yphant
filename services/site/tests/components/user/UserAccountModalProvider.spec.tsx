@@ -1,23 +1,31 @@
+import { render, screen } from "@testing-library/react";
 import UserAccountModal from "app/components/user/UserAccountModal";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
-import { shallow } from "enzyme";
 import React from "react";
+
+jest.mock("app/components/user/UserAccountModal", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
+beforeEach(() => {
+  (UserAccountModal as jest.Mock).mockImplementation(() => <></>);
+});
 
 describe("UserAccountModalProvider", () => {
   it("renders the UserAccountModal", () => {
-    const wrapper = shallow(<UserAccountModalProvider />);
+    render(<UserAccountModalProvider />);
 
-    expect(wrapper.exists(UserAccountModal)).toBeTruthy();
+    expect(UserAccountModal).toHaveBeenCalled();
   });
 
   it("renders the children", () => {
-    const ChildComponent: React.FunctionComponent = () => null;
-    const wrapper = shallow(
+    render(
       <UserAccountModalProvider>
-        <ChildComponent />
+        <p>Child</p>
       </UserAccountModalProvider>,
     );
 
-    expect(wrapper.exists(ChildComponent)).toBeTruthy();
+    expect(screen.getByText("Child")).toBeInTheDocument();
   });
 });

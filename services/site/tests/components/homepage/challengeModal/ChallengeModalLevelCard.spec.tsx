@@ -1,8 +1,6 @@
+import { render, screen } from "@testing-library/react";
 import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
-import Check from "app/components/icons/Check";
 import { LevelStatus } from "app/generated/graphql";
-import { shallow } from "enzyme";
-import Link from "next/link";
 import React from "react";
 
 const mockChallengeSlug = "mocked-challenge-slug";
@@ -10,7 +8,7 @@ const mockLevelNumber = "03";
 
 describe("ChallengeModalLevelCard", () => {
   it("renders the heading", () => {
-    const wrapper = shallow(
+    render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -19,11 +17,11 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.find("h3").text()).toBe(`Level ${mockLevelNumber}`);
+    expect(screen.getByRole("heading", { level: 3, name: `Level ${mockLevelNumber}` })).toBeInTheDocument();
   });
 
   it("renders a checkmark icon if the challenge is finished", () => {
-    const wrapper = shallow(
+    const { container } = render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -32,11 +30,12 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.exists(Check)).toBeTruthy();
+    // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
+    expect(container.querySelector("svg")).toBeInTheDocument();
   });
 
   it("renders no checkmark icon if the challenge is not finished", () => {
-    const wrapper = shallow(
+    const { container } = render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -45,11 +44,12 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.exists(Check)).toBeFalsy();
+    // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
+    expect(container.querySelector("svg")).not.toBeInTheDocument();
   });
 
   it("renders no checkmark icon if the challenge is still in progress", () => {
-    const wrapper = shallow(
+    const { container } = render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -58,11 +58,12 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.exists(Check)).toBeFalsy();
+    // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
+    expect(container.querySelector("svg")).not.toBeInTheDocument();
   });
 
   it("renders the challenge card with the background color `primary` if it is the first unfinished level", () => {
-    const wrapper = shallow(
+    render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -71,11 +72,11 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.find("a").hasClass("bg-primary")).toBeTruthy();
+    expect(screen.getByRole("link")).toHaveClass("bg-primary");
   });
 
   it("renders the challenge card without the background color `primary` if it is NOT the first unfinished level", () => {
-    const wrapper = shallow(
+    render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -84,11 +85,11 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.find("a").hasClass("bg-primary")).toBeFalsy();
+    expect(screen.getByRole("link")).not.toHaveClass("bg-primary");
   });
 
   it("links to correct url", () => {
-    const wrapper = shallow(
+    render(
       <ChallengeModalLevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
@@ -97,6 +98,6 @@ describe("ChallengeModalLevelCard", () => {
       />,
     );
 
-    expect(wrapper.find(Link).props().href).toBe(`/challenge/${mockChallengeSlug}/level/${mockLevelNumber}`);
+    expect(screen.getByRole("link")).toHaveAttribute("href", `/challenge/${mockChallengeSlug}/level/${mockLevelNumber}`);
   });
 });

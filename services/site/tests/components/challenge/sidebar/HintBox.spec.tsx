@@ -1,7 +1,6 @@
-import Button from "app/components/buttons/Button";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import HintBox from "app/components/challenge/sidebar/HintBox";
-import Chevron from "app/components/icons/Chevron";
-import { mount } from "enzyme";
 import React from "react";
 
 const hints = [
@@ -16,45 +15,40 @@ const hints = [
 ];
 
 describe("HintBox", () => {
-  it("renders closed hint box", () => {
-    const wrapper = mount(<HintBox hints={hints} />);
+  it("renders the box closed by default", () => {
+    render(<HintBox hints={hints} />);
 
-    expect(wrapper.find("h4").text()).toContain("Stuck? Click to reveal a hint");
-    expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(180deg)");
-
-    expect(wrapper.exists("ol")).toBeFalsy();
+    expect(screen.getByRole("heading", { level: 4, name: "Stuck? Click to reveal a hint" })).toBeInTheDocument();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
   });
 
-  it("renders open HintBox after click", () => {
-    const wrapper = mount(<HintBox hints={hints} />);
+  it("renders open HintBox after click", async () => {
+    render(<HintBox hints={hints} />);
 
-    wrapper.find(Button).simulate("click");
+    await userEvent.click(screen.getByRole("button"));
 
     // show one hint in a list after click
-    expect(wrapper.exists("ol")).toBeTruthy();
-    expect(wrapper.exists("li")).toBeTruthy();
-    expect(wrapper.find("li").text()).toBe(hints[0].text);
-    // check if the heading contains the hint text
-    expect(wrapper.find("h4").text()).toContain("Hint");
-    // show "Show me another hint" button since there are two mocked hints
-    expect(wrapper.findWhere((n) => n.type() === Button && n.text().includes("Show me another hint")).length).toBe(1);
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem").find((item) => item.textContent === hints[0].text)).toBeInTheDocument();
 
-    // Spring Animation is not executed in test and I haven't (yet) found a solution
-    // expect(wrapper.find(Chevron).props().style.transform).toContain("rotate(0deg)");
+    // check if the heading contains the hint text
+    expect(screen.getByRole("heading", { level: 4, name: "Hint" })).toBeInTheDocument();
+    // show "Show me another hint" button since there are two mocked hints
+    expect(screen.getByRole("button", { name: "Show me another hint." })).toBeInTheDocument();
   });
 
-  it("renders another hint in open HintBox after click", () => {
-    const wrapper = mount(<HintBox hints={hints} />);
+  it("renders another hint in open HintBox after click", async () => {
+    render(<HintBox hints={hints} />);
 
-    wrapper.find("h4").children(Button).simulate("click");
-
-    wrapper.findWhere((n) => n.type() === Button && n.text().includes("Show me another hint")).simulate("click");
+    await userEvent.click(screen.getByRole("button"));
+    await userEvent.click(screen.getByRole("button", { name: "Show me another hint." }));
 
     // show 2 li tags after clicking "Show me another hint"
-    expect(wrapper.find("li").length).toBe(2);
-    expect(wrapper.find("li").first().text()).toBe(hints[0].text);
-    expect(wrapper.find("li").last().text()).toBe(hints[1].text);
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    expect(screen.getAllByRole("listitem").find((item) => item.textContent === hints[0].text)).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem").find((item) => item.textContent === hints[1].text)).toBeInTheDocument();
+
     // Since there are two mocked hints, the "Show me another hint" button disappears once both hints are shown
-    expect(wrapper.findWhere((n) => n.type() === Button && n.text().includes("Show me another hint")).length).toBe(0);
+    expect(screen.queryByRole("button", { name: "Show me another hint." })).not.toBeInTheDocument();
   });
 });

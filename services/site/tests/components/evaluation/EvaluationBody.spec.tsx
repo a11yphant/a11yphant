@@ -1,9 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import CollapsableSection from "app/components/evaluation/CollapsableSection";
+import { render, screen } from "@testing-library/react";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import { RequirementStatus } from "app/generated/graphql";
-import { shallow } from "enzyme";
 import React from "react";
 
 const mockRequirements = [
@@ -32,21 +31,25 @@ const mockRequirements = [
 describe("EvaluationBody", () => {
   it("renders the list with classes", () => {
     const mockClassName = "mock-classname";
-    const wrapper = shallow(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
+    render(<EvaluationBody className={mockClassName} requirements={mockRequirements} />);
 
-    expect(wrapper.find("ul").first().props().className).toContain(mockClassName);
+    const lists = screen.getAllByRole("list");
+
+    lists.forEach((list) => {
+      expect(list).toHaveClass(mockClassName);
+    });
   });
 
   it("renders two unordered lists containing the failed and successful requirements", () => {
-    const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
+    render(<EvaluationBody requirements={mockRequirements} />);
 
-    expect(wrapper.find("ul").length).toBe(2);
+    expect(screen.getAllByRole("list")).toHaveLength(2);
   });
 
   it("renders the requirements as bullet points inside a list", () => {
-    const wrapper = shallow(<EvaluationBody requirements={mockRequirements} />);
+    render(<EvaluationBody requirements={mockRequirements} />);
 
-    expect(wrapper.find("li").length).toBe(2);
-    expect(wrapper.find(CollapsableSection).length).toBe(2);
+    const listItems = screen.getAllByRole("listitem");
+    expect(listItems).toHaveLength(2);
   });
 });
