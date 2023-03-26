@@ -1,6 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
 import Preview from "app/components/challenge/Preview";
-import { mount, shallow } from "enzyme";
 import React from "react";
 
 const mockHtmlCode = "<h1>Mock Html</h1>";
@@ -11,34 +10,42 @@ const mockHeading = "Mock Heading";
 
 describe("Preview", () => {
   it("renders the wrapper element with classes", () => {
+    jest.useFakeTimers();
     const mockClassName = "test-class";
 
-    const wrapper = shallow(
+    const { container } = render(
       <Preview className={mockClassName} htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />,
     );
 
-    expect(wrapper.find("div").first().props().className).toContain(mockClassName);
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
+    expect(container.querySelector(`.${mockClassName}`)).toBeInTheDocument();
   });
 
   it("renders heading", () => {
-    const wrapper = shallow(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
+    jest.useFakeTimers();
+    render(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading="Mock Heading" />);
 
-    expect(wrapper.find("h3").text()).toBe(mockHeading);
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    expect(screen.getByRole("heading", { level: 3, name: /Mock Heading/ })).toBeInTheDocument();
   });
 
   it("renders code in iframe", async () => {
     jest.useFakeTimers();
-    const wrapper = mount(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
+    const { container } = render(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
 
-    await act(async () => {
-      await Promise.resolve(wrapper);
+    act(() => {
       jest.runOnlyPendingTimers();
-      wrapper.update();
     });
 
-    // I didn't find a way to make enzyme render the content iframe
-    // therefore I just check the content of srcDoc
-    const iframeSrc = wrapper.find("iframe").props().srcDoc;
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const iframeSrc = container.querySelector("iframe").getAttribute("srcDoc");
 
     expect(iframeSrc).toContain(mockHtmlCode);
     expect(iframeSrc).toContain(mockCssCode);
@@ -47,15 +54,14 @@ describe("Preview", () => {
 
   it("renders base font in iFrame", async () => {
     jest.useFakeTimers();
-    const wrapper = mount(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
+    const { container } = render(<Preview htmlCode={mockHtmlCode} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
 
-    await act(async () => {
-      await Promise.resolve(wrapper);
+    act(() => {
       jest.runOnlyPendingTimers();
-      wrapper.update();
     });
 
-    const iframeSrc = wrapper.find("iframe").props().srcDoc;
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const iframeSrc = container.querySelector("iframe").getAttribute("srcDoc");
 
     expect(iframeSrc).toContain('body {\n    font-family: "Courier", "Arial", sans-serif;\n  }');
   });
@@ -64,15 +70,14 @@ describe("Preview", () => {
     jest.useFakeTimers();
     const mockHtmlCodeWithATag = "<a href='https://www.google.at/'>Google</a>";
 
-    const wrapper = mount(<Preview htmlCode={mockHtmlCodeWithATag} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
+    const { container } = render(<Preview htmlCode={mockHtmlCodeWithATag} cssCode={mockCssCode} javascriptCode={mockJsCode} heading={mockHeading} />);
 
-    await act(async () => {
-      await Promise.resolve(wrapper);
+    act(() => {
       jest.runOnlyPendingTimers();
-      wrapper.update();
     });
 
-    const iframeSrc = wrapper.find("iframe").props().srcDoc;
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const iframeSrc = container.querySelector("iframe").getAttribute("srcDoc");
 
     expect(iframeSrc).toMatch(/(<a).*(target="_blank").*(>Google<\/a>)/g);
   });

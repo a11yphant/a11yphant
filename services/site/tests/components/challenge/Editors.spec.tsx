@@ -1,6 +1,6 @@
-import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
+import { render, screen } from "@testing-library/react";
+import { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
-import { shallow } from "enzyme";
 import React from "react";
 
 const mockClassName = "test-class";
@@ -25,21 +25,23 @@ const handleReset = jest.fn();
 
 describe("Editors", () => {
   it("renders the wrapper element with classes", () => {
-    const wrapper = shallow(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
+    const { container } = render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
 
-    expect(wrapper.exists("div")).toBeTruthy();
-    expect(wrapper.find("div").first().props().className).toContain(mockClassName);
+    // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
+    expect(container.querySelector(`div.${mockClassName}`)).toBeInTheDocument();
   });
 
-  it("renders one editor", () => {
-    const wrapper = shallow(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
+  it("can render a single editor", () => {
+    render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
 
-    expect(wrapper.find(WrappedEditor).length).toBe(1);
+    // this fails if multiple h3 are present
+    expect(screen.getByRole("heading", { level: 3 })).toBeInTheDocument();
   });
 
-  it("renders multiple editors", () => {
-    const wrapper = shallow(<Editors className={mockClassName} editors={[htmlEditorConfig, cssEditorConfig]} onReset={handleReset} />);
+  it("can render multiple editors", () => {
+    render(<Editors className={mockClassName} editors={[htmlEditorConfig, cssEditorConfig]} onReset={handleReset} />);
 
-    expect(wrapper.find(WrappedEditor).length).toBe(2);
+    expect(screen.getByRole("heading", { level: 3, name: "HTML Editor" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3, name: "CSS Editor" })).toBeInTheDocument();
   });
 });
