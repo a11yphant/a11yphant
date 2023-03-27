@@ -15,7 +15,7 @@ const hints = [
 ];
 
 describe("HintBox", () => {
-  it("renders the box closed by default", () => {
+  it("renders the HintBox closed by default", () => {
     render(<HintBox hints={hints} />);
 
     expect(screen.getByRole("heading", { level: 4, name: "Stuck? Click to reveal a hint" })).toBeInTheDocument();

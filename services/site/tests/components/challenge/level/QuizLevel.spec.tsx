@@ -130,7 +130,7 @@ describe("Quiz Level", () => {
 
   it("renders fail animation when quiz status is fail", async () => {
     render(
-      <MockedProvider mocks={mockedResponsesForSuccess}>
+      <MockedProvider mocks={mockedResponsesForIncorrect}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
       </MockedProvider>,
     );
@@ -147,7 +147,7 @@ describe("Quiz Level", () => {
 
   it("renders success animation when quiz status is success", async () => {
     render(
-      <MockedProvider mocks={mockedResponsesForIncorrect}>
+      <MockedProvider mocks={mockedResponsesForSuccess}>
         <QuizLevel question={mockText} answers={mockAnswers} isLastLevel={false} levelId={"1"} />
       </MockedProvider>,
     );
