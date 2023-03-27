@@ -31,14 +31,14 @@ describe("Editors", () => {
     expect(container.querySelector(`div.${mockClassName}`)).toBeInTheDocument();
   });
 
-  it("can render a single editor", () => {
+  it("renders a single editor if its configured to do so", () => {
     render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
 
     // this fails if multiple h3 are present
     expect(screen.getByRole("heading", { level: 3 })).toBeInTheDocument();
   });
 
-  it("can render multiple editors", () => {
+  it("renders mulitple editors if its configured to do so", () => {
     render(<Editors className={mockClassName} editors={[htmlEditorConfig, cssEditorConfig]} onReset={handleReset} />);
 
     expect(screen.getByRole("heading", { level: 3, name: "HTML Editor" })).toBeInTheDocument();

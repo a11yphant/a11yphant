@@ -99,7 +99,7 @@ describe("Code Level", () => {
     jest.resetAllMocks();
   });
 
-  it("renders instructions", () => {
+  it("renders the sidebar with instructions", () => {
     mountCodeLevel();
 
     expect(screen.getByText(mockLevel.instructions)).toBeInTheDocument();
