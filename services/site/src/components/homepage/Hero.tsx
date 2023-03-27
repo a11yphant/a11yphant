@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
           Learn to code <br /> accessibly with <br /> <span className="sr-only">allyphant</span>
           <span aria-hidden="true">a11yphant</span>.
         </h2>
-        <p className={clsx("text-grey-middle text-lg max-w-[40ch]")}>
+        <p className={clsx("text-grey-middle text-lg max-w-[36ch]")}>
           <span className="sr-only">allyphant</span>
           <span aria-hidden="true" className="text-grey-middle">
             a11yphant
