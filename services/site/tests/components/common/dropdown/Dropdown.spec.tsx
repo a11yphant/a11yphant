@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import Dropdown from "app/components/common/dropdown/Dropdown";
 import React from "react";
 
@@ -6,7 +6,9 @@ function renderAndOpenDropdown(children: React.ReactNode = <></>): void {
   render(<Dropdown triggerButton={<Dropdown.TriggerButton>Open</Dropdown.TriggerButton>}>{children}</Dropdown>);
 
   const triggerButton = screen.getByRole("button", { name: "Open" });
-  triggerButton.click();
+  act(() => {
+    triggerButton.click();
+  });
 }
 
 describe("dropdown", () => {

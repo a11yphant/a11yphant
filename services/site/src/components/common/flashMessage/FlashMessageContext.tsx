@@ -1,11 +1,13 @@
 import { FlashMessage, FlashMessageProps } from "app/components/common/flashMessage/FlashMessage";
 import React from "react";
+import { createPortal } from "react-dom";
 
 type UserDefinedFlashMessageProps = Omit<FlashMessageProps, "show" | "onClose">;
 
 export interface FlashMessageApi {
   show: (message: React.ReactElement | string, props?: UserDefinedFlashMessageProps) => void;
   hide: () => void;
+  portalRootRef: React.RefObject<HTMLDivElement>;
 }
 
 const FlashMessageContext = React.createContext<FlashMessageApi>({
@@ -15,12 +17,14 @@ const FlashMessageContext = React.createContext<FlashMessageApi>({
   hide: () => {
     throw new Error("flashMessageApi used outside FlashMessageContextProvider");
   },
+  portalRootRef: null,
 });
 
 export const FlashMessageContextProvider: React.FunctionComponent = ({ children }) => {
   const [isShowing, setIsShowing] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<React.ReactNode>();
   const [props, setProps] = React.useState<UserDefinedFlashMessageProps>({});
+  const portalRootRef = React.useRef<HTMLDivElement>(null);
 
   const closeFlashMessage = (): void => {
     setIsShowing(false);
@@ -37,12 +41,17 @@ export const FlashMessageContextProvider: React.FunctionComponent = ({ children 
       value={{
         show: showFlashMessage,
         hide: closeFlashMessage,
+        portalRootRef,
       }}
     >
       {children}
-      <FlashMessage show={isShowing} onClose={closeFlashMessage} {...props}>
-        {message}
-      </FlashMessage>
+      {portalRootRef.current &&
+        createPortal(
+          <FlashMessage show={isShowing} onClose={closeFlashMessage} {...props}>
+            {message}
+          </FlashMessage>,
+          portalRootRef.current,
+        )}
     </FlashMessageContext.Provider>
   );
 };
