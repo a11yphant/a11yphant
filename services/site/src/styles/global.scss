@@ -94,13 +94,15 @@
     h3 span,
     h4 span,
     h5 span,
-    h6 span {
+    h6 span,
+    p span,
+    a span,
+    li span {
         font-size: inherit;
         line-height: inherit;
     }
 
     p,
-    span,
     ul,
     li {
         @apply text-base;
@@ -142,10 +144,6 @@
         }
         &:focus {
             @apply text-light;
-        }
-
-        & span {
-            @apply text-inherit;
         }
     }
 }
