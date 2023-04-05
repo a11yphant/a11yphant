@@ -80,6 +80,11 @@ describe("ChallengeModal", () => {
     // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
     expect(document.querySelector("svg")).toBeTruthy();
     expect(screen.queryByRole("heading", { level: 2 })).not.toBeInTheDocument();
+
+    // await query to avoid state updates after unmount
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
   });
 
   it("renders a heading and introduction text", async () => {

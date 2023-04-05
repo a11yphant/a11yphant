@@ -137,6 +137,9 @@ describe("Evaluation", () => {
       renderEvaluationPage();
 
       expect(screen.getByText("loading ...")).toBeInTheDocument();
+
+      // await resolve query to avoid state updates after unmount
+      await resolveGraphQLQuery();
     });
 
     it("renders the head", async () => {
