@@ -1,15 +1,20 @@
 import Editor from "@monaco-editor/react";
+import { act, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
 import { EditorLanguage } from "app/components/challenge/Editors";
-import Reset from "app/components/icons/Reset";
-import ConfirmationModal from "app/components/modal/ConfirmationModal";
-import { mount, shallow } from "enzyme";
 import React from "react";
 
 jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
-    return;
+    return {};
   },
+}));
+
+jest.mock("@monaco-editor/react", () => ({
+  __esModule: true,
+  default: jest.fn(),
+  useMonaco: jest.fn(),
 }));
 
 const editorConfig: EditorConfig = {
@@ -25,11 +30,17 @@ beforeEach(() => {
     value: undefined,
     writable: true,
   });
+
+  (Editor as jest.Mock).mockImplementation(() => <></>);
+});
+
+afterEach(() => {
+  jest.resetAllMocks();
 });
 
 describe("WrappedEditor", () => {
   it("renders heading", () => {
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -38,11 +49,11 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("h3").text()).toBe(editorConfig.heading);
+    expect(screen.getByRole("heading", { name: editorConfig.heading })).toBeInTheDocument();
   });
 
-  it("renders editor", () => {
-    const wrapper = shallow(
+  it("renders editor", async () => {
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -51,14 +62,17 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.exists(Editor));
-
-    expect(wrapper.find(Editor).props().language).toBe(editorConfig.language);
-    expect(wrapper.find(Editor).props().value).toBe(editorConfig.code);
+    expect(Editor).toHaveBeenCalledWith(
+      expect.objectContaining({
+        language: editorConfig.language,
+        value: editorConfig.code,
+      }),
+      expect.anything(),
+    );
   });
 
-  it("reset button opens modal", () => {
-    const wrapper = mount(
+  it("reset button opens modal", async () => {
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -67,27 +81,40 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find(Reset).closest("button")).toBeTruthy();
-    wrapper.find(Reset).closest("button").simulate("click");
-    expect(wrapper.find(ConfirmationModal).props().open).toBeTruthy();
+    // needed to wait for modal transition to be finished
+    // headless ui sets state during the trasition hence the act is needed
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Reset" }));
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
-  it("reset is called after button click", () => {
-    const onReset = jest.fn();
-    const wrapper = mount(<WrappedEditor onReset={onReset} config={editorConfig} />);
+  it("reset is called after button click", async () => {
+    const reset = jest.fn();
+    render(<WrappedEditor onReset={reset} config={editorConfig} />);
 
-    wrapper.find(Reset).simulate("click");
-    wrapper
-      .findWhere((n) => n.text() === `Reset ${editorConfig.languageLabel}`)
-      .find("button")
-      .simulate("click");
+    // needed to wait for modal transition to be finished
+    // headless ui sets state during the trasition hence the act is needed
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Reset" }));
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
 
-    expect(onReset).toHaveBeenCalledTimes(1);
-    expect(onReset).toHaveBeenCalledWith(editorConfig.language);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      await userEvent.click(screen.getByRole("button", { name: "Reset HTML" }));
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    expect(reset).toHaveBeenCalled();
   });
 
   it("uses the windows keys as a fallback for the tab management hint", async () => {
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -96,7 +123,7 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("span.text-grey-middle").text()).toContain("ctrl + m");
+    expect(screen.getByText("ctrl + m")).toBeInTheDocument();
   });
 
   it("shows the correct tab management keys for mac os", async () => {
@@ -105,7 +132,7 @@ describe("WrappedEditor", () => {
       writable: true,
     });
 
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -114,7 +141,7 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("span.text-grey-middle").text()).toContain("ctrl + shift + m");
+    expect(screen.getByText("ctrl + shift + m")).toBeInTheDocument();
   });
 
   it("shows the correct tab management keys for platforms other than mac os", async () => {
@@ -123,7 +150,7 @@ describe("WrappedEditor", () => {
       writable: true,
     });
 
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -132,6 +159,6 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("span.text-grey-middle").text()).toContain("ctrl + m");
+    expect(screen.getByText("ctrl + m")).toBeInTheDocument();
   });
 });

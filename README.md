@@ -1,4 +1,4 @@
-<img src="services/site/public/images/a11yphant_Logo_Signet.png" height="138">
+<img src="services/site/public/images/logo/a11yphant_Logo_pictorial-mark.png" height="138">
 
 # [a11yphant.com](https://a11yphant.com)
 
@@ -33,7 +33,7 @@ In an ideal world, all websites are designed and developed so everyone can use t
 
 <img
   alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-  src="https://a11yphant.com/images/mockups-social-media.jpg"
+  src="https://a11yphant.com/images/SEO/mockups-social-media.jpg"
   quality="100"
   sizes="100vw"
   style="objectFit:cover"
@@ -69,7 +69,7 @@ Nowadays, the a11yphant core-team continues developing a11yphant as Open Source 
 
 <img src="https://unavatar.io/github/hntrhfr" height="138">
 
-<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a> is a corporate backend developer on weekdays and chief of happiness officer for a11yphant on the weekend. Since co-founding a11yphant, he supported the team with his magic in the backend.
+<a href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">Michael Hinterhofer</a> is a corporate backend developer on weekdays and "Chief of Happiness Officer" for a11yphant on the weekend. Since co-founding a11yphant, he supported the team with his magic in the backend.
 
 ### Interface and Corporate Design
 

@@ -18,20 +18,20 @@ const Hero: React.FC = () => {
         <h2
           className={clsx("mb-6 max-w-2xl font-bold font-sans text-3xl leading-tight", "sm:text-4xl sm:leading-snug", "xl:text-5xl xl:leading-snug")}
         >
-          Learning web accessibility made easy
+          Learn to code <br /> accessibly with <br /> <span className="sr-only">allyphant</span>
+          <span aria-hidden="true">a11yphant</span>.
         </h2>
-        <p className={clsx("text-grey-middle text-lg")}>
-          <span className={clsx("text-inherit text-lg")} aria-label="allyphant">
+        <p className={clsx("text-grey-middle text-lg max-w-[36ch]")}>
+          <span className="sr-only">allyphant</span>
+          <span aria-hidden="true" className="text-grey-middle">
             a11yphant
           </span>{" "}
-          teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to read large
-          amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web accessibility
-          challenge and improve your skills.
+          teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges.
         </p>
         <Link href="/#challenges">
           <a
             className={clsx(
-              "w-max mt-8 px-6 py-2.5 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
+              "w-max mt-8 px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
               "transition duration-300",
               "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
             )}

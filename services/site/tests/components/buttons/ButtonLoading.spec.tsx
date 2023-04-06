@@ -2,8 +2,6 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { render, screen } from "@testing-library/react";
 import LoadingButton, { LoadingButtonProps } from "app/components/buttons/LoadingButton";
-import LoadingIndicator from "app/components/icons/LoadingIndicator";
-import { shallow } from "enzyme";
 import React from "react";
 
 const buttonText = "Button Text";
@@ -57,9 +55,10 @@ describe("Button Loading", () => {
   });
 
   it("renders svg loading icon", () => {
-    const view = shallow(<LoadingButton loading={true}>{buttonText}</LoadingButton>);
+    const { container } = render(<LoadingButton loading={true}>{buttonText}</LoadingButton>);
 
-    expect(view.exists(LoadingIndicator)).toBeTruthy();
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelector("svg")).toBeInTheDocument();
   });
 
   it("renders screen reader loading text", () => {

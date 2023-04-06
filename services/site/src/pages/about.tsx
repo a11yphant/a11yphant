@@ -1,5 +1,6 @@
 import Footer from "app/components/Footer";
 import A11yphantLogoWithoutText from "app/components/icons/A11yphantLogoWithoutText";
+import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
@@ -7,7 +8,7 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import a11yphantStatic from "../../public/images/a11yphant-static.jpg";
+import a11yphantStatic from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
 
 const About: React.FunctionComponent = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -23,7 +24,7 @@ const About: React.FunctionComponent = () => {
         <meta property="og:locale" content="en" />
         <meta property="og:title" content="About" />
         <meta property="og:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
@@ -33,7 +34,7 @@ const About: React.FunctionComponent = () => {
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="a11yphant" />
         <meta name="twitter:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
@@ -114,27 +115,27 @@ const About: React.FunctionComponent = () => {
             <p>
               <span className="sr-only">allyphant</span>
               <span aria-hidden="true">a11yphant</span> started as a master’s project created by six students at the{" "}
-              <InTextLink href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
+              <InTextLink href="https://www.fh-salzburg.ac.at/en/" opensInNewTab>
                 Salzburg University of Applied Sciences (Austria)<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
-              . <span className="font-medium">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
-              <InTextLink href="https://lucapircher.at/" target="_blank" rel="noopener noreferrer nofollow">
+              . <span className="font-bold">Concept and Development</span> by <InTextLink href="https://dnikub.dev">Daniela Kubesch</InTextLink>,{" "}
+              <InTextLink href="https://lucapircher.at/" opensInNewTab>
                 Luca Pircher<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
               ,{" "}
-              <InTextLink href="https://github.com/thomasdax98" target="_blank" rel="noopener noreferrer nofollow">
+              <InTextLink href="https://github.com/thomasdax98" opensInNewTab>
                 Thomas Dax<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>{" "}
               and{" "}
-              <InTextLink href="https://github.com/hntrhfr" target="_blank" rel="noopener noreferrer nofollow">
+              <InTextLink href="https://github.com/hntrhfr" opensInNewTab>
                 Michael Hinterhofer<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
-              . <span className="font-medium">Interface and Corporate Design</span> by{" "}
-              <InTextLink href="https://johannawicht.com/" target="_blank" rel="noopener noreferrer nofollow">
+              . <span className="font-bold">Interface and Corporate Design</span> by{" "}
+              <InTextLink href="https://johannawicht.com/" opensInNewTab>
                 Johanna Wicht<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>{" "}
               and{" "}
-              <InTextLink href="https://www.fabianhellerdesign.com/" target="_blank" rel="noopener noreferrer nofollow">
+              <InTextLink href="https://www.fabianhellerdesign.com/" opensInNewTab>
                 Fabian Heller<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
               .
@@ -154,11 +155,7 @@ const About: React.FunctionComponent = () => {
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
-                  <InTextLink
-                    href="https://page-online.de/tools-technik/web-accessability-lernen-mit-a11yphant/"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
+                  <InTextLink href="https://page-online.de/tools-technik/web-accessability-lernen-mit-a11yphant/" opensInNewTab>
                     "Web Accessability lernen mit a11yphant"
                     <span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -167,11 +164,7 @@ const About: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink
-                    href="https://a11y-guidelines.orange.com/en/articles/watch-february-march-2022/"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
+                  <InTextLink href="https://a11y-guidelines.orange.com/en/articles/watch-february-march-2022/" opensInNewTab>
                     "Digital accessibility watch February-Maarch 2022"<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
                   by Orange
@@ -183,11 +176,7 @@ const About: React.FunctionComponent = () => {
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
-                  <InTextLink
-                    href="https://www.smashingmagazine.com/the-smashing-newsletter/smashing-newsletter-issue-344/"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
+                  <InTextLink href="https://www.smashingmagazine.com/the-smashing-newsletter/smashing-newsletter-issue-344/" opensInNewTab>
                     "Smashing Newsletter" - Issue #344<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
                   by Smashing Magazine
@@ -195,7 +184,7 @@ const About: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://a11yweekly.com/issue/285/" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://a11yweekly.com/issue/285/" opensInNewTab>
                     "A11y Weekly" - Issue #285<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
                   by David A. Kennedy
@@ -203,11 +192,7 @@ const About: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink
-                    href="https://stephaniewalter.design/blog/pixels-of-the-week-march-20-2022/"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
+                  <InTextLink href="https://stephaniewalter.design/blog/pixels-of-the-week-march-20-2022/" opensInNewTab>
                     "Pixels of the Week"<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
                   by Stéphanie Walter
@@ -215,7 +200,7 @@ const About: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://wweb.dev/weekly/108/" target="_blank" rel="noopener noreferrer nofollow">
+                  <InTextLink href="https://wweb.dev/weekly/108/" opensInNewTab>
                     "Weekly Web Development Resources" - Issue #108<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
                   by wweb.dev (Vincent Will)
@@ -225,8 +210,7 @@ const About: React.FunctionComponent = () => {
                 <p>
                   <InTextLink
                     href="https://www.nyu.edu/life/information-technology/web-and-digital-publishing/digital-publishing/accessibility/accessibility-newsletter/accessibility-newsletter-archive/digital-accessibility-news---fall-2022.html"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
+                    opensInNewTab
                   >
                     "Digital Accessibility News" - Issue #18<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -241,8 +225,7 @@ const About: React.FunctionComponent = () => {
                 <p>
                   <InTextLink
                     href="https://www.producthunt.com/products/a11yphant?utm_source=badge-featured&amp;utm_medium=badge#a11yphant"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
+                    opensInNewTab
                   >
                     ProductHunt ranking #11<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
@@ -251,11 +234,7 @@ const About: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink
-                    href="https://podcasters.spotify.com/pod/show/stacksnacks/episodes/5-Snacks-e1hv3ae"
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                  >
+                  <InTextLink href="https://podcasters.spotify.com/pod/show/stacksnacks/episodes/5-Snacks-e1hv3ae" opensInNewTab>
                     "5 Snacks" Episode<span className="sr-only">(opens in a new tab)</span>
                   </InTextLink>{" "}
                   by Stack Snacks
@@ -267,25 +246,6 @@ const About: React.FunctionComponent = () => {
       </main>
       <Footer />
     </>
-  );
-};
-
-const InTextLink: React.FunctionComponent<React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>> = ({
-  children,
-  ...props
-}) => {
-  return (
-    <a
-      className={clsx(
-        "text-light font-sans font-normal border-light",
-        "transition-colors duration-300",
-        "hover:text-primary-light hover:border-transparent",
-        "focus-rounded-instead-of-underline",
-      )}
-      {...props}
-    >
-      {children}
-    </a>
   );
 };
 

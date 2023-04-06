@@ -21,7 +21,12 @@ const LoadingButton: React.FunctionComponent<LoadingButtonProps> = ({
 }) => {
   return (
     <Button
-      className={clsx(className, loading && "cursor-not-allowed", disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary")}
+      className={clsx(
+        className,
+        loading && "cursor-not-allowed",
+        disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary",
+        "font-medium",
+      )}
       disabled={disabled || loading}
       {...props}
     >

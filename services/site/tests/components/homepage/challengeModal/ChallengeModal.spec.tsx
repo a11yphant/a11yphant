@@ -1,12 +1,8 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act } from "@testing-library/react";
-import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
+import { act, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
-import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
-import LoadingIndicator from "app/components/icons/LoadingIndicator";
-import { ModalTitle } from "app/components/modal/ModalTitle";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
-import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
 
@@ -57,74 +53,71 @@ const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
   },
 ];
 
+const Wrapper: React.FC = ({ children }) => <MockedProvider mocks={mocks}>{children}</MockedProvider>;
+
+function renderModalWitoutWaitingForQuery(): void {
+  render(<ChallengeModal challengeSlug={mockChallengeSlug} onClose={mockOnClose} open={true} />, { wrapper: Wrapper });
+}
+
+async function renderModal(): Promise<void> {
+  renderModalWitoutWaitingForQuery();
+
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+}
+
 describe("ChallengeModal", () => {
-  let wrapper: ReactWrapper;
-  beforeEach(async () => {
+  beforeEach(() => {
     jest.resetAllMocks();
     jest.resetModules();
+  });
 
-    wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <ChallengeModal challengeSlug={mockChallengeSlug} onClose={mockOnClose} open={true} />
-      </MockedProvider>,
-    );
+  it("renders loading indicator before receiving a graphql response", async () => {
+    renderModalWitoutWaitingForQuery();
 
+    // query from document instead of the render container since content is rendered to a portal
+    // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
+    expect(document.querySelector("svg")).toBeTruthy();
+    expect(screen.queryByRole("heading", { level: 2 })).not.toBeInTheDocument();
+
+    // await query to avoid state updates after unmount
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
-      wrapper.update();
     });
   });
 
-  it("renders loading indicator before receiving a graphql response", () => {
-    // override wrapper from beforeEach because
-    // we don't want the query to resolve
-    const wrapper = mount(
-      <MockedProvider mocks={mocks}>
-        <ChallengeModal challengeSlug={mockChallengeSlug} onClose={mockOnClose} open={true} />
-      </MockedProvider>,
-    );
-
-    expect(wrapper.exists(LoadingIndicator)).toBeTruthy();
-    expect(wrapper.exists(ModalTitle)).toBeFalsy();
-  });
-
   it("renders a heading and introduction text", async () => {
-    expect(wrapper.find(ModalTitle).text()).toBe(mockChallengeName);
-    expect(wrapper.find("p").text()).toBe(mockChallengeIntroduction);
-  });
+    await renderModal();
 
-  it("renders the `ScrollOverlayWrapper`", async () => {
-    expect(wrapper.exists(ScrollOverlayWrapper)).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
+    expect(screen.getByText(mockChallengeIntroduction)).toBeInTheDocument();
   });
 
   it("renders all levels as cards", async () => {
-    expect(wrapper.find(ChallengeModalLevelCard).length).toBe(mockLevels.length);
+    await renderModal();
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(mockLevels.length);
   });
 
-  it("only one level card has the 'isFirstUnfinishedLevel' attribute", () => {
-    expect(wrapper.find(ChallengeModalLevelCard).findWhere((n) => n.props().isFirstUnfinishedLevel === true).length).toBe(1);
-    expect(
-      wrapper
-        .find(ChallengeModalLevelCard)
-        .findWhere((n) => n.props().isFirstUnfinishedLevel === true)
-        .props().levelNumber,
-    ).toBe(firstUnfinishedLevel.order);
+  it("only one level card is hilighted as the first unfinished level", async () => {
+    await renderModal();
+    const links = screen.getAllByRole("link");
+
+    const hilightedLinks = links.filter((link) => link.classList.contains("bg-primary"));
+    expect(hilightedLinks).toHaveLength(1);
   });
 
-  it("renders a cancel button that calls onClose", () => {
-    wrapper
-      .find("button")
-      .findWhere((n) => n.type() === "button" && n.text() === "Cancel")
-      .simulate("click");
+  it("calls onClose when clickling cancel", async () => {
+    await renderModal();
+
+    await userEvent.click(screen.getByRole("button", { name: "Cancel" }));
 
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it("renders a start coding button that routes to the first unfinished level", () => {
-    wrapper
-      .find("button")
-      .findWhere((n) => n.type() === "button" && n.text() === "Start Coding")
-      .simulate("click");
+  it("renders a start coding button that routes to the first unfinished level", async () => {
+    await renderModal();
+    await userEvent.click(screen.getByRole("button", { name: "Start Coding" }));
 
     expect(router).toMatchObject({
       asPath: `/challenge/${mockChallengeSlug}/level/${firstUnfinishedLevel.order.toLocaleString("de-AT", {

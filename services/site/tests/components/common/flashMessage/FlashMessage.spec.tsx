@@ -1,44 +1,30 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { FlashMessage, FlashMessageProps, FlashMessageType } from "app/components/common/flashMessage/FlashMessage";
-import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
-import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import React from "react";
 
-const renderFlashMessageWithPortalRoot = (props?: Partial<React.PropsWithChildren<FlashMessageProps>>): void => {
-  const wrapper = ({ children }): React.ReactElement => (
-    <FlashMessageContextProvider>
-      <div>
-        <FlashMessagePortalRoot />
-        {children}
-      </div>
-    </FlashMessageContextProvider>
+const renderFlashMessage = async ({ children, ...props }: Partial<React.PropsWithChildren<FlashMessageProps>> = {}): Promise<void> => {
+  render(
+    <FlashMessage show={true} onClose={jest.fn()} {...props}>
+      {children}
+    </FlashMessage>,
   );
-  render(<FlashMessage show={true} onClose={jest.fn()} {...props} />, { wrapper });
+
+  // wait for appear transition to be randered, this updates state within
+  // the transition component, hence the act
+  await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)));
 };
 
 describe("FlashMessage", () => {
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
-  it("log console error if no FlashMessagePortalRoot is present", () => {
-    jest.spyOn(global.console, "error").mockImplementation(jest.fn());
-
-    render(<FlashMessage show={true} onClose={jest.fn()} />);
-
-    expect(global.console.error).toHaveBeenCalledTimes(1);
-  });
-
-  it("renders children", () => {
+  it("renders children", async () => {
     const message = "Mock Message";
-    renderFlashMessageWithPortalRoot({ children: message });
+    await renderFlashMessage({ children: message });
 
     expect(screen.getByText(message)).toBeInTheDocument();
   });
 
   it("calls onClose on close button click", () => {
     const onClose = jest.fn();
-    renderFlashMessageWithPortalRoot({ onClose });
+    renderFlashMessage({ onClose });
 
     screen.getByRole("button", { name: "Close" }).click();
 
@@ -46,13 +32,13 @@ describe("FlashMessage", () => {
   });
 
   it("sets role to 'alert' if type = FlashMessageType.ALERT", () => {
-    renderFlashMessageWithPortalRoot({ type: FlashMessageType.ALERT });
+    renderFlashMessage({ type: FlashMessageType.ALERT });
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });
 
   it("sets role to 'status' if type = FlashMessageType.STATUS", () => {
-    renderFlashMessageWithPortalRoot({ type: FlashMessageType.STATUS });
+    renderFlashMessage({ type: FlashMessageType.STATUS });
 
     expect(screen.getByRole("status")).toBeInTheDocument();
   });

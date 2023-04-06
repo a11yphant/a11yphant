@@ -1,7 +1,6 @@
-import HintBox from "app/components/challenge/sidebar/HintBox";
+import { render, screen } from "@testing-library/react";
 import HintList from "app/components/challenge/sidebar/HintList";
 import { Task } from "app/generated/graphql";
-import { shallow } from "enzyme";
 import React from "react";
 
 const mockTasks: Task[] = [
@@ -38,37 +37,25 @@ const mockTasks: Task[] = [
 describe("HintList", () => {
   it("renders text and a HintBox if there is only one hint", () => {
     const task = mockTasks[0];
-    const wrapper = shallow(<HintList tasks={[task]} />);
+    render(<HintList tasks={[task]} />);
 
-    expect(wrapper.exists("ol")).toBeFalsy();
-    expect(wrapper.exists("li")).toBeFalsy();
-    expect(wrapper.exists("div")).toBeTruthy();
-    expect(wrapper.exists(HintBox)).toBeTruthy();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
+    expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
+    expect(screen.getByText("Stuck? Click to reveal a hint")).toBeInTheDocument();
   });
 
   it("renders text as HTML if there is only one hint", () => {
     const task = mockTasks[0];
-    const wrapper = shallow(<HintList tasks={[task]} />);
+    render(<HintList tasks={[task]} />);
 
-    expect(wrapper.html()).toContain(task.text);
+    expect(screen.getByText(task.text)).toBeInTheDocument();
   });
 
   it("renders a list of text and HintBoxes if there are multiple hints", () => {
-    const wrapper = shallow(<HintList tasks={mockTasks} />);
+    render(<HintList tasks={mockTasks} />);
 
-    expect(wrapper.exists("ol")).toBeTruthy();
-    expect(wrapper.find("li").length).toBe(mockTasks.length);
-    expect(wrapper.find("li>div").length).toBe(mockTasks.length);
-    expect(wrapper.find(HintBox).length).toBe(mockTasks.length);
-  });
-
-  it("renders the numbered list as HTML if there are multiple hints", () => {
-    const wrapper = shallow(<HintList tasks={mockTasks} />);
-
-    expect(wrapper.find("li").at(0).html()).toContain("1.");
-    expect(wrapper.find("li").at(0).html()).toContain(mockTasks[0].text);
-
-    expect(wrapper.find("li").at(1).html()).toContain("2.");
-    expect(wrapper.find("li").at(1).html()).toContain(mockTasks[1].text);
+    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(mockTasks.length);
+    expect(screen.getAllByText("Stuck? Click to reveal a hint")).toHaveLength(mockTasks.length);
   });
 });

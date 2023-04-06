@@ -1,17 +1,17 @@
+import { render, screen } from "@testing-library/react";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
-import { shallow } from "enzyme";
 import React from "react";
 
 describe("Error Messages", () => {
   it("renders 'Network error' in `NetworkError` component", () => {
-    const wrapper = shallow(<NetworkError />);
+    render(<NetworkError />);
 
-    expect(wrapper.text()).toContain("Network error");
+    expect(screen.getByText(/Network error/)).toBeInTheDocument();
   });
 
   it("renders 'Unknown error' in `UnknownError` component", () => {
-    const wrapper = shallow(<UnknownError />);
+    render(<UnknownError />);
 
-    expect(wrapper.text()).toContain("Unknown error");
+    expect(screen.getByText(/Unknown error/)).toBeInTheDocument();
   });
 });

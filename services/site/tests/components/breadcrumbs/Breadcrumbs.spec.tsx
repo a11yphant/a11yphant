@@ -1,10 +1,14 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { act } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
-import Slash from "app/components/icons/Slash";
-import { mount, ReactWrapper } from "enzyme";
 import router, { NextRouter } from "next/router";
 import React from "react";
+
+async function waitForQuery(): Promise<void> {
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+}
 
 // expected breadcrumbs
 const challengeSlug = "mock-challenge-1";
@@ -45,31 +49,26 @@ jest.mock("app/components/breadcrumbs/getRouteList", () => ({
 
 jest.mock("next/router", () => require("next-router-mock"));
 
-const renderBreadcrumbs = async (): Promise<ReactWrapper> => {
-  const wrapper = mount(
+const renderBreadcrumbs = async (): Promise<void> => {
+  render(
     <MockedProvider>
       <Breadcrumbs />
     </MockedProvider>,
   );
 
-  await act(async () => {
-    await wrapper;
-    wrapper.update();
-  });
-
-  return wrapper;
+  await waitForQuery();
 };
 
 describe("Breadcrumbs", () => {
   it("renders no navigation and no list if there is only one breadcrumb", async () => {
-    await act(async () => {
+    act(() => {
       router.push("/");
     });
 
-    const view = await renderBreadcrumbs();
+    await renderBreadcrumbs();
 
-    expect(view.exists("nav")).toBeFalsy();
-    expect(view.exists("ol")).toBeFalsy();
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
   });
 
   it("renders no slash if there is only one breadcrumb", async () => {
@@ -77,9 +76,9 @@ describe("Breadcrumbs", () => {
       router.push("/");
     });
 
-    const view = await renderBreadcrumbs();
+    await renderBreadcrumbs();
 
-    expect(view.exists(Slash)).toBeFalsy();
+    expect(screen.queryByRole("img", { hidden: true })).not.toBeInTheDocument();
   });
 
   it("renders two breadcrumbs with dividing slashes", async () => {
@@ -90,20 +89,20 @@ describe("Breadcrumbs", () => {
       });
     });
 
-    const view = await renderBreadcrumbs();
+    await renderBreadcrumbs();
 
-    expect(view.exists("nav")).toBeTruthy();
-    expect(view.exists("ol")).toBeTruthy();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
+    expect(screen.getByRole("list")).toBeInTheDocument();
 
-    expect(view.find("li")).toHaveLength(2);
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
 
     // Breadcrumb Home is rendered
-    expect(view.find("li a").first().text()).toBe(expectedBreadcrumbHome.breadcrumb);
+    expect(screen.getByText(expectedBreadcrumbHome.breadcrumb)).toBeInTheDocument();
 
     // Dividing Slash is rendered
-    expect(view.exists(Slash)).toBeTruthy();
+    expect(screen.getByText(expectedBreadcrumbHome.breadcrumb)).toBeInTheDocument();
 
     // Breadcrumb Challenge is rendered
-    expect(view.find("li a").at(1).text()).toBe(expectedBreadcrumbChallenge.breadcrumb);
+    expect(screen.getByText(expectedBreadcrumbChallenge.breadcrumb)).toBeInTheDocument();
   });
 });

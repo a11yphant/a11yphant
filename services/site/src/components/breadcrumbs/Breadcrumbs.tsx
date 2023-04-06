@@ -42,7 +42,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
                     <Link href={route.href}>
                       <a
                         className={clsx(
-                          "ml-1 font-medium whitespace-nowrap",
+                          "ml-1 font-normal whitespace-nowrap",
                           "transition-colors duration-300",
                           "hover:text-primary-light hover:border-primary-light",
                           idx === routeList.length - 1 ? "text-light font-bold" : "text-grey-middle",

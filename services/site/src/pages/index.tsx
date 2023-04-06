@@ -6,6 +6,7 @@ import ChallengeList from "app/components/homepage/ChallengeList";
 import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import Hero from "app/components/homepage/Hero";
 import Legend from "app/components/homepage/Legend";
+import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus, useChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
@@ -14,7 +15,6 @@ import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -69,7 +69,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           property="og:description"
           content="a11yphant is the easy way to learn the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
-        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
@@ -82,7 +82,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           property="twitter:description"
           content="a11yphant is the easy way to learn the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
-        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
@@ -166,18 +166,9 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               </span>{" "}
               Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
               challenges on our{" "}
-              <Link href={"https://twitter.com/a11yphant"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Twitter account
-                </a>
-              </Link>
+              <InTextLink href="https://twitter.com/a11yphant" opensInNewTab>
+                Twitter account
+              </InTextLink>
               . <br />
               Want to help us? Slide into our DMs.
             </p>

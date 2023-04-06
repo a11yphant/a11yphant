@@ -1,8 +1,8 @@
 import Footer from "app/components/Footer";
+import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Head from "next/head";
-import Link from "next/link";
 import React from "react";
 
 const PrivacyPolicy: React.FunctionComponent = () => {
@@ -18,7 +18,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
         <meta property="og:locale" content="en" />
         <meta property="og:title" content="Privacy Policy" />
         <meta property="og:description" content="Details about the privacy policy of a11yphant." />
-        <meta property="og:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
           content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
@@ -28,7 +28,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="Privacy Policy" />
         <meta name="twitter:description" content="Details about the privacy policy of a11yphant." />
-        <meta name="twitter:image" content="https://a11yphant.com/images/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
@@ -41,19 +41,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
 
           <section role="contentinfo" aria-label="Purpose of the Privacy Policy">
             <p>
-              Thank you for choosing to be part of our community at{" "}
-              <Link href={"https://a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  a11yphant.com
-                </a>
-              </Link>
+              Thank you for choosing to be part of our community at <InTextLink href="https://a11yphant.com">a11yphant.com</InTextLink>
               .
               <br />
               <span className="sr-only">allyphant</span>
@@ -65,37 +53,13 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this
               privacy notice or our practices concerning your personal information, please contact us at{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  info@a11yphant.com
-                </a>
-              </Link>
-              .
+              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>.
             </p>
 
             <p className={clsx("mt-10")}>This privacy notice describes how we might use your information if you:</p>
             <ul className={clsx("list-disc ml-6 mb-8")}>
               <li className={clsx("m-0 my-4")}>
-                Visit our website at{" "}
-                <Link href={"https://a11yphant.com"}>
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    a11yphant.com
-                  </a>
-                </Link>
+                Visit our website at <InTextLink href="https://a11yphant.com">a11yphant.com</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>Engage with us in other related ways ― including any sales, marketing, or events</li>
             </ul>
@@ -103,7 +67,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p className={clsx("mt-10")}>In this privacy notice, if we refer to:</p>
             <ul className={clsx("list-disc ml-6 mb-8")}>
               <li className={clsx("m-0 my-4")}>
-                <strong>"Website"</strong>," we are referring to any website of ours that references or links to this policy
+                <strong>"Website"</strong>," we are referring to any website of ours that references or InTextLinks to this policy
               </li>
               <li className={clsx("m-0 my-4")}>
                 <strong>"Services"</strong>, we are referring to our Website, and other related services, including any sales, marketing, or events
@@ -127,172 +91,40 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <h2 className={clsx("mb-8", "h4", "md:h3")}>Table of contents</h2>
             <ul className={clsx("list-decimal ml-8 mb-8")}>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter1">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    What information do we collect?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter1">What information do we collect?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter2">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    How do we use your information?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter2">How do we use your information?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter3">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    Will your information be shared with anyone?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter3">Will your information be shared with anyone?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter4">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    Do we use cookies and other tracking technologies?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter4">Do we use cookies and other tracking technologies?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter5">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    How do we handle your social logins?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter5">How do we handle your social logins?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter6">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    How long do we keep your information?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter6">How long do we keep your information?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter7">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    How do we keep your information safe?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter7">How do we keep your information safe?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter8">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    What are your privacy rights?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter8">What are your privacy rights?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter9">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    Controls for do not track features
-                  </a>
-                </Link>
+                <InTextLink href="#chapter9">Controls for do not track features</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter10">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    Do we make updates to this notice?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter10">Do we make updates to this notice?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter11">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    How can you contact us about this notice?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter11">How can you contact us about this notice?</InTextLink>
               </li>
               <li className={clsx("m-0 my-4")}>
-                <Link href="#chapter12">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    How can you review, update or delete the data we collect from you?
-                  </a>
-                </Link>
+                <InTextLink href="#chapter12">How can you review, update or delete the data we collect from you?</InTextLink>
               </li>
             </ul>
           </section>
@@ -324,20 +156,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               <li className={clsx("m-0 my-4")}>
                 <strong>Social Media Login Data.</strong> We may provide you with the option to register with us using your existing social media
                 account details, like your Twitter and GitHub account. If you choose to register in this way, we will collect the information
-                described in the section called{" "}
-                <Link href="#chapter5">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    "how do we handle your social logins"
-                  </a>
-                </Link>{" "}
-                below.
+                described in the section called <InTextLink href="#chapter5">"how do we handle your social logins"</InTextLink> below.
               </li>
             </ul>
 
@@ -367,22 +186,10 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>We use the information we collect or receive:</p>
             <ul className={clsx("list-disc ml-6 mb-8")}>
               <li className={clsx("m-0 my-4")}>
-                <strong>To facilitate account creation and login process.</strong> If you choose to link your account with us to a third-party account
-                (such as your Twitter or Github account), we use the information you allowed us to collect from those third parties to facilitate
-                account creation and login process for the performance of the contract. See the section below headed{" "}
-                <Link href="#chapter5">
-                  <a
-                    className={clsx(
-                      "text-light font-sans font-normal border-light",
-                      "transition-colors duration-300",
-                      "hover:text-primary-light hover:border-transparent",
-                      "focus-rounded-instead-of-underline",
-                    )}
-                  >
-                    "how do we handle your social logins"
-                  </a>
-                </Link>{" "}
-                for further information.
+                <strong>To facilitate account creation and login process.</strong> If you choose to InTextLink your account with us to a third-party
+                account (such as your Twitter or Github account), we use the information you allowed us to collect from those third parties to
+                facilitate account creation and login process for the performance of the contract. See the section below headed{" "}
+                <InTextLink href="#chapter5">"how do we handle your social logins"</InTextLink> for further information.
               </li>
               <li className={clsx("m-0 my-4")}>
                 <strong>Request feedback.</strong> We may use your information to request feedback and to contact you about your use of our Website.
@@ -457,20 +264,9 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               We do not use cookies or similar tracking technologies (like web beacons and pixels) to access or store information. We integrated the
               tool{" "}
-              <Link href={"https://plausible.io/"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  plausible
-                </a>
-              </Link>{" "}
+              <InTextLink href="https://plausible.io/" opensInNewTab>
+                plausible
+              </InTextLink>{" "}
               into our website. However, we are using a self-hosted instance so no data leaves our infrastructure.
             </p>
 
@@ -570,73 +366,27 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               If you are a resident in the EEA or UK and you believe we are unlawfully processing your personal information, you also have the right
               to{" "}
-              <Link href={"https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  complain to your local data protection supervisory authority
-                </a>
-              </Link>
+              <InTextLink href="https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm" opensInNewTab>
+                complain to your local data protection supervisory authority
+              </InTextLink>
               .
             </p>
             <p>
               If you are a resident in Switzerland,{" "}
-              <Link href={"https://www.edoeb.admin.ch/edoeb/en/home.html"}>
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  contact this data protection supervisory authority
-                </a>
-              </Link>
+              <InTextLink href="https://www.edoeb.admin.ch/edoeb/en/home.html" opensInNewTab>
+                contact this data protection supervisory authority
+              </InTextLink>
               .
             </p>
             <p>
               If you have questions or comments about your privacy rights, you may email us at{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  info@a11yphant.com
-                </a>
-              </Link>
-              .
+              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>.
             </p>
 
             <h3 className={clsx("mt-10 mb-4", "h5", "md:h4")}>Account Information</h3>
             <p>
               If you would at any time like to review or change the information in your account or terminate your account, you can{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  contact us
-                </a>
-              </Link>
-              .
+              <InTextLink href="mailto:info@a11yphant.com">contact us</InTextLink>.
             </p>
             <p>
               Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases.
@@ -687,19 +437,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </h2>
             <p>
               If you have questions or comments about this notice, you may email us at{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  info@a11yphant.com
-                </a>
-              </Link>{" "}
-              or by post to:
+              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink> or by post to:
             </p>
             <address className={clsx("not-italic")}>
               <strong>Daniela Kubesch, BSc</strong> <br />
@@ -716,19 +454,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>
               Based on the applicable laws of your country, you may have the right to request access to the personal information we collect from you,
               change that information, or delete it in some circumstances. To request to review, update, or delete your personal information, please{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  send us an email
-                </a>
-              </Link>
-              .
+              <InTextLink href="mailto:info@a11yphant.com">send us an email</InTextLink>.
             </p>
           </section>
         </div>
