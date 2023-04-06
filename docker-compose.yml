@@ -15,7 +15,7 @@ services:
       retries: 10
 
   postgres:
-    image: postgres:14-alpine
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: a11yphant
