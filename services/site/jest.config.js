@@ -17,7 +17,7 @@ const customJestConfig = {
   testEnvironment: "jest-environment-jsdom",
   reporters: ["default", "jest-junit"],
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s?(x)"],
-  coverageReporters: ["text", "text-summary", "cobertura"],
+  coverageReporters: ["text", "text-summary", "lcov"],
   coveragePathIgnorePatterns: ["<rootDir>/src/generated", "<rootDir>/tests"],
   coverageDirectory: "<rootDir>/coverage",
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
