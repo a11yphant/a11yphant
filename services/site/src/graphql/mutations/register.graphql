@@ -1,7 +1,15 @@
 mutation register($name: String!, $email: String!, $password: String!) {
   register(registerUserInput: { displayName: $name, email: $email, password: $password }) {
-    id
-    displayName
-    email
+    __typename
+
+    ... on User {
+      id
+      displayName
+      email
+    }
+
+    ... on RegisterErrorResult {
+      errorCode
+    }
   }
 }

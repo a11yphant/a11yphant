@@ -1,7 +1,7 @@
 import { ApolloError } from "@apollo/client";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUpForm from "app/components/user/SignUpForm";
-import { useRegisterMutation } from "app/generated/graphql";
+import { RegisterErrorCodes, useRegisterMutation } from "app/generated/graphql";
 import React from "react";
 import { act } from "react-dom/test-utils";
 
@@ -18,7 +18,7 @@ jest.mock("app/generated/graphql", () => ({
 describe("sign up form", () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    (useRegisterMutation as jest.Mock).mockReturnValue([jest.fn().mockResolvedValue({ errors: null }), { loading: false }]);
+    (useRegisterMutation as jest.Mock).mockReturnValue([jest.fn().mockResolvedValue({ errors: null, data: { register: {} } }), { loading: false }]);
   });
 
   it("renders a name input", () => {
@@ -85,7 +85,7 @@ describe("sign up form", () => {
     const email = "test@a11yphant.com";
     const password = "verysecret";
 
-    const register = jest.fn().mockReturnValue({ errors: null });
+    const register = jest.fn().mockReturnValue({ errors: null, data: { register: {} } });
     (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
 
     render(<SignUpForm />);
@@ -112,7 +112,7 @@ describe("sign up form", () => {
     const email = "test@a11yphant.com";
     const password = "verysecret";
 
-    const register = jest.fn().mockReturnValue({ errors: null });
+    const register = jest.fn().mockReturnValue({ errors: null, data: { register: {} } });
     (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
 
     render(<SignUpForm />);
@@ -134,14 +134,10 @@ describe("sign up form", () => {
     await waitFor(() => expect(passwordInput).toHaveValue(""));
   });
 
-  it("renders a email already taken message if the graphql mutation fails with a INPUT_ERROR", async () => {
-    (useRegisterMutation as jest.Mock).mockImplementation((options: Parameters<typeof useRegisterMutation>[0]) => {
-      const login = (): { errors: {}[] } => {
-        options.onError({ graphQLErrors: [{ extensions: { code: "INPUT_ERROR" } }] } as unknown as ApolloError);
-        return { errors: [] };
-      };
-      return [login, { loading: false }];
-    });
+  it("renders a email already taken message if the graphql mutation returns an email already in use", async () => {
+    const register = jest.fn().mockReturnValue({ errors: null, data: { register: { errorCode: RegisterErrorCodes.EmailInUse } } });
+    (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
+
     render(<SignUpForm />);
 
     const name = "name";
