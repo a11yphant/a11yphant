@@ -94,17 +94,7 @@ describe("sign up form", () => {
 
     render(<SignUpForm />);
 
-    const nameInput = screen.getByRole("textbox", { name: /Name/ });
-    fireEvent.change(nameInput, { target: { value: name } });
-
-    const emailInput = screen.getByRole("textbox", { name: /Email/ });
-    fireEvent.change(emailInput, { target: { value: email } });
-
-    const passwordInput = screen.getByLabelText(/Password/);
-    fireEvent.change(passwordInput, { target: { value: password } });
-
-    const form = screen.getByRole("form");
-    fireEvent.submit(form);
+    fillForm(name, email, password);
 
     await waitForMutation();
 
@@ -194,12 +184,8 @@ describe("sign up form", () => {
   });
 });
 
-function fillFormWithValidValuesAndSubmit(): void {
-  const name = "name";
-  const email = "test@a11yphant.com";
-  const password = "verysecret";
+function fillForm(name: string, email: string, password: string): void {
   const nameInput = screen.getByRole("textbox", { name: /Name/ });
-
   fireEvent.change(nameInput, { target: { value: name } });
 
   const emailInput = screen.getByRole("textbox", { name: /Email/ });
@@ -210,4 +196,12 @@ function fillFormWithValidValuesAndSubmit(): void {
 
   const form = screen.getByRole("form");
   fireEvent.submit(form);
+}
+
+function fillFormWithValidValuesAndSubmit(): void {
+  const name = "name";
+  const email = "test@a11yphant.com";
+  const password = "verysecret";
+
+  fillForm(name, email, password);
 }
