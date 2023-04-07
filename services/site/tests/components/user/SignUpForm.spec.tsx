@@ -112,26 +112,16 @@ describe("sign up form", () => {
   });
 
   it("resets the form after a successful submit", async () => {
-    const name = "name";
-    const email = "test@a11yphant.com";
-    const password = "verysecret";
-
     const register = jest.fn().mockReturnValue({ errors: null, data: { register: {} } });
     (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
 
     render(<SignUpForm />);
 
+    fillFormWithValidValuesAndSubmit();
+
     const nameInput = screen.getByRole("textbox", { name: /Name/ });
-    fireEvent.change(nameInput, { target: { value: name } });
-
     const emailInput = screen.getByRole("textbox", { name: /Email/ });
-    fireEvent.change(emailInput, { target: { value: email } });
-
     const passwordInput = screen.getByLabelText(/Password/);
-    fireEvent.change(passwordInput, { target: { value: password } });
-
-    const form = screen.getByRole("form");
-    fireEvent.submit(form);
 
     await waitFor(() => expect(nameInput).toHaveValue(""));
     await waitFor(() => expect(emailInput).toHaveValue(""));
@@ -144,25 +134,24 @@ describe("sign up form", () => {
 
     render(<SignUpForm />);
 
-    const name = "name";
-    const email = "test@a11yphant.com";
-    const password = "verysecret";
-
-    const nameInput = screen.getByRole("textbox", { name: /Name/ });
-    fireEvent.change(nameInput, { target: { value: name } });
-
-    const emailInput = screen.getByRole("textbox", { name: /Email/ });
-    fireEvent.change(emailInput, { target: { value: email } });
-
-    const passwordInput = screen.getByLabelText(/Password/);
-    fireEvent.change(passwordInput, { target: { value: password } });
-
-    const form = screen.getByRole("form");
-    fireEvent.submit(form);
+    fillFormWithValidValuesAndSubmit();
 
     await waitForMutation();
 
     expect(await screen.findByText("This email is already taken")).toBeInTheDocument();
+  });
+
+  it("renders a try again message if the graphql mutation returns an technical error", async () => {
+    const register = jest.fn().mockReturnValue({ errors: null, data: { register: { errorCode: RegisterErrorCodes.AnonymousUserInvalid } } });
+    (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
+
+    render(<SignUpForm />);
+
+    fillFormWithValidValuesAndSubmit();
+
+    await waitForMutation();
+
+    expect(await screen.findByText("We hit an error while processing your signup, please refresh the page and try again")).toBeInTheDocument();
   });
 
   it("renders a unknown error message if the graphql mutation fails", async () => {
@@ -173,23 +162,10 @@ describe("sign up form", () => {
       };
       return [login, { loading: false }];
     });
+
     render(<SignUpForm />);
 
-    const name = "name";
-    const email = "test@a11yphant.com";
-    const password = "verysecret";
-
-    const nameInput = screen.getByRole("textbox", { name: /Name/ });
-    fireEvent.change(nameInput, { target: { value: name } });
-
-    const emailInput = screen.getByRole("textbox", { name: /Email/ });
-    fireEvent.change(emailInput, { target: { value: email } });
-
-    const passwordInput = screen.getByLabelText(/Password/);
-    fireEvent.change(passwordInput, { target: { value: password } });
-
-    const form = screen.getByRole("form");
-    fireEvent.submit(form);
+    fillFormWithValidValuesAndSubmit();
 
     await waitForMutation();
 
@@ -209,26 +185,29 @@ describe("sign up form", () => {
 
     render(<SignUpForm onAfterSubmit={onAfterSubmit} />);
 
-    const name = "name";
-    const email = "test@a11yphant.com";
-    const password = "verysecret";
-
-    const nameInput = screen.getByRole("textbox", { name: /Name/ });
-    fireEvent.change(nameInput, { target: { value: name } });
-
-    const emailInput = screen.getByRole("textbox", { name: /Email/ });
-    fireEvent.change(emailInput, { target: { value: email } });
-
-    const passwordInput = screen.getByLabelText(/Password/);
-    fireEvent.change(passwordInput, { target: { value: password } });
-
-    const form = screen.getByRole("form");
-    fireEvent.submit(form);
+    fillFormWithValidValuesAndSubmit();
 
     await waitForMutation();
-
     await screen.findByText("An unknown error occurred");
 
     expect(onAfterSubmit).not.toHaveBeenCalled();
   });
 });
+
+function fillFormWithValidValuesAndSubmit(): void {
+  const name = "name";
+  const email = "test@a11yphant.com";
+  const password = "verysecret";
+  const nameInput = screen.getByRole("textbox", { name: /Name/ });
+
+  fireEvent.change(nameInput, { target: { value: name } });
+
+  const emailInput = screen.getByRole("textbox", { name: /Email/ });
+  fireEvent.change(emailInput, { target: { value: email } });
+
+  const passwordInput = screen.getByLabelText(/Password/);
+  fireEvent.change(passwordInput, { target: { value: password } });
+
+  const form = screen.getByRole("form");
+  fireEvent.submit(form);
+}
