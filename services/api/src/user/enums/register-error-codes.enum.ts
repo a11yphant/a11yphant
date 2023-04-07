@@ -7,6 +7,6 @@ export enum RegisterErrorCodes {
 }
 
 registerEnumType(RegisterErrorCodes, {
-  name: "RegisterResultEnum",
+  name: "RegisterErrorCodes",
   description: "The possible error codes for registering a new user.",
 });
