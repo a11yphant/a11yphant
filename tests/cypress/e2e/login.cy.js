@@ -16,9 +16,9 @@ function createUser({ name, email, password }) {
         body: JSON.stringify({
             query: `mutation register($name: String!, $email: String!, $password: String!) {
                 register(registerUserInput: { displayName: $name, email: $email, password: $password }) {
-                    id
-                    displayName
-                    email
+                    ... on User {
+                        id
+                    }
                 }
             }`,
             variables: { name, email, password },
