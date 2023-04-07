@@ -11,9 +11,13 @@ async function waitForMutation(): Promise<void> {
   });
 }
 
-jest.mock("app/generated/graphql", () => ({
-  useRegisterMutation: jest.fn(),
-}));
+jest.mock("app/generated/graphql", () => {
+  const actual = jest.requireActual("app/generated/graphql");
+  return {
+    useRegisterMutation: jest.fn(),
+    RegisterErrorCodes: actual.RegisterErrorCodes,
+  };
+});
 
 describe("sign up form", () => {
   beforeEach(() => {
