@@ -5,9 +5,10 @@ import { SessionToken as SessionTokenInterface } from "@/authentication/interfac
 import { SessionToken } from "@/authentication/session-token.decorator";
 import { MailService } from "@/mail/mail.service";
 
-import { InputError } from "./exceptions/input.error";
+import { WithCodeError } from "../support/graphql/results/with-code.error";
 import { RegisterUserInput } from "./inputs/register-user.input";
 import { User } from "./models/user.model";
+import { RegisterResult } from "./results/register.result";
 import { UserService } from "./user.service";
 
 @Resolver(() => User)
@@ -24,21 +25,32 @@ export class UserResolver {
     return this.userService.findById(sessionToken.userId);
   }
 
-  @Mutation(() => User, { description: "Register a new local user." })
+  @Mutation(() => RegisterResult, { description: "Register a new local user." })
   async register(
     @Args("registerUserInput") registerUserInput: RegisterUserInput,
     @SessionToken() sessionToken: SessionTokenInterface,
-  ): Promise<User> {
-    const user = await this.userService.registerUser(registerUserInput, sessionToken.userId).catch((e) => {
-      throw new InputError(e.message);
-    });
-    this.mailService.sendRegistrationMail({
-      userId: user.id,
-      email: user.email,
-      displayName: user.displayName,
-      token: await this.authService.generateMailConfirmationToken(user.id),
-    });
-    return user;
+  ): Promise<typeof RegisterResult> {
+    try {
+      const user = await this.userService.registerUser(registerUserInput, sessionToken.userId);
+
+      this.mailService.sendRegistrationMail({
+        userId: user.id,
+        email: user.email,
+        displayName: user.displayName,
+        token: await this.authService.generateMailConfirmationToken(user.id),
+      });
+
+      return user;
+    } catch (error: unknown) {
+      if (error instanceof WithCodeError) {
+        return {
+          errorCode: error.code,
+        };
+      }
+
+      // some unexpected error
+      throw error;
+    }
   }
 
   @ResolveField(() => Boolean)

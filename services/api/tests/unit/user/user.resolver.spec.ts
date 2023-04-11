@@ -4,8 +4,10 @@ import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { AuthenticationService } from "@/authentication/authentication.service";
 import { SessionToken } from "@/authentication/interfaces/session-token.interface";
 import { MailService } from "@/mail/mail.service";
-import { InputError } from "@/user/exceptions/input.error";
+import { RegisterErrorCodes } from "@/user/enums/register-error-codes.enum";
+import { AnonymousUserInvalidError } from "@/user/exceptions/anonymous-user-invalid.error";
 import { RegisterUserInput } from "@/user/inputs/register-user.input";
+import { RegisterErrorResult } from "@/user/results/register-error.result";
 import { UserResolver } from "@/user/user.resolver";
 import { UserService } from "@/user/user.service";
 
@@ -142,13 +144,24 @@ describe("user resolver", () => {
       });
     });
 
-    it("throws an input error if the service throws an error", () => {
+    it("throws an input error if the service throws an unknown error", () => {
       const registerUser = jest.fn().mockRejectedValue(new Error());
       const registerUserInput: RegisterUserInput = { email: "test", password: "test" };
       const sessionToken: SessionToken = { userId: "test" };
 
       const resolver = createUserResolver({ userService: { registerUser } });
-      expect(resolver.register(registerUserInput, sessionToken)).rejects.toThrow(InputError);
+      expect(resolver.register(registerUserInput, sessionToken)).rejects.toThrow(Error);
+    });
+
+    it("maps the thrown error correctly", async () => {
+      const registerUser = jest.fn().mockRejectedValue(new AnonymousUserInvalidError());
+      const registerUserInput: RegisterUserInput = { email: "test", password: "test" };
+      const sessionToken: SessionToken = { userId: "test" };
+
+      const resolver = createUserResolver({ userService: { registerUser } });
+      const result = (await resolver.register(registerUserInput, sessionToken)) as RegisterErrorResult;
+
+      expect(result.errorCode).toEqual(RegisterErrorCodes.ANONYMOUS_USER_INVALID);
     });
   });
 });
