@@ -2,6 +2,24 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
+const LinkListItem: React.FC<{ href: string; title: string }> = ({ href, title }) => (
+  <li className={clsx("mb-0 -ml-4 flex")}>
+    <Link
+      href={href}
+      className={clsx(
+        "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+        "transition-colors duration-300",
+        "hover:text-primary-light hover:decoration-primary-light",
+        "focus-rounded-instead-of-underline",
+      )}
+    >
+      {title}
+    </Link>
+  </li>
+);
+
+const LinkList: React.FC<React.PropsWithChildren> = ({ children }) => <ul className={clsx("mb-0 flex flex-col")}>{children}</ul>;
+
 const Footer: React.FunctionComponent = () => (
   <footer className={clsx("max-w-screen-3xl mx-8 mt-10 mb-16", "sm:mx-12 sm:mt-20 sm:mb-7", "md:mt-28", "lg:mx-24", "2xl:mx-auto")}>
     <div className={clsx("xl:flex xl:flex-row xl:justify-between", "2xl:mx-24")}>
@@ -20,130 +38,28 @@ const Footer: React.FunctionComponent = () => (
       <nav className={clsx("mt-10 mb-6 flex flex-col items-start justify-start", "sm:flex-row", "xl:my-0")} aria-label="Footer">
         <div className={clsx("flex flex-col mb-5", "xl:mb-0")}>
           <h2 className="h6 mb-3 uppercase">Project</h2>
-          <ul className={clsx("mb-0 flex flex-col")}>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="/about"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                About
-              </Link>
-            </li>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="/press-kit"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                Press Kit
-              </Link>
-            </li>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="https://github.com/a11yphant/a11yphant"
-                target={"_blank"}
-                rel="noopener noreferrer nofollow"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                Support us
-              </Link>
-            </li>
-          </ul>
+          <LinkList>
+            <LinkListItem href="/about" title="About" />
+            <LinkListItem href="/press-kit" title="Press Kit" />
+            <LinkListItem href="https://github.com/a11yphant/a11yphant" title="Support us" />
+          </LinkList>
         </div>
 
         <div className={clsx("flex flex-col my-5", "sm:my-0 sm:mx-9")}>
           <h2 className="h6 mb-3 uppercase">Social</h2>
-          <ul className={clsx("mb-0 flex flex-col")}>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="mailto:info@a11yphant.com"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                Contact
-              </Link>
-            </li>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="https://twitter.com/a11yphant"
-                target={"_blank"}
-                rel="noopener noreferrer nofollow"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                Twitter
-              </Link>
-            </li>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="https://github.com/a11yphant/a11yphant"
-                target={"_blank"}
-                rel="noopener noreferrer nofollow"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                GitHub
-              </Link>
-            </li>
-          </ul>
+          <LinkList>
+            <LinkListItem href="mailto:info@a11yphant.com" title="Contact" />
+            <LinkListItem href="https://twitter.com/a11yphant" title="Twitter" />
+            <LinkListItem href="https://github.com/a11yphant/a11yphant" title="GitHub" />
+          </LinkList>
         </div>
 
         <div className={clsx("flex flex-col mt-5", "sm:mt-0")}>
           <h2 className="h6 mb-3 uppercase">Site</h2>
-          <ul className={clsx("mb-0 flex flex-col")}>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="/legal-notice"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                Legal Notice
-              </Link>
-            </li>
-            <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link
-                href="/privacy-policy"
-                className={clsx(
-                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                  "transition-colors duration-300",
-                  "hover:text-primary-light hover:decoration-primary-light",
-                  "focus-rounded-instead-of-underline",
-                )}
-              >
-                Privacy Policy
-              </Link>
-            </li>
-          </ul>
+          <LinkList>
+            <LinkListItem href="/legal-notice" title="Legal Notice" />
+            <LinkListItem href="/privacy-policy" title="Privacy Policy" />
+          </LinkList>
         </div>
       </nav>
 
