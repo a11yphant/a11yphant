@@ -34,11 +34,16 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 type ConditionalWrapperProps<T> = T & {
   condition: boolean;
-  Wrapper: React.FunctionComponent;
+  Wrapper: React.FC<React.PropsWithChildren>;
   children: React.ReactElement;
 };
 
-const ConditionalWrapper = <T,>({ condition, Wrapper, children, ...otherProps }: ConditionalWrapperProps<T>): React.ReactElement => {
+const ConditionalWrapper = <T,>({
+  condition,
+  Wrapper,
+  children,
+  ...otherProps
+}: React.PropsWithChildren<ConditionalWrapperProps<T>>): React.ReactElement => {
   return condition ? <Wrapper {...otherProps}>{children}</Wrapper> : children;
 };
 

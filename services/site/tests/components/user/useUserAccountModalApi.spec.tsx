@@ -1,10 +1,10 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import React from "react";
 
 jest.mock("app/components/user/UserAccountModal", () => {
-  return "";
+  return () => <></>;
 });
 
 describe("useUserAccountModalApi", () => {

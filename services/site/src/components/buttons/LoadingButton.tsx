@@ -10,7 +10,7 @@ export interface LoadingButtonProps extends ButtonProps {
   submitButton?: boolean;
 }
 
-const LoadingButton: React.FunctionComponent<LoadingButtonProps> = ({
+const LoadingButton: React.FunctionComponent<React.PropsWithChildren<LoadingButtonProps>> = ({
   srTextLoading,
   loading,
   submitButton = false,

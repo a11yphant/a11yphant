@@ -39,20 +39,19 @@ const Breadcrumbs: React.FunctionComponent = () => {
                 <li key={route.href} className={clsx("m-0")}>
                   <div className={clsx("flex items-center")}>
                     {idx > 0 && <Slash />}
-                    <Link href={route.href}>
-                      <a
-                        className={clsx(
-                          "ml-1 font-normal whitespace-nowrap",
-                          "transition-colors duration-300",
-                          "hover:text-primary-light hover:border-primary-light",
-                          idx === routeList.length - 1 ? "text-light font-bold" : "text-grey-middle",
-                          "focus:text-light",
-                          "focus-rounded-instead-of-underline",
-                        )}
-                        aria-current={idx === routeList.length - 1 ? "page" : undefined}
-                      >
-                        {route.breadcrumb}
-                      </a>
+                    <Link
+                      href={route.href}
+                      className={clsx(
+                        "ml-1 font-normal whitespace-nowrap",
+                        "transition-colors duration-300",
+                        "hover:text-primary-light hover:border-primary-light",
+                        idx === routeList.length - 1 ? "text-light font-bold" : "text-grey-middle",
+                        "focus:text-light",
+                        "focus-rounded-instead-of-underline",
+                      )}
+                      aria-current={idx === routeList.length - 1 ? "page" : undefined}
+                    >
+                      {route.breadcrumb}
                     </Link>
                   </div>
                 </li>

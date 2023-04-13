@@ -3,7 +3,11 @@ import React from "react";
 
 import LoadingIndicator from "../icons/LoadingIndicator";
 
-const InvertedLoadingButton: React.FC<{ loading: boolean; srLoadingText: string }> = ({ loading, srLoadingText, children }) => {
+const InvertedLoadingButton: React.FC<React.PropsWithChildren<{ loading: boolean; srLoadingText: string }>> = ({
+  loading,
+  srLoadingText,
+  children,
+}) => {
   return (
     <button
       className={clsx(

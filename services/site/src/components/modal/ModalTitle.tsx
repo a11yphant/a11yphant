@@ -7,7 +7,7 @@ interface ModalTitleProps {
   as?: React.ElementType;
 }
 
-export const ModalTitle: React.FunctionComponent<ModalTitleProps & RestylableProps> = ({ children, className, as }) => {
+export const ModalTitle: React.FC<React.PropsWithChildren<ModalTitleProps & RestylableProps>> = ({ children, className, as }) => {
   return (
     <Dialog.Title as={as} className={clsx(className)}>
       {children}

@@ -1,5 +1,5 @@
 import { MockedProvider } from "@apollo/client/testing";
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { CurrentUserDocument, User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import React from "react";
@@ -27,8 +27,10 @@ const mocks = [
 describe("useCurrentUser", () => {
   it("returns the current user", async () => {
     const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={mocks}>{children}</MockedProvider>;
-    const { result, waitForNextUpdate } = renderHook(() => useCurrentUser(), { wrapper });
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useCurrentUser(), { wrapper });
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
 
     expect(result.current.currentUser).toEqual(mockUser);
   });

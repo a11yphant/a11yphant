@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import Navigation, { NavigationProps } from "app/components/Navigation";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
@@ -31,19 +32,8 @@ jest.mock("app/hooks/useCurrentUser", () => ({
   useCurrentUser: jest.fn(),
 }));
 
-let navigation;
-
-beforeEach(() => {
-  navigation = <Navigation />;
-});
-
 const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): void => {
-  render(
-    React.cloneElement(navigation, {
-      ...props,
-    }),
-    { wrapper: FlashMessageContextProvider },
-  );
+  render(<Navigation {...props} />, { wrapper: FlashMessageContextProvider });
 };
 
 const mockRegisteredUser = (): void => {
@@ -128,7 +118,8 @@ describe("Navigation", () => {
     const userAccountModalApi = useUserAccountModalApi();
     renderNavigation();
 
-    screen.getByRole("button", { name: "Sign Up" }).click();
+    const login = screen.getByRole("button", { name: "Sign Up" });
+    await userEvent.click(login);
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
@@ -139,7 +130,8 @@ describe("Navigation", () => {
     const userAccountModalApi = useUserAccountModalApi();
     renderNavigation();
 
-    screen.getByRole("button", { name: "Login" }).click();
+    const login = screen.getByRole("button", { name: "Login" });
+    await userEvent.click(login);
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("login");
@@ -150,9 +142,11 @@ describe("Navigation", () => {
     const logoutMutation = useLogoutMutation();
     renderNavigation();
 
-    screen.getByRole("button", { name: "User Menu" }).click();
+    const login = screen.getByRole("button", { name: "User Menu" });
+    await userEvent.click(login);
 
-    (await screen.findByRole("menuitem", { name: "Logout" })).click();
+    const logout = screen.getByRole("menuitem", { name: "Logout" });
+    await userEvent.click(logout);
 
     expect(logoutMutation[0]).toHaveBeenCalledTimes(1);
   });

@@ -22,23 +22,23 @@ describe("FlashMessage", () => {
     expect(screen.getByText(message)).toBeInTheDocument();
   });
 
-  it("calls onClose on close button click", () => {
+  it("calls onClose on close button click", async () => {
     const onClose = jest.fn();
-    renderFlashMessage({ onClose });
+    await renderFlashMessage({ onClose });
 
     screen.getByRole("button", { name: "Close" }).click();
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("sets role to 'alert' if type = FlashMessageType.ALERT", () => {
-    renderFlashMessage({ type: FlashMessageType.ALERT });
+  it("sets role to 'alert' if type = FlashMessageType.ALERT", async () => {
+    await renderFlashMessage({ type: FlashMessageType.ALERT });
 
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });
 
-  it("sets role to 'status' if type = FlashMessageType.STATUS", () => {
-    renderFlashMessage({ type: FlashMessageType.STATUS });
+  it("sets role to 'status' if type = FlashMessageType.STATUS", async () => {
+    await renderFlashMessage({ type: FlashMessageType.STATUS });
 
     expect(screen.getByRole("status")).toBeInTheDocument();
   });

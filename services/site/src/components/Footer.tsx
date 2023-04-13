@@ -22,47 +22,44 @@ const Footer: React.FunctionComponent = () => (
           <h2 className="h6 mb-3 uppercase">Project</h2>
           <ul className={clsx("mb-0 flex flex-col")}>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="/about">
-                <a
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  About
-                </a>
+              <Link
+                href="/about"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                About
               </Link>
             </li>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="/press-kit">
-                <a
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Press Kit
-                </a>
+              <Link
+                href="/press-kit"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Press Kit
               </Link>
             </li>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="https://github.com/a11yphant/a11yphant">
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Support us
-                </a>
+              <Link
+                href="https://github.com/a11yphant/a11yphant"
+                target={"_blank"}
+                rel="noopener noreferrer nofollow"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Support us
               </Link>
             </li>
           </ul>
@@ -72,49 +69,46 @@ const Footer: React.FunctionComponent = () => (
           <h2 className="h6 mb-3 uppercase">Social</h2>
           <ul className={clsx("mb-0 flex flex-col")}>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="mailto:info@a11yphant.com">
-                <a
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Contact
-                </a>
+              <Link
+                href="mailto:info@a11yphant.com"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Contact
               </Link>
             </li>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="https://twitter.com/a11yphant">
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Twitter
-                </a>
+              <Link
+                href="https://twitter.com/a11yphant"
+                target={"_blank"}
+                rel="noopener noreferrer nofollow"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Twitter
               </Link>
             </li>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="https://github.com/a11yphant/a11yphant">
-                <a
-                  target={"_blank"}
-                  rel="noopener noreferrer nofollow"
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  GitHub
-                </a>
+              <Link
+                href="https://github.com/a11yphant/a11yphant"
+                target={"_blank"}
+                rel="noopener noreferrer nofollow"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                GitHub
               </Link>
             </li>
           </ul>
@@ -124,31 +118,29 @@ const Footer: React.FunctionComponent = () => (
           <h2 className="h6 mb-3 uppercase">Site</h2>
           <ul className={clsx("mb-0 flex flex-col")}>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="/legal-notice">
-                <a
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Legal Notice
-                </a>
+              <Link
+                href="/legal-notice"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Legal Notice
               </Link>
             </li>
             <li className={clsx("mb-0 -ml-4 flex")}>
-              <Link href="/privacy-policy">
-                <a
-                  className={clsx(
-                    "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:decoration-primary-light",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Privacy Policy
-                </a>
+              <Link
+                href="/privacy-policy"
+                className={clsx(
+                  "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:decoration-primary-light",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Privacy Policy
               </Link>
             </li>
           </ul>
@@ -157,22 +149,25 @@ const Footer: React.FunctionComponent = () => (
 
       <div className={clsx("flex items-start justify-start", "xl:justify-end")}>
         <div className={clsx("mb-0 -ml-3 inline-block", "xl:ml-0")}>
-          <Link href="https://www.producthunt.com/posts/a11yphant?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-a11yphant">
-            <a className={clsx("group")} target={"_blank"} rel="noopener noreferrer nofollow">
-              <span className="sr-only">Product Hunt campaign of a11yphant (opens in a new tab)</span>
-              <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=328460&theme=dark"
-                alt="Featured on Product Hunt badge"
-                width="250"
-                height="54"
-                className={clsx(
-                  "border-transparent border-[3px] rounded-lg",
-                  "transition-colors duration-300",
-                  "group-hover:border-light",
-                  "group-focus:border-light",
-                )}
-              />
-            </a>
+          <Link
+            href="https://www.producthunt.com/posts/a11yphant?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-a11yphant"
+            className={clsx("group")}
+            target={"_blank"}
+            rel="noopener noreferrer nofollow"
+          >
+            <span className="sr-only">Product Hunt campaign of a11yphant (opens in a new tab)</span>
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=328460&theme=dark"
+              alt="Featured on Product Hunt badge"
+              width="250"
+              height="54"
+              className={clsx(
+                "border-transparent border-[3px] rounded-lg",
+                "transition-colors duration-300",
+                "group-hover:border-light",
+                "group-focus:border-light",
+              )}
+            />
           </Link>
         </div>
       </div>

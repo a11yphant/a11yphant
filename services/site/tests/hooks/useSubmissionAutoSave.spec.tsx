@@ -1,5 +1,5 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { CreateCodeLevelSubmissionDocument, UpdateCodeLevelSubmissionDocument } from "app/generated/graphql";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import React from "react";
@@ -58,11 +58,29 @@ function createCreateSubmissionMock(levelId = "level-uuid", code = defaultCode, 
   };
 }
 
-const defaultApolloMock = [createCreateSubmissionMock(), createUpdateSubmissionMock()];
+function createDefaultApolloMock(): MockedResponse[] {
+  return [createCreateSubmissionMock(), createUpdateSubmissionMock()];
+}
+
+beforeAll(() => {
+  jest.useFakeTimers();
+});
+
+beforeEach(() => {
+  jest.clearAllTimers();
+});
+
+afterEach(() => {
+  jest.runOnlyPendingTimers();
+});
+
+afterAll(() => {
+  jest.useRealTimers();
+});
 
 describe("submission auto save", () => {
   it("can set the submission id", () => {
-    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={defaultApolloMock}>{children}</MockedProvider>;
+    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={createDefaultApolloMock()}>{children}</MockedProvider>;
     const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
 
     act(() => {
@@ -73,7 +91,7 @@ describe("submission auto save", () => {
   });
 
   it("can set the submission code", () => {
-    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={defaultApolloMock}>{children}</MockedProvider>;
+    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={createDefaultApolloMock()}>{children}</MockedProvider>;
     const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
     const code = {
       html: "html",
@@ -91,86 +109,99 @@ describe("submission auto save", () => {
   it("can update the submission", async () => {
     const id = "uuid";
 
-    const mockRequest = createUpdateSubmissionMock(id);
+    const mockUpdateRequest = createUpdateSubmissionMock(id);
 
-    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockRequest]}>{children}</MockedProvider>;
-    const { result, waitForNextUpdate } = renderHook(() => useSubmissionAutoSave(), { wrapper });
+    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockUpdateRequest]}>{children}</MockedProvider>;
+    const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
 
     await act(async () => {
+      result.current.setLevelId(id);
       result.current.setSubmissionId(id);
       result.current.setSubmissionCode(defaultCode);
-      await waitForNextUpdate();
-      await result.current.updateSubmission();
+      await new Promise((resolve) => {
+        setTimeout(resolve, 0);
+        jest.runOnlyPendingTimers();
+      });
     });
 
-    expect(mockRequest.newData).toHaveBeenCalled();
+    await act(async () => {
+      await jest.runOnlyPendingTimersAsync();
+    });
+
+    expect(mockUpdateRequest.newData).toHaveBeenCalled();
   });
 
   it("creates a new submission if no submission id is set", async () => {
     const levelId = "uuid";
     const submissionId = "submission-uuid";
 
-    const mockRequest = createCreateSubmissionMock(levelId, defaultCode, submissionId);
+    const mockCreateRequest = createCreateSubmissionMock(levelId, defaultCode, submissionId);
+    const mockUpdateRequest = createUpdateSubmissionMock(submissionId);
 
-    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockRequest]}>{children}</MockedProvider>;
-    const { result, waitForNextUpdate } = renderHook(() => useSubmissionAutoSave(), { wrapper });
+    const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockCreateRequest, mockUpdateRequest]}>{children}</MockedProvider>;
+    const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
 
     await act(async () => {
       result.current.setLevelId(levelId);
       result.current.setSubmissionCode(defaultCode);
-      await waitForNextUpdate();
-      await result.current.updateSubmission();
+      await new Promise((resolve) => {
+        setTimeout(resolve, 0);
+        jest.runOnlyPendingTimers();
+      });
     });
 
-    expect(mockRequest.newData).toHaveBeenCalled();
+    await act(async () => {
+      await jest.runOnlyPendingTimersAsync();
+    });
+
+    await act(async () => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 0);
+        jest.runOnlyPendingTimers();
+      });
+    });
+
+    expect(mockCreateRequest.newData).toHaveBeenCalled();
     expect(result.current.submissionId).toEqual(submissionId);
   });
 
   it("updates the submission after a delay", async () => {
-    jest.useFakeTimers();
     const levelId = "uuid";
 
     const mockRequest = createCreateSubmissionMock(levelId);
 
     const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockRequest]}>{children}</MockedProvider>;
-    const { result, waitForNextUpdate } = renderHook(() => useSubmissionAutoSave(), { wrapper });
+    const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
 
     await act(async () => {
       result.current.setLevelId(levelId);
       result.current.setSubmissionCode(defaultCode);
-      await waitForNextUpdate();
     });
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
-      await waitForNextUpdate();
     });
 
     expect(mockRequest.newData).toHaveBeenCalled();
-    jest.clearAllTimers();
   });
 
   it("provides the loading state", async () => {
-    jest.useFakeTimers();
     const levelId = "uuid";
 
     const mockRequest = createCreateSubmissionMock(levelId);
 
     const wrapper = ({ children }): React.ReactElement => <MockedProvider mocks={[mockRequest]}>{children}</MockedProvider>;
-    const { result, waitForNextUpdate } = renderHook(() => useSubmissionAutoSave(), { wrapper });
+    const { result } = renderHook(() => useSubmissionAutoSave(), { wrapper });
 
     await act(async () => {
       result.current.setLevelId(levelId);
       result.current.setSubmissionCode(defaultCode);
-      await waitForNextUpdate();
     });
 
     await act(async () => {
-      jest.advanceTimersByTime(1000);
-      await waitForNextUpdate();
+      await jest.advanceTimersByTimeAsync(1000);
     });
 
     expect(result.current.loading).toBeTruthy();
-    jest.clearAllTimers();
   });
 });

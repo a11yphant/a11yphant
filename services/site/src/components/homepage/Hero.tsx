@@ -28,16 +28,15 @@ const Hero: React.FC = () => {
           </span>{" "}
           teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges.
         </p>
-        <Link href="/#challenges">
-          <a
-            className={clsx(
-              "w-max mt-8 px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
-              "transition duration-300",
-              "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
-            )}
-          >
-            Start Coding
-          </a>
+        <Link
+          href="/#challenges"
+          className={clsx(
+            "w-max mt-8 px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
+            "transition duration-300",
+            "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
+          )}
+        >
+          Start Coding
         </Link>
       </section>
       <section

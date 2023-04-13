@@ -8,7 +8,7 @@ interface UnderlinedTextProps {
   className?: string;
 }
 
-const UnderlinedText: React.FC<UnderlinedTextProps> = ({ children, onClick, className }) => {
+const UnderlinedText: React.FC<React.PropsWithChildren<UnderlinedTextProps>> = ({ children, onClick, className }) => {
   return (
     <Button
       onClick={onClick}

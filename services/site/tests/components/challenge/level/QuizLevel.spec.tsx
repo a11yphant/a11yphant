@@ -8,7 +8,6 @@ import QuizLevel from "app/components/challenge/level/QuizLevel";
 import { ResultStatus, SubmitQuizLevelAnswerDocument } from "app/generated/graphql";
 import router from "next/router";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -136,13 +135,8 @@ describe("Quiz Level", () => {
     );
 
     await userEvent.click(screen.getByText(mockAnswers[0].text));
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      await userEvent.click(screen.getByText("Submit"));
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    expect(screen.getByTestId("lottie")).toBeInTheDocument();
+    await userEvent.click(screen.getByText("Submit"));
+    expect(await screen.findByTestId("lottie")).toBeInTheDocument();
   });
 
   it("renders success animation when quiz status is success", async () => {
@@ -153,13 +147,8 @@ describe("Quiz Level", () => {
     );
 
     await userEvent.click(screen.getByText(mockAnswers[0].text));
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      await userEvent.click(screen.getByText("Submit"));
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    expect(screen.getByTestId("lottie")).toBeInTheDocument();
+    await userEvent.click(screen.getByText("Submit"));
+    expect(await screen.findByTestId("lottie")).toBeInTheDocument();
   });
 
   it("shows the success message on the last level if it was successful", async () => {

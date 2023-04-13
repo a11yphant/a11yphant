@@ -3,7 +3,7 @@ import { Modal } from "app/components/modal/Modal";
 import { ModalTitle } from "app/components/modal/ModalTitle";
 import React from "react";
 
-const WrapperModal: React.FC = ({ children }) => (
+const WrapperModal: React.FC<React.PropsWithChildren> = ({ children }) => (
   <Modal open={true} onClose={jest.fn()}>
     {children}
   </Modal>

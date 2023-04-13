@@ -28,16 +28,15 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
           <div>
             <h1 className={clsx("font-normal mb-4", "h5", "sm:h4")}>Error {statusCode}</h1>
             <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>ooops, something went wrong</p>
-            <Link href="/">
-              <a
-                className={clsx(
-                  "w-max mt-8 px-6 py-2.5 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
-                  "transition duration-300",
-                  "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
-                )}
-              >
-                Go to homepage
-              </a>
+            <Link
+              href="/"
+              className={clsx(
+                "w-max mt-8 px-6 py-2.5 font-normal bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
+                "transition duration-300",
+                "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
+              )}
+            >
+              Go to homepage
             </Link>
           </div>
           <IllustrationLost
