@@ -30,7 +30,7 @@
     "@nestjs/microservices": "9.4.0",
     "amqp-connection-manager": "4.1.12",
     "amqplib": "0.10.3",
-    "node-fetch": "2.6.9",
+    "node-fetch": "3.3.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "4.4.1",
     "rxjs": "7.8.0",
