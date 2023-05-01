@@ -1,5 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
-import { renderHook as renderHookServer } from "@testing-library/react-hooks/server";
+import { renderHook } from "@testing-library/react";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 
 jest.unmock("app/hooks/prefersReducedMotion");
@@ -29,8 +28,7 @@ describe("prefersReducedMotion", () => {
   // If the site is rendered on the server, the default value "true" should be returned
   // That's because before we know if the user prefers reduced motion, we don't want to render any animations per default
   it("returns true during SSR", () => {
-    mockMatchMedia(true);
-    const { result } = renderHookServer(() => usePrefersReducedMotion());
+    const { result } = renderHook(() => usePrefersReducedMotion());
 
     expect(result.current).toBeTruthy();
   });

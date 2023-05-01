@@ -1,5 +1,5 @@
 import { gql, InMemoryCache } from "@apollo/client";
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 import { initializeApollo, useApollo } from "app/lib/apollo-client";
 
 const query = gql`

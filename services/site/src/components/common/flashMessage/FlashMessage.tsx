@@ -18,7 +18,7 @@ export interface FlashMessageProps {
   offsetElementClassName?: string;
 }
 
-export const FlashMessage: React.FunctionComponent<FlashMessageProps> = ({
+export const FlashMessage: React.FC<React.PropsWithChildren<FlashMessageProps>> = ({
   children,
   show,
   onClose,

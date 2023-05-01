@@ -99,7 +99,7 @@ interface ErrorDialogProviderProps {
   errorDialogApi?: ErrorDialogApi;
 }
 
-export const ErrorDialogProvider: React.FunctionComponent<ErrorDialogProviderProps> = ({
+export const ErrorDialogProvider: React.FC<React.PropsWithChildren<ErrorDialogProviderProps>> = ({
   children,
   errorDialog: customErrorDialog,
   errorDialogApi: customErrorDialogApi,

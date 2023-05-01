@@ -23,27 +23,24 @@ export const ChallengeModalLevelCard = ({
         minimumIntegerDigits: 2,
         useGrouping: false,
       })}`}
+      className={clsx(
+        "border border-solid rounded-lg",
+        !isFirstUnfinishedLevel && "border-grey-dark",
+        "px-4 py-3",
+        "w-52 h-16",
+        isFirstUnfinishedLevel && "border-primary bg-primary",
+        "relative",
+        "hover:bg-primary-dark hover:border-primary-dark",
+      )}
     >
-      <a
-        className={clsx(
-          "border border-solid rounded-lg",
-          !isFirstUnfinishedLevel && "border-grey-dark",
-          "px-4 py-3",
-          "w-52 h-16",
-          isFirstUnfinishedLevel && "border-primary bg-primary",
-          "relative",
-          "hover:bg-primary-dark hover:border-primary-dark",
-        )}
-      >
-        <h3 className={clsx("text-base")}>
-          Level{" "}
-          {Number(levelNumber).toLocaleString("de-AT", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-        </h3>
-        {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10 absolute top-4 right-5 text-light")} />}
-      </a>
+      <h3 className={clsx("text-base")}>
+        Level{" "}
+        {Number(levelNumber).toLocaleString("de-AT", {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })}
+      </h3>
+      {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10 absolute top-4 right-5 text-light")} />}
     </Link>
   );
 };

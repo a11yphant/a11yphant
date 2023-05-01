@@ -70,8 +70,12 @@ const About: React.FunctionComponent = () => {
                 src={a11yphantStatic}
                 quality={80}
                 placeholder="blur"
-                sizes="80ch"
                 priority
+                sizes="80ch"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
               />
             ) : (
               <video autoPlay muted loop controls>

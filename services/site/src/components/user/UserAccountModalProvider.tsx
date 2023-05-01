@@ -3,7 +3,7 @@ import React from "react";
 
 import { UserAccountModalContext } from "./useUserAccountModalApi";
 
-export const UserAccountModalProvider: React.FunctionComponent = ({ children }) => {
+export const UserAccountModalProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const [mode, setMode] = React.useState<"signup" | "login">("signup");
 

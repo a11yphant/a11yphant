@@ -1,5 +1,5 @@
 import Editor from "@monaco-editor/react";
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
 import { EditorLanguage } from "app/components/challenge/Editors";
@@ -81,13 +81,7 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    // needed to wait for modal transition to be finished
-    // headless ui sets state during the trasition hence the act is needed
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      await userEvent.click(screen.getByRole("button", { name: "Reset" }));
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
+    await userEvent.click(screen.getByRole("button", { name: "Reset" }));
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
@@ -96,19 +90,8 @@ describe("WrappedEditor", () => {
     const reset = jest.fn();
     render(<WrappedEditor onReset={reset} config={editorConfig} />);
 
-    // needed to wait for modal transition to be finished
-    // headless ui sets state during the trasition hence the act is needed
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      await userEvent.click(screen.getByRole("button", { name: "Reset" }));
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      await userEvent.click(screen.getByRole("button", { name: "Reset HTML" }));
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
+    await userEvent.click(screen.getByRole("button", { name: "Reset" }));
+    await userEvent.click(screen.getByRole("button", { name: "Reset HTML" }));
 
     expect(reset).toHaveBeenCalled();
   });

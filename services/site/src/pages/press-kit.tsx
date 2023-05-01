@@ -250,19 +250,18 @@ const PressKit: React.FunctionComponent = () => {
           <section className="mt-24">
             <p className={clsx("text-base", "md:text-xl")}>
               Want to know more?{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "text-base",
-                    "md:text-xl",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Send us an email
-                </a>
+              <Link
+                href={"mailto:info@a11yphant.com"}
+                className={clsx(
+                  "text-light font-sans font-normal border-light",
+                  "text-base",
+                  "md:text-xl",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:border-transparent",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                Send us an email
               </Link>{" "}
               with your question.
             </p>

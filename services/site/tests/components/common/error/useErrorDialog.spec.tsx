@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
 import { ErrorDialogProvider, useErrorDialog, useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { GraphQLError } from "graphql";

@@ -1,4 +1,5 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { EmailConfirmationFailedMessage } from "app/components/common/flashMessage/messages/EmailConfirmationFailedMessage";
 import { ResendEmailConfirmationResultEnum, useResendConfirmationEmailMutation } from "app/generated/graphql";
 import React from "react";
@@ -29,11 +30,7 @@ describe("EmailConfirmationFailedMessage", () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.Successful } });
     render(<EmailConfirmationFailedMessage />);
 
-    // without act the test fails with an error
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
-    });
+    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
 
     expect(resendConfirmationEmailMock).toHaveBeenCalledTimes(1);
   });
@@ -42,11 +39,7 @@ describe("EmailConfirmationFailedMessage", () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.Successful } });
     render(<EmailConfirmationFailedMessage />);
 
-    // without act the test fails with an error
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
-    });
+    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
 
     expect(screen.getByText(/Check your inbox/)).toBeInTheDocument();
   });
@@ -55,11 +48,7 @@ describe("EmailConfirmationFailedMessage", () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.AlreadyVerified } });
     render(<EmailConfirmationFailedMessage />);
 
-    // without act the test fails with an error
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
-    });
+    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
 
     expect(screen.getByText(/Your email has already been verified/)).toBeInTheDocument();
   });
@@ -68,11 +57,7 @@ describe("EmailConfirmationFailedMessage", () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.NotApplicable } });
     render(<EmailConfirmationFailedMessage />);
 
-    // without act the test fails with an error
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
-    });
+    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
 
     expect(screen.getByText(/Your email has already been verified/)).toBeInTheDocument();
   });

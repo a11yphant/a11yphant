@@ -11,7 +11,7 @@ export interface ScrollOverlayWrapperProps {
   attachScrollListenerToDocument?: boolean;
 }
 
-const ScrollOverlayWrapper: React.FunctionComponent<ScrollOverlayWrapperProps> = ({
+const ScrollOverlayWrapper: React.FC<React.PropsWithChildren<ScrollOverlayWrapperProps>> = ({
   children,
   className,
   classNameTopOverlay,

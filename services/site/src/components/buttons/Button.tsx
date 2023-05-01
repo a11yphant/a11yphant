@@ -9,7 +9,7 @@ export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
   overrideClassName?: boolean;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({
+const Button: React.FunctionComponent<React.PropsWithChildren<ButtonProps>> = ({
   primary = false,
   icon,
   srText,

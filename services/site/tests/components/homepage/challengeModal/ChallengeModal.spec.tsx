@@ -53,7 +53,7 @@ const mocks: Array<MockedResponse<ChallengeDetailsBySlugQuery>> = [
   },
 ];
 
-const Wrapper: React.FC = ({ children }) => <MockedProvider mocks={mocks}>{children}</MockedProvider>;
+const Wrapper: React.FC<React.PropsWithChildren> = ({ children }) => <MockedProvider mocks={mocks}>{children}</MockedProvider>;
 
 function renderModalWitoutWaitingForQuery(): void {
   render(<ChallengeModal challengeSlug={mockChallengeSlug} onClose={mockOnClose} open={true} />, { wrapper: Wrapper });
