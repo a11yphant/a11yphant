@@ -1,30 +1,14 @@
 import Editor, { EditorProps, useMonaco } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
+import ModeCommandHint from "app/components/challenge/editor/ModeCommandHint";
 import { EditorLanguage } from "app/components/challenge/Editors";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import ConfirmationModal from "app/components/modal/ConfirmationModal";
+import theme from "app/monaco-theme/a11yphant-color-theme.json";
 import clsx from "clsx";
 import React, { useCallback, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-
-import theme from "../../../monaco-theme/a11yphant-color-theme.json";
-
-const CTRL_SHIFT_PLATFORMS = ["Macintosh", "MacIntel", "MacPPC", "Mac68K", "iPhone", "iPad", "iPod"];
-
-function getCommandForTabModeSwitch(): "ctrl + shift" | "ctrl" {
-  // there is no sign of deprecation of navigator.platform in the spec
-  // https://html.spec.whatwg.org/multipage/system-state.html#dom-navigator-platform
-  if (typeof navigator === "undefined" || !navigator.platform) {
-    return "ctrl";
-  }
-
-  if (CTRL_SHIFT_PLATFORMS.includes(navigator.platform)) {
-    return "ctrl + shift";
-  }
-
-  return "ctrl";
-}
 
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
@@ -124,8 +108,6 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
     onResize: updateEditorSize,
   });
 
-  const commandForTabModeSwitch = getCommandForTabModeSwitch();
-
   return (
     <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
       <div ref={wrapperRef} className={clsx("relative", "p-4 w-inherit h-full", "container-dark overflow-hidden")}>
@@ -133,9 +115,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
           <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
             {config.heading}
           </h3>
-          <p className="text-grey-middle">
-            Press <span className="italic text-grey-middle">{commandForTabModeSwitch} + m</span> to use the tab key for site navigation.
-          </p>
+          <ModeCommandHint />
         </div>
         <div className={clsx("absolute")} style={{ top: editorTop }}>
           <Editor
