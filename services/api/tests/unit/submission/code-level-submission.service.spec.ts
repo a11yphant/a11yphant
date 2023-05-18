@@ -176,7 +176,7 @@ describe("code level submission service", () => {
 
       expect(async () =>
         service.update({
-          id: faker.datatype.uuid(),
+          id: faker.string.uuid(),
           levelId,
           userId,
         }),

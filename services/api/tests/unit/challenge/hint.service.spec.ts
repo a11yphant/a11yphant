@@ -32,6 +32,6 @@ describe("hint service", () => {
     const prisma = getPrismaService();
     const service = new HintService(prisma);
 
-    expect(await service.findOneById(faker.datatype.uuid())).toBeFalsy();
+    expect(await service.findOneById(faker.string.uuid())).toBeFalsy();
   });
 });

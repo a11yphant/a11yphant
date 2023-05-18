@@ -28,7 +28,7 @@ function buildChallengeWithCodeLevel(overrides: Partial<CodeLevel> = {}): Challe
     ...buildChallenge(),
     levels: [
       {
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
         order: 1,
         type: "code",
         instructions: "hi",
@@ -50,18 +50,18 @@ function buildChallengeWithQuizLevel(overrides: Partial<QuizLevel> = {}): Challe
     ...buildChallenge(),
     levels: [
       {
-        id: faker.datatype.uuid(),
+        id: faker.string.uuid(),
         order: 1,
         type: "quiz",
         question: "How are you today?",
         answer_options: [
           {
-            id: faker.datatype.uuid(),
+            id: faker.string.uuid(),
             text: "I'm fine",
             correct: true,
           },
           {
-            id: faker.datatype.uuid(),
+            id: faker.string.uuid(),
             text: "I'm not fine",
             correct: false,
           },
@@ -134,7 +134,7 @@ describe("import service", () => {
 
   it("deletes old challenges", async () => {
     const deleteMany = jest.fn().mockResolvedValue({ count: 1 });
-    const challengeIds = [faker.datatype.uuid(), faker.datatype.uuid()];
+    const challengeIds = [faker.string.uuid(), faker.string.uuid()];
 
     const importer = new ImportService(
       createMock<Logger>(),
@@ -224,7 +224,7 @@ describe("import service", () => {
       const challenge = buildChallenge({
         levels: [
           {
-            id: faker.datatype.uuid(),
+            id: faker.string.uuid(),
             order: 1,
             type: "code",
             instructions: "hi",
@@ -350,13 +350,13 @@ describe("import service", () => {
         ...challengeWithoutLevels,
         levels: [
           {
-            id: faker.datatype.uuid(),
+            id: faker.string.uuid(),
             order: 1,
             type: "quiz",
             question: "How are you today?",
             answer_options: [
               {
-                id: faker.datatype.uuid(),
+                id: faker.string.uuid(),
                 correct: true,
                 text: "Options",
               },
@@ -385,7 +385,7 @@ describe("import service", () => {
       });
 
       const challenge = buildChallengeWithCodeLevel({
-        requirements: [{ id: faker.datatype.uuid(), title: "lala", description: "asdf", key: "test-rule" }],
+        requirements: [{ id: faker.string.uuid(), title: "lala", description: "asdf", key: "test-rule" }],
       });
 
       const importer = new ImportService(createMock<Logger>(), prisma, createMock<YamlReaderService>());

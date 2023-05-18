@@ -18,7 +18,7 @@ describe("answer option factory", () => {
   });
 
   it("does not create a quiz level if an quiz level id is passed", () => {
-    const data = Factory.build<AnswerOptionData>(ANSWER_OPTION, { quizLevelId: faker.datatype.uuid() });
+    const data = Factory.build<AnswerOptionData>(ANSWER_OPTION, { quizLevelId: faker.string.uuid() });
 
     expect(data.quizLevel).toBeUndefined();
   });

@@ -83,7 +83,7 @@ describe("challenge service", () => {
       const prisma = getPrismaService();
       const service = new ChallengeService(prisma);
 
-      const challenge = await service.findOne(faker.datatype.uuid());
+      const challenge = await service.findOne(faker.string.uuid());
       expect(challenge).toBeFalsy();
     });
   });

@@ -52,7 +52,7 @@ describe("user service", () => {
 
     it("returns null if it cannot find the user by id", async () => {
       const service = getUserService();
-      expect(await service.findById(faker.datatype.uuid())).toBeNull();
+      expect(await service.findById(faker.string.uuid())).toBeNull();
     });
   });
 
@@ -79,7 +79,7 @@ describe("user service", () => {
         },
       });
 
-      const userId = faker.datatype.uuid();
+      const userId = faker.string.uuid();
       const email = "hallo@a11yphant.com";
       const password = "fake_password";
 
@@ -101,14 +101,14 @@ describe("user service", () => {
 
     it("throws an error if the anonymous user is not found", async () => {
       const service = getUserService();
-      expect(service.registerUser({ email: "test", password: "test" }, faker.datatype.uuid())).rejects.toBeInstanceOf(AnonymousUserInvalidError);
+      expect(service.registerUser({ email: "test", password: "test" }, faker.string.uuid())).rejects.toBeInstanceOf(AnonymousUserInvalidError);
     });
 
     it("throws an error if the email addres is already in use", async () => {
       const prisma = getPrismaService();
       const service = getUserService(prisma);
 
-      const userId = faker.datatype.uuid();
+      const userId = faker.string.uuid();
       const email = faker.internet.email();
 
       await Promise.all([
@@ -127,7 +127,7 @@ describe("user service", () => {
       const prisma = getPrismaService();
       const service = getUserService(prisma);
 
-      const userId = faker.datatype.uuid();
+      const userId = faker.string.uuid();
 
       await prisma.user.create({
         data: UserFactory.build({ id: userId, authProvider: "github" }),
@@ -168,8 +168,8 @@ describe("user service", () => {
       });
 
       const providerInformation: ProviderInformation = {
-        id: faker.datatype.uuid(),
-        displayName: faker.name.fullName(),
+        id: faker.string.uuid(),
+        displayName: faker.person.fullName(),
         provider: "github",
       };
 

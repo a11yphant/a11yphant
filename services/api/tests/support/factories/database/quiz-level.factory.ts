@@ -8,7 +8,7 @@ import { AnswerOptionData, ChallengeData, QuizLevelData } from "./types";
 export function define(factory: IFactoryStatic): void {
   factory
     .define<QuizLevelData>(QUIZ_LEVEL)
-    .attr("order", faker.datatype.number())
+    .attr("order", faker.number.int({ min: 0, max: 100 }))
     .attr("question", faker.lorem.sentence())
     .attr("challengeId", undefined)
     .option("createChallengeIfMissing", true)

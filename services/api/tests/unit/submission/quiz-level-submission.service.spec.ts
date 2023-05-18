@@ -48,7 +48,7 @@ describe("quiz level submission service", () => {
 
       const service = new QuizLevelSubmissionService(prisma);
 
-      expect(() => service.create(faker.datatype.uuid(), [], faker.datatype.uuid())).rejects.toThrowError(ReferenceNotValidException);
+      expect(() => service.create(faker.string.uuid(), [], faker.string.uuid())).rejects.toThrowError(ReferenceNotValidException);
     });
   });
 
