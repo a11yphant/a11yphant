@@ -69,7 +69,7 @@
   "devDependencies": {
     "@a11yphant/eslint-config": "0.5.0",
     "@apollo/client": "3.7.14",
-    "@faker-js/faker": "7.6.0",
+    "@faker-js/faker": "8.0.1",
     "@golevelup/ts-jest": "0.3.7",
     "@nestjs/cli": "9.5.0",
     "@nestjs/schematics": "9.2.0",
