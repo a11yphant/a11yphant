@@ -8,7 +8,7 @@ import { AnswerOptionData, QuizLevelData } from "./types";
 export function define(factory: IFactoryStatic): void {
   factory
     .define<AnswerOptionData>(ANSWER_OPTION)
-    .attr("id", () => faker.datatype.uuid())
+    .attr("id", () => faker.string.uuid())
     .attr("text", () => faker.lorem.paragraph())
     .attr("correct", () => faker.datatype.boolean())
     .attr("quizLevelId", undefined)

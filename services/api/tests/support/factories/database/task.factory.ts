@@ -8,7 +8,7 @@ import { HintData, TaskData } from "./types";
 export function define(factory: IFactoryStatic): void {
   factory
     .define<TaskData>(TASK)
-    .attr("id", () => faker.datatype.uuid())
+    .attr("id", () => faker.string.uuid())
     .attr("text", () => faker.lorem.paragraph())
     .option("numberOfHints", 2)
     .attr("hints", ["numberOfHints"], buildMultipleOf<HintData>(HINT));

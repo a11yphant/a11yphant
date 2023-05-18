@@ -10,7 +10,7 @@ import { CheckResultData, CodeLevelResultData, CodeLevelSubmissionData } from ".
 export function define(factory: IFactoryStatic): void {
   factory
     .define<CodeLevelResultData>(CODE_LEVEL_RESULT)
-    .attr("id", () => faker.datatype.uuid())
+    .attr("id", () => faker.string.uuid())
     .attr("status", ResultStatus.SUCCESS)
     .attr("submissionId", undefined)
     .option("createSubmissionIfMissing", true)

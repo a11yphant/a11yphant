@@ -12,7 +12,7 @@ export function define(factory: IFactoryStatic): void {
     .attr("html", "<p>hi</p>")
     .attr("css", "body { color: blue }")
     .attr("js", "console.log('hi')")
-    .attr("order", faker.datatype.number())
+    .attr("order", faker.number.int({ min: 0, max: 100 }))
     .attr("challengeId", undefined)
     .option("createChallengeIfMissing", true)
     .attr("challenge", ["challengeId", "createChallengeIfMissing"], buildOneOf<ChallengeData>(CHALLENGE, {}, { createLevelIfMissing: false }))
