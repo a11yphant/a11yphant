@@ -96,21 +96,26 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
       const paddingWrapper = window.getComputedStyle(wrapperRef.current);
 
       // calculate real width
-      setEditorWidth(wrapperWidth - parseInt(paddingWrapper.paddingLeft) - parseInt(paddingWrapper.paddingRight));
+      setEditorWidth(wrapperWidth - parseInt(paddingWrapper.paddingLeft || "0") - parseInt(paddingWrapper.paddingRight || "0"));
       // calculate real height
       setEditorHeight(
         wrapperHeight -
-          parseInt(paddingWrapper.paddingTop) -
-          parseInt(paddingWrapper.paddingBottom) -
+          parseInt(paddingWrapper.paddingTop || "0") -
+          parseInt(paddingWrapper.paddingBottom || "0") -
           headingHeight -
-          parseInt(marginHeading.marginTop) -
-          parseInt(marginHeading.marginBottom) -
+          parseInt(marginHeading.marginTop || "0") -
+          parseInt(marginHeading.marginBottom || "0") -
           buttonHeight -
-          parseInt(marginButton.marginTop) -
-          parseInt(marginButton.marginBottom),
+          parseInt(marginButton.marginTop || "0") -
+          parseInt(marginButton.marginBottom || "0"),
       );
 
-      setEditorTop(parseInt(paddingWrapper.paddingTop) + headingHeight + parseInt(marginHeading.marginTop) + parseInt(marginHeading.marginBottom));
+      setEditorTop(
+        parseInt(paddingWrapper.paddingTop || "0") +
+          headingHeight +
+          parseInt(marginHeading.marginTop || "0") +
+          parseInt(marginHeading.marginBottom || "0"),
+      );
     }
   }, [wrapperRef, headingRef, buttonRef]);
 

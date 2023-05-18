@@ -6,11 +6,7 @@ import React from "react";
 
 export interface ApolloErrorResponse {
   graphQLErrors: ApolloError["graphQLErrors"];
-  networkError: ApolloError["networkError"] & {
-    result?: {
-      errors?: GraphQLError[];
-    };
-  };
+  networkError: ApolloError["networkError"];
 }
 
 interface ErrorDialogOptions {
@@ -60,7 +56,7 @@ export const useErrorDialog = (): { errorDialog: React.ReactElement<ErrorDialogP
 
     if (graphQLErrors && graphQLErrors.length > 0) {
       messages = graphQLErrors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
-    } else if (networkError?.result?.errors && networkError.result.errors.length > 0) {
+    } else if ("result" in networkError && typeof networkError.result !== "string" && networkError.result.errors.length > 0) {
       // when handling errors locally, the graphqlErrors are for some reason moved to networkError.result.errors
       // see https://github.com/apollographql/apollo-client/issues/2810
       messages = networkError.result.errors.map((graphQLError) => getMessageForGraphQLError(graphQLError, options));
