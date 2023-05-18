@@ -31,7 +31,7 @@ beforeEach(() => {
     writable: true,
   });
 
-  (Editor as jest.Mock).mockImplementation(() => <></>);
+  (Editor as unknown as jest.Mock).mockImplementation(() => <></>);
 });
 
 afterEach(() => {
