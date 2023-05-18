@@ -50,7 +50,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.43.9",
-    "react-resize-detector": "8.1.0",
+    "react-resize-detector": "9.1.0",
     "react-spring": "9.7.1",
     "sanitize-html": "2.10.0",
     "yup": "1.1.1"
