@@ -24,7 +24,7 @@ export const usePollSubmissionResult = (submissionId: string): CustomSubmissionR
 
     const interval = setInterval(() => {
       getResultForSubmission({ variables: { id: submissionId as string } });
-    }, 3000);
+    }, 500);
 
     setQueryInterval(interval);
   }, []);

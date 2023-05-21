@@ -1,6 +1,5 @@
 import { createMock, PartialFuncReturn } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
-import { ThenableWebDriver } from "selenium-webdriver";
 import { CheckFactory } from "src/check.factory";
 import { Check } from "src/checks/check.interface";
 import { RuleCheckResult } from "src/rule-check-result.interface";
@@ -37,7 +36,7 @@ describe("check submission service", () => {
     const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "test-rule", options: {} }];
 
     const service = factory();
-    const result = await service.check(submission, rules, createMock<ThenableWebDriver>());
+    const result = await service.check(submission, rules);
     expect(result).toBeTruthy();
   });
 
@@ -52,7 +51,7 @@ describe("check submission service", () => {
     const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "test-rule", options: {} }];
 
     const service = factory();
-    const result = await service.check(submission, rules, createMock<ThenableWebDriver>());
+    const result = await service.check(submission, rules);
 
     expect(result.ruleCheckResults.length).toEqual(1);
     expect(result.ruleCheckResults[0].id).toBeTruthy();
@@ -72,7 +71,7 @@ describe("check submission service", () => {
     const dummyCheck = createMock<Check>({ run: jest.fn().mockResolvedValue(checkResult) });
     const service = factory({ checkFactory: { get: jest.fn().mockReturnValue(dummyCheck) } });
 
-    await service.check(submission, rules, createMock<ThenableWebDriver>());
+    await service.check(submission, rules);
 
     expect(dummyCheck.run).toHaveBeenCalled();
   });
@@ -88,7 +87,7 @@ describe("check submission service", () => {
     const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "doesn't exist", options: {} }];
     const service = factory({ checkFactory: { get: jest.fn().mockReturnValue(null) } });
 
-    const result = await service.check(submission, rules, createMock<ThenableWebDriver>());
+    const result = await service.check(submission, rules);
 
     expect(result.ruleCheckResults[0].status).toBe("error");
   });

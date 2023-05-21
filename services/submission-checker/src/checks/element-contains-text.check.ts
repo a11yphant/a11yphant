@@ -1,19 +1,20 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { By, WebDriver } from "selenium-webdriver";
+import { DOMWindow } from "jsdom";
+import nodeFetch from "node-fetch";
 
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
 import { Submission } from "../submission.interface";
-import { SeleniumCheck } from "./selenium-check";
+import { JsdomCheck } from "./jsdom-check";
 
 @Injectable()
-export class ElementContainsText extends SeleniumCheck {
-  constructor(logger: Logger, config: ConfigService) {
-    super(logger, config);
+export class ElementContainsText extends JsdomCheck {
+  constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
+    super(logger, config, fetch);
   }
 
-  public async evaluateRule(driver: WebDriver, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.selector || !rule.options?.text) {
       this.logger.error(
         `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector or text configuration`,
@@ -27,7 +28,7 @@ export class ElementContainsText extends SeleniumCheck {
       };
     }
 
-    const containsText = await this.containsText(driver, rule.options as { selector: string; text: string });
+    const containsText = this.containsText(window, rule.options as { selector: string; text: string });
 
     return {
       id: rule.id,
@@ -35,13 +36,13 @@ export class ElementContainsText extends SeleniumCheck {
     };
   }
 
-  public async containsText(driver: WebDriver, { selector, text }: { selector: string; text: string }): Promise<boolean> {
-    const matchingElements = await driver.findElements(By.css(selector));
+  public containsText(window: DOMWindow, { selector, text }: { selector: string; text: string }): boolean {
+    const matchingElements = window.document.querySelectorAll(selector);
 
-    const containsText = await matchingElements.reduce(async (prev, element): Promise<boolean> => {
-      const elementText = await element.getText();
-      return elementText.includes(text) || (await prev);
-    }, Promise.resolve(false));
+    const containsText = [...matchingElements].reduce((prev, element): boolean => {
+      const elementText = element.textContent;
+      return elementText.includes(text) || prev;
+    }, false);
 
     return containsText;
   }

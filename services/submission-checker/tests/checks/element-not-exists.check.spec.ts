@@ -1,7 +1,8 @@
 import { createMock } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { WebDriver } from "selenium-webdriver";
+import fetchMock from "fetch-mock-jest";
+import nodeFetch from "node-fetch";
 
 import { ElementNotExists } from "@/checks/element-not-exists.check";
 import { Rule } from "@/rule.interface";
@@ -9,13 +10,9 @@ import { Submission } from "@/submission.interface";
 
 describe("element-not-exists check", () => {
   it("is successful if the selector was not found", async () => {
-    const webdriver = createMock<WebDriver>({
-      get: jest.fn().mockResolvedValue(null),
-      findElements: jest.fn().mockResolvedValue(new Array(0)),
-      quit: jest.fn().mockResolvedValue(null),
-    });
+    const fetch = fetchMock.sandbox().get("url/1", "<!doctype html><html></html>") as unknown as typeof nodeFetch;
 
-    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
+    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
 
     const submission: Submission = {
       id: "1",
@@ -32,20 +29,16 @@ describe("element-not-exists check", () => {
       },
     };
 
-    const result = await check.run(submission, rule, webdriver);
+    const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "success");
   });
 
   it("fails if the selector was found", async () => {
-    const webdriver = createMock<WebDriver>({
-      get: jest.fn().mockResolvedValue(null),
-      findElements: jest.fn().mockResolvedValue(new Array(3)),
-      quit: jest.fn().mockResolvedValue(null),
-    });
+    const fetch = fetchMock.sandbox().get("url/1", `<!doctype html><html><a href=""></a></html>`) as unknown as typeof nodeFetch;
 
-    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
+    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
 
     const submission: Submission = {
       id: "1",
@@ -62,20 +55,16 @@ describe("element-not-exists check", () => {
       },
     };
 
-    const result = await check.run(submission, rule, webdriver);
+    const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "failed");
   });
 
   it("errors if the there was an error", async () => {
-    const webdriver = createMock<WebDriver>({
-      get: jest.fn().mockResolvedValue(null),
-      findElements: jest.fn().mockRejectedValue(new Array(0)),
-      quit: jest.fn().mockResolvedValue(null),
-    });
+    const fetch = jest.fn().mockRejectedValue(new Error()) as unknown as typeof nodeFetch;
 
-    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
+    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
 
     const submission: Submission = {
       id: "1",
@@ -92,20 +81,16 @@ describe("element-not-exists check", () => {
       },
     };
 
-    const result = await check.run(submission, rule, webdriver);
+    const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "error");
   });
 
   it("errors if the the selector is missing", async () => {
-    const webdriver = createMock<WebDriver>({
-      get: jest.fn().mockResolvedValue(null),
-      findElements: jest.fn().mockRejectedValue(new Array(0)),
-      quit: jest.fn().mockResolvedValue(null),
-    });
+    const fetch = fetchMock.sandbox().get("url/1", "") as unknown as typeof nodeFetch;
 
-    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url") }));
+    const check = new ElementNotExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
 
     const submission: Submission = {
       id: "1",
@@ -120,7 +105,7 @@ describe("element-not-exists check", () => {
       options: {},
     };
 
-    const result = await check.run(submission, rule, webdriver);
+    const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "error");
