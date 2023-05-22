@@ -82,7 +82,7 @@ const mocks: MockedResponse[] = [
 
 async function waitForNextPoll(): Promise<void> {
   await act(async () => {
-    jest.advanceTimersByTime(3000);
+    jest.advanceTimersByTime(500);
     await new Promise((resolve) => {
       setTimeout(resolve, 0);
       jest.advanceTimersToNextTimer();
