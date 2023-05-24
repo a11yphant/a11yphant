@@ -5,7 +5,6 @@ import nodeFetch from "node-fetch";
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
 import { Submission } from "../submission.interface";
-import { Check } from "./check.interface";
 
 interface ValidationResult {
   messages: { type: "error" | "info" }[];
@@ -20,10 +19,8 @@ export class HtmlIsValidCheck implements Check {
   ) {}
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {
-    const url = `${this.config.get<string>("submission-checker.renderer-base-url")}${submission.id}`;
-
     try {
-      const renderedSubmission = await this.fetch(url).then((response) => response.text());
+      const renderedSubmission = await this.fetchSubmission(submission.id);
       const validationResult: ValidationResult = await this.fetch("https://validator.w3.org/nu/?out=json", {
         method: "POST",
         headers: {
@@ -37,12 +34,7 @@ export class HtmlIsValidCheck implements Check {
         status: this.isSuccess(validationResult) ? "success" : "failed",
       };
     } catch (error) {
-      this.logger.error(`Executing check ${rule.key} on submission ${submission.id} failed: ${error.message}`, error.stack, HtmlIsValidCheck.name);
-
-      return {
-        id: rule.id,
-        status: "error",
-      };
+      return this.checkFailed(error, submission, rule);
     }
   }
 
