@@ -1,19 +1,6 @@
 version: "3"
 
 services:
-  selenium:
-    image: ${SELENIUM_IMAGE:-selenium/standalone-chrome:4}
-    restart: always
-    volumes:
-      - /dev/shm:/dev/shm
-    ports:
-      - 4444:4444
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:4444/wd/hub/status" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
-
   postgres:
     image: postgres:14-alpine
     restart: always

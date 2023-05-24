@@ -46,11 +46,8 @@ services:
       SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
       SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME: "submission-checker"
       SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: "api"
-      SUBMISSION_CHECKER_WEBDRIVER_ENDPOINT: http://selenium:4444/wd/hub
     depends_on:
       api:
         condition: service_started
       rabbitmq:
-        condition: service_healthy
-      selenium:
         condition: service_healthy

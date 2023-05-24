@@ -6,8 +6,6 @@ import fetch from "node-fetch";
 import { ElementContainsText } from "@/checks/element-contains-text.check";
 import { ElementNotContainsText } from "@/checks/element-not-contains-text.check";
 
-import { AxeFactory } from "./axe.factory";
-import { BrowserService } from "./browser.service";
 import { CheckFactory } from "./check.factory";
 import { CheckSubmissionService } from "./check-submission.service";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./check-to-class-map";
@@ -20,7 +18,6 @@ import messagingConfig from "./config/messaging.config";
 import submissionRenderer from "./config/submission-checker.config";
 import { SUBMISSIONS_CLIENT } from "./constants";
 import { SubmissionController } from "./submission.controller";
-import { WebdriverFactory } from "./webdriver.factory";
 
 @Module({
   imports: [
@@ -45,10 +42,7 @@ import { WebdriverFactory } from "./webdriver.factory";
   ],
   controllers: [SubmissionController],
   providers: [
-    BrowserService,
     CheckSubmissionService,
-    WebdriverFactory,
-    AxeFactory,
     Logger,
     { provide: "fetch", useValue: fetch },
     { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
