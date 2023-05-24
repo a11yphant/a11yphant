@@ -41,7 +41,7 @@ export class ElementContainsText extends JsdomCheck {
     let containsText = false;
     // iterate using forEach since NodeList<T> only suports that
     matchingElements.forEach((element) => {
-      if (element.textContent.includes(text)) {
+      if (element.textContent?.includes(text)) {
         containsText = true;
       }
     });
