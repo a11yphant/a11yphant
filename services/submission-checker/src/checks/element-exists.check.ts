@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { DOMWindow } from "jsdom";
 import nodeFetch from "node-fetch";
 
 import { Rule } from "../rule.interface";
@@ -14,7 +13,7 @@ export class ElementExists extends JsdomCheck {
     super(logger, config, fetch);
   }
 
-  public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.selector) {
       this.logger.error(
         `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector configuration`,
@@ -28,7 +27,7 @@ export class ElementExists extends JsdomCheck {
       };
     }
 
-    const matchingElements = window.document.querySelectorAll(rule.options.selector);
+    const matchingElements = document.querySelectorAll(rule.options.selector);
 
     return {
       id: rule.id,

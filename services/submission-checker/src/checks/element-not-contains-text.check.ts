@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { DOMWindow } from "jsdom";
 import nodeFetch from "node-fetch";
 
 import { ElementContainsText } from "@/checks/element-contains-text.check";
@@ -21,7 +20,7 @@ export class ElementNotContainsText extends JsdomCheck {
     super(logger, config, fetch);
   }
 
-  public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.selector || !rule.options?.text) {
       this.logger.error(
         `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector or text configuration`,
@@ -35,7 +34,7 @@ export class ElementNotContainsText extends JsdomCheck {
       };
     }
 
-    const containsText = this.elementContainsText.containsText(window, rule.options as { selector: string; text: string });
+    const containsText = this.elementContainsText.containsText(document, rule.options as { selector: string; text: string });
 
     return {
       id: rule.id,

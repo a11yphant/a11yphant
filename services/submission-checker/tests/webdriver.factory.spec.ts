@@ -2,8 +2,8 @@ import { createMock } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { WebdriverDriverNotSupportedException } from "../src/exceptions/WebdriverDriverNotSupportedException";
-import { WebdriverFactory } from "../src/webdriver.factory";
+import { WebdriverDriverNotSupportedException } from "@/exceptions/WebdriverDriverNotSupportedException";
+import { WebdriverFactory } from "@/webdriver.factory";
 
 describe("webdriver factory", () => {
   it("creates a webdriver for remote selenium", async () => {

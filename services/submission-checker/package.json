@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.7.0",
+    "@faker-js/faker": "8.0.1",
     "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "10.1.11",
     "@nestjs/schematics": "9.2.0",

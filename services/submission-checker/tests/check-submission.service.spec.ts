@@ -5,8 +5,8 @@ import { Check } from "src/checks/check.interface";
 import { RuleCheckResult } from "src/rule-check-result.interface";
 
 import { CheckSubmissionService } from "@/check-submission.service";
-import { Rule } from "@/rule.interface";
-import { Submission } from "@/submission.interface";
+
+import { createRule, createSubmission } from "./helpers";
 
 const factory = ({
   checkFactory = {},
@@ -26,14 +26,8 @@ const factory = ({
 
 describe("check submission service", () => {
   it("can check a submission", async () => {
-    const submission: Submission = {
-      id: "1234",
-      html: `<h1>This is submission</h1>`,
-      css: "body { color: deepseagreen }",
-      js: `document.querySelector('h1').style.opacity = 0.5`,
-    };
-
-    const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "test-rule", options: {} }];
+    const submission = createSubmission();
+    const rules = [createRule()];
 
     const service = factory();
     const result = await service.check(submission, rules);
@@ -41,14 +35,8 @@ describe("check submission service", () => {
   });
 
   it("returns a formatted test result", async () => {
-    const submission: Submission = {
-      id: "1234",
-      html: `<h1>This is submission</h1>`,
-      css: "body { color: deepseagreen }",
-      js: `document.querySelector('h1').style.opacity = 0.5`,
-    };
-
-    const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "test-rule", options: {} }];
+    const submission = createSubmission();
+    const rules = [createRule()];
 
     const service = factory();
     const result = await service.check(submission, rules);
@@ -59,14 +47,9 @@ describe("check submission service", () => {
   });
 
   it("executes the check", async () => {
-    const submission: Submission = {
-      id: "1234",
-      html: `<h1>This is submission</h1>`,
-      css: "body { color: deepseagreen }",
-      js: `document.querySelector('h1').style.opacity = 0.5`,
-    };
+    const submission = createSubmission();
+    const rules = [createRule()];
 
-    const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "test-rule", options: {} }];
     const checkResult: RuleCheckResult = { id: "1", status: "success" };
     const dummyCheck = createMock<Check>({ run: jest.fn().mockResolvedValue(checkResult) });
     const service = factory({ checkFactory: { get: jest.fn().mockReturnValue(dummyCheck) } });
@@ -77,14 +60,9 @@ describe("check submission service", () => {
   });
 
   it("adds an error to the result if the check for a rule was not found", async () => {
-    const submission: Submission = {
-      id: "1234",
-      html: `<h1>This is submission</h1>`,
-      css: "body { color: deepseagreen }",
-      js: `document.querySelector('h1').style.opacity = 0.5`,
-    };
+    const submission = createSubmission();
+    const rules = [createRule()];
 
-    const rules: Rule[] = [{ id: "e84b2cb7-38eb-4f7c-9bc3-d96051300cad", key: "doesn't exist", options: {} }];
     const service = factory({ checkFactory: { get: jest.fn().mockReturnValue(null) } });
 
     const result = await service.check(submission, rules);

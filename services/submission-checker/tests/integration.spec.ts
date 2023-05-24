@@ -2,7 +2,7 @@ import { ReadPacket } from "@nestjs/microservices";
 
 import { SubmissionCreatedEvent } from "@/submission-created-event.interface";
 
-import { publishMessageForSubmissionChecker, useApiQueueSubscription, useApp } from "./helpers";
+import { createRule, createSubmission, publishMessageForSubmissionChecker, useApiQueueSubscription, useApp } from "./helpers";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 jest.mock("node-fetch", () => require("fetch-mock-jest").sandbox().get("begin:https://url.com/", "<!doctype html>"));
@@ -10,19 +10,8 @@ jest.mock("node-fetch", () => require("fetch-mock-jest").sandbox().get("begin:ht
 const mockSubmissionCreatedEvent: ReadPacket<SubmissionCreatedEvent> = {
   pattern: "submission.created",
   data: {
-    submission: {
-      id: "id",
-      css: "css",
-      html: "html",
-      js: "js",
-    },
-    rules: [
-      {
-        id: "id",
-        key: "document-starts-with-html5-doctype",
-        options: {},
-      },
-    ],
+    submission: createSubmission(),
+    rules: [createRule({ key: "document-starts-with-html5-doctype" })],
   },
 };
 

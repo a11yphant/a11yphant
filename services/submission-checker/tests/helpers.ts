@@ -1,5 +1,11 @@
+import { faker } from "@faker-js/faker";
 import { INestMicroservice } from "@nestjs/common";
 import amqp from "amqplib";
+import fetchMock from "fetch-mock-jest";
+import nodeFetch from "node-fetch";
+
+import { Rule } from "@/rule.interface";
+import { Submission } from "@/submission.interface";
 
 const SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME = "submission-checker-test";
 const SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME = "api-test";
@@ -13,6 +19,41 @@ const env = {
   SUBMISSION_CHECKER_RENDERER_BASE_URL: "https://url.com/render/",
   SUBMISSION_CHECKER_DISABLE_LOGGER: "1",
 };
+
+export function createRule(rule: Partial<Rule> = {}): Rule {
+  const defaultValues: Rule = {
+    id: faker.string.uuid(),
+    key: "rule-key",
+    options: {},
+  };
+
+  return {
+    ...defaultValues,
+    ...rule,
+  };
+}
+
+export function createSubmission(submission: Partial<Submission> = {}): Submission {
+  const defaultValues: Submission = {
+    id: faker.string.uuid(),
+    html: "html",
+    css: "css",
+    js: "js",
+  };
+
+  return {
+    ...defaultValues,
+    ...submission,
+  };
+}
+
+export function mockSubmissionApi(id: string, responseBody: string): typeof nodeFetch {
+  return fetchMock.sandbox().get(`url/${id}`, responseBody) as unknown as typeof nodeFetch;
+}
+
+export function mockSubmissionApiError(error: Error): typeof nodeFetch {
+  return jest.fn().mockRejectedValue(error) as unknown as typeof nodeFetch;
+}
 
 function setUpEnv(): void {
   Object.keys(env).forEach((key) => {

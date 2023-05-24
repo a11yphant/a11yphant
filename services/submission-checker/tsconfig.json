@@ -7,11 +7,15 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "target": "es2019",
+    "target": "es2020",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
     "paths": {
       "@/*": ["src/*"],
       "@tests/*": ["tests/*"]

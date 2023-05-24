@@ -2,7 +2,6 @@ import { Inject, Injectable, Logger, Type } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AxeResults } from "axe-core";
 import axe from "axe-core";
-import { DOMWindow } from "jsdom";
 import nodeFetch from "node-fetch";
 
 import { Rule } from "../rule.interface";
@@ -18,8 +17,8 @@ export function AxeCheck(checkName: string): Type<Check> {
       super(logger, config, fetch);
     }
 
-    public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
-      const result = await axe.run(window.document.documentElement, { runOnly: [checkName] });
+    public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+      const result = await axe.run(document, { runOnly: [checkName] });
 
       return {
         id: rule.id,

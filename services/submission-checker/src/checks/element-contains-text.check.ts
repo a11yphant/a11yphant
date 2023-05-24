@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { DOMWindow } from "jsdom";
 import nodeFetch from "node-fetch";
 
 import { Rule } from "../rule.interface";
@@ -14,7 +13,7 @@ export class ElementContainsText extends JsdomCheck {
     super(logger, config, fetch);
   }
 
-  public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.selector || !rule.options?.text) {
       this.logger.error(
         `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector or text configuration`,
@@ -28,7 +27,7 @@ export class ElementContainsText extends JsdomCheck {
       };
     }
 
-    const containsText = this.containsText(window, rule.options as { selector: string; text: string });
+    const containsText = this.containsText(document, rule.options as { selector: string; text: string });
 
     return {
       id: rule.id,
@@ -36,13 +35,16 @@ export class ElementContainsText extends JsdomCheck {
     };
   }
 
-  public containsText(window: DOMWindow, { selector, text }: { selector: string; text: string }): boolean {
-    const matchingElements = window.document.querySelectorAll(selector);
+  public containsText(document: HTMLElement, { selector, text }: { selector: string; text: string }): boolean {
+    const matchingElements = document.querySelectorAll(selector);
 
-    const containsText = [...matchingElements].reduce((prev, element): boolean => {
-      const elementText = element.textContent;
-      return elementText.includes(text) || prev;
-    }, false);
+    let containsText = false;
+    // iterate using forEach since NodeList<T> only suports that
+    matchingElements.forEach((element) => {
+      if (element.textContent.includes(text)) {
+        containsText = true;
+      }
+    });
 
     return containsText;
   }
