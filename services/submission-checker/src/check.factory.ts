@@ -15,7 +15,7 @@ export class CheckFactory {
     private moduleRef: ModuleRef,
   ) {}
 
-  public get(checkName: string): Check {
+  public get(checkName: string): Check | null {
     const className = this.checkToClassMap[checkName];
 
     if (!className) {

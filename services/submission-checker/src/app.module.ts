@@ -10,6 +10,7 @@ import { CheckFactory } from "./check.factory";
 import { CheckSubmissionService } from "./check-submission.service";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./check-to-class-map";
 import { AVAILABLE_AXE_CHECKS, buildCheckProviders } from "./checks/axe-checks";
+import { DocumentLanguageIsSpecified } from "./checks/document-language-is-specified.check";
 import { DocumentStartsWithHtml5Doctype } from "./checks/document-starts-with-html5-doctype.check";
 import { ElementExists } from "./checks/element-exists.check";
 import { ElementNotExists } from "./checks/element-not-exists.check";
@@ -53,6 +54,7 @@ import { SubmissionController } from "./submission.controller";
     ElementContainsText,
     ElementNotContainsText,
     DocumentStartsWithHtml5Doctype,
+    DocumentLanguageIsSpecified,
     ...buildCheckProviders(AVAILABLE_AXE_CHECKS),
   ],
 })
