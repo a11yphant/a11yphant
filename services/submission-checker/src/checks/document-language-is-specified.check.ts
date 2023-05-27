@@ -34,18 +34,4 @@ export class DocumentLanguageIsSpecified extends JsdomCheck {
       status: languages.includes(document.lang) ? "success" : "failed",
     };
   }
-
-  public containsText(document: HTMLElement, { selector, text }: { selector: string; text: string }): boolean {
-    const matchingElements = document.querySelectorAll(selector);
-
-    let containsText = false;
-    // iterate using forEach since NodeList<T> only suports that
-    matchingElements.forEach((element) => {
-      if (element.textContent?.includes(text)) {
-        containsText = true;
-      }
-    });
-
-    return containsText;
-  }
 }
