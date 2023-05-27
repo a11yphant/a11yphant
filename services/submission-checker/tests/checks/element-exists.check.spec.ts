@@ -1,33 +1,25 @@
 import { createMock } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { createRule, createSubmission } from "@tests/helpers";
 import fetchMock from "fetch-mock-jest";
 import nodeFetch from "node-fetch";
 
 import { ElementExists } from "@/checks/element-exists.check";
-import { Rule } from "@/rule.interface";
-import { Submission } from "@/submission.interface";
 
 describe("element-exists check", () => {
+  const submission = createSubmission({ id: "1" });
+  const rule = createRule({
+    key: "element-exists",
+    options: {
+      selector: "a",
+    },
+  });
+
   it("is successful if the selector was found", async () => {
     const fetch = fetchMock.sandbox().get("url/1", `<!doctype html><html><a href=""></a></html>`) as unknown as typeof nodeFetch;
 
     const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
-
-    const submission: Submission = {
-      id: "1",
-      css: "",
-      js: "",
-      html: "",
-    };
-
-    const rule: Rule = {
-      id: "adsf",
-      key: "element-exists",
-      options: {
-        selector: "a",
-      },
-    };
 
     const result = await check.run(submission, rule);
 
@@ -40,21 +32,6 @@ describe("element-exists check", () => {
 
     const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
 
-    const submission: Submission = {
-      id: "1",
-      css: "",
-      js: "",
-      html: "",
-    };
-
-    const rule: Rule = {
-      id: "adsf",
-      key: "element-exists",
-      options: {
-        selector: "a",
-      },
-    };
-
     const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
@@ -65,21 +42,6 @@ describe("element-exists check", () => {
     const fetch = jest.fn().mockRejectedValue(new Error()) as unknown as typeof nodeFetch;
 
     const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
-
-    const submission: Submission = {
-      id: "1",
-      css: "",
-      js: "",
-      html: "",
-    };
-
-    const rule: Rule = {
-      id: "adsf",
-      key: "element-exists",
-      options: {
-        selector: "a",
-      },
-    };
 
     const result = await check.run(submission, rule);
 
@@ -92,18 +54,10 @@ describe("element-exists check", () => {
 
     const check = new ElementExists(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
 
-    const submission: Submission = {
-      id: "1",
-      css: "",
-      js: "",
-      html: "",
-    };
-
-    const rule: Rule = {
-      id: "adsf",
+    const rule = createRule({
       key: "element-exists",
       options: {},
-    };
+    });
 
     const result = await check.run(submission, rule);
 
