@@ -16,7 +16,7 @@ export class DocumentLanguageIsSpecified extends JsdomCheck {
   public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.languages) {
       this.logger.error(
-        `Executing check ${rule.key} on submission ${submission.id} failed due to missing language or text configuration`,
+        `Executing check ${rule.key} on submission ${submission.id} failed due to missing language configuration`,
         null,
         this.constructor.name,
       );

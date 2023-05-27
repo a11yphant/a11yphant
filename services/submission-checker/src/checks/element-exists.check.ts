@@ -14,17 +14,8 @@ export class ElementExists extends JsdomCheck {
   }
 
   public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
-    if (!rule.options?.selector) {
-      this.logger.error(
-        `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector configuration`,
-        null,
-        ElementExists.name,
-      );
-
-      return {
-        id: rule.id,
-        status: "error",
-      };
+    if (!this.ruleHasOption(rule, "selector")) {
+      return this.checkConfigurationError(submission, rule, "selector");
     }
 
     const matchingElements = document.querySelectorAll(rule.options.selector);

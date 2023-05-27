@@ -32,4 +32,21 @@ export abstract class BaseCheck implements Check {
       status: "error",
     };
   }
+
+  protected ruleHasOption(rule: Rule, key: string): boolean {
+    return !!rule.options?.[key];
+  }
+
+  protected checkConfigurationError(submission: Submission, rule: Rule, key: string): RuleCheckResult {
+    this.logger.error(
+      `Executing check ${rule.key} on submission ${submission.id} failed due to missing ${key} configuration for the rule.`,
+      null,
+      this.constructor.name,
+    );
+
+    return {
+      id: rule.id,
+      status: "error",
+    };
+  }
 }

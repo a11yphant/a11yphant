@@ -14,17 +14,12 @@ export class ElementContainsText extends JsdomCheck {
   }
 
   public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
-    if (!rule.options?.selector || !rule.options?.text) {
-      this.logger.error(
-        `Executing check ${rule.key} on submission ${submission.id} failed due to missing selector or text configuration`,
-        null,
-        ElementContainsText.name,
-      );
+    if (!this.ruleHasOption(rule, "selector")) {
+      return this.checkConfigurationError(submission, rule, "selector");
+    }
 
-      return {
-        id: rule.id,
-        status: "error",
-      };
+    if (!this.ruleHasOption(rule, "text")) {
+      return this.checkConfigurationError(submission, rule, "text");
     }
 
     const containsText = this.containsText(document, rule.options as { selector: string; text: string });
