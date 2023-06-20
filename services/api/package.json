@@ -71,7 +71,7 @@
     "@apollo/client": "3.7.15",
     "@faker-js/faker": "8.0.2",
     "@golevelup/ts-jest": "0.3.7",
-    "@nestjs/cli": "9.5.0",
+    "@nestjs/cli": "10.0.3",
     "@nestjs/schematics": "9.2.0",
     "@nestjs/testing": "9.4.3",
     "@prisma/generator-helper": "4.16.0",
