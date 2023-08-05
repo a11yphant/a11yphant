@@ -8,7 +8,10 @@ import { Submission } from "../submission.interface";
 import { Check } from "./check.interface";
 
 export abstract class SeleniumCheck implements Check {
-  constructor(protected logger: Logger, private config: ConfigService) {}
+  constructor(
+    protected logger: Logger,
+    private config: ConfigService,
+  ) {}
 
   abstract evaluateRule(driver: WebDriver, submission: Submission, rule: Rule): Promise<RuleCheckResult>;
 

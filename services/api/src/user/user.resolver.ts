@@ -13,7 +13,11 @@ import { UserService } from "./user.service";
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private userService: UserService, private authService: AuthenticationService, private mailService: MailService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthenticationService,
+    private mailService: MailService,
+  ) {}
 
   @Query(() => User, { nullable: true })
   async user(@Args("id", { type: () => ID }) id: string): Promise<User> {

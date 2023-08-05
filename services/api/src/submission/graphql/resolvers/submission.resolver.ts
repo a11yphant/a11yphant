@@ -9,7 +9,10 @@ import { Submission } from "../models/submission.model";
 
 @Resolver(() => Submission)
 export class SubmissionResolver {
-  constructor(private readonly levelService: LevelService, private readonly resultService: CodeLevelResultService) {}
+  constructor(
+    private readonly levelService: LevelService,
+    private readonly resultService: CodeLevelResultService,
+  ) {}
 
   @ResolveField(() => Level, {
     description: "The level this submission is for.",

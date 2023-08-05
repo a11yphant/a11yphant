@@ -13,7 +13,11 @@ interface ValidationResult {
 
 @Injectable()
 export class HtmlIsValidCheck implements Check {
-  constructor(private logger: Logger, private config: ConfigService, @Inject("fetch") private fetch: typeof nodeFetch) {}
+  constructor(
+    private logger: Logger,
+    private config: ConfigService,
+    @Inject("fetch") private fetch: typeof nodeFetch,
+  ) {}
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     const url = `${this.config.get<string>("submission-checker.renderer-base-url")}${submission.id}`;

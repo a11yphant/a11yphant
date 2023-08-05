@@ -8,7 +8,10 @@ import { Result } from "../models/result.model";
 
 @Resolver(() => Result)
 export class CodeLevelResultResolver {
-  constructor(private resultService: CodeLevelResultService, private requirementResultService: RequirementResultService) {}
+  constructor(
+    private resultService: CodeLevelResultService,
+    private requirementResultService: RequirementResultService,
+  ) {}
 
   @Query(() => Result, { nullable: true })
   async resultForSubmission(@Args("submissionId", new ParseUUIDPipe()) submissionId: string): Promise<Result> {

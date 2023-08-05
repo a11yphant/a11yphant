@@ -5,7 +5,10 @@ import { WebdriverFactory } from "./webdriver.factory";
 
 @Injectable()
 export class BrowserService {
-  constructor(private logger: Logger, private factory: WebdriverFactory) {}
+  constructor(
+    private logger: Logger,
+    private factory: WebdriverFactory,
+  ) {}
 
   async startSession(): Promise<ThenableWebDriver> {
     this.logger.log(`Creating a webdriver`, BrowserService.name);
