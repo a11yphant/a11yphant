@@ -5,7 +5,10 @@ import { ImportService } from "./import.service";
 
 @Console()
 export class ImportChallenges {
-  constructor(private config: ConfigService, private importer: ImportService) {}
+  constructor(
+    private config: ConfigService,
+    private importer: ImportService,
+  ) {}
 
   @Command({
     command: "import:challenges",

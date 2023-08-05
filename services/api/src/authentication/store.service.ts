@@ -14,7 +14,10 @@ interface TokenInformation {
 export class StoreService {
   private tokenMap = new Map<string, TokenInformation>();
 
-  constructor(private jwtService: JwtService, private config: ConfigService) {}
+  constructor(
+    private jwtService: JwtService,
+    private config: ConfigService,
+  ) {}
 
   public set(req: Request, token: string, tokenSecret: string, state: unknown, meta: unknown, cb: () => void): void {
     this.tokenMap.set(this.getId(req), {

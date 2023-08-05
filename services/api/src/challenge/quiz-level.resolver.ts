@@ -11,7 +11,10 @@ import { QuizLevel } from "./models/quiz-level.model";
 
 @Resolver(QuizLevel)
 export class QuizLevelResolver {
-  constructor(private readonly answerOptionService: AnswerOptionService, private readonly levelService: LevelService) {}
+  constructor(
+    private readonly answerOptionService: AnswerOptionService,
+    private readonly levelService: LevelService,
+  ) {}
 
   @ResolveField(() => [AnswerOption], { description: "The answer options for this quiz level" })
   answerOptions(@Parent() level: QuizLevel): Promise<AnswerOption[]> {

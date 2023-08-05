@@ -16,7 +16,10 @@ import { CodeLevelResultService } from "./code-level-result.service";
 
 @Injectable()
 export class CodeLevelSubmissionService {
-  constructor(private prisma: PrismaService, @Inject(SUBMISSIONS_CLIENT) private clientProxy: ClientProxy) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject(SUBMISSIONS_CLIENT) private clientProxy: ClientProxy,
+  ) {}
 
   public async findOne(id: string): Promise<CodeLevelSubmission> {
     const submission = await this.prisma.codeLevelSubmission.findUnique({

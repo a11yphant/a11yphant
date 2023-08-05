@@ -7,7 +7,11 @@ import { SendRegistrationMailContext } from "./send-registration-mail-context.in
 
 @Injectable()
 export class MailService {
-  constructor(private readonly mailerService: MailerService, private readonly config: ConfigService, private readonly logger: Logger) {}
+  constructor(
+    private readonly mailerService: MailerService,
+    private readonly config: ConfigService,
+    private readonly logger: Logger,
+  ) {}
 
   async sendRegistrationMail(context: SendRegistrationMailContext): Promise<void> {
     this.logger.log(`Sending registration mail to ${context.email}`);

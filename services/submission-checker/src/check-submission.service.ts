@@ -9,7 +9,10 @@ import { SubmissionCheckResult } from "./submission-check-result.interface";
 
 @Injectable()
 export class CheckSubmissionService {
-  constructor(private logger: Logger, private checkFactory: CheckFactory) {}
+  constructor(
+    private logger: Logger,
+    private checkFactory: CheckFactory,
+  ) {}
 
   public async check(submission: Submission, rules: Rule[], webdriver: WebDriver): Promise<SubmissionCheckResult> {
     const ruleCheckResults: RuleCheckResult[] = [];

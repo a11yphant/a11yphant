@@ -14,7 +14,12 @@ import { JwtService } from "./jwt.service";
 
 @Controller("auth")
 export class AuthenticationController {
-  constructor(private userService: UserService, private jwtService: JwtService, private logger: Logger, private config: ConfigService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+    private logger: Logger,
+    private config: ConfigService,
+  ) {}
 
   @Get("confirm")
   async confirm(@Query("code") token: string, @Res() res: Response): Promise<void> {

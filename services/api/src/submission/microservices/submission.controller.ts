@@ -10,7 +10,11 @@ import { RequirementResultService } from "../services/requirement-result.service
 
 @Controller()
 export class SubmissionController {
-  constructor(private logger: Logger, private resultService: CodeLevelResultService, private requirementResultService: RequirementResultService) {}
+  constructor(
+    private logger: Logger,
+    private resultService: CodeLevelResultService,
+    private requirementResultService: RequirementResultService,
+  ) {}
   @EventPattern("submission.check-completed")
   public async handleSubmissionEvent(event: SubmissionCheckCompletedEvent): Promise<void> {
     this.logger.log(`Received submission.check-completed for ${event.submissionId}`, SubmissionController.name);

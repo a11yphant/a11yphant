@@ -14,7 +14,11 @@ import { SeleniumCheck } from "./selenium-check";
 export function AxeCheck(checkName: string): Type<Check> {
   @Injectable()
   class AxeCheckHost extends SeleniumCheck {
-    constructor(logger: Logger, config: ConfigService, private axeFactory: AxeFactory) {
+    constructor(
+      logger: Logger,
+      config: ConfigService,
+      private axeFactory: AxeFactory,
+    ) {
       super(logger, config);
     }
 

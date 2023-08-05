@@ -15,7 +15,12 @@ import { JwtService } from "./jwt.service";
 
 @Injectable()
 export class SessionInterceptor implements NestInterceptor {
-  constructor(private jwtService: JwtService, private userService: UserService, private logger: Logger, private config: ConfigService) {}
+  constructor(
+    private jwtService: JwtService,
+    private userService: UserService,
+    private logger: Logger,
+    private config: ConfigService,
+  ) {}
   async intercept(executionContext: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
     if (executionContext.getType<GqlContextType>() === "graphql") {
       const context = GqlExecutionContext.create(executionContext).getContext<Context>();

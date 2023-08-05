@@ -6,7 +6,10 @@ import { PrismaModuleConfig } from "./prisma-module-config.interface";
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-  constructor(private logger: Logger, @Inject(PRISMA_MODULE_CONFIG) config: PrismaModuleConfig) {
+  constructor(
+    private logger: Logger,
+    @Inject(PRISMA_MODULE_CONFIG) config: PrismaModuleConfig,
+  ) {
     super({
       datasources: {
         db: {

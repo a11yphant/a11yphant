@@ -6,7 +6,10 @@ import { WebdriverDriverNotSupportedException } from "./exceptions/WebdriverDriv
 
 @Injectable()
 export class WebdriverFactory {
-  constructor(private logger: Logger, private config: ConfigService) {}
+  constructor(
+    private logger: Logger,
+    private config: ConfigService,
+  ) {}
 
   async create(): Promise<ThenableWebDriver> {
     const driver = this.config.get<string>("submission-checker.webdriver-driver");

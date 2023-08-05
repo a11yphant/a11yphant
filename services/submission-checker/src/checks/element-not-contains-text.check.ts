@@ -11,7 +11,11 @@ import { SeleniumCheck } from "./selenium-check";
 
 @Injectable()
 export class ElementNotContainsText extends SeleniumCheck {
-  constructor(logger: Logger, config: ConfigService, private readonly elementContainsText: ElementContainsText) {
+  constructor(
+    logger: Logger,
+    config: ConfigService,
+    private readonly elementContainsText: ElementContainsText,
+  ) {
     super(logger, config);
   }
 

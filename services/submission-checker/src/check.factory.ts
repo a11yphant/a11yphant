@@ -9,7 +9,11 @@ type ClassType = { new (): any };
 
 @Injectable()
 export class CheckFactory {
-  constructor(private logger: Logger, @Inject(CHECK_TO_CLASS_MAP) private checkToClassMap: Record<string, ClassType>, private moduleRef: ModuleRef) {}
+  constructor(
+    private logger: Logger,
+    @Inject(CHECK_TO_CLASS_MAP) private checkToClassMap: Record<string, ClassType>,
+    private moduleRef: ModuleRef,
+  ) {}
 
   public get(checkName: string): Check {
     const className = this.checkToClassMap[checkName];

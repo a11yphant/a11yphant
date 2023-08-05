@@ -12,7 +12,11 @@ const readdir = promisify(readdirCallback);
 
 @Injectable()
 export class ImportService {
-  constructor(private logger: Logger, private prisma: PrismaService, private ymlReader: YamlReaderService) {}
+  constructor(
+    private logger: Logger,
+    private prisma: PrismaService,
+    private ymlReader: YamlReaderService,
+  ) {}
 
   public async importAllFromFolder(folder: string): Promise<void> {
     const path = resolve(__dirname, folder);
