@@ -34,7 +34,7 @@
   "dependencies": {
     "@apollo/server": "4.7.4",
     "@nestjs-modules/mailer": "1.8.1",
-    "@nestjs/apollo": "11.0.6",
+    "@nestjs/apollo": "12.0.7",
     "@nestjs/common": "9.4.3",
     "@nestjs/config": "2.3.4",
     "@nestjs/core": "9.4.3",
