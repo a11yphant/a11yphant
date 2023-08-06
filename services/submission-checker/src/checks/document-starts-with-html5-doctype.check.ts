@@ -5,14 +5,13 @@ import nodeFetch from "node-fetch";
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
 import { Submission } from "../submission.interface";
+import { BaseCheck } from "./base.check";
 
 @Injectable()
-export class DocumentStartsWithHtml5Doctype implements Check {
-  constructor(
-    private logger: Logger,
-    private config: ConfigService,
-    @Inject("fetch") private fetch: typeof nodeFetch,
-  ) {}
+export class DocumentStartsWithHtml5Doctype extends BaseCheck {
+  constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
+    super(logger, config, fetch);
+  }
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     try {

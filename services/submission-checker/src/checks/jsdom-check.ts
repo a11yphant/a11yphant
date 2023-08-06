@@ -6,13 +6,12 @@ import nodeFetch from "node-fetch";
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
 import { Submission } from "../submission.interface";
+import { BaseCheck } from "./base.check";
 
-export abstract class JsdomCheck implements Check {
-  constructor(
-    protected logger: Logger,
-    private config: ConfigService,
-    @Inject("fetch") private fetch: typeof nodeFetch,
-  ) {}
+export abstract class JsdomCheck extends BaseCheck {
+  constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
+    super(logger, config, fetch);
+  }
 
   abstract evaluateRule(window: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult>;
 

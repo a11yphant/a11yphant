@@ -5,18 +5,17 @@ import nodeFetch from "node-fetch";
 import { Rule } from "../rule.interface";
 import { RuleCheckResult } from "../rule-check-result.interface";
 import { Submission } from "../submission.interface";
+import { BaseCheck } from "./base.check";
 
 interface ValidationResult {
   messages: { type: "error" | "info" }[];
 }
 
 @Injectable()
-export class HtmlIsValidCheck implements Check {
-  constructor(
-    private logger: Logger,
-    private config: ConfigService,
-    @Inject("fetch") private fetch: typeof nodeFetch,
-  ) {}
+export class HtmlIsValidCheck extends BaseCheck {
+  constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
+    super(logger, config, fetch);
+  }
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     try {
