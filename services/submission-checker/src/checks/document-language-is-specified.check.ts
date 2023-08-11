@@ -8,21 +8,30 @@ import { Submission } from "../submission.interface";
 import { JsdomCheck } from "./jsdom-check";
 
 @Injectable()
-export class ElementExists extends JsdomCheck {
+export class DocumentLanguageIsSpecified extends JsdomCheck {
   constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
     super(logger, config, fetch);
   }
 
   public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
-    if (!this.ruleHasOption(rule, "selector")) {
-      return this.checkConfigurationError(submission, rule, "selector");
+    if (!rule.options?.languages) {
+      this.logger.error(
+        `Executing check ${rule.key} on submission ${submission.id} failed due to missing language configuration`,
+        null,
+        this.constructor.name,
+      );
+
+      return {
+        id: rule.id,
+        status: "error",
+      };
     }
 
-    const matchingElements = document.querySelectorAll(rule.options.selector);
+    const languages = rule.options.languages.split(",");
 
     return {
       id: rule.id,
-      status: matchingElements.length > 0 ? "success" : "failed",
+      status: languages.includes(document.lang) ? "success" : "failed",
     };
   }
 }

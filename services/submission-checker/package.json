@@ -13,7 +13,7 @@
     "start:prod": "node dist/main",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:tsc": "tsc --project ./tsconfig.lint.json",
-    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:eslint": "eslint \"{src,apps,libs,tests}/**/*.ts\"",
     "lint:eslint:fix": "npm run lint:eslint -- --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -30,14 +30,15 @@
     "@nestjs/microservices": "9.4.3",
     "amqp-connection-manager": "4.1.14",
     "amqplib": "0.10.3",
+    "jsdom": "22.0.0",
     "node-fetch": "2.6.12",
     "reflect-metadata": "0.1.13",
     "rimraf": "5.0.1",
-    "rxjs": "7.8.1",
-    "selenium-webdriver": "4.11.1"
+    "rxjs": "7.8.1"
   },
   "devDependencies": {
     "@a11yphant/eslint-config": "0.7.0",
+    "@faker-js/faker": "8.0.1",
     "@golevelup/nestjs-testing": "0.1.2",
     "@nestjs/cli": "10.1.11",
     "@nestjs/schematics": "9.2.0",

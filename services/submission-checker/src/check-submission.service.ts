@@ -1,5 +1,4 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { WebDriver } from "selenium-webdriver";
 
 import { CheckFactory } from "./check.factory";
 import { Rule } from "./rule.interface";
@@ -14,7 +13,7 @@ export class CheckSubmissionService {
     private checkFactory: CheckFactory,
   ) {}
 
-  public async check(submission: Submission, rules: Rule[], webdriver: WebDriver): Promise<SubmissionCheckResult> {
+  public async check(submission: Submission, rules: Rule[]): Promise<SubmissionCheckResult> {
     const ruleCheckResults: RuleCheckResult[] = [];
 
     for (const rule of rules) {
@@ -30,7 +29,7 @@ export class CheckSubmissionService {
         continue;
       }
 
-      const result = await check.run(submission, rule, webdriver);
+      const result = await check.run(submission, rule);
 
       ruleCheckResults.push(result);
     }

@@ -1,12 +1,16 @@
 import { createMock } from "@golevelup/nestjs-testing";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { createRule, createSubmission } from "@tests/helpers";
 import fetchMock from "fetch-mock-jest";
 import nodeFetch from "node-fetch";
 
-import { HtmlIsValidCheck } from "../../src/checks/html-is-valid.check";
+import { HtmlIsValidCheck } from "@/checks/html-is-valid.check";
 
 describe("html-is-valid check", () => {
+  const submission = createSubmission();
+  const rule = createRule({ key: "html-is-valid" });
+
   it("can check a submission", async () => {
     const fetch = fetchMock
       .sandbox()
@@ -19,17 +23,9 @@ describe("html-is-valid check", () => {
       fetch as unknown as typeof nodeFetch,
     );
 
-    const result = await check.run(
-      {
-        id: "some-id",
-        css: "",
-        html: "",
-        js: "",
-      },
-      { id: "asdf", key: "html-is-valid", options: {} },
-    );
+    const result = await check.run(submission, rule);
 
-    expect(result).toHaveProperty("id", "asdf");
+    expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "success");
   });
 
@@ -45,17 +41,9 @@ describe("html-is-valid check", () => {
       fetch as unknown as typeof nodeFetch,
     );
 
-    const result = await check.run(
-      {
-        id: "some-id",
-        css: "",
-        html: "",
-        js: "",
-      },
-      { id: "asdf", key: "html-is-valid", options: {} },
-    );
+    const result = await check.run(submission, rule);
 
-    expect(result).toHaveProperty("id", "asdf");
+    expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "failed");
   });
 
@@ -71,17 +59,9 @@ describe("html-is-valid check", () => {
       fetch as unknown as typeof nodeFetch,
     );
 
-    const result = await check.run(
-      {
-        id: "some-id",
-        css: "",
-        html: "",
-        js: "",
-      },
-      { id: "asdf", key: "html-is-valid", options: {} },
-    );
+    const result = await check.run(submission, rule);
 
-    expect(result).toHaveProperty("id", "asdf");
+    expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "error");
   });
 });
