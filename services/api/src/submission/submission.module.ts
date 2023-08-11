@@ -5,6 +5,8 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 import { ChallengeModule } from "@/challenge/challenge.module";
 import { PrismaModule } from "@/prisma/prisma.module";
 
+import { CheckFactory } from "./checks/check.factory";
+import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./checks/check-to-class-map";
 import { SUBMISSIONS_CLIENT } from "./constants";
 import { RendererController } from "./controllers/renderer.controller";
 import { CodeLevelResultResolver } from "./graphql/resolvers/code-level-result.resolver";
@@ -12,7 +14,7 @@ import { CodeLevelSubmissionResolver } from "./graphql/resolvers/code-level-subm
 import { QuizLevelSubmissionResolver } from "./graphql/resolvers/quiz-level-submission.resolver";
 import { RequirementResultResolver } from "./graphql/resolvers/requirement-result.resolver";
 import { SubmissionResolver } from "./graphql/resolvers/submission.resolver";
-import { SubmissionController } from "./microservices/submission.controller";
+import { CheckSubmissionService } from "./services/check-submission.service";
 import { CodeLevelResultService } from "./services/code-level-result.service";
 import { CodeLevelSubmissionService } from "./services/code-level-submission.service";
 import { QuizLevelSubmissionService } from "./services/quiz-level-submission.service";
@@ -37,7 +39,7 @@ import { RequirementResultService } from "./services/requirement-result.service"
     ]),
     forwardRef(() => ChallengeModule),
   ],
-  controllers: [SubmissionController, RendererController],
+  controllers: [RendererController],
   providers: [
     SubmissionResolver,
     CodeLevelSubmissionService,
@@ -49,6 +51,10 @@ import { RequirementResultService } from "./services/requirement-result.service"
     CodeLevelSubmissionResolver,
     QuizLevelSubmissionResolver,
     QuizLevelSubmissionService,
+    CheckSubmissionService,
+    CheckFactory,
+    { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
+    { provide: "fetch", useValue: fetch },
   ],
   exports: [CodeLevelSubmissionService],
 })
