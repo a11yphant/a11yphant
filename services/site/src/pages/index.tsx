@@ -119,46 +119,6 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               />
             )}
 
-            {/* TODO: add when more difficult challenge content exists & adapt disclaimer in legend
-            {easyChallenges.length !== 0 && (
-              <ChallengeList
-                className={clsx("2xl:mx-24")}
-                heading={
-                  <>
-                    Easy
-                    <DifficultyEasy className={"w-2.5 h-5"} firstClassName={"ml-4"} />
-                  </>
-                }
-                challenges={easyChallenges}
-              />
-            )}
-
-            {mediumChallenges.length !== 0 && (
-              <ChallengeList
-                className={clsx("2xl:mx-24")}
-                heading={
-                  <>
-                    Medium
-                    <DifficultyMedium className={"w-2.5 h-5"} firstClassName={"ml-4"} />
-                  </>
-                }
-                challenges={mediumChallenges}
-              />
-            )}
-
-            {hardChallenges.length !== 0 && (
-              <ChallengeList
-                className={clsx("2xl:mx-24")}
-                heading={
-                  <>
-                    Hard
-                    <DifficultyHard className={"w-2.5 h-5"} firstClassName={"ml-4"} />
-                  </>
-                }
-                challenges={hardChallenges}
-              />
-            )} */}
-
             <p className={clsx("mb-8 md:mb-0", "2xl:mx-24")}>
               <span className="sr-only">Disclaimer:</span>
               <span aria-hidden="true" className="text-xl text-grey">
