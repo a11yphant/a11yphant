@@ -39,8 +39,8 @@ const PressKit: React.FunctionComponent = () => {
           <section className="mb-16">
             <h1 className={clsx("mb-8", "h2", "md:h1")}>Press Kit</h1>
             <p>
-              Here you can find more information about the origin of an motivation behind <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>. We are also providing some pictures and logos for you to use if you want to write about us.
+              Here you can find more information about the origin of and motivation behind <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span>. We also provide some pictures and logos for you to use if you want to write about us.
             </p>
           </section>
 
@@ -70,7 +70,7 @@ const PressKit: React.FunctionComponent = () => {
             <p>
               The name <span className="sr-only">allyphant</span>
               <span aria-hidden="true">a11yphant</span> is a combination of the numeronym "a11y", which is an abbreviation for "accessibility", and
-              the word "elephant". We have chosen the elephant because we like them, they are very smart animals.{" "}
+              the word "elephant". We chose "elephant" as part of our name because elephants are very smart animals and we like them.{" "}
             </p>
           </section>
 
