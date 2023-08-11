@@ -155,6 +155,31 @@ const About: React.FunctionComponent = () => {
           <section className="mt-16">
             <h2 className={clsx("mb-8", "h4", "md:h3")}>What others say about us:</h2>
 
+            <h3 className={clsx("h5 mt-8", "md:h4")}>Awards</h3>
+            <ul className="mt-4 ml-6 list-disc">
+              <li>
+                <p>
+                  <InTextLink href="https://www.adc.de/wettbewerb/talent/" opensInNewTab>
+                    <span className="sr-only">One time</span>
+                    <span aria-hidden>1x </span>
+                    Distinction in "Concept and Design of Digital Services/Products"
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Art Directors Club (ADC) at the ADC Talent Award 2023
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink href="https://creativclub.at/news/cca-venus-2023-shortlist/" opensInNewTab>
+                    <span className="sr-only">One time</span>
+                    <span aria-hidden>1x </span>
+                    Shortlist in "Student of the Year"<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Creative Club Austria (CCA) at the CCA Venus 2023
+                </p>
+              </li>
+            </ul>
+
             <h3 className={clsx("h5 mt-8", "md:h4")}>Articles</h3>
             <ul className="mt-4 ml-6 list-disc">
               <li>
