@@ -12,11 +12,5 @@ module.exports = {
       namespace: "a11yphant",
       autorestart: true,
     },
-    {
-      name: "a11yphant-submission-checker",
-      script: "npm run dev:submission-checker",
-      namespace: "a11yphant",
-      autorestart: true,
-    },
   ],
 };

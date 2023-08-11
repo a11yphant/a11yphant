@@ -20,8 +20,4 @@ ln -s ./../../.env ./services/api/.env
 rm -f ./services/site/.env
 ln -s ./../../.env ./services/site/.env
 
-# create submission-checker symlinks
-rm -f ./services/submission-checker/.env
-ln -s ./../../.env ./services/submission-checker/.env
-
 npm install
