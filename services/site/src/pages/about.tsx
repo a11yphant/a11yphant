@@ -148,7 +148,8 @@ const About: React.FunctionComponent = () => {
             <p>
               As we hope to make the world more inclusive, we continue developing <span className="sr-only">allyphant</span>
               <span aria-hidden="true">a11yphant</span> as an Open Source project. So, if you find an accessibility issue or want to contribute or
-              support us in any other way, please <InTextLink href="mailto:info@a11yphant.com">let us know</InTextLink>.
+              support us in any other way, please let us know by writing to{" "}
+              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>.
             </p>
           </section>
 
