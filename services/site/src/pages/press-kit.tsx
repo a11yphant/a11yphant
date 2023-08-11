@@ -249,7 +249,7 @@ const PressKit: React.FunctionComponent = () => {
 
           <section className="mt-24">
             <p className={clsx("text-base", "md:text-xl")}>
-              Want to know more?{" "}
+              Want to know more? Send us an email with your question to{" "}
               <Link
                 href={"mailto:info@a11yphant.com"}
                 className={clsx(
@@ -261,9 +261,9 @@ const PressKit: React.FunctionComponent = () => {
                   "focus-rounded-instead-of-underline",
                 )}
               >
-                Send us an email
-              </Link>{" "}
-              with your question.
+                info@a11yphant.com
+              </Link>
+              .
             </p>
           </section>
         </div>
