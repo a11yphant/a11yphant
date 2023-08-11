@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 interface CompleteEvaluationButtonProps {
+  autoFocus?: boolean;
   status: ResultStatus;
   isLastLevel: boolean;
   className?: string;
@@ -14,6 +15,7 @@ interface CompleteEvaluationButtonProps {
 }
 
 export const CompleteEvaluationButton = ({
+  autoFocus,
   status,
   isLastLevel,
   className,
@@ -28,6 +30,8 @@ export const CompleteEvaluationButton = ({
   if (status === ResultStatus.Fail) {
     return (
       <LoadingButton
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus={autoFocus}
         primary
         onClick={() => {
           setLoadingAnimation(true);
@@ -47,6 +51,8 @@ export const CompleteEvaluationButton = ({
   } else if (isLastLevel) {
     return (
       <LoadingButton
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus={autoFocus}
         onClick={() => {
           router.push("/");
         }}
@@ -61,6 +67,8 @@ export const CompleteEvaluationButton = ({
   } else {
     return (
       <LoadingButton
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus={autoFocus}
         onClick={() => {
           const nextLevel = parseInt(nthLevel as string) + 1;
           router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
