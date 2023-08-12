@@ -1,6 +1,4 @@
 import { forwardRef, Logger, Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { ClientsModule, Transport } from "@nestjs/microservices";
 
 import { ChallengeModule } from "@/challenge/challenge.module";
 import { PrismaModule } from "@/prisma/prisma.module";
@@ -16,7 +14,6 @@ import {
 } from "./checks/base-checks";
 import { CheckFactory } from "./checks/check.factory";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./checks/check-to-class-map";
-import { SUBMISSIONS_CLIENT } from "./constants";
 import { RendererController } from "./controllers/renderer.controller";
 import { CodeLevelResultResolver } from "./graphql/resolvers/code-level-result.resolver";
 import { CodeLevelSubmissionResolver } from "./graphql/resolvers/code-level-submission.resolver";
@@ -30,24 +27,7 @@ import { QuizLevelSubmissionService } from "./services/quiz-level-submission.ser
 import { RequirementResultService } from "./services/requirement-result.service";
 
 @Module({
-  imports: [
-    PrismaModule,
-    ClientsModule.registerAsync([
-      {
-        name: SUBMISSIONS_CLIENT,
-        imports: [ConfigModule],
-        useFactory: (config: ConfigService) => ({
-          transport: Transport.RMQ,
-          options: {
-            urls: [config.get<string>("messaging.rabbitmq-url")],
-            queue: config.get<string>("messaging.publish-queue-name"),
-          },
-        }),
-        inject: [ConfigService],
-      },
-    ]),
-    forwardRef(() => ChallengeModule),
-  ],
+  imports: [PrismaModule, forwardRef(() => ChallengeModule)],
   controllers: [RendererController],
   providers: [
     SubmissionResolver,
