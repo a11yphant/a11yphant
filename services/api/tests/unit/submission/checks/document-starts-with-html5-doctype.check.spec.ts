@@ -1,18 +1,17 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { createRule, createSubmission } from "@tests/support/helpers";
 
 import { DocumentStartsWithHtml5Doctype } from "@/submission/checks/base-checks/document-starts-with-html5-doctype.check";
-
-import { createRule, createSubmission, mockSubmissionApi, mockSubmissionApiError } from "../helpers";
 
 describe("document-starts-with-html5-doctype check", () => {
   const submission = createSubmission();
   const rule = createRule({ key: "document-starts-with-html5-doctype" });
 
   it("returns success for a document starting with a doctype", async () => {
-    const fetch = mockSubmissionApi(submission.id, "<!doctype html>");
+    submission.html = "<!doctype html>";
 
-    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>(), fetch);
+    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>());
     const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
@@ -20,9 +19,9 @@ describe("document-starts-with-html5-doctype check", () => {
   });
 
   it("returns success for a document starting with whitespace followed by a doctype", async () => {
-    const fetch = mockSubmissionApi(submission.id, "   \n\n  <!doctype html>");
+    submission.html = "   \n\n  <!doctype html>";
 
-    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>(), fetch);
+    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>());
     const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
@@ -30,9 +29,9 @@ describe("document-starts-with-html5-doctype check", () => {
   });
 
   it("fails if there is no doctype", async () => {
-    const fetch = mockSubmissionApi(submission.id, "no-doctype");
+    submission.html = "no-doctype";
 
-    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>(), fetch);
+    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>());
     const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
@@ -40,22 +39,12 @@ describe("document-starts-with-html5-doctype check", () => {
   });
 
   it("returns success if the document starts with a comment followed by the doctype", async () => {
-    const fetch = mockSubmissionApi(submission.id, "<!-- html comment -->\n<!doctype html>");
+    submission.html = "<!-- html comment -->\n<!doctype html>";
 
-    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>(), fetch);
+    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>());
     const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
     expect(result).toHaveProperty("status", "success");
-  });
-
-  it("returns an error if fetching the document fails", async () => {
-    const fetch = mockSubmissionApiError(new Error("some error"));
-
-    const check = new DocumentStartsWithHtml5Doctype(createMock<Logger>(), fetch);
-    const result = await check.run(submission, rule);
-
-    expect(result).toHaveProperty("id", rule.id);
-    expect(result).toHaveProperty("status", "error");
   });
 });

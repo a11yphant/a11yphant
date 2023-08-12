@@ -1,14 +1,11 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import fetchMock from "fetch-mock-jest";
-import nodeFetch from "node-fetch";
+import { createRule, createSubmission } from "@tests/support/helpers";
 
 import { ElementExists } from "@/submission/checks/base-checks/element-exists.check";
 
-import { createRule, createSubmission } from "../helpers";
-
 describe("element-exists check", () => {
-  const submission = createSubmission({ id: "1" });
+  const submission = createSubmission();
   const rule = createRule({
     key: "element-exists",
     options: {
@@ -17,9 +14,8 @@ describe("element-exists check", () => {
   });
 
   it("is successful if the selector was found", async () => {
-    const fetch = fetchMock.sandbox().get("url/1", `<!doctype html><html><a href=""></a></html>`) as unknown as typeof nodeFetch;
-
-    const check = new ElementExists(createMock<Logger>(), fetch);
+    submission.html = `<!doctype html><html><a href=""></a></html>`;
+    const check = new ElementExists(createMock<Logger>());
 
     const result = await check.run(submission, rule);
 
@@ -28,9 +24,8 @@ describe("element-exists check", () => {
   });
 
   it("fails if the selector was not found", async () => {
-    const fetch = fetchMock.sandbox().get("url/1", "<!doctype><html></html>") as unknown as typeof nodeFetch;
-
-    const check = new ElementExists(createMock<Logger>(), fetch);
+    submission.html = "<!doctype><html></html>";
+    const check = new ElementExists(createMock<Logger>());
 
     const result = await check.run(submission, rule);
 
@@ -38,21 +33,8 @@ describe("element-exists check", () => {
     expect(result).toHaveProperty("status", "failed");
   });
 
-  it("errors if the there was an error", async () => {
-    const fetch = jest.fn().mockRejectedValue(new Error()) as unknown as typeof nodeFetch;
-
-    const check = new ElementExists(createMock<Logger>(), fetch);
-
-    const result = await check.run(submission, rule);
-
-    expect(result).toHaveProperty("id", rule.id);
-    expect(result).toHaveProperty("status", "error");
-  });
-
   it("errors if the the selector is missing", async () => {
-    const fetch = fetchMock.sandbox().get("url/1", "") as unknown as typeof nodeFetch;
-
-    const check = new ElementExists(createMock<Logger>(), fetch);
+    const check = new ElementExists(createMock<Logger>());
 
     const rule = createRule({
       key: "element-exists",

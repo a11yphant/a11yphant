@@ -1,11 +1,10 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { createRule, createSubmission } from "@tests/support/helpers";
 import fetchMock from "fetch-mock-jest";
 import nodeFetch from "node-fetch";
 
 import { HtmlIsValidCheck } from "@/submission/checks/base-checks/html-is-valid.check";
-
-import { createRule, createSubmission } from "../helpers";
 
 describe("html-is-valid check", () => {
   const submission = createSubmission();
