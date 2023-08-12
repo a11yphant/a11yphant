@@ -19,23 +19,6 @@ services:
       interval: 10s
       retries: 10
 
-  rabbitmq:
-    image: rabbitmq:management-alpine
-    environment:
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_PASS: secret
-    volumes:
-      - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
-      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
-    ports:
-      - 15672:15672
-      - 5672:5672
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      timeout: 45s
-      interval: 10s
-      retries: 10
-
   mailhog:
     image: mailhog/mailhog
     restart: unless-stopped

@@ -147,7 +147,7 @@ jobs:
         with:
           name: test-coverage-api
           path: services/api/coverage
-                 
+
   build-api:
     needs:
       - variables
@@ -261,93 +261,9 @@ jobs:
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
 
-  # Submission Checker
-  lint-submission-checker:
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/submission-checker
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Lint
-        run: npm run lint --prefix services/submission-checker
-
-  test-submission-checker:
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
-    services:
-      rabbitmq:
-        image: rabbitmq:management-alpine
-        env:
-          RABBITMQ_DEFAULT_USER: user
-          RABBITMQ_DEFAULT_PASS: secret
-        ports:
-          - 5672:5672
-          - 15672:15672
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/submission-checker
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configure RabbitMQ
-        run: curl -u user:secret -X POST -T docker/rabbitmq/definitions.json http://localhost:15672/api/definitions
-
-      - name: Test
-        run: npm run test:coverage --prefix services/submission-checker
-        env:
-          SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: amqp://user:secret@localhost:5672
-
-      - name: Upload Coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-coverage-submission-checker
-          path: services/submission-checker/coverage
-
-  build-submission-checker:
-    needs:
-      - variables
-      - lint-submission-checker
-      - test-submission-checker
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      digest: ${{ steps.build.outputs.digest }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Build
-        id: build
-        uses: ./.github/actions/docker-build
-        with:
-          path: services/submission-checker
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: submission-checker
-          version: ${{ needs.variables.outputs.environment-name }}
-          registry-user: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-
   upload-coverage-reports:
     needs:
       - test-api
-      - test-submission-checker
       - test-site
     runs-on: ubuntu-22.04
     permissions:
@@ -389,12 +305,6 @@ jobs:
           name: test-coverage-site
           path: services/site/coverage/
 
-      - name: Download Submission Checker test coverage
-        uses: actions/download-artifact@v3
-        with:
-          name: test-coverage-submission-checker
-          path: services/submission-checker/coverage/
-
       - name: Format API Coverage
         run: |
           cd services/api
@@ -411,16 +321,8 @@ jobs:
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
-      - name: Format Submission Checker Coverage
-        run: |
-          cd services/submission-checker
-          ./../../cc-test-reporter format-coverage -t lcov --add-prefix services/submission-checker -o coverage/codeclimate.json coverage/lcov.info
-        env:
-          GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
-          GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
-
       - name: Sum Coverage
-        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 3
+        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 2
         env:
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
@@ -437,7 +339,6 @@ jobs:
       - variables
       - build-api
       - build-site
-      - build-submission-checker
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -480,15 +381,6 @@ jobs:
       - name: Load Site Image
         run: docker load --input /tmp/site-image/image.tar
 
-      - name: Get Submission Checker Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: submission-checker-image
-          path: /tmp/submission-checker-image/
-
-      - name: Load Submission Checker Image
-        run: docker load --input /tmp/submission-checker-image/image.tar
-
       - name: Start services
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
         env:
@@ -525,10 +417,6 @@ jobs:
       - name: Echo Site Logs
         if: failure()
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
-
-      - name: Echo Submission Checker Logs
-        if: failure()
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs submission-checker --no-color --tail all
 
       - uses: actions/upload-artifact@v3
         if: failure()
@@ -583,29 +471,6 @@ jobs:
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
 
-  publish-submission-checker-image:
-    needs:
-      - variables
-      - test-end-to-end
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      image-digest: ${{ steps.publish.outputs.digest }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Publish Image
-        id: publish
-        uses: ./.github/actions/docker-push-image-from-artifact
-        with:
-          artifact-name: submission-checker-image
-          image: ghcr.io/a11yphant/submission-checker:${{ needs.variables.outputs.environment-name }}
-          registry-user: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-
   trigger-review-deploy:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-22.04
@@ -613,7 +478,6 @@ jobs:
       - variables
       - publish-site-image
       - publish-api-image
-      - publish-submission-checker-image
     steps:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
@@ -626,8 +490,7 @@ jobs:
               "environment-name": "${{ needs.variables.outputs.environment-name }}",
               "image-tag": "${{ needs.variables.outputs.environment-name }}",
               "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}",
-              "image-digest-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
+              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}"
             }
 
   trigger-beta-deploy:
@@ -637,7 +500,6 @@ jobs:
       - variables
       - publish-site-image
       - publish-api-image
-      - publish-submission-checker-image
     steps:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
@@ -648,8 +510,7 @@ jobs:
           client-payload: |
             {
               "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}",
-              "image-digest-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
+              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}"
             }
 
   trigger-production-deploy:
@@ -659,7 +520,6 @@ jobs:
       - variables
       - publish-site-image
       - publish-api-image
-      - publish-submission-checker-image
     steps:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
@@ -670,6 +530,5 @@ jobs:
           client-payload: |
             {
               "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}",
-              "image-digest-submission-checker": "${{ needs.publish-submission-checker-image.outputs.image-digest }}"
+              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}"
             }

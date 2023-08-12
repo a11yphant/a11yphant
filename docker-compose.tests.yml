@@ -11,15 +11,10 @@ services:
       API_PORT: 3000
       API_KEY: please-generate-a-secret-key-for-production
       API_CHALLENGES_LOCATION: "../../challenges"
-      API_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
-      API_MESSAGING_CONSUME_QUEUE_NAME: "api"
-      API_MESSAGING_PUBLISH_QUEUE_NAME: "submission-checker"
     ports:
       - 3000:3000
     depends_on:
       postgres:
-        condition: service_healthy
-      rabbitmq:
         condition: service_healthy
 
   site:
@@ -36,18 +31,3 @@ services:
     depends_on:
       api:
         condition: service_started
-      submission-checker:
-        condition: service_started
-
-  submission-checker:
-    image: ghcr.io/a11yphant/submission-checker:${IMAGE_TAG:-develop}
-    environment:
-      SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
-      SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
-      SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME: "submission-checker"
-      SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: "api"
-    depends_on:
-      api:
-        condition: service_started
-      rabbitmq:
-        condition: service_healthy

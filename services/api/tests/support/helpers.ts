@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloLink, concat, HttpLink, InMemoryCache } from "@apollo/client/core";
+import { faker } from "@faker-js/faker";
 import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
 import { CallHandler, ExecutionContext, INestApplication, Logger, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -8,6 +9,9 @@ import { Migrate } from "@prisma/migrate";
 import os from "os";
 import { join } from "path";
 import { Observable, of } from "rxjs";
+
+import { CodeLevelSubmission as Submission } from "@/submission/graphql/models/code-level-submission.model";
+import { Rule } from "@/submission/interfaces/rule.interface";
 
 import { PrismaService } from "../../src/prisma/prisma.service";
 
@@ -121,12 +125,11 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
   process.env.API_KEY = "secret";
   process.env.IGNORE_ENV_FILE = "true";
   process.env.DB_URL = getCurrentSchemaUrl();
-  process.env.API_MESSAGING_POLL_QUEUE = "false";
 
   let app: INestApplication;
 
   beforeEach(async () => {
-    const { configureApp, setupMicroservices } = await import("../../src/main");
+    const { configureApp } = await import("../../src/main");
     const { appModuleMetadata } = await import("../../src/app.module");
 
     const module = await Test.createTestingModule(appModuleMetadata).compile();
@@ -135,7 +138,6 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
 
     app = module.createNestApplication();
     configureApp(app);
-    setupMicroservices(app);
     await app.listen(0);
   });
 
@@ -194,4 +196,34 @@ export function runInterceptor(
       },
     }),
   );
+}
+
+export function createRule(rule: Partial<Rule> = {}): Rule {
+  const defaultValues: Rule = {
+    id: faker.string.uuid(),
+    key: "rule-key",
+    options: {},
+  };
+
+  return {
+    ...defaultValues,
+    ...rule,
+  };
+}
+
+export function createSubmission(submission: Partial<Submission> = {}): Submission {
+  const defaultValues: Submission = {
+    id: faker.string.uuid(),
+    html: "html",
+    css: "css",
+    js: "js",
+    levelId: "someId",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  return {
+    ...defaultValues,
+    ...submission,
+  };
 }

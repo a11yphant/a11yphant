@@ -13,7 +13,6 @@ import cookieConfig from "./config/cookie.config";
 import databaseConfig from "./config/database.config";
 import gqlConfig from "./config/gql.config";
 import mailConfig from "./config/mail.config";
-import messagingConfig from "./config/messaging.config";
 import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
 import siteConfig from "./config/site.config";
@@ -27,7 +26,7 @@ import { UserModule } from "./user/user.module";
 export const appModuleMetadata: ModuleMetadata = {
   imports: [
     ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, messagingConfig, oauthConfig, siteConfig],
+      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, oauthConfig, siteConfig],
       ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({

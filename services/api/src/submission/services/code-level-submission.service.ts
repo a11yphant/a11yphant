@@ -1,10 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { ClientProxy } from "@nestjs/microservices";
+import { Injectable, Logger } from "@nestjs/common";
 import { CodeLevelSubmission as SubmissionRecord, Prisma } from "@prisma/client";
 
+import { RequirementStatus } from "@/challenge/enums/requirement-status.enum";
 import { PrismaService } from "@/prisma/prisma.service";
 
-import { SUBMISSIONS_CLIENT } from "../constants";
 import { SubmissionAlreadyHasCheckResultException } from "../exceptions/submission-already-has-check-result.exception";
 import { SubmissionNotFoundException } from "../exceptions/submission-not-found.exception";
 import { CodeLevelSubmission } from "../graphql/models/code-level-submission.model";
@@ -12,13 +11,19 @@ import { Result } from "../graphql/models/result.model";
 import { ResultStatus } from "../graphql/models/result-status.enum";
 import { CodeLevelSubmissionCreateData } from "../interfaces/code-level-submission-create-data.interface";
 import { CodeLevelSubmissionUpdateData } from "../interfaces/code-level-submission-update-data.interface";
+import { RuleCheckResult } from "../interfaces/rule-check-result.interface";
+import { CheckSubmissionService } from "./check-submission.service";
 import { CodeLevelResultService } from "./code-level-result.service";
+import { RequirementResultService } from "./requirement-result.service";
 
 @Injectable()
 export class CodeLevelSubmissionService {
   constructor(
     private prisma: PrismaService,
-    @Inject(SUBMISSIONS_CLIENT) private clientProxy: ClientProxy,
+    private submissionChecker: CheckSubmissionService,
+    private resultService: CodeLevelResultService,
+    private requirementResultService: RequirementResultService,
+    private logger: Logger,
   ) {}
 
   public async findOne(id: string): Promise<CodeLevelSubmission> {
@@ -74,7 +79,7 @@ export class CodeLevelSubmissionService {
       throw new SubmissionAlreadyHasCheckResultException();
     }
 
-    const { result } = await this.prisma.codeLevelSubmission.update({
+    await this.prisma.codeLevelSubmission.update({
       where: { id: submissionId },
       data: {
         result: {
@@ -89,21 +94,51 @@ export class CodeLevelSubmissionService {
       include: { level: { include: { requirements: { include: { rule: true } } } } },
     });
 
-    this.clientProxy.emit("submission.created", {
-      submission: {
-        id: submission.id,
-        html: submission.html,
-        css: submission.css,
-        js: submission.js,
-      },
-      rules: submission.level.requirements.map((requirement) => ({
+    const { ruleCheckResults } = await this.submissionChecker.check(
+      submission,
+      submission.level.requirements.map((requirement) => ({
         id: requirement.id,
         key: requirement.rule.key,
-        options: requirement.options,
+        options: requirement.options as Record<string, string>,
       })),
+    );
+
+    const result = await this.resultService.findOneForSubmission(submissionId);
+    await this.resultService.update(result.id, {
+      status: this.getSubmissionStatus(ruleCheckResults),
     });
 
+    for (const checkResult of ruleCheckResults) {
+      await this.requirementResultService.create(result.id, checkResult.id, this.getRequirementStatus(checkResult.status));
+    }
+
     return result ? CodeLevelResultService.createModelFromRecord(result) : null;
+  }
+
+  private getRequirementStatus(status: string): RequirementStatus {
+    switch (status) {
+      case "success":
+        return RequirementStatus.SUCCESS;
+      case "failed":
+        return RequirementStatus.FAIL;
+      case "error":
+        return RequirementStatus.ERROR;
+      default:
+        this.logger.error(`The result contained the unknown status ${status}`);
+        return RequirementStatus.ERROR;
+    }
+  }
+
+  private getSubmissionStatus(results: RuleCheckResult[]): ResultStatus {
+    if (results.filter((result) => this.getRequirementStatus(result.status) === RequirementStatus.FAIL).length > 0) {
+      return ResultStatus.FAIL;
+    }
+
+    if (results.filter((result) => this.getRequirementStatus(result.status) === RequirementStatus.ERROR).length > 0) {
+      return ResultStatus.ERROR;
+    }
+
+    return ResultStatus.SUCCESS;
   }
 
   static createModelFromDatabaseRecord(record: SubmissionRecord): CodeLevelSubmission {
