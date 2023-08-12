@@ -12,5 +12,6 @@ export default registerAs("api", () => {
     "challenges-location": process.env.API_CHALLENGES_LOCATION,
     key: process.env.API_KEY,
     "user-as-stale-days": 7,
+    "importer-enabled": Boolean(+process.env.API_CHALLENGE_IMPORTER_ENABLED),
   };
 });
