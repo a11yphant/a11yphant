@@ -2,8 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { createRule, createSubmission } from "@tests/support/helpers";
 
-import { ElementContainsText } from "@/submission/checks/base-checks/element-contains-text.check";
-import { ElementNotContainsText } from "@/submission/checks/base-checks/element-not-contains-text.check";
+import { ElementContainsText, ElementNotContainsText } from "@/submission/checks/base-checks";
 
 describe("element-not-contains-text check", () => {
   const submission = createSubmission();

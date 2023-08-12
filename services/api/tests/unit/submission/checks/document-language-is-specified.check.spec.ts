@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { createRule, createSubmission } from "@tests/support/helpers";
 
-import { DocumentLanguageIsSpecified } from "@/submission/checks/base-checks/document-language-is-specified.check";
+import { DocumentLanguageIsSpecified } from "@/submission/checks/base-checks";
 
 describe("document-language-is-specified", () => {
   const rule = createRule({ key: "document-language-is-specified", options: { languages: "en,en-us" } });

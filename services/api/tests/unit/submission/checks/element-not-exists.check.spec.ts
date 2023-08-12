@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { createRule, createSubmission } from "@tests/support/helpers";
 
-import { ElementNotExists } from "@/submission/checks/base-checks/element-not-exists.check";
+import { ElementNotExists } from "@/submission/checks/base-checks";
 
 describe("element-not-exists check", () => {
   const submission = createSubmission({

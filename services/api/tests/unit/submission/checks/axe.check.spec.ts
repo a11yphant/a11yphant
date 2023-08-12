@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { createRule, createSubmission } from "@tests/support/helpers";
 
-import { AxeCheck } from "@/submission/checks/base-checks/axe.check";
+import { AxeCheck } from "@/submission/checks/base-checks";
 
 describe("axe check", () => {
   const AxeLinkNameCheck = AxeCheck("link-name");

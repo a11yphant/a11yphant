@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { JSDOM } from "jsdom";
 
-import { Submission } from "../../graphql/models/submission.model";
+import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
 import { RuleCheckResult } from "../../interfaces/rule-check-result.interface";
 import { BaseCheck } from "./base.check";

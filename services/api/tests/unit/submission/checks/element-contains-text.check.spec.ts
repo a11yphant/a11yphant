@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { createRule, createSubmission } from "@tests/support/helpers";
 
-import { ElementContainsText } from "@/submission/checks/base-checks/element-contains-text.check";
+import { ElementContainsText } from "@/submission/checks/base-checks";
 
 describe("element-contains-text check", () => {
   const rule = createRule({ key: "element-contains-text", options: { selector: "a", text: "abc" } });

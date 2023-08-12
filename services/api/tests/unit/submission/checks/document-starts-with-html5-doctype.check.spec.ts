@@ -2,7 +2,7 @@ import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { createRule, createSubmission } from "@tests/support/helpers";
 
-import { DocumentStartsWithHtml5Doctype } from "@/submission/checks/base-checks/document-starts-with-html5-doctype.check";
+import { DocumentStartsWithHtml5Doctype } from "@/submission/checks/base-checks";
 
 describe("document-starts-with-html5-doctype check", () => {
   const submission = createSubmission();

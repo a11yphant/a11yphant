@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 
-import { Submission } from "../../graphql/models/submission.model";
+import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
 import { RuleCheckResult } from "../../interfaces/rule-check-result.interface";
 import { ElementContainsText } from "./element-contains-text.check";

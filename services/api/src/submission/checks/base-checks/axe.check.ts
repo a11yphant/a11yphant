@@ -2,7 +2,7 @@ import { Injectable, Logger, Type } from "@nestjs/common";
 import { AxeResults } from "axe-core";
 import axe from "axe-core";
 
-import { Submission } from "../../graphql/models/submission.model";
+import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
 import { RuleCheckResult } from "../../interfaces/rule-check-result.interface";
 import { Check } from "../check.interface";
