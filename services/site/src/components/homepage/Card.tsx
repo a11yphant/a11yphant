@@ -13,9 +13,19 @@ export interface CardProps {
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
+  quizOnly?: string;
 }
 
-const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, finishedLevels, difficulty, challengeSlug, challengeNumber }) => {
+const Card: React.FunctionComponent<CardProps> = ({
+  className,
+  heading,
+  levels,
+  finishedLevels,
+  difficulty,
+  challengeSlug,
+  challengeNumber,
+  quizOnly,
+}) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
 
   return (
@@ -31,6 +41,12 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
         className,
       )}
     >
+      {quizOnly == "Quiz" && (
+        <span className="text-dark font-medium px-3 py-0.5 bg-gradient-to-l from-grey-light to-light absolute right-0 top-3 rounded-l-lg shadow-md">
+          Quiz only
+        </span>
+      )}
+
       {finishedLevels > 0 && finishedLevels !== levels && (
         <div className={clsx("flex-1 flex items-center justify-center")}>
           <p className={clsx("text-background-light font-mono text-6xl mb-0", "transition duration-300", "group-hover:text-grey-dark")}>
