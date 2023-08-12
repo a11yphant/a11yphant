@@ -1,8 +1,7 @@
 import { Inject, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import nodeFetch from "node-fetch";
 
-import { Submission } from "../../graphql/models/submission.model";
+import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
 import { RuleCheckResult } from "../../interfaces/rule-check-result.interface";
 import { Check } from "../check.interface";
@@ -10,18 +9,13 @@ import { Check } from "../check.interface";
 export abstract class BaseCheck implements Check {
   constructor(
     protected logger: Logger,
-    protected config: ConfigService,
     @Inject("fetch") protected fetch: typeof nodeFetch,
   ) {}
 
   public abstract run(submission: Submission, rule: Rule): Promise<RuleCheckResult>;
 
-  protected async fetchSubmission(submissionId: string): Promise<string> {
-    const url = `${this.config.get<string>("submission-checker.renderer-base-url")}${submissionId}`;
-    const response = await this.fetch(url);
-    const text = response.text();
-
-    return text;
+  protected async fetchSubmission(submission: Submission): Promise<string> {
+    return submission.html;
   }
 
   protected checkFailed(error: Error, submission: Submission, rule: Rule): RuleCheckResult {

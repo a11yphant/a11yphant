@@ -1,5 +1,4 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import nodeFetch from "node-fetch";
 
 import { Submission } from "../../graphql/models/submission.model";
@@ -13,13 +12,13 @@ interface ValidationResult {
 
 @Injectable()
 export class HtmlIsValidCheck extends BaseCheck {
-  constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
-    super(logger, config, fetch);
+  constructor(logger: Logger, @Inject("fetch") fetch: typeof nodeFetch) {
+    super(logger, fetch);
   }
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     try {
-      const renderedSubmission = await this.fetchSubmission(submission.id);
+      const renderedSubmission = await this.fetchSubmission(submission);
       const validationResult: ValidationResult = await this.fetch("https://validator.w3.org/nu/?out=json", {
         method: "POST",
         headers: {

@@ -1,6 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import fetchMock from "fetch-mock-jest";
 import nodeFetch from "node-fetch";
 
@@ -27,7 +26,6 @@ describe("element-not-contains-text check", () => {
 
     const check = new ElementNotContainsText(
       createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url/") }),
       fetch,
       createMock<ElementContainsText>({
         containsText: jest.fn().mockReturnValue(false),
@@ -45,7 +43,6 @@ describe("element-not-contains-text check", () => {
 
     const check = new ElementNotContainsText(
       createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url/") }),
       fetch,
       createMock<ElementContainsText>({
         containsText: jest.fn().mockReturnValue(true),
@@ -63,7 +60,6 @@ describe("element-not-contains-text check", () => {
 
     const check = new ElementNotContainsText(
       createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url/") }),
       fetch,
       createMock<ElementContainsText>({
         containsText: jest.fn().mockReturnValue(true),
@@ -88,7 +84,6 @@ describe("element-not-contains-text check", () => {
 
     const check = new ElementNotContainsText(
       createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "url/") }),
       fetch,
       createMock<ElementContainsText>({
         containsText: jest.fn().mockReturnValue(true),

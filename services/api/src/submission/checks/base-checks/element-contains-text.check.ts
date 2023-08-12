@@ -1,5 +1,4 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import nodeFetch from "node-fetch";
 
 import { Submission } from "../../graphql/models/submission.model";
@@ -9,8 +8,8 @@ import { JsdomCheck } from "./jsdom-check";
 
 @Injectable()
 export class ElementContainsText extends JsdomCheck {
-  constructor(logger: Logger, config: ConfigService, @Inject("fetch") fetch: typeof nodeFetch) {
-    super(logger, config, fetch);
+  constructor(logger: Logger, @Inject("fetch") fetch: typeof nodeFetch) {
+    super(logger, fetch);
   }
 
   public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {

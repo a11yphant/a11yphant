@@ -1,6 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 
 import { DocumentLanguageIsSpecified } from "@/submission/checks/base-checks/document-language-is-specified.check";
 
@@ -12,7 +11,7 @@ describe("document-language-is-specified", () => {
 
   it("is successful if the language is specified", async () => {
     const fetch = mockSubmissionApi(submission.id, `<!doctype html><html lang="en"></html>`);
-    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
+    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), fetch);
 
     const result = await check.run(submission, rule);
 
@@ -22,7 +21,7 @@ describe("document-language-is-specified", () => {
 
   it("fails if the language is not correct", async () => {
     const fetch = mockSubmissionApi(submission.id, `<!doctype html><html lang="de"></html>`);
-    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
+    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), fetch);
 
     const result = await check.run(submission, rule);
 
@@ -32,7 +31,7 @@ describe("document-language-is-specified", () => {
 
   it("errors if the language is not specified", async () => {
     const fetch = mockSubmissionApi(submission.id, `<!doctype html><html></html>`);
-    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
+    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), fetch);
 
     const result = await check.run(submission, rule);
 
@@ -43,7 +42,7 @@ describe("document-language-is-specified", () => {
   it("errors if the language is missing on the rule", async () => {
     const rule = createRule({ key: "document-language-is-specified", options: {} });
     const fetch = mockSubmissionApi(submission.id, `<!doctype html><html lang="en"></html>`);
-    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), createMock<ConfigService>({ get: jest.fn(() => "url/") }), fetch);
+    const check = new DocumentLanguageIsSpecified(createMock<Logger>(), fetch);
 
     const result = await check.run(submission, rule);
 

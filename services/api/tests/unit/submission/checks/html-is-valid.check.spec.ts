@@ -1,6 +1,5 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import fetchMock from "fetch-mock-jest";
 import nodeFetch from "node-fetch";
 
@@ -18,11 +17,7 @@ describe("html-is-valid check", () => {
       .get("begin:https://url.com/", "some-html")
       .post("begin:https://validator.w3.org", { messages: [{ type: "info" }] });
 
-    const check = new HtmlIsValidCheck(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
-      fetch as unknown as typeof nodeFetch,
-    );
+    const check = new HtmlIsValidCheck(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
 
     const result = await check.run(submission, rule);
 
@@ -36,11 +31,7 @@ describe("html-is-valid check", () => {
       .get("begin:https://url.com/", "some-html")
       .post("begin:https://validator.w3.org", { messages: [{ type: "error" }] });
 
-    const check = new HtmlIsValidCheck(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
-      fetch as unknown as typeof nodeFetch,
-    );
+    const check = new HtmlIsValidCheck(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
 
     const result = await check.run(submission, rule);
 
@@ -54,11 +45,7 @@ describe("html-is-valid check", () => {
       .get("begin:https://url.com/", "some-html")
       .post("begin:https://validator.w3.org", { throws: new Error("did not work") });
 
-    const check = new HtmlIsValidCheck(
-      createMock<Logger>(),
-      createMock<ConfigService>({ get: jest.fn(() => "https://url.com/") }),
-      fetch as unknown as typeof nodeFetch,
-    );
+    const check = new HtmlIsValidCheck(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
 
     const result = await check.run(submission, rule);
 
