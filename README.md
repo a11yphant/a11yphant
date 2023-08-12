@@ -4,13 +4,13 @@
 
 The easy way to learn web accessibility
 
+[![Sponsor Us](https://img.shields.io/badge/-Sponsor%20Us-5719D9)](https://github.com/sponsors/a11yphant)
 [![Twitter](https://img.shields.io/badge/-Twitter-7331FF)](https://twitter.com/a11yphant)
 [![ProductHunt](https://img.shields.io/badge/-ProductHunt-7331FF)](https://www.producthunt.com/products/a11yphant)
 ![Open Source Project](https://img.shields.io/badge/-Open%20Source%20Project-121212)
 ![Launched 2022](https://img.shields.io/badge/-Launched%202022-121212)
 
 <hr style="color:white; height:1.5px; width:100%;"/>
-
 
 ## Table of Contents
 
@@ -81,7 +81,6 @@ Nowadays, the a11yphant core-team continues developing a11yphant as Open Source 
 
 <a href="https://www.fabianhellerdesign.com" target="_blank" rel="noopener noreferrer nofollow">Fabian Heller</a> is an interdisciplinary digital designer at the intersection of Graphic Design, Motion Design and Illustration. He received multiple awards for his work in these fields.
 
-
 ## Contributing to a11yphant
 
 Looking to contribute something to a11yphant? [**Here's how you can help.**](CONTRIBUTING.md)
@@ -89,7 +88,6 @@ Looking to contribute something to a11yphant? [**Here's how you can help.**](CON
 ## Documentation
 
 Interested in the technology behind a11yphant? Have a look at our [documentation](DOCUMENTATION.md).
-
 
 <hr style="color:white; height:1.5px; width:100%;"/>
 
