@@ -1,7 +1,6 @@
-import { Inject, Injectable, Logger, Type } from "@nestjs/common";
+import { Injectable, Logger, Type } from "@nestjs/common";
 import { AxeResults } from "axe-core";
 import axe from "axe-core";
-import nodeFetch from "node-fetch";
 
 import { Submission } from "../../graphql/models/submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -12,8 +11,8 @@ import { JsdomCheck } from "./jsdom-check";
 export function AxeCheck(checkName: string): Type<Check> {
   @Injectable()
   class AxeCheckHost extends JsdomCheck {
-    constructor(logger: Logger, @Inject("fetch") fetch: typeof nodeFetch) {
-      super(logger, fetch);
+    constructor(logger: Logger) {
+      super(logger);
     }
 
     public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {

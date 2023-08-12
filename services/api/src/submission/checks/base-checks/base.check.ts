@@ -1,5 +1,4 @@
-import { Inject, Logger } from "@nestjs/common";
-import nodeFetch from "node-fetch";
+import { Logger } from "@nestjs/common";
 
 import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -7,10 +6,7 @@ import { RuleCheckResult } from "../../interfaces/rule-check-result.interface";
 import { Check } from "../check.interface";
 
 export abstract class BaseCheck implements Check {
-  constructor(
-    protected logger: Logger,
-    @Inject("fetch") protected fetch: typeof nodeFetch,
-  ) {}
+  constructor(protected logger: Logger) {}
 
   public abstract run(submission: Submission, rule: Rule): Promise<RuleCheckResult>;
 

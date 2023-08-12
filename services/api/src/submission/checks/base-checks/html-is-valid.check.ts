@@ -12,8 +12,11 @@ interface ValidationResult {
 
 @Injectable()
 export class HtmlIsValidCheck extends BaseCheck {
-  constructor(logger: Logger, @Inject("fetch") fetch: typeof nodeFetch) {
-    super(logger, fetch);
+  constructor(
+    logger: Logger,
+    @Inject("fetch") private fetch: typeof nodeFetch,
+  ) {
+    super(logger);
   }
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {

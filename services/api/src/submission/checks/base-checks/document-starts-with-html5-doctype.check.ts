@@ -1,5 +1,4 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
-import nodeFetch from "node-fetch";
+import { Injectable, Logger } from "@nestjs/common";
 
 import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -8,8 +7,8 @@ import { BaseCheck } from "./base.check";
 
 @Injectable()
 export class DocumentStartsWithHtml5Doctype extends BaseCheck {
-  constructor(logger: Logger, @Inject("fetch") fetch: typeof nodeFetch) {
-    super(logger, fetch);
+  constructor(logger: Logger) {
+    super(logger);
   }
 
   public async run(submission: Submission, rule: Rule): Promise<RuleCheckResult> {
