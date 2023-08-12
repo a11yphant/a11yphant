@@ -50,6 +50,7 @@ const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, 
           <Link
             href={`/?challenge=${challengeSlug}`}
             shallow={true}
+            scroll={false}
             className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
           >
             {heading}

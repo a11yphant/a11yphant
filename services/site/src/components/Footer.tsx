@@ -41,7 +41,7 @@ const Footer: React.FunctionComponent = () => (
           <LinkList>
             <LinkListItem href="/about" title="About" />
             <LinkListItem href="/press-kit" title="Press Kit" />
-            <LinkListItem href="https://github.com/a11yphant/a11yphant" title="Support us" />
+            <LinkListItem href="https://github.com/sponsors/a11yphant" title="Support us" />
           </LinkList>
         </div>
 
