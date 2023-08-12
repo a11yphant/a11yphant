@@ -6,11 +6,11 @@ import {
   ElementExists,
   ElementNotContainsText,
   ElementNotExists,
-  HtmlIsValidCheck,
+  HtmlIsValid,
 } from "./base-checks";
 
 export const checkToClassMap = {
-  "html-is-valid": HtmlIsValidCheck,
+  "html-is-valid": HtmlIsValid,
   "element-exists": ElementExists,
   "element-not-exists": ElementNotExists,
   "element-contains-text": ElementContainsText,

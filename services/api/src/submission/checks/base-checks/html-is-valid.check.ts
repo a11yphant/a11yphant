@@ -11,7 +11,7 @@ interface ValidationResult {
 }
 
 @Injectable()
-export class HtmlIsValidCheck extends BaseCheck {
+export class HtmlIsValid extends BaseCheck {
   constructor(
     logger: Logger,
     @Inject("fetch") private fetch: typeof nodeFetch,

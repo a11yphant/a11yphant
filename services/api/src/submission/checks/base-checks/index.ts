@@ -5,7 +5,7 @@ import { ElementContainsText } from "./element-contains-text.check";
 import { ElementExists } from "./element-exists.check";
 import { ElementNotContainsText } from "./element-not-contains-text.check";
 import { ElementNotExists } from "./element-not-exists.check";
-import { HtmlIsValidCheck } from "./html-is-valid.check";
+import { HtmlIsValid } from "./html-is-valid.check";
 
 export {
   AxeCheck,
@@ -15,5 +15,5 @@ export {
   ElementExists,
   ElementNotContainsText,
   ElementNotExists,
-  HtmlIsValidCheck,
+  HtmlIsValid,
 };

@@ -12,7 +12,7 @@ import {
   ElementExists,
   ElementNotContainsText,
   ElementNotExists,
-  HtmlIsValidCheck,
+  HtmlIsValid,
 } from "./checks/base-checks";
 import { CheckFactory } from "./checks/check.factory";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./checks/check-to-class-map";
@@ -70,7 +70,7 @@ import { RequirementResultService } from "./services/requirement-result.service"
     ElementExists,
     ElementNotContainsText,
     ElementNotExists,
-    HtmlIsValidCheck,
+    HtmlIsValid,
   ],
   exports: [CodeLevelSubmissionService],
 })

@@ -4,7 +4,7 @@ import { createRule, createSubmission } from "@tests/support/helpers";
 import fetchMock from "fetch-mock-jest";
 import nodeFetch from "node-fetch";
 
-import { HtmlIsValidCheck } from "@/submission/checks/base-checks";
+import { HtmlIsValid } from "@/submission/checks/base-checks";
 
 describe("html-is-valid check", () => {
   const submission = createSubmission();
@@ -16,7 +16,7 @@ describe("html-is-valid check", () => {
       .get("begin:https://url.com/", "some-html")
       .post("begin:https://validator.w3.org", { messages: [{ type: "info" }] });
 
-    const check = new HtmlIsValidCheck(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
+    const check = new HtmlIsValid(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
 
     const result = await check.run(submission, rule);
 
@@ -30,7 +30,7 @@ describe("html-is-valid check", () => {
       .get("begin:https://url.com/", "some-html")
       .post("begin:https://validator.w3.org", { messages: [{ type: "error" }] });
 
-    const check = new HtmlIsValidCheck(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
+    const check = new HtmlIsValid(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
 
     const result = await check.run(submission, rule);
 
@@ -44,7 +44,7 @@ describe("html-is-valid check", () => {
       .get("begin:https://url.com/", "some-html")
       .post("begin:https://validator.w3.org", { throws: new Error("did not work") });
 
-    const check = new HtmlIsValidCheck(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
+    const check = new HtmlIsValid(createMock<Logger>(), fetch as unknown as typeof nodeFetch);
 
     const result = await check.run(submission, rule);
 
