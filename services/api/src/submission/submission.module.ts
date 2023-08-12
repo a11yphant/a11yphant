@@ -5,6 +5,15 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 import { ChallengeModule } from "@/challenge/challenge.module";
 import { PrismaModule } from "@/prisma/prisma.module";
 
+import {
+  DocumentLanguageIsSpecified,
+  DocumentStartsWithHtml5Doctype,
+  ElementContainsText,
+  ElementExists,
+  ElementNotContainsText,
+  ElementNotExists,
+  HtmlIsValidCheck,
+} from "./checks/base-checks";
 import { CheckFactory } from "./checks/check.factory";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./checks/check-to-class-map";
 import { SUBMISSIONS_CLIENT } from "./constants";
@@ -55,6 +64,13 @@ import { RequirementResultService } from "./services/requirement-result.service"
     CheckFactory,
     { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
     { provide: "fetch", useValue: fetch },
+    DocumentLanguageIsSpecified,
+    DocumentStartsWithHtml5Doctype,
+    ElementContainsText,
+    ElementExists,
+    ElementNotContainsText,
+    ElementNotExists,
+    HtmlIsValidCheck,
   ],
   exports: [CodeLevelSubmissionService],
 })

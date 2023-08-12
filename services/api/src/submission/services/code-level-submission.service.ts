@@ -79,7 +79,7 @@ export class CodeLevelSubmissionService {
       throw new SubmissionAlreadyHasCheckResultException();
     }
 
-    const { result } = await this.prisma.codeLevelSubmission.update({
+    await this.prisma.codeLevelSubmission.update({
       where: { id: submissionId },
       data: {
         result: {
@@ -103,20 +103,16 @@ export class CodeLevelSubmissionService {
       })),
     );
 
-    await this.handleResults(ruleCheckResults, submissionId);
-
-    return result ? CodeLevelResultService.createModelFromRecord(result) : null;
-  }
-
-  private async handleResults(results: RuleCheckResult[], submissionId: string): Promise<void> {
     const result = await this.resultService.findOneForSubmission(submissionId);
     await this.resultService.update(result.id, {
-      status: this.getSubmissionStatus(results),
+      status: this.getSubmissionStatus(ruleCheckResults),
     });
 
-    for (const checkResult of results) {
+    for (const checkResult of ruleCheckResults) {
       await this.requirementResultService.create(result.id, checkResult.id, this.getRequirementStatus(checkResult.status));
     }
+
+    return result ? CodeLevelResultService.createModelFromRecord(result) : null;
   }
 
   private getRequirementStatus(status: string): RequirementStatus {
