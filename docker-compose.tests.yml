@@ -11,6 +11,7 @@ services:
       API_PORT: 3000
       API_KEY: please-generate-a-secret-key-for-production
       API_CHALLENGES_LOCATION: "../../challenges"
+      API_CHALLENGE_IMPORTER_ENABLED: 1
     ports:
       - 3000:3000
     depends_on:
