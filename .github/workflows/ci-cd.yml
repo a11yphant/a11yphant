@@ -322,7 +322,7 @@ jobs:
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
       - name: Sum Coverage
-        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 3
+        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 2
         env:
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
