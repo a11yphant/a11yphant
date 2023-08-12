@@ -125,12 +125,11 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
   process.env.API_KEY = "secret";
   process.env.IGNORE_ENV_FILE = "true";
   process.env.DB_URL = getCurrentSchemaUrl();
-  process.env.API_MESSAGING_POLL_QUEUE = "false";
 
   let app: INestApplication;
 
   beforeEach(async () => {
-    const { configureApp, setupMicroservices } = await import("../../src/main");
+    const { configureApp } = await import("../../src/main");
     const { appModuleMetadata } = await import("../../src/app.module");
 
     const module = await Test.createTestingModule(appModuleMetadata).compile();
@@ -139,7 +138,6 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
 
     app = module.createNestApplication();
     configureApp(app);
-    setupMicroservices(app);
     await app.listen(0);
   });
 

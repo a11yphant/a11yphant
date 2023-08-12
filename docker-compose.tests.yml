@@ -11,15 +11,10 @@ services:
       API_PORT: 3000
       API_KEY: please-generate-a-secret-key-for-production
       API_CHALLENGES_LOCATION: "../../challenges"
-      API_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
-      API_MESSAGING_CONSUME_QUEUE_NAME: "api"
-      API_MESSAGING_PUBLISH_QUEUE_NAME: "submission-checker"
     ports:
       - 3000:3000
     depends_on:
       postgres:
-        condition: service_healthy
-      rabbitmq:
         condition: service_healthy
 
   site:
