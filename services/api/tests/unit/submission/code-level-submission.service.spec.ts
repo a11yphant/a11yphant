@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { createMock } from "@golevelup/ts-jest";
+import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import {
   CODE_LEVEL,
@@ -14,6 +14,7 @@ import { useDatabase } from "@tests/support/helpers";
 
 import { PrismaService } from "@/prisma/prisma.service";
 import { SubmissionNotFoundException } from "@/submission/exceptions/submission-not-found.exception";
+import { Result } from "@/submission/graphql/models/result.model";
 import { ResultStatus } from "@/submission/graphql/models/result-status.enum";
 import { CheckSubmissionService } from "@/submission/services/check-submission.service";
 import { CodeLevelResultService } from "@/submission/services/code-level-result.service";
@@ -220,68 +221,135 @@ describe("code level submission service", () => {
   });
 
   describe("requestCheck", () => {
-    it("emits a submission.created event when a new submission is created", async () => {
-      const emit = jest.fn(() => ({ toPromise: jest.fn().mockResolvedValue(null) }));
+    const requirement = { id: "some-uuid", rule: { key: "test-key" }, options: { selector: "ul > li" } };
 
-      const submission = {
-        id: "uuid",
-        html: "html",
-        css: "css",
-        js: "js",
-        level: { requirements: [{ id: "some-uuid", rule: { key: "test-key" }, options: { selector: "ul > li" } }] },
-      };
+    const submission = {
+      id: "uuid",
+      html: "html",
+      css: "css",
+      js: "js",
+      level: { requirements: [requirement] },
+    };
 
-      const service = new CodeLevelSubmissionService(
+    const getSubmissionService = (partials?: {
+      prismaService?: PartialFuncReturn<PrismaService>;
+      checkSubmissionService?: PartialFuncReturn<CheckSubmissionService>;
+      codeLevelResultService?: PartialFuncReturn<CodeLevelResultService>;
+      requriementResultService?: PartialFuncReturn<RequirementResultService>;
+      logger?: PartialFuncReturn<Logger>;
+    }): CodeLevelSubmissionService => {
+      return new CodeLevelSubmissionService(
         createMock<PrismaService>({
           codeLevelResult: {
             count: jest.fn().mockResolvedValue(0),
           },
           codeLevelSubmission: {
-            update: jest.fn().mockResolvedValue({ result: { status: ResultStatus.PENDING } }),
+            update: jest.fn(),
             findUnique: jest.fn().mockResolvedValue(submission),
           },
+          ...partials.prismaService,
         }),
-        createMock<CheckSubmissionService>(),
-        createMock<CodeLevelResultService>(),
-        createMock<RequirementResultService>(),
-        createMock<Logger>(),
+        createMock<CheckSubmissionService>(partials.checkSubmissionService),
+        createMock<CodeLevelResultService>(partials.codeLevelResultService),
+        createMock<RequirementResultService>(partials.requriementResultService),
+        createMock<Logger>(partials.logger),
       );
+    };
 
-      const result = await service.requestCheck("uuid");
+    it("calls the submission checker correctly", async () => {
+      const check = jest.fn().mockResolvedValue({ ruleCheckResults: [{ id: "someId", status: "success" }] });
 
-      expect(result.status).toBe(ResultStatus.PENDING);
-      expect(emit).toHaveBeenCalledWith(
-        "submission.created",
-        expect.objectContaining({
-          submission: {
-            id: submission.id,
-            html: submission.html,
-            css: submission.css,
-            js: submission.js,
-          },
-          rules: expect.arrayContaining([
-            expect.objectContaining({
-              id: submission.level.requirements[0].id,
-              key: submission.level.requirements[0].rule.key,
-              options: submission.level.requirements[0].options,
-            }),
-          ]),
-        }),
+      const service = getSubmissionService({
+        checkSubmissionService: {
+          check,
+        },
+      });
+
+      await service.requestCheck("uuid");
+
+      expect(check).toHaveBeenCalledWith(
+        submission,
+        expect.arrayContaining([
+          expect.objectContaining({
+            id: requirement.id,
+            key: requirement.rule.key,
+            options: expect.anything(),
+          }),
+        ]),
       );
     });
 
+    it("returns a successful result", async () => {
+      const resultId = "someResultId";
+      const resultUpdate = jest.fn();
+
+      const service = getSubmissionService({
+        checkSubmissionService: {
+          check: jest.fn().mockResolvedValue({ ruleCheckResults: [{ id: "someId", status: "success" }] }),
+        },
+        codeLevelResultService: {
+          findOneForSubmission: jest.fn().mockResolvedValue(new Result({ id: resultId, submissionId: "someotherid", status: ResultStatus.PENDING })),
+          update: resultUpdate,
+        },
+      });
+
+      await service.requestCheck("uuid");
+      expect(resultUpdate).toHaveBeenCalledWith(resultId, { status: ResultStatus.SUCCESS });
+    });
+
+    it("returns an error result", async () => {
+      const resultId = "someResultId";
+      const resultUpdate = jest.fn();
+
+      const service = getSubmissionService({
+        checkSubmissionService: {
+          check: jest.fn().mockResolvedValue({ ruleCheckResults: [{ id: "someId", status: "failed" }] }),
+        },
+        codeLevelResultService: {
+          findOneForSubmission: jest.fn().mockResolvedValue(new Result({ id: resultId, submissionId: "someotherid", status: ResultStatus.PENDING })),
+          update: resultUpdate,
+        },
+      });
+
+      await service.requestCheck("uuid");
+      expect(resultUpdate).toHaveBeenCalledWith(resultId, { status: ResultStatus.FAIL });
+    });
+
+    it("creates the right amount of requirement results", async () => {
+      const requirementResultCreate = jest.fn();
+
+      const ruleCheckResults = [
+        { id: "someId", status: "failed" },
+        { id: "someId", status: "success" },
+        { id: "someId", status: "success" },
+      ];
+
+      const service = getSubmissionService({
+        checkSubmissionService: {
+          check: jest.fn().mockResolvedValue({ ruleCheckResults }),
+        },
+        codeLevelResultService: {
+          findOneForSubmission: jest
+            .fn()
+            .mockResolvedValue(new Result({ id: "resultId", submissionId: "someotherid", status: ResultStatus.PENDING })),
+        },
+        requriementResultService: {
+          create: requirementResultCreate,
+        },
+      });
+
+      await service.requestCheck("uuid");
+      expect(requirementResultCreate).toHaveBeenCalledTimes(ruleCheckResults.length);
+    });
+
     it("throws an exception if the submission already has a result", async () => {
-      const service = new CodeLevelSubmissionService(
-        createMock<PrismaService>({
+      const service = getSubmissionService({
+        prismaService: {
           codeLevelResult: {
             count: jest.fn().mockResolvedValue(1),
           },
-        }),
-        createMock<CheckSubmissionService>(),
-        createMock<CodeLevelResultService>(),
-        createMock<RequirementResultService>(),
-        createMock<Logger>(),
-      );
+        },
+      });
 
       expect(async () => await service.requestCheck("uuid")).rejects.toBeTruthy();
     });

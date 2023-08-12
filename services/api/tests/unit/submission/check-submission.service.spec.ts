@@ -1,12 +1,11 @@
 import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
+import { createRule, createSubmission } from "@tests/support/helpers";
 
 import { CheckFactory } from "@/submission/checks/check.factory";
 import { Check } from "@/submission/checks/check.interface";
 import { RuleCheckResult } from "@/submission/interfaces/rule-check-result.interface";
 import { CheckSubmissionService } from "@/submission/services/check-submission.service";
-
-import { createRule, createSubmission } from "./helpers";
 
 const factory = ({
   checkFactory = {},
