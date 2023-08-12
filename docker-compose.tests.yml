@@ -38,16 +38,3 @@ services:
         condition: service_started
       submission-checker:
         condition: service_started
-
-  submission-checker:
-    image: ghcr.io/a11yphant/submission-checker:${IMAGE_TAG:-develop}
-    environment:
-      SUBMISSION_CHECKER_RENDERER_BASE_URL: http://api:3000/render/
-      SUBMISSION_CHECKER_MESSAGING_RABBITMQ_URL: "amqp://user:secret@rabbitmq:5672"
-      SUBMISSION_CHECKER_MESSAGING_CONSUME_QUEUE_NAME: "submission-checker"
-      SUBMISSION_CHECKER_MESSAGING_PUBLISH_QUEUE_NAME: "api"
-    depends_on:
-      api:
-        condition: service_started
-      rabbitmq:
-        condition: service_healthy
