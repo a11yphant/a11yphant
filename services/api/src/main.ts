@@ -25,7 +25,6 @@ export async function bootstrap(): Promise<INestApplication> {
   const port = configService.get("api.port");
 
   await app.listen(port);
-  await app.startAllMicroservices();
   logger.log(`App listening on ${url}/graphql`, AppModule.name);
 
   return app;
