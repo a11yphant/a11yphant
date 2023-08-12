@@ -31,5 +31,3 @@ services:
     depends_on:
       api:
         condition: service_started
-      submission-checker:
-        condition: service_started
