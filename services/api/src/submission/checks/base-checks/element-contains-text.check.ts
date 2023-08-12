@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { DOMWindow } from "jsdom";
 
 import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -11,7 +12,7 @@ export class ElementContainsText extends JsdomCheck {
     super(logger);
   }
 
-  public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!this.ruleHasOption(rule, "selector")) {
       return this.checkConfigurationError(submission, rule, "selector");
     }
@@ -20,7 +21,7 @@ export class ElementContainsText extends JsdomCheck {
       return this.checkConfigurationError(submission, rule, "text");
     }
 
-    const containsText = this.containsText(document, rule.options as { selector: string; text: string });
+    const containsText = this.containsText(window.document.documentElement, rule.options as { selector: string; text: string });
 
     return {
       id: rule.id,

@@ -4,6 +4,7 @@ import {
   DocumentStartsWithHtml5Doctype,
   ElementContainsText,
   ElementExists,
+  ElementHasCssPropertyValue,
   ElementNotContainsText,
   ElementNotExists,
   HtmlIsValid,
@@ -12,6 +13,7 @@ import {
 export const checkToClassMap = {
   "html-is-valid": HtmlIsValid,
   "element-exists": ElementExists,
+  "element-has-css-property-value": ElementHasCssPropertyValue,
   "element-not-exists": ElementNotExists,
   "element-contains-text": ElementContainsText,
   "element-not-contains-text": ElementNotContainsText,

@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { DOMWindow } from "jsdom";
 
 import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -11,7 +12,7 @@ export class DocumentLanguageIsSpecified extends JsdomCheck {
     super(logger);
   }
 
-  public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!rule.options?.languages) {
       this.logger.error(
         `Executing check ${rule.key} on submission ${submission.id} failed due to missing language configuration`,
@@ -29,7 +30,7 @@ export class DocumentLanguageIsSpecified extends JsdomCheck {
 
     return {
       id: rule.id,
-      status: languages.includes(document.lang) ? "success" : "failed",
+      status: languages.includes(window.document.documentElement.lang) ? "success" : "failed",
     };
   }
 }

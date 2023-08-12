@@ -1,6 +1,7 @@
 import { Injectable, Logger, Type } from "@nestjs/common";
 import { AxeResults } from "axe-core";
 import axe from "axe-core";
+import { DOMWindow } from "jsdom";
 
 import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -15,8 +16,8 @@ export function AxeCheck(checkName: string): Type<Check> {
       super(logger);
     }
 
-    public async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
-      const result = await axe.run(document, { runOnly: [checkName] });
+    public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+      const result = await axe.run(window.document.documentElement, { runOnly: [checkName] });
 
       return {
         id: rule.id,

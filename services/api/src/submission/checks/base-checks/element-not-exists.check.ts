@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import { DOMWindow } from "jsdom";
 
 import { CodeLevelSubmission as Submission } from "../../graphql/models/code-level-submission.model";
 import { Rule } from "../../interfaces/rule.interface";
@@ -11,12 +12,12 @@ export class ElementNotExists extends JsdomCheck {
     super(logger);
   }
 
-  async evaluateRule(document: HTMLElement, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
+  async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
     if (!this.ruleHasOption(rule, "selector")) {
       return this.checkConfigurationError(submission, rule, "selector");
     }
 
-    const matchingElements = document.querySelectorAll(rule.options.selector);
+    const matchingElements = window.document.querySelectorAll(rule.options.selector);
 
     return {
       id: rule.id,
