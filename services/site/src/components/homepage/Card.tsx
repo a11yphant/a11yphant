@@ -43,7 +43,7 @@ const Card: React.FunctionComponent<CardProps> = ({
     >
       {quizOnly == "Quiz" && (
         <span className="text-dark font-medium px-3 py-0.5 bg-gradient-to-l from-grey-light to-light absolute right-0 top-3 rounded-l-lg shadow-md">
-          Quiz only
+          Mobile friendly
         </span>
       )}
 
