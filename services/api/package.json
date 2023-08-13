@@ -36,7 +36,7 @@
     "@nestjs-modules/mailer": "1.9.1",
     "@nestjs/apollo": "12.0.7",
     "@nestjs/common": "9.4.3",
-    "@nestjs/config": "2.3.4",
+    "@nestjs/config": "3.0.0",
     "@nestjs/core": "9.4.3",
     "@nestjs/graphql": "12.0.8",
     "@nestjs/passport": "9.0.3",
