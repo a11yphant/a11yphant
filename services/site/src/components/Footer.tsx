@@ -72,7 +72,7 @@ const Footer: React.FunctionComponent = () => (
           <Link
             href="https://www.producthunt.com/posts/a11yphant?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-a11yphant"
             className={clsx("group")}
-            target={"_blank"}
+            target="_blank"
             rel="noopener noreferrer nofollow"
           >
             <span className="sr-only">Product Hunt campaign of a11yphant (opens in a new tab)</span>
@@ -99,7 +99,7 @@ const Footer: React.FunctionComponent = () => (
             "group-hover:border-light",
             "group-focus:border-light",
           )}
-          target={"_blank"}
+          target="_blank"
           rel="noopener noreferrer nofollow"
         >
           <Heart className="w-4 mr-3" />
