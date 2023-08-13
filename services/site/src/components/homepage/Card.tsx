@@ -13,7 +13,7 @@ export interface CardProps {
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
-  quizOnly?: string;
+  mobileFriendly?: boolean;
 }
 
 const Card: React.FunctionComponent<CardProps> = ({
@@ -24,7 +24,7 @@ const Card: React.FunctionComponent<CardProps> = ({
   difficulty,
   challengeSlug,
   challengeNumber,
-  quizOnly,
+  mobileFriendly,
 }) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
 
@@ -41,7 +41,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         className,
       )}
     >
-      {quizOnly == "Quiz" && (
+      {mobileFriendly && (
         <span className="text-dark font-medium px-3 py-0.5 bg-gradient-to-l from-grey-light to-light absolute right-0 top-3 rounded-l-lg shadow-md">
           Mobile friendly
         </span>

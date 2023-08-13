@@ -6,6 +6,7 @@ fragment ChallengeOverview on Challenge {
     difficulty
     numberOfLevels
     numberOfFinishedLevels
+    isMobileFriendly
 }
 
 query challenges($difficulty: ChallengeDifficulty, $status: ChallengeStatus) {

@@ -28,7 +28,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
       <ul className={clsx("flex flex-row flex-wrap")}>
         {challenges.map((challenge) => (
           <Card
-            // quizOnly={challenge.type} TODO: implement after API integration
+            mobileFriendly={challenge.isMobileFriendly}
             key={challenge.id}
             className={clsx("mb-12 mr-12 last:mr-0", "sm:mr-14", "md:mr-16", "lg:mr-24")}
             challengeSlug={challenge.slug}
