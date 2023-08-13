@@ -43,7 +43,7 @@ export const ChallengeModalLevelCard = ({
         })}
       </h3>
 
-      <p className="font-normal text-grey-middle mb-0">{type == "QuizLevel" ? "Quiz" : "Coding"}</p>
+      <p className="font-normal text-grey-middle mb-0">{type === "QuizLevel" ? "Quiz" : "Coding"}</p>
       {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10 absolute top-4 right-5 text-light")} />}
     </Link>
   );
