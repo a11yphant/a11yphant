@@ -18,10 +18,10 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
   const userAccountModalApi = useUserAccountModalApi();
 
   return (
-    <div className={clsx("my-8 flex flex-row justify-between", className)}>
+    <div className={clsx("my-4 flex flex-row justify-between", "md:my-8", className)}>
       <div className={clsx("flex flex-col")}>
         <h2 className={clsx("pb-2.5 text-grey", "h3", "sm:h2")}>Challenges</h2>
-        <p className={clsx("text-grey-middle")}>Pick a challenge from below</p>
+        <p className={clsx("text-grey ml-1")}>Pick a challenge from below</p>
       </div>
       {!userLoggedIn && (
         <section className={clsx("hidden", "lg:flex")}>
