@@ -57,7 +57,7 @@ export const CompleteEvaluationButton = ({
           router.push("/");
         }}
         primary
-        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", className, "ml-auto self-end")}
+        className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", "ml-auto self-end", className)}
         loading={loadingAnimation}
         srTextLoading="The request is being processed."
       >
