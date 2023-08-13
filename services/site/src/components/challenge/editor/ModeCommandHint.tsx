@@ -24,8 +24,9 @@ const ModeCommandHint: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <p className="text-grey-middle">
-      Press <span className="italic text-grey-middle">{commandForTabModeSwitch} + m</span> to use the tab key for site navigation.
+    <p className="text-grey-middle text-right ml-8">
+      <span className="sr-only">On your computer: </span>Press <span className="italic text-grey-middle">{commandForTabModeSwitch} + m</span> to use
+      the tab key for site navigation.
     </p>
   );
 };

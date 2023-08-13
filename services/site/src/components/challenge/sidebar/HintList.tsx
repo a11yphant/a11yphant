@@ -13,7 +13,10 @@ const HintList: React.FunctionComponent<HintListProps> = ({ tasks }) => {
   if (tasks.length === 1) {
     return (
       <>
-        <div className={clsx("font-bold mb-8 mt-10 inline-block", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(tasks[0].text) }} />
+        <div
+          className={clsx("font-bold mt-4 mb-8 md:mt-10 inline-block", "prose")}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(tasks[0].text) }}
+        />
         <HintBox hints={tasks[0].hints} />
       </>
     );
