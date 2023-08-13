@@ -171,7 +171,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             theme="light"
             options={{
               lineHeight: 24,
-              fontSize: 12,
+              fontSize: 16,
               wordWrap: "on",
               minimap: {
                 enabled: false,
