@@ -101,6 +101,26 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
 
             <Legend className={clsx("2xl:mx-24")} />
+            <p className={clsx("mb-12 text-grey-middle", "2xl:mx-24")}>
+              <span className="sr-only">Disclaimer:</span>
+              <span aria-hidden="true" className="text-xl text-grey-middle">
+                *
+              </span>{" "}
+              Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
+              challenges on our{" "}
+              <InTextLink
+                href="https://twitter.com/a11yphant"
+                opensInNewTab
+                overrideClassName
+                className="text-grey-middle font-sans font-normal border-grey-middle
+        transition-colors duration-300
+        hover:text-primary-grey-middle hover:border-transparent
+        focus-rounded-instead-of-underline"
+              >
+                Twitter account
+              </InTextLink>
+              . <br />
+            </p>
 
             {dataChallengesInProgress?.challenges.length > 0 && (
               <ChallengeList
@@ -118,20 +138,6 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
                 challenges={easyChallenges}
               />
             )}
-
-            <p className={clsx("mb-8 md:mb-0", "2xl:mx-24")}>
-              <span className="sr-only">Disclaimer:</span>
-              <span aria-hidden="true" className="text-xl text-grey">
-                *
-              </span>{" "}
-              Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
-              challenges on our{" "}
-              <InTextLink href="https://twitter.com/a11yphant" opensInNewTab>
-                Twitter account
-              </InTextLink>
-              . <br />
-              Want to help us? Slide into our DMs.
-            </p>
           </section>
         </div>
         <ChallengeModal open={!!router.query.challenge} onClose={onCloseModal} challengeSlug={router.query.challenge as string} />
