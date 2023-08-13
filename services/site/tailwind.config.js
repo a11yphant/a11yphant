@@ -73,6 +73,7 @@ module.exports = {
               color: theme("colors.primary.light"),
               fontFamily: theme("fontFamily.mono").join(" "),
               fontSize: "1em",
+              overflowWrap: "anywhere",
               "&::before": {
                 // cannot overwrite the content without important...
                 content: "none !important",
