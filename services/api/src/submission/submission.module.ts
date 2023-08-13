@@ -3,6 +3,7 @@ import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ChallengeModule } from "@/challenge/challenge.module";
 import { PrismaModule } from "@/prisma/prisma.module";
 
+import { AVAILABLE_AXE_CHECKS, buildCheckProviders } from "./checks/axe-checks";
 import {
   DocumentLanguageIsSpecified,
   DocumentStartsWithHtml5Doctype,
@@ -55,6 +56,7 @@ import { RequirementResultService } from "./services/requirement-result.service"
     ElementNotContainsText,
     ElementNotExists,
     HtmlIsValid,
+    ...buildCheckProviders(AVAILABLE_AXE_CHECKS),
   ],
   exports: [CodeLevelSubmissionService],
 })
