@@ -93,16 +93,18 @@ const Evaluation: React.FunctionComponent = () => {
           <>
             <main className={clsx("h-full", "md:p-4 md:pt-0 md:flex md:flex-col md:justify-between")}>
               {heading}
-              <LoadingScreen className={clsx("hidden", "lg:flex")} />
+              <LoadingScreen className={clsx("flex")} />
             </main>
           </>
         ) : (
           <>
-            <main className={clsx("h-full max-w-screen-3xl mx-auto", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}>
+            <main
+              className={clsx("h-full max-w-screen-3xl mx-auto px-5", "sm:px-8", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}
+            >
               {heading}
               {/* <SmallScreenNotification /> */}
               <EvaluationHeader
-                className={clsx("hidden", "lg:flex")}
+                className={clsx("flex")}
                 challengeName={data.challenge.name}
                 levelIdx={Number(nthLevel)}
                 score={submissionResult.totalScore}
@@ -110,15 +112,14 @@ const Evaluation: React.FunctionComponent = () => {
               />
               <ScrollOverlayWrapper
                 className={clsx(
-                  "h-full max-w-7xl m-auto pt-20 mt-0 mb-4 hidden flex-col items-left w-full box-border overflow-auto overscroll-none",
-                  "lg:flex",
+                  "h-full max-w-7xl m-auto pt-8 lg:pt-20 mt-0 mb-4 flex flex-col items-left w-full box-border overflow-auto overscroll-none",
                 )}
                 classNameBottomOverlay={"w-full h-52 shrink-0 -mt-52"}
                 enableTopOverlay={false}
               >
                 <EvaluationBody requirements={submissionResult.requirements} />
               </ScrollOverlayWrapper>
-              <div className={clsx("absolute bottom-4 right-4 hidden", "lg:block")}>
+              <div className={clsx("mb-8 flex lg:absolute lg:bottom-4 lg:right-4 lg:block")}>
                 <CompleteEvaluationButton status={submissionResult.status} isLastLevel={isLastLevel} />
               </div>
             </main>
