@@ -28,4 +28,7 @@ export class Challenge {
 
   @Field(() => ChallengeDifficulty)
   difficulty: ChallengeDifficulty;
+
+  @Field(() => Boolean)
+  isMobileFriendly: boolean;
 }
