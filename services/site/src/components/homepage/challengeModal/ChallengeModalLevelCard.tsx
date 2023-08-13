@@ -9,6 +9,7 @@ interface ChallengeModalLevelCardProps {
   levelNumber: number;
   status: LevelStatus;
   isFirstUnfinishedLevel: boolean;
+  type: string;
 }
 
 export const ChallengeModalLevelCard = ({
@@ -16,6 +17,7 @@ export const ChallengeModalLevelCard = ({
   levelNumber,
   status,
   isFirstUnfinishedLevel,
+  type,
 }: ChallengeModalLevelCardProps): React.ReactElement => {
   return (
     <Link
@@ -27,7 +29,7 @@ export const ChallengeModalLevelCard = ({
         "border border-solid rounded-lg",
         !isFirstUnfinishedLevel && "border-grey-dark",
         "px-4 py-3",
-        "w-52 h-16",
+        "w-full h-18",
         isFirstUnfinishedLevel && "border-primary bg-primary",
         "relative",
         "hover:bg-primary-dark hover:border-primary-dark",
@@ -40,6 +42,8 @@ export const ChallengeModalLevelCard = ({
           useGrouping: false,
         })}
       </h3>
+
+      <p className="font-normal text-grey-middle mb-0">{type == "QuizLevel" ? "Quiz" : "Coding"}</p>
       {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10 absolute top-4 right-5 text-light")} />}
     </Link>
   );

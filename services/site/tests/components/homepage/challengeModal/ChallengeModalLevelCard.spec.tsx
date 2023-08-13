@@ -14,6 +14,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -27,6 +28,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Finished}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -41,6 +43,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -55,6 +58,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.InProgress}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -69,6 +73,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={true}
+        type={"CodingLevel"}
       />,
     );
 
@@ -82,6 +87,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -95,6 +101,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
