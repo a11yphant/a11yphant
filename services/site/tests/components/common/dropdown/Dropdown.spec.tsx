@@ -1,14 +1,13 @@
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Dropdown from "app/components/common/dropdown/Dropdown";
 import React from "react";
 
-function renderAndOpenDropdown(children: React.ReactNode = <></>): void {
+async function renderAndOpenDropdown(children: React.ReactNode = <></>): Promise<void> {
   render(<Dropdown triggerButton={<Dropdown.TriggerButton>Open</Dropdown.TriggerButton>}>{children}</Dropdown>);
 
-  const triggerButton = screen.getByRole("button", { name: "Open" });
-  act(() => {
-    triggerButton.click();
-  });
+  const button = screen.getByRole("button");
+  await userEvent.click(button);
 }
 
 describe("dropdown", () => {
@@ -19,35 +18,35 @@ describe("dropdown", () => {
   });
 
   it("opens the modal when clicking the trigger button", async () => {
-    renderAndOpenDropdown();
+    await renderAndOpenDropdown();
 
     expect(await screen.findByRole("menu")).toBeInTheDocument();
   });
 
   it("renders the passed content in the dropdown", async () => {
     const content = "Text";
-    renderAndOpenDropdown(<p>{content}</p>);
+    await renderAndOpenDropdown(<p>{content}</p>);
 
     expect(await screen.findByText(content)).toBeInTheDocument();
   });
 
   it("renders the button as a menuitem", async () => {
     const content = "button";
-    renderAndOpenDropdown(<Dropdown.Button>{content}</Dropdown.Button>);
+    await renderAndOpenDropdown(<Dropdown.Button>{content}</Dropdown.Button>);
 
     expect(await screen.findByRole("menuitem", { name: content })).toBeInTheDocument();
   });
 
   it("renders the link as a menuitem", async () => {
     const content = "link";
-    renderAndOpenDropdown(<Dropdown.Link href="/">{content}</Dropdown.Link>);
+    await renderAndOpenDropdown(<Dropdown.Link href="/">{content}</Dropdown.Link>);
 
     expect(await screen.findByRole("menuitem", { name: content })).toBeInTheDocument();
   });
 
   it("renders items that are grouped together", async () => {
     const content = "group";
-    renderAndOpenDropdown(
+    await renderAndOpenDropdown(
       <Dropdown.Group>
         <Dropdown.Button>{content}</Dropdown.Button>
         <Dropdown.Link href="/">{content}</Dropdown.Link>
@@ -59,10 +58,10 @@ describe("dropdown", () => {
 
   it("calls onClick when clicking on a menu item button", async () => {
     const onClick = jest.fn();
-    renderAndOpenDropdown(<Dropdown.Button onClick={onClick}>Button</Dropdown.Button>);
+    await renderAndOpenDropdown(<Dropdown.Button onClick={onClick}>Button</Dropdown.Button>);
 
     const button = await screen.findByRole("menuitem", { name: "Button" });
-    button.click();
+    await userEvent.click(button);
 
     expect(onClick).toHaveBeenCalled();
   });

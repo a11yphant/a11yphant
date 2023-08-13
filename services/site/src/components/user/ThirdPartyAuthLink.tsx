@@ -5,7 +5,7 @@ interface ThirdPartyAuthLinkProps {
   href: string;
 }
 
-const ThirdPartyAuthLink: React.FC<ThirdPartyAuthLinkProps> = ({ href, children }) => (
+const ThirdPartyAuthLink: React.FC<React.PropsWithChildren<ThirdPartyAuthLinkProps>> = ({ href, children }) => (
   <a
     href={href}
     className={clsx(

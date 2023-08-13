@@ -8,7 +8,10 @@ import { ProviderInformation } from "../interfaces/provider-information.interfac
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, "github") {
-  constructor(private readonly configService: ConfigService, private readonly logger: Logger) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly logger: Logger,
+  ) {
     super({
       clientID: configService.get<string>("oauth.github.clientID"),
       clientSecret: configService.get<string>("oauth.github.clientSecret"),

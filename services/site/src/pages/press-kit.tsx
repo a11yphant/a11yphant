@@ -39,8 +39,8 @@ const PressKit: React.FunctionComponent = () => {
           <section className="mb-16">
             <h1 className={clsx("mb-8", "h2", "md:h1")}>Press Kit</h1>
             <p>
-              Here you can find more information about the origin of an motivation behind <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>. We are also providing some pictures and logos for you to use if you want to write about us.
+              Here you can find more information about the origin of and motivation behind <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">a11yphant</span>. We also provide some pictures and logos for you to use if you want to write about us.
             </p>
           </section>
 
@@ -70,7 +70,7 @@ const PressKit: React.FunctionComponent = () => {
             <p>
               The name <span className="sr-only">allyphant</span>
               <span aria-hidden="true">a11yphant</span> is a combination of the numeronym "a11y", which is an abbreviation for "accessibility", and
-              the word "elephant". We have chosen the elephant because we like them, they are very smart animals.{" "}
+              the word "elephant". We chose "elephant" as part of our name because elephants are very smart animals and we like them.{" "}
             </p>
           </section>
 
@@ -249,22 +249,21 @@ const PressKit: React.FunctionComponent = () => {
 
           <section className="mt-24">
             <p className={clsx("text-base", "md:text-xl")}>
-              Want to know more?{" "}
-              <Link href={"mailto:info@a11yphant.com"}>
-                <a
-                  className={clsx(
-                    "text-light font-sans font-normal border-light",
-                    "text-base",
-                    "md:text-xl",
-                    "transition-colors duration-300",
-                    "hover:text-primary-light hover:border-transparent",
-                    "focus-rounded-instead-of-underline",
-                  )}
-                >
-                  Send us an email
-                </a>
-              </Link>{" "}
-              with your question.
+              Want to know more? Send us an email with your question to{" "}
+              <Link
+                href={"mailto:info@a11yphant.com"}
+                className={clsx(
+                  "text-light font-sans font-normal border-light",
+                  "text-base",
+                  "md:text-xl",
+                  "transition-colors duration-300",
+                  "hover:text-primary-light hover:border-transparent",
+                  "focus-rounded-instead-of-underline",
+                )}
+              >
+                info@a11yphant.com
+              </Link>
+              .
             </p>
           </section>
         </div>

@@ -1,20 +1,14 @@
 import { ApolloError } from "@apollo/client";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import { act, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
-import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
-import EvaluationBody from "app/components/evaluation/EvaluationBody";
-import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
-import LoadingScreen from "app/components/evaluation/LoadingScreen";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import { LottieProps } from "app/components/Lottie";
 import { ChallengeBySlugDocument, CurrentUserDocument, ResultStatus } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import Evaluation, { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
-import { mount, ReactWrapper } from "enzyme";
 import { GraphQLError } from "graphql";
 import { GetServerSidePropsContext } from "next";
-import Head from "next/head";
 import router from "next/router";
 import React from "react";
 
@@ -46,8 +40,14 @@ const mockShowFlashMessage = jest.fn();
 jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
   useFlashMessageApi: () => ({
     show: mockShowFlashMessage,
+    hide: jest.fn(),
     portalRootRef: null,
   }),
+}));
+
+jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
+  __esModule: true,
+  default: () => <></>,
 }));
 
 const mockChallengeName = "Mock Challenge Name";
@@ -117,73 +117,57 @@ afterEach(() => {
   jest.resetAllMocks();
 });
 
-const mountEvaluationPage = (): ReactWrapper => {
-  return mount(
+const renderEvaluationPage = (): void => {
+  render(
     <MockedProvider mocks={mocks}>
       <Evaluation />
     </MockedProvider>,
   );
 };
 
-const resolveGraphQLQuery = async (wrapper: ReactWrapper): Promise<void> => {
+const resolveGraphQLQuery = async (): Promise<void> => {
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
-    wrapper.update();
   });
 };
 
 describe("Evaluation", () => {
   describe("page", () => {
     it("renders the loading screen", async () => {
-      const wrapper = mountEvaluationPage();
+      renderEvaluationPage();
 
-      await act(async () => {
-        wrapper.update();
-      });
+      expect(screen.getByText("loading ...")).toBeInTheDocument();
 
-      expect(wrapper.exists(LoadingScreen)).toBeTruthy();
+      // await resolve query to avoid state updates after unmount
+      await resolveGraphQLQuery();
     });
 
     it("renders the head", async () => {
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
+      renderEvaluationPage();
+      await resolveGraphQLQuery();
 
-      expect(wrapper.exists(Head)).toBeTruthy();
-    });
-
-    it("renders all wrapper elements", async () => {
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
-
-      expect(wrapper.exists("main")).toBeTruthy();
+      expect(screen.getByRole("banner")).toBeInTheDocument();
     });
 
     it("renders the `EvaluationHeader`", async () => {
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
+      renderEvaluationPage();
+      await resolveGraphQLQuery();
 
-      expect(wrapper.exists(EvaluationHeader)).toBeTruthy();
-    });
-
-    it("renders the `EvaluationBody`", async () => {
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
-
-      expect(wrapper.exists(EvaluationBody)).toBeTruthy();
+      expect(screen.getByText("Evaluation - Mock Challenge Name - Level 2")).toBeInTheDocument();
     });
 
     it("renders the `CompleteEvaluationButton`", async () => {
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
+      renderEvaluationPage();
+      await resolveGraphQLQuery();
 
-      expect(wrapper.exists(CompleteEvaluationButton)).toBeTruthy();
+      expect(screen.getByRole("button", { name: "Finish Challenge" })).toBeInTheDocument();
     });
 
     it("sets failedLevelsInARow to 0 if status = Success", async () => {
       (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Success, requirements: [], totalScore: 100 });
 
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
+      renderEvaluationPage();
+      await resolveGraphQLQuery();
       await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<ChallengeCompletedFlashMessage />));
     });
 
@@ -191,8 +175,8 @@ describe("Evaluation", () => {
       (useSessionState as jest.Mock).mockReturnValue([0, jest.fn()]);
       (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Success, requirements: [], totalScore: 100 });
 
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
+      renderEvaluationPage();
+      await resolveGraphQLQuery();
 
       expect(useSessionState("")[1]).toHaveBeenCalledWith(0);
     });
@@ -201,8 +185,8 @@ describe("Evaluation", () => {
       (useSessionState as jest.Mock).mockReturnValue([1, jest.fn()]);
       (usePollSubmissionResult as jest.Mock).mockReturnValue({ status: ResultStatus.Fail, requirements: [], totalScore: 100 });
 
-      const wrapper = mountEvaluationPage();
-      await resolveGraphQLQuery(wrapper);
+      renderEvaluationPage();
+      await resolveGraphQLQuery();
 
       expect(useSessionState("")[1]).toHaveBeenCalledWith(expect.any(Function));
     });

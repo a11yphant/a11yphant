@@ -14,7 +14,7 @@ export interface ConfirmationModalProps {
   onClose?: () => void;
 }
 
-export const Modal: React.FunctionComponent<ConfirmationModalProps & RestylableProps> = ({
+export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & RestylableProps>> = ({
   open = false,
   onClose,
   children,

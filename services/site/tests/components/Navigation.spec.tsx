@@ -1,18 +1,12 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { render, screen } from "@testing-library/react";
-import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
-import Button from "app/components/buttons/Button";
-import Dropdown from "app/components/common/dropdown/Dropdown";
+import userEvent from "@testing-library/user-event";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
-import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
-import A11yphantLogo from "app/components/icons/A11yphantLogo";
-import UserAvatar from "app/components/icons/UserAvatar";
 import Navigation, { NavigationProps } from "app/components/Navigation";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 import { useLogoutMutation, User } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
-import { shallow, ShallowWrapper } from "enzyme";
 import React, { PropsWithChildren } from "react";
 
 const mockShow = jest.fn();
@@ -24,7 +18,7 @@ jest.mock("app/generated/graphql", () => ({
 
 jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
   __esModule: true,
-  default: () => <></>,
+  default: () => <div data-testid="breadcrumbs"></div>,
 }));
 
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
@@ -38,27 +32,8 @@ jest.mock("app/hooks/useCurrentUser", () => ({
   useCurrentUser: jest.fn(),
 }));
 
-let navigation;
-
-beforeEach(() => {
-  navigation = <Navigation />;
-});
-
-const shallowRenderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): ShallowWrapper => {
-  return shallow(
-    React.cloneElement(navigation, {
-      ...props,
-    }),
-  );
-};
-
 const renderNavigation = (props?: Partial<PropsWithChildren<NavigationProps>>): void => {
-  render(
-    React.cloneElement(navigation, {
-      ...props,
-    }),
-    { wrapper: FlashMessageContextProvider },
-  );
+  render(<Navigation {...props} />, { wrapper: FlashMessageContextProvider });
 };
 
 const mockRegisteredUser = (): void => {
@@ -89,61 +64,53 @@ beforeEach(() => {
 });
 
 describe("Navigation", () => {
-  it("renders the header, logo and breadcrumbs", () => {
+  it("renders the header", () => {
     mockRegisteredUser();
-    const view = shallowRenderNavigation();
+    renderNavigation();
 
-    expect(view.exists("header")).toBeTruthy();
-    expect(view.exists(A11yphantLogo)).toBeTruthy();
+    expect(screen.getByRole("banner")).toBeInTheDocument();
   });
 
   it("renders the user dropdown if the user is registered", () => {
     mockRegisteredUser();
-    const view = shallowRenderNavigation();
+    renderNavigation();
 
-    expect(view.exists(Dropdown)).toBeTruthy();
+    expect(screen.getByRole("button", { name: "User Menu" })).toBeInTheDocument();
   });
 
   it("renders no avatar if the user is not registered", () => {
     mockNonRegisteredUser();
-    const view = shallowRenderNavigation();
+    renderNavigation();
 
-    expect(view.exists(UserAvatar)).toBeFalsy();
+    expect(screen.queryByRole("button", { name: "User Menu" })).not.toBeInTheDocument();
   });
 
   it("renders the breadcrumbs if they are enabled", () => {
     mockRegisteredUser();
-    const view = shallowRenderNavigation({ displayBreadcrumbs: true });
+    renderNavigation({ displayBreadcrumbs: true });
 
-    expect(view.exists(Breadcrumbs)).toBeTruthy();
+    expect(screen.getByTestId("breadcrumbs")).toBeInTheDocument();
   });
 
   it("renders no breadcrumbs if they are disabled", () => {
     mockRegisteredUser();
-    const view = shallowRenderNavigation({ displayBreadcrumbs: false });
+    renderNavigation({ displayBreadcrumbs: false });
 
-    expect(view.exists(Breadcrumbs)).toBeFalsy();
+    expect(screen.queryByTestId("breadcrumbs")).not.toBeInTheDocument();
   });
 
   it("renders the children", () => {
     mockRegisteredUser();
-    const view = shallowRenderNavigation({ children: <p className="test-children">children</p> });
+    renderNavigation({ children: <p data-testid="test-children">children</p> });
 
-    expect(view.exists(".test-children")).toBeTruthy();
+    expect(screen.getByTestId("test-children")).toBeInTheDocument();
   });
 
   it("renders login and signup buttons if the user is not registered", () => {
     mockNonRegisteredUser();
-    const view = shallowRenderNavigation();
+    renderNavigation();
 
-    expect(view.find(Button).length).toBe(2);
-  });
-
-  it("renders a FlashMessagePortalRoot", () => {
-    mockRegisteredUser();
-    const view = shallowRenderNavigation();
-
-    expect(view.exists(FlashMessagePortalRoot)).toBeTruthy();
+    expect(screen.getAllByRole("button")).toHaveLength(2);
   });
 
   it("calls userAccountModalApi.show with the mode 'signup' after a click on `sign up`", async () => {
@@ -151,7 +118,8 @@ describe("Navigation", () => {
     const userAccountModalApi = useUserAccountModalApi();
     renderNavigation();
 
-    screen.getByRole("button", { name: "Sign Up" }).click();
+    const login = screen.getByRole("button", { name: "Sign Up" });
+    await userEvent.click(login);
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("signup");
@@ -162,7 +130,8 @@ describe("Navigation", () => {
     const userAccountModalApi = useUserAccountModalApi();
     renderNavigation();
 
-    screen.getByRole("button", { name: "Login" }).click();
+    const login = screen.getByRole("button", { name: "Login" });
+    await userEvent.click(login);
 
     expect(userAccountModalApi.show).toHaveBeenCalledTimes(1);
     expect(userAccountModalApi.show).toHaveBeenCalledWith("login");
@@ -173,9 +142,11 @@ describe("Navigation", () => {
     const logoutMutation = useLogoutMutation();
     renderNavigation();
 
-    screen.getByRole("button", { name: "User Menu" }).click();
+    const login = screen.getByRole("button", { name: "User Menu" });
+    await userEvent.click(login);
 
-    (await screen.findByRole("menuitem", { name: "Logout" })).click();
+    const logout = screen.getByRole("menuitem", { name: "Logout" });
+    await userEvent.click(logout);
 
     expect(logoutMutation[0]).toHaveBeenCalledTimes(1);
   });

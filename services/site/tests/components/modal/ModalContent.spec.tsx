@@ -1,16 +1,23 @@
+import { render, screen } from "@testing-library/react";
+import { Modal } from "app/components/modal/Modal";
 import { ModalContent } from "app/components/modal/ModalContent";
-import { shallow } from "enzyme";
 import React from "react";
+
+const WrapperModal: React.FC<React.PropsWithChildren> = ({ children }) => (
+  <Modal open={true} onClose={jest.fn()}>
+    {children}
+  </Modal>
+);
 
 describe("ModalContent", () => {
   it("renders the children", () => {
-    const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
-    const wrapper = shallow(
+    render(
       <ModalContent>
-        <ChildComponent />
+        <p>Child</p>
       </ModalContent>,
+      { wrapper: WrapperModal },
     );
 
-    expect(wrapper.exists(ChildComponent)).toBeTruthy();
+    expect(screen.getByText("Child")).toBeInTheDocument();
   });
 });

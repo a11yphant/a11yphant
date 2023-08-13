@@ -1,13 +1,20 @@
 import Editor from "@monaco-editor/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import WrappedEditor, { EditorConfig } from "app/components/challenge/editor/WrappedEditor";
 import { EditorLanguage } from "app/components/challenge/Editors";
-import { shallow } from "enzyme";
 import React from "react";
 
 jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
     return {};
   },
+}));
+
+jest.mock("@monaco-editor/react", () => ({
+  __esModule: true,
+  default: jest.fn(),
+  useMonaco: jest.fn(),
 }));
 
 const editorConfig: EditorConfig = {
@@ -23,11 +30,17 @@ beforeEach(() => {
     value: undefined,
     writable: true,
   });
+
+  (Editor as unknown as jest.Mock).mockImplementation(() => <></>);
+});
+
+afterEach(() => {
+  jest.resetAllMocks();
 });
 
 describe("WrappedEditor", () => {
   it("renders heading", () => {
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -36,11 +49,11 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("h3").text()).toBe(editorConfig.heading);
+    expect(screen.getByRole("heading", { name: editorConfig.heading })).toBeInTheDocument();
   });
 
-  it("renders editor", () => {
-    const wrapper = shallow(
+  it("renders editor", async () => {
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -49,32 +62,42 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.exists(Editor));
-
-    expect(wrapper.find(Editor).props().language).toBe(editorConfig.language);
-    expect(wrapper.find(Editor).props().value).toBe(editorConfig.code);
+    expect(Editor).toHaveBeenCalledWith(
+      expect.objectContaining({
+        language: editorConfig.language,
+        value: editorConfig.code,
+      }),
+      expect.anything(),
+    );
   });
 
-  it.todo("reset button opens modal");
-  // it("reset button opens modal", () => {
-  //   const wrapper = mount(
-  //     <WrappedEditor
-  //       onReset={() => {
-  //         return;
-  //       }}
-  //       config={editorConfig}
-  //     />,
-  //   );
+  it("reset button opens modal", async () => {
+    render(
+      <WrappedEditor
+        onReset={() => {
+          return;
+        }}
+        config={editorConfig}
+      />,
+    );
 
-  //   expect(wrapper.find(Reset).closest("button")).toBeTruthy();
-  //   wrapper.find(Reset).closest("button").simulate("click");
-  //   expect(wrapper.find(ConfirmationModal).props().open).toBeTruthy();
-  // });
+    await userEvent.click(screen.getByRole("button", { name: "Reset" }));
 
-  it.todo("reset is called after button click");
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("reset is called after button click", async () => {
+    const reset = jest.fn();
+    render(<WrappedEditor onReset={reset} config={editorConfig} />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Reset" }));
+    await userEvent.click(screen.getByRole("button", { name: "Reset HTML" }));
+
+    expect(reset).toHaveBeenCalled();
+  });
 
   it("uses the windows keys as a fallback for the tab management hint", async () => {
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -83,7 +106,7 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("span.text-grey-middle").text()).toContain("ctrl + m");
+    expect(screen.getByText("ctrl + m")).toBeInTheDocument();
   });
 
   it("shows the correct tab management keys for mac os", async () => {
@@ -92,7 +115,7 @@ describe("WrappedEditor", () => {
       writable: true,
     });
 
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -101,7 +124,7 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("span.text-grey-middle").text()).toContain("ctrl + shift + m");
+    expect(screen.getByText("ctrl + shift + m")).toBeInTheDocument();
   });
 
   it("shows the correct tab management keys for platforms other than mac os", async () => {
@@ -110,7 +133,7 @@ describe("WrappedEditor", () => {
       writable: true,
     });
 
-    const wrapper = shallow(
+    render(
       <WrappedEditor
         onReset={() => {
           return;
@@ -119,6 +142,6 @@ describe("WrappedEditor", () => {
       />,
     );
 
-    expect(wrapper.find("span.text-grey-middle").text()).toContain("ctrl + m");
+    expect(screen.getByText("ctrl + m")).toBeInTheDocument();
   });
 });

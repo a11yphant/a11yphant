@@ -1,16 +1,15 @@
+import { render, screen } from "@testing-library/react";
 import { ModalActions } from "app/components/modal/ModalActions";
-import { shallow } from "enzyme";
 import React from "react";
 
 describe("ModalActions", () => {
   it("renders the children", () => {
-    const ChildComponent: React.FunctionComponent = () => <>Child Component</>;
-    const wrapper = shallow(
+    render(
       <ModalActions>
-        <ChildComponent />
+        <p>Child</p>
       </ModalActions>,
     );
 
-    expect(wrapper.exists(ChildComponent)).toBeTruthy();
+    expect(screen.getByText("Child")).toBeInTheDocument();
   });
 });

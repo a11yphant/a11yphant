@@ -4,14 +4,11 @@ import { Hint } from "app/generated/graphql";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
 import React, { useState } from "react";
-import { animated, useSpring } from "react-spring";
 import sanitizeHtml from "sanitize-html";
 
 interface HintBoxProps {
   hints: Hint[];
 }
-
-const AnimatedChevron = animated(Chevron);
 
 const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
   const [usedHints, setUsedHints] = useState(0);
@@ -20,15 +17,6 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
   const totalHints = hints.length;
 
   const prefersReducedMotion = usePrefersReducedMotion();
-
-  // any is necessary here because the types of react-spring are somehow messed up
-  const { transform }: any = useSpring({
-    transform: showHint && !prefersReducedMotion ? "rotate(0deg)" : "rotate(180deg)",
-    config: {
-      tension: 0,
-      delay: 0,
-    },
-  });
 
   return (
     <div className={clsx("flex flex-col", "container-ultra-dark card-smaller")}>
@@ -48,7 +36,13 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
           aria-expanded={usedHints > 0}
         >
           {showHint ? "Hint" : "Stuck? Click to reveal a hint"}
-          <AnimatedChevron style={{ transform: transform }} className={clsx("text-grey-middle ml-4", "group-hover:text-primary-light")} />
+          <Chevron
+            className={clsx(
+              "text-grey-middle ml-4 transition-transform ease-in-out",
+              "group-hover:text-primary-light",
+              showHint && !prefersReducedMotion ? "rotate-0" : "rotate-180",
+            )}
+          />
         </Button>
       </h4>
       {showHint && (

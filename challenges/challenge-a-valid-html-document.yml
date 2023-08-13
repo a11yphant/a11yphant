@@ -93,12 +93,12 @@ challenge:
         #   description: The language attribute must contain a valid language code. If the language code is not valid, screen readers cannot use this information.
         #   order: 2
         - id: b6d5f0d6-d171-4f8b-a223-6af981822956
-          key: element-exists
+          key: document-language-is-specified
           title: The language of the page is specified
           description: The language of the page needs to be specified on the <code>&lt;html&gt;</code> element. For this page, an english language code (e.g. <code>en</code> or <code>en-us</code>) is suitable. This allows screen readers to properly pronounce the content of the page.
           order: 3
           options:
-            selector: 'html[lang="en"],html[lang="en-au"],html[lang="en-bz"],html[lang="en-ca"],html[lang="en-ie"],html[lang="en-jm"],html[lang="en-nz"],html[lang="en-za"],html[lang="en-tt"],html[lang="en-gb"],html[lang="en-us"]'
+            languages: en,en-au,en-bz,en-ca,en-ie,en-jm,en-nz,en-za,en-tt,en-gb,en-us
 
     - id: 012d0f47-d66e-43d5-802d-f8683e43804f
       order: 4

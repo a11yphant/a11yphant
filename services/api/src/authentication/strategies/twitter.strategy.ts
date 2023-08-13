@@ -9,7 +9,11 @@ import { StoreService } from "../store.service";
 
 @Injectable()
 export class TwitterStrategy extends PassportStrategy(Strategy, "twitter") {
-  constructor(private readonly configService: ConfigService, private readonly logger: Logger, private readonly store: StoreService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly logger: Logger,
+    private readonly store: StoreService,
+  ) {
     super({
       consumerKey: configService.get<string>("oauth.twitter.consumerKey"),
       consumerSecret: configService.get<string>("oauth.twitter.consumerSecret"),

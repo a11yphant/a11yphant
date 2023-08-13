@@ -1,15 +1,11 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
-import LoadingButton from "app/components/buttons/LoadingButton";
-import Editors from "app/components/challenge/Editors";
+import { render, RenderResult, screen } from "@testing-library/react";
 import CodeLevel, { CodeLevelProps } from "app/components/challenge/level/CodeLevel";
-import Preview from "app/components/challenge/Preview";
-import Sidebar from "app/components/challenge/Sidebar";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, LevelByChallengeSlugDocument } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
-import { mount, ReactWrapper } from "enzyme";
 import router from "next/router";
 import React from "react";
 
@@ -26,10 +22,7 @@ jest.mock("app/hooks/sessionState/useSessionState", () => ({
 }));
 
 jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
-  useFlashMessageApi: jest.fn().mockImplementation(() => ({
-    show: jest.fn(),
-    hide: jest.fn(),
-  })),
+  useFlashMessageApi: jest.fn(),
 }));
 
 const mockChallengeSlug = "mock-slug";
@@ -39,6 +32,7 @@ const mockOnAutoSaveLoadingChange = jest.fn();
 const mockLevel: CodeLevelDetailsFragment = {
   id: "1",
   instructions: "This is a instruction.",
+  hasHtmlEditor: true,
   tasks: [
     {
       id: "11",
@@ -79,10 +73,10 @@ interface MountCodeLevelParams {
   mockedResponses?: MockedResponse[];
   props?: Partial<CodeLevelProps>;
 }
-const mountCodeLevel = (options?: MountCodeLevelParams): ReactWrapper => {
+const mountCodeLevel = (options?: MountCodeLevelParams): RenderResult => {
   const mockedResponses = options?.mockedResponses ?? mocks;
 
-  return mount(
+  return render(
     <MockedProvider mocks={mockedResponses}>
       <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} {...options?.props} />
     </MockedProvider>,
@@ -95,40 +89,38 @@ describe("Code Level", () => {
     router.back = jest.fn();
     jest.restoreAllMocks();
     (useSessionState as jest.Mock).mockImplementation(() => [1, jest.fn()]);
+    (useFlashMessageApi as jest.Mock).mockImplementation(() => ({
+      show: jest.fn(),
+      hide: jest.fn(),
+    }));
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it("renders `Sidebar` component", () => {
-    const view = mountCodeLevel();
+  it("renders the sidebar with instructions", () => {
+    mountCodeLevel();
 
-    expect(view.exists(Sidebar)).toBeTruthy();
+    expect(screen.getByText(mockLevel.instructions)).toBeInTheDocument();
   });
 
   it("renders `Editors` component", () => {
-    const view = mountCodeLevel();
+    mountCodeLevel();
 
-    expect(view.exists(Editors)).toBeTruthy();
+    expect(screen.getByText("The editor is loading...")).toBeInTheDocument();
   });
 
   it("renders `Preview` component", () => {
-    const view = mountCodeLevel();
+    mountCodeLevel();
 
-    expect(view.exists(Preview)).toBeTruthy();
-  });
-
-  it("renders submit button with loading animation", () => {
-    const view = mountCodeLevel();
-
-    expect(view.exists(LoadingButton)).toBeTruthy();
+    expect(screen.getByText("Preview")).toBeInTheDocument();
   });
 
   it("disables the submit button if the submission is not yet available", () => {
-    const view = mountCodeLevel();
+    mountCodeLevel();
 
-    expect(view.find(LoadingButton).props()).toHaveProperty("disabled", true);
+    expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled();
   });
 
   it("renders FlashMessage if the user failed two times in a row", () => {
@@ -153,9 +145,10 @@ describe("Code Level", () => {
       hide: jest.fn(),
     });
 
-    const view = mountCodeLevel();
+    const { unmount } = mountCodeLevel();
 
-    view.unmount();
+    unmount();
+
     expect(useFlashMessageApi().hide).toHaveBeenCalledTimes(1);
   });
 });

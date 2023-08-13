@@ -17,7 +17,7 @@ export interface NavigationProps {
   displaySave?: boolean;
 }
 
-const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrumbs = true, children }) => {
+const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displayBreadcrumbs = true, children }) => {
   const { currentUser } = useCurrentUser();
   const [logout] = useLogoutMutation({
     refetchQueries: [{ query: CurrentUserDocument }],
@@ -27,18 +27,17 @@ const Navigation: React.FunctionComponent<NavigationProps> = ({ displayBreadcrum
   return (
     <>
       <header className={clsx("pt-8 pb-6 px-8 grid grid-cols-2 relative z-40 bg-background", "sm:px-11", "lg:grid-cols-3")}>
-        <Link href="/">
-          <a
-            className={clsx(
-              "block text-light border-none rounded col-span-1 max-w-max py-1 px-2 -ml-2",
-              "transition ease-in-out duration-300",
-              "motion-safe:hover:scale-110 motion-reduce:border-solid",
-              "focus-outline-offset",
-            )}
-          >
-            <A11yphantLogo className="w-36" />
-            <span className="sr-only">Allyphant Homepage</span>
-          </a>
+        <Link
+          href="/"
+          className={clsx(
+            "block text-light border-none rounded col-span-1 max-w-max py-1 px-2 -ml-2",
+            "transition ease-in-out duration-300",
+            "motion-safe:hover:scale-110 motion-reduce:border-solid",
+            "focus-outline-offset",
+          )}
+        >
+          <A11yphantLogo className="w-36" />
+          <span className="sr-only">Allyphant Homepage</span>
         </Link>
         {displayBreadcrumbs && (
           <div className={clsx("ml-[50%] -translate-x-1/2 col-span-1 w-fit-content hidden self-center", "lg:block")}>

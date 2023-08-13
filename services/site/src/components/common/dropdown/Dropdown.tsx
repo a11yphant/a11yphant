@@ -3,17 +3,15 @@ import clsx from "clsx";
 import NextLink, { LinkProps } from "next/link";
 import React from "react";
 
-const WrappedNextLink: React.FC<LinkProps & { className: string }> = React.forwardRef<HTMLAnchorElement, LinkProps & { className: string }>(
-  ({ href, children, ...rest }, ref) => (
-    <NextLink href={href}>
-      <a ref={ref} {...rest}>
-        {children}
-      </a>
-    </NextLink>
-  ),
-);
+type Props = React.PropsWithChildren<LinkProps & { className: string }>;
 
-type LinkComponent = React.FC<LinkProps>;
+const WrappedNextLink: React.FC<Props> = React.forwardRef<HTMLAnchorElement, Props>(({ href, children, ...rest }, ref) => (
+  <NextLink href={href} ref={ref} {...rest}>
+    {children}
+  </NextLink>
+));
+
+type LinkComponent = React.FC<React.PropsWithChildren<LinkProps>>;
 const Link: LinkComponent = ({ children, ...props }) => (
   <Menu.Item>
     {({ active }) => (
@@ -31,14 +29,14 @@ const Link: LinkComponent = ({ children, ...props }) => (
   </Menu.Item>
 );
 
-type GroupComponent = React.FC;
+type GroupComponent = React.FC<React.PropsWithChildren>;
 export const Group: GroupComponent = ({ children }) => <div className="my-3 mx-10">{children}</div>;
 
 interface ButtonProps {
   onClick?: () => void;
 }
 
-type ButtonComponent = React.FC<ButtonProps>;
+type ButtonComponent = React.FC<React.PropsWithChildren<ButtonProps>>;
 const Button: ButtonComponent = ({ children, ...props }) => (
   <Menu.Item>
     {({ active }) => (
@@ -60,14 +58,14 @@ interface TriggerButtonProps {
   className?: string;
 }
 
-type TriggerButtonComponent = React.FC<TriggerButtonProps>;
+type TriggerButtonComponent = React.FC<React.PropsWithChildren<TriggerButtonProps>>;
 const TriggerButton: TriggerButtonComponent = ({ children, ...props }) => <Menu.Button {...props}>{children}</Menu.Button>;
 
 interface DropdownProps {
   triggerButton: React.ReactElement;
 }
 
-type DropdownComponent = React.FC<DropdownProps> & {
+type DropdownComponent = React.FC<React.PropsWithChildren<DropdownProps>> & {
   Link: LinkComponent;
   Button: ButtonComponent;
   TriggerButton: TriggerButtonComponent;

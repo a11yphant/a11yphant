@@ -70,11 +70,15 @@ const About: React.FunctionComponent = () => {
                 src={a11yphantStatic}
                 quality={80}
                 placeholder="blur"
-                sizes="80ch"
                 priority
+                sizes="80ch"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
               />
             ) : (
-              <video autoPlay muted loop controls>
+              <video autoPlay muted loop playsInline controls>
                 <source src="/videos/a11yphant-showcase.mp4" />
                 <p>
                   Your browser doesn't support HTML video. Here is a <a href="/videos/a11yphant-showcase.mp4">link to the video</a> instead.
@@ -144,12 +148,38 @@ const About: React.FunctionComponent = () => {
             <p>
               As we hope to make the world more inclusive, we continue developing <span className="sr-only">allyphant</span>
               <span aria-hidden="true">a11yphant</span> as an Open Source project. So, if you find an accessibility issue or want to contribute or
-              support us in any other way, please <InTextLink href="mailto:info@a11yphant.com">let us know</InTextLink>.
+              support us in any other way, please let us know by writing to{" "}
+              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>.
             </p>
           </section>
 
           <section className="mt-16">
             <h2 className={clsx("mb-8", "h4", "md:h3")}>What others say about us:</h2>
+
+            <h3 className={clsx("h5 mt-8", "md:h4")}>Awards</h3>
+            <ul className="mt-4 ml-6 list-disc">
+              <li>
+                <p>
+                  <InTextLink href="https://www.adc.de/wettbewerb/talent/" opensInNewTab>
+                    <span className="sr-only">One time</span>
+                    <span aria-hidden>1x </span>
+                    Distinction in "Concept and Design of Digital Services/Products"
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Art Directors Club (ADC) at the ADC Talent Award 2023
+                </p>
+              </li>
+              <li>
+                <p>
+                  <InTextLink href="https://creativclub.at/news/cca-venus-2023-shortlist/" opensInNewTab>
+                    <span className="sr-only">One time</span>
+                    <span aria-hidden>1x </span>
+                    Shortlist in "Student of the Year"<span className="sr-only">(opens in a new tab)</span>
+                  </InTextLink>{" "}
+                  by Creative Club Austria (CCA) at the CCA Venus 2023
+                </p>
+              </li>
+            </ul>
 
             <h3 className={clsx("h5 mt-8", "md:h4")}>Articles</h3>
             <ul className="mt-4 ml-6 list-disc">

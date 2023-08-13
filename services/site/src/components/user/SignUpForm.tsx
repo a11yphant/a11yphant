@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
-import { CurrentUserDocument, useRegisterMutation } from "app/generated/graphql";
+import { CurrentUserDocument, RegisterErrorCodes, useRegisterMutation } from "app/generated/graphql";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -39,18 +39,24 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
   const [register, { loading }] = useRegisterMutation({
     context: LocalErrorScopeApolloContext,
     refetchQueries: [{ query: CurrentUserDocument }],
-    onError: (error) => {
-      if (error.graphQLErrors?.[0]?.extensions.code === "INPUT_ERROR") {
-        setError("email", { message: "This email is already taken" });
-        return;
-      }
+    onError: () => {
       setError("password", { message: "An unknown error occurred" });
     },
   });
 
   const submitLogin = async ({ name, email, password }): Promise<void> => {
-    const { errors } = await register({ variables: { name, email, password } });
+    const { errors, data } = await register({ variables: { name, email, password } });
     if (errors) {
+      return;
+    }
+
+    if ("errorCode" in data.register) {
+      if (data.register.errorCode === RegisterErrorCodes.EmailInUse) {
+        setError("email", { message: "This email is already taken" });
+        return;
+      }
+
+      setError("password", { message: "We hit an error while processing your signup, please refresh the page and try again" });
       return;
     }
 

@@ -1,5 +1,8 @@
+/* eslint-disable testing-library/no-node-access, testing-library/no-container */
+
 import "@testing-library/jest-dom/extend-expect";
 
+import { render } from "@testing-library/react";
 import {
   DifficultyEasy,
   DifficultyHard,
@@ -7,38 +10,40 @@ import {
   getDifficultyIconByChallengeDifficulty,
 } from "app/components/homepage/difficulties/Difficulties";
 import { ChallengeDifficulty } from "app/generated/graphql";
-import { shallow } from "enzyme";
 import React from "react";
 
 describe("Difficulties", () => {
   it("renders the difficulty `Easy` correctly", () => {
-    const wrapper = shallow(<DifficultyEasy />);
+    const { container } = render(<DifficultyEasy />);
 
-    expect(wrapper.find("span").length).toBe(3);
+    const spans = container.querySelectorAll("span");
+    expect(spans).toHaveLength(3);
 
-    expect(wrapper.find(".bg-grey").length).toBe(1);
-    expect(wrapper.find("span").first().hasClass("bg-grey")).toBeTruthy();
+    expect(container.querySelectorAll(".bg-grey")).toHaveLength(1);
+    expect(spans[0].classList).toContain("bg-grey");
   });
 
   it("renders the difficulty `Medium` correctly", () => {
-    const wrapper = shallow(<DifficultyMedium />);
+    const { container } = render(<DifficultyMedium />);
 
-    expect(wrapper.find("span").length).toBe(3);
+    const spans = container.querySelectorAll("span");
+    expect(spans).toHaveLength(3);
 
-    expect(wrapper.find(".bg-grey").length).toBe(2);
-    expect(wrapper.find("span").first().hasClass("bg-grey")).toBeTruthy();
-    expect(wrapper.find("span").at(1).hasClass("bg-grey")).toBeTruthy();
+    expect(container.querySelectorAll(".bg-grey")).toHaveLength(2);
+    expect(spans[0].classList).toContain("bg-grey");
+    expect(spans[1].classList).toContain("bg-grey");
   });
 
   it("renders the difficulty `Hard` correctly", () => {
-    const wrapper = shallow(<DifficultyHard />);
+    const { container } = render(<DifficultyHard />);
 
-    expect(wrapper.find("span").length).toBe(3);
+    const spans = container.querySelectorAll("span");
+    expect(spans).toHaveLength(3);
 
-    expect(wrapper.find(".bg-grey").length).toBe(3);
-    expect(wrapper.find("span").first().hasClass("bg-grey")).toBeTruthy();
-    expect(wrapper.find("span").at(1).hasClass("bg-grey")).toBeTruthy();
-    expect(wrapper.find("span").at(2).hasClass("bg-grey")).toBeTruthy();
+    expect(container.querySelectorAll(".bg-grey")).toHaveLength(3);
+    expect(spans[0].classList).toContain("bg-grey");
+    expect(spans[1].classList).toContain("bg-grey");
+    expect(spans[2].classList).toContain("bg-grey");
   });
 });
 

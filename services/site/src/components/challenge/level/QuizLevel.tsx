@@ -21,7 +21,7 @@ interface QuizLevelProps {
 
 const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question, answers, isLastLevel }) => {
   const [chosenId, setChosenId] = React.useState<string>(null);
-  const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>(null);
+  const [quizResult, setQuizResult] = React.useState<{ levelId: string; id: string; status: ResultStatus }>(null);
   const flashMessageApi = useFlashMessageApi();
 
   const [submitQuizLevelAnswerMutation, { loading }] = useSubmitQuizLevelAnswerMutation();
@@ -29,7 +29,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   const submitLevel = async (): Promise<void> => {
     const { data } = await submitQuizLevelAnswerMutation({ variables: { input: { levelId: levelId, answers: [chosenId] } } });
 
-    setQuizResult(data.submitQuizLevelAnswer.result);
+    setQuizResult({ levelId, ...data.submitQuizLevelAnswer.result });
   };
 
   const reset = (): void => {
@@ -42,7 +42,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   }, [levelId]);
 
   React.useEffect(() => {
-    if (isLastLevel && quizResult?.status === ResultStatus.Success) {
+    if (isLastLevel && quizResult?.levelId === levelId && quizResult?.status === ResultStatus.Success) {
       flashMessageApi.show(<ChallengeCompletedFlashMessage />);
     }
   }, [quizResult?.status, isLastLevel]);
@@ -56,7 +56,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
             className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
-          <div className={clsx("col-span-3 mb-8 p-1 overflow-y-auto")}>
+          <div className={clsx("col-span-3 mb-8 p-1 overflow-y-auto")} role="status" aria-live="assertive">
             {quizResult === null && (
               <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
             )}
@@ -98,18 +98,17 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
         </div>
         <div className={clsx("flex justify-end mr-12 mb-12")}>
           {quizResult === null ? (
-            <LoadingButton
-              primary
-              onClick={submitLevel}
-              loading={loading}
-              submitButton
-              srTextLoading="The submission is being processed."
-              disabled={chosenId === null}
-            >
+            <LoadingButton primary onClick={submitLevel} loading={loading} submitButton disabled={chosenId === null}>
               Submit
             </LoadingButton>
           ) : (
-            <CompleteEvaluationButton status={quizResult.status} isLastLevel={isLastLevel} onRetry={reset} />
+            <CompleteEvaluationButton
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
+              status={quizResult.status}
+              isLastLevel={isLastLevel}
+              onRetry={reset}
+            />
           )}
         </div>
       </section>

@@ -20,7 +20,7 @@ const FlashMessageContext = React.createContext<FlashMessageApi>({
   portalRootRef: null,
 });
 
-export const FlashMessageContextProvider: React.FunctionComponent = ({ children }) => {
+export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isShowing, setIsShowing] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState<React.ReactNode>();
   const [props, setProps] = React.useState<UserDefinedFlashMessageProps>({});

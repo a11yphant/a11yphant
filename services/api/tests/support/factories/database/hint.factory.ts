@@ -7,6 +7,6 @@ import { HintData } from "./types";
 export function define(factory: IFactoryStatic): void {
   factory
     .define<HintData>(HINT)
-    .attr("id", () => faker.datatype.uuid())
+    .attr("id", () => faker.string.uuid())
     .attr("text", () => faker.lorem.paragraph());
 }

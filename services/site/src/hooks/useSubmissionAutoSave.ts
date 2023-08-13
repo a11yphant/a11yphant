@@ -37,6 +37,10 @@ export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
   }, [createSubmissionLoading, updateSubmitMutationLoading]);
 
   const updateSubmission = async (): Promise<void> => {
+    if (!levelId) {
+      return;
+    }
+
     if (!submissionId && !createSubmissionLoading) {
       const { data } = await createSubmissionMutation({
         variables: {
@@ -68,7 +72,7 @@ export function useSubmissionAutoSave(): SubmissionAutoSaveApi {
     debounceOneSecond(() => {
       updateSubmission();
     });
-  }, [submissionCode]);
+  }, [submissionCode, levelId, submissionId]);
 
   return {
     setLevelId,

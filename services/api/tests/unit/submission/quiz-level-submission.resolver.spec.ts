@@ -12,10 +12,10 @@ describe("quiz level submission resolver", () => {
 
     const result = await resolver.submitQuizLevelAnswer(
       {
-        levelId: faker.datatype.uuid(),
-        answers: [faker.datatype.uuid(), faker.datatype.uuid()],
+        levelId: faker.string.uuid(),
+        answers: [faker.string.uuid(), faker.string.uuid()],
       },
-      { userId: faker.datatype.uuid() },
+      { userId: faker.string.uuid() },
     );
 
     expect(result).toBeTruthy();
@@ -34,10 +34,10 @@ describe("quiz level submission resolver", () => {
     expect(() =>
       resolver.submitQuizLevelAnswer(
         {
-          levelId: faker.datatype.uuid(),
-          answers: [faker.datatype.uuid(), faker.datatype.uuid()],
+          levelId: faker.string.uuid(),
+          answers: [faker.string.uuid(), faker.string.uuid()],
         },
-        { userId: faker.datatype.uuid() },
+        { userId: faker.string.uuid() },
       ),
     ).rejects.toThrowError(GraphQLError);
   });

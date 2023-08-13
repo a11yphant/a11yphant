@@ -31,7 +31,7 @@ describe("quiz level database factory", () => {
   });
 
   it("does not create a challenge when a challenge id is passed", () => {
-    const level = Factory.build<QuizLevelData>(QUIZ_LEVEL, { challengeId: faker.datatype.uuid() });
+    const level = Factory.build<QuizLevelData>(QUIZ_LEVEL, { challengeId: faker.string.uuid() });
 
     expect(level.challenge).toBeUndefined();
   });

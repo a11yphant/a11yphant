@@ -24,6 +24,6 @@ describe("rule service", () => {
 
     const ruleService = new RuleService(prisma);
 
-    expect(await ruleService.findOneForRequirement(faker.datatype.uuid())).toBeNull();
+    expect(await ruleService.findOneForRequirement(faker.string.uuid())).toBeNull();
   });
 });
