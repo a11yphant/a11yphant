@@ -21,7 +21,7 @@ interface QuizLevelProps {
 
 const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question, answers, isLastLevel }) => {
   const [chosenId, setChosenId] = React.useState<string>(null);
-  const [quizResult, setQuizResult] = React.useState<{ id: string; status: ResultStatus }>(null);
+  const [quizResult, setQuizResult] = React.useState<{ levelId: string; id: string; status: ResultStatus }>(null);
   const flashMessageApi = useFlashMessageApi();
 
   const [submitQuizLevelAnswerMutation, { loading }] = useSubmitQuizLevelAnswerMutation();
@@ -29,7 +29,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   const submitLevel = async (): Promise<void> => {
     const { data } = await submitQuizLevelAnswerMutation({ variables: { input: { levelId: levelId, answers: [chosenId] } } });
 
-    setQuizResult(data.submitQuizLevelAnswer.result);
+    setQuizResult({ levelId, ...data.submitQuizLevelAnswer.result });
   };
 
   const reset = (): void => {
@@ -42,7 +42,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
   }, [levelId]);
 
   React.useEffect(() => {
-    if (isLastLevel && quizResult?.status === ResultStatus.Success) {
+    if (isLastLevel && quizResult?.levelId === levelId && quizResult?.status === ResultStatus.Success) {
       flashMessageApi.show(<ChallengeCompletedFlashMessage />);
     }
   }, [quizResult?.status, isLastLevel]);
