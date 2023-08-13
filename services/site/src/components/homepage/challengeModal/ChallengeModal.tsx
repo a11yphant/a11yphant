@@ -111,7 +111,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                 );
               }}
             >
-              Start Coding
+              Start Level
             </Button>
           </ModalActions>
         </>
