@@ -38,7 +38,7 @@ describe("Card", () => {
   });
 
   it("renders the mobile friendly indicator", () => {
-    renderCard({ mobileFriendly: true });
+    renderCard({ isMobileFriendly: true });
 
     expect(screen.getByText("Mobile friendly", { selector: "span" })).toBeInTheDocument();
   });

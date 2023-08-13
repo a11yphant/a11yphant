@@ -13,7 +13,7 @@ export interface CardProps {
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
-  mobileFriendly?: boolean;
+  isMobileFriendly?: boolean;
 }
 
 const Card: React.FunctionComponent<CardProps> = ({
@@ -24,7 +24,7 @@ const Card: React.FunctionComponent<CardProps> = ({
   difficulty,
   challengeSlug,
   challengeNumber,
-  mobileFriendly,
+  isMobileFriendly,
 }) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
 
@@ -41,7 +41,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         className,
       )}
     >
-      {mobileFriendly && (
+      {isMobileFriendly && (
         <span className="text-dark font-medium px-3 py-0.5 bg-gradient-to-l from-grey-light to-light absolute right-0 top-3 rounded-l-lg shadow-md">
           Mobile friendly
         </span>
