@@ -62,4 +62,11 @@ export class ChallengeResolver {
   statusForUser(@Parent() challenge: Challenge, @Args("userId", { type: () => ID }) userId: string): Promise<ChallengeStatus> {
     return this.challengeService.getStatusForUserAndChallenge(userId, challenge.id);
   }
+
+  @ResolveField(() => Number, {
+    description: "Indicates that this challenge contains no code levels, and can therefore be completed on mobile devices",
+  })
+  async isMobileFriendly(@Parent() challenge: Challenge): Promise<boolean> {
+    return this.levelService.isQuizOnly(challenge.id);
+  }
 }

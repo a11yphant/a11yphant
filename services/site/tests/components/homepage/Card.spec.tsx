@@ -37,6 +37,12 @@ describe("Card", () => {
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeInTheDocument();
   });
 
+  it("renders the mobile friendly indicator", () => {
+    renderCard({ isMobileFriendly: true });
+
+    expect(screen.getByText("Mobile friendly", { selector: "span" })).toBeInTheDocument();
+  });
+
   it("renders the correct gradient for `Easy` challenges", () => {
     const { container } = renderCard({ difficulty: ChallengeDifficulty.Easy });
 

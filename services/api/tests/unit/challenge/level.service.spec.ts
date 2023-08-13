@@ -260,4 +260,42 @@ describe("level service", () => {
       expect(status).toBe(LevelStatus.FINISHED);
     });
   });
+
+  describe("isQuizOnly", () => {
+    it("returns false if code levels are found", async () => {
+      const prisma = getPrismaService();
+
+      const { id } = await prisma.challenge.create({
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 2, numberOfQuizLevels: 2 }),
+      });
+
+      const service = new LevelService(prisma);
+
+      expect(await service.isQuizOnly(id)).toBe(false);
+    });
+
+    it("returns true if no code levels are found", async () => {
+      const prisma = getPrismaService();
+
+      const { id } = await prisma.challenge.create({
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 0, numberOfQuizLevels: 2 }),
+      });
+
+      const service = new LevelService(prisma);
+
+      expect(await service.isQuizOnly(id)).toBe(true);
+    });
+
+    it("does not throw an error if there are no levels", async () => {
+      const prisma = getPrismaService();
+
+      const { id } = await prisma.challenge.create({
+        data: Factory.build<ChallengeData>(CHALLENGE, {}, { numberOfCodeLevels: 0, numberOfQuizLevels: 0 }),
+      });
+
+      const service = new LevelService(prisma);
+      expect(service.isQuizOnly(id)).resolves.not.toThrowError();
+      expect(await service.isQuizOnly(id)).toBe(true);
+    });
+  });
 });

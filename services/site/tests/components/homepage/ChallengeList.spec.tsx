@@ -16,6 +16,7 @@ const challenges = [
     numberOfLevels: 2,
     numberOfFinishedLevels: 0,
     status: ChallengeStatus.Finished,
+    isMobileFriendly: false,
   },
 ];
 

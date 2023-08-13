@@ -145,6 +145,16 @@ export class LevelService {
     return LevelStatus.IN_PROGRESS;
   }
 
+  async isQuizOnly(challengeId: string): Promise<boolean> {
+    const count = await this.prisma.codeLevel.count({
+      where: {
+        challengeId,
+      },
+    });
+
+    return count === 0;
+  }
+
   public static createQuizLevelModelFromDatabaseRecord(record: QuizLevel): QuizLevelModel {
     const level = new QuizLevelModel({ ...record });
 
