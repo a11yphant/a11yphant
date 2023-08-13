@@ -91,7 +91,7 @@ const Footer: React.FunctionComponent = () => (
           </Link>
         </div>
         <Link
-          href="https://github.com/sponsors/a11yphant?o=esb"
+          href="https://github.com/sponsors/a11yphant"
           className={clsx(
             "group text-light bg-[#221d21] px-[1.6rem] py-[0.8rem] flex tracking-wider font-medium -ml-2 sm:ml-0 xl:ml-1",
             "border-transparent border-[3px] rounded-lg",
