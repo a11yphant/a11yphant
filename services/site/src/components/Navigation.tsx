@@ -36,7 +36,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
             "focus-outline-offset",
           )}
         >
-          <A11yphantLogo className="w-36" />
+          <A11yphantLogo className="w-48 xs:w-52 sm:w-36" />
           <span className="sr-only">Allyphant Homepage</span>
         </Link>
         {displayBreadcrumbs && (

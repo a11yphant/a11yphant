@@ -96,7 +96,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           {!currentUser?.isRegistered && <Hero />}
           <section
             id="challenges"
-            className={clsx("max-w-screen-3xl mx-8 pt-10 mt-22 mb-4", "sm:mx-12 sm:mt-18 sm:mb-12", "md:mx-24 md:mb-24", "2xl:mx-auto")}
+            className={clsx("max-w-screen-3xl pt-10 mx-8 mt-22 mb-4", "sm:mx-12 sm:mt-18 sm:mb-12", "md:mx-24 md:mb-24", "2xl:mx-auto")}
           >
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
 
