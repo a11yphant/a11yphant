@@ -102,7 +102,6 @@ const Evaluation: React.FunctionComponent = () => {
               className={clsx("h-full max-w-screen-3xl mx-auto px-5", "sm:px-8", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}
             >
               {heading}
-              {/* <SmallScreenNotification /> */}
               <EvaluationHeader
                 className={clsx("flex")}
                 challengeName={data.challenge.name}

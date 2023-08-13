@@ -94,7 +94,6 @@ const Level: React.FunctionComponent = () => {
       <FullScreenLayout header={header}>
         <main className={clsx("max-h-full h-full px-4 pb-4 flex flex-col md:flex-row justify-between box-border")}>
           <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
-          {/* <SmallScreenNotification /> */}
           {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
         </main>
