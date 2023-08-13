@@ -2,7 +2,6 @@ import { Transition } from "@headlessui/react";
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
-import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
@@ -93,9 +92,9 @@ const Level: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <FullScreenLayout header={header}>
-        <main className={clsx("max-h-full h-full", "md:p-4 md:pt-0 md:flex md:justify-between md:box-border")}>
+        <main className={clsx("max-h-full h-full p-4 flex justify-between box-border")}>
           <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
-          <SmallScreenNotification />
+          {/* <SmallScreenNotification /> */}
           {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
         </main>

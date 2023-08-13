@@ -1,6 +1,7 @@
 import LoadingButton from "app/components/buttons/LoadingButton";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
+import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import Lottie from "app/components/Lottie";
 import { ResultStatus, useSubmitQuizLevelAnswerMutation } from "app/generated/graphql";
@@ -49,16 +50,32 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
 
   return (
     <>
-      <section className={clsx("mx-auto h-full w-full box-border hidden", "container-dark", "lg:pt-12 lg:flex lg:flex-col lg:justify-between")}>
-        <h2 className={clsx("mb-2 lg:px-12", "h4")}>Quiz</h2>
-        <div className={clsx("grid grid-cols-7 lg:px-12  min-h-[50vh]")}>
+      <section className={clsx("mx-auto h-full w-full box-border pt-6 flex flex-col justify-between", "container-dark", "sm:pt-8", "lg:pt-12")}>
+        <h2 className={clsx("mb-2 px-5 sm:px-8 lg:px-12 text-grey-middle", "h5 md:h4 md:text-grey-middle")}>Quiz</h2>
+        <div className={clsx("grid grid-cols-7 px-5 sm:px-8 lg:px-12 min-h-[50vh]")}>
           <h3
-            className={clsx("mr-8 leading-tight tracking-wider font-mono col-span-4 text-5xl", "h2 prose", quizResult && "opacity-50")}
+            className={clsx(
+              "mr-4 tracking-wider font-mono col-span-7 text-2xl leading-snug",
+              "xs:text-3xl sm:mr-10 sm:leading-snug",
+              "md:text-4xl md:leading-snug",
+              "lg:col-span-4 lg:h2 prose",
+              quizResult && "opacity-50",
+            )}
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(question) }}
           />
-          <div className={clsx("col-span-3 mb-8 p-1 overflow-y-auto")} role="status" aria-live="assertive">
+          <div
+            className={clsx("col-span-7 mt-6 sm:mt-10 mb-4 p-1 overflow-y-auto", "lg:col-span-3 lg:mb-8 lg:mt-0")}
+            role="status"
+            aria-live="assertive"
+          >
             {quizResult === null && (
-              <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
+              <ScrollOverlayWrapper
+                className={clsx("max-h-full")}
+                classNameTopOverlay="h-16 -mb-16 from-background-light"
+                classNameBottomOverlay="h-16 -mt-16 from-background-light"
+              >
+                <SingleAnswer srTitle={"Possible answers to the quiz"} answers={answers} chosenId={chosenId} onChooseId={setChosenId} />
+              </ScrollOverlayWrapper>
             )}
             {quizResult?.status === ResultStatus.Fail && (
               <div>

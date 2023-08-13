@@ -2,7 +2,6 @@ import { ApolloError } from "@apollo/client";
 import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
-import SmallScreenNotification from "app/components/common/SmallScreenNotification";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
@@ -101,7 +100,7 @@ const Evaluation: React.FunctionComponent = () => {
           <>
             <main className={clsx("h-full max-w-screen-3xl mx-auto", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}>
               {heading}
-              <SmallScreenNotification />
+              {/* <SmallScreenNotification /> */}
               <EvaluationHeader
                 className={clsx("hidden", "lg:flex")}
                 challengeName={data.challenge.name}
