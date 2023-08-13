@@ -96,9 +96,9 @@ describe("challenge resolver", () => {
     const isQuizOnly = jest.fn().mockResolvedValue(false);
 
     const resolver = createChallengeResolver({ levelService: { isQuizOnly } });
-    const status = await resolver.isMobileFriendly(challenge);
+    const isMobileFriendly = await resolver.isMobileFriendly(challenge);
 
-    expect(status).toBe(false);
+    expect(isMobileFriendly).toBe(false);
     expect(isQuizOnly).toHaveBeenCalledWith(challenge.id);
   });
 });
