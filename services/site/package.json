@@ -50,7 +50,7 @@
     "yup": "1.2.0"
   },
   "devDependencies": {
-    "@a11yphant/eslint-config": "0.7.0",
+    "@a11yphant/eslint-config": "0.8.0",
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/fragment-matcher": "5.0.0",
     "@graphql-codegen/typescript": "4.0.1",
