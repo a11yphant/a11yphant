@@ -117,7 +117,7 @@ describe("ChallengeModal", () => {
 
   it("renders a start coding button that routes to the first unfinished level", async () => {
     await renderModal();
-    await userEvent.click(screen.getByRole("button", { name: "Start Coding" }));
+    await userEvent.click(screen.getByRole("button", { name: "Start Level" }));
 
     expect(router).toMatchObject({
       asPath: `/challenge/${mockChallengeSlug}/level/${firstUnfinishedLevel.order.toLocaleString("de-AT", {

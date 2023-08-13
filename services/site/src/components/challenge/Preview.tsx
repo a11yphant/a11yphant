@@ -60,7 +60,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
-    <div className={clsx("p-4", "container-light overflow-hidden", className)}>
+    <div className={clsx("px-4 py-3 sm:p-4", "container-light overflow-hidden", className)}>
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
         {heading}
         {title && (

@@ -26,7 +26,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
 
   return (
     <>
-      <header className={clsx("pt-8 pb-6 px-8 grid grid-cols-2 relative z-40 bg-background", "sm:px-11", "lg:grid-cols-3")}>
+      <header className={clsx("pt-8 pb-6 px-6 sm:px-8 grid grid-cols-2 relative z-20 bg-background", "sm:px-11", "lg:grid-cols-3")}>
         <Link
           href="/"
           className={clsx(
@@ -36,11 +36,17 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
             "focus-outline-offset",
           )}
         >
-          <A11yphantLogo className="w-36" />
+          <A11yphantLogo className="w-48 xs:w-52 sm:w-36" />
           <span className="sr-only">Allyphant Homepage</span>
         </Link>
         {displayBreadcrumbs && (
-          <div className={clsx("ml-[50%] -translate-x-1/2 col-span-1 w-fit-content hidden self-center", "lg:block")}>
+          <div
+            className={clsx(
+              "mt-4 col-span-2 w-fit-content self-center",
+              "sm:hidden",
+              "lg:mt-0 lg:col-span-1 lg:block lg:ml-[50%] lg:-translate-x-1/2",
+            )}
+          >
             <Breadcrumbs />
           </div>
         )}

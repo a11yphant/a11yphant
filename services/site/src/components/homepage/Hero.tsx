@@ -7,14 +7,14 @@ const Hero: React.FC = () => {
   return (
     <div
       className={clsx(
-        "max-w-screen-3xl mx-8 mt-16 mb-24 flex flex-col",
+        "max-w-screen-3xl mx-8 mt-6 mb-4 flex flex-col",
         "sm:m-12 sm:mt-20",
-        "md:mx-24",
-        "xl:min-h-[85vh] xl:flex-row xl:items-center",
+        "md:mx-24 md:mt-16",
+        "xl:mb-24 xl:min-h-[85vh] xl:flex-row xl:items-center",
         "2xl:mx-auto",
       )}
     >
-      <section className={clsx("flex flex-col justify-center mb-24", "md:mb-4", "xl:shrink xl:grow xl:mb-0", "2xl:ml-24")}>
+      <section className={clsx("flex flex-col justify-center mb-20", "md:mb-4", "xl:shrink xl:grow xl:mb-0", "2xl:ml-24")}>
         <h2
           className={clsx("mb-6 max-w-2xl font-bold font-sans text-3xl leading-tight", "sm:text-4xl sm:leading-snug", "xl:text-5xl xl:leading-snug")}
         >

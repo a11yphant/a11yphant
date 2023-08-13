@@ -43,8 +43,8 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
         const { message, type } = getFlashMessage(FlashMessageEnum.HINT_REMINDER);
         flashMessageApi.show(message, {
           type,
-          className: clsx("hidden", "lg:flex"),
-          offsetElementClassName: clsx("hidden", "lg:block"),
+          className: clsx("flex"),
+          offsetElementClassName: clsx("block"),
         });
       }, 1000);
     }
@@ -161,12 +161,12 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
 
   return (
     <>
-      <Sidebar className={clsx("h-full hidden", "lg:block")} challengeName={challengeName} level={level} />
-      <div className={clsx("w-full hidden", "lg:flex")}>
-        <div className={clsx("h-full pl-4 relative box-border justify-between flex-col flex-auto")}>
+      <Sidebar className={clsx("h-full block mb-4 md:mb-0")} challengeName={challengeName} level={level} />
+      <div className={clsx("w-full flex")}>
+        <div className={clsx("h-full md:pl-4 relative box-border justify-between flex-col flex-auto")}>
           <Editors
             onReset={resetToInitialCode}
-            className={clsx("w-full h-3/5")}
+            className={clsx("w-full h-[30rem] md:h-3/5")}
             editors={editorConfiguration}
             theme="light"
             options={{
@@ -179,7 +179,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
             }}
           />
           <Preview
-            className={clsx("w-full h-2/5")}
+            className={clsx("w-full h-80 md:h-2/5")}
             heading="Preview"
             htmlCode={submissionCode?.html}
             cssCode={submissionCode?.css}

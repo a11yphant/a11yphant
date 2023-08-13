@@ -31,10 +31,11 @@ const Card: React.FunctionComponent<CardProps> = ({
   return (
     <li
       className={clsx(
-        "w-64 h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
+        "min-w-full h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
         "group transition duration-300",
         "card shadow-card gap-0",
         "bg-no-repeat	bg-contain bg-top",
+        "xs:min-w-0 xs:w-64",
         difficulty === ChallengeDifficulty.Easy && finishedLevels !== levels && "bg-gradient-easy",
         difficulty === ChallengeDifficulty.Medium && finishedLevels !== levels && "bg-gradient-medium",
         difficulty === ChallengeDifficulty.Hard && finishedLevels !== levels && "bg-gradient-hard",

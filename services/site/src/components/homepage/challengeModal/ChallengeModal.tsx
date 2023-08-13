@@ -71,7 +71,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
               <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
             </section>
 
-            <div className={clsx("p-2 pt-8", "grid grid-cols-1 gap-y-4", "sm:grid-cols-2", "lg:grid-cols-3", "2xl:grid-cols-4")}>
+            <div className={clsx("gap-4 pt-8", "grid grid-cols-1 gap-y-4", "xs:grid-cols-2", "lg:grid-cols-3", "2xl:grid-cols-4")}>
               {challenge.levels.map((level) => {
                 return (
                   <ChallengeModalLevelCard
@@ -79,6 +79,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                     challengeSlug={challengeSlug}
                     levelNumber={level.order}
                     status={level.status}
+                    type={level.__typename}
                     isFirstUnfinishedLevel={level.id === firstUnfinishedLevel?.id}
                   />
                 );
@@ -110,7 +111,7 @@ export const ChallengeModal = ({ open, onClose, challengeSlug }: ChallengeModalP
                 );
               }}
             >
-              Start Coding
+              Start Level
             </Button>
           </ModalActions>
         </>

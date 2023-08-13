@@ -21,7 +21,10 @@ const SingleAnswer: React.FunctionComponent<SingleAnswerProps> = ({ className, s
             key={answer.id}
             value={answer.id}
             className={clsx(
-              "px-10 py-8 mb-6 w-full rounded-lg border text-left",
+              "px-5 py-3 mb-4 w-full rounded-lg border text-left",
+              "sm:px-8 sm:py-5 sm:mb-6",
+              "lg:px-8 lg:py-5",
+              "xl:px-10 xl:py-8",
               chosenId !== answer.id && "border-light",
               "transition duration-300",
               "hover:bg-primary hover:border-light hover:text-light hover:cursor-pointer",

@@ -38,10 +38,10 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
         initialFocus={closeButtonRef}
         open={open}
         onClose={onClose}
-        className={clsx("fixed z-10 inset-0 overflow-y-auto h-screen flex items-center justify-center")}
+        className={clsx("fixed z-30 inset-0 overflow-y-auto h-screen h-[100dvh]  flex items-center justify-center")}
       >
         <div className={clsx("relative", !overrideClassName && "rounded-lg", className)}>
-          <Dialog.Overlay className={clsx("fixed inset-0 bg-background opacity-25 z-[-1] cursor-pointer")} />
+          <Dialog.Overlay className={clsx("fixed inset-0 bg-background opacity-70 z-[-1] cursor-pointer")} />
 
           <Button
             innerRef={closeButtonRef}
