@@ -19,6 +19,8 @@ export function AxeCheck(checkName: string): Type<Check> {
     public async evaluateRule(window: DOMWindow, submission: Submission, rule: Rule): Promise<RuleCheckResult> {
       const result = await axe.run(window.document.documentElement, { runOnly: [checkName] });
 
+      console.log("result ", result);
+
       return {
         id: rule.id,
         status: this.isSuccessful(result) ? "success" : "failed",

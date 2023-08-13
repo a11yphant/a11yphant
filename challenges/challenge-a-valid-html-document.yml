@@ -33,6 +33,11 @@ challenge:
             </body>
           </html>
       requirements:
+        - id: 37d8a1a8-542d-4ff0-a9bc-1778678fba4a
+          key: axe-color-contrast
+          order: 0
+          title: Color contrast
+          description: None
         - id: 772c4310-20fe-4024-a2cd-6075ab6783f2
           key: document-starts-with-html5-doctype
           title: The document starts with an HTML5 doctype
