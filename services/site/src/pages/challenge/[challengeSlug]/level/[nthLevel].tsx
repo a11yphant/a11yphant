@@ -92,7 +92,7 @@ const Level: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <FullScreenLayout header={header}>
-        <main className={clsx("max-h-full h-full p-4 flex justify-between box-border")}>
+        <main className={clsx("max-h-full h-full px-4 pb-4 flex justify-between box-border")}>
           <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
           {/* <SmallScreenNotification /> */}
           {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}

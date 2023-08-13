@@ -33,7 +33,7 @@ const Breadcrumbs: React.FunctionComponent = () => {
     <>
       {routeList.length > 1 && (
         <nav className={clsx("w-fit-content")} aria-label="Breadcrumbs">
-          <ol className={clsx("flex flex-row")}>
+          <ol className={clsx("flex flex-wrap lg:flex-nowrap")}>
             {routeList.map((route, idx) => {
               return (
                 <li key={route.href} className={clsx("m-0")}>
