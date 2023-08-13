@@ -69,7 +69,7 @@
     "@a11yphant/eslint-config": "0.8.0",
     "@apollo/client": "3.8.1",
     "@faker-js/faker": "8.0.2",
-    "@golevelup/ts-jest": "0.4.0",
+    "@golevelup/ts-jest": "0.3.7",
     "@nestjs/cli": "10.1.11",
     "@nestjs/schematics": "9.2.0",
     "@nestjs/testing": "9.4.3",
