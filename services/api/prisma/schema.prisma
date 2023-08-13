@@ -110,10 +110,10 @@ model Requirement {
   order       Int           @default(0)
   id          String        @id @default(uuid()) @db.Uuid
   levelId     String        @db.Uuid
-  ruleId      String?       @db.Uuid
+  ruleId      String        @db.Uuid
   CheckResult CheckResult[]
   level       CodeLevel     @relation(fields: [levelId], references: [id], onDelete: Cascade)
-  rule        Rule?         @relation(fields: [ruleId], references: [id], onDelete: Restrict)
+  rule        Rule          @relation(fields: [ruleId], references: [id], onDelete: Restrict)
 
   @@map("requirements")
 }
