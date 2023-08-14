@@ -79,24 +79,14 @@ describe("color-contrast-greater-than-or-equal", () => {
     expect(result).toHaveProperty("status", "failed");
   });
 
-  it("errors if the background color has an invalid value", async () => {
-    submission.css = "button { background-color: invalid-color; color: white; }";
+  it("fails if no explicit colors are set", async () => {
+    submission.css = "";
     const check = new ColorContrastGreaterThanOrEqual(createMock<Logger>());
 
     const result = await check.run(submission, rule);
 
     expect(result).toHaveProperty("id", rule.id);
-    expect(result).toHaveProperty("status", "error");
-  });
-
-  it("errors if the text color has an invalid value", async () => {
-    submission.css = "button { background-color: black; color: invalid-color; }";
-    const check = new ColorContrastGreaterThanOrEqual(createMock<Logger>());
-
-    const result = await check.run(submission, rule);
-
-    expect(result).toHaveProperty("id", rule.id);
-    expect(result).toHaveProperty("status", "error");
+    expect(result).toHaveProperty("status", "failed");
   });
 
   it("errors if the selector is missing", async () => {

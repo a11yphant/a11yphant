@@ -25,22 +25,20 @@ export class ColorContrastGreaterThanOrEqual extends JsdomCheck {
     const matchingElements = window.document.querySelectorAll(selector);
 
     let hasSufficientColorContrast = false;
+    const ccc = new ColorContrastChecker();
     for (const element of matchingElements) {
       const styles = window.getComputedStyle(element);
       let color1: string, color2: string;
       try {
         color1 = new ColorTranslator(styles[cssProperty1]).HEX;
-      } catch (err) {
-        return this.checkConfigurationError(err, rule, "property1");
-      }
-
-      try {
         color2 = new ColorTranslator(styles[cssProperty2]).HEX;
       } catch (err) {
-        return this.checkConfigurationError(err, rule, "property2");
+        // invalid color value (e.g. if no color is set, the background-color of a button equals to "ButtonFace")
+        return {
+          id: rule.id,
+          status: "failed",
+        };
       }
-
-      const ccc = new ColorContrastChecker();
 
       if (ccc.isLevelCustom(color1, color2, Number(minContrastValue))) {
         hasSufficientColorContrast = true;
