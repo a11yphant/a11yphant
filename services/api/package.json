@@ -44,7 +44,6 @@
     "@prisma/client": "4.16.2",
     "axe-core": "^4.7.2",
     "bcrypt": "5.1.0",
-    "canvas": "^2.11.2",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "color-contrast-checker": "^2.1.0",
