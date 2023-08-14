@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloLink, concat, HttpLink, InMemoryCache } from "@apollo/client/core";
 import { faker } from "@faker-js/faker";
-import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
+import { PartialFuncReturn } from "@golevelup/ts-jest";
 import { CallHandler, ExecutionContext, INestApplication, Logger, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
@@ -14,6 +14,7 @@ import { CodeLevelSubmission as Submission } from "@/submission/graphql/models/c
 import { Rule } from "@/submission/interfaces/rule.interface";
 
 import { PrismaService } from "../../src/prisma/prisma.service";
+import { NoopLogger } from "./noop-logger";
 
 function getDbUrl(): URL {
   return new URL(process.env.DB_URL || "postgresql://please-provide-a-connection-url/db");
@@ -86,7 +87,7 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
 }
 
 export function useDatabase(logger?: Logger): { getPrismaService: () => PrismaService } {
-  const client = createTestingPrismaClient(logger || createMock<Logger>());
+  const client = createTestingPrismaClient(logger || new NoopLogger());
   beforeAll(async () => {
     await client.$connect();
   });
