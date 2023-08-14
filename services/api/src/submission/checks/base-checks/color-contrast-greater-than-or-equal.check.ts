@@ -9,7 +9,7 @@ import { RuleCheckResult } from "../../interfaces/rule-check-result.interface";
 import { JsdomCheck } from "./jsdom-check";
 
 @Injectable()
-export class ColorContrastGreaterThan extends JsdomCheck {
+export class ColorContrastGreaterThanOrEqual extends JsdomCheck {
   constructor(logger: Logger) {
     super(logger);
   }
@@ -25,17 +25,27 @@ export class ColorContrastGreaterThan extends JsdomCheck {
     const matchingElements = window.document.querySelectorAll(selector);
 
     let hasSufficientColorContrast = false;
-    matchingElements.forEach((element) => {
+    for (const element of matchingElements) {
       const styles = window.getComputedStyle(element);
-      const color1 = new ColorTranslator(styles[cssProperty1]).HEX;
-      const color2 = styles[cssProperty2];
+      let color1: string, color2: string;
+      try {
+        color1 = new ColorTranslator(styles[cssProperty1]).HEX;
+      } catch (err) {
+        return this.checkConfigurationError(err, rule, "property1");
+      }
+
+      try {
+        color2 = new ColorTranslator(styles[cssProperty2]).HEX;
+      } catch (err) {
+        return this.checkConfigurationError(err, rule, "property2");
+      }
 
       const ccc = new ColorContrastChecker();
 
       if (ccc.isLevelCustom(color1, color2, Number(minContrastValue))) {
         hasSufficientColorContrast = true;
       }
-    });
+    }
 
     return {
       id: rule.id,
