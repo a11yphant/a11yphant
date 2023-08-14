@@ -30,9 +30,6 @@ export class CheckSubmissionService {
       }
 
       const result = await check.run(submission, rule);
-      console.log(rule.key);
-      console.log(check);
-      console.log(result);
 
       ruleCheckResults.push(result);
     }
