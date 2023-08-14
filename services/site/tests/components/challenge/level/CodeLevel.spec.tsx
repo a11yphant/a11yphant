@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { render, RenderResult, screen } from "@testing-library/react";
 import CodeLevel, { CodeLevelProps } from "app/components/challenge/level/CodeLevel";

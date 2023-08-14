@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Check from "app/components/icons/Check";
 import Chevron from "app/components/icons/Chevron";

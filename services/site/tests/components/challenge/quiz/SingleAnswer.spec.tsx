@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, screen } from "@testing-library/react";
 import SingleAnswer, { SingleAnswerProps } from "app/components/challenge/quiz/SingleAnswer";
 import React from "react";

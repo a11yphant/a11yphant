@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, screen } from "@testing-library/react";
 import LoadingButton, { LoadingButtonProps } from "app/components/buttons/LoadingButton";
 import React from "react";
