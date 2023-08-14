@@ -5,6 +5,7 @@ import { PrismaModule } from "@/prisma/prisma.module";
 
 import { AVAILABLE_AXE_CHECKS, buildCheckProviders } from "./checks/axe-checks";
 import {
+  ColorContrastGreaterThan,
   DocumentLanguageIsSpecified,
   DocumentStartsWithHtml5Doctype,
   ElementContainsText,
@@ -47,6 +48,7 @@ import { RequirementResultService } from "./services/requirement-result.service"
     CheckFactory,
     { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
     { provide: "fetch", useValue: fetch },
+    ColorContrastGreaterThan,
     DocumentLanguageIsSpecified,
     DocumentStartsWithHtml5Doctype,
     ElementContainsText,

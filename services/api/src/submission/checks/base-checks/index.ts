@@ -1,4 +1,5 @@
 import { AxeCheck } from "./axe.check";
+import { ColorContrastGreaterThan } from "./color-contrast-greater-than.check";
 import { DocumentLanguageIsSpecified } from "./document-language-is-specified.check";
 import { DocumentStartsWithHtml5Doctype } from "./document-starts-with-html5-doctype.check";
 import { ElementContainsText } from "./element-contains-text.check";
@@ -11,6 +12,7 @@ import { HtmlIsValid } from "./html-is-valid.check";
 
 export {
   AxeCheck,
+  ColorContrastGreaterThan,
   DocumentLanguageIsSpecified,
   DocumentStartsWithHtml5Doctype,
   ElementContainsText,

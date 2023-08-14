@@ -1,5 +1,6 @@
 import { AXE_CHECKS_TO_CHECK_NAMES_MAP } from "./axe-checks";
 import {
+  ColorContrastGreaterThan,
   DocumentLanguageIsSpecified,
   DocumentStartsWithHtml5Doctype,
   ElementContainsText,
@@ -21,6 +22,7 @@ export const checkToClassMap = {
   "element-not-contains-text": ElementNotContainsText,
   "document-language-is-specified": DocumentLanguageIsSpecified,
   "document-starts-with-html5-doctype": DocumentStartsWithHtml5Doctype,
+  "color-contrast-greater-than": ColorContrastGreaterThan,
   ...AXE_CHECKS_TO_CHECK_NAMES_MAP,
 };
 
