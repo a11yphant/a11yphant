@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
 import { UserAccountBox, UserAccountBoxProps } from "app/components/user/UserAccountBox";

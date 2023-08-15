@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
 import { CodeLevelDetailsFragment, QuizLevelDetailsFragment } from "app/generated/graphql";
 

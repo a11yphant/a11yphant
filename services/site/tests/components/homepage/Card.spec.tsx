@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, RenderResult, screen } from "@testing-library/react";
 import Card, { CardProps } from "app/components/homepage/Card";
 import { ChallengeDifficulty } from "app/generated/graphql";

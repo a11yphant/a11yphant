@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, screen } from "@testing-library/react";
 import EvaluationBody from "app/components/evaluation/EvaluationBody";
 import { RequirementStatus } from "app/generated/graphql";
