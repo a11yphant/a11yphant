@@ -51,7 +51,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
             {hints.slice(0, usedHints).map((hint) => (
               <li
                 key={hint.id}
-                className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose text-lg leading-8")}
+                className={clsx("mt-2 mb-4 whitespace-pre-wrap", "prose leading-8", "md:text-lg")}
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(hint.text) }}
               />
             ))}
