@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, screen } from "@testing-library/react";
 import Legend from "app/components/homepage/Legend";
 import React from "react";

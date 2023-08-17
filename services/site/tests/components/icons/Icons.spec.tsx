@@ -1,9 +1,8 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import A11yphantLogo from "app/components/icons/A11yphantLogo";
 import Check from "app/components/icons/Check";
 import Chevron from "app/components/icons/Chevron";
 import Github from "app/components/icons/Github";
+import Heart from "app/components/icons/Heart";
 import IllustrationCodingMan from "app/components/icons/IllustrationCodingMan";
 import IllustrationCodingWoman from "app/components/icons/IllustrationCodingWoman";
 import IllustrationLost from "app/components/icons/IllustrationLost";
@@ -30,6 +29,7 @@ describe.each([
   ["UserAvatar", UserAvatar],
   ["X", X],
   ["LoadingIndicator", LoadingIndicator],
+  ["Heart", Heart],
 ])("Icons", (_, Component) => {
   test("the %s icon renders without failure", () => {
     expect(() => Component({})).not.toThrow();

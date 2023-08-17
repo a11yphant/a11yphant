@@ -14,6 +14,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -27,6 +28,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Finished}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -41,6 +43,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -55,6 +58,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.InProgress}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -69,6 +73,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={true}
+        type={"CodingLevel"}
       />,
     );
 
@@ -82,6 +87,7 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
@@ -95,9 +101,38 @@ describe("ChallengeModalLevelCard", () => {
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
         isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
       />,
     );
 
     expect(screen.getByRole("link")).toHaveAttribute("href", `/challenge/${mockChallengeSlug}/level/${mockLevelNumber}`);
+  });
+
+  it("level is a quiz", () => {
+    render(
+      <ChallengeModalLevelCard
+        challengeSlug={mockChallengeSlug}
+        levelNumber={Number(mockLevelNumber)}
+        status={LevelStatus.Open}
+        isFirstUnfinishedLevel={false}
+        type={"QuizLevel"}
+      />,
+    );
+
+    expect(screen.getByText("Quiz")).toBeInTheDocument();
+  });
+
+  it("level is a coding level", () => {
+    render(
+      <ChallengeModalLevelCard
+        challengeSlug={mockChallengeSlug}
+        levelNumber={Number(mockLevelNumber)}
+        status={LevelStatus.Open}
+        isFirstUnfinishedLevel={false}
+        type={"CodingLevel"}
+      />,
+    );
+
+    expect(screen.getByText("Coding")).toBeInTheDocument();
   });
 });

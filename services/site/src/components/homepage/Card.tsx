@@ -13,24 +13,41 @@ export interface CardProps {
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
   challengeNumber: number;
+  isMobileFriendly?: boolean;
 }
 
-const Card: React.FunctionComponent<CardProps> = ({ className, heading, levels, finishedLevels, difficulty, challengeSlug, challengeNumber }) => {
+const Card: React.FunctionComponent<CardProps> = ({
+  className,
+  heading,
+  levels,
+  finishedLevels,
+  difficulty,
+  challengeSlug,
+  challengeNumber,
+  isMobileFriendly,
+}) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
 
   return (
     <li
       className={clsx(
-        "w-64 h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
+        "min-w-full h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
         "group transition duration-300",
         "card shadow-card gap-0",
         "bg-no-repeat	bg-contain bg-top",
+        "xs:min-w-0 xs:w-64",
         difficulty === ChallengeDifficulty.Easy && finishedLevels !== levels && "bg-gradient-easy",
         difficulty === ChallengeDifficulty.Medium && finishedLevels !== levels && "bg-gradient-medium",
         difficulty === ChallengeDifficulty.Hard && finishedLevels !== levels && "bg-gradient-hard",
         className,
       )}
     >
+      {isMobileFriendly && (
+        <span className="text-dark font-medium px-3 py-0.5 bg-gradient-to-l from-grey-light to-light absolute right-0 top-3 rounded-l-lg shadow-md">
+          Mobile friendly
+        </span>
+      )}
+
       {finishedLevels > 0 && finishedLevels !== levels && (
         <div className={clsx("flex-1 flex items-center justify-center")}>
           <p className={clsx("text-background-light font-mono text-6xl mb-0", "transition duration-300", "group-hover:text-grey-dark")}>

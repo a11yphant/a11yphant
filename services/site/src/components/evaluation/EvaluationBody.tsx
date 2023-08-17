@@ -20,7 +20,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           {failedRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
-              <li key={requirement.id} className={clsx("w-full max-w-none m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border")}>
+              <li key={requirement.id} className={clsx("w-full max-w-none m-4 ml-0 mb-8 last:mb-0 first:mt-0 grid grid-cols-10 gap-2 box-border")}>
                 <CollapsableSection passed={false} title={requirementTitle} description={requirement.description} />
               </li>
             );
@@ -32,7 +32,7 @@ const EvaluationBody: React.FunctionComponent<EvaluationBodyProps> = ({ classNam
           {successfulRequirements.map((requirement, idx) => {
             const requirementTitle = `${requirement.title}`;
             return (
-              <li key={requirement.id} className={clsx("w-full max-w-none m-4 ml-0 mb-8 first:mt-0 grid grid-cols-10 gap-2 box-border")}>
+              <li key={requirement.id} className={clsx("w-full max-w-none m-4 ml-0 mb-8 last:mb-0 first:mt-0 grid grid-cols-10 gap-2 box-border")}>
                 <CollapsableSection passed={true} title={requirementTitle} description={requirement.description} />
               </li>
             );

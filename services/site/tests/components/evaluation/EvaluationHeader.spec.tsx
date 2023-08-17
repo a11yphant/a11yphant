@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, screen } from "@testing-library/react";
 import EvaluationHeader from "app/components/evaluation/EvaluationHeader";
 import { LottieProps } from "app/components/Lottie";

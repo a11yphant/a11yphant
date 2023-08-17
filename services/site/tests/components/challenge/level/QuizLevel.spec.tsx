@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

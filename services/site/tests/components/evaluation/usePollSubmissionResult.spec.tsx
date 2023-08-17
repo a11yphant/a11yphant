@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { act, renderHook } from "@testing-library/react";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";

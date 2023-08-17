@@ -22,7 +22,14 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
 
   return (
     <>
-      <div className={clsx("h-14 w-14 mr-8  ml-0 lg:ml-8 flex justify-center items-center", "lg:mr-20 lg:ml-8")}>
+      <div
+        className={clsx(
+          "h-6 w-6 mt-4 mr-4 ml-0 lg:ml-8 flex justify-center items-center",
+          "sm:h-10 sm:w-10 sm:mt-2 sm:mr-8",
+          "md:h-14 md:w-14 md:mt-0",
+          "lg:mr-20 lg:ml-8",
+        )}
+      >
         {passed ? <Check className={clsx("h-9 w-14 text-success")} /> : <X className={clsx("h-10 w-10 text-error")} />}
         {passed ? (
           <p className={clsx("sr-only")}>The following requirement is fulfilled:</p>
@@ -31,7 +38,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
         )}
       </div>
 
-      <div className={clsx("flex flex-col col-start-2 col-span-9")}>
+      <div className={clsx("flex flex-col col-start-2 col-span-9 -ml-5")}>
         <h3>
           <Button
             onClick={() => {
@@ -41,10 +48,10 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
             overrideClassName
             aria-expanded={showDescription}
           >
-            <span className={clsx("h4 prose prose-2xl text-left")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
+            <span className={clsx("h5 prose prose-2xl text-left", "lg:h4")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
             <Chevron
               className={clsx(
-                "mr-8 text-light shrink-0 transition-transform ease-in-out",
+                "mr-4 lg:mr-8 text-light shrink-0 transition-transform ease-in-out",
                 "group-hover:text-primary-light",
                 showDescription && !prefersReducedMotion ? "rotate-0" : "rotate-180",
                 className,
@@ -53,7 +60,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
           </Button>
         </h3>
         <div hidden={!showDescription}>
-          <p className={clsx("ml-20 my-4", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }} />
+          <p className={clsx("ml-16 lg:ml-20 my-4", "prose")} dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }} />
         </div>
       </div>
     </>

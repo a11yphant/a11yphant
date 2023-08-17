@@ -35,8 +35,8 @@ const LegalNotice: React.FunctionComponent = () => {
       </Head>
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
-          <h1 className={clsx("mb-8", "h2", "md:h1")}>Legal Notice</h1>
+        <div className={clsx("py-4 mx-8 h-main max-w-screen-3xl", "sm:mx-12", "md:py-8", "lg:mt-12 lg:mx-24")}>
+          <h1 className={clsx("mb-8 h3", "sm:h2", "md:h1")}>Legal Notice</h1>
           <p className={clsx("italic mb-8")}>
             Information obligation according to §5 E-Commerce Law, §14 Corporate Code, §63 Trade Regulations and disclosure obligation according to
             §25 Media Act.
@@ -56,7 +56,7 @@ const LegalNotice: React.FunctionComponent = () => {
           </address>
 
           <h2 className={clsx("h5 mb-4", "sm:h4")}>Responsible for the Content</h2>
-          <ul className={clsx("list-disc ml-6 mb-8")}>
+          <ul className={clsx("list-disc ml-6 mb-0 md:mb-8")}>
             <li className={clsx("m-0 my-4")}>
               <InTextLink href="https://dnikub.dev/" opensInNewTab>
                 Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>

@@ -110,14 +110,14 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
 
   return (
     <div className={clsx("w-inherit h-full px-2", "first:pl-0 last:pr-0")}>
-      <div ref={wrapperRef} className={clsx("relative", "p-4 w-inherit h-full", "container-dark overflow-hidden")}>
+      <div ref={wrapperRef} className={clsx("relative", "px-4 py-3 sm:p-4 w-inherit h-full", "container-dark overflow-hidden")}>
         <div className={clsx("flex flex-row justify-between")}>
-          <h3 ref={headingRef} className={clsx("mb-5 mx-3", "h6")}>
+          <h3 ref={headingRef} className={clsx("mb-5 sm:mx-3", "h6")}>
             {config.heading}
           </h3>
           <ModeCommandHint />
         </div>
-        <div className={clsx("absolute")} style={{ top: editorTop }}>
+        <div className={clsx("absolute -ml-3")} style={{ top: editorTop }}>
           <Editor
             {...props}
             theme="a11yphant"

@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, screen } from "@testing-library/react";
 import ChallengeHeader from "app/components/homepage/ChallengeHeader";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";

@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom/extend-expect";
-
 import { render, RenderResult, screen } from "@testing-library/react";
 import Card, { CardProps } from "app/components/homepage/Card";
 import { ChallengeDifficulty } from "app/generated/graphql";
@@ -35,6 +33,12 @@ describe("Card", () => {
 
     expect(screen.getByRole("link", { name: headingText })).toBeInTheDocument();
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeInTheDocument();
+  });
+
+  it("renders the mobile friendly indicator", () => {
+    renderCard({ isMobileFriendly: true });
+
+    expect(screen.getByText("Mobile friendly", { selector: "span" })).toBeInTheDocument();
   });
 
   it("renders the correct gradient for `Easy` challenges", () => {

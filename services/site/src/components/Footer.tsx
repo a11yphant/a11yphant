@@ -2,6 +2,8 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
+import Heart from "./icons/Heart";
+
 const LinkListItem: React.FC<{ href: string; title: string }> = ({ href, title }) => (
   <li className={clsx("mb-0 -ml-4 flex")}>
     <Link
@@ -21,7 +23,7 @@ const LinkListItem: React.FC<{ href: string; title: string }> = ({ href, title }
 const LinkList: React.FC<React.PropsWithChildren> = ({ children }) => <ul className={clsx("mb-0 flex flex-col")}>{children}</ul>;
 
 const Footer: React.FunctionComponent = () => (
-  <footer className={clsx("max-w-screen-3xl mx-8 mt-10 mb-16", "sm:mx-12 sm:mt-20 sm:mb-7", "md:mt-28", "lg:mx-24", "2xl:mx-auto")}>
+  <footer className={clsx("max-w-screen-3xl mx-8 mt-14 mb-16", "sm:mx-12 sm:mt-20 sm:mb-7", "md:mt-28", "md:mx-24", "2xl:mx-auto")}>
     <div className={clsx("xl:flex xl:flex-row xl:justify-between", "2xl:mx-24")}>
       <div className="flex flex-col justify-start">
         <p className={clsx("h5 mb-2 max-w-none")}>The easy way to learn web accessibility</p>
@@ -63,12 +65,14 @@ const Footer: React.FunctionComponent = () => (
         </div>
       </nav>
 
-      <div className={clsx("flex items-start justify-start", "xl:justify-end")}>
+      <div
+        className={clsx("flex flex-col items-start justify-start gap-4", "sm:flex-row sm:items-center", "xl:flex-col xl:items-start xl:justify-end")}
+      >
         <div className={clsx("mb-0 -ml-3 inline-block", "xl:ml-0")}>
           <Link
             href="https://www.producthunt.com/posts/a11yphant?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-a11yphant"
             className={clsx("group")}
-            target={"_blank"}
+            target="_blank"
             rel="noopener noreferrer nofollow"
           >
             <span className="sr-only">Product Hunt campaign of a11yphant (opens in a new tab)</span>
@@ -86,6 +90,21 @@ const Footer: React.FunctionComponent = () => (
             />
           </Link>
         </div>
+        <Link
+          href="https://github.com/sponsors/a11yphant"
+          className={clsx(
+            "group text-light bg-[#221d21] px-[1.6rem] py-[0.8rem] flex tracking-wider font-medium -ml-2 sm:ml-0 xl:ml-1",
+            "border-transparent border-[3px] rounded-lg",
+            "transition-colors duration-300",
+            "group-hover:border-light",
+            "group-focus:border-light",
+          )}
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+        >
+          <Heart className="w-4 mr-3" />
+          <span aria-label="Sponsor Allyphant (opens in a new tab)">Sponsor a11yphant</span>
+        </Link>
       </div>
     </div>
   </footer>

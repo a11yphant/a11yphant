@@ -91,4 +91,14 @@ describe("challenge resolver", () => {
     expect(status).toBeTruthy();
     expect(getNumberOfFinishedLevelsForUserAndChallenge).toHaveBeenCalledWith(sessionToken.userId, challenge.id);
   });
+
+  it("resolves if it only has quiz levels", async () => {
+    const isQuizOnly = jest.fn().mockResolvedValue(false);
+
+    const resolver = createChallengeResolver({ levelService: { isQuizOnly } });
+    const isMobileFriendly = await resolver.isMobileFriendly(challenge);
+
+    expect(isMobileFriendly).toBe(false);
+    expect(isQuizOnly).toHaveBeenCalledWith(challenge.id);
+  });
 });
