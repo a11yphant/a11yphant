@@ -37,6 +37,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
             finishedLevels={challenge.numberOfFinishedLevels}
             difficulty={challenge.difficulty}
             challengeNumber={challenges.length}
+            challengeStatus={challenge.status}
           />
         ))}
       </ul>

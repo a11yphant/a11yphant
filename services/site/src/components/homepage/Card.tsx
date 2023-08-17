@@ -1,6 +1,6 @@
 import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import Check from "app/components/icons/Check";
-import { ChallengeDifficulty } from "app/generated/graphql";
+import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
@@ -14,6 +14,7 @@ export interface CardProps {
   challengeSlug: string;
   challengeNumber: number;
   isMobileFriendly?: boolean;
+  challengeStatus: ChallengeStatus;
 }
 
 const Card: React.FunctionComponent<CardProps> = ({
@@ -25,6 +26,7 @@ const Card: React.FunctionComponent<CardProps> = ({
   challengeSlug,
   challengeNumber,
   isMobileFriendly,
+  challengeStatus,
 }) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
 
@@ -48,7 +50,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         </span>
       )}
 
-      {finishedLevels > 0 && finishedLevels !== levels && (
+      {((finishedLevels > 0 && finishedLevels !== levels) || (finishedLevels >= 0 && challengeStatus === ChallengeStatus.InProgress)) && (
         <div className={clsx("flex-1 flex items-center justify-center")}>
           <p className={clsx("text-background-light font-mono text-6xl mb-0", "transition duration-300", "group-hover:text-grey-dark")}>
             {finishedLevels}/{levels} <span className={clsx("sr-only")}>levels completed</span>
