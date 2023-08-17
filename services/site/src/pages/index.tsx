@@ -114,7 +114,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
                 overrideClassName
                 className="text-grey-middle font-sans font-normal border-grey-middle
         transition-colors duration-300
-        hover:text-primary-grey-middle hover:border-transparent
+        hover:text-primary-light hover:border-transparent
         focus-rounded-instead-of-underline"
               >
                 Twitter account
