@@ -91,6 +91,11 @@ module.exports = {
                 color: theme("colors.primary.light"),
                 borderColor: theme("colors.transparent"),
               },
+              "&:focus": {
+                borderRadius: theme("borderRadius.DEFAULT"),
+                borderColor: theme("colors.transparent"),
+                outlineOffset: theme("outlineOffset.4"),
+              },
             },
           },
         },
