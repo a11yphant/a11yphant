@@ -68,17 +68,6 @@
     @apply inline-block;
 }
 
-.instruction-text a {
-    @apply text-grey;
-    @apply focus-rounded-instead-of-underline;
-    @apply no-underline;
-    @apply border-light;
-
-    &:hover {
-        @apply border-transparent;
-    }
-}
-
 // Reduced Motion ---
 @media (prefers-reduced-motion: no-preference) {
     :focus {
