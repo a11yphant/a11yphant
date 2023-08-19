@@ -50,7 +50,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         </span>
       )}
 
-      {((finishedLevels > 0 && finishedLevels !== levels) || (finishedLevels >= 0 && challengeStatus === ChallengeStatus.InProgress)) && (
+      {challengeStatus === ChallengeStatus.InProgress && (
         <div className={clsx("flex-1 flex items-center justify-center")}>
           <p className={clsx("text-background-light font-mono text-6xl mb-0", "transition duration-300", "group-hover:text-grey-dark")}>
             {finishedLevels}/{levels} <span className={clsx("sr-only")}>levels completed</span>
