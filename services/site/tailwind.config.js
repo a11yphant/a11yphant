@@ -85,7 +85,7 @@ module.exports = {
             a: {
               color: theme("colors.grey.DEFAULT"),
               textDecorationLine: "none",
-              borderColor: theme("colors.white"),
+              borderColor: theme("colors.grey.DEFAULT"),
               fontWeight: theme("fontWeight.normal"),
               "&:hover": {
                 color: theme("colors.primary.light"),
