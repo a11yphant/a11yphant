@@ -82,6 +82,21 @@ module.exports = {
                 content: "none !important",
               },
             },
+            a: {
+              color: theme("colors.grey.DEFAULT"),
+              textDecorationLine: "none",
+              borderColor: theme("colors.grey.DEFAULT"),
+              fontWeight: theme("fontWeight.normal"),
+              "&:hover": {
+                color: theme("colors.primary.light"),
+                borderColor: theme("colors.transparent"),
+              },
+              "&:focus": {
+                borderRadius: theme("borderRadius.DEFAULT"),
+                borderColor: theme("colors.transparent"),
+                outlineOffset: theme("outlineOffset.4"),
+              },
+            },
           },
         },
       }),
