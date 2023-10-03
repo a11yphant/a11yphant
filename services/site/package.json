@@ -55,7 +55,7 @@
     "@graphql-codegen/fragment-matcher": "5.0.0",
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-operations": "4.0.1",
-    "@graphql-codegen/typescript-react-apollo": "3.3.7",
+    "@graphql-codegen/typescript-react-apollo": "4.0.0",
     "@tailwindcss/typography": "0.5.10",
     "@testing-library/dom": "9.3.3",
     "@testing-library/jest-dom": "6.1.3",
