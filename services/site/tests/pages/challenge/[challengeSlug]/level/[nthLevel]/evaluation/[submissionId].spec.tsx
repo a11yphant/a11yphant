@@ -1,7 +1,7 @@
 import { ApolloError } from "@apollo/client";
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
+import EndOfChallengeFlashMessage from "app/components/challenge/EndOfChallengeFlashMessage";
 import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmissionResult";
 import { LottieProps } from "app/components/Lottie";
 import { ChallengeBySlugDocument, CurrentUserDocument, ResultStatus } from "app/generated/graphql";
@@ -168,7 +168,7 @@ describe("Evaluation", () => {
 
       renderEvaluationPage();
       await resolveGraphQLQuery();
-      await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<ChallengeCompletedFlashMessage />));
+      await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<EndOfChallengeFlashMessage />));
     });
 
     it("shows success flash massage if is success and last level", async () => {

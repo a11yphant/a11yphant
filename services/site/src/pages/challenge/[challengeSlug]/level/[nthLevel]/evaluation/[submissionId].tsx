@@ -1,5 +1,5 @@
 import { ApolloError } from "@apollo/client";
-import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
+import EndOfChallengeFlashMessage from "app/components/challenge/EndOfChallengeFlashMessage";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
@@ -58,7 +58,7 @@ const Evaluation: React.FunctionComponent = () => {
     }
 
     if (isLastLevel && submissionResult?.status === ResultStatus.Success) {
-      flashMessageApi.show(<ChallengeCompletedFlashMessage />);
+      flashMessageApi.show(<EndOfChallengeFlashMessage />);
     }
   }, [submissionResult?.status, data?.challenge?.levels?.length]);
 
