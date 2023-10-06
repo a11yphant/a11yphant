@@ -171,7 +171,10 @@ const About: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://creativclub.at/news/cca-venus-2023-shortlist/" opensInNewTab>
+                  <InTextLink
+                    href="https://creativclub.at/submission/daniela-kubesch-luca-pircher-thomas-dax-michael-hinterhofer-johanna-wicht-fabian-heller-a11yphant/"
+                    opensInNewTab
+                  >
                     <span className="sr-only">One time</span>
                     <span aria-hidden>1x </span>
                     Shortlist in "Student of the Year"<span className="sr-only">(opens in a new tab)</span>
