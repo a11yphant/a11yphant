@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 
+import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import failOnConsole from "jest-fail-on-console";
 import { setConfig } from "next/config";
 import React from "react";
@@ -13,6 +14,8 @@ setConfig(config);
 mockUsePrefersReducedMotion();
 setupIntersectionObserverMock();
 failOnConsole();
+loadDevMessages();
+loadErrorMessages();
 
 React.useLayoutEffect = React.useEffect;
 

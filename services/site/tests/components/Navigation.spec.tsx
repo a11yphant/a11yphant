@@ -14,6 +14,12 @@ jest.mock("app/generated/graphql", () => ({
   useLogoutMutation: jest.fn(),
 }));
 
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    refresh: jest.fn(),
+  }),
+}));
+
 jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
   __esModule: true,
   default: () => <div data-testid="breadcrumbs"></div>,

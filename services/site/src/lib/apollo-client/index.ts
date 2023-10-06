@@ -1,37 +1,61 @@
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
+import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from "@apollo/experimental-nextjs-app-support/ssr";
 import { ErrorDialogApi, useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
 import crossFetch from "cross-fetch";
 import { GetServerSidePropsContext } from "next";
-import getConfig from "next/config";
 import { useMemo } from "react";
 
+import { getConfig } from "../config";
 import { createForwardCookiesToClientLink } from "./create-forward-cookies-to-client-link";
 import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-server-link";
 
-const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
+const { graphqlEndpointServer, graphqlEndpointClient } = getConfig();
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-function createApolloClient(context: GetServerSidePropsContext = null, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
+export function createApolloClientSSR(errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
   const isServer = typeof window === "undefined";
   const httpLink = new HttpLink({
-    uri: isServer ? serverRuntimeConfig.graphqlEndpointServer : publicRuntimeConfig.graphqlEndpointClient,
+    uri: isServer ? graphqlEndpointServer : graphqlEndpointClient,
+    fetchOptions: { cache: "no-store" },
+  });
+
+  const links = [createForwardCookiesToClientLink(), createForwardCookiesToServerLink(), createErrorLink({ errorDialogApi }), httpLink];
+
+  return new NextSSRApolloClient({
+    cache: new NextSSRInMemoryCache(),
+    link: from(isServer ? [new SSRMultipartLink({ stripDefer: true }), ...links] : links),
+    credentials: "same-site",
+  });
+}
+
+function createApolloClient(
+  context: GetServerSidePropsContext | null = null,
+  errorDialogApi: ErrorDialogApi | undefined,
+): ApolloClient<NormalizedCacheObject> {
+  const isServer = typeof window === "undefined";
+  const httpLink = new HttpLink({
+    uri: isServer ? graphqlEndpointServer : graphqlEndpointClient,
     fetch: crossFetch,
   });
+
+  const getCookieHeader = (): string | null => {
+    return context?.req.headers.cookie ?? null;
+  };
 
   return new ApolloClient({
     ssrMode: isServer,
     // the http link has to be at the end because it is a terminating link
-    link: from([createForwardCookiesToClientLink(context), createForwardCookiesToServerLink(context), createErrorLink({ errorDialogApi }), httpLink]),
+    link: from([createForwardCookiesToServerLink(getCookieHeader), createErrorLink({ errorDialogApi }), httpLink]),
     cache: new InMemoryCache(),
     credentials: "same-site",
   });
 }
 
 export function initializeApollo(
-  initialState: NormalizedCacheObject = null,
-  context: GetServerSidePropsContext = null,
+  initialState: NormalizedCacheObject | null = null,
+  context: GetServerSidePropsContext | null = null,
   errorDialogApi?: ErrorDialogApi,
 ): ApolloClient<NormalizedCacheObject> {
   const _apolloClient = apolloClient ?? createApolloClient(context, errorDialogApi);

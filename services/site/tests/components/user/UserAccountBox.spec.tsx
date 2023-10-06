@@ -6,6 +6,12 @@ import React from "react";
 const mockShow = jest.fn();
 const mockHide = jest.fn();
 
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    refresh: jest.fn(),
+  }),
+}));
+
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
     show: mockShow,

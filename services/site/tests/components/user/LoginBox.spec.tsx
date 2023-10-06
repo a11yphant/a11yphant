@@ -13,6 +13,12 @@ jest.mock("app/components/user/LoginForm", () => ({
   default: jest.fn(),
 }));
 
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    refresh: jest.fn(),
+  }),
+}));
+
 jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
     show: mockShowModal,
