@@ -4,7 +4,7 @@ import React from "react";
 
 const SignUpSection: React.FC = () => {
   return (
-    <div
+    <section
       className={clsx(
         "max-w-screen-3xl mx-8 my-12 flex flex-col",
         "sm:m-12 sm:mt-20",
@@ -14,7 +14,7 @@ const SignUpSection: React.FC = () => {
         "2xl:mx-auto",
       )}
     >
-      <section className={clsx("flex flex-col justify-center", "sm:mr-20", "md:mr-10", "lg:mr-18", "xl:ml-2 xl:mr-8", "2xl:ml-20 2xl:mr-24")}>
+      <div className={clsx("flex flex-col justify-center", "sm:mr-20", "md:mr-10", "lg:mr-18", "xl:ml-2 xl:mr-8", "2xl:ml-20 2xl:mr-24")}>
         <h2 className={clsx("mb-6 max-w-2xl h4 leading-tight", "md:h3 md:leading-snug", "lg:text-right", "2xl:h2 xl:leading-snug")}>
           Join{" "}
           <strong
@@ -25,8 +25,8 @@ const SignUpSection: React.FC = () => {
           and be part of the <span className="sr-only">allyphant</span>
           <span aria-hidden="true">a11yphant</span> community.
         </h2>
-      </section>
-      <section
+      </div>
+      <div
         className={clsx(
           "p-8 bg-primary rounded-lg min-w-fit",
           "xl:block xl:px-20 xl:py-16 xl:max-w-xl xl:ml-12 xl:self-center xl:shrink-0",
@@ -43,8 +43,8 @@ const SignUpSection: React.FC = () => {
           Sign up to save your progress!
         </h2>
         <UserAccountBox mode="signup" />
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
