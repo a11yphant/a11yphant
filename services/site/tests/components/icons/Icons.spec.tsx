@@ -5,8 +5,11 @@ import Github from "app/components/icons/Github";
 import Heart from "app/components/icons/Heart";
 import IllustrationCodingMan from "app/components/icons/IllustrationCodingMan";
 import IllustrationCodingWoman from "app/components/icons/IllustrationCodingWoman";
+import IllustrationCouchWoman from "app/components/icons/IllustrationCouchWoman";
+import IllustrationFloatingWoman from "app/components/icons/IllustrationFloatingWomen";
 import IllustrationLost from "app/components/icons/IllustrationLost";
 import IllustrationLostSpace from "app/components/icons/IllustrationLostSpace";
+import IllustrationPhoneWoman from "app/components/icons/IllustrationPhoneWoman";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Reset from "app/components/icons/Reset";
 import Slash from "app/components/icons/Slash";
@@ -20,6 +23,9 @@ describe.each([
   ["Chevron", Chevron],
   ["GitHub", Github],
   ["IllustrationCodingWoman", IllustrationCodingWoman],
+  ["IllustrationFloatingWoman", IllustrationFloatingWoman],
+  ["IllustrationCouchWoman", IllustrationCouchWoman],
+  ["IllustrationPhoneWoman", IllustrationPhoneWoman],
   ["IllustrationCodingMan", IllustrationCodingMan],
   ["IllustrationLost", IllustrationLost],
   ["IllustrationLostSpace", IllustrationLostSpace],
