@@ -4,17 +4,8 @@ import React from "react";
 
 const SignUpSection: React.FC = () => {
   return (
-    <section
-      className={clsx(
-        "max-w-screen-3xl mx-8 my-12 flex flex-col",
-        "sm:m-12 sm:mt-20",
-        "md:mx-24 md:mt-16",
-        "lg:flex-row",
-        "xl:mb-24 xl:min-h-[85vh] xl:items-center",
-        "2xl:mx-auto",
-      )}
-    >
-      <div className={clsx("flex flex-col justify-center", "sm:mr-20", "md:mr-10", "lg:mr-18", "xl:ml-2 xl:mr-8", "2xl:ml-20 2xl:mr-24")}>
+    <section className={clsx("my-12 flex flex-col", "sm:mb-12 sm:mt-20", "md:mt-16", "lg:flex-row", "xl:mb-24 xl:items-center")}>
+      <div className={clsx("flex flex-col justify-center", "sm:mr-20", "md:mr-10", "lg:mr-18", "xl:mr-8", "2xl:mr-24")}>
         <h2 className={clsx("mb-6 max-w-2xl h4 leading-tight", "md:h3 md:leading-snug", "lg:text-right", "2xl:h2 xl:leading-snug")}>
           Join{" "}
           <strong
