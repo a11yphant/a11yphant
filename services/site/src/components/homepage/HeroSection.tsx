@@ -4,7 +4,7 @@ import React from "react";
 
 import IllustrationFloatingWoman from "../icons/IllustrationFloatingWomen";
 
-const Hero: React.FC = () => {
+const HeroSection: React.FC = () => {
   return (
     <section
       className={clsx(
@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
           teaches web accessibility, one step at a time, broken down into manageable pieces. Completely free of charge.
         </p>
         <Link
-          href="/#challenges"
+          href="/challenges"
           className={clsx(
             "w-max mt-8 px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
             "transition duration-300",
@@ -44,4 +44,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default HeroSection;

@@ -49,7 +49,7 @@ const USPSection: React.FunctionComponent<React.PropsWithChildren<USPSectionProp
         <p className={clsx("text-grey-middle text-lg mb-6", imageLeft && "max-w-[60ch]", !imageLeft && "md:text-right lg:max-w-xl")}>{paragraph}</p>
         {displayButton && (
           <Link
-            href="/#challenges"
+            href="/challenges"
             className={clsx(
               "w-max mt-8 px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
               "transition duration-300",
