@@ -1,4 +1,4 @@
-import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
+import { getDifficultyIconByChallengeDifficulty } from "app/components/challengePage/difficulties/Difficulties";
 import Check from "app/components/icons/Check";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 import clsx from "clsx";

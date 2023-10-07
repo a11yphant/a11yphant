@@ -1,8 +1,8 @@
+import ChallengeList from "app/components/challengePage/ChallengeList";
+import { ChallengeModal } from "app/components/challengePage/challengeModal/ChallengeModal";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
-import ChallengeList from "app/components/homepage/ChallengeList";
-import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
 import Hero from "app/components/homepage/Hero";
 import SignUpSection from "app/components/homepage/SignUpSection";
 import Navigation from "app/components/Navigation";
