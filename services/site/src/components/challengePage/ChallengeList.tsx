@@ -1,4 +1,4 @@
-import Card from "app/components/homepage/Card";
+import Card from "app/components/challengePage/Card";
 import { ChallengeOverviewFragment, ChallengeStatus } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";

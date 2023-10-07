@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
+import { ChallengeModalLevelCard } from "app/components/challengePage/challengeModal/ChallengeModalLevelCard";
 import { LevelStatus } from "app/generated/graphql";
 import React from "react";
 
