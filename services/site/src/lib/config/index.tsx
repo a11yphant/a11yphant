@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
-export { ClientConfig, getClientConfig } from "./rsc";
+export type { ClientConfig } from "./rsc";
+export { getClientConfig } from "./rsc";
 import { ClientConfig } from "./rsc";
 
 const ConfigContext = createContext<ClientConfig>({
