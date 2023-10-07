@@ -1,5 +1,3 @@
-import ChallengeList from "app/components/challengePage/ChallengeList";
-import { ChallengeModal } from "app/components/challengePage/challengeModal/ChallengeModal";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
@@ -8,18 +6,19 @@ import HeroSection from "app/components/homepage/HeroSection";
 import QuoteCard from "app/components/homepage/QuoteCard";
 import SignUpSection from "app/components/homepage/SignUpSection";
 import TestimonialSection from "app/components/homepage/TestimonialSection";
+import TopChallenge from "app/components/homepage/TopChallenge";
+import TopChallengeSection from "app/components/homepage/TopChallengeSection";
 import USPSection from "app/components/homepage/USPSection";
 import IllustrationCouchWoman from "app/components/icons/IllustrationCouchWoman";
 import IllustrationPhoneWoman from "app/components/icons/IllustrationPhoneWoman";
 import Navigation from "app/components/Navigation";
-import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus, useChallengesQuery } from "app/generated/graphql";
+import { ChallengesDocument, useTopThreeChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { initializeApollo } from "app/lib/apollo-client";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import React from "react";
 
 interface HomeProps {
@@ -27,7 +26,6 @@ interface HomeProps {
 }
 
 const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
-  const router = useRouter();
   const { currentUser } = useCurrentUser();
   const flashMessageApi = useFlashMessageApi();
 
@@ -38,23 +36,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
     }
   }, [fmType]);
 
-  const { data: dataEasyChallengesOpen } = useChallengesQuery({
-    variables: { difficulty: ChallengeDifficulty.Easy, status: ChallengeStatus.Open },
-  });
-
-  const { data: dataEasyChallengesFinished } = useChallengesQuery({
-    variables: { difficulty: ChallengeDifficulty.Easy, status: ChallengeStatus.Finished },
-  });
-
-  const easyChallenges = [...(dataEasyChallengesOpen?.challenges || []), ...(dataEasyChallengesFinished?.challenges || [])];
-
-  const { data: dataChallengesInProgress } = useChallengesQuery({
-    variables: { status: ChallengeStatus.InProgress },
-  });
-
-  const onCloseModal = (): void => {
-    router.push("/", undefined, { shallow: true });
-  };
+  const topChallenges = useTopThreeChallengesQuery();
 
   return (
     <>
@@ -95,6 +77,15 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
       <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top">
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
           <HeroSection />
+          <TopChallengeSection>
+            {topChallenges.data && (
+              <>
+                <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="3400" userFavorite />
+                <TopChallenge challenge={topChallenges.data.challenge2} timesCompleted="1700" />
+                <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="1000" />
+              </>
+            )}
+          </TopChallengeSection>
           {!currentUser?.isRegistered && <SignUpSection />}
           <div className="my-8">
             <USPSection
@@ -144,17 +135,8 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             />
           </TestimonialSection>
           <CTASection />
-
-          {easyChallenges.length > 0 && (
-            <ChallengeList
-              className={clsx("2xl:mx-24")}
-              heading={dataChallengesInProgress?.challenges.length === 0 ? "All challenges" : "Other challenges"}
-              challenges={easyChallenges}
-            />
-          )}
         </div>
       </main>
-      <ChallengeModal open={!!router.query.challenge} onClose={onCloseModal} challengeSlug={router.query.challenge as string} />
       <Footer />
     </>
   );

@@ -1,0 +1,33 @@
+
+query topThreeChallenges {
+    challenge1: challengeBySlug(slug: "a-valid-html-document") {
+      id
+      slug
+      name
+      status
+      difficulty
+      numberOfLevels
+      numberOfFinishedLevels
+      isMobileFriendly
+  }
+  challenge2: challengeBySlug(slug: "headings") {
+      id
+      slug
+      name
+      status
+      difficulty
+      numberOfLevels
+      numberOfFinishedLevels
+      isMobileFriendly
+  }
+   challenge3: challengeBySlug(slug: "page-regions") {
+      id
+      slug
+      name
+      status
+      difficulty
+      numberOfLevels
+      numberOfFinishedLevels
+      isMobileFriendly
+  }
+}

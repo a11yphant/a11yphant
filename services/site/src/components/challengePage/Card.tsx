@@ -12,8 +12,9 @@ export interface CardProps {
   finishedLevels: number;
   difficulty: ChallengeDifficulty;
   challengeSlug: string;
-  challengeNumber: number;
+  challengeNumber?: number;
   isMobileFriendly?: boolean;
+  isUserFavorite?: boolean;
   challengeStatus: ChallengeStatus;
 }
 
@@ -26,6 +27,7 @@ const Card: React.FunctionComponent<CardProps> = ({
   challengeSlug,
   challengeNumber,
   isMobileFriendly,
+  isUserFavorite,
   challengeStatus,
 }) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
@@ -47,6 +49,12 @@ const Card: React.FunctionComponent<CardProps> = ({
       {isMobileFriendly && (
         <span className="text-dark font-medium px-3 py-0.5 bg-gradient-to-l from-grey-light to-light absolute right-0 top-3 rounded-l-lg shadow-md">
           Mobile friendly
+        </span>
+      )}
+
+      {isUserFavorite && (
+        <span className="text-light font-medium px-3 py-0.5 bg-gradient-to-l bg-primary absolute right-0 top-3 rounded-l-lg shadow-md">
+          <span className="sr-only">Loved</span> <span aria-hidden="true">🤍</span> by our community
         </span>
       )}
 
