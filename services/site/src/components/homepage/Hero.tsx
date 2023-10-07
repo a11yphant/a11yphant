@@ -1,33 +1,30 @@
-import { UserAccountBox } from "app/components/user/UserAccountBox";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
+import IllustrationFloatingWoman from "../icons/IllustrationFloatingWomen";
+
 const Hero: React.FC = () => {
   return (
-    <div
+    <section
       className={clsx(
-        "max-w-screen-3xl mx-8 mt-6 mb-4 flex flex-col",
-        "sm:m-12 sm:mt-20",
-        "md:mx-24 md:mt-16",
-        "xl:mb-24 xl:min-h-[85vh] xl:flex-row xl:items-center",
-        "2xl:mx-auto",
+        "mb-4 flex flex-col-reverse mt-2",
+        "xs:mt-6",
+        "sm:mb-12 sm:mt-8",
+        "md:mt-8 md:flex-row",
+        "xl:mb-24 xl:min-h-[80vh] md:flex-row xl:items-center",
       )}
     >
-      <section className={clsx("flex flex-col justify-center mb-20", "md:mb-4", "xl:shrink xl:grow xl:mb-0", "2xl:ml-24")}>
-        <h2
-          className={clsx("mb-6 max-w-2xl font-bold font-sans text-3xl leading-tight", "sm:text-4xl sm:leading-snug", "xl:text-5xl xl:leading-snug")}
-        >
+      <div className={clsx("flex flex-col justify-center mb-20", "md:mb-4", "xl:shrink xl:grow xl:mb-0")}>
+        <h1 className={clsx("mb-6 h3 leading-tight", "sm:h2 sm:leading-tight", "md:max-w-[20ch]", "xl:h1 xl:leading-tight xl:max-w-[15ch]")}>
           Learning web accessibility made easy
-        </h2>
-        <p className={clsx("text-grey-middle text-lg")}>
+        </h1>
+        <p className={clsx("text-grey-middle text-lg max-w-[60ch]")}>
           <span className="sr-only">allyphant</span>
           <span aria-hidden="true" className="text-inherit">
             a11yphant
           </span>{" "}
-          teaches web accessibility, one step at a time, broken down into manageable pieces. We call these challenges. You won't need to read large
-          amounts of text to complete those. Instead, you will learn by applying the concepts in code. Get started with your first web accessibility
-          challenge and improve your skills.
+          teaches web accessibility, one step at a time, broken down into manageable pieces. Completely free of charge.
         </p>
         <Link
           href="/#challenges"
@@ -39,27 +36,11 @@ const Hero: React.FC = () => {
         >
           Start Coding
         </Link>
-      </section>
-      <section
-        className={clsx(
-          "p-8 bg-primary rounded-lg",
-          "md:hidden",
-          "xl:block xl:px-20 xl:py-16 xl:max-w-xl xl:ml-12 xl:self-center xl:shrink-0",
-          "2xl:mr-24",
-        )}
-      >
-        <h2
-          className={clsx(
-            "mb-8 max-w-2xl font-bold font-sans text-3xl leading-tight",
-            "sm:text-4xl sm:leading-snug",
-            "xl:mr-0 xl:mb-10 xl:text-5xl xl:leading-snug",
-          )}
-        >
-          Sign up to save your progress!
-        </h2>
-        <UserAccountBox mode="signup" />
-      </section>
-    </div>
+      </div>
+      <div className={clsx("flex justify-center", "md:max-w-xs md:ml-12", "lg:max-w-sm", "xl:max-w-full")}>
+        <IllustrationFloatingWoman className="h-auto move-floating-woman" />
+      </div>
+    </section>
   );
 };
 
