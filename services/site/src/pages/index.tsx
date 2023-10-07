@@ -3,7 +3,7 @@ import { ChallengeModal } from "app/components/challengePage/challengeModal/Chal
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
-import Hero from "app/components/homepage/Hero";
+import HeroSection from "app/components/homepage/HeroSection";
 import QuoteCard from "app/components/homepage/QuoteCard";
 import SignUpSection from "app/components/homepage/SignUpSection";
 import TestimonialSection from "app/components/homepage/TestimonialSection";
@@ -93,7 +93,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
       <Navigation />
       <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top">
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
-          <Hero />
+          <HeroSection />
           {!currentUser?.isRegistered && <SignUpSection />}
           <div className="my-8">
             <USPSection
