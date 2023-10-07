@@ -11,7 +11,7 @@ import clsx from "clsx";
 import React from "react";
 import sanitizeHtml from "sanitize-html";
 
-import ChallengeCompletedFlashMessage from "../ChallengeCompletedFlashMessage";
+import EndOfChallengeFlashMessage from "../EndOfChallengeFlashMessage";
 
 interface QuizLevelProps {
   question: string;
@@ -44,7 +44,7 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
 
   React.useEffect(() => {
     if (isLastLevel && quizResult?.levelId === levelId && quizResult?.status === ResultStatus.Success) {
-      flashMessageApi.show(<ChallengeCompletedFlashMessage />);
+      flashMessageApi.show(<EndOfChallengeFlashMessage />);
     }
   }, [quizResult?.status, isLastLevel]);
 

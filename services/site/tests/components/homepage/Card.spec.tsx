@@ -1,6 +1,6 @@
 import { render, RenderResult, screen } from "@testing-library/react";
 import Card, { CardProps } from "app/components/homepage/Card";
-import { ChallengeDifficulty } from "app/generated/graphql";
+import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 import React from "react";
 
 const headingText = "Semantic HTML";
@@ -16,6 +16,7 @@ const card = (
     finishedLevels={0}
     difficulty={ChallengeDifficulty.Easy}
     challengeNumber={1}
+    challengeStatus={ChallengeStatus.InProgress}
   />
 );
 

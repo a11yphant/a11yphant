@@ -24,6 +24,7 @@ describe("user service", () => {
   ): UserService => {
     const hashService = createMock<HashService>({
       ...partials?.hashService,
+      make: () => Promise.resolve("hash"),
     });
 
     const configService = createMock<ConfigService>(createConfigServiceMock(partials?.configs));
@@ -192,6 +193,7 @@ describe("user service", () => {
       });
 
       const oldTime = user.lastSeen;
+      await new Promise((resolve) => setTimeout(resolve, 10));
 
       await service.seenUser(user.id);
 

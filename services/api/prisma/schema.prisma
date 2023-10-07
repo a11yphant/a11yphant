@@ -173,6 +173,7 @@ model User {
   password             String?
   lastSeen             DateTime              @default(now())
   verifiedAt           DateTime?
+  createdAt            DateTime?             @default(now())
   codeLevelSubmissions CodeLevelSubmission[]
   quizLevelSubmissions QuizLevelSubmission[]
 

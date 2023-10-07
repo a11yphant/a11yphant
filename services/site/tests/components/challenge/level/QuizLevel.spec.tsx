@@ -1,7 +1,7 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ChallengeCompletedFlashMessage from "app/components/challenge/ChallengeCompletedFlashMessage";
+import EndOfChallengeFlashMessage from "app/components/challenge/EndOfChallengeFlashMessage";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import { ResultStatus, SubmitQuizLevelAnswerDocument } from "app/generated/graphql";
 import router from "next/router";
@@ -158,7 +158,7 @@ describe("Quiz Level", () => {
 
     fireEvent.click(screen.getByText(mockAnswers[0].text));
     fireEvent.click(screen.getByText("Submit"));
-    await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<ChallengeCompletedFlashMessage />));
+    await waitFor(() => expect(mockShowFlashMessage).toHaveBeenCalledWith(<EndOfChallengeFlashMessage />));
   });
 
   it("renders submit button", () => {
