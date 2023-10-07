@@ -1,4 +1,5 @@
 export type ClientConfig = {
+  host: string;
   graphqlEndpointClient: string;
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
@@ -6,6 +7,7 @@ export type ClientConfig = {
 };
 
 export const getClientConfig = (): ClientConfig => ({
+  host: process.env.SITE_HOST || "localhost",
   graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT,
   githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT,
   twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT,
