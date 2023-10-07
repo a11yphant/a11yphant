@@ -3,6 +3,7 @@ import { ChallengeModal } from "app/components/challengePage/challengeModal/Chal
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
+import CTASection from "app/components/homepage/CTASection";
 import HeroSection from "app/components/homepage/HeroSection";
 import QuoteCard from "app/components/homepage/QuoteCard";
 import SignUpSection from "app/components/homepage/SignUpSection";
@@ -142,6 +143,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               url="https://twitter.com/jbuller/status/1512392777346211844"
             />
           </TestimonialSection>
+          <CTASection />
 
           {easyChallenges.length > 0 && (
             <ChallengeList
