@@ -15,7 +15,7 @@ const queryResult = { user: { __typename: "user", id: 4 } };
 describe("apollo client", () => {
   describe("initialize apollo client", () => {
     it("returns an apollo client", () => {
-      const client = initializeApollo();
+      const client = initializeApollo("/graphql");
 
       expect(client).toBeTruthy();
     });
@@ -27,7 +27,7 @@ describe("apollo client", () => {
         data: queryResult,
       });
 
-      const client = initializeApollo(cache.extract());
+      const client = initializeApollo("/graphql", cache.extract());
 
       expect(
         client.readQuery({
@@ -40,7 +40,7 @@ describe("apollo client", () => {
 
 describe("useApollo", () => {
   it("returns a client", () => {
-    const { result } = renderHook(() => useApollo(null));
+    const { result } = renderHook(() => useApollo("/graphql", null));
 
     expect(result.current).toBeTruthy();
   });

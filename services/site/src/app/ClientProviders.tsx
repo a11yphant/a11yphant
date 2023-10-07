@@ -5,20 +5,23 @@ import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { createApolloClientSSR } from "app/lib/apollo-client";
+import { ClientConfig, ConfigProvider } from "app/lib/config";
 
-const ClientProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
+const ClientProviders: React.FC<React.PropsWithChildren<{ config: ClientConfig }>> = ({ config, children }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
-  const apolloClient = createApolloClientSSR(errorDialogApi);
+  const apolloClient = createApolloClientSSR(config.graphqlEndpointClient, errorDialogApi);
 
   return (
     <>
-      <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
-        <ApolloNextAppProvider makeClient={() => apolloClient}>
-          <FlashMessageContextProvider>
-            <UserAccountModalProvider>{children}</UserAccountModalProvider>
-          </FlashMessageContextProvider>
-        </ApolloNextAppProvider>
-      </ErrorDialogProvider>
+      <ConfigProvider value={config}>
+        <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
+          <ApolloNextAppProvider makeClient={() => apolloClient}>
+            <FlashMessageContextProvider>
+              <UserAccountModalProvider>{children}</UserAccountModalProvider>
+            </FlashMessageContextProvider>
+          </ApolloNextAppProvider>
+        </ErrorDialogProvider>
+      </ConfigProvider>
     </>
   );
 };

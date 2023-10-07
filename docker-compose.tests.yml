@@ -26,7 +26,7 @@ services:
       SITE_HOST: 0.0.0.0
       SITE_PORT: 3001
       SITE_GRAPHQL_ENDPOINT_SERVER: http://api:3000/graphql
-      NEXT_PUBLIC_SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3000/graphql
+      SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3000/graphql
     ports:
       - 3001:3001
     depends_on:

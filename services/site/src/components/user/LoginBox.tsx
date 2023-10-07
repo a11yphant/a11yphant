@@ -1,6 +1,6 @@
 "use client";
 
-import { getConfig } from "app/lib/config";
+import { useClientConfig } from "app/lib/config";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -13,9 +13,8 @@ import ThirdPartyAuthLink from "./ThirdPartyAuthLink";
 import UnderlinedTextButton from "./UnderlinedTextButton";
 import { useUserAccountModalApi } from "./useUserAccountModalApi";
 
-const { githubLoginEndpoint, twitterLoginEndpoint } = getConfig();
-
 const LoginBox: React.FC = () => {
+  const { githubLoginEndpoint, twitterLoginEndpoint } = useClientConfig();
   const userAccountModalApi = useUserAccountModalApi();
   const flashMessageApi = useFlashMessageApi();
   const router = useRouter();

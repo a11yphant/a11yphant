@@ -38,7 +38,7 @@ jest.mock("app/components/evaluation/usePollSubmissionResult", () => ({
 }));
 
 jest.mock("app/lib/apollo-client", () => ({
-  initializeApollo: (_, context) => context.apolloClient,
+  initializeApollo: (_, __, context) => context.apolloClient,
 }));
 
 const mockShowFlashMessage = jest.fn();

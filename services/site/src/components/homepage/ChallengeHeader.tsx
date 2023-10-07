@@ -1,6 +1,6 @@
 "use client";
 
-import { getConfig } from "app/lib/config";
+import { useClientConfig } from "app/lib/config";
 import clsx from "clsx";
 import React from "react";
 
@@ -9,14 +9,13 @@ import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 import { useUserAccountModalApi } from "../user/useUserAccountModalApi";
 
-const { githubLoginEndpoint, twitterLoginEndpoint } = getConfig();
-
 export interface ChallengeHeaderProps {
   className?: string;
   userLoggedIn?: boolean;
 }
 
 const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ className, userLoggedIn }) => {
+  const { githubLoginEndpoint, twitterLoginEndpoint } = useClientConfig();
   const userAccountModalApi = useUserAccountModalApi();
 
   return (

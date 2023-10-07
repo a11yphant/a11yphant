@@ -3,7 +3,9 @@ import A11yphantLogoWithoutText from "app/components/icons/A11yphantLogoWithoutT
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
+import { getClientConfig } from "app/lib/config";
 import clsx from "clsx";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
@@ -283,3 +285,11 @@ const About: React.FunctionComponent = () => {
 };
 
 export default About;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      config: getClientConfig(),
+    },
+  };
+};

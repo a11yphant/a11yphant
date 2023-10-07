@@ -6,18 +6,15 @@ import crossFetch from "cross-fetch";
 import { GetServerSidePropsContext } from "next";
 import { useMemo } from "react";
 
-import { getConfig } from "../config";
 import { createForwardCookiesToClientLink } from "./create-forward-cookies-to-client-link";
 import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-server-link";
 
-const { graphqlEndpointServer, graphqlEndpointClient } = getConfig();
-
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-export function createApolloClientSSR(errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
+export function createApolloClientSSR(uri: string, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
   const isServer = typeof window === "undefined";
   const httpLink = new HttpLink({
-    uri: isServer ? graphqlEndpointServer : graphqlEndpointClient,
+    uri,
     fetchOptions: { cache: "no-store" },
   });
 
@@ -31,17 +28,18 @@ export function createApolloClientSSR(errorDialogApi: ErrorDialogApi): ApolloCli
 }
 
 function createApolloClient(
+  uri: string,
   context: GetServerSidePropsContext | null = null,
   errorDialogApi: ErrorDialogApi | undefined,
 ): ApolloClient<NormalizedCacheObject> {
   const isServer = typeof window === "undefined";
   const httpLink = new HttpLink({
-    uri: isServer ? graphqlEndpointServer : graphqlEndpointClient,
+    uri,
     fetch: crossFetch,
   });
 
   const getCookieHeader = (): string | null => {
-    return context?.req.headers.cookie ?? null;
+    return context?.req?.headers?.cookie ?? null;
   };
 
   return new ApolloClient({
@@ -54,11 +52,12 @@ function createApolloClient(
 }
 
 export function initializeApollo(
+  uri: string,
   initialState: NormalizedCacheObject | null = null,
   context: GetServerSidePropsContext | null = null,
   errorDialogApi?: ErrorDialogApi,
 ): ApolloClient<NormalizedCacheObject> {
-  const _apolloClient = apolloClient ?? createApolloClient(context, errorDialogApi);
+  const _apolloClient = apolloClient ?? createApolloClient(uri, context, errorDialogApi);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
@@ -79,10 +78,14 @@ export function initializeApollo(
   return _apolloClient;
 }
 
-export function useApollo(initialState: NormalizedCacheObject, customErrorDialogApi?: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
+export function useApollo(
+  uri: string,
+  initialState: NormalizedCacheObject,
+  customErrorDialogApi?: ErrorDialogApi,
+): ApolloClient<NormalizedCacheObject> {
   const internalErrorDialogApi = useErrorDialogApi();
   const errorDialogApi = customErrorDialogApi ?? internalErrorDialogApi;
 
-  const store = useMemo(() => initializeApollo(initialState, null, errorDialogApi), [errorDialogApi, initialState]);
+  const store = useMemo(() => initializeApollo(uri, initialState, null, errorDialogApi), [errorDialogApi, initialState]);
   return store;
 }
