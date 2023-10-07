@@ -4,7 +4,12 @@ import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMess
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
 import Hero from "app/components/homepage/Hero";
+import QuoteCard from "app/components/homepage/QuoteCard";
 import SignUpSection from "app/components/homepage/SignUpSection";
+import TestimonialSection from "app/components/homepage/TestimonialSection";
+import USPSection from "app/components/homepage/USPSection";
+import IllustrationCouchWoman from "app/components/icons/IllustrationCouchWoman";
+import IllustrationPhoneWoman from "app/components/icons/IllustrationPhoneWoman";
 import Navigation from "app/components/Navigation";
 import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus, useChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
@@ -90,6 +95,53 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
           <Hero />
           {!currentUser?.isRegistered && <SignUpSection />}
+          <div className="my-8">
+            <USPSection
+              imageLeft
+              heading="Study from the comfort of your home"
+              paragraph="For challenges on a11yphant you won't need to read large amounts. Instead, you will learn by applying the concepts in code."
+            >
+              <IllustrationCouchWoman className="h-auto mb-4 max-w-[15rem] md:max-w-full md:mb-0" />
+            </USPSection>
+            <USPSection
+              heading="Interactive coding challenges and quizzes"
+              paragraph="With a phone, computer or tablet, a11yphant works wherever you are. Get started with your first web accessibility challenge and improve your skills."
+            >
+              <IllustrationPhoneWoman className="h-auto mb-4 max-w-[15rem] md:max-w-full md:mb-0" />
+            </USPSection>
+          </div>
+          <TestimonialSection>
+            <QuoteCard
+              quote="Thank you for your wonderful work!"
+              author="Vitaly Friedman (@vitalyf)"
+              url="https://twitter.com/vitalyf/status/1592382098391842817"
+            />
+            <QuoteCard
+              quote="a11yphant is such a good resource to learn the basics of HTML accessibility by doing."
+              author="Kitty Giraudel (@KittyGiraudel)"
+              url="https://twitter.com/KittyGiraudel/status/1586278237407440897"
+            />
+            <QuoteCard
+              quote="I shared this with the frontend teams in my company yesterday. Looking forward to it being expanded with more levels and topics."
+              author="Daniel Yuschick (@DanielYuschick)"
+              url="https://twitter.com/DanielYuschick/status/1504369896460894208"
+            />
+            <QuoteCard
+              quote="Love it - much better than just documentation. Will put it on our developer onboarding list."
+              author="@a11y_mmo"
+              url="https://twitter.com/a11y_mmo/status/1592598812237139968"
+            />
+            <QuoteCard
+              quote="This is amazing. I was thinking of picking up my accessibility learnings again. This will be useful."
+              author="Kehinde (@adeleke5140)"
+              url="https://twitter.com/adeleke5140/status/1504164112049356805"
+            />
+            <QuoteCard
+              quote="When thinking about how to train developers on #accessibility (after researching their views) this interactive coding tutorial by a11yphant is what I envisaged.  It's outstanding."
+              author="James Buller (@jbuller)"
+              url="https://twitter.com/jbuller/status/1512392777346211844"
+            />
+          </TestimonialSection>
 
           {easyChallenges.length > 0 && (
             <ChallengeList
