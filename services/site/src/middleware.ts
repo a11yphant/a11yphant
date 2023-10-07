@@ -5,14 +5,15 @@ import { Cookie, createForwardCookiesToClientLink } from "app/lib/apollo-client/
 import { SetCookieFunction } from "app/lib/apollo-client/create-forward-cookies-to-client-link";
 import { GetCookieHeaderFunction } from "app/lib/apollo-client/create-forward-cookies-to-server-link";
 import { NextRequest, NextResponse } from "next/server";
+
 import { getConfig } from "./lib/config/rsc";
 
 export default async function middleware(req: NextRequest): Promise<NextResponse | void> {
   const url = req.nextUrl.clone();
 
   if (url.pathname === "/" && url.searchParams.has("challenge")) {
-    const { host } = getConfig();
-    return NextResponse.redirect(`https://${host}/challenge/${url.searchParams.get("challenge")}`, 308);
+    const { baseUrl } = getConfig();
+    return NextResponse.redirect(`${baseUrl}/challenge/${url.searchParams.get("challenge")}`, 308);
   }
 
   if (process.env.SITE_GRAPHQL_ENDPOINT_SERVER && url.pathname === "/graphql") {
