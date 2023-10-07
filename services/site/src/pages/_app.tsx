@@ -46,11 +46,11 @@ const ConditionalWrapper = <T,>({
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
-  const apolloClient = useApollo(pageProps.config.graphqlEndpointClient, pageProps.initialApolloState, errorDialogApi);
+  const apolloClient = useApollo(pageProps.config?.graphqlEndpointClient, pageProps.initialApolloState, errorDialogApi);
 
   return (
     <>
-      <Head>{pageProps.config.isPlausibleEnabled && <script defer data-domain={pageProps.config.domain} src="/js/script.js" />}</Head>
+      <Head>{pageProps.config?.isPlausibleEnabled && <script defer data-domain={pageProps.config.domain} src="/js/script.js" />}</Head>
       <ConfigProvider value={pageProps.config}>
         <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
           <ApolloProvider client={apolloClient}>
