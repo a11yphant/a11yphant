@@ -7,20 +7,13 @@ jest.mock("app/generated/graphql", () => ({
 }));
 
 describe("Hero Section", () => {
-  it("renders two headings", () => {
+  it("renders one heading", () => {
     render(
       <MockedProvider>
         <HeroSection />
       </MockedProvider>,
     );
 
-    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(2);
-    expect(screen.getByRole("heading", { level: 2, name: /Sign up/ }));
-  });
-
-  it("renders a UserAccountBox", () => {
-    render(<HeroSection />);
-
-    expect(screen.getByRole("heading", { level: 2, name: "Sign up to save your progress!" })).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
 });
