@@ -1,16 +1,16 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
-import Hero from "app/components/homepage/Hero";
+import HeroSection from "app/components/homepage/HeroSection";
 
 jest.mock("app/generated/graphql", () => ({
   useRegisterMutation: jest.fn().mockReturnValue([{}, {}]),
 }));
 
-describe("Hero", () => {
+describe("Hero Section", () => {
   it("renders two headings", () => {
     render(
       <MockedProvider>
-        <Hero />
+        <HeroSection />
       </MockedProvider>,
     );
 
@@ -19,7 +19,7 @@ describe("Hero", () => {
   });
 
   it("renders a UserAccountBox", () => {
-    render(<Hero />);
+    render(<HeroSection />);
 
     expect(screen.getByRole("heading", { level: 2, name: "Sign up to save your progress!" })).toBeInTheDocument();
   });
