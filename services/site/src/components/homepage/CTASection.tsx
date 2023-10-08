@@ -2,9 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-import IllustrationRocket from "../icons/IllustrationRocket";
-
-const CTASection: React.FC = () => {
+const CTASection: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
   return (
     <section
       className={clsx(
@@ -39,7 +37,7 @@ const CTASection: React.FC = () => {
       <div
         className={clsx("flex justify-end min-w-[46%] mt-4 xs:-mt-20", "md:mt-0", "md:max-w-xs md:justify-center", "lg:max-w-sm", "xl:max-w-full")}
       >
-        <IllustrationRocket className="h-auto" />
+        {children}
       </div>
     </section>
   );
