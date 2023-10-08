@@ -39,7 +39,7 @@ const Footer: React.FunctionComponent = () => (
 
       <nav className={clsx("mt-10 mb-6 flex flex-col items-start justify-start", "sm:flex-row", "xl:my-0")} aria-label="Footer">
         <div className={clsx("flex flex-col mb-5", "xl:mb-0")}>
-          <h2 className="h6 mb-3 uppercase">Project</h2>
+          <h3 className="h6 mb-3 uppercase">Project</h3>
           <LinkList>
             <LinkListItem href="/about" title="About" />
             <LinkListItem href="/press-kit" title="Press Kit" />
@@ -48,7 +48,7 @@ const Footer: React.FunctionComponent = () => (
         </div>
 
         <div className={clsx("flex flex-col my-5", "sm:my-0 sm:mx-9")}>
-          <h2 className="h6 mb-3 uppercase">Social</h2>
+          <h3 className="h6 mb-3 uppercase">Social</h3>
           <LinkList>
             <LinkListItem href="mailto:info@a11yphant.com" title="Contact" />
             <LinkListItem href="https://twitter.com/a11yphant" title="Twitter" />
@@ -57,7 +57,7 @@ const Footer: React.FunctionComponent = () => (
         </div>
 
         <div className={clsx("flex flex-col mt-5", "sm:mt-0")}>
-          <h2 className="h6 mb-3 uppercase">Site</h2>
+          <h3 className="h6 mb-3 uppercase">Site</h3>
           <LinkList>
             <LinkListItem href="/legal-notice" title="Legal Notice" />
             <LinkListItem href="/privacy-policy" title="Privacy Policy" />
