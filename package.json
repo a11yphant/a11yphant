@@ -4,6 +4,7 @@
   "description": "",
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "private": true,
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "prepare": "husky install",
     "postinstall": "npm run package-dependencies",
