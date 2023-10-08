@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-import { useFlashMessageApi } from "../common/flashMessage/FlashMessageContext";
 import Github from "../icons/Github";
 import Twitter from "../icons/Twitter";
 import LoginForm from "./LoginForm";
@@ -16,13 +15,11 @@ import { useUserAccountModalApi } from "./useUserAccountModalApi";
 const LoginBox: React.FC = () => {
   const { githubLoginEndpoint, twitterLoginEndpoint } = useClientConfig();
   const userAccountModalApi = useUserAccountModalApi();
-  const flashMessageApi = useFlashMessageApi();
   const router = useRouter();
 
   const onSuccessfulLogin = (): void => {
-    flashMessageApi.show("Welcome back!");
     userAccountModalApi.hide();
-    router.refresh();
+    router.push("?fm-type=login-success");
   };
 
   return (

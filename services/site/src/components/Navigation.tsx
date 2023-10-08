@@ -30,7 +30,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
 
   const logout = async (): Promise<void> => {
     await triggerLogout();
-    router.refresh();
+    router.push("/");
   };
 
   return (

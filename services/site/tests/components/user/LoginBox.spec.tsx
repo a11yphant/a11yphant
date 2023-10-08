@@ -6,7 +6,6 @@ import React from "react";
 
 const mockShowModal = jest.fn();
 const mockHideModal = jest.fn();
-const mockShowFlashMessage = jest.fn();
 
 jest.mock("app/components/user/LoginForm", () => ({
   __esModule: true,
@@ -15,7 +14,7 @@ jest.mock("app/components/user/LoginForm", () => ({
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
-    refresh: jest.fn(),
+    push: jest.fn(),
   }),
 }));
 
@@ -23,12 +22,6 @@ jest.mock("app/components/user/useUserAccountModalApi", () => ({
   useUserAccountModalApi: () => ({
     show: mockShowModal,
     hide: mockHideModal,
-  }),
-}));
-
-jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
-  useFlashMessageApi: () => ({
-    show: mockShowFlashMessage,
   }),
 }));
 
@@ -92,15 +85,5 @@ describe("login box", () => {
     render(<LoginBox />);
 
     expect(mockHideModal).toHaveBeenCalled();
-  });
-
-  it("shows a flash message after a successful login", () => {
-    (LoginForm as jest.Mock).mockImplementation((props: Parameters<typeof LoginForm>[0]) => {
-      props.onAfterSubmit();
-      return <div>LoginForm</div>;
-    });
-    render(<LoginBox />);
-
-    expect(mockShowFlashMessage).toHaveBeenCalledWith(expect.any(String));
   });
 });

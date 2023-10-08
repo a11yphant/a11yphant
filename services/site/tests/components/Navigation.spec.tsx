@@ -16,7 +16,7 @@ jest.mock("app/generated/graphql", () => ({
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
-    refresh: jest.fn(),
+    push: jest.fn(),
   }),
 }));
 

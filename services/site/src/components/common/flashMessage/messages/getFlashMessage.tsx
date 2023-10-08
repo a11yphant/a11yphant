@@ -11,6 +11,7 @@ export enum FlashMessageEnum {
   EMAIL_CONFIRMATION_FAILED = "email-confirmation-failed",
   EMAIL_CONFIRMATION_SUCCESSFUL = "email-confirmation-successful",
   OAUTH_LOGIN_FAILED = "oauth-login-failed",
+  LOGIN_SUCCESS = "login-success",
 }
 
 interface FlashMessage {
@@ -27,6 +28,7 @@ const flashMessages: FlashMessages = {
   [FlashMessageEnum.EMAIL_CONFIRMATION_FAILED]: { message: <EmailConfirmationFailedMessage />, type: FlashMessageType.ALERT },
   [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: { message: <EmailConfirmationSuccessfulMessage />, type: FlashMessageType.STATUS },
   [FlashMessageEnum.OAUTH_LOGIN_FAILED]: { message: <OAuthLoginFailedMessage />, type: FlashMessageType.ALERT },
+  [FlashMessageEnum.LOGIN_SUCCESS]: { message: <>Welcome Back!</>, type: FlashMessageType.STATUS },
 };
 
 export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): FlashMessage => {
