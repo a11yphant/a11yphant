@@ -7,14 +7,16 @@ import Card from "../challengePage/Card";
 interface TopChallengeProps {
   challenge: ChallengeOverviewFragment;
   timesCompleted: string;
-  userFavorite?: boolean;
+  isUserFavorite?: boolean;
+  isNew?: boolean;
 }
-const TopChallenge: React.FunctionComponent<React.PropsWithChildren<TopChallengeProps>> = ({ challenge, timesCompleted, userFavorite }) => {
+const TopChallenge: React.FunctionComponent<React.PropsWithChildren<TopChallengeProps>> = ({ challenge, timesCompleted, isUserFavorite, isNew }) => {
   return (
     <div className={clsx("px-4 py-4 flex flex-col items-center")}>
       <Card
         isMobileFriendly={challenge.isMobileFriendly}
-        isUserFavorite={userFavorite}
+        isUserFavorite={isUserFavorite}
+        isNew={isNew}
         key={challenge.id}
         className={clsx("mb-6 lg:mb-12", "h-56 sm:h-64")}
         challengeSlug={challenge.slug}

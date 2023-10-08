@@ -83,9 +83,9 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           <TopChallengeSection>
             {topChallenges.data && (
               <>
-                <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="3400" userFavorite />
+                <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="3400" isUserFavorite />
                 <TopChallenge challenge={topChallenges.data.challenge2} timesCompleted="1700" />
-                <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="1000" />
+                <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="60" isNew />
               </>
             )}
           </TopChallengeSection>
