@@ -7,7 +7,7 @@ import Monitor from "../icons/Monitor";
 
 const IconSection: React.FunctionComponent<React.PropsWithChildren> = () => {
   return (
-    <section className={clsx("flex flex-col items-center", "sm:my-20", "xl:my-24")}>
+    <section className={clsx("flex flex-col items-center", "sm:my-20", "xl:my-28")}>
       <h2 className={clsx("h4 mb-10", "sm:h3 sm:max-w-[38ch] sm:text-center", "xl:h2 xl:max-w-[38ch]")}>
         We believe that{" "}
         <strong className={clsx("text-primary-text h4", "sm:h3 sm:leading-snug sm:text-primary-text", "xl:h2 xl:leading-snug xl:text-primary-text")}>
@@ -23,7 +23,7 @@ const IconSection: React.FunctionComponent<React.PropsWithChildren> = () => {
               "block py-1.5 px-4 mb-8 mt-4 text-light font-medium not-italic uppercase tracking-[0.18rem] text-center text-sm max-w-[33ch]",
             )}
           >
-            all Challenges on our platform are free.
+            All Challenges on our platform are free.
           </p>
         </div>
         <div className={clsx("flex flex-col items-center")}>
