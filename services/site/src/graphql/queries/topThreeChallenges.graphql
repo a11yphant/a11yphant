@@ -20,7 +20,7 @@ query topThreeChallenges {
       numberOfFinishedLevels
       isMobileFriendly
   }
-   challenge3: challengeBySlug(slug: "web-accessibility-intro") {
+   challenge3: challengeBySlug(slug: "intro-to-web-accessibility") {
       id
       slug
       name
