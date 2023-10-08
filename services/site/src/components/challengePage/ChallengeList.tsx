@@ -27,7 +27,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
       </div>
       <ul className={clsx("flex flex-row flex-wrap gap-x-12", "sm:gap-x-14", "md:gap-x-16", "lg:gap-x-24")}>
         {challenges.map((challenge) => (
-          <li>
+          <li key={challenge.id}>
             <Card
               isMobileFriendly={challenge.isMobileFriendly}
               key={challenge.id}
