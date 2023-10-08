@@ -19,10 +19,10 @@ export function match(key: string): RouteInfo | null {
   if (key === "/") {
     return {
       getBreadcrumbInfo: async () => {
-        return {
+        return Promise.resolve({
           href: "/",
           breadcrumb: "Challenges",
-        };
+        });
       },
     };
   } else if (key.match(/^\/challenge\/[\w-]+$/) !== null) {
@@ -46,13 +46,13 @@ export function match(key: string): RouteInfo | null {
       getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
         const { challengeSlug, nthLevel } = urlParams;
 
-        return {
+        return Promise.resolve({
           href: `/challenge/${challengeSlug}/level/${nthLevel}`,
           breadcrumb: `Level ${Number(nthLevel).toLocaleString("de-AT", {
             minimumIntegerDigits: 2,
             useGrouping: false,
           })}`,
-        };
+        });
       },
     };
   } else if (key.match(/^\/challenge\/[\w-]+\/level\/[\w-]+\/evaluation$/) !== null) {
@@ -60,10 +60,10 @@ export function match(key: string): RouteInfo | null {
       getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
         const { challengeSlug, nthLevel } = urlParams;
 
-        return {
+        return Promise.resolve({
           href: `/challenge/${challengeSlug}/level/${nthLevel}/evaluation`,
           breadcrumb: "Evaluation",
-        };
+        });
       },
     };
   }

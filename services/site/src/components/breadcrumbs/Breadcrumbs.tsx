@@ -4,12 +4,11 @@ import { BreadcrumbInfo } from "app/components/breadcrumbs/routes";
 import Slash from "app/components/icons/Slash";
 import clsx from "clsx";
 import Link from "next/link";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import React from "react";
 
 const Breadcrumbs: React.FunctionComponent = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const params = useParams();
   const apolloClient = useApolloClient();
 
@@ -19,18 +18,16 @@ const Breadcrumbs: React.FunctionComponent = () => {
     // Workaround for `Warning: Can't perform a React state update on an unmounted component.`
     // as seen here: https://stackoverflow.com/a/60907638
     let isMounted = true;
-    getRouteList(pathname || "", { ...params, ...(searchParams ? Object.fromEntries(searchParams.entries()) : {}) }, apolloClient).then(
-      (routeList) => {
-        if (isMounted) {
-          setRouteList(routeList);
-        }
-      },
-    );
+    getRouteList(pathname || "", params, apolloClient).then((routeList) => {
+      if (isMounted) {
+        setRouteList(routeList);
+      }
+    });
 
     return () => {
       isMounted = false;
     };
-  }, [apolloClient, searchParams, pathname, params]);
+  }, [apolloClient, pathname, JSON.stringify(params)]);
 
   return (
     <>
