@@ -13,6 +13,7 @@ import { useApollo } from "app/lib/apollo-client";
 import { ConfigProvider } from "app/lib/config";
 import Head from "next/head";
 import Router from "next/router";
+import Script from "next/script";
 import NProgress from "nprogress";
 import React from "react";
 
@@ -50,7 +51,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <>
-      <Head>{pageProps.config?.isPlausibleEnabled && <script defer data-domain={pageProps.config.domain} src="/js/script.js" />}</Head>
+      <Head>{pageProps.config?.isPlausibleEnabled && <Script defer data-domain={pageProps.config.domain} src="/js/script.js" />}</Head>
       <ConfigProvider value={pageProps.config}>
         <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
           <ApolloProvider client={apolloClient}>
