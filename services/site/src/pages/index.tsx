@@ -4,6 +4,7 @@ import Footer from "app/components/Footer";
 import CTASection from "app/components/homepage/CTASection";
 import HeroSection from "app/components/homepage/HeroSection";
 import IconSection from "app/components/homepage/IconSection";
+import MediaSection from "app/components/homepage/MediaSection";
 import QuoteCard from "app/components/homepage/QuoteCard";
 import SignUpSection from "app/components/homepage/SignUpSection";
 import TestimonialSection from "app/components/homepage/TestimonialSection";
@@ -78,6 +79,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
       <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top">
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
           <HeroSection />
+          <MediaSection />
           <TopChallengeSection>
             {topChallenges.data && (
               <>

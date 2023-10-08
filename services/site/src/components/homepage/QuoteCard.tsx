@@ -12,7 +12,7 @@ const QuoteCard: React.FunctionComponent<React.PropsWithChildren<QuoteCardProps>
     <blockquote
       cite={url}
       className={clsx(
-        "flex flex-col relative grow shrink items-center justify-center p-6 m-2 container-dark",
+        "flex flex-col relative grow shrink basis-96 items-center justify-center p-6 m-2 container-dark",
         "md:p-8 md:mx-6 md:my-4",
         "lg:mx-8 lg:my-6",
       )}
