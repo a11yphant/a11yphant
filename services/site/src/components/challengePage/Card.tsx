@@ -15,6 +15,7 @@ export interface CardProps {
   challengeNumber?: number;
   isMobileFriendly?: boolean;
   isUserFavorite?: boolean;
+  isNew?: boolean;
   challengeStatus: ChallengeStatus;
 }
 
@@ -28,6 +29,7 @@ const Card: React.FunctionComponent<CardProps> = ({
   challengeNumber,
   isMobileFriendly,
   isUserFavorite,
+  isNew,
   challengeStatus,
 }) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
@@ -56,6 +58,10 @@ const Card: React.FunctionComponent<CardProps> = ({
         <span className="text-light font-medium px-3 py-0.5 bg-gradient-to-l bg-primary absolute right-0 top-3 rounded-l-lg shadow-md">
           <span className="sr-only">Loved</span> <span aria-hidden="true">🤍</span> by our community
         </span>
+      )}
+
+      {isNew && (
+        <span className="text-light font-medium px-3 py-0.5 bg-gradient-to-l bg-primary absolute right-0 top-12 rounded-l-lg shadow-md">New</span>
       )}
 
       {challengeStatus === ChallengeStatus.InProgress && (
