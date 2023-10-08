@@ -3,6 +3,7 @@ import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMe
 import Footer from "app/components/Footer";
 import CTASection from "app/components/homepage/CTASection";
 import HeroSection from "app/components/homepage/HeroSection";
+import IconSection from "app/components/homepage/IconSection";
 import QuoteCard from "app/components/homepage/QuoteCard";
 import SignUpSection from "app/components/homepage/SignUpSection";
 import TestimonialSection from "app/components/homepage/TestimonialSection";
@@ -86,6 +87,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               </>
             )}
           </TopChallengeSection>
+          <IconSection />
           {!currentUser?.isRegistered && <SignUpSection />}
           <div className="my-8">
             <USPSection
