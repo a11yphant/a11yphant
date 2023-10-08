@@ -28,7 +28,7 @@ const flashMessages: FlashMessages = {
   [FlashMessageEnum.EMAIL_CONFIRMATION_FAILED]: { message: <EmailConfirmationFailedMessage />, type: FlashMessageType.ALERT },
   [FlashMessageEnum.EMAIL_CONFIRMATION_SUCCESSFUL]: { message: <EmailConfirmationSuccessfulMessage />, type: FlashMessageType.STATUS },
   [FlashMessageEnum.OAUTH_LOGIN_FAILED]: { message: <OAuthLoginFailedMessage />, type: FlashMessageType.ALERT },
-  [FlashMessageEnum.LOGIN_SUCCESS]: { message: <>Welcome Back!</>, type: FlashMessageType.STATUS },
+  [FlashMessageEnum.LOGIN_SUCCESS]: { message: <>Welcome back!</>, type: FlashMessageType.STATUS },
 };
 
 export const getFlashMessage = (flashMessageEnum: FlashMessageEnum): FlashMessage => {
