@@ -2,9 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-import IllustrationFloatingWoman from "../icons/IllustrationFloatingWomen";
-
-const HeroSection: React.FC = () => {
+const HeroSection: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
   return (
     <section
       className={clsx(
@@ -37,9 +35,7 @@ const HeroSection: React.FC = () => {
           Start Coding
         </Link>
       </div>
-      <div className={clsx("flex justify-center", "md:max-w-xs md:ml-12", "lg:max-w-sm", "xl:max-w-full")}>
-        <IllustrationFloatingWoman className="h-auto move-floating-woman" />
-      </div>
+      <div className={clsx("flex justify-center mb-6", "md:mb-0 md:max-w-xs md:ml-12", "lg:max-w-sm", "xl:max-w-full")}>{children}</div>
     </section>
   );
 };

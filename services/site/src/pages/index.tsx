@@ -1,3 +1,4 @@
+import Button from "app/components/buttons/Button";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
@@ -12,7 +13,9 @@ import TopChallenge from "app/components/homepage/TopChallenge";
 import TopChallengeSection from "app/components/homepage/TopChallengeSection";
 import USPSection from "app/components/homepage/USPSection";
 import IllustrationCouchWoman from "app/components/icons/IllustrationCouchWoman";
+import IllustrationFloatingWoman from "app/components/icons/IllustrationFloatingWomen";
 import IllustrationPhoneWoman from "app/components/icons/IllustrationPhoneWoman";
+import IllustrationRocket from "app/components/icons/IllustrationRocket";
 import Navigation from "app/components/Navigation";
 import { ChallengesDocument, useTopThreeChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
@@ -21,13 +24,15 @@ import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 
 interface HomeProps {
   fmType: FlashMessageEnum | null;
 }
 
 const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
+  const [animation, setAnimation] = useState(false);
+
   const { currentUser } = useCurrentUser();
   const flashMessageApi = useFlashMessageApi();
 
@@ -78,7 +83,18 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
       <Navigation />
       <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top">
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
-          <HeroSection />
+          <HeroSection>
+            <IllustrationFloatingWoman className={clsx("h-auto move-floating-woman", animation && "stopAnimation")} />
+            <Button
+              srText={animation ? "Start animation" : "Stop animation"}
+              overrideClassName
+              animation
+              className={clsx("md:mb-20")}
+              onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
+            >
+              {animation ? "Start" : "Stop"}
+            </Button>
+          </HeroSection>
           <MediaSection />
           <TopChallengeSection>
             {topChallenges.data && (
@@ -97,13 +113,37 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               heading="Study from the comfort of your home"
               paragraph="For challenges on a11yphant you won't need to read large amounts. Instead, you will learn by applying the concepts in code."
             >
-              <IllustrationCouchWoman className="h-auto mb-4 max-w-[15rem] md:max-w-full md:mb-0" />
+              <div className="flex flex-row-reverse md:flex-row justify-start min-w-[46%] md:max-w-xs lg:max-w-sm xl:max-w-full lg:justify-end lg:pr-12">
+                <Button
+                  srText={animation ? "Start animation" : "Stop animation"}
+                  overrideClassName
+                  animation
+                  className={clsx("mb-52 xs:ml-6 md:ml-0 md:mb-0")}
+                  onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
+                >
+                  {animation ? "Start" : "Stop"}
+                </Button>
+                <IllustrationCouchWoman
+                  className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman-reverse", animation && "stopAnimation")}
+                />
+              </div>
             </USPSection>
             <USPSection
               heading="Interactive coding challenges and quizzes"
               paragraph="With a phone, computer or tablet, a11yphant works wherever you are. Get started with your first web accessibility challenge and improve your skills."
             >
-              <IllustrationPhoneWoman className="h-auto mb-4 max-w-[15rem] md:max-w-full md:mb-0" />
+              <IllustrationPhoneWoman
+                className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman", animation && "stopAnimation")}
+              />
+              <Button
+                srText={animation ? "Start animation" : "Stop animation"}
+                overrideClassName
+                animation
+                className={clsx("mb-52 xs:ml-6 md:ml-0 md:mb-0")}
+                onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
+              >
+                {animation ? "Start" : "Stop"}
+              </Button>
             </USPSection>
           </div>
           <TestimonialSection>
@@ -138,7 +178,17 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               url="https://twitter.com/jbuller/status/1512392777346211844"
             />
           </TestimonialSection>
-          <CTASection />
+          <CTASection>
+            <IllustrationRocket className={clsx("h-auto", "move-floating-woman", animation && "stopAnimation")} />
+            <Button
+              srText={animation ? "Start animation" : "Stop animation"}
+              overrideClassName
+              animation
+              onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
+            >
+              {animation ? "Start" : "Stop"}
+            </Button>
+          </CTASection>
         </div>
       </main>
       <Footer />
