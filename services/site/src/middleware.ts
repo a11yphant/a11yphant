@@ -8,48 +8,66 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getConfig } from "./lib/config/rsc";
 
-export default async function middleware(req: NextRequest): Promise<NextResponse | void> {
-  const url = req.nextUrl.clone();
+type Middleware = {
+  match: (req: NextRequest) => boolean;
+  run: (req: NextRequest) => Promise<NextResponse | null>;
+};
 
-  if (url.pathname === "/" && url.searchParams.has("challenge")) {
-    const { baseUrl } = getConfig();
-    return NextResponse.redirect(`${baseUrl}/challenge/${url.searchParams.get("challenge")}`, 308);
+export default async function middleware(req: NextRequest): Promise<NextResponse | null> {
+  const middlewares = [forwardGraphqlRequests, redirectChallengeOverlayUrls, authentication];
+
+  for (const middleware of middlewares) {
+    if (!middleware.match(req)) {
+      continue;
+    }
+
+    return middleware.run(req);
   }
-
-  if (process.env.SITE_GRAPHQL_ENDPOINT_SERVER && url.pathname === "/graphql") {
-    return NextResponse.rewrite(process.env.SITE_GRAPHQL_ENDPOINT_SERVER);
-  }
-
-  if (req.cookies.has("a11yphant_session")) {
-    return;
-  }
-
-  const cookies: Cookie[] = [];
-
-  const setCookie: SetCookieFunction = (cookie) => {
-    cookies.push(cookie);
-  };
-
-  const getCookiesHeader: GetCookieHeaderFunction = () => {
-    return req.headers.toString();
-  };
-
-  const client = createApolloClientRSC(getCookiesHeader);
-  client.setLink(from([createForwardCookiesToClientLink(setCookie), client.link]));
-
-  await client.query<CurrentUserQuery>({
-    query: CurrentUserDocument,
-  });
-
-  for (const cookie of cookies) {
-    req.cookies.set(cookie);
-  }
-
-  const response = NextResponse.next();
-
-  for (const { name, value } of cookies) {
-    response.cookies.set(name, value);
-  }
-
-  return response;
 }
+
+const forwardGraphqlRequests: Middleware = {
+  match: (req) => process.env.SITE_GRAPHQL_ENDPOINT_SERVER && req.nextUrl.clone().pathname === "/graphql",
+  run: async () => NextResponse.rewrite(process.env.SITE_GRAPHQL_ENDPOINT_SERVER),
+};
+
+const redirectChallengeOverlayUrls: Middleware = {
+  match: (req) => req.nextUrl.clone().pathname === "/" && req.nextUrl.clone().searchParams.has("challenge"),
+  run: async (req) => {
+    const { baseUrl } = getConfig();
+    return NextResponse.redirect(`${baseUrl}/challenge/${req.nextUrl.clone().searchParams.get("challenge")}`, { status: 308 });
+  },
+};
+
+const authentication: Middleware = {
+  match: (req) => !req.cookies.has("a11yphant_session"),
+  run: async (req) => {
+    const cookies: Cookie[] = [];
+
+    const setCookie: SetCookieFunction = (cookie) => {
+      cookies.push(cookie);
+    };
+
+    const getCookiesHeader: GetCookieHeaderFunction = () => {
+      return req.headers.toString();
+    };
+
+    const client = createApolloClientRSC(getCookiesHeader);
+    client.setLink(from([createForwardCookiesToClientLink(setCookie), client.link]));
+
+    await client.query<CurrentUserQuery>({
+      query: CurrentUserDocument,
+    });
+
+    for (const cookie of cookies) {
+      req.cookies.set(cookie);
+    }
+
+    const response = NextResponse.next();
+
+    for (const { name, value } of cookies) {
+      response.cookies.set(name, value);
+    }
+
+    return response;
+  },
+};

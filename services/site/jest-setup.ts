@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import "whatwg-fetch";
 
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import failOnConsole from "jest-fail-on-console";

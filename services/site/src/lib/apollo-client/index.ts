@@ -6,7 +6,6 @@ import crossFetch from "cross-fetch";
 import { GetServerSidePropsContext } from "next";
 import { useMemo } from "react";
 
-import { createForwardCookiesToClientLink } from "./create-forward-cookies-to-client-link";
 import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-server-link";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
@@ -15,10 +14,11 @@ export function createApolloClientSSR(uri: string, errorDialogApi: ErrorDialogAp
   const isServer = typeof window === "undefined";
   const httpLink = new HttpLink({
     uri,
+    fetch: crossFetch,
     fetchOptions: { cache: "no-store" },
   });
 
-  const links = [createForwardCookiesToClientLink(), createForwardCookiesToServerLink(), createErrorLink({ errorDialogApi }), httpLink];
+  const links = [createErrorLink({ errorDialogApi }), httpLink];
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),

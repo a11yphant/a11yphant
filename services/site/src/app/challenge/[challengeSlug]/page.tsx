@@ -13,7 +13,7 @@ type PageProps = {
   };
 };
 
-const Challenge: React.FC<PageProps> = async ({ params: { challengeSlug } }) => {
+const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<React.ReactElement> => {
   const client = getApolloClient();
   const response = await client.query<ChallengeDetailsBySlugQuery>({
     query: ChallengeDetailsBySlugDocument,
