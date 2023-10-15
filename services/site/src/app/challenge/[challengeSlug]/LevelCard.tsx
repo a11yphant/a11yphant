@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-interface ChallengeModalLevelCardProps {
+interface LevelCardProps {
   challengeSlug: string;
   levelNumber: number;
   status: LevelStatus;
@@ -12,13 +12,7 @@ interface ChallengeModalLevelCardProps {
   type: string;
 }
 
-export const ChallengeModalLevelCard = ({
-  challengeSlug,
-  levelNumber,
-  status,
-  isFirstUnfinishedLevel,
-  type,
-}: ChallengeModalLevelCardProps): React.ReactElement => {
+export const LevelCard = ({ challengeSlug, levelNumber, status, isFirstUnfinishedLevel, type }: LevelCardProps): React.ReactElement => {
   return (
     <Link
       href={`/challenge/${challengeSlug}/level/${Number(levelNumber).toLocaleString("de-AT", {

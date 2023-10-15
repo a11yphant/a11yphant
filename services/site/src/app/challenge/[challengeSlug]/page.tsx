@@ -1,11 +1,12 @@
 import Footer from "app/components/Footer";
-import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
 import Navigation from "app/components/Navigation";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, LevelStatus } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
 import clsx from "clsx";
 import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
+
+import { LevelCard } from "./LevelCard";
 
 type PageProps = {
   params: {
@@ -44,7 +45,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
           <div className={clsx("gap-4 pt-8", "grid grid-cols-1 gap-y-4", "xs:grid-cols-2", "lg:grid-cols-3", "2xl:grid-cols-4")}>
             {challenge.levels.map((level) => {
               return (
-                <ChallengeModalLevelCard
+                <LevelCard
                   key={level.id}
                   challengeSlug={challengeSlug}
                   levelNumber={level.order}

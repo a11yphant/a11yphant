@@ -1,15 +1,15 @@
 import { render, screen } from "@testing-library/react";
-import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
+import { LevelCard } from "app/app/challenge/[challengeSlug]/LevelCard";
 import { LevelStatus } from "app/generated/graphql";
 import React from "react";
 
 const mockChallengeSlug = "mocked-challenge-slug";
 const mockLevelNumber = "03";
 
-describe("ChallengeModalLevelCard", () => {
+describe("LevelCard", () => {
   it("renders the heading", () => {
     render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
@@ -23,7 +23,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("renders a checkmark icon if the challenge is finished", () => {
     const { container } = render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Finished}
@@ -38,7 +38,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("renders no checkmark icon if the challenge is not finished", () => {
     const { container } = render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
@@ -53,7 +53,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("renders no checkmark icon if the challenge is still in progress", () => {
     const { container } = render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.InProgress}
@@ -68,7 +68,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("renders the challenge card with the background color `primary` if it is the first unfinished level", () => {
     render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
@@ -82,7 +82,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("renders the challenge card without the background color `primary` if it is NOT the first unfinished level", () => {
     render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
@@ -96,7 +96,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("links to correct url", () => {
     render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
@@ -110,7 +110,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("level is a quiz", () => {
     render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
@@ -124,7 +124,7 @@ describe("ChallengeModalLevelCard", () => {
 
   it("level is a coding level", () => {
     render(
-      <ChallengeModalLevelCard
+      <LevelCard
         challengeSlug={mockChallengeSlug}
         levelNumber={Number(mockLevelNumber)}
         status={LevelStatus.Open}
