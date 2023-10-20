@@ -1,9 +1,10 @@
 import Footer from "app/components/Footer";
 import Check from "app/components/icons/Check";
 import Navigation from "app/components/Navigation";
-import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, LevelStatus } from "app/generated/graphql";
+import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDetailsBySlugQueryResult, LevelStatus } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
 import clsx from "clsx";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
@@ -14,16 +15,19 @@ type PageProps = {
   };
 };
 
-const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<React.ReactElement> => {
+async function getChallenge(slug: string): Promise<ChallengeDetailsBySlugQueryResult["data"]["challenge"]> {
   const client = getApolloClient();
+
   const response = await client.query<ChallengeDetailsBySlugQuery>({
     query: ChallengeDetailsBySlugDocument,
-    variables: {
-      slug: challengeSlug,
-    },
+    variables: { slug },
   });
 
-  const challenge = response.data.challenge;
+  return response.data.challenge;
+}
+
+const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<React.ReactElement> => {
+  const challenge = await getChallenge(challengeSlug);
 
   if (!challenge) {
     notFound();
@@ -72,3 +76,10 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
 };
 
 export default Challenge;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const challenge = await getChallenge(params.challengeSlug);
+  return {
+    title: `${challenge.name} | a11yphant`,
+  };
+}
