@@ -15,12 +15,9 @@ interface LevelCardProps {
 export const LevelCard = ({ challengeSlug, levelNumber, status, isFirstUnfinishedLevel, type }: LevelCardProps): React.ReactElement => {
   return (
     <Link
-      href={`/challenge/${challengeSlug}/level/${Number(levelNumber).toLocaleString("de-AT", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      })}`}
+      href={`/challenge/${challengeSlug}/level/${String(levelNumber).padStart(2, "0")}`}
       className={clsx(
-        "border border-solid rounded-lg",
+        "relative border border-solid rounded-lg",
         !isFirstUnfinishedLevel && "border-grey-dark",
         "px-4 py-3",
         "w-full h-18",
@@ -29,15 +26,9 @@ export const LevelCard = ({ challengeSlug, levelNumber, status, isFirstUnfinishe
         "hover:bg-primary-dark hover:border-primary-dark",
       )}
     >
-      <h3 className={clsx("text-base")}>
-        Level{" "}
-        {Number(levelNumber).toLocaleString("de-AT", {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        })}
-      </h3>
+      <span className={clsx("h3 text-base text-grey block")}>Level {String(levelNumber).padStart(2, "0")}</span>
 
-      <p className="font-normal text-grey-middle mb-0">{type === "QuizLevel" ? "Quiz" : "Coding"}</p>
+      <span className="font-normal text-grey-middle mb-0 block">{type === "QuizLevel" ? "Quiz" : "Coding"}</span>
       {status === LevelStatus.Finished && <Check className={clsx("h-7 w-10 absolute top-4 right-5 text-light")} />}
     </Link>
   );
