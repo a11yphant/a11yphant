@@ -7,8 +7,11 @@ import { setConfig } from "next/config";
 import React from "react";
 import { mockUsePrefersReducedMotion } from "tests/helper/mockUsePrefersReducedMotion";
 import { setupIntersectionObserverMock } from "tests/helpers/setupIntersectionObserverMock";
+import { TextDecoder, TextEncoder } from "util";
 
 import config from "./next.config";
+
+Object.assign(global, { TextDecoder, TextEncoder });
 
 setConfig(config);
 
