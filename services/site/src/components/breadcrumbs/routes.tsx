@@ -6,9 +6,16 @@ export interface Routes {
   [key: string]: RouteInfo;
 }
 
+type GetBreadcrumbInfoFunction = (urlParams: Record<string, string | string[] | null>, apolloClient: ApolloClient<object>) => Promise<BreadcrumbInfo>;
+
 export interface RouteInfo {
-  getBreadcrumbInfo: (urlParams: Record<string, string | string[] | null>, apolloClient: ApolloClient<object>) => Promise<BreadcrumbInfo>;
+  getBreadcrumbInfo: GetBreadcrumbInfoFunction;
 }
+
+type Route = {
+  pattern: RegExp;
+  getBreadcrumbInfo: GetBreadcrumbInfoFunction;
+};
 
 export interface BreadcrumbInfo {
   href: string;
@@ -16,57 +23,66 @@ export interface BreadcrumbInfo {
 }
 
 export function match(key: string): RouteInfo | null {
-  if (key === "/") {
-    return {
-      getBreadcrumbInfo: async () => {
-        return Promise.resolve({
-          href: "/",
-          breadcrumb: "Challenges",
-        });
-      },
-    };
-  } else if (key.match(/^\/challenge\/[\w-]+$/) !== null) {
-    return {
-      getBreadcrumbInfo: async (urlParams: { challengeSlug: string }, apolloClient) => {
-        const { challengeSlug } = urlParams;
+  const routes = [landingpage, challengeDetails, level, evaluation];
 
-        const { data } = await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
-          query: ChallengeBySlugDocument,
-          variables: { slug: challengeSlug as string },
-        });
+  for (const { pattern, getBreadcrumbInfo } of routes) {
+    if (key.match(pattern) === null) {
+      continue;
+    }
 
-        return {
-          href: `/challenge/${challengeSlug}`,
-          breadcrumb: data.challenge?.name,
-        };
-      },
-    };
-  } else if (key.match(/^\/challenge\/[\w-]+\/level\/[\w-]+$/) !== null) {
-    return {
-      getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
-        const { challengeSlug, nthLevel } = urlParams;
-
-        return Promise.resolve({
-          href: `/challenge/${challengeSlug}/level/${nthLevel}`,
-          breadcrumb: `Level ${Number(nthLevel).toLocaleString("de-AT", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}`,
-        });
-      },
-    };
-  } else if (key.match(/^\/challenge\/[\w-]+\/level\/[\w-]+\/evaluation$/) !== null) {
-    return {
-      getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
-        const { challengeSlug, nthLevel } = urlParams;
-
-        return Promise.resolve({
-          href: `/challenge/${challengeSlug}/level/${nthLevel}/evaluation`,
-          breadcrumb: "Evaluation",
-        });
-      },
-    };
+    return { getBreadcrumbInfo };
   }
 
   return null;
 }
+
+const landingpage: Route = {
+  pattern: /^\/$/,
+  getBreadcrumbInfo: async () => {
+    return Promise.resolve({
+      href: "/",
+      breadcrumb: "Challenges",
+    });
+  },
+};
+
+const challengeDetails: Route = {
+  pattern: /^\/challenge\/[\w-]+$/,
+  getBreadcrumbInfo: async (urlParams: { challengeSlug: string }, apolloClient) => {
+    const { challengeSlug } = urlParams;
+
+    const { data } = await apolloClient.query<ChallengeBySlugQuery, ChallengeBySlugQueryVariables>({
+      query: ChallengeBySlugDocument,
+      variables: { slug: challengeSlug as string },
+    });
+
+    return {
+      href: `/challenge/${challengeSlug}`,
+      breadcrumb: data.challenge?.name,
+    };
+  },
+};
+
+const level: Route = {
+  pattern: /^\/challenge\/[\w-]+\/level\/[\w-]+$/,
+  getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
+    const { challengeSlug, nthLevel } = urlParams;
+
+    return Promise.resolve({
+      href: `/challenge/${challengeSlug}/level/${nthLevel}`,
+      breadcrumb: `Level ${String(nthLevel).padStart(2, "0")}`,
+    });
+  },
+};
+
+const evaluation: Route = {
+  pattern: /^\/challenge\/[\w-]+\/level\/[\w-]+\/evaluation$/,
+  getBreadcrumbInfo: async (urlParams: { challengeSlug: string; nthLevel: string }) => {
+    const { challengeSlug, nthLevel } = urlParams;
+
+    return Promise.resolve({
+      href: `/challenge/${challengeSlug}/level/${nthLevel}/evaluation`,
+      breadcrumb: "Evaluation",
+    });
+  },
+};
