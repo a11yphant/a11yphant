@@ -64,7 +64,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         </div>
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
-        <h4 className={clsx("w-full")}>
+        <h3 className={clsx("w-full")}>
           <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
           <Link
             href={`/challenges/${challengeSlug}`}
@@ -74,7 +74,7 @@ const Card: React.FunctionComponent<CardProps> = ({
           >
             {heading}
           </Link>
-        </h4>
+        </h3>
         <div className={clsx("w-full mt-2 text-grey-middle flex justify-between")}>
           <p className={clsx("m-0 text-grey-middle", "transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
