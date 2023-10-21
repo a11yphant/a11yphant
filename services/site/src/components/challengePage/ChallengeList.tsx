@@ -15,7 +15,7 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
   return (
     <div className={clsx("mt-2 mb-6", className)}>
       <div className={clsx("mb-6 flex flex-row items-center")}>
-        <h3 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")}>{heading}</h3>
+        <h2 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")}>{heading}</h2>
         {displayCompleted === true && (
           <p
             className={clsx("ml-4 mb-0 text-grey font-normal", "h4")}

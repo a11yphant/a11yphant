@@ -83,6 +83,7 @@ const Card: React.FunctionComponent<CardProps> = ({
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
         <CardHeading isTopChallenge={isTopChallenge}>
+          <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
           <Link
             href={`/challenges/${challengeSlug}`}
             shallow={true}
