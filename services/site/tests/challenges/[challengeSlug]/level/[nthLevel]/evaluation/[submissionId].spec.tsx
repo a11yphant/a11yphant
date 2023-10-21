@@ -6,7 +6,7 @@ import { usePollSubmissionResult } from "app/components/evaluation/usePollSubmis
 import { LottieProps } from "app/components/Lottie";
 import { ChallengeBySlugDocument, CurrentUserDocument, ResultStatus } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
-import Evaluation, { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
+import Evaluation, { getServerSideProps } from "app/pages/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { GraphQLError } from "graphql";
 import { GetServerSidePropsContext } from "next";
 import router from "next/router";

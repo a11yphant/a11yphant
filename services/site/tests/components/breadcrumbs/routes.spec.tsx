@@ -17,38 +17,38 @@ describe("Routes", () => {
     { slug: challengeSlug },
   );
 
-  it("can create breadcrumb infos for the '/' route", async () => {
-    const breadcrumbInfo = await match("/")?.getBreadcrumbInfo({}, mockClient);
+  it("can create breadcrumb infos for the '/challenges' route", async () => {
+    const breadcrumbInfo = await match("/challenges")?.getBreadcrumbInfo({}, mockClient);
 
-    expect(breadcrumbInfo?.href).toBe("/");
+    expect(breadcrumbInfo?.href).toBe("/challenges");
     expect(breadcrumbInfo?.breadcrumb).toBe("Challenges");
   });
 
-  it("can create breadcrumb infos for the '/challenge/[challengeSlug]' route", async () => {
-    const breadcrumbInfo = await match(`/challenge/${challengeSlug}`)?.getBreadcrumbInfo({ challengeSlug }, mockClient);
+  it("can create breadcrumb infos for the '/challenges/[challengeSlug]' route", async () => {
+    const breadcrumbInfo = await match(`/challenges/${challengeSlug}`)?.getBreadcrumbInfo({ challengeSlug }, mockClient);
 
-    expect(breadcrumbInfo?.href).toBe(`/challenge/${challengeSlug}`);
+    expect(breadcrumbInfo?.href).toBe(`/challenges/${challengeSlug}`);
     expect(breadcrumbInfo?.breadcrumb).toBe(name);
   });
 
-  it("can create breadcrumb infos for the '/challenge/[challengeSlug]/level/[nthLevel]' route", async () => {
+  it("can create breadcrumb infos for the '/challenges/[challengeSlug]/level/[nthLevel]' route", async () => {
     const nthLevel = "5";
 
-    const breadcrumbInfo = await match(`/challenge/${challengeSlug}/level/${nthLevel}`)?.getBreadcrumbInfo({ challengeSlug, nthLevel }, mockClient);
+    const breadcrumbInfo = await match(`/challenges/${challengeSlug}/level/${nthLevel}`)?.getBreadcrumbInfo({ challengeSlug, nthLevel }, mockClient);
 
-    expect(breadcrumbInfo?.href).toBe(`/challenge/${challengeSlug}/level/${nthLevel}`);
+    expect(breadcrumbInfo?.href).toBe(`/challenges/${challengeSlug}/level/${nthLevel}`);
     expect(breadcrumbInfo?.breadcrumb).toBe(`Level 0${nthLevel}`);
   });
 
-  it("can create breadcrumb infos for the '/challenge/[challengeSlug]/level/[nthLevel]/evaluation' route", async () => {
+  it("can create breadcrumb infos for the '/challenges/[challengeSlug]/level/[nthLevel]/evaluation' route", async () => {
     const nthLevel = "5";
 
-    const breadcrumbInfo = await match(`/challenge/${challengeSlug}/level/${nthLevel}/evaluation`)?.getBreadcrumbInfo(
+    const breadcrumbInfo = await match(`/challenges/${challengeSlug}/level/${nthLevel}/evaluation`)?.getBreadcrumbInfo(
       { challengeSlug, nthLevel },
       mockClient,
     );
 
-    expect(breadcrumbInfo?.href).toBe(`/challenge/${challengeSlug}/level/${nthLevel}/evaluation`);
+    expect(breadcrumbInfo?.href).toBe(`/challenges/${challengeSlug}/level/${nthLevel}/evaluation`);
     expect(breadcrumbInfo?.breadcrumb).toBe("Evaluation");
   });
 });

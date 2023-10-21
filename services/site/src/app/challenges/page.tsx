@@ -28,9 +28,6 @@ const Challenges = async (): Promise<React.ReactElement> => {
     <>
       <Navigation displayBreadcrumbs />
       <main>
-        <h1 className={clsx("sr-only")} aria-label="Allyphant">
-          a11yphant
-        </h1>
         <div className={clsx("w-full h-full")}>
           <section
             id="challenges"
