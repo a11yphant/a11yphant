@@ -5,12 +5,12 @@ import { getRouteList } from "app/components/breadcrumbs/getRouteList";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/graphql";
 
 const challengeSlug = "mock-challenge-1";
-const expectedBreadcrumbHome = {
-  href: "/",
+const expectedBreadcumbsChallenges = {
+  href: "/challenges",
   breadcrumb: "Challenges",
 };
 const expectedBreadcrumbChallenge = {
-  href: `/challenge/${challengeSlug}`,
+  href: `/challenges/${challengeSlug}`,
   breadcrumb: "Mock First Challenge",
 };
 
@@ -32,14 +32,14 @@ beforeEach(() => {
 
 describe("getRouteList", () => {
   it("correctly generates breadcrumbs for a non-dynamic route", async () => {
-    const routeList = await getRouteList("/", {}, mockClient);
+    const routeList = await getRouteList("/challenges", {}, mockClient);
 
-    expect(routeList).toEqual([expectedBreadcrumbHome]);
+    expect(routeList).toEqual([expectedBreadcumbsChallenges]);
   });
 
   it("correctly generates breadcrumbs for a dynamic route", async () => {
-    const routeList = await getRouteList("/challenge/challenge-slug", { challengeSlug }, mockClient);
+    const routeList = await getRouteList("/challenges/challenge-slug", { challengeSlug }, mockClient);
 
-    expect(routeList).toEqual([expectedBreadcrumbHome, expectedBreadcrumbChallenge]);
+    expect(routeList).toEqual([expectedBreadcumbsChallenges, expectedBreadcrumbChallenge]);
   });
 });

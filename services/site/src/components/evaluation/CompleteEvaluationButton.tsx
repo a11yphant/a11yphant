@@ -1,6 +1,6 @@
 import LoadingButton from "app/components/buttons/LoadingButton";
 import { ResultStatus } from "app/generated/graphql";
-import { EvaluationRouterParams } from "app/pages/challenge/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
+import { EvaluationRouterParams } from "app/pages/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import React from "react";
@@ -71,7 +71,7 @@ export const CompleteEvaluationButton = ({
         autoFocus={autoFocus}
         onClick={() => {
           const nextLevel = parseInt(nthLevel as string) + 1;
-          router.push(`/challenge/${challengeSlug}/level/0${nextLevel}`);
+          router.push(`/challenges/${challengeSlug}/level/${nextLevel.toString().padStart(2, "0")}`);
         }}
         primary
         className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", "ml-auto self-end", className)}

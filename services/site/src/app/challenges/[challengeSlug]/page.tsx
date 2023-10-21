@@ -70,7 +70,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
               return (
                 <li className="m-0 p-0" key={level.id}>
                   <Link
-                    href={`/challenge/${challengeSlug}/level/${String(level.order).padStart(2, "0")}`}
+                    href={`/challenges/${challengeSlug}/level/${String(level.order).padStart(2, "0")}`}
                     className={clsx(
                       "relative block border border-solid rounded-lg px-4 py-3 w-full h-18",
                       "hover:bg-primary-dark hover:border-primary-dark",
