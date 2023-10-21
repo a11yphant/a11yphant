@@ -18,7 +18,7 @@ const expectedBreadcrumbHome = {
   breadcrumb: "Mock Home",
 };
 const expectedBreadcrumbChallenge = {
-  href: `/challenge/${challengeSlug}`,
+  href: `/challenges/${challengeSlug}`,
   breadcrumb: "Mock First Challenge",
 };
 

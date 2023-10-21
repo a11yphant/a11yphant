@@ -11,7 +11,7 @@ export const routes: Routes = {
       };
     },
   },
-  "/challenge/[challengeSlug]": {
+  "/challenges/[challengeSlug]": {
     getBreadcrumbInfo: async (urlParams, apolloClient: ApolloClient<object>) => {
       const { challengeSlug } = urlParams;
 
@@ -21,7 +21,7 @@ export const routes: Routes = {
       });
 
       return {
-        href: `/challenge/${challengeSlug}`,
+        href: `/challenges/${challengeSlug}`,
         breadcrumb: data.challenge?.name,
       };
     },

@@ -20,7 +20,7 @@ describe("ChallengeHeader", () => {
   it("renders the heading and description text", () => {
     render(<ChallengeHeader />);
 
-    expect(screen.getByText("Challenges", { selector: "h2" })).toBeInTheDocument();
+    expect(screen.getByText("Challenges", { selector: "h1" })).toBeInTheDocument();
     expect(screen.getByText("Pick a challenge from below", { selector: "p" })).toBeInTheDocument();
   });
 

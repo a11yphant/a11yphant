@@ -1,7 +1,7 @@
+import ChallengeHeader from "app/components/challengePage/ChallengeHeader";
+import ChallengeList from "app/components/challengePage/ChallengeList";
+import Legend from "app/components/challengePage/Legend";
 import Footer from "app/components/Footer";
-import ChallengeHeader from "app/components/homepage/ChallengeHeader";
-import ChallengeList from "app/components/homepage/ChallengeList";
-import Legend from "app/components/homepage/Legend";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { ChallengesDocument, ChallengesQuery, ChallengeStatus } from "app/generated/graphql";
@@ -28,9 +28,6 @@ const Challenges = async (): Promise<React.ReactElement> => {
     <>
       <Navigation displayBreadcrumbs />
       <main>
-        <h1 className={clsx("sr-only")} aria-label="Allyphant">
-          a11yphant
-        </h1>
         <div className={clsx("w-full h-full")}>
           <section
             id="challenges"
