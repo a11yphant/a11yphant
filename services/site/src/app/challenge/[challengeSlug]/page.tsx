@@ -33,22 +33,35 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
     notFound();
   }
 
-  const firstUnfinishedLevel =
-    challenge === undefined
-      ? undefined
-      : challenge.levels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
+  const firstUnfinishedLevel = challenge.levels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
 
   return (
     <>
       <Navigation displayBreadcrumbs />
       <main className="h-full box-border max-w-screen-3xl mx-auto">
         <div className="mx-8 py-8 h-main max-w-screen-3xl sm:mx-12 lg:mt-12 lg:mx-24">
-          <h1 className="mb-8 h2 md:h1">{challenge?.name}</h1>
+          <h1 className="mb-8 h2 md:h1">
+            <span className="sr-only">Challenge: </span>
+            {challenge?.name}
+          </h1>
           <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
 
           <ul className="gap-4 pt-8 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            {challenge.levels.map((level) => {
+            {challenge.levels.map((level, index) => {
               const isFirstUnfinishedLevel = level.id === firstUnfinishedLevel?.id;
+
+              function getTitlePrefix(): string {
+                if (index === 0 && isFirstUnfinishedLevel) {
+                  return "Start here: ";
+                }
+
+                if (isFirstUnfinishedLevel) {
+                  return "Up next: ";
+                }
+
+                return "";
+              }
+
               return (
                 <li className="m-0 p-0" key={level.id}>
                   <Link
@@ -60,9 +73,16 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                       isFirstUnfinishedLevel && "border-primary bg-primary",
                     )}
                   >
-                    <span className="h3 text-base text-grey block">Level {String(level.order).padStart(2, "0")}</span>
+                    <span className="h3 text-base text-grey block">
+                      {getTitlePrefix()}Level {String(level.order).padStart(2, "0")}
+                    </span>
                     <span className="font-normal text-grey-middle mb-0 block">{level.__typename === "QuizLevel" ? "Quiz" : "Coding"}</span>
-                    {level.status === LevelStatus.Finished && <Check className="h-7 w-10 absolute top-4 right-5 text-light" />}
+                    {level.status === LevelStatus.Finished && (
+                      <>
+                        <span className="sr-only">You have already completed this level.</span>
+                        <Check className="h-7 w-10 absolute top-4 right-5 text-light" />
+                      </>
+                    )}
                   </Link>
                 </li>
               );
