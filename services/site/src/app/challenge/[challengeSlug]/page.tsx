@@ -1,4 +1,5 @@
 import Footer from "app/components/Footer";
+import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import Check from "app/components/icons/Check";
 import Navigation from "app/components/Navigation";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDetailsBySlugQueryResult, LevelStatus } from "app/generated/graphql";
@@ -33,6 +34,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
     notFound();
   }
 
+  const DifficultyIcon = getDifficultyIconByChallengeDifficulty(challenge.difficulty);
   const firstUnfinishedLevel = challenge.levels.find((level) => level.status === LevelStatus.Open || level.status === LevelStatus.InProgress);
 
   return (
@@ -43,6 +45,9 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
           <h1 className="mb-8 h2 md:h1">
             <span className="sr-only">Challenge: </span>
             {challenge?.name}
+            <div className={clsx("inline-block")}>
+              <DifficultyIcon className={clsx("w-5 h-12 inline-block")} firstClassName="ml-4" />
+            </div>
           </h1>
           <p className="prose" dangerouslySetInnerHTML={{ __html: sanitizeHtml(challenge.introduction) }} />
 
