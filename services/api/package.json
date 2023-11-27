@@ -54,7 +54,7 @@
     "graphql": "16.8.1",
     "handlebars": "4.7.8",
     "js-yaml": "4.1.0",
-    "jsdom": "^22.0.0",
+    "jsdom": "^23.0.0",
     "jsonwebtoken": "9.0.2",
     "module-alias": "2.2.3",
     "nestjs-console": "9.0.0",
