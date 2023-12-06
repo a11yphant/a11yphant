@@ -48,7 +48,7 @@
     "class-transformer": "0.5.1",
     "class-validator": "0.14.0",
     "color-contrast-checker": "^2.1.0",
-    "colortranslator": "^3.0.2",
+    "colortranslator": "^4.0.0",
     "commander": "11.1.0",
     "cookie-parser": "1.4.6",
     "graphql": "16.8.1",
