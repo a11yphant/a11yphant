@@ -84,7 +84,7 @@ jobs:
       - name: Generate GraphQL Schema
         run: npm run generate-schema --prefix services/api
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -143,7 +143,7 @@ jobs:
           DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
 
       - name: Upload Coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-coverage-api
           path: services/api/coverage
@@ -224,7 +224,7 @@ jobs:
         run: npm run test:coverage --prefix services/site
 
       - name: Upload Coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-coverage-site
           path: services/site/coverage
@@ -404,7 +404,7 @@ jobs:
 
       - name: Upload artifact
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: tests/cypress/screenshots/
@@ -418,7 +418,7 @@ jobs:
         if: failure()
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
