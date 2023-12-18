@@ -191,7 +191,7 @@ jobs:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -215,7 +215,7 @@ jobs:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -245,7 +245,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -294,13 +294,13 @@ jobs:
           chmod +x ./cc-test-reporter
 
       - name: Download API test coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-coverage-api
           path: services/api/coverage/
 
       - name: Download Site test coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-coverage-site
           path: services/site/coverage/
@@ -364,7 +364,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get API Image Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: api-image
           path: /tmp/api-image/
@@ -373,7 +373,7 @@ jobs:
         run: docker load --input /tmp/api-image/image.tar
 
       - name: Get Site Image Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: site-image
           path: /tmp/site-image/
