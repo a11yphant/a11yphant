@@ -35,14 +35,14 @@ describe("ChallengeList", () => {
       />,
     );
 
-    expect(screen.getByText(headingTextDifficulty, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.getByText(headingTextDifficulty, { selector: "h2" })).toBeInTheDocument();
     expect(screen.getByText("(1/1)", { selector: "p" })).toBeInTheDocument();
   });
 
   it("renders no number of completed challenges", () => {
     render(<ChallengeList heading={<>All challenges</>} challenges={challenges} displayCompleted={false} />);
 
-    expect(screen.getByText(headingTextAll, { selector: "h3" })).toBeInTheDocument();
+    expect(screen.getByText(headingTextAll, { selector: "h2" })).toBeInTheDocument();
     expect(screen.queryByText("(1/1)", { selector: "p" })).not.toBeInTheDocument();
   });
 });

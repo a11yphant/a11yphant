@@ -8,7 +8,6 @@ const levelAmount = 12;
 
 const card = (
   <Card
-    key={1}
     className="mr-24"
     challengeSlug={"semantic-html"}
     heading={headingText}

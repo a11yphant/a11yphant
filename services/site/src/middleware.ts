@@ -14,7 +14,7 @@ type Middleware = {
 };
 
 export default async function middleware(req: NextRequest): Promise<NextResponse | null> {
-  const middlewares = [forwardGraphqlRequests, redirectChallengeOverlayUrls, authentication];
+  const middlewares = [forwardGraphqlRequests, redirectChallengeOverlayUrls, redirectChallengeUrls, authentication];
 
   for (const middleware of middlewares) {
     if (!middleware.match(req)) {
@@ -34,7 +34,15 @@ const redirectChallengeOverlayUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname === "/" && req.nextUrl.clone().searchParams.has("challenge"),
   run: async (req) => {
     const { baseUrl } = getConfig();
-    return NextResponse.redirect(`${baseUrl}/challenge/${req.nextUrl.clone().searchParams.get("challenge")}`, { status: 308 });
+    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, { status: 308 });
+  },
+};
+
+const redirectChallengeUrls: Middleware = {
+  match: (req) => req.nextUrl.clone().pathname.startsWith("/challenge/"),
+  run: async (req) => {
+    const { baseUrl } = getConfig();
+    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
   },
 };
 

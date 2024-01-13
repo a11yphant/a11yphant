@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { MockedResponse, MockLink } from "@apollo/client/testing";
 import { getAllByRole, getByRole, render, screen } from "@testing-library/react";
-import Challenge, { generateMetadata } from "app/app/challenge/[challengeSlug]/page";
+import Challenge, { generateMetadata } from "app/app/challenges/[challengeSlug]/page";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQueryResult, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
 
