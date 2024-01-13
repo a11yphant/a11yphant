@@ -43,11 +43,10 @@ Technically, a11yphant is split into three applications:
 
 1. The **API** (Backend)
 2. The **Site** (Frontend)
-3. The **Submission Checker** (Backend)
 
-All three applications are written in [Typescript](https://www.typescriptlang.org). 
+Both applications are written in [Typescript](https://www.typescriptlang.org).
 The **Site** uses the React framework [NextJS](https://nextjs.org), [GraphQL](https://graphql.org/) and [Tailwind](https://tailwindcss.com/).
-The **API** and the **Submission Checker** use the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database.
+The **API** uses the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database.
 
 ## Prerequisites
 
@@ -136,9 +135,6 @@ npm run debug:api
 
 # Site
 npm run debug:site
-
-# Submission Checker
-npm run debug:submission-checker
 ```
 
 ### Stop Services
@@ -202,15 +198,12 @@ We write tests in the frontend and the backend to ensure code quality. We primar
     - Service Tests (for important GraphQL queries)
 - **Site**
     - Component Tests
-- **Submission Checker**
-    - Unit Tests
-    - Service Tests
 - **Global**
     - End-to-End Tests that test the core functionality of a11yphant
 
 > **Note:** To get a feature merged, it is mandatory to write a meaningful test. 
 
-To see if your written test passes or fails, you can go to the folder of the specific service you are working in (**API**, **Site**, **Submission Checker**) and run the following command:
+To see if your written test passes or fails, you can go to the folder of the specific service you are working in (**API**, **Site**) and run the following command:
 ```bash
 npm run test:watch
 ```
