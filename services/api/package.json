@@ -93,7 +93,7 @@
     "@types/passport-github2": "1.2.9",
     "@types/passport-twitter": "1.0.40",
     "@types/rosie": "0.0.45",
-    "@types/supertest": "2.0.16",
+    "@types/supertest": "6.0.2",
     "@types/uuid": "9.0.7",
     "@typescript-eslint/eslint-plugin": "6.18.1",
     "@typescript-eslint/parser": "6.18.1",
