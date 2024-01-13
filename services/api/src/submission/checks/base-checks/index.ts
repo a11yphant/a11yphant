@@ -6,6 +6,7 @@ import { ElementContainsText } from "./element-contains-text.check";
 import { ElementExists } from "./element-exists.check";
 import { ElementHasCssPropertyValue } from "./element-has-css-property-value.check";
 import { ElementHasCssPropertyValueGreaterThan } from "./element-has-css-property-value-greater-than.check";
+import { ElementHasMinimumDimension } from "./element-has-minimum-dimension";
 import { ElementNotContainsText } from "./element-not-contains-text.check";
 import { ElementNotExists } from "./element-not-exists.check";
 import { HtmlIsValid } from "./html-is-valid.check";
@@ -19,6 +20,7 @@ export {
   ElementExists,
   ElementHasCssPropertyValue,
   ElementHasCssPropertyValueGreaterThan,
+  ElementHasMinimumDimension,
   ElementNotContainsText,
   ElementNotExists,
   HtmlIsValid,
