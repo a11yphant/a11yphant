@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 const config = {
   serverRuntimeConfig: {
     graphqlEndpointServer: process.env.SITE_GRAPHQL_ENDPOINT_SERVER,
@@ -9,6 +10,10 @@ const config = {
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT,
     isPlausibleEnabled: !!process.env.SITE_PLAUSIBLE_BASE_URL,
     domain: process.env.SITE_HOST,
+  },
+
+  experimental: {
+    serverComponentsExternalPackages: ["@nestjs/core"],
   },
 
   async headers() {
