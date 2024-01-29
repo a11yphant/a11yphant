@@ -480,7 +480,7 @@ jobs:
       - publish-api-image
     steps:
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
           repository: a11yphant/infrastructure
@@ -502,7 +502,7 @@ jobs:
       - publish-api-image
     steps:
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
           repository: a11yphant/infrastructure
@@ -522,7 +522,7 @@ jobs:
       - publish-api-image
     steps:
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
           repository: a11yphant/infrastructure
