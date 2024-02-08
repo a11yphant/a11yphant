@@ -1,5 +1,5 @@
 import { render, RenderResult, screen } from "@testing-library/react";
-import Card, { CardProps } from "app/components/homepage/Card";
+import Card, { CardProps } from "app/components/challengePage/Card";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 import React from "react";
 

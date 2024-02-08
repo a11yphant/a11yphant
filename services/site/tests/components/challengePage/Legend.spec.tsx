@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Legend from "app/components/homepage/Legend";
+import Legend from "app/components/challengePage/Legend";
 import React from "react";
 
 describe("Legend", () => {

@@ -1,4 +1,4 @@
-import { DifficultyEasy, DifficultyHard, DifficultyMedium } from "app/components/homepage/difficulties/Difficulties";
+import { DifficultyEasy, DifficultyHard, DifficultyMedium } from "app/components/challengePage/difficulties/Difficulties";
 import clsx from "clsx";
 import React from "react";
 
