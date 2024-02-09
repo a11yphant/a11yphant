@@ -16,6 +16,8 @@ import {
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -105,7 +107,7 @@ const Level: React.FunctionComponent = () => {
 export default Level;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const { challengeSlug, nthLevel } = context.params;
 
@@ -137,6 +139,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       initialApolloState: apolloClient.cache.extract(),
       displaySave: true,
       showScrollOverlay: false,
+      config: getClientConfig(),
     },
   };
 };

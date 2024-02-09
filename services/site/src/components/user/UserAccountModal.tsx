@@ -1,3 +1,5 @@
+"use client";
+
 import { Modal } from "app/components/modal/Modal";
 import { ModalContent } from "app/components/modal/ModalContent";
 import { ModalTitle } from "app/components/modal/ModalTitle";

@@ -12,6 +12,8 @@ import {
   useUserByIdQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -147,7 +149,7 @@ const Challenge: React.FunctionComponent = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const { userId } = context.params;
 
@@ -180,6 +182,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       displayBreadcrumbs: false,
+      config: getClientConfig(),
     },
   };
 };

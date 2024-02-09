@@ -1,6 +1,5 @@
 import { execute, gql } from "@apollo/client";
-import { createForwardCookiesToClientLink } from "app/lib/apollo-client/create-forward-cookies-to-client-link";
-import { GetServerSidePropsContext } from "next";
+import { createForwardCookiesToClientLink, SetCookieFunction } from "app/lib/apollo-client/create-forward-cookies-to-client-link";
 
 import { createTerminatingLink } from "./helpers";
 
@@ -13,7 +12,7 @@ const query = gql`
 `;
 
 describe("forward cookies to client link", () => {
-  it("returns a link if no context is provided", (done) => {
+  it("returns a link if no set cookie function is provided", (done) => {
     const link = createForwardCookiesToClientLink().concat(createTerminatingLink());
 
     execute(link, { query }).subscribe({
@@ -22,9 +21,9 @@ describe("forward cookies to client link", () => {
     });
   });
 
-  it("returns a link if a context is provided", (done) => {
-    const context = { res: { setHeader: jest.fn() }, req: {} } as unknown as GetServerSidePropsContext;
-    const link = createForwardCookiesToClientLink(context).concat(createTerminatingLink());
+  it("returns a link if a set cookie function is provided", (done) => {
+    const setCookie = jest.fn() as SetCookieFunction;
+    const link = createForwardCookiesToClientLink(setCookie).concat(createTerminatingLink());
 
     execute(link, { query }).subscribe({
       complete: done,
@@ -35,13 +34,12 @@ describe("forward cookies to client link", () => {
   it("sets the set cookie header in the response", (done) => {
     expect.assertions(1);
 
-    const setHeader = jest.fn();
-    const context = { res: { setHeader }, req: {} } as unknown as GetServerSidePropsContext;
-    const link = createForwardCookiesToClientLink(context).concat(createTerminatingLink());
+    const setCookie = jest.fn() as SetCookieFunction;
+    const link = createForwardCookiesToClientLink(setCookie).concat(createTerminatingLink());
 
     execute(link, { query }).subscribe({
       complete: () => {
-        expect(setHeader).toHaveBeenCalledWith("Set-Cookie", expect.any(String));
+        expect(setCookie).toHaveBeenCalledWith(expect.objectContaining({ name: "a11yphant_session", value: "header-content" }));
         done();
       },
       error: done.fail,

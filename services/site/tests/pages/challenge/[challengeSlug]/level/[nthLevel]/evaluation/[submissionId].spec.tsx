@@ -13,6 +13,11 @@ import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    refresh: jest.fn(),
+  }),
+}));
 
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
   return null;
@@ -33,7 +38,7 @@ jest.mock("app/components/evaluation/usePollSubmissionResult", () => ({
 }));
 
 jest.mock("app/lib/apollo-client", () => ({
-  initializeApollo: (_, context) => context.apolloClient,
+  initializeApollo: (_, __, context) => context.apolloClient,
 }));
 
 const mockShowFlashMessage = jest.fn();

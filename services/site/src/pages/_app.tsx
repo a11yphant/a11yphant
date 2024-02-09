@@ -10,7 +10,10 @@ import { FlashMessageContextProvider } from "app/components/common/flashMessage/
 import ScrollOverlayWrapper, { ScrollOverlayWrapperProps } from "app/components/common/ScrollOverlayWrapper";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
 import { useApollo } from "app/lib/apollo-client";
+import { ConfigProvider } from "app/lib/config";
+import Head from "next/head";
 import Router from "next/router";
+import Script from "next/script";
 import NProgress from "nprogress";
 import React from "react";
 
@@ -44,27 +47,32 @@ const ConditionalWrapper = <T,>({
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
-  const apolloClient = useApollo(pageProps.initialApolloState, errorDialogApi);
+  const apolloClient = useApollo(pageProps.config?.graphqlEndpointClient, pageProps.initialApolloState, errorDialogApi);
 
   return (
-    <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
-      <ApolloProvider client={apolloClient}>
-        <FlashMessageContextProvider>
-          <UserAccountModalProvider>
-            <ConditionalWrapper<ScrollOverlayWrapperProps>
-              condition={pageProps.showScrollOverlay ?? true}
-              Wrapper={ScrollOverlayWrapper}
-              enableTopOverlay={false}
-              enableBottomOverlay={true}
-              classNameBottomOverlay={"h-52 -mt-52"}
-              attachScrollListenerToDocument
-            >
-              <Component {...pageProps} />
-            </ConditionalWrapper>
-          </UserAccountModalProvider>
-        </FlashMessageContextProvider>
-      </ApolloProvider>
-    </ErrorDialogProvider>
+    <>
+      <Head>{pageProps.config?.isPlausibleEnabled && <Script defer data-domain={pageProps.config.domain} src="/js/script.js" />}</Head>
+      <ConfigProvider value={pageProps.config}>
+        <ErrorDialogProvider errorDialog={errorDialog} errorDialogApi={errorDialogApi}>
+          <ApolloProvider client={apolloClient}>
+            <FlashMessageContextProvider>
+              <UserAccountModalProvider>
+                <ConditionalWrapper<ScrollOverlayWrapperProps>
+                  condition={pageProps.showScrollOverlay ?? true}
+                  Wrapper={ScrollOverlayWrapper}
+                  enableTopOverlay={false}
+                  enableBottomOverlay={true}
+                  classNameBottomOverlay={"h-52 -mt-52"}
+                  attachScrollListenerToDocument
+                >
+                  <Component {...pageProps} />
+                </ConditionalWrapper>
+              </UserAccountModalProvider>
+            </FlashMessageContextProvider>
+          </ApolloProvider>
+        </ErrorDialogProvider>
+      </ConfigProvider>
+    </>
   );
 };
 

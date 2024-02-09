@@ -1,6 +1,6 @@
 import { gql, InMemoryCache } from "@apollo/client";
 import { renderHook } from "@testing-library/react";
-import { initializeApollo, useApollo } from "app/lib/apollo-client";
+import { createApolloClientSSR, initializeApollo, useApollo } from "app/lib/apollo-client";
 
 const query = gql`
   query test {
@@ -15,7 +15,7 @@ const queryResult = { user: { __typename: "user", id: 4 } };
 describe("apollo client", () => {
   describe("initialize apollo client", () => {
     it("returns an apollo client", () => {
-      const client = initializeApollo();
+      const client = initializeApollo("/graphql");
 
       expect(client).toBeTruthy();
     });
@@ -27,7 +27,7 @@ describe("apollo client", () => {
         data: queryResult,
       });
 
-      const client = initializeApollo(cache.extract());
+      const client = initializeApollo("/graphql", cache.extract());
 
       expect(
         client.readQuery({
@@ -36,12 +36,20 @@ describe("apollo client", () => {
       ).toEqual(queryResult);
     });
   });
-});
 
-describe("useApollo", () => {
-  it("returns a client", () => {
-    const { result } = renderHook(() => useApollo(null));
+  describe("useApollo", () => {
+    it("returns a client", () => {
+      const { result } = renderHook(() => useApollo("/graphql", null));
 
-    expect(result.current).toBeTruthy();
+      expect(result.current).toBeTruthy();
+    });
+  });
+
+  describe("createApolloClient", () => {
+    it("returns an apollo client", () => {
+      const client = createApolloClientSSR("/graphql", { showApolloError: jest.fn() });
+
+      expect(client).toBeTruthy();
+    });
   });
 });

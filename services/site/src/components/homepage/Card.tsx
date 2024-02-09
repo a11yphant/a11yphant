@@ -67,7 +67,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         <h4 className={clsx("w-full")}>
           <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
           <Link
-            href={`/?challenge=${challengeSlug}`}
+            href={`/challenge/${challengeSlug}`}
             shallow={true}
             scroll={false}
             className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}

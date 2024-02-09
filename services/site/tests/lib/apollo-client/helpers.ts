@@ -3,7 +3,7 @@ import { ApolloLink, Observable } from "@apollo/client";
 export function createTerminatingLink(): ApolloLink {
   return new ApolloLink((operation) => {
     operation.setContext({
-      response: { headers: { get: jest.fn().mockReturnValue("header-content") } },
+      response: { headers: { get: jest.fn().mockReturnValue("a11yphant_session=header-content") } },
     });
 
     return createFakeObservable();

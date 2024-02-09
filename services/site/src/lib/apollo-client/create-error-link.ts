@@ -4,7 +4,7 @@ import { ErrorScope, errorScopeForOperationContext } from "app/components/common
 import { ErrorDialogApi } from "app/components/common/error/useErrorDialog";
 
 interface CreateErrorLinkProps {
-  errorDialogApi: ErrorDialogApi;
+  errorDialogApi?: ErrorDialogApi;
 }
 
 export const createErrorLink = ({ errorDialogApi }: CreateErrorLinkProps): ApolloLink => {

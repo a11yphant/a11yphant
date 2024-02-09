@@ -1,3 +1,5 @@
+"use client";
+
 import { Transition } from "@headlessui/react";
 import Button from "app/components/buttons/Button";
 import X from "app/components/icons/X";

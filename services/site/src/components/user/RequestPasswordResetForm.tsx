@@ -1,3 +1,5 @@
+"use client";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRequestPasswordResetMutation } from "app/generated/graphql";
 import clsx from "clsx";

@@ -1,3 +1,5 @@
+"use client";
+
 import { ApolloError } from "@apollo/client";
 import ErrorDialog, { ErrorDialogProps } from "app/components/common/error/ErrorDialog";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";

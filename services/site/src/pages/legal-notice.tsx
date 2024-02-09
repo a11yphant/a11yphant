@@ -1,7 +1,9 @@
 import Footer from "app/components/Footer";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
+import { getClientConfig } from "app/lib/config";
 import clsx from "clsx";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 
@@ -86,3 +88,11 @@ const LegalNotice: React.FunctionComponent = () => {
 };
 
 export default LegalNotice;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      config: getClientConfig(),
+    },
+  };
+};
