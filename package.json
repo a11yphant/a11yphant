@@ -36,7 +36,7 @@
   "keywords": [],
   "devDependencies": {
     "dotenv-cli": "7.3.0",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "lint-staged": "15.2.2",
     "npm-run-all2": "5.0.0",
     "pm2": "5.3.1",
