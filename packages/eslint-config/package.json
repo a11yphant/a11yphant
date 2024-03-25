@@ -15,8 +15,8 @@
   },
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.0.0 || ^6.0.0",
-    "@typescript-eslint/parser": "^5.0.0 || ^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "@typescript-eslint/parser": "^5.0.0 || ^6.0.0 || ^7.0.0",
     "eslint": "^7.20.0 || ^8.0.0",
     "eslint-config-prettier": "^8.0.0 || ^9.0.0",
     "eslint-plugin-import": "^2.22.1",
