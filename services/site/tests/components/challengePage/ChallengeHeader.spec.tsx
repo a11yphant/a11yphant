@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ChallengeHeader from "app/components/homepage/ChallengeHeader";
+import ChallengeHeader from "app/components/challengePage/ChallengeHeader";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
 
 afterEach(() => {

@@ -1,5 +1,5 @@
+import { getDifficultyIconByChallengeDifficulty } from "app/components/challengePage/difficulties/Difficulties";
 import Footer from "app/components/Footer";
-import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import Check from "app/components/icons/Check";
 import Navigation from "app/components/Navigation";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDetailsBySlugQueryResult, LevelStatus } from "app/generated/graphql";

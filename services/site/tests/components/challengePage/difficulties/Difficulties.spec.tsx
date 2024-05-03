@@ -6,7 +6,7 @@ import {
   DifficultyHard,
   DifficultyMedium,
   getDifficultyIconByChallengeDifficulty,
-} from "app/components/homepage/difficulties/Difficulties";
+} from "app/components/challengePage/difficulties/Difficulties";
 import { ChallengeDifficulty } from "app/generated/graphql";
 import React from "react";
 
