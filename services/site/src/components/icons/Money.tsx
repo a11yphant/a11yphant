@@ -15,7 +15,6 @@ const Money: React.FunctionComponent<MoneyProps> = ({ className, ...props }) => 
       xmlns="http://www.w3.org/2000/svg"
       className={clsx("text-gray-300 shrink-0", className)}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path

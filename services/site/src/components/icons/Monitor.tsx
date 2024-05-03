@@ -15,7 +15,6 @@ const Monitor: React.FunctionComponent<MonitorProps> = ({ className, ...props })
       xmlns="http://www.w3.org/2000/svg"
       className={clsx("text-gray-300 shrink-0", className)}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path d="M26.7773 63.7159L32.2205 50.2377H43.1067L48.5498 63.7159H26.7773Z" fill="white" />

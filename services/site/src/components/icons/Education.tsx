@@ -15,7 +15,6 @@ const Education: React.FunctionComponent<EducationProps> = ({ className, ...prop
       xmlns="http://www.w3.org/2000/svg"
       className={clsx("text-gray-300 shrink-0", className)}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path
