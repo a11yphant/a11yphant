@@ -15,7 +15,7 @@ const Custom404: React.FunctionComponent = () => {
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
         <div className={clsx("mx-8 py-8 h-main", "lg:mx-24")}>
-          <ErrorWithIllustration error="Error 404" text="seems like you got lost in space" />
+          <ErrorWithIllustration error="Error 404" text="Seems like you got lost in space" />
         </div>
       </main>
       <Footer />

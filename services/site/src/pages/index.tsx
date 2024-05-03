@@ -134,9 +134,14 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               url="https://twitter.com/KittyGiraudel/status/1586278237407440897"
             />
             <QuoteCard
-              quote="I shared this with the frontend teams in my company yesterday. Looking forward to it being expanded with more levels and topics."
-              author="Daniel Yuschick (@DanielYuschick)"
-              url="https://twitter.com/DanielYuschick/status/1504369896460894208"
+              quote="If you are looking for a way to get started learning about #WebAccessibility, check out a11yphant. Bit sized coding challenges, super fun & interactive."
+              author="Josefine Schaefer (@JsfnSchfr)"
+              url="https://twitter.com/JsfnSchfr/status/1698260298551988251"
+            />
+            <QuoteCard
+              quote="When thinking about how to train developers on #accessibility (after researching their views) this interactive coding tutorial by a11yphant is what I envisaged.  It's outstanding."
+              author="James Buller (@jbuller)"
+              url="https://twitter.com/jbuller/status/1512392777346211844"
             />
             <QuoteCard
               quote="Love it - much better than just documentation. Will put it on our developer onboarding list."
@@ -144,14 +149,9 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               url="https://twitter.com/a11y_mmo/status/1592598812237139968"
             />
             <QuoteCard
-              quote="This is amazing. I was thinking of picking up my accessibility learnings again. This will be useful."
-              author="Kehinde (@adeleke5140)"
-              url="https://twitter.com/adeleke5140/status/1504164112049356805"
-            />
-            <QuoteCard
-              quote="When thinking about how to train developers on #accessibility (after researching their views) this interactive coding tutorial by a11yphant is what I envisaged.  It's outstanding."
-              author="James Buller (@jbuller)"
-              url="https://twitter.com/jbuller/status/1512392777346211844"
+              quote="a11yphant - A cool project that teaches the basics of web accessibility."
+              author="Vincent Will (@wweb_dev)"
+              url="https://twitter.com/wweb_dev/status/1491014410487611393"
             />
           </TestimonialSection>
           <CTASection>
