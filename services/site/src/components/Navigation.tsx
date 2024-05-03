@@ -26,33 +26,28 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
 
   return (
     <>
-      <header className={clsx("fixed top-0 w-full pt-8 pb-6 px-6 sm:px-8 grid grid-cols-2 z-20 bg-background", "sm:px-11", "lg:grid-cols-3")}>
+      <header className={clsx("relative pt-8 pb-6 px-6 sm:px-8 grid grid-cols-12 z-20 bg-background", "sm:px-11")}>
         <Link
           href="/"
           className={clsx(
-            "block text-light border-none rounded col-span-1 max-w-max py-1 px-2 -ml-2",
+            "block text-light border-none rounded col-span-10 max-w-max py-1 px-2 -ml-2",
             "transition ease-in-out duration-300",
             "motion-safe:hover:scale-110 motion-reduce:border-solid",
             "focus-outline-offset",
+            "lg:col-span-2",
           )}
         >
           <A11yphantLogo className="w-48 xs:w-52 sm:w-36" />
           <span className="sr-only">Allyphant Homepage</span>
         </Link>
         {displayBreadcrumbs && (
-          <div
-            className={clsx(
-              "mt-4 col-span-2 w-fit-content self-center",
-              "sm:hidden",
-              "lg:mt-0 lg:col-span-1 lg:block lg:ml-[50%] lg:-translate-x-1/2",
-            )}
-          >
+          <div className={clsx("mt-4 col-span-12 w-fit-content self-center", "lg:mt-0 lg:col-span-6")}>
             <Breadcrumbs />
           </div>
         )}
-        <div className={clsx("flex justify-end items-center")}>
-          <nav className={clsx("hidden justify-end items-center mr-4", "sm:flex")} aria-label="Main">
-            {children}
+        <div className={clsx("flex justify-end items-center col-span-12", "lg:col-span-4")}>
+          {children}
+          <nav className={clsx("justify-end items-center", "sm:flex")} aria-label="Main">
             <Link
               href="/challennges"
               className={clsx(
@@ -70,7 +65,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                   onClick={() => {
                     userAccountModalApi.show("login");
                   }}
-                  className={clsx("px-8 py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
+                  className={clsx("py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
                 >
                   Login
                 </Button>
@@ -79,7 +74,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                   onClick={() => {
                     userAccountModalApi.show("signup");
                   }}
-                  className="mx-4 px-6"
+                  className="ml-2 xl:ml-4"
                 >
                   Sign Up
                 </Button>{" "}

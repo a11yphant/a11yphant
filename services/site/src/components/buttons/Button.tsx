@@ -32,7 +32,7 @@ const Button: React.FunctionComponent<React.PropsWithChildren<ButtonProps>> = ({
         animation &&
           "z-10 px-3 py-2 border-2 border-solid border-light rounded-md bg-background h-fit-content self-end hover:bg-light hover:text-background transition duration-300",
         !overrideClassName &&
-          `relative inline-flex items-center px-6 py-2.5
+          `relative inline-flex items-center px-4 xl:px-6 py-2.5
           border-primary border-2 rounded tracking-wider transition duration-300
           hover:text-light hover:bg-primary-dark hover:border-primary-dark`,
       )}
