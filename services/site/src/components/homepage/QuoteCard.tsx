@@ -32,9 +32,9 @@ const QuoteCard: React.FunctionComponent<React.PropsWithChildren<QuoteCardProps>
             rel="noopener noreferrer nofollow"
             className={clsx(
               "block py-1.5 px-4 text-grey-middle font-medium not-italic uppercase tracking-[0.18rem] text-center text-sm",
-              "border-none underline decoration-transparent underline-offset-4 decoration-2",
+              "border-none underline decoration-grey-middle underline-offset-4 decoration-2",
               "transition-colors duration-300",
-              "hover:text-primary-light hover:decoration-primary-light",
+              "hover:text-primary-light hover:decoration-transparent",
               "focus-rounded-instead-of-underline",
             )}
           >
