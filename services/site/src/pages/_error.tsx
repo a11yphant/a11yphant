@@ -27,7 +27,7 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
         >
           <div>
             <h1 className={clsx("font-normal mb-4", "h5", "sm:h4")}>Error {statusCode}</h1>
-            <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>ooops, something went wrong</p>
+            <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>Ooops, something went wrong</p>
             <Link
               href="/"
               className={clsx(
