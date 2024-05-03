@@ -1,33 +1,22 @@
+fragment TopThreeChallengesChallenge on Challenge {
+    id
+    slug
+    name
+    status
+    difficulty
+    numberOfLevels
+    numberOfFinishedLevels
+    isMobileFriendly
+}
 
 query topThreeChallenges {
     challenge1: challengeBySlug(slug: "a-valid-html-document") {
-      id
-      slug
-      name
-      status
-      difficulty
-      numberOfLevels
-      numberOfFinishedLevels
-      isMobileFriendly
+      ...TopThreeChallengesChallenge
   }
   challenge2: challengeBySlug(slug: "headings") {
-      id
-      slug
-      name
-      status
-      difficulty
-      numberOfLevels
-      numberOfFinishedLevels
-      isMobileFriendly
+      ...TopThreeChallengesChallenge
   }
    challenge3: challengeBySlug(slug: "intro-to-web-accessibility") {
-      id
-      slug
-      name
-      status
-      difficulty
-      numberOfLevels
-      numberOfFinishedLevels
-      isMobileFriendly
+      ...TopThreeChallengesChallenge
   }
 }
