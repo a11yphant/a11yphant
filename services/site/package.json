@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.10.1",
-    "@apollo/experimental-nextjs-app-support": "0.6.0",
+    "@apollo/experimental-nextjs-app-support": "^0.10.0",
     "@headlessui/react": "1.7.19",
     "@hookform/resolvers": "3.3.4",
     "@monaco-editor/react": "4.6.0",
