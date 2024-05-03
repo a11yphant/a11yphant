@@ -1,11 +1,11 @@
 import { ApolloError } from "@apollo/client";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUpForm from "app/components/user/SignUpForm";
 import { RegisterErrorCodes, useRegisterMutation } from "app/generated/graphql";
 import React from "react";
 
 async function waitForMutation(): Promise<void> {
-  await React.act(async () => {
+  await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
 }
