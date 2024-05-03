@@ -76,6 +76,7 @@
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "autoprefixer": "10.4.19",
+    "babel-plugin-superjson-next": "^0.4.5",
     "concurrently": "8.2.2",
     "dotenv": "16.4.5",
     "dotenv-cli": "7.4.1",
