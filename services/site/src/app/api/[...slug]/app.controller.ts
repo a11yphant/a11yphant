@@ -1,6 +1,6 @@
 import { Controller, Get, HttpException } from "@nestjs/common";
 
-@Controller("*")
+@Controller("api")
 export class AppController {
   @Get("hi")
   findAll(): object {
