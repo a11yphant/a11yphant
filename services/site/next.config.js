@@ -13,7 +13,13 @@ const config = {
   },
 
   experimental: {
-    serverComponentsExternalPackages: ["@nestjs/core"],
+    serverComponentsExternalPackages: ["@nestjs/core", "fsevents", "@apollo/subgraph", "class-transformer/storage", "class-transformer"],
+  },
+
+  webpack(config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) {
+    // Important: return the modified config
+    config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /class-transformer\/storage/ }));
+    return config;
   },
 
   async headers() {
