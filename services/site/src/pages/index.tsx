@@ -31,7 +31,7 @@ interface HomeProps {
 }
 
 const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
-  const [animation, setAnimation] = useState(false);
+  const [animation, setAnimation] = useState(true);
 
   const { currentUser } = useCurrentUser();
   const flashMessageApi = useFlashMessageApi();
@@ -84,7 +84,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
       <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top">
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
           <HeroSection>
-            <IllustrationFloatingWoman className={clsx("h-auto move-floating-woman", animation && "stopAnimation")} />
+            <IllustrationFloatingWoman className={clsx("h-auto move-floating-woman", !animation && "stopAnimation")} />
             <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
           </HeroSection>
           <IconSection />
@@ -108,7 +108,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               <div className="flex flex-row-reverse md:flex-row justify-start min-w-[46%] md:max-w-xs lg:max-w-sm xl:max-w-full lg:justify-end lg:pr-12">
                 <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
                 <IllustrationCouchWoman
-                  className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman-reverse", animation && "stopAnimation")}
+                  className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman-reverse", !animation && "stopAnimation")}
                 />
               </div>
             </USPSection>
@@ -117,7 +117,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               paragraph="With a phone, computer or tablet, a11yphant works wherever you are. Get started with your first web accessibility challenge and improve your skills."
             >
               <IllustrationPhoneWoman
-                className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman", animation && "stopAnimation")}
+                className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman", !animation && "stopAnimation")}
               />
               <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
             </USPSection>
@@ -155,7 +155,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             />
           </TestimonialSection>
           <CTASection>
-            <IllustrationRocket className={clsx("h-auto", "move-floating-woman", animation && "stopAnimation")} />
+            <IllustrationRocket className={clsx("h-auto", "move-floating-woman", !animation && "stopAnimation")} />
             <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
           </CTASection>
         </div>
