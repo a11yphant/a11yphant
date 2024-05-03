@@ -1,4 +1,4 @@
-import Button from "app/components/buttons/Button";
+import AnimationButton from "app/components/buttons/AnimationButton";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { FlashMessageEnum, getFlashMessage } from "app/components/common/flashMessage/messages/getFlashMessage";
 import Footer from "app/components/Footer";
@@ -85,15 +85,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
           <HeroSection>
             <IllustrationFloatingWoman className={clsx("h-auto move-floating-woman", animation && "stopAnimation")} />
-            <Button
-              srText={animation ? "Start animation" : "Stop animation"}
-              overrideClassName
-              animation
-              className={clsx("md:mb-20")}
-              onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
-            >
-              {animation ? "Start" : "Stop"}
-            </Button>
+            <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
           </HeroSection>
           <IconSection />
           <TopChallengeSection>
@@ -114,15 +106,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               paragraph="For challenges on a11yphant you won't need to read large amounts. Instead, you will learn by applying the concepts in code."
             >
               <div className="flex flex-row-reverse md:flex-row justify-start min-w-[46%] md:max-w-xs lg:max-w-sm xl:max-w-full lg:justify-end lg:pr-12">
-                <Button
-                  srText={animation ? "Start animation" : "Stop animation"}
-                  overrideClassName
-                  animation
-                  className={clsx("mb-52 xs:ml-6 md:ml-0 md:mb-0")}
-                  onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
-                >
-                  {animation ? "Start" : "Stop"}
-                </Button>
+                <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
                 <IllustrationCouchWoman
                   className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman-reverse", animation && "stopAnimation")}
                 />
@@ -135,15 +119,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               <IllustrationPhoneWoman
                 className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman", animation && "stopAnimation")}
               />
-              <Button
-                srText={animation ? "Start animation" : "Stop animation"}
-                overrideClassName
-                animation
-                className={clsx("mb-52 xs:ml-6 md:ml-0 md:mb-0")}
-                onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
-              >
-                {animation ? "Start" : "Stop"}
-              </Button>
+              <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
             </USPSection>
           </div>
           <TestimonialSection>
@@ -180,14 +156,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           </TestimonialSection>
           <CTASection>
             <IllustrationRocket className={clsx("h-auto", "move-floating-woman", animation && "stopAnimation")} />
-            <Button
-              srText={animation ? "Start animation" : "Stop animation"}
-              overrideClassName
-              animation
-              onClick={() => setAnimation((prevAnimation) => !prevAnimation)}
-            >
-              {animation ? "Start" : "Stop"}
-            </Button>
+            <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
           </CTASection>
         </div>
       </main>
