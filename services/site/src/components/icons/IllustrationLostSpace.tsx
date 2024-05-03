@@ -10,7 +10,6 @@ const IllustrationLostSpace: React.FunctionComponent<React.SVGProps<SVGSVGElemen
       viewBox="0 0 910 830"
       className={className}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path

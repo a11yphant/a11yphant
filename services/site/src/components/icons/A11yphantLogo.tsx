@@ -3,7 +3,7 @@ import React from "react";
 
 const A11yphantLogo: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => {
   return (
-    <svg viewBox="0 0 2000 500" fill="currentColor" className={clsx(className)} aria-hidden="true" focusable="false" {...props}>
+    <svg viewBox="0 0 2000 500" fill="currentColor" className={clsx(className)} aria-hidden="true" {...props}>
       <path
         d="M144.63 408.71A104.75 104.75 0 0140 304.08h77.51a27.12 27.12 0 0054.24 0v-65.87c0-94 76.49-170.5 170.5-170.5s170.5 76.48 170.5 170.5V370h-77.5V238.21a93 93 0 10-186 0v65.87a104.75 104.75 0 01-104.62 104.63z"
         fill="#7331ff"

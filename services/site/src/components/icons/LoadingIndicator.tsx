@@ -10,7 +10,6 @@ const LoadingIndicator: React.FunctionComponent<React.SVGProps<SVGSVGElement>> =
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
-      focusable="false"
       viewBox="0 0 15 15"
       className={clsx(!prefersReducedMotion && "animate-spin", "loading-spinner w-[0.94rem] h-[0.94rem]", className)}
       {...props}

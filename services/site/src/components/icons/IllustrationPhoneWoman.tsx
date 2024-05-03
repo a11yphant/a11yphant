@@ -10,7 +10,6 @@ const IllustrationPhoneWoman: React.FunctionComponent<React.SVGProps<SVGSVGEleme
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path
