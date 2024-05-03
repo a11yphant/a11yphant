@@ -5,6 +5,8 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
+import CardHeading from "./CardHeading";
+
 export interface CardProps {
   className?: string;
   heading: string;
@@ -80,31 +82,16 @@ const Card: React.FunctionComponent<CardProps> = ({
         </div>
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
-        {isTopChallenge ? (
-          <h3 className={clsx("w-full")}>
-            <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
-            <Link
-              href={`/?challenge=${challengeSlug}`}
-              shallow={true}
-              scroll={false}
-              className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
-            >
-              {heading}
-            </Link>
-          </h3>
-        ) : (
-          <h4 className={clsx("w-full")}>
-            <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
-            <Link
-              href={`/?challenge=${challengeSlug}`}
-              shallow={true}
-              scroll={false}
-              className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
-            >
-              {heading}
-            </Link>
-          </h4>
-        )}
+        <CardHeading isTopChallenge={isTopChallenge}>
+          <Link
+            href={`/?challenge=${challengeSlug}`}
+            shallow={true}
+            scroll={false}
+            className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
+          >
+            {heading}
+          </Link>
+        </CardHeading>
         <div className={clsx("w-full mt-2 text-grey-middle flex justify-between")}>
           <p className={clsx("m-0 text-grey-middle", "transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
