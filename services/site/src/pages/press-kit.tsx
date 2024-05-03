@@ -127,7 +127,7 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(dark on light background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <Image alt="Allyphant Logo Dark" src={a11yphantLogo} placeholder="blur" priority sizes="80ch" quality={100} />
+                  <Image alt="Allyphant Logo Dark" src={a11yphantLogo} placeholder="blur" sizes="80ch" quality={100} />
                 </div>
               </li>
               <li>
@@ -135,13 +135,13 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(light on dark background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <Image alt="Allyphant Logo Light" src={a11yphantLogoLight} placeholder="blur" priority sizes="80ch" quality={100} />
+                  <Image alt="Allyphant Logo Light" src={a11yphantLogoLight} placeholder="blur" sizes="80ch" quality={100} />
                 </div>
               </li>
               <li>
                 <h4 className={clsx("h5 mt-8")}>Pictorial mark</h4>
                 <div className="max-w-[20ch]">
-                  <Image alt="Allyphant Logo" src={a11yphantPictorialMark} placeholder="blur" priority sizes="80ch" quality={100} />
+                  <Image alt="Allyphant Logo" src={a11yphantPictorialMark} placeholder="blur" sizes="80ch" quality={100} />
                 </div>
               </li>
             </ul>
@@ -229,7 +229,6 @@ const PressKit: React.FunctionComponent = () => {
                   alt="Allyphant website: An overview of all available challenge topics and their difficulty."
                   src={a11yphantWebsite}
                   placeholder="blur"
-                  priority
                   quality={100}
                 />
               </div>
@@ -238,7 +237,6 @@ const PressKit: React.FunctionComponent = () => {
                   alt="Allyphant website: The textual details about a challenge (how many levels and topic)."
                   src={a11yphantWebsiteChallenge}
                   placeholder="blur"
-                  priority
                   quality={100}
                 />
               </div>
@@ -247,7 +245,6 @@ const PressKit: React.FunctionComponent = () => {
                   alt="Allyphant website: A coding level within a challenge. It consist of an editor, a sidebar with information and a preview window."
                   src={a11yphantWebsiteCodingLevel}
                   placeholder="blur"
-                  priority
                   quality={100}
                 />
               </div>
@@ -256,7 +253,6 @@ const PressKit: React.FunctionComponent = () => {
                   alt="Allyphant website: The result of a coding level evaluation, displaying if it was passed or failed."
                   src={a11yphantWebsiteResult}
                   placeholder="blur"
-                  priority
                   quality={100}
                 />
               </div>
@@ -265,7 +261,6 @@ const PressKit: React.FunctionComponent = () => {
                   alt="Allyphant website: A quiz level consisting of a question and 4 possible answers."
                   src={a11yphantWebsiteQuiz}
                   placeholder="blur"
-                  priority
                   quality={100}
                 />
               </div>
