@@ -26,7 +26,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
 
   return (
     <>
-      <header className={clsx("pt-8 pb-6 px-6 sm:px-8 grid grid-cols-2 relative z-20 bg-background", "sm:px-11", "lg:grid-cols-3")}>
+      <header className={clsx("fixed top-0 w-full pt-8 pb-6 px-6 sm:px-8 grid grid-cols-2 z-20 bg-background", "sm:px-11", "lg:grid-cols-3")}>
         <Link
           href="/"
           className={clsx(
