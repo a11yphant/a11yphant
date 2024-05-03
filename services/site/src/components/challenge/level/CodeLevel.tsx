@@ -18,7 +18,7 @@ export interface CodeLevelProps {
   challengeName: string;
   level: CodeLevelDetailsFragment;
   onAutoSaveLoadingChange: (autoSaveLoading: boolean) => void;
-  autoSave: boolean;
+  autoSave?: boolean;
 }
 
 const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange, autoSave }: CodeLevelProps): React.ReactElement => {
