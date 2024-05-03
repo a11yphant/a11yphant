@@ -3,10 +3,9 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUpForm from "app/components/user/SignUpForm";
 import { RegisterErrorCodes, useRegisterMutation } from "app/generated/graphql";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 async function waitForMutation(): Promise<void> {
-  await act(async () => {
+  await React.act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
   });
 }
