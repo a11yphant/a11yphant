@@ -29,7 +29,7 @@ const SignUpSection: React.FC = () => {
           <strong
             className={clsx("text-primary-text h4", "md:h3 md:leading-snug md:text-primary-text", "2xl:h2 xl:leading-snug xl:text-primary-text")}
           >
-            1500+ other registered users
+            1900+ other registered users
           </strong>{" "}
           and be part of the <span className="sr-only">allyphant</span>
           <span aria-hidden="true">a11yphant</span> community.
