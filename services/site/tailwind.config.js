@@ -37,6 +37,7 @@ module.exports = {
           DEFAULT: "#7331FF",
           light: "#B795FF",
           dark: "#5719D9",
+          text: "#7b78f9",
         },
         background: {
           DEFAULT: "#121212",
@@ -64,6 +65,7 @@ module.exports = {
         "gradient-easy": "url('/images/01_easy.jpg')",
         "gradient-medium": "url('/images/02_medium.jpg')",
         "gradient-hard": "url('/images/03_hard.jpg')",
+        texture: "url('/images/Texture-Dust.svg')",
       }),
       typography: (theme) => ({
         DEFAULT: {

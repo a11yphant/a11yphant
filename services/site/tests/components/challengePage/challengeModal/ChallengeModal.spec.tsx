@@ -1,7 +1,7 @@
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ChallengeModal } from "app/components/homepage/challengeModal/ChallengeModal";
+import { ChallengeModal } from "app/components/challengePage/challengeModal/ChallengeModal";
 import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDifficulty, LevelStatus } from "app/generated/graphql";
 import router from "next/router";
 import React from "react";

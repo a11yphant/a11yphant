@@ -68,14 +68,6 @@
     @apply inline-block;
 }
 
-// Reduced Motion ---
-@media (prefers-reduced-motion: no-preference) {
-    :focus {
-        transition: outline-offset 0.25s ease;
-        outline-offset: 5px;
-    }
-}
-
 // Focus Styles ---
 *:focus {
     @apply outline-light;
@@ -96,4 +88,68 @@
     @apply focus:rounded;
     @apply focus:border-transparent;
     @apply focus:outline-offset-4;
+}
+
+// ANIMATIONS
+
+// Reduced Motion ---
+@media (prefers-reduced-motion: no-preference) {
+    :focus {
+        transition: outline-offset 0.25s ease;
+        outline-offset: 5px;
+    }
+
+    // landing page animations
+    .move-floating-woman {
+        animation: floating-woman 30s linear infinite;
+    }
+    .move-floating-woman-reverse {
+        animation: floating-woman-reverse 30s linear infinite;
+    }
+}
+
+.stopAnimation {
+    animation-play-state: paused;
+}
+
+@keyframes floating-woman {
+    0% {
+        transform: translate(1rem, 1.5rem);
+    }
+    20% {
+        transform: translate(0rem, -0.5rem);
+    }
+    40% {
+        transform: translate(-1.5rem, 1rem);
+    }
+    60% {
+        transform: translate(1rem, -0.75rem);
+    }
+    80% {
+        transform: translate(0.5rem, 2.5rem);
+    }
+    100% {
+        transform: translate(1rem, 2rem);
+    }
+}
+
+@keyframes floating-woman-reverse {
+    0% {
+        transform: translate(1rem, 2rem);
+    }
+    20% {
+        transform: translate(0.5rem, 2.5rem);
+    }
+    40% {
+        transform: translate(1rem, -0.75rem);
+    }
+    60% {
+        transform: translate(-1.5rem, 1rem);
+    }
+    80% {
+        transform: translate(0rem, -0.5rem);
+    }
+    100% {
+        transform: translate(1rem, 1.5rem);
+    }
 }

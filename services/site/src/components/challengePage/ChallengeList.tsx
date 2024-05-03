@@ -1,4 +1,4 @@
-import Card from "app/components/homepage/Card";
+import Card from "app/components/challengePage/Card";
 import { ChallengeOverviewFragment, ChallengeStatus } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";
@@ -27,18 +27,20 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
       </div>
       <ul className={clsx("flex flex-row flex-wrap gap-x-12", "sm:gap-x-14", "md:gap-x-16", "lg:gap-x-24")}>
         {challenges.map((challenge) => (
-          <Card
-            isMobileFriendly={challenge.isMobileFriendly}
-            key={challenge.id}
-            className={clsx("mb-12")}
-            challengeSlug={challenge.slug}
-            heading={challenge.name}
-            levels={challenge.numberOfLevels}
-            finishedLevels={challenge.numberOfFinishedLevels}
-            difficulty={challenge.difficulty}
-            challengeNumber={challenges.length}
-            challengeStatus={challenge.status}
-          />
+          <li key={challenge.id}>
+            <Card
+              isMobileFriendly={challenge.isMobileFriendly}
+              key={challenge.id}
+              className={clsx("mb-12")}
+              challengeSlug={challenge.slug}
+              heading={challenge.name}
+              levels={challenge.numberOfLevels}
+              finishedLevels={challenge.numberOfFinishedLevels}
+              difficulty={challenge.difficulty}
+              challengeNumber={challenges.length}
+              challengeStatus={challenge.status}
+            />
+          </li>
         ))}
       </ul>
     </div>
