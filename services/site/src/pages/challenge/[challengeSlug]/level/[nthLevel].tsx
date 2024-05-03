@@ -1,8 +1,6 @@
-import { Transition } from "@headlessui/react";
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
-import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
 import {
@@ -46,22 +44,7 @@ const Level: React.FunctionComponent = () => {
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
-  const header = (
-    <Navigation displayBreadcrumbs>
-      <Transition
-        show={autoSaveLoading}
-        enter="transition-opacity duration-300"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-300 delay-1000"
-        leaveTo="opacity-0"
-      >
-        <span>
-          <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
-          <LoadingIndicator className={clsx("inline ml-4")} />
-        </span>
-      </Transition>
-    </Navigation>
-  );
+  const header = <Navigation displayBreadcrumbs />;
 
   return (
     <>
@@ -94,7 +77,9 @@ const Level: React.FunctionComponent = () => {
       <FullScreenLayout header={header}>
         <main className={clsx("max-h-full h-full px-4 pb-4 flex flex-col md:flex-row justify-between box-border")}>
           <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
-          {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
+          {isCodeLevel(level) && (
+            <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} autoSave={autoSaveLoading} />
+          )}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
         </main>
       </FullScreenLayout>
