@@ -3,8 +3,18 @@ import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import clsx from "clsx";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
+import a11yphantLogo from "../../public/images/logo/a11yphant_Logo_combination-mark_dark.png";
+import a11yphantLogoLight from "../../public/images/logo/a11yphant_Logo_combination-mark_light.png";
+import a11yphantPictorialMark from "../../public/images/logo/a11yphant_Logo_pictorial-mark.png";
+import a11yphantWebsiteChallenge from "../../public/images/showcase/a11yphant_challenge_detail.jpg";
+import a11yphantWebsite from "../../public/images/showcase/a11yphant_challenge_overview.jpg";
+import a11yphantWebsiteResult from "../../public/images/showcase/a11yphant_challenge_result.jpg";
+import a11yphantWebsiteCodingLevel from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
+import a11yphantWebsiteQuiz from "../../public/images/showcase/a11yphant-quiz.jpg";
 
 const PressKit: React.FunctionComponent = () => {
   return (
@@ -117,7 +127,7 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(dark on light background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <img alt="Allyphant Logo" src="/images/logo/a11yphant_Logo_combination-mark_dark.png" />
+                  <Image alt="Allyphant Logo Dark" src={a11yphantLogo} placeholder="blur" priority sizes="80ch" quality={100} />
                 </div>
               </li>
               <li>
@@ -125,13 +135,13 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(light on dark background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <img alt="Allyphant Logo" src="/images/logo/a11yphant_Logo_combination-mark_light.png" />
+                  <Image alt="Allyphant Logo Light" src={a11yphantLogoLight} placeholder="blur" priority sizes="80ch" quality={100} />
                 </div>
               </li>
               <li>
                 <h4 className={clsx("h5 mt-8")}>Pictorial mark</h4>
                 <div className="max-w-[20ch]">
-                  <img alt="Allyphant Logo" src="/images/logo/a11yphant_Logo_pictorial-mark.png" />
+                  <Image alt="Allyphant Logo" src={a11yphantPictorialMark} placeholder="blur" priority sizes="80ch" quality={100} />
                 </div>
               </li>
             </ul>
@@ -146,7 +156,7 @@ const PressKit: React.FunctionComponent = () => {
                 <p>
                   <InTextLink href="https://dnikub.dev" opensInNewTab>
                     Daniela Kubesch
-                    <span className="sr-only">(opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </InTextLink>{" "}
                   is a frontend developer who is passionate about accessibility and inclusive design. She strongly believes in equality and inclusion.
                   Daniela is co-founder of a11yphant. When she is not coding, she juggles all things of organisational nature.
@@ -156,7 +166,7 @@ const PressKit: React.FunctionComponent = () => {
                 <p>
                   <InTextLink href="https://lucapircher.at" opensInNewTab>
                     Luca Pircher
-                    <span className="sr-only">(opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </InTextLink>{" "}
                   is a web developer based in Austria who firmly believes the web should be inclusive. At a11yphant, Luca supports the team as the
                   "Technical Project Lead" by ensuring that the project is a joy to work on for the dev team and planning the technical requirements
@@ -167,7 +177,7 @@ const PressKit: React.FunctionComponent = () => {
                 <p>
                   <InTextLink href="https://github.com/thomasdax98" opensInNewTab>
                     Thomas Dax
-                    <span className="sr-only">(opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </InTextLink>{" "}
                   is a full-stack developer interested in product development and developer experience. As "Head of Text", he has supported the team
                   with copywriting since co-founding a11yphant. Thomas further does a lot of frontend development work and takes care of the
@@ -178,7 +188,7 @@ const PressKit: React.FunctionComponent = () => {
                 <p>
                   <InTextLink href="https://github.com/hntrhfr" opensInNewTab>
                     Michael Hinterhofer
-                    <span className="sr-only">(opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </InTextLink>{" "}
                   is a corporate backend developer on weekdays and "Chief of Happiness Officer" for a11yphant on the weekend. Since co-founding
                   a11yphant, he supported the team with his magic in the backend.
@@ -192,7 +202,7 @@ const PressKit: React.FunctionComponent = () => {
                 <p>
                   <InTextLink href="https://johannawicht.com" opensInNewTab>
                     Johanna Wicht
-                    <span className="sr-only">(opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </InTextLink>{" "}
                   is a communication designer based in Salzburg with a strong interest in visualizing data and identities. She received multiple
                   awards, including ADC Talent and CCA Student of the year.
@@ -202,7 +212,7 @@ const PressKit: React.FunctionComponent = () => {
                 <p>
                   <InTextLink href="https://www.fabianhellerdesign.com" opensInNewTab>
                     Fabian Heller
-                    <span className="sr-only">(opens in a new tab)</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </InTextLink>{" "}
                   is an interdisciplinary digital designer at the intersection of Graphic Design, Motion Design and Illustration. He received multiple
                   awards for his work in these fields.
@@ -215,33 +225,48 @@ const PressKit: React.FunctionComponent = () => {
             <h2 className={clsx("mb-8", "h4", "md:h3")}>Application Screenshots</h2>
             <div className="flex flex-wrap items-center">
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <img
+                <Image
                   alt="Allyphant website: An overview of all available challenge topics and their difficulty."
-                  src="/images/showcase/a11yphant_challenge_overview.jpg"
+                  src={a11yphantWebsite}
+                  placeholder="blur"
+                  priority
+                  quality={100}
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <img
+                <Image
                   alt="Allyphant website: The textual details about a challenge (how many levels and topic)."
-                  src="/images/showcase/a11yphant_challenge_detail.jpg"
+                  src={a11yphantWebsiteChallenge}
+                  placeholder="blur"
+                  priority
+                  quality={100}
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <img
+                <Image
                   alt="Allyphant website: A coding level within a challenge. It consist of an editor, a sidebar with information and a preview window."
-                  src="/images/showcase/a11yphant-coding-challenge.jpg"
+                  src={a11yphantWebsiteCodingLevel}
+                  placeholder="blur"
+                  priority
+                  quality={100}
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <img
+                <Image
                   alt="Allyphant website: The result of a coding level evaluation, displaying if it was passed or failed."
-                  src="/images/showcase/a11yphant_challenge_result.jpg"
+                  src={a11yphantWebsiteResult}
+                  placeholder="blur"
+                  priority
+                  quality={100}
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
-                <img
+                <Image
                   alt="Allyphant website: A quiz level consisting of a question and 4 possible answers."
-                  src="/images/showcase/a11yphant-quiz.jpg"
+                  src={a11yphantWebsiteQuiz}
+                  placeholder="blur"
+                  priority
+                  quality={100}
                 />
               </div>
             </div>
