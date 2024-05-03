@@ -4,6 +4,7 @@ export { getClientConfig } from "./rsc";
 import { ClientConfig } from "./rsc";
 
 const ConfigContext = createContext<ClientConfig>({
+  isDevelopmentMode: false,
   graphqlEndpointClient: "/graphql",
   githubLoginEndpoint: "https://github.com",
   twitterLoginEndpoint: "https://twitter.com",

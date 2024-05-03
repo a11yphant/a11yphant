@@ -4,6 +4,7 @@ import { ClientConfig } from "app/lib/config";
 import ClientProviders from "../../src/app/ClientProviders";
 
 const config: ClientConfig = {
+  isDevelopmentMode: true,
   graphqlEndpointClient: "http://localhost:3001/graphql",
   githubLoginEndpoint: "/github",
   twitterLoginEndpoint: "/twitter",
