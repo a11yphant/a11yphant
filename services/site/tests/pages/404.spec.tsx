@@ -3,7 +3,7 @@ import Custom404 from "app/pages/404";
 import React from "react";
 
 const mockHeading = "Error 404";
-const mockText = "seems like you got lost in space";
+const mockText = "Seems like you got lost in space";
 
 jest.mock("app/components/Navigation", () => ({
   __esModule: true,
