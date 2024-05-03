@@ -95,17 +95,17 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               {animation ? "Start" : "Stop"}
             </Button>
           </HeroSection>
-          <MediaSection />
+          <IconSection />
           <TopChallengeSection>
             {topChallenges.data && (
               <>
-                <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="3400" isUserFavorite />
-                <TopChallenge challenge={topChallenges.data.challenge2} timesCompleted="1700" />
-                <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="60" isNew />
+                <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="1500" isUserFavorite />
+                <TopChallenge challenge={topChallenges.data.challenge2} timesCompleted="1000" />
+                <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="100" isNew />
               </>
             )}
           </TopChallengeSection>
-          <IconSection />
+          <MediaSection />
           {!currentUser?.isRegistered && <SignUpSection />}
           <div className="my-8">
             <USPSection
