@@ -1,5 +1,4 @@
-import { ApolloClient, from, HttpLink, NormalizedCacheObject } from "@apollo/client";
-import { NextSSRApolloClient, NextSSRInMemoryCache } from "@apollo/experimental-nextjs-app-support/ssr";
+import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import crossFetch from "cross-fetch";
 
 import { getConfig } from "../config/rsc";
@@ -12,8 +11,8 @@ export function createApolloClientRSC(getCookieHeader: GetCookieHeaderFunction =
     fetch: crossFetch,
   });
 
-  return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+  return new ApolloClient({
+    cache: new InMemoryCache(),
     link: from([createForwardCookiesToServerLink(getCookieHeader), httpLink]),
   });
 }
