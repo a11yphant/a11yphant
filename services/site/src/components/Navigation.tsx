@@ -51,10 +51,29 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
           </div>
         )}
         <div className={clsx("flex justify-end items-center")}>
-          <div className={clsx("hidden justify-end items-center mr-4", "sm:flex")}>
+          <nav className={clsx("hidden justify-end items-center mr-4", "sm:flex")} aria-label="Main">
             {children}
+            <Link
+              href="/challennges"
+              className={clsx(
+                "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
+                "transition-colors duration-300",
+                "hover:text-primary-light hover:decoration-primary-light",
+                "focus-rounded-instead-of-underline",
+              )}
+            >
+              Challenges
+            </Link>
             {!currentUser?.isRegistered && (
               <>
+                <Button
+                  onClick={() => {
+                    userAccountModalApi.show("login");
+                  }}
+                  className={clsx("px-8 py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
+                >
+                  Login
+                </Button>
                 <Button
                   primary
                   onClick={() => {
@@ -64,17 +83,9 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                 >
                   Sign Up
                 </Button>{" "}
-                <Button
-                  onClick={() => {
-                    userAccountModalApi.show("login");
-                  }}
-                  className={clsx("px-8 py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
-                >
-                  Login
-                </Button>
               </>
             )}
-          </div>
+          </nav>
           {currentUser?.isRegistered && (
             <Dropdown
               triggerButton={
