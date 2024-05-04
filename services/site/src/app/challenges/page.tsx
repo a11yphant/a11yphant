@@ -28,12 +28,9 @@ const Challenges = async (): Promise<React.ReactElement> => {
   return (
     <>
       <Navigation displayBreadcrumbs />
-      <main>
-        <div className={clsx("w-full h-full")}>
-          <section
-            id="challenges"
-            className={clsx("max-w-screen-3xl pt-10 mx-8 mt-22 mb-4", "sm:mx-12 sm:mt-18 sm:mb-12", "md:mx-24 md:mb-24", "2xl:mx-auto")}
-          >
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+        <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
+          <section id="challenges">
             <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
 
             <Legend className={clsx("2xl:mx-24")} />
