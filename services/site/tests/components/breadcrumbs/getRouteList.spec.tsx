@@ -3,20 +3,16 @@ import { ApolloClient } from "@apollo/client/core";
 import { createMockClient } from "@apollo/client/testing";
 import { getRouteList } from "app/components/breadcrumbs/getRouteList";
 import { ChallengeBySlugDocument, ChallengeBySlugQuery } from "app/generated/graphql";
-import router from "next/router";
 
 const challengeSlug = "mock-challenge-1";
 const expectedBreadcrumbHome = {
   href: "/",
-  breadcrumb: "Mock Home",
+  breadcrumb: "Challenges",
 };
 const expectedBreadcrumbChallenge = {
   href: `/challenge/${challengeSlug}`,
   breadcrumb: "Mock First Challenge",
 };
-
-jest.mock("app/components/breadcrumbs/routes");
-jest.mock("next/router", () => require("next-router-mock"));
 
 let mockClient: ApolloClient<NormalizedCacheObject>;
 
@@ -36,19 +32,13 @@ beforeEach(() => {
 
 describe("getRouteList", () => {
   it("correctly generates breadcrumbs for a non-dynamic route", async () => {
-    router.push("/");
-    const routeList = await getRouteList(router, mockClient);
+    const routeList = await getRouteList("/", {}, mockClient);
 
     expect(routeList).toEqual([expectedBreadcrumbHome]);
   });
 
   it("correctly generates breadcrumbs for a dynamic route", async () => {
-    router.push({
-      pathname: "/challenge/[challengeSlug]",
-      query: { challengeSlug: challengeSlug },
-    });
-
-    const routeList = await getRouteList(router, mockClient);
+    const routeList = await getRouteList("/challenge/challenge-slug", { challengeSlug }, mockClient);
 
     expect(routeList).toEqual([expectedBreadcrumbHome, expectedBreadcrumbChallenge]);
   });

@@ -12,6 +12,7 @@ export interface DifficultyProps {
 export const DifficultyEasy = ({ className, firstClassName, secondClassName, thirdClassName }: DifficultyProps): React.ReactElement => {
   return (
     <>
+      <span className="sr-only">Difficulty Easy</span>
       <span
         className={clsx(
           className,
@@ -46,6 +47,7 @@ export const DifficultyEasy = ({ className, firstClassName, secondClassName, thi
 export const DifficultyMedium = ({ className, firstClassName, secondClassName, thirdClassName }: DifficultyProps): React.ReactElement => {
   return (
     <>
+      <span className="sr-only">Difficulty Medium</span>
       <span
         className={clsx(
           className,
@@ -80,6 +82,7 @@ export const DifficultyMedium = ({ className, firstClassName, secondClassName, t
 export const DifficultyHard = ({ className, firstClassName, secondClassName, thirdClassName }: DifficultyProps): React.ReactElement => {
   return (
     <>
+      <span className="sr-only">Difficulty Hard</span>
       <span
         className={clsx(
           className,

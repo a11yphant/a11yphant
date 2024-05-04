@@ -1,3 +1,5 @@
+"use client";
+
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
@@ -5,6 +7,7 @@ import { CurrentUserDocument, useLogoutMutation } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import Button from "./buttons/Button";
@@ -19,10 +22,16 @@ export interface NavigationProps {
 
 const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displayBreadcrumbs = true, children }) => {
   const { currentUser } = useCurrentUser();
-  const [logout] = useLogoutMutation({
+  const [triggerLogout] = useLogoutMutation({
     refetchQueries: [{ query: CurrentUserDocument }],
   });
   const userAccountModalApi = useUserAccountModalApi();
+  const router = useRouter();
+
+  const logout = async (): Promise<void> => {
+    await triggerLogout();
+    router.push("/");
+  };
 
   return (
     <>

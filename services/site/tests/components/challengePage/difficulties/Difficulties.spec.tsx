@@ -15,33 +15,33 @@ describe("Difficulties", () => {
     const { container } = render(<DifficultyEasy />);
 
     const spans = container.querySelectorAll("span");
-    expect(spans).toHaveLength(3);
+    expect(spans).toHaveLength(4);
 
     expect(container.querySelectorAll(".bg-grey")).toHaveLength(1);
-    expect(spans[0].classList).toContain("bg-grey");
+    expect(spans[1].classList).toContain("bg-grey");
   });
 
   it("renders the difficulty `Medium` correctly", () => {
     const { container } = render(<DifficultyMedium />);
 
     const spans = container.querySelectorAll("span");
-    expect(spans).toHaveLength(3);
+    expect(spans).toHaveLength(4);
 
     expect(container.querySelectorAll(".bg-grey")).toHaveLength(2);
-    expect(spans[0].classList).toContain("bg-grey");
     expect(spans[1].classList).toContain("bg-grey");
+    expect(spans[2].classList).toContain("bg-grey");
   });
 
   it("renders the difficulty `Hard` correctly", () => {
     const { container } = render(<DifficultyHard />);
 
     const spans = container.querySelectorAll("span");
-    expect(spans).toHaveLength(3);
+    expect(spans).toHaveLength(4);
 
     expect(container.querySelectorAll(".bg-grey")).toHaveLength(3);
-    expect(spans[0].classList).toContain("bg-grey");
     expect(spans[1].classList).toContain("bg-grey");
     expect(spans[2].classList).toContain("bg-grey");
+    expect(spans[3].classList).toContain("bg-grey");
   });
 });
 
