@@ -10,6 +10,7 @@ import { ElementHasMinimumDimension } from "./element-has-minimum-dimension";
 import { ElementNotContainsText } from "./element-not-contains-text.check";
 import { ElementNotExists } from "./element-not-exists.check";
 import { HtmlIsValid } from "./html-is-valid.check";
+import { MarginBetweenElementsGreaterThanOrEqual } from "./margin-between-elements-greater-than-or-equal.check";
 
 export {
   AxeCheck,
@@ -24,4 +25,5 @@ export {
   ElementNotContainsText,
   ElementNotExists,
   HtmlIsValid,
+  MarginBetweenElementsGreaterThanOrEqual,
 };
