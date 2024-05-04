@@ -81,10 +81,18 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     <span className="h3 text-base text-grey block">
                       {getTitlePrefix()}Level {String(level.order).padStart(2, "0")}
                     </span>
-                    <span className="font-normal text-grey-middle mb-0 block">{level.__typename === "QuizLevel" ? "Quiz" : "Coding"}</span>
+                    <span
+                      className={clsx(
+                        "font-normal mb-0 block",
+                        !isFirstUnfinishedLevel && "text-grey-middle",
+                        isFirstUnfinishedLevel && "text-white",
+                      )}
+                    >
+                      {level.__typename === "QuizLevel" ? "Quiz" : "Coding"}
+                    </span>
                     {level.status === LevelStatus.Finished && (
                       <>
-                        <span className="sr-only">You have already completed this level.</span>
+                        <span className="sr-only">Completed</span>
                         <Check className="h-7 w-10 absolute top-4 right-5 text-light" />
                       </>
                     )}
