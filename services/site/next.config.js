@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
 
 /** @type {import('next').NextConfig} */
@@ -15,6 +16,7 @@ const config = {
   },
 
   experimental: {
+    serverMinification: false,
     serverComponentsExternalPackages: [
       "@apollo/server",
       "@nestjs/core",
@@ -34,7 +36,6 @@ const config = {
     // Important: return the modified config
     config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /(class-transformer\/storage|@apollo\/subgraph)/ }));
     config.resolve.alias["@"] = path.resolve(__dirname, "src/api");
-    config.optimization.minimize = false;
     return config;
   },
 
