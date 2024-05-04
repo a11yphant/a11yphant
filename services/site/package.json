@@ -7,7 +7,7 @@
   "author": "Michael Hinterhofer | Thomas Dax | Daniela Kubesch | Luca Pircher",
   "scripts": {
     "prebuild": "npm run schema:generate && npm run gql:generate",
-    "vercel-build": "prisma generate && prisma migrate deploy && npm run build",
+    "vercel-build": "prisma generate && DB_URL=POSTGRES_PRISMA_URL prisma migrate deploy && npm run build",
     "build": "next build",
     "dev": "npm run dotenv -- npm run dev:internal",
     "dev:internal": "concurrently \"next dev -p ${SITE_PORT-3001}\" \"npm run gql:generate:watch\"",
