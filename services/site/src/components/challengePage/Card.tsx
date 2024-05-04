@@ -42,8 +42,8 @@ const Card: React.FunctionComponent<CardProps> = ({
         "min-w-full h-64 relative overflow-hidden border-0 border-background-light bg-background-light rounded-xl flex flex-col justify-end",
         "group transition duration-300",
         "card shadow-card gap-0",
-        "bg-no-repeat	bg-contain bg-top",
-        "xs:min-w-0 xs:w-64",
+        "bg-no-repeat bg-contain bg-top",
+        "min-w-0 w-64",
         difficulty === ChallengeDifficulty.Easy && finishedLevels !== levels && "bg-gradient-easy",
         difficulty === ChallengeDifficulty.Medium && finishedLevels !== levels && "bg-gradient-medium",
         difficulty === ChallengeDifficulty.Hard && finishedLevels !== levels && "bg-gradient-hard",
@@ -81,13 +81,13 @@ const Card: React.FunctionComponent<CardProps> = ({
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
         <h3 className={clsx("w-full")}>
-          <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
           <Link
             href={`/challenges/${challengeSlug}`}
             shallow={true}
             scroll={false}
             className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
           >
+            <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}: `}</span>
             {heading}
           </Link>
         </h3>
