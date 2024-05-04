@@ -1,3 +1,4 @@
+import { Menu } from "@headlessui/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import { useUserAccountModalApi } from "app/components/user/useUserAccountModalApi";
@@ -11,7 +12,6 @@ import Button from "./buttons/Button";
 import Dropdown from "./common/dropdown/Dropdown";
 import A11yphantLogo from "./icons/A11yphantLogo";
 import UserAvatar from "./icons/UserAvatar";
-import X from "./icons/X";
 
 export interface NavigationProps {
   displayBreadcrumbs?: boolean;
@@ -33,7 +33,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
           "pt-2 pb-4 px-6 sm:px-8 grid grid-cols-12 z-20 bg-background",
           "sm:px-11",
           "md:pt-4",
-          "lg:py-6",
+          "lg:pb-2 lg:pt-1",
           isSticky && "fixed top-0 w-full",
           !isSticky && "relative",
         )}
@@ -41,32 +41,90 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
         <Link
           href="/"
           className={clsx(
-            "block text-light border-none rounded col-span-10 max-w-max py-1 px-2 -ml-2",
+            "block text-light border-none rounded col-span-4 max-w-max py-1 px-2 -ml-2",
             "transition ease-in-out duration-300",
             "motion-safe:hover:scale-110 motion-reduce:border-solid",
             "focus-outline-offset",
-            "lg:col-span-2",
           )}
         >
-          <A11yphantLogo className="w-48 xs:w-52 sm:w-36" />
+          <A11yphantLogo className="w-48 xs:w-52 md:w-36" />
           <span className="sr-only">Allyphant Homepage</span>
         </Link>
-        {displayBreadcrumbs && (
-          <div className={clsx("mt-4 col-span-12 w-fit-content self-center", "lg:mt-0 lg:col-span-6")}>
-            <Breadcrumbs />
-          </div>
-        )}
-        <div className={clsx("flex justify-end items-center col-span-12", "lg:col-span-4")}>
+
+        {/* Mobile Nav */}
+        <div className={clsx("flex justify-end items-center col-span-8", "md:hidden")}>
+          {children}
+          <nav className={clsx("mt-2")} aria-label="Main">
+            <Dropdown
+              hamburger={true}
+              isSticky={isSticky}
+              triggerButton={
+                <Dropdown.TriggerButton
+                  className={clsx(
+                    "flex flex-row items-center py-0 ml-2 pl-2 border-none rounded underline decoration-transparent underline-offset-4 decoration-2",
+                    "hover:text-primary-light hover:decoration-primary-light motion-safe:transition-colors transition-300 align-middle",
+                    "focus:outline-offset-2",
+                  )}
+                >
+                  <span>Menu</span>
+                  <span className={clsx("text-4xl -mt-2 pl-1")}>&#9776;</span>
+                </Dropdown.TriggerButton>
+              }
+            >
+              <Dropdown.Group>
+                <Dropdown.Link href={"/challenges"}>Challenges</Dropdown.Link>
+                {currentUser?.isRegistered && <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>}
+              </Dropdown.Group>
+              {!currentUser?.isRegistered && (
+                <Dropdown.Group>
+                  <div className="flex flex-col items-center mt-4">
+                    <Menu.Item>
+                      {() => (
+                        <Button
+                          onClick={() => {
+                            userAccountModalApi.show("login");
+                          }}
+                          className="mb-2 min-w-full justify-center"
+                        >
+                          Login
+                        </Button>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {() => (
+                        <Button
+                          onClick={() => {
+                            userAccountModalApi.show("signup");
+                          }}
+                          primary
+                          className="my-2 min-w-full justify-center"
+                        >
+                          Sign Up
+                        </Button>
+                      )}
+                    </Menu.Item>
+                  </div>
+                </Dropdown.Group>
+              )}
+              {currentUser?.isRegistered && (
+                <Dropdown.Group>
+                  <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
+                </Dropdown.Group>
+              )}
+            </Dropdown>
+          </nav>
+        </div>
+
+        <div className={clsx("flex justify-end items-center col-span-8 mt-1.5", "hidden md:block")}>
           {children}
           <nav className={clsx("justify-end items-center", "sm:flex")} aria-label="Main">
             <Link
-              href="/challennges"
+              href="/challenges"
               className={clsx(
                 "py-1.5 px-4 text-light font-sans font-normal border-none underline decoration-transparent underline-offset-4 decoration-2",
                 "transition-colors duration-300",
                 "hover:text-primary-light hover:decoration-primary-light",
                 "focus-rounded-instead-of-underline",
-                "hidden md:block",
               )}
             >
               Challenges
@@ -77,7 +135,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                   onClick={() => {
                     userAccountModalApi.show("login");
                   }}
-                  className={clsx("py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent", "hidden md:block")}
+                  className={clsx("ml-4 py-3 border-primary", "hover:border-primary-dark", "focus:bg-transparent")}
                 >
                   Login
                 </Button>
@@ -114,53 +172,13 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                 </Dropdown.Group>
               </Dropdown>
             )}
-            {/* Mobile Nav */}
-            <Dropdown
-              hamburger={true}
-              isSticky={isSticky}
-              triggerButton={
-                <Dropdown.TriggerButton
-                  className={clsx(
-                    "flex flex-row items-center pl-4",
-                    "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle",
-                    "focus:outline-offset-2",
-                  )}
-                >
-                  <span className={clsx("")}>Menu</span>
-                  <X className={clsx("w-4 h-4 ml-2")} />
-                </Dropdown.TriggerButton>
-              }
-            >
-              <Dropdown.Group>
-                <Dropdown.Link href={"/challennges"}>Challenges</Dropdown.Link>
-                {!currentUser?.isRegistered && (
-                  <>
-                    <Dropdown.Button
-                      onClick={() => {
-                        userAccountModalApi.show("login");
-                      }}
-                    >
-                      Login
-                    </Dropdown.Button>
-                    <Dropdown.Button
-                      onClick={() => {
-                        userAccountModalApi.show("signup");
-                      }}
-                    >
-                      Sign Up
-                    </Dropdown.Button>
-                  </>
-                )}
-                {currentUser?.isRegistered && <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>}
-              </Dropdown.Group>
-              {currentUser?.isRegistered && (
-                <Dropdown.Group>
-                  <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
-                </Dropdown.Group>
-              )}
-            </Dropdown>
           </nav>
         </div>
+        {displayBreadcrumbs && (
+          <div className={clsx("mt-2 col-span-12 w-fit-content self-center", "md:mt-0", "lg:mt-0 lg:col-span-6")}>
+            <Breadcrumbs />
+          </div>
+        )}
       </header>
       <FlashMessagePortalRoot />
     </>

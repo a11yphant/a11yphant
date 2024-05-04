@@ -34,20 +34,14 @@ export const Group: GroupComponent = ({ children }) => <div className="my-3 mx-1
 
 interface ButtonProps {
   onClick?: () => void;
+  primary?: boolean;
 }
 
 type ButtonComponent = React.FC<React.PropsWithChildren<ButtonProps>>;
-const Button: ButtonComponent = ({ children, ...props }) => (
+const Button: ButtonComponent = ({ children, primary, ...props }) => (
   <Menu.Item>
-    {({ active }) => (
-      <button
-        className={clsx(
-          "p-3 w-full text-center leading-6 motion-safe:transition transition-300 underline decoration-2 underline-offset-4",
-          !active && "decoration-transparent",
-          active && "text-primary-light decoration-primary-light",
-        )}
-        {...props}
-      >
+    {() => (
+      <button className={clsx("p-3 w-full text-center leading-6", "motion-safe:transition transition-300")} {...props}>
         {children}
       </button>
     )}
@@ -76,7 +70,7 @@ type DropdownComponent = React.FC<React.PropsWithChildren<DropdownProps>> & {
 
 const Dropdown: DropdownComponent = ({ children, triggerButton, hamburger, isSticky }) => {
   return (
-    <Menu as="div" className={clsx("relative inline-block", hamburger && "md:hidden", !hamburger && "hidden md:block")}>
+    <Menu as="div" className={clsx("relative inline-block")}>
       {triggerButton}
       <Transition
         as={React.Fragment}
