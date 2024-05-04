@@ -10,7 +10,7 @@ const TopChallengeSection: React.FunctionComponent<React.PropsWithChildren> = ({
       <Link
         href="/challenges"
         className={clsx(
-          "w-max mt-8 px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
+          "w-max px-6 py-2.5 font-medium bg-primary text-light border-primary border-2 rounded tracking-wider inline-flex items-center",
           "transition duration-300",
           "hover:text-light hover:bg-primary-dark hover:border-primary-dark",
         )}
