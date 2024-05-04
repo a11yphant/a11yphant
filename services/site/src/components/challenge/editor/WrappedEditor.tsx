@@ -14,7 +14,7 @@ import { useResizeDetector } from "react-resize-detector";
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
   onReset: (language?: EditorLanguage) => void;
-  autoSave?: boolean;
+  autoSave: boolean;
 }
 
 export interface EditorConfig {

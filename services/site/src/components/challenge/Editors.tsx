@@ -13,7 +13,7 @@ interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "on
   className?: string;
   editors: EditorConfig[];
   onReset: (language?: EditorLanguage) => void;
-  autoSave?: boolean;
+  autoSave: boolean;
 }
 
 const Editors: React.FunctionComponent<CustomEditorProps> = ({ className, editors, onReset, autoSave, ...props }) => {
