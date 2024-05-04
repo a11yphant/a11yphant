@@ -1,5 +1,3 @@
-import "module-alias/register";
-
 import { BootstrapConsole } from "nestjs-console";
 
 import { AppModule } from "./app.module";

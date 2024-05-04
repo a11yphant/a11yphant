@@ -1,7 +1,4 @@
-import "module-alias/register";
-
-import { INestApplication, Logger, ValidationPipe } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import cookieParser from "cookie-parser";
 
@@ -15,18 +12,8 @@ export function configureApp(app: INestApplication): void {
 export async function bootstrap(): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-
-  const configService = app.get<ConfigService>(ConfigService);
-  const logger = app.get<Logger>(Logger);
-
   configureApp(app);
-
-  const url = configService.get("api.url");
-  const port = configService.get("api.port");
-
-  await app.listen(port);
-  logger.log(`App listening on ${url}/graphql`, AppModule.name);
-
+  await app.init();
   return app;
 }
 
