@@ -22,7 +22,7 @@ export interface NavigationProps {
   isSticky?: boolean;
 }
 
-const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displayBreadcrumbs = true, isSticky = true, children }) => {
+const Navigation: React.FC<NavigationProps> = ({ displayBreadcrumbs = true, isSticky = true }) => {
   const { currentUser } = useCurrentUser();
   const [triggerLogout] = useLogoutMutation({
     refetchQueries: [{ query: CurrentUserDocument }],
@@ -62,7 +62,6 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
 
         {/* Mobile Nav */}
         <div className={clsx("flex justify-end items-center col-span-8", "md:hidden")}>
-          {children}
           <nav className={clsx("mt-2")} aria-label="Main">
             <Dropdown
               hamburger
@@ -127,7 +126,6 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
         </div>
 
         <div className={clsx("flex justify-end items-center col-span-8 mt-1.5", "hidden md:block")}>
-          {children}
           <nav className={clsx("justify-end items-center", "sm:flex")} aria-label="Main">
             <Link
               href="/challenges"
