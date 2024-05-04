@@ -1,7 +1,8 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { act, render, screen } from "@testing-library/react";
 import Breadcrumbs from "app/components/breadcrumbs/Breadcrumbs";
-import router, { NextRouter } from "next/router";
+import { getRouteList } from "app/components/breadcrumbs/getRouteList";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import React from "react";
 
 async function waitForQuery(): Promise<void> {
@@ -21,14 +22,19 @@ const expectedBreadcrumbChallenge = {
   breadcrumb: "Mock First Challenge",
 };
 
-jest.mock("app/components/breadcrumbs/getRouteList", () => ({
-  getRouteList: async (router: NextRouter) => {
+jest.mock("app/components/breadcrumbs/getRouteList", () => ({ getRouteList: jest.fn() }));
+
+jest.mock("next/navigation", () => ({ usePathname: jest.fn(), useSearchParams: jest.fn(), useParams: jest.fn() }));
+
+beforeEach(() => {
+  jest.resetAllMocks();
+  (getRouteList as jest.Mock).mockImplementation(async (pathname: string) => {
     // Otherwise: ReferenceError: Cannot access 'challengeSlug' before initialization
     // because of hoisting
     // eslint-disable-next-line
     const dummy = challengeSlug;
 
-    if (router.pathname === "/") {
+    if (pathname === "/") {
       return [
         {
           ...expectedBreadcrumbHome,
@@ -44,10 +50,8 @@ jest.mock("app/components/breadcrumbs/getRouteList", () => ({
         },
       ];
     }
-  },
-}));
-
-jest.mock("next/router", () => require("next-router-mock"));
+  });
+});
 
 const renderBreadcrumbs = async (): Promise<void> => {
   render(
@@ -61,9 +65,7 @@ const renderBreadcrumbs = async (): Promise<void> => {
 
 describe("Breadcrumbs", () => {
   it("renders no navigation and no list if there is only one breadcrumb", async () => {
-    act(() => {
-      router.push("/");
-    });
+    (usePathname as jest.Mock).mockReturnValue("/");
 
     await renderBreadcrumbs();
 
@@ -72,9 +74,7 @@ describe("Breadcrumbs", () => {
   });
 
   it("renders no slash if there is only one breadcrumb", async () => {
-    await act(async () => {
-      router.push("/");
-    });
+    (usePathname as jest.Mock).mockReturnValue("/");
 
     await renderBreadcrumbs();
 
@@ -82,12 +82,9 @@ describe("Breadcrumbs", () => {
   });
 
   it("renders two breadcrumbs with dividing slashes", async () => {
-    await act(async () => {
-      router.push({
-        pathname: "/challenge/[challengeSlug]",
-        query: { challengeSlug: challengeSlug },
-      });
-    });
+    (usePathname as jest.Mock).mockReturnValue("/challenge/[challengeSlug]");
+    (useParams as jest.Mock).mockReturnValue(challengeSlug);
+    (useSearchParams as jest.Mock).mockReturnValue(new URLSearchParams());
 
     await renderBreadcrumbs();
 

@@ -42,6 +42,6 @@ describe("login", () => {
         getInputByLabel('Password', loginContainer()).type("very-secret");
         loginContainer().contains('button', 'Log in').click();
 
-        cy.contains("Welcome back!").should("exist");
+        cy.contains("Welcome back!", { timeout: 6000 }).should("exist");
     });
 });

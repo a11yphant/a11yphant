@@ -30,11 +30,13 @@
   },
   "dependencies": {
     "@apollo/client": "3.10.1",
+    "@apollo/experimental-nextjs-app-support": "^0.10.0",
     "@headlessui/react": "1.7.19",
     "@hookform/resolvers": "3.3.4",
     "@monaco-editor/react": "4.6.0",
     "clsx": "2.1.1",
     "cross-fetch": "4.0.0",
+    "encoding": "0.1.13",
     "focus-visible": "5.2.0",
     "graphql": "16.8.1",
     "lodash.debounce": "4.0.8",
@@ -48,6 +50,8 @@
     "react-hook-form": "7.51.3",
     "react-resize-detector": "10.0.1",
     "sanitize-html": "2.13.0",
+    "set-cookie-parser": "2.6.0",
+    "sharp": "0.32.6",
     "yup": "1.4.0"
   },
   "devDependencies": {
@@ -63,6 +67,7 @@
     "@testing-library/react": "14.3.1",
     "@testing-library/user-event": "14.5.2",
     "@types/express": "4.17.21",
+    "@types/jest": "^29.5.11",
     "@types/lodash.debounce": "4.0.9",
     "@types/node": "20.12.8",
     "@types/nprogress": "0.2.3",
@@ -71,6 +76,7 @@
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "autoprefixer": "10.4.19",
+    "babel-plugin-superjson-next": "^0.4.5",
     "concurrently": "8.2.2",
     "dotenv": "16.4.5",
     "dotenv-cli": "7.4.1",
@@ -100,6 +106,7 @@
     "remark-html": "16.0.1",
     "sass": "1.76.0",
     "tailwindcss": "3.4.3",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "whatwg-fetch": "3.6.19"
   }
 }

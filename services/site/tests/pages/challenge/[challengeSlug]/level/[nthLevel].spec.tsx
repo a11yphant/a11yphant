@@ -2,7 +2,7 @@ import { getServerSideProps } from "app/pages/challenge/[challengeSlug]/level/[n
 import { GetServerSidePropsContext } from "next";
 
 jest.mock("app/lib/apollo-client", () => ({
-  initializeApollo: (_, context) => context.apolloClient,
+  initializeApollo: (_, __, context) => context.apolloClient,
 }));
 
 jest.mock("app/components/Lottie", () => ({}));

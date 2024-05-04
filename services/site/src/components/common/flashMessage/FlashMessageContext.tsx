@@ -1,3 +1,5 @@
+"use client";
+
 import { FlashMessage, FlashMessageProps } from "app/components/common/flashMessage/FlashMessage";
 import React from "react";
 import { createPortal } from "react-dom";

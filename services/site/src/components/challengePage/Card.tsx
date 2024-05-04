@@ -84,7 +84,7 @@ const Card: React.FunctionComponent<CardProps> = ({
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
         <CardHeading isTopChallenge={isTopChallenge}>
           <Link
-            href={`/?challenge=${challengeSlug}`}
+            href={`/challenge/${challengeSlug}`}
             shallow={true}
             scroll={false}
             className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
@@ -96,7 +96,6 @@ const Card: React.FunctionComponent<CardProps> = ({
           <p className={clsx("m-0 text-grey-middle", "transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
           </p>
-          <p className={clsx("sr-only")}>{`Difficulty ${difficulty.charAt(0).toUpperCase() + difficulty.toLowerCase().slice(1)}`}</p>
           <div className={clsx("flex")}>
             <DifficultyIcon className={clsx("w-2.5 h-4/5", "transition duration-300")} />
           </div>

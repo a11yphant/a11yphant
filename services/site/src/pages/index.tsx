@@ -20,6 +20,8 @@ import Navigation from "app/components/Navigation";
 import { ChallengesDocument, useTopThreeChallengesQuery } from "app/generated/graphql";
 import { useCurrentUser } from "app/hooks/useCurrentUser";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -166,7 +168,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const fmType = context.query?.["fm-type"] ?? null;
 
@@ -181,6 +183,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       fmType,
+      config: getClientConfig(),
     },
   };
 };

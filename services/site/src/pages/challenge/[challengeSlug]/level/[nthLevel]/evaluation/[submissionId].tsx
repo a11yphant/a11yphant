@@ -22,6 +22,8 @@ import {
 import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionStateKeys";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -132,7 +134,7 @@ const Evaluation: React.FunctionComponent = () => {
 export default Evaluation;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const { challengeSlug, submissionId } = context.params;
 
@@ -171,6 +173,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       showScrollOverlay: false,
+      config: getClientConfig(),
     },
   };
 };
