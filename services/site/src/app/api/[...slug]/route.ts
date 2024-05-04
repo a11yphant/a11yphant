@@ -1,10 +1,9 @@
 import "reflect-metadata";
 
 import serverlessExpress from "@codegenie/serverless-express";
-import { NestFactory } from "@nestjs/core";
 import { Request as ExpressRequest } from "express";
 
-import { AppModule } from "./app.module";
+import { bootstrap as initializeApp } from "../../../api/main";
 
 type ParsedRequest = { request: Request; body?: Uint8Array };
 
@@ -32,11 +31,10 @@ function getResponse(response): Response {
 }
 
 type Handler = (request: ParsedRequest) => Response;
-let handler: Handler;
+let handler: Promise<Handler>;
 
 async function bootstrap(): Promise<Handler> {
-  const app = await NestFactory.create(AppModule);
-  await app.init();
+  const app = await initializeApp();
 
   const expressApp = app.getHttpAdapter().getInstance();
   return serverlessExpress<Request, Response>({ app: expressApp, eventSourceName: "custom", eventSource: { getRequest, getResponse } });
@@ -61,17 +59,25 @@ async function getContent(stream: ReadableStream<Uint8Array>): Promise<Uint8Arra
   return content;
 }
 
+function getHandler(): Promise<Handler> {
+  if (!handler) {
+    handler = bootstrap();
+  }
+
+  return handler;
+}
+
 export async function GET(request: Request): Promise<Response> {
-  handler = handler ?? (await bootstrap());
-  return handler({ request });
+  const resolvedHandler = await getHandler();
+  return resolvedHandler({ request });
 }
 
 export async function POST(request: Request): Promise<Response> {
-  handler = handler ?? (await bootstrap());
+  const resolvedHandler = await getHandler();
 
   if (!request.body) {
-    return handler({ request });
+    return resolvedHandler({ request });
   }
 
-  return handler({ request, body: await getContent(request.body) });
+  return resolvedHandler({ request, body: await getContent(request.body) });
 }
