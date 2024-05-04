@@ -105,7 +105,13 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             <USPSection
               imageLeft
               heading="Study from the comfort of your home"
-              paragraph="For challenges on a11yphant you won't need to read large amounts. Instead, you will learn by applying the concepts in code."
+              paragraph={
+                <>
+                  For challenges on <span className="sr-only">allyphant</span>
+                  <span aria-hidden="true">a11yphant</span> you won't need to read large amounts. Instead, you will learn by applying the concepts in
+                  code.
+                </>
+              }
             >
               <div className="flex flex-row-reverse md:flex-row justify-start min-w-[46%] md:max-w-xs lg:max-w-sm xl:max-w-full lg:justify-end lg:pr-12">
                 <AnimationButton animation={animation} onClick={() => setAnimation((prevAnimation) => !prevAnimation)} />
@@ -116,7 +122,13 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             </USPSection>
             <USPSection
               heading="Interactive coding challenges and quizzes"
-              paragraph="With a phone, computer or tablet, a11yphant works wherever you are. Get started with your first web accessibility challenge and improve your skills."
+              paragraph={
+                <>
+                  With a phone, computer or tablet, <span className="sr-only">allyphant</span>
+                  <span aria-hidden="true">a11yphant</span> works wherever you are. Get started with your first web accessibility challenge and
+                  improve your skills.
+                </>
+              }
             >
               <IllustrationPhoneWoman
                 className={clsx("h-auto mb-10 max-w-[15rem] md:max-w-full md:mb-0", "move-floating-woman", !animation && "stopAnimation")}

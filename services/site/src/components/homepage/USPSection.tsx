@@ -5,7 +5,7 @@ import React from "react";
 interface USPSectionProps {
   imageLeft?: boolean;
   heading: string;
-  paragraph: string;
+  paragraph: React.ReactNode;
   displayButton?: boolean;
 }
 const USPSection: React.FunctionComponent<React.PropsWithChildren<USPSectionProps>> = ({
@@ -32,7 +32,7 @@ const USPSection: React.FunctionComponent<React.PropsWithChildren<USPSectionProp
           "md:mb-4",
           "xl:shrink xl:grow xl:mb-0",
           imageLeft && "md:ml-8 lg:ml-20",
-          !imageLeft && "items-end",
+          !imageLeft && "md:items-end",
         )}
       >
         <h2
