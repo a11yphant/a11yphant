@@ -47,12 +47,7 @@ const LegalNotice: React.FunctionComponent = () => {
           <h2 className={clsx("h5", "sm:h4")}>Contact Information</h2>
           <address className={clsx("not-italic mb-12")}>
             <p>
-              <strong>Daniela Kubesch, BSc</strong> <br />
-              Wiesengasse 18 <br />
-              3001 Mauerbach <br />
-              Austria
-            </p>
-            <p>
+              <strong>Address: </strong> On request <br />
               <strong>Email: </strong> <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>
             </p>
           </address>
