@@ -64,7 +64,7 @@ const Navigation: React.FC<NavigationProps> = ({ displayBreadcrumbs = true, isSt
         <div className={clsx("flex justify-end items-center col-span-8", "md:hidden")}>
           <nav className={clsx("mt-2")} aria-label="Main">
             <Dropdown
-              hamburger
+              isHamburgerMenu
               isSticky={isSticky}
               triggerButton={
                 <Dropdown.TriggerButton
