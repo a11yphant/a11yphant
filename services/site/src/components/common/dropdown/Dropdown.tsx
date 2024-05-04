@@ -34,11 +34,10 @@ export const Group: GroupComponent = ({ children }) => <div className="my-3 mx-1
 
 interface ButtonProps {
   onClick?: () => void;
-  primary?: boolean;
 }
 
 type ButtonComponent = React.FC<React.PropsWithChildren<ButtonProps>>;
-const Button: ButtonComponent = ({ children, primary, ...props }) => (
+const Button: ButtonComponent = ({ children, ...props }) => (
   <Menu.Item>
     {() => (
       <button className={clsx("p-3 w-full text-center leading-6", "motion-safe:transition transition-300")} {...props}>
