@@ -15,9 +15,10 @@ import UserAvatar from "./icons/UserAvatar";
 export interface NavigationProps {
   displayBreadcrumbs?: boolean;
   displaySave?: boolean;
+  isSticky?: boolean;
 }
 
-const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displayBreadcrumbs = true, children }) => {
+const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displayBreadcrumbs = true, isSticky = true, children }) => {
   const { currentUser } = useCurrentUser();
   const [logout] = useLogoutMutation({
     refetchQueries: [{ query: CurrentUserDocument }],
@@ -26,7 +27,14 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
 
   return (
     <>
-      <header className={clsx("relative pt-8 pb-6 px-6 sm:px-8 grid grid-cols-12 z-20 bg-background", "sm:px-11")}>
+      <header
+        className={clsx(
+          "pt-8 pb-6 px-6 sm:px-8 grid grid-cols-12 z-20 bg-background",
+          "sm:px-11",
+          isSticky && "fixed top-0 w-full",
+          !isSticky && "relative",
+        )}
+      >
         <Link
           href="/"
           className={clsx(

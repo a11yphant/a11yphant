@@ -44,7 +44,7 @@ const Level: React.FunctionComponent = () => {
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
-  const header = <Navigation displayBreadcrumbs />;
+  const header = <Navigation displayBreadcrumbs isSticky={false} />;
 
   return (
     <>
