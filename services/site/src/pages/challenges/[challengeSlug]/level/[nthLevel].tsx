@@ -1,8 +1,6 @@
-import { Transition } from "@headlessui/react";
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
-import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
 import {
@@ -16,6 +14,8 @@ import {
   useLevelByChallengeSlugQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -46,22 +46,7 @@ const Level: React.FunctionComponent = () => {
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
-  const header = (
-    <Navigation displayBreadcrumbs>
-      <Transition
-        show={autoSaveLoading}
-        enter="transition-opacity duration-300"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-300 delay-1000"
-        leaveTo="opacity-0"
-      >
-        <span>
-          <span className={clsx("sr-only", "xl:not-sr-only")}>Saving... </span>
-          <LoadingIndicator className={clsx("inline ml-4")} />
-        </span>
-      </Transition>
-    </Navigation>
-  );
+  const header = <Navigation displayBreadcrumbs isSticky={false} />;
 
   return (
     <>
@@ -94,7 +79,9 @@ const Level: React.FunctionComponent = () => {
       <FullScreenLayout header={header}>
         <main className={clsx("max-h-full h-full px-4 pb-4 flex flex-col md:flex-row justify-between box-border")}>
           <h1 className={clsx("sr-only")}>{`${challenge.name} - Level ${nthLevel}`}</h1>
-          {isCodeLevel(level) && <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} />}
+          {isCodeLevel(level) && (
+            <CodeLevel challengeName={challenge.name} level={level} onAutoSaveLoadingChange={setAutoSaveLoading} autoSave={autoSaveLoading} />
+          )}
           {isQuizLevel(level) && <QuizLevel question={level.question} answers={level.answerOptions} isLastLevel={isLastLevel} levelId={level.id} />}
         </main>
       </FullScreenLayout>
@@ -105,7 +92,7 @@ const Level: React.FunctionComponent = () => {
 export default Level;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const { challengeSlug, nthLevel } = context.params;
 
@@ -137,6 +124,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       initialApolloState: apolloClient.cache.extract(),
       displaySave: true,
       showScrollOverlay: false,
+      config: getClientConfig(),
     },
   };
 };

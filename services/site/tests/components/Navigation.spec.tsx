@@ -14,6 +14,12 @@ jest.mock("app/generated/graphql", () => ({
   useLogoutMutation: jest.fn(),
 }));
 
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
+
 jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({
   __esModule: true,
   default: () => <div data-testid="breadcrumbs"></div>,
@@ -97,18 +103,11 @@ describe("Navigation", () => {
     expect(screen.queryByTestId("breadcrumbs")).not.toBeInTheDocument();
   });
 
-  it("renders the children", () => {
-    mockRegisteredUser();
-    renderNavigation({ children: <p data-testid="test-children">children</p> });
-
-    expect(screen.getByTestId("test-children")).toBeInTheDocument();
-  });
-
   it("renders login and signup buttons if the user is not registered", () => {
     mockNonRegisteredUser();
     renderNavigation();
 
-    expect(screen.getAllByRole("button")).toHaveLength(2);
+    expect(screen.getAllByRole("button")).toHaveLength(3);
   });
 
   it("calls userAccountModalApi.show with the mode 'signup' after a click on `sign up`", async () => {

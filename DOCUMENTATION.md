@@ -39,7 +39,7 @@ Everything you need to know to setup the project.
 
 ## General Information
 
-Technically, a11yphant is split into three applications:
+Technically, a11yphant is split into two applications:
 
 1. The **API** (Backend)
 2. The **Site** (Frontend)
@@ -70,11 +70,11 @@ npm login --scope=@a11yphant --auth-type=legacy --registry=https://npm.pkg.githu
 
 ### 3. Install Node via `nvm`
 
-`nvm` must be installed installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
+`nvm` must be installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
 ## Setup
 
-To setup the project the project follow these steps:
+To setup the project follow these steps:
 
 1. Clone the repository.
 ```bash
@@ -191,7 +191,7 @@ We use Tailwind for styling. If you want to set global variables you can do so i
 
 ### Testing
 
-We write tests in the frontend and the backend to ensure code quality. We primarily have the following tests across our three applications:
+We write tests in the frontend and the backend to ensure code quality. We primarily have the following tests across our two applications:
 - **API**
     - Unit Tests
     - Integration Tests (with the DB and business logic)

@@ -1,3 +1,5 @@
+"use client";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LocalErrorScopeApolloContext } from "app/components/common/error/ErrorScope";
 import { CurrentUserDocument, useLoginMutation } from "app/generated/graphql";

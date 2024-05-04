@@ -205,6 +205,15 @@ jobs:
     permissions:
       contents: read
       packages: read
+    env:
+      SITE_HOST: localhost
+      SITE_PORT: 3001
+      SITE_GRAPHQL_ENDPOINT_SERVER: http://localhost:3000/graphql
+      SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3001/graphql
+      SITE_GITHUB_LOGIN_ENDPOINT: /auth/github
+      SITE_TWITTER_LOGIN_ENDPOINT: /auth/twitter
+      SITE_PLAUSIBLE_BASE_URL: "https://plausible.a11yphant.com"
+      SITE_BASE_URL: "http://localhost:3001"
     steps:
       - name: Checkout
         uses: actions/checkout@v4

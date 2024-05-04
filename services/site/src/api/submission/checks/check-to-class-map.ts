@@ -1,3 +1,5 @@
+import { MarginBetweenElementsGreaterThanOrEqual } from "@/submission/checks/base-checks/margin-between-elements-greater-than-or-equal.check";
+
 import { AXE_CHECKS_TO_CHECK_NAMES_MAP } from "./axe-checks";
 import {
   ColorContrastGreaterThanOrEqual,
@@ -25,6 +27,7 @@ export const checkToClassMap = {
   "document-language-is-specified": DocumentLanguageIsSpecified,
   "document-starts-with-html5-doctype": DocumentStartsWithHtml5Doctype,
   "color-contrast-greater-than-or-equal": ColorContrastGreaterThanOrEqual,
+  "margin-between-elements-greater-than-or-equal": MarginBetweenElementsGreaterThanOrEqual,
   ...AXE_CHECKS_TO_CHECK_NAMES_MAP,
 };
 

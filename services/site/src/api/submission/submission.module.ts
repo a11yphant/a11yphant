@@ -16,6 +16,7 @@ import {
   ElementNotContainsText,
   ElementNotExists,
   HtmlIsValid,
+  MarginBetweenElementsGreaterThanOrEqual,
 } from "./checks/base-checks";
 import { CheckFactory } from "./checks/check.factory";
 import { CHECK_TO_CLASS_MAP, checkToClassMap } from "./checks/check-to-class-map";
@@ -60,6 +61,7 @@ import { RequirementResultService } from "./services/requirement-result.service"
     ElementNotExists,
     ElementHasMinimumDimension,
     HtmlIsValid,
+    MarginBetweenElementsGreaterThanOrEqual,
     ...buildCheckProviders(AVAILABLE_AXE_CHECKS),
   ],
   exports: [CodeLevelSubmissionService],

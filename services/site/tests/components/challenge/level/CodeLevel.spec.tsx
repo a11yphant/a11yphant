@@ -76,7 +76,13 @@ const mountCodeLevel = (options?: MountCodeLevelParams): RenderResult => {
 
   return render(
     <MockedProvider mocks={mockedResponses}>
-      <CodeLevel challengeName={mockChallengeName} level={mockLevel} onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange} {...options?.props} />
+      <CodeLevel
+        challengeName={mockChallengeName}
+        level={mockLevel}
+        onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange}
+        autoSave={true}
+        {...options?.props}
+      />
     </MockedProvider>,
   );
 };

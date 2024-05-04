@@ -3,15 +3,13 @@ import Card, { CardProps } from "app/components/challengePage/Card";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 import React from "react";
 
-const headingText = "Semantic HTML";
 const levelAmount = 12;
 
 const card = (
   <Card
-    key={1}
     className="mr-24"
     challengeSlug={"semantic-html"}
-    heading={headingText}
+    heading={"Semantic HTML"}
     levels={levelAmount}
     finishedLevels={0}
     difficulty={ChallengeDifficulty.Easy}
@@ -32,7 +30,7 @@ describe("Card", () => {
   it("renders the heading and description text", () => {
     renderCard();
 
-    expect(screen.getByRole("link", { name: headingText })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Semantic HTML" })).toBeInTheDocument();
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeInTheDocument();
   });
 

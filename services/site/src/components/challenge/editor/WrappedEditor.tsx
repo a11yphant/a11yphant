@@ -1,3 +1,4 @@
+import { Transition } from "@headlessui/react";
 import Editor, { EditorProps, useMonaco } from "@monaco-editor/react";
 import Button from "app/components/buttons/Button";
 import ModeCommandHint from "app/components/challenge/editor/ModeCommandHint";
@@ -13,6 +14,7 @@ import { useResizeDetector } from "react-resize-detector";
 interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "onChange"> {
   config: EditorConfig;
   onReset: (language?: EditorLanguage) => void;
+  autoSave: boolean;
 }
 
 export interface EditorConfig {
@@ -25,7 +27,7 @@ export interface EditorConfig {
 
 // It is necessary to wrap the Editor because the Editor ist exported from @monaco-editor/react
 // in memoized form. Meaning you cannot spawn multiple instances when importing it directly.
-const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, ...props }) => {
+const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, config, autoSave, ...props }) => {
   // custom editor theme styling
   const monaco = useMonaco();
 
@@ -112,9 +114,23 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
     <div className={clsx("w-inherit h-full p-2", "md:py-0 md:first:pl-0 md:last:pr-0")}>
       <div ref={wrapperRef} className={clsx("relative", "px-4 py-3 sm:p-4 w-inherit h-full", "container-dark overflow-hidden")}>
         <div className={clsx("flex flex-row justify-between")}>
-          <h3 ref={headingRef} className={clsx("mb-5 sm:mx-3", "h6")}>
-            {config.heading}
-          </h3>
+          <div className={clsx("flex flex-row")}>
+            <h3 ref={headingRef} className={clsx("mb-5 sm:ml-3", "h6")}>
+              {config.heading}
+            </h3>
+            <Transition
+              show={autoSave}
+              enter="transition-opacity duration-300"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-300 delay-1000"
+              leaveTo="opacity-0"
+            >
+              <span>
+                <span className={clsx("sr-only", "xl:not-sr-only xl:ml-4")}>Saving... </span>
+                <LoadingIndicator className={clsx("inline ml-4")} />
+              </span>
+            </Transition>
+          </div>
           <ModeCommandHint />
         </div>
         <div className={clsx("absolute -ml-3")} style={{ top: editorTop }}>
