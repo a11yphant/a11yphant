@@ -32,8 +32,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ token, tokenValidationRes
   return (
     <>
       <FullScreenLayout header={<Navigation />} footer={<Footer />}>
-        <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-          <div className={clsx("mx-8 py-8 h-main", "lg:mx-24")}>
+        <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+          <div className={clsx("mx-8 h-main", "lg:mx-24")}>
             {tokenValidationResult === ValidatePasswordResetTokenResultEnum.InvalidToken && (
               <ErrorWithIllustration error="Invalid token" text="Something is wrong with the URL... Make sure to copy the entire link." />
             )}

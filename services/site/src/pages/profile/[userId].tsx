@@ -78,8 +78,8 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+        <div className={clsx("mx-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
           <div className={clsx("flex flex-col justify-between content-start pb-6 mb-20 border-grey-light border-b", "md:flex-row md:content-end")}>
             <div className={clsx("md:self-end")}>
               <h1 className={clsx("pb-2.5 pr-4 text-grey", "h3", "sm:h2")}>{user.displayName || "Anonymous coder"}</h1>

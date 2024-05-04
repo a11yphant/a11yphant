@@ -83,7 +83,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top">
+      <main className="bg-texture bg-repeat-y bg-contain bg-origin-border bg-top mt-32">
         <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
           <HeroSection>
             <IllustrationFloatingWoman className={clsx("h-auto move-floating-woman", !animation && "stopAnimation")} />
