@@ -101,14 +101,14 @@ describe("Navigation", () => {
     mockRegisteredUser();
     renderNavigation({ children: <p data-testid="test-children">children</p> });
 
-    expect(screen.getByTestId("test-children")).toBeInTheDocument();
+    expect(screen.getAllByTestId("test-children")).toHaveLength(2);
   });
 
   it("renders login and signup buttons if the user is not registered", () => {
     mockNonRegisteredUser();
     renderNavigation();
 
-    expect(screen.getAllByRole("button")).toHaveLength(2);
+    expect(screen.getAllByRole("button")).toHaveLength(3);
   });
 
   it("calls userAccountModalApi.show with the mode 'signup' after a click on `sign up`", async () => {
