@@ -65,7 +65,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
           {children}
           <nav className={clsx("mt-2")} aria-label="Main">
             <Dropdown
-              hamburger={true}
+              hamburger
               isSticky={isSticky}
               triggerButton={
                 <Dropdown.TriggerButton
