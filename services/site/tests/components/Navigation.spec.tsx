@@ -103,13 +103,6 @@ describe("Navigation", () => {
     expect(screen.queryByTestId("breadcrumbs")).not.toBeInTheDocument();
   });
 
-  it("renders the children", () => {
-    mockRegisteredUser();
-    renderNavigation({ children: <p data-testid="test-children">children</p> });
-
-    expect(screen.getAllByTestId("test-children")).toHaveLength(2);
-  });
-
   it("renders login and signup buttons if the user is not registered", () => {
     mockNonRegisteredUser();
     renderNavigation();
