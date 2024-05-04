@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ChallengeList from "app/components/homepage/ChallengeList";
+import ChallengeList from "app/components/challengePage/ChallengeList";
 import { ChallengeDifficulty, ChallengeStatus } from "app/generated/graphql";
 
 const headingTextDifficulty = "Easy";

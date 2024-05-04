@@ -1,7 +1,7 @@
 import Button from "app/components/buttons/Button";
+import { ChallengeModalLevelCard } from "app/components/challengePage/challengeModal/ChallengeModalLevelCard";
+import { getDifficultyIconByChallengeDifficulty } from "app/components/challengePage/difficulties/Difficulties";
 import ScrollOverlayWrapper from "app/components/common/ScrollOverlayWrapper";
-import { ChallengeModalLevelCard } from "app/components/homepage/challengeModal/ChallengeModalLevelCard";
-import { getDifficultyIconByChallengeDifficulty } from "app/components/homepage/difficulties/Difficulties";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import { Modal } from "app/components/modal/Modal";
 import { ModalActions } from "app/components/modal/ModalActions";

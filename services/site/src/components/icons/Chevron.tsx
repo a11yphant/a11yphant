@@ -9,7 +9,6 @@ const Chevron: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = ({ class
       stroke="currentColor"
       className={clsx("h-8 w-8", "group transition duration-300", className)}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path d="M11 28l11-11 11 11" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
