@@ -29,8 +29,10 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
     <>
       <header
         className={clsx(
-          "pt-8 pb-6 px-6 sm:px-8 grid grid-cols-12 z-20 bg-background",
+          "pt-2 pb-4 px-6 sm:px-8 grid grid-cols-12 z-20 bg-background",
           "sm:px-11",
+          "md:pt-4",
+          "lg:py-6",
           isSticky && "fixed top-0 w-full",
           !isSticky && "relative",
         )}
