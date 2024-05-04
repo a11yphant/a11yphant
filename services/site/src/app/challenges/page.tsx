@@ -8,6 +8,7 @@ import { ChallengesDocument, ChallengesQuery, ChallengeStatus } from "app/genera
 import { getApolloClient } from "app/lib/apollo-client/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
+import { Metadata } from "next";
 
 const Challenges = async (): Promise<React.ReactElement> => {
   const client = getApolloClient();
@@ -82,3 +83,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
 };
 
 export default Challenges;
+
+export const metadata: Metadata = {
+  title: "Challenges | a11yphant",
+};

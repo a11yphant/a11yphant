@@ -5,8 +5,6 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-import CardHeading from "./CardHeading";
-
 export interface CardProps {
   className?: string;
   heading: string;
@@ -82,7 +80,7 @@ const Card: React.FunctionComponent<CardProps> = ({
         </div>
       )}
       <div className={clsx("p-4 pt-2 bg-background-light", "transition duration-300", "group-hover:bg-grey")}>
-        <CardHeading isTopChallenge={isTopChallenge}>
+        <h3 className={clsx("w-full")}>
           <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}`}</span>
           <Link
             href={`/challenges/${challengeSlug}`}
@@ -92,7 +90,7 @@ const Card: React.FunctionComponent<CardProps> = ({
           >
             {heading}
           </Link>
-        </CardHeading>
+        </h3>
         <div className={clsx("w-full mt-2 text-grey-middle flex justify-between")}>
           <p className={clsx("m-0 text-grey-middle", "transition duration-300", "group-hover:text-grey-dark")}>
             {levels <= 1 ? `${levels} Level` : `${levels} Levels`}
