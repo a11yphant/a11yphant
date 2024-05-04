@@ -67,7 +67,9 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                   )}
                 >
                   <span>Menu</span>
-                  <span className={clsx("text-4xl -mt-2 pl-1")}>&#9776;</span>
+                  <span className={clsx("text-4xl -mt-2 pl-1")} aria-hidden="true">
+                    &#9776;
+                  </span>
                 </Dropdown.TriggerButton>
               }
             >
