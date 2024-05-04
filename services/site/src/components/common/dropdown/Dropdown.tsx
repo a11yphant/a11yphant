@@ -63,6 +63,8 @@ const TriggerButton: TriggerButtonComponent = ({ children, ...props }) => <Menu.
 
 interface DropdownProps {
   triggerButton: React.ReactElement;
+  hamburger?: boolean;
+  isSticky?: boolean;
 }
 
 type DropdownComponent = React.FC<React.PropsWithChildren<DropdownProps>> & {
@@ -72,9 +74,9 @@ type DropdownComponent = React.FC<React.PropsWithChildren<DropdownProps>> & {
   Group: GroupComponent;
 };
 
-const Dropdown: DropdownComponent = ({ children, triggerButton }) => {
+const Dropdown: DropdownComponent = ({ children, triggerButton, hamburger, isSticky }) => {
   return (
-    <Menu as="div" className="relative inline-block">
+    <Menu as="div" className={clsx("relative inline-block", hamburger && "md:hidden", !hamburger && "hidden md:block")}>
       {triggerButton}
       <Transition
         as={React.Fragment}
@@ -87,9 +89,12 @@ const Dropdown: DropdownComponent = ({ children, triggerButton }) => {
       >
         <Menu.Items
           className={clsx(
-            "absolute right-0 w-56 mt-2 origin-top-right",
-            "bg-background-light rounded-md shadow-card divide-grey-dark divide-y",
+            "mt-2 origin-top-right",
+            "bg-background-light shadow-card divide-grey-dark divide-y",
             "focus:outline-none",
+            !hamburger && "absolute right-0 rounded-md w-56",
+            !isSticky && hamburger && "w-screen absolute -right-[1.5rem] sm:-right-[2rem]",
+            hamburger && "w-full fixed right-0",
           )}
         >
           {children}

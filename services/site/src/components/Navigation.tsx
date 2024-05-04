@@ -11,6 +11,7 @@ import Button from "./buttons/Button";
 import Dropdown from "./common/dropdown/Dropdown";
 import A11yphantLogo from "./icons/A11yphantLogo";
 import UserAvatar from "./icons/UserAvatar";
+import X from "./icons/X";
 
 export interface NavigationProps {
   displayBreadcrumbs?: boolean;
@@ -65,6 +66,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                 "transition-colors duration-300",
                 "hover:text-primary-light hover:decoration-primary-light",
                 "focus-rounded-instead-of-underline",
+                "hidden md:block",
               )}
             >
               Challenges
@@ -75,7 +77,7 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                   onClick={() => {
                     userAccountModalApi.show("login");
                   }}
-                  className={clsx("py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent")}
+                  className={clsx("py-3 border-none", "hover:border-primary-dark", "focus:bg-transparent", "hidden md:block")}
                 >
                   Login
                 </Button>
@@ -84,35 +86,80 @@ const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({ displa
                   onClick={() => {
                     userAccountModalApi.show("signup");
                   }}
-                  className="ml-2 xl:ml-4"
+                  className={clsx("ml-2 xl:ml-4", "hidden md:block")}
                 >
                   Sign Up
                 </Button>{" "}
               </>
             )}
-          </nav>
-          {currentUser?.isRegistered && (
+            {currentUser?.isRegistered && (
+              <Dropdown
+                triggerButton={
+                  <Dropdown.TriggerButton
+                    className={clsx(
+                      "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle rounded",
+                      "focus:outline-offset-2",
+                    )}
+                  >
+                    <span className={clsx("sr-only")}>User Menu</span>
+                    <UserAvatar />
+                  </Dropdown.TriggerButton>
+                }
+              >
+                <Dropdown.Group>
+                  <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+                </Dropdown.Group>
+                <Dropdown.Group>
+                  <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
+                </Dropdown.Group>
+              </Dropdown>
+            )}
+            {/* Mobile Nav */}
             <Dropdown
+              hamburger={true}
+              isSticky={isSticky}
               triggerButton={
                 <Dropdown.TriggerButton
                   className={clsx(
-                    "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle rounded",
+                    "flex flex-row items-center pl-4",
+                    "hover:text-primary-light motion-safe:transition-colors transition-300 align-middle",
                     "focus:outline-offset-2",
                   )}
                 >
-                  <span className={clsx("sr-only")}>User Menu</span>
-                  <UserAvatar />
+                  <span className={clsx("")}>Menu</span>
+                  <X className={clsx("w-4 h-4 ml-2")} />
                 </Dropdown.TriggerButton>
               }
             >
               <Dropdown.Group>
-                <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>
+                <Dropdown.Link href={"/challennges"}>Challenges</Dropdown.Link>
+                {!currentUser?.isRegistered && (
+                  <>
+                    <Dropdown.Button
+                      onClick={() => {
+                        userAccountModalApi.show("login");
+                      }}
+                    >
+                      Login
+                    </Dropdown.Button>
+                    <Dropdown.Button
+                      onClick={() => {
+                        userAccountModalApi.show("signup");
+                      }}
+                    >
+                      Sign Up
+                    </Dropdown.Button>
+                  </>
+                )}
+                {currentUser?.isRegistered && <Dropdown.Link href={`/profile/${currentUser?.id}`}>Public Profile</Dropdown.Link>}
               </Dropdown.Group>
-              <Dropdown.Group>
-                <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
-              </Dropdown.Group>
+              {currentUser?.isRegistered && (
+                <Dropdown.Group>
+                  <Dropdown.Button onClick={() => logout()}>Logout</Dropdown.Button>
+                </Dropdown.Group>
+              )}
             </Dropdown>
-          )}
+          </nav>
         </div>
       </header>
       <FlashMessagePortalRoot />
