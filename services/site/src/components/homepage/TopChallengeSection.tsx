@@ -4,7 +4,7 @@ import React from "react";
 
 const TopChallengeSection: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
   return (
-    <section className={clsx("flex flex-col items-center my-12 py-12 px-4 lg:p-12 container-dark", "sm:my-20", "xl:my-24")}>
+    <section className={clsx("flex flex-col items-center my-12 py-12 px-4 sm:px-6 lg:p-12 container-dark", "sm:my-20", "xl:my-24")}>
       <h2 className={clsx("text-center h4 mb-10", "sm:h3", "xl:h2")}>Our three most popular challenges</h2>
       <ul className={clsx("flex flex-col justify-center xs:flex-row xs:flex-wrap")}>{children}</ul>
       <Link
