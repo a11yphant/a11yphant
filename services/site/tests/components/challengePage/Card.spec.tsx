@@ -30,7 +30,7 @@ describe("Card", () => {
   it("renders the heading and description text", () => {
     renderCard();
 
-    expect(screen.getByRole("link", { name: "Challenge 1: Semantic HTML" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Semantic HTML" })).toBeInTheDocument();
     expect(screen.getByText("12 Levels", { selector: "p" })).toBeInTheDocument();
   });
 

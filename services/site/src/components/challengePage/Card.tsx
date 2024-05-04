@@ -31,7 +31,6 @@ const Card: React.FunctionComponent<CardProps> = ({
   isMobileFriendly,
   isUserFavorite,
   isNew,
-  isTopChallenge,
   challengeStatus,
 }) => {
   const DifficultyIcon = getDifficultyIconByChallengeDifficulty(difficulty);
@@ -87,7 +86,6 @@ const Card: React.FunctionComponent<CardProps> = ({
             scroll={false}
             className={clsx("border-transparent", "transition duration-300", "group-hover:text-grey-dark group-hover:border-transparent", "h6")}
           >
-            <span className={clsx("sr-only")}>{`Challenge ${challengeNumber}: `}</span>
             {heading}
           </Link>
         </h3>
