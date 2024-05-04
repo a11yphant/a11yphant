@@ -69,12 +69,14 @@ const Navigation: React.FC<NavigationProps> = ({ displayBreadcrumbs = true, isSt
               triggerButton={
                 <Dropdown.TriggerButton
                   className={clsx(
-                    "flex flex-row items-center py-0 ml-2 pl-2 border-none rounded underline decoration-transparent underline-offset-4 decoration-2",
-                    "hover:text-primary-light hover:decoration-primary-light motion-safe:transition-colors transition-300 align-middle",
+                    "flex flex-row items-center py-0 ml-2 pl-2 border-none",
+                    "group hover:text-primary-light motion-safe:transition-colors transition-300 align-middle",
                     "focus:outline-offset-2",
                   )}
                 >
-                  <span>Menu</span>
+                  <span className={clsx("underline decoration-transparent underline-offset-4 decoration-2", "group-hover:decoration-primary-light")}>
+                    Menu
+                  </span>
                   <span className={clsx("text-4xl -mt-2 pl-1")} aria-hidden="true">
                     &#9776;
                   </span>
