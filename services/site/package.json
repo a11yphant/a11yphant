@@ -30,7 +30,8 @@
     "test:watch": "jest --watch",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:migrate:prod": "prisma migrate deploy"
+    "prisma:migrate:prod": "prisma migrate deploy",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@apollo/client": "3.10.1",
