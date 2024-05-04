@@ -90,7 +90,7 @@ const Evaluation: React.FunctionComponent = () => {
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
-      <FullScreenLayout header={<Navigation displayBreadcrumbs />}>
+      <FullScreenLayout header={<Navigation displayBreadcrumbs isSticky={false} />}>
         {data === undefined || submissionResult === undefined || submissionResult.status === ResultStatus.Pending ? (
           <>
             <main className={clsx("h-full", "md:p-4 md:pt-0 md:flex md:flex-col md:justify-between")}>

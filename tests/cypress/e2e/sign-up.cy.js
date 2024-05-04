@@ -3,7 +3,7 @@ function getInputByLabel(label) {
 }
 
 describe("sign up", () => {
-    it("can sign up", () => {
+    it("can sign up", { scrollBehavior: 'center' },() => {
         Cypress.Cookies.debug(true);
         cy.visit("/");
 

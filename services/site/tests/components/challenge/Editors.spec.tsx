@@ -25,21 +25,21 @@ const handleReset = jest.fn();
 
 describe("Editors", () => {
   it("renders the wrapper element with classes", () => {
-    const { container } = render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
+    const { container } = render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} autoSave={true} />);
 
     // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
     expect(container.querySelector(`div.${mockClassName}`)).toBeInTheDocument();
   });
 
   it("renders a single editor if its configured to do so", () => {
-    render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} />);
+    render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} autoSave={true} />);
 
     // this fails if multiple h3 are present
     expect(screen.getByRole("heading", { level: 3 })).toBeInTheDocument();
   });
 
-  it("renders mulitple editors if its configured to do so", () => {
-    render(<Editors className={mockClassName} editors={[htmlEditorConfig, cssEditorConfig]} onReset={handleReset} />);
+  it("renders multiple editors if its configured to do so", () => {
+    render(<Editors className={mockClassName} editors={[htmlEditorConfig, cssEditorConfig]} onReset={handleReset} autoSave={true} />);
 
     expect(screen.getByRole("heading", { level: 3, name: "HTML Editor" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 3, name: "CSS Editor" })).toBeInTheDocument();

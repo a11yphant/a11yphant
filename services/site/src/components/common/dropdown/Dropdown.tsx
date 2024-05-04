@@ -39,15 +39,8 @@ interface ButtonProps {
 type ButtonComponent = React.FC<React.PropsWithChildren<ButtonProps>>;
 const Button: ButtonComponent = ({ children, ...props }) => (
   <Menu.Item>
-    {({ active }) => (
-      <button
-        className={clsx(
-          "p-3 w-full text-center leading-6 motion-safe:transition transition-300 underline decoration-2 underline-offset-4",
-          !active && "decoration-transparent",
-          active && "text-primary-light decoration-primary-light",
-        )}
-        {...props}
-      >
+    {() => (
+      <button className={clsx("p-3 w-full text-center leading-6", "motion-safe:transition transition-300")} {...props}>
         {children}
       </button>
     )}
@@ -63,6 +56,8 @@ const TriggerButton: TriggerButtonComponent = ({ children, ...props }) => <Menu.
 
 interface DropdownProps {
   triggerButton: React.ReactElement;
+  isHamburgerMenu?: boolean;
+  isSticky?: boolean;
 }
 
 type DropdownComponent = React.FC<React.PropsWithChildren<DropdownProps>> & {
@@ -72,9 +67,9 @@ type DropdownComponent = React.FC<React.PropsWithChildren<DropdownProps>> & {
   Group: GroupComponent;
 };
 
-const Dropdown: DropdownComponent = ({ children, triggerButton }) => {
+const Dropdown: DropdownComponent = ({ children, triggerButton, isHamburgerMenu, isSticky }) => {
   return (
-    <Menu as="div" className="relative inline-block">
+    <Menu as="div" className={clsx("relative inline-block")}>
       {triggerButton}
       <Transition
         as={React.Fragment}
@@ -87,9 +82,12 @@ const Dropdown: DropdownComponent = ({ children, triggerButton }) => {
       >
         <Menu.Items
           className={clsx(
-            "absolute right-0 w-56 mt-2 origin-top-right",
-            "bg-background-light rounded-md shadow-card divide-grey-dark divide-y",
+            "mt-2 origin-top-right",
+            "bg-background-light shadow-card divide-grey-dark divide-y",
             "focus:outline-none",
+            !isHamburgerMenu && "absolute right-0 rounded-md w-56",
+            !isSticky && isHamburgerMenu && "w-screen absolute -right-[1.5rem] sm:-right-[2rem]",
+            isHamburgerMenu && "w-full fixed right-0",
           )}
         >
           {children}
