@@ -23,7 +23,7 @@ export class User {
   @Field(() => String, { description: "The users id." })
   id: string;
 
-  @Field(() => String, { description: "The users display name." })
+  @Field(() => String, { nullable: true, description: "The users display name." })
   displayName?: string;
 
   @Field(() => String, { nullable: true, description: "The email of an locally registered user" })
