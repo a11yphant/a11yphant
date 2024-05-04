@@ -14,10 +14,11 @@ const UnderlinedText: React.FC<React.PropsWithChildren<UnderlinedTextProps>> = (
       onClick={onClick}
       overrideClassName
       className={clsx(
-        "mx-3 font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
+        "font-normal text-grey-light border-b-grey-light border-b-2 max-w-max",
         "transition duration-300",
         "hover:border-transparent",
         "focus-rounded-instead-of-underline",
+        "xs:mx-3",
         className,
       )}
     >
