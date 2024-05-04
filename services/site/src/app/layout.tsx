@@ -2,7 +2,6 @@ import "app/styles/nprogress.scss";
 import "app/styles/global.scss";
 import "app/styles/fonts.scss";
 import "app/styles/custom.scss";
-import "focus-visible/dist/focus-visible";
 
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { getClientConfig, getConfig } from "app/lib/config/rsc";
