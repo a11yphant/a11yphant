@@ -16,7 +16,7 @@ import a11yphantWebsiteCodingLevel from "../../public/images/showcase/a11yphant_
 import a11yphantWebsiteQuizLevel from "../../public/images/showcase/a11yphant_quiz_challenge.png";
 import a11yphantWebsiteAbout from "../../public/images/showcase/mockups-ABOUT.png";
 import a11yphantWebsiteChallenge from "../../public/images/showcase/mockups-challenge.png";
-import a11yphantWebsiteChallenges from "../../public/images/showcase/mockups-CHALLENGES.png";
+import a11yphantWebsiteChallenges from "../../public/images/showcase/mockups-challenges.png";
 import a11yphantWebsiteHome from "../../public/images/showcase/mockups-social-media-new.png";
 
 const PressKit: React.FunctionComponent = () => {
