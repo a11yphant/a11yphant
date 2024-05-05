@@ -59,7 +59,7 @@ const authentication: Middleware = {
       return req.headers.get("cookie");
     };
 
-    const client = createApolloClientRSC(getCookiesHeader);
+    const client = createApolloClientRSC(`https://${req.headers.get("host")}`, getCookiesHeader);
     client.setLink(from([createForwardCookiesToClientLink(setCookie), client.link]));
 
     await client.query<CurrentUserQuery>({

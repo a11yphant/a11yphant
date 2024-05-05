@@ -9,5 +9,5 @@ export const { getClient: getApolloClient } = registerApolloClient(() => {
     return headers().get("cookie");
   };
 
-  return createApolloClientRSC(getCookieHeader);
+  return createApolloClientRSC(`https://${headers().get("host")}`, getCookieHeader);
 });

@@ -92,7 +92,7 @@ const Level: React.FunctionComponent = () => {
 export default Level;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
+  const apolloClient = initializeApollo(getConfig().getGraphqlEndpointUrl(context.req.url), null, context);
 
   const { challengeSlug, nthLevel } = context.params;
 

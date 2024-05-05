@@ -54,7 +54,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ token, tokenValidationRes
 };
 
 export const getServerSideProps: GetServerSideProps<ResetPasswordProps> = async (context) => {
-  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
+  const apolloClient = initializeApollo(getConfig().getGraphqlEndpointUrl(context.req.url), null, context);
 
   const token = context.query.token as string;
 
