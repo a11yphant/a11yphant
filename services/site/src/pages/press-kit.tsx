@@ -12,11 +12,12 @@ import React from "react";
 import a11yphantLogo from "../../public/images/logo/a11yphant_Logo_combination-mark_dark.png";
 import a11yphantLogoLight from "../../public/images/logo/a11yphant_Logo_combination-mark_light.png";
 import a11yphantPictorialMark from "../../public/images/logo/a11yphant_Logo_pictorial-mark.png";
-import a11yphantWebsiteChallenge from "../../public/images/showcase/a11yphant_challenge_detail.jpg";
-import a11yphantWebsite from "../../public/images/showcase/a11yphant_challenge_overview.jpg";
-import a11yphantWebsiteResult from "../../public/images/showcase/a11yphant_challenge_result.jpg";
-import a11yphantWebsiteCodingLevel from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
-import a11yphantWebsiteQuiz from "../../public/images/showcase/a11yphant-quiz.jpg";
+import a11yphantWebsiteCodingLevel from "../../public/images/showcase/a11yphant_coding_challenge.png";
+import a11yphantWebsiteQuizLevel from "../../public/images/showcase/a11yphant_quiz_challenge.png";
+import a11yphantWebsiteAbout from "../../public/images/showcase/mockups-ABOUT.png";
+import a11yphantWebsiteChallenge from "../../public/images/showcase/mockups-challenge.png";
+import a11yphantWebsiteChallenges from "../../public/images/showcase/mockups-CHALLENGES.png";
+import a11yphantWebsiteHome from "../../public/images/showcase/mockups-social-media-new.png";
 
 const PressKit: React.FunctionComponent = () => {
   return (
@@ -239,23 +240,40 @@ const PressKit: React.FunctionComponent = () => {
             <div className="flex flex-wrap items-center">
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: An overview of all available challenge topics and their difficulty."
-                  src={a11yphantWebsite}
+                  alt="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
+                  src={a11yphantWebsiteHome}
                   placeholder="blur"
                   quality={100}
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: The textual details about a challenge (how many levels and topic)."
+                  alt="Illustrations of people coding along with a textual description of a11ypahnt's benefits, which are studying from the comfort of your home and interactive coding challenges and quizzes."
+                  src={a11yphantWebsiteAbout}
+                  placeholder="blur"
+                  quality={100}
+                />
+              </div>
+              <div className="w-[70ch] h-full my-6 md:m-8">
+                <Image
+                  alt="A screenshot showing all available challenges on a11yphant and their difficulty."
+                  src={a11yphantWebsiteChallenges}
+                  placeholder="blur"
+                  quality={100}
+                />
+              </div>
+              <div className="w-[70ch] h-full my-6 md:m-8">
+                <Image
+                  alt="A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete."
                   src={a11yphantWebsiteChallenge}
                   placeholder="blur"
                   quality={100}
                 />
               </div>
+
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: A coding level within a challenge. It consist of an editor, a sidebar with information and a preview window."
+                  alt="Screenshot of a coding level within a challenge on a11yphant. It consist of an editor, a sidebar with information and a preview window."
                   src={a11yphantWebsiteCodingLevel}
                   placeholder="blur"
                   quality={100}
@@ -263,16 +281,8 @@ const PressKit: React.FunctionComponent = () => {
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: The result of a coding level evaluation, displaying if it was passed or failed."
-                  src={a11yphantWebsiteResult}
-                  placeholder="blur"
-                  quality={100}
-                />
-              </div>
-              <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="Allyphant website: A quiz level consisting of a question and 4 possible answers."
-                  src={a11yphantWebsiteQuiz}
+                  alt="Screenshot of a quiz level on a11yphant, consisting of a question and four possible answers."
+                  src={a11yphantWebsiteQuizLevel}
                   placeholder="blur"
                   quality={100}
                 />
