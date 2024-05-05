@@ -19,15 +19,6 @@ const config = {
     serverMinification: false,
     serverComponentsExternalPackages: [
       "@apollo/server",
-      "@css-inline/css-inline",
-      "@css-inline/css-inline-darwin-arm64",
-      "@css-inline/css-inline-darwin-x64",
-      "@css-inline/css-inline-linux-arm-gnueabihf",
-      "@css-inline/css-inline-linux-arm64-gnu",
-      "@css-inline/css-inline-linux-arm64-musl",
-      "@css-inline/css-inline-linux-x64-gnu",
-      "@css-inline/css-inline-linux-x64-musl",
-      "@css-inline/css-inline-win32-x64-msvc",
       "@nestjs/core",
       "fsevents",
       "@nestjs-modules/mailer",
@@ -43,7 +34,7 @@ const config = {
 
   webpack(config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) {
     // Important: return the modified config
-    config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /(class-transformer\/storage|@apollo\/subgraph)/ }));
+    config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /(class-transformer\/storage|@apollo\/subgraph|@css-inline\/css-inline-)/ }));
     config.resolve.alias["@"] = path.resolve(__dirname, "src/api");
     return config;
   },
