@@ -36,7 +36,7 @@ const LegalNotice: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <div className={clsx("py-4 mx-8 h-main max-w-screen-3xl", "sm:mx-12", "md:py-8", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8 h3", "sm:h2", "md:h1")}>Legal Notice</h1>
           <p className={clsx("italic mb-8")}>
@@ -47,12 +47,7 @@ const LegalNotice: React.FunctionComponent = () => {
           <h2 className={clsx("h5", "sm:h4")}>Contact Information</h2>
           <address className={clsx("not-italic mb-12")}>
             <p>
-              <strong>Daniela Kubesch, BSc</strong> <br />
-              Wiesengasse 18 <br />
-              3001 Mauerbach <br />
-              Austria
-            </p>
-            <p>
+              <strong>Address: </strong> On request <br />
               <strong>Email: </strong> <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>
             </p>
           </address>

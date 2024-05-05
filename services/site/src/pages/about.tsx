@@ -42,8 +42,8 @@ const About: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+        <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8", "h2", "md:h1")}>About</h1>
 
           <div className="mt-4 flex items-center max-w-80ch">

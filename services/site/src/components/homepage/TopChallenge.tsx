@@ -12,7 +12,7 @@ interface TopChallengeProps {
 }
 const TopChallenge: React.FunctionComponent<React.PropsWithChildren<TopChallengeProps>> = ({ challenge, timesCompleted, isUserFavorite, isNew }) => {
   return (
-    <li className={clsx("px-4 py-4 flex flex-col items-center")}>
+    <li className={clsx("px-4 md:px-8 py-4 flex flex-col items-center")}>
       {challenge && (
         <Card
           isMobileFriendly={challenge.isMobileFriendly}
