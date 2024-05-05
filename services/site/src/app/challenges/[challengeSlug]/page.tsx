@@ -73,7 +73,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     href={`/challenges/${challengeSlug}/level/${String(level.order).padStart(2, "0")}`}
                     className={clsx(
                       "relative block border border-solid rounded-lg px-4 py-3 w-full h-18",
-                      "hover:bg-primary-dark hover:border-primary-dark",
+                      "group hover:bg-primary-dark hover:border-primary-dark",
                       !isFirstUnfinishedLevel && "border-grey-dark",
                       isFirstUnfinishedLevel && "border-primary bg-primary",
                     )}
@@ -84,7 +84,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     <span
                       className={clsx(
                         "font-normal mb-0 block",
-                        !isFirstUnfinishedLevel && "text-grey-middle",
+                        !isFirstUnfinishedLevel && "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
                         isFirstUnfinishedLevel && "text-white",
                       )}
                     >
@@ -93,7 +93,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     {level.status === LevelStatus.Finished && (
                       <>
                         <span className="sr-only">Completed</span>
-                        <Check className="h-7 w-10 absolute top-4 right-5 text-light" />
+                        <Check className="h-7 w-10 absolute top-5 right-5 text-light" />
                       </>
                     )}
                   </Link>
