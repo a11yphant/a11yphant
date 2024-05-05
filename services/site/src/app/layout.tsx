@@ -49,6 +49,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
+    card: "summary_large_image",
     site: "@a11yphant",
     title: "a11yphant",
     description: "a11yphant is an interactive online course for web accessibility.",
