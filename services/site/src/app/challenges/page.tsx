@@ -39,8 +39,8 @@ const Challenges = async (): Promise<React.ReactElement> => {
               <span aria-hidden="true" className="text-xl text-grey-middle">
                 *
               </span>{" "}
-              Currently, we only offer easy challenges. However, our small team is dedicated to producing more content for you. We will announce new
-              challenges on our{" "}
+              Currently, we only offer easy and medium challenges. However, our small team is dedicated to producing more content for you. We will
+              announce new challenges on our{" "}
               <InTextLink
                 href="https://twitter.com/a11yphant"
                 opensInNewTab
