@@ -1,3 +1,5 @@
+"use client";
+
 import { Modal } from "app/components/modal/Modal";
 import { ModalContent } from "app/components/modal/ModalContent";
 import { ModalTitle } from "app/components/modal/ModalTitle";
@@ -30,7 +32,8 @@ const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open
       className={clsx(
         "bg-primary",
         "flex flex-col",
-        "p-8 min-w-max max-w-xl",
+        "p-5 min-w-fit max-w-xl",
+        "xs:p-8",
         "md:px-12 md:py-10 md:min-w-[32rem] md:mx-auto",
         "lg:px-16 lg:py-14",
         "xl:px-20 xl:py-16",
@@ -38,7 +41,7 @@ const UserAccountModal: React.FunctionComponent<UserAccountModalProps> = ({ open
       open={open}
       onClose={onClose}
     >
-      <ModalTitle className={clsx("mb-8", "h4")}>{getModalTitle(mode)}</ModalTitle>
+      <ModalTitle className={clsx("mb-8 max-w-52", "h4")}>{getModalTitle(mode)}</ModalTitle>
       <ModalContent>
         <UserAccountBox mode={mode} />
       </ModalContent>

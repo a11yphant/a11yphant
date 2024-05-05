@@ -18,7 +18,7 @@ describe("Error Page", () => {
   it("renders a description text", () => {
     render(<CustomError statusCode={500} />);
 
-    expect(screen.getByText("ooops, something went wrong")).toBeInTheDocument();
+    expect(screen.getByText("Ooops, something went wrong")).toBeInTheDocument();
   });
 
   it("disables capturing errors on the frontend if getInitialProps has already been run", async () => {

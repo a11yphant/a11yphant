@@ -11,6 +11,8 @@ import {
   ValidateResetPasswordTokenMutationVariables,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
 import React from "react";
@@ -20,7 +22,7 @@ export interface ResetPasswordProps {
   tokenValidationResult: ValidatePasswordResetTokenResultEnum;
 }
 
-const ResetPassword: React.VFC<ResetPasswordProps> = ({ token, tokenValidationResult }) => {
+const ResetPassword: React.FC<ResetPasswordProps> = ({ token, tokenValidationResult }) => {
   const flashMessageApi = useFlashMessageApi();
 
   function onAfterSubmit(): void {
@@ -30,8 +32,8 @@ const ResetPassword: React.VFC<ResetPasswordProps> = ({ token, tokenValidationRe
   return (
     <>
       <FullScreenLayout header={<Navigation />} footer={<Footer />}>
-        <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-          <div className={clsx("mx-8 py-8 h-main", "lg:mx-24")}>
+        <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+          <div className={clsx("mx-8 h-main", "lg:mx-24")}>
             {tokenValidationResult === ValidatePasswordResetTokenResultEnum.InvalidToken && (
               <ErrorWithIllustration error="Invalid token" text="Something is wrong with the URL... Make sure to copy the entire link." />
             )}
@@ -52,7 +54,7 @@ const ResetPassword: React.VFC<ResetPasswordProps> = ({ token, tokenValidationRe
 };
 
 export const getServerSideProps: GetServerSideProps<ResetPasswordProps> = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const token = context.query.token as string;
 
@@ -65,6 +67,7 @@ export const getServerSideProps: GetServerSideProps<ResetPasswordProps> = async 
     props: {
       token,
       tokenValidationResult: data.validatePasswordResetToken.result,
+      config: getClientConfig(),
     },
   };
 };

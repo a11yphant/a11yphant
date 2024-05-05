@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18.15.0
           cache: npm
@@ -84,7 +84,7 @@ jobs:
       - name: Generate GraphQL Schema
         run: npm run generate-schema --prefix services/api
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -143,7 +143,7 @@ jobs:
           DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
 
       - name: Upload Coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-coverage-api
           path: services/api/coverage
@@ -191,7 +191,7 @@ jobs:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -205,6 +205,15 @@ jobs:
     permissions:
       contents: read
       packages: read
+    env:
+      SITE_HOST: localhost
+      SITE_PORT: 3001
+      SITE_GRAPHQL_ENDPOINT_SERVER: http://localhost:3000/graphql
+      SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3001/graphql
+      SITE_GITHUB_LOGIN_ENDPOINT: /auth/github
+      SITE_TWITTER_LOGIN_ENDPOINT: /auth/twitter
+      SITE_PLAUSIBLE_BASE_URL: "https://plausible.a11yphant.com"
+      SITE_BASE_URL: "http://localhost:3001"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -215,7 +224,7 @@ jobs:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -224,7 +233,7 @@ jobs:
         run: npm run test:coverage --prefix services/site
 
       - name: Upload Coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-coverage-site
           path: services/site/coverage
@@ -245,7 +254,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
           path: services/api/schema.gql
@@ -294,13 +303,13 @@ jobs:
           chmod +x ./cc-test-reporter
 
       - name: Download API test coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-coverage-api
           path: services/api/coverage/
 
       - name: Download Site test coverage
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-coverage-site
           path: services/site/coverage/
@@ -348,7 +357,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18.15.0
           cache: npm
@@ -364,7 +373,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get API Image Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: api-image
           path: /tmp/api-image/
@@ -373,7 +382,7 @@ jobs:
         run: docker load --input /tmp/api-image/image.tar
 
       - name: Get Site Image Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: site-image
           path: /tmp/site-image/
@@ -404,7 +413,7 @@ jobs:
 
       - name: Upload artifact
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: tests/cypress/screenshots/
@@ -418,7 +427,7 @@ jobs:
         if: failure()
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
@@ -480,7 +489,7 @@ jobs:
       - publish-api-image
     steps:
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
           repository: a11yphant/infrastructure
@@ -502,7 +511,7 @@ jobs:
       - publish-api-image
     steps:
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
           repository: a11yphant/infrastructure
@@ -522,7 +531,7 @@ jobs:
       - publish-api-image
     steps:
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
           repository: a11yphant/infrastructure

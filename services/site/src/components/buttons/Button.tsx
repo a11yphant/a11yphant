@@ -7,6 +7,7 @@ export interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAtt
   srText?: string;
   innerRef?: React.MutableRefObject<HTMLButtonElement>;
   overrideClassName?: boolean;
+  animation?: boolean;
 }
 
 const Button: React.FunctionComponent<React.PropsWithChildren<ButtonProps>> = ({
@@ -18,6 +19,7 @@ const Button: React.FunctionComponent<React.PropsWithChildren<ButtonProps>> = ({
   className,
   children,
   disabled,
+  animation,
   ...props
 }) => {
   return (
@@ -27,8 +29,10 @@ const Button: React.FunctionComponent<React.PropsWithChildren<ButtonProps>> = ({
         disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary",
         primary && "bg-primary text-light",
         "font-medium",
+        animation &&
+          "z-10 px-3 py-2 border-2 border-solid border-light rounded-md bg-background h-fit-content self-end hover:bg-light hover:text-background transition duration-300",
         !overrideClassName &&
-          `relative inline-flex items-center px-6 py-2.5
+          `relative inline-flex items-center px-4 xl:px-6 py-2.5
           border-primary border-2 rounded tracking-wider transition duration-300
           hover:text-light hover:bg-primary-dark hover:border-primary-dark`,
       )}

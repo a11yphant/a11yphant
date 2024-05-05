@@ -46,6 +46,7 @@ describe("WrappedEditor", () => {
           return;
         }}
         config={editorConfig}
+        autoSave={true}
       />,
     );
 
@@ -59,6 +60,7 @@ describe("WrappedEditor", () => {
           return;
         }}
         config={editorConfig}
+        autoSave={true}
       />,
     );
 
@@ -78,6 +80,7 @@ describe("WrappedEditor", () => {
           return;
         }}
         config={editorConfig}
+        autoSave={true}
       />,
     );
 
@@ -88,7 +91,7 @@ describe("WrappedEditor", () => {
 
   it("reset is called after button click", async () => {
     const reset = jest.fn();
-    render(<WrappedEditor onReset={reset} config={editorConfig} />);
+    render(<WrappedEditor onReset={reset} config={editorConfig} autoSave={true} />);
 
     await userEvent.click(screen.getByRole("button", { name: "Reset" }));
     await userEvent.click(screen.getByRole("button", { name: "Reset HTML" }));
@@ -103,6 +106,7 @@ describe("WrappedEditor", () => {
           return;
         }}
         config={editorConfig}
+        autoSave={true}
       />,
     );
 
@@ -121,6 +125,7 @@ describe("WrappedEditor", () => {
           return;
         }}
         config={editorConfig}
+        autoSave={true}
       />,
     );
 
@@ -139,6 +144,7 @@ describe("WrappedEditor", () => {
           return;
         }}
         config={editorConfig}
+        autoSave={true}
       />,
     );
 

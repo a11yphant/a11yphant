@@ -1,18 +1,32 @@
 import { ApolloLink } from "@apollo/client";
-import { GetServerSidePropsContext } from "next";
+import setCookieParser from "set-cookie-parser";
 
-export function createForwardCookiesToClientLink(context: GetServerSidePropsContext = null): ApolloLink {
+export type Cookie = {
+  name: string;
+  value: string;
+  path?: string;
+  domain?: string;
+  expires?: Date;
+  secure?: boolean;
+  httpOnly?: boolean;
+  sameSite?: string;
+};
+
+export type SetCookieFunction = (cookie: Cookie) => void;
+
+export function createForwardCookiesToClientLink(setCookie: SetCookieFunction | null = () => null): ApolloLink {
   return new ApolloLink((operation, forward) => {
-    if (!context) {
+    if (!setCookie) {
       return forward(operation);
     }
 
     return forward(operation).map((response) => {
       const apolloContext = operation.getContext();
       const setCookieHeader = apolloContext.response.headers.get("Set-Cookie");
+      const cookies: Cookie[] = setCookieParser.parse(setCookieHeader);
 
-      if (setCookieHeader) {
-        context.res.setHeader("Set-Cookie", setCookieHeader);
+      if (setCookie) {
+        cookies.forEach((cookie) => setCookie(cookie));
       }
 
       return response;

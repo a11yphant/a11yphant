@@ -11,8 +11,8 @@ const customJestConfig = {
   testRegex: ".*\\.spec\\.tsx?$",
   testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
   moduleNameMapper: {
-    "app/(.*)": "<rootDir>/src/$1",
-    "tests/(.*)": "<rootDir>/tests/$1",
+    "^app/(.*)": "<rootDir>/src/$1",
+    "^tests/(.*)": "<rootDir>/tests/$1",
   },
   testEnvironment: "jest-environment-jsdom",
   reporters: ["default", "jest-junit"],

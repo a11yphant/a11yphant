@@ -39,15 +39,14 @@ Everything you need to know to setup the project.
 
 ## General Information
 
-Technically, a11yphant is split into three applications:
+Technically, a11yphant is split into two applications:
 
 1. The **API** (Backend)
 2. The **Site** (Frontend)
-3. The **Submission Checker** (Backend)
 
-All three applications are written in [Typescript](https://www.typescriptlang.org). 
+Both applications are written in [Typescript](https://www.typescriptlang.org).
 The **Site** uses the React framework [NextJS](https://nextjs.org), [GraphQL](https://graphql.org/) and [Tailwind](https://tailwindcss.com/).
-The **API** and the **Submission Checker** use the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database.
+The **API** uses the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database.
 
 ## Prerequisites
 
@@ -71,11 +70,11 @@ npm login --scope=@a11yphant --auth-type=legacy --registry=https://npm.pkg.githu
 
 ### 3. Install Node via `nvm`
 
-`nvm` must be installed installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
+`nvm` must be installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
 ## Setup
 
-To setup the project the project follow these steps:
+To setup the project follow these steps:
 
 1. Clone the repository.
 ```bash
@@ -136,9 +135,6 @@ npm run debug:api
 
 # Site
 npm run debug:site
-
-# Submission Checker
-npm run debug:submission-checker
 ```
 
 ### Stop Services
@@ -195,22 +191,19 @@ We use Tailwind for styling. If you want to set global variables you can do so i
 
 ### Testing
 
-We write tests in the frontend and the backend to ensure code quality. We primarily have the following tests across our three applications:
+We write tests in the frontend and the backend to ensure code quality. We primarily have the following tests across our two applications:
 - **API**
     - Unit Tests
     - Integration Tests (with the DB and business logic)
     - Service Tests (for important GraphQL queries)
 - **Site**
     - Component Tests
-- **Submission Checker**
-    - Unit Tests
-    - Service Tests
 - **Global**
     - End-to-End Tests that test the core functionality of a11yphant
 
 > **Note:** To get a feature merged, it is mandatory to write a meaningful test. 
 
-To see if your written test passes or fails, you can go to the folder of the specific service you are working in (**API**, **Site**, **Submission Checker**) and run the following command:
+To see if your written test passes or fails, you can go to the folder of the specific service you are working in (**API**, **Site**) and run the following command:
 ```bash
 npm run test:watch
 ```

@@ -33,7 +33,7 @@ describe("CompleteEvaluationButton", () => {
     expect(finishButton).toBeInTheDocument();
 
     await userEvent.click(finishButton);
-    expect(router.asPath).toBe("/");
+    expect(router.asPath).toBe("/challenges");
   });
 
   it("renders the 'Next Level' button", async () => {
@@ -43,6 +43,6 @@ describe("CompleteEvaluationButton", () => {
     expect(finishButton).toBeInTheDocument();
 
     await userEvent.click(finishButton);
-    expect(router.asPath).toBe(`/challenge/${mockChallengeSlug}/level/0${mockNthLevel + 1}`);
+    expect(router.asPath).toBe(`/challenges/${mockChallengeSlug}/level/0${mockNthLevel + 1}`);
   });
 });

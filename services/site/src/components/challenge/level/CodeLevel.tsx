@@ -18,9 +18,10 @@ export interface CodeLevelProps {
   challengeName: string;
   level: CodeLevelDetailsFragment;
   onAutoSaveLoadingChange: (autoSaveLoading: boolean) => void;
+  autoSave: boolean;
 }
 
-const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelProps): React.ReactElement => {
+const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange, autoSave }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
   const { challengeSlug, nthLevel } = router.query;
   const errorDialogApi = useErrorDialogApi();
@@ -177,6 +178,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange }: CodeLevelP
                 enabled: false,
               },
             }}
+            autoSave={autoSave}
           />
           <Preview
             className={clsx("w-full h-80 md:h-2/5")}

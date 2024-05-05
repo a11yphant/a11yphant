@@ -12,6 +12,8 @@ import {
   useUserByIdQuery,
 } from "app/generated/graphql";
 import { initializeApollo } from "app/lib/apollo-client";
+import { getClientConfig } from "app/lib/config";
+import { getConfig } from "app/lib/config/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -53,31 +55,42 @@ const Challenge: React.FunctionComponent = () => {
       <Head>
         <title>{user.displayName || "Anonymous user"}'s profile | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
+        <meta
+          name="description"
+          content={`${user.displayName || "An anonymous user"} shared their progress on a11yphant with you. Join them and start learning about web accessibility today!`}
+        />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content={`https://a11yphant.com/${user.id}`} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta property="og:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content={`${user.displayName || "An anonymous user"}'s profile | a11yphant`} />
+        <meta
+          property="og:description"
+          content={`${user.displayName || "An anonymous user"} shared their progress on a11yphant with you. Join them and start learning about web accessibility today!`}
+        />
         <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+          content="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
         />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta name="twitter:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
+        <meta name="twitter:title" content={`${user.displayName || "An anonymous user"}'s profile | a11yphant`} />
+        <meta
+          name="twitter:description"
+          content={`${user.displayName || "An anonymous user"} shared their progress on a11yphant with you. Join them and start learning about web accessibility today!`}
+        />
         <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+        <div className={clsx("mx-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
           <div className={clsx("flex flex-col justify-between content-start pb-6 mb-20 border-grey-light border-b", "md:flex-row md:content-end")}>
             <div className={clsx("md:self-end")}>
               <h1 className={clsx("pb-2.5 pr-4 text-grey", "h3", "sm:h2")}>{user.displayName || "Anonymous coder"}</h1>
@@ -147,7 +160,7 @@ const Challenge: React.FunctionComponent = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(null, context);
+  const apolloClient = initializeApollo(getConfig().graphqlEndpointServer, null, context);
 
   const { userId } = context.params;
 
@@ -180,6 +193,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       displayBreadcrumbs: false,
+      config: getClientConfig(),
     },
   };
 };

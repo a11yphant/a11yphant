@@ -9,7 +9,6 @@ const IllustrationCodingWoman: React.FunctionComponent<React.SVGProps<SVGSVGElem
       viewBox="0 0 878.63037 483"
       className={className}
       aria-hidden="true"
-      focusable="false"
       {...props}
     >
       <path
