@@ -16,7 +16,7 @@ const Legend: React.FunctionComponent<LegendProps> = ({ className }) => {
         </li>
         <li className={clsx("text-grey flex items-center", "xs:mx-2 xs:px-1")}>
           <DifficultyMedium thirdClassName={"mr-2"} />
-          Medium <span className="text-xl text-grey">*</span>
+          Medium
         </li>
         <li className={clsx("text-grey flex items-center", "xs:mx-2 xs:px-1")}>
           <DifficultyHard thirdClassName={"mr-2"} />
