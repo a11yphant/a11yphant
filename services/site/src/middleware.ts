@@ -56,7 +56,7 @@ const authentication: Middleware = {
     };
 
     const getCookiesHeader: GetCookieHeaderFunction = () => {
-      return req.headers.toString();
+      return req.headers.get("cookie");
     };
 
     const client = createApolloClientRSC(getCookiesHeader);
