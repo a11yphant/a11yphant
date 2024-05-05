@@ -19,13 +19,21 @@ const About: React.FunctionComponent = () => {
     <>
       <Head>
         <title>About | a11yphant</title>
-        <meta name="description" content="a11yphant is an interactive online course for web accessibility." />
+        <meta
+          name="description"
+          content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
+        />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content="https://a11yphant.com" />
+        <meta property="og:url" content="https://a11yphant.com/about" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="About" />
-        <meta property="og:description" content="a11yphant is an interactive online course for web accessibility." />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content="About a11yphant" />
+        <meta
+          property="og:description"
+          content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
+        />
         <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
@@ -34,8 +42,11 @@ const About: React.FunctionComponent = () => {
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="a11yphant" />
-        <meta name="twitter:description" content="a11yphant is an interactive online course for web accessibility." />
+        <meta name="twitter:title" content="About a11yphant" />
+        <meta
+          name="twitter:description"
+          content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
+        />
         <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />

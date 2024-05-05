@@ -23,13 +23,21 @@ const PressKit: React.FunctionComponent = () => {
     <>
       <Head>
         <title>Press Kit | a11yphant</title>
-        <meta name="description" content="This press kit has all the resources you need when you want to write about a11yphant." />
+        <meta
+          name="description"
+          content="This press kit has all the resources you need when you want to write about a11yphant: Images, Logos and descriptions about the creators and their motivation."
+        />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://a11yphant.com" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="Press Kit" />
-        <meta property="og:description" content="This press kit has all the resources you need when you want to write about a11yphant." />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content="Press Kit | a11yphant" />
+        <meta
+          property="og:description"
+          content="This press kit has all the resources you need when you want to write about a11yphant: Images, Logos and descriptions about the creators and their motivation."
+        />
         <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
@@ -38,8 +46,11 @@ const PressKit: React.FunctionComponent = () => {
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="a11yphant" />
-        <meta name="twitter:description" content="This press kit has all the resources you need when you want to write about a11yphant." />
+        <meta name="twitter:title" content="Press Kit | a11yphant" />
+        <meta
+          name="twitter:description"
+          content="This press kit has all the resources you need when you want to write about a11yphant: Images, Logos and descriptions about the creators and their motivation."
+        />
         <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
