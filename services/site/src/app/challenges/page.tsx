@@ -86,4 +86,24 @@ export default Challenges;
 
 export const metadata: Metadata = {
   title: "Challenges | a11yphant",
+  description:
+    "Web accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each level teaching you one thing at a time.",
+  openGraph: {
+    url: "https://a11yphant.com/challenges",
+    title: "Challenges | a11yphant",
+    description:
+      "Web accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each level teaching you one thing at a time.",
+    images: [
+      {
+        url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
+        alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+      },
+    ],
+  },
+  twitter: {
+    title: "Challenges | a11yphant",
+    description:
+      "Web accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each level teaching you one thing at a time.",
+    images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+  },
 };
