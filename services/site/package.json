@@ -41,7 +41,7 @@
     "@headlessui/react": "1.7.19",
     "@hookform/resolvers": "3.3.4",
     "@monaco-editor/react": "4.6.0",
-    "@nestjs-modules/mailer": "1.11.2",
+    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/apollo": "^12.1.0",
     "@nestjs/common": "^10.3.0",
     "@nestjs/config": "3.2.2",
