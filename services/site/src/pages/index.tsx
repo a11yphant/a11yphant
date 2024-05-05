@@ -53,29 +53,31 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
         <title>a11yphant - The easy way to learn web accessibility</title>
         <meta
           name="description"
-          content="a11yphant teaches the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes. Completely free."
+          content="a11yphant teaches the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://a11yphant.com" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="a11yphant" />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content="a11yphant - The easy way to learn web accessibility" />
         <meta
           property="og:description"
-          content="a11yphant teaches the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes. Completely free."
+          content="a11yphant teaches the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
         <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+          content="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
         />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="a11yphant" />
+        <meta name="twitter:title" content="a11yphant - The easy way to learn web accessibility" />
         <meta
           property="twitter:description"
-          content="a11yphant teaches the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes. Completely free."
+          content="a11yphant teaches the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes."
         />
         <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}

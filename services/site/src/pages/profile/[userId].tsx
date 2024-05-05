@@ -55,23 +55,34 @@ const Challenge: React.FunctionComponent = () => {
       <Head>
         <title>{user.displayName || "Anonymous user"}'s profile | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
+        <meta
+          name="description"
+          content={`${user.displayName || "An anonymous user"} shared their progress on a11yphant with you. Join them and start learning about web accessibility today!`}
+        />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content={`https://a11yphant.com/${user.id}`} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta property="og:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content={`${user.displayName || "An anonymous user"}'s profile | a11yphant`} />
+        <meta
+          property="og:description"
+          content={`${user.displayName || "An anonymous user"} shared their progress on a11yphant with you. Join them and start learning about web accessibility today!`}
+        />
         <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+          content="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
         />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content={`${user.displayName || "Anonymous user"}'s profile`} />
-        <meta name="twitter:description" content={`${user.displayName || "Anonymous user"} shared their progress on a11yphant.com with you.`} />
+        <meta name="twitter:title" content={`${user.displayName || "An anonymous user"}'s profile | a11yphant`} />
+        <meta
+          name="twitter:description"
+          content={`${user.displayName || "An anonymous user"} shared their progress on a11yphant with you. Join them and start learning about web accessibility today!`}
+        />
         <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />

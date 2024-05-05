@@ -43,11 +43,12 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-        alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+        alt: "A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written.",
       },
     ],
   },
   twitter: {
+    card: "summary_large_image",
     site: "@a11yphant",
     title: "a11yphant",
     description: "a11yphant is an interactive online course for web accessibility.",
