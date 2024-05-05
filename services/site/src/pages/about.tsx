@@ -2,7 +2,6 @@ import Footer from "app/components/Footer";
 import A11yphantLogoWithoutText from "app/components/icons/A11yphantLogoWithoutText";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
-import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import { getClientConfig } from "app/lib/config";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -10,10 +9,10 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import a11yphantStatic from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
+import a11yphantStatic from "../../public/images/showcase/mockups-social-media-new.png";
 
 const About: React.FunctionComponent = () => {
-  const prefersReducedMotion = usePrefersReducedMotion();
+  // const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <>
@@ -77,27 +76,27 @@ const About: React.FunctionComponent = () => {
           </p>
 
           <div className="max-w-80ch">
-            {prefersReducedMotion ? (
-              <Image
-                alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                src={a11yphantStatic}
-                quality={80}
-                placeholder="blur"
-                priority
-                sizes="80ch"
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                }}
-              />
-            ) : (
+            {/* {prefersReducedMotion ? ( */}
+            <Image
+              alt="The a11yphant website where users can complete interactive challenges on web accessibility."
+              src={a11yphantStatic}
+              quality={80}
+              placeholder="blur"
+              priority
+              sizes="80ch"
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+            />
+            {/* ) : (
               <video autoPlay muted loop playsInline controls>
                 <source src="/videos/a11yphant-showcase.mp4" />
                 <p>
                   Your browser doesn't support HTML video. Here is a <a href="/videos/a11yphant-showcase.mp4">link to the video</a> instead.
                 </p>
               </video>
-            )}
+            )} */}
           </div>
 
           <section className="my-16">
