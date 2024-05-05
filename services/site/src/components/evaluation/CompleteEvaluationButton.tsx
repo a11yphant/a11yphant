@@ -54,7 +54,7 @@ export const CompleteEvaluationButton = ({
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus={autoFocus}
         onClick={() => {
-          router.push("/");
+          router.push("/challenges");
         }}
         primary
         className={clsx(disabled && "opacity-50 cursor-not-allowed hover:bg-primary hover:border-primary", "ml-auto self-end", className)}
