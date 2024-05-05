@@ -44,9 +44,7 @@
     }
 }
 
-.card-smaller {
-    @include card;
-
+.hint-box {
     &:focus-within {
         outline: 3px solid #fff;
     }

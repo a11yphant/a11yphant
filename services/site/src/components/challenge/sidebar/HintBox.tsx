@@ -19,7 +19,7 @@ const HintBox: React.FunctionComponent<HintBoxProps> = ({ hints }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
-    <div className={clsx("flex flex-col", "container-ultra-dark card-smaller")}>
+    <div className={clsx("flex flex-col", "container-ultra-dark hint-box")}>
       <h4 className={clsx("w-full")}>
         <Button
           onClick={() => {
