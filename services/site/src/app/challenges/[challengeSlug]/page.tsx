@@ -120,15 +120,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "A valid HTML document lays the foundation for an accessible web page. Assistive technologies extract information based on the structure of the document.",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-valid-doc.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "A valid HTML document lays the foundation for an accessible web page. Assistive technologies extract information based on the structure of the document.",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-valid-doc.jpg" }],
       },
     },
     headings: {
@@ -139,15 +139,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "You will learn how to use the six available HTML headings to structure your page. A logical structure is very important for web accessibility.",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-headings.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "You will learn how to use the six available HTML headings to structure your page. A logical structure is very important for web accessibility.",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-headings.jpg" }],
       },
     },
     links: {
@@ -158,15 +158,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "Hyperlinks are one of the most fundamental concepts of the web. Without meaningful links, users might be unable to find the desired information.",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-links.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "Hyperlinks are one of the most fundamental concepts of the web. Without meaningful links, users might be unable to find the desired information.",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-links.jpg" }],
       },
     },
     "page-regions": {
@@ -177,15 +177,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "The foundation to building accessible websites is using semantically meaningful markup. It structures a page into common sections, like headers and navigations.",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-page-regions.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "The foundation to building accessible websites is using semantically meaningful markup. It structures a page into common sections, like headers and navigations.",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-page-regions.jpg" }],
       },
     },
     buttons: {
@@ -196,15 +196,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "Learn how to utilise and design HTML buttons to make them accessible. Buttons are critical to user engagement. There are many things to consider. ",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-buttons.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "Learn how to utilise and design HTML buttons to make them accessible. Buttons are critical to user engagement. There are many things to consider. ",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-buttons.jpg" }],
       },
     },
     "intro-to-web-accessibility": {
@@ -215,15 +215,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "This quiz-only challenge gives a brief introduction to what web accessibility is. The accessibility of websites is an important aspect of social inclusion. ",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-a11y-intro.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "This quiz-only challenge gives a brief introduction to what web accessibility is. The accessibility of websites is an important aspect of social inclusion. ",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-a11y-intro.jpg" }],
       },
     },
     "content-elements": {
@@ -234,15 +234,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "In this challenge, you will get an overview of a few simple HTML elements that you can use to structure the content on your page.",
         images: [
           {
-            url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg",
-            alt: "A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written.",
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-content-element.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
         description:
           "In this challenge, you will get an overview of a few simple HTML elements that you can use to structure the content on your page.",
-        images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-content-element.jpg" }],
       },
     },
   };

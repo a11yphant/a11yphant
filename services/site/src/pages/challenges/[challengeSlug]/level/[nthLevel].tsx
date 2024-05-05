@@ -70,11 +70,8 @@ const Level: React.FunctionComponent = () => {
           property="og:description"
           content="Solve coding levels and single-choice quizzes about web accessibility on a11yphant, broken down into manageable pieces. Start your accessibility journey today!"
         />
-        <meta property="og:image" content="/images/SEO/mockups-social-media.jpg" />
-        <meta
-          property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
-        />
+        <meta property="og:image" content="/images/SEO/mockups-CHALLENGES.jpg" />
+        <meta property="og:image:alt" content="A screenshot showing all available challenges on a11yphant and their difficulty." />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
@@ -83,7 +80,7 @@ const Level: React.FunctionComponent = () => {
           name="twitter:description"
           content="Solve coding levels and single-choice quizzes about web accessibility on a11yphant, broken down into manageable pieces. Start your accessibility journey today!"
         />
-        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-CHALLENGES.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />

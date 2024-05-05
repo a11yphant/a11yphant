@@ -34,10 +34,10 @@ const About: React.FunctionComponent = () => {
           property="og:description"
           content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
         />
-        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-ABOUT.jpg" />
         <meta
           property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+          content="Illustrations of people coding along with a textual description of a11ypahnt's benefits, which are studying from the comfort of your home and interactive coding challenges and quizzes."
         />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -47,7 +47,7 @@ const About: React.FunctionComponent = () => {
           name="twitter:description"
           content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
         />
-        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-ABOUT.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
