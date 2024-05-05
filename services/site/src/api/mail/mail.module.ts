@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MailerModule } from "@nestjs-modules/mailer";
-import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
+// import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 import path from "path";
 
 import { MailService } from "./mail.service";
@@ -25,7 +25,7 @@ import { MailService } from "./mail.service";
         },
         template: {
           dir: path.resolve(__dirname, "..", "..", "mail-templates"),
-          adapter: new HandlebarsAdapter(),
+          //adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
           },
