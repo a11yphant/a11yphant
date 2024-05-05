@@ -19,6 +19,7 @@ const config = {
     serverMinification: false,
     serverComponentsExternalPackages: [
       "@apollo/server",
+      "@css-inline/css-inline",
       "@nestjs/core",
       "fsevents",
       "@nestjs-modules/mailer",
