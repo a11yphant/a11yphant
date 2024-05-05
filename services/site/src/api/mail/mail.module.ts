@@ -1,9 +1,9 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MailerModule } from "@nestjs-modules/mailer";
-import { LiquidAdapter } from "@nestjs-modules/mailer/dist/adapters/liquid.adapter";
 import path from "path";
 
+import { LiquidAdapter } from "./liquid.adapter";
 import { MailService } from "./mail.service";
 
 @Module({
