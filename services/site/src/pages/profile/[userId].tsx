@@ -149,7 +149,7 @@ const Challenge: React.FunctionComponent = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(getConfig().getGraphqlEndpointUrl(`https://${context.req.headers.host}`), null, context);
+  const apolloClient = initializeApollo(getConfig().getGraphqlEndpointUrl(context.req.headers.host), null, context);
 
   const { userId } = context.params;
 

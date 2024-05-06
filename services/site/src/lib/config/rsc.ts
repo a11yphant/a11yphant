@@ -40,9 +40,8 @@ export function getConfig(): {
   };
 }
 
-function getGraphqlEndpointUrl(currentUrl: string): string {
-  const url = new URL(currentUrl);
-  url.pathname = "api/graphql";
+function getGraphqlEndpointUrl(host: string): string {
+  const url = new URL("/api/graphql", `https://${host}`);
 
   return url.toString();
 }
