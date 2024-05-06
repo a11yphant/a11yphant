@@ -24,8 +24,8 @@ export function getConfig(): {
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
   plausibleBaseUrl?: string;
-  baseUrl: string;
-  getGraphqlEndpointUrl: (currentUrl: string) => string;
+  getBaseUrl: (host: string) => string;
+  getGraphqlEndpointUrl: (host: string) => string;
 } {
   return {
     isDevelopmentMode: process.env.NODE_ENV === "development",
@@ -35,13 +35,21 @@ export function getConfig(): {
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     plausibleBaseUrl: process.env.SITE_PLAUSIBLE_BASE_URL,
-    baseUrl: process.env.SITE_BASE_URL || "http://localhost:3001",
+    getBaseUrl,
     getGraphqlEndpointUrl,
   };
 }
 
+function getBaseUrl(host: string): string {
+  return getUrl("/", host);
+}
+
 function getGraphqlEndpointUrl(host: string): string {
-  const url = new URL("/api/graphql", `https://${host}`);
+  return getUrl("/api/graphql", host);
+}
+
+function getUrl(path: string, host: string): string {
+  const url = new URL(path, `${process.env.SITE_PROTOCOL || "http"}://${host}`);
 
   return url.toString();
 }

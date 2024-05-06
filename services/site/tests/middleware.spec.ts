@@ -12,14 +12,21 @@ jest.mock("app/lib/apollo-client/create-apollo-client-rsc", () => ({
 
 jest.mock("app/lib/config/rsc", () => ({
   getConfig: () => ({
-    baseUrl: "https://a11yphant.com",
+    getBaseUrl: () => "https://a11yphant.com",
     getGraphqlEndpointUrl: () => "https://a11yphant.com/api/graphql",
   }),
 }));
 
+function getRequest(url: string): NextRequest {
+  return {
+    nextUrl: { clone: () => new NextURL(url) },
+    headers: { get: () => "a11yphant.com" },
+  } as unknown as NextRequest;
+}
+
 describe("middleware", () => {
   it("redirects old challenge modal urls", async () => {
-    const req = { nextUrl: { clone: () => new NextURL("https://a11yphant.com/?challenge=headings") } } as NextRequest;
+    const req = getRequest("https://a11yphant.com/?challenge=headings");
     const res = await middleware(req);
     expect(res).toBeDefined();
     expect(res?.status).toEqual(308);
@@ -27,7 +34,7 @@ describe("middleware", () => {
   });
 
   it("redirects old level urls", async () => {
-    const req = { nextUrl: { clone: () => new NextURL("https://a11yphant.com/challenge/headings/level/1") } } as NextRequest;
+    const req = getRequest("https://a11yphant.com/challenge/headings/level/1");
     const res = await middleware(req);
     expect(res).toBeDefined();
     expect(res?.status).toEqual(308);
