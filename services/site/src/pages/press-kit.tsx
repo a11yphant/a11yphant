@@ -12,42 +12,54 @@ import React from "react";
 import a11yphantLogo from "../../public/images/logo/a11yphant_Logo_combination-mark_dark.png";
 import a11yphantLogoLight from "../../public/images/logo/a11yphant_Logo_combination-mark_light.png";
 import a11yphantPictorialMark from "../../public/images/logo/a11yphant_Logo_pictorial-mark.png";
-import a11yphantWebsiteChallenge from "../../public/images/showcase/a11yphant_challenge_detail.jpg";
-import a11yphantWebsite from "../../public/images/showcase/a11yphant_challenge_overview.jpg";
-import a11yphantWebsiteResult from "../../public/images/showcase/a11yphant_challenge_result.jpg";
-import a11yphantWebsiteCodingLevel from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
-import a11yphantWebsiteQuiz from "../../public/images/showcase/a11yphant-quiz.jpg";
+import a11yphantWebsiteCodingLevel from "../../public/images/showcase/a11yphant_coding_challenge.png";
+import a11yphantWebsiteQuizLevel from "../../public/images/showcase/a11yphant_quiz_challenge.png";
+import a11yphantWebsiteAbout from "../../public/images/showcase/mockups-ABOUT.png";
+import a11yphantWebsiteChallenge from "../../public/images/showcase/mockups-challenge.png";
+import a11yphantWebsiteChallenges from "../../public/images/showcase/mockups-challenges.png";
+import a11yphantWebsiteHome from "../../public/images/showcase/mockups-social-media-new.png";
 
 const PressKit: React.FunctionComponent = () => {
   return (
     <>
       <Head>
         <title>Press Kit | a11yphant</title>
-        <meta name="description" content="This press kit has all the resources you need when you want to write about a11yphant." />
+        <meta
+          name="description"
+          content="This press kit has all the resources you need when you want to write about a11yphant: Images, Logos and descriptions about the creators and their motivation."
+        />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://a11yphant.com" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="Press Kit" />
-        <meta property="og:description" content="This press kit has all the resources you need when you want to write about a11yphant." />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content="Press Kit | a11yphant" />
+        <meta
+          property="og:description"
+          content="This press kit has all the resources you need when you want to write about a11yphant: Images, Logos and descriptions about the creators and their motivation."
+        />
         <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         <meta
           property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+          content="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
         />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="a11yphant" />
-        <meta name="twitter:description" content="This press kit has all the resources you need when you want to write about a11yphant." />
+        <meta name="twitter:title" content="Press Kit | a11yphant" />
+        <meta
+          name="twitter:description"
+          content="This press kit has all the resources you need when you want to write about a11yphant: Images, Logos and descriptions about the creators and their motivation."
+        />
         <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+        <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <section className="mb-16">
             <h1 className={clsx("mb-8", "h2", "md:h1")}>Press Kit</h1>
             <p>
@@ -228,23 +240,40 @@ const PressKit: React.FunctionComponent = () => {
             <div className="flex flex-wrap items-center">
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: An overview of all available challenge topics and their difficulty."
-                  src={a11yphantWebsite}
+                  alt="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
+                  src={a11yphantWebsiteHome}
                   placeholder="blur"
                   quality={100}
                 />
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: The textual details about a challenge (how many levels and topic)."
+                  alt="Illustrations of people coding along with a textual description of a11ypahnt's benefits, which are studying from the comfort of your home and interactive coding challenges and quizzes."
+                  src={a11yphantWebsiteAbout}
+                  placeholder="blur"
+                  quality={100}
+                />
+              </div>
+              <div className="w-[70ch] h-full my-6 md:m-8">
+                <Image
+                  alt="A screenshot showing all available challenges on a11yphant and their difficulty."
+                  src={a11yphantWebsiteChallenges}
+                  placeholder="blur"
+                  quality={100}
+                />
+              </div>
+              <div className="w-[70ch] h-full my-6 md:m-8">
+                <Image
+                  alt="A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete."
                   src={a11yphantWebsiteChallenge}
                   placeholder="blur"
                   quality={100}
                 />
               </div>
+
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: A coding level within a challenge. It consist of an editor, a sidebar with information and a preview window."
+                  alt="Screenshot of a coding level within a challenge on a11yphant. It consist of an editor, a sidebar with information and a preview window."
                   src={a11yphantWebsiteCodingLevel}
                   placeholder="blur"
                   quality={100}
@@ -252,16 +281,8 @@ const PressKit: React.FunctionComponent = () => {
               </div>
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image
-                  alt="Allyphant website: The result of a coding level evaluation, displaying if it was passed or failed."
-                  src={a11yphantWebsiteResult}
-                  placeholder="blur"
-                  quality={100}
-                />
-              </div>
-              <div className="w-[70ch] h-full my-6 md:m-8">
-                <Image
-                  alt="Allyphant website: A quiz level consisting of a question and 4 possible answers."
-                  src={a11yphantWebsiteQuiz}
+                  alt="Screenshot of a quiz level on a11yphant, consisting of a question and four possible answers."
+                  src={a11yphantWebsiteQuizLevel}
                   placeholder="blur"
                   quality={100}
                 />

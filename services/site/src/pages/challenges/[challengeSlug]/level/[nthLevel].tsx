@@ -52,27 +52,36 @@ const Level: React.FunctionComponent = () => {
     <>
       <Head>
         <title>
-          {challenge.name} - Level {nthLevel} | a11yphant
+          Challenge: {challenge.name} - Level {nthLevel} | a11yphant
         </title>
         <meta name="robots" content="noindex,nofollow" />
         <meta
           name="description"
-          content="Various accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each challenge teaching you one thing at a time."
+          content="Solve coding levels and single-choice quizzes about web accessibility on a11yphant, broken down into manageable pieces. Start your accessibility journey today!"
         />
-        <meta property="og:title" content={`${challenge.name} - Level ${nthLevel}`} />
+        <meta name="author" content="a11yphant" />
+        {/* <!-- Facebook Meta Tags --> */}
+        <meta property="og:url" content={`https://a11yphant.com/challenge/${challenge.name}/level/${nthLevel}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en" />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content={`Challenge: ${challenge.name} - Level ${nthLevel} | a11yphant`} />
         <meta
           property="og:description"
-          content="Various accessibility topics are split up into short challenges. Solve coding levels and single-choice quizzes, with each challenge teaching you one thing at a time."
+          content="Solve coding levels and single-choice quizzes about web accessibility on a11yphant, broken down into manageable pieces. Start your accessibility journey today!"
         />
-        <meta property="og:image" content="/images/SEO/mockups-social-media.jpg" />
-        <meta
-          property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
-        />
-        <meta property="og:locale" content="en" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://a11yphant.com/challenge/${challenge.name}/level/${nthLevel}`} />
+        <meta property="og:image" content="/images/SEO/mockups-CHALLENGES.jpg" />
+        <meta property="og:image:alt" content="A screenshot showing all available challenges on a11yphant and their difficulty." />
+        {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@a11yphant" />
+        <meta name="twitter:title" content={`Challenge: ${challenge.name} - Level ${nthLevel} | a11yphant`} />
+        <meta
+          name="twitter:description"
+          content="Solve coding levels and single-choice quizzes about web accessibility on a11yphant, broken down into manageable pieces. Start your accessibility journey today!"
+        />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-CHALLENGES.jpg" />
+        {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>

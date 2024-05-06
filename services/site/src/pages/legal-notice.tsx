@@ -13,30 +13,13 @@ const LegalNotice: React.FunctionComponent = () => {
       <Head>
         <title>Legal Notice | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content="a11yphant is an interactive online course for web accessibility." />
-        {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content="https://a11yphant.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en" />
-        <meta property="og:title" content="Legal Notice" />
-        <meta property="og:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
-        <meta
-          property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
-        />
-        {/* <!-- Twitter Meta Tags --> */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="a11yphant" />
-        <meta name="twitter:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
+        <meta name="author" content="a11yphant" />
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <div className={clsx("py-4 mx-8 h-main max-w-screen-3xl", "sm:mx-12", "md:py-8", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8 h3", "sm:h2", "md:h1")}>Legal Notice</h1>
           <p className={clsx("italic mb-8")}>
@@ -47,12 +30,7 @@ const LegalNotice: React.FunctionComponent = () => {
           <h2 className={clsx("h5", "sm:h4")}>Contact Information</h2>
           <address className={clsx("not-italic mb-12")}>
             <p>
-              <strong>Daniela Kubesch, BSc</strong> <br />
-              Wiesengasse 18 <br />
-              3001 Mauerbach <br />
-              Austria
-            </p>
-            <p>
+              <strong>Address: </strong> On request <br />
               <strong>Email: </strong> <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>
             </p>
           </address>

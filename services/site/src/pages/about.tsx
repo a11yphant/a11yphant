@@ -2,7 +2,6 @@ import Footer from "app/components/Footer";
 import A11yphantLogoWithoutText from "app/components/icons/A11yphantLogoWithoutText";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
-import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import { getClientConfig } from "app/lib/config";
 import clsx from "clsx";
 import { GetServerSideProps } from "next";
@@ -10,40 +9,51 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import a11yphantStatic from "../../public/images/showcase/a11yphant-coding-challenge.jpg";
+import a11yphantStatic from "../../public/images/showcase/mockups-social-media-new.png";
 
 const About: React.FunctionComponent = () => {
-  const prefersReducedMotion = usePrefersReducedMotion();
+  // const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
     <>
       <Head>
         <title>About | a11yphant</title>
-        <meta name="description" content="a11yphant is an interactive online course for web accessibility." />
+        <meta
+          name="description"
+          content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
+        />
+        <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content="https://a11yphant.com" />
+        <meta property="og:url" content="https://a11yphant.com/about" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
-        <meta property="og:title" content="About" />
-        <meta property="og:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
+        <meta property="og:site_name" content="a11yphant" />
+        <meta property="og:title" content="About a11yphant" />
+        <meta
+          property="og:description"
+          content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
+        />
+        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-ABOUT.jpg" />
         <meta
           property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
+          content="Illustrations of people coding along with a textual description of a11ypahnt's benefits, which are studying from the comfort of your home and interactive coding challenges and quizzes."
         />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="a11yphant" />
-        <meta name="twitter:description" content="a11yphant is an interactive online course for web accessibility." />
-        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
+        <meta name="twitter:title" content="About a11yphant" />
+        <meta
+          name="twitter:description"
+          content="a11yphant is an interactive online course for web accessibility. It was created with love in Austria and is maintained as an Open Source project."
+        />
+        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-ABOUT.jpg" />
         {/* <!-- General Meta Tags --> */}
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
-        <div className={clsx("mx-8 py-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
+        <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8", "h2", "md:h1")}>About</h1>
 
           <div className="mt-4 flex items-center max-w-80ch">
@@ -66,27 +76,27 @@ const About: React.FunctionComponent = () => {
           </p>
 
           <div className="max-w-80ch">
-            {prefersReducedMotion ? (
-              <Image
-                alt="The a11yphant website where users can complete interactive challenges on web accessibility."
-                src={a11yphantStatic}
-                quality={80}
-                placeholder="blur"
-                priority
-                sizes="80ch"
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                }}
-              />
-            ) : (
+            {/* {prefersReducedMotion ? ( */}
+            <Image
+              alt="The a11yphant website where users can complete interactive challenges on web accessibility."
+              src={a11yphantStatic}
+              quality={80}
+              placeholder="blur"
+              priority
+              sizes="80ch"
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+            />
+            {/* ) : (
               <video autoPlay muted loop playsInline controls>
                 <source src="/videos/a11yphant-showcase.mp4" />
                 <p>
                   Your browser doesn't support HTML video. Here is a <a href="/videos/a11yphant-showcase.mp4">link to the video</a> instead.
                 </p>
               </video>
-            )}
+            )} */}
           </div>
 
           <section className="my-16">

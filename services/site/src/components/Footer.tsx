@@ -23,7 +23,7 @@ const LinkListItem: React.FC<{ href: string; title: string }> = ({ href, title }
 const LinkList: React.FC<React.PropsWithChildren> = ({ children }) => <ul className={clsx("mb-0 flex flex-col")}>{children}</ul>;
 
 const Footer: React.FunctionComponent = () => (
-  <footer className={clsx("max-w-screen-3xl mx-8 mt-14 mb-16", "sm:mx-12 sm:mt-20 sm:mb-7", "md:mt-28", "md:mx-24", "2xl:mx-auto")}>
+  <footer className={clsx("max-w-screen-3xl mx-8 mt-14 mb-16", "sm:mx-12 sm:mt-20 sm:mb-7", "md:mt-28", "lg:mx-24", "2xl:mx-auto")}>
     <div className={clsx("xl:flex xl:flex-row xl:justify-between", "2xl:mx-24")}>
       <div className="flex flex-col justify-start">
         <p className={clsx("h5 mb-2 max-w-none")}>The easy way to learn web accessibility</p>

@@ -40,8 +40,8 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
   return (
     <>
       <Navigation displayBreadcrumbs />
-      <main className="h-full box-border max-w-screen-3xl mx-auto">
-        <div className="mx-8 py-8 h-main max-w-screen-3xl sm:mx-12 lg:mt-12 lg:mx-24">
+      <main className="h-full box-border max-w-screen-3xl mx-auto mt-32">
+        <div className="mx-8 h-main max-w-screen-3xl sm:mx-12 lg:mt-12 lg:mx-24">
           <h1 className="mb-8 h2 md:h1">
             <span className="sr-only">Challenge: </span>
             {challenge?.name}
@@ -73,7 +73,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     href={`/challenges/${challengeSlug}/level/${String(level.order).padStart(2, "0")}`}
                     className={clsx(
                       "relative block border border-solid rounded-lg px-4 py-3 w-full h-18",
-                      "hover:bg-primary-dark hover:border-primary-dark",
+                      "group hover:bg-primary-dark hover:border-primary-dark",
                       !isFirstUnfinishedLevel && "border-grey-dark",
                       isFirstUnfinishedLevel && "border-primary bg-primary",
                     )}
@@ -84,7 +84,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     <span
                       className={clsx(
                         "font-normal mb-0 block",
-                        !isFirstUnfinishedLevel && "text-grey-middle",
+                        !isFirstUnfinishedLevel && "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
                         isFirstUnfinishedLevel && "text-white",
                       )}
                     >
@@ -93,7 +93,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     {level.status === LevelStatus.Finished && (
                       <>
                         <span className="sr-only">Completed</span>
-                        <Check className="h-7 w-10 absolute top-4 right-5 text-light" />
+                        <Check className="h-7 w-10 absolute top-5 right-5 text-light" />
                       </>
                     )}
                   </Link>
@@ -111,8 +111,154 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
 export default Challenge;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const challengeMetadata: Record<string, Partial<Metadata>> = {
+    "a-valid-html-document": {
+      description:
+        "A valid HTML document lays the foundation for an accessible web page. Assistive technologies extract information based on the structure of the document.",
+      openGraph: {
+        description:
+          "A valid HTML document lays the foundation for an accessible web page. Assistive technologies extract information based on the structure of the document.",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-valid-doc.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "A valid HTML document lays the foundation for an accessible web page. Assistive technologies extract information based on the structure of the document.",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-valid-doc.jpg" }],
+      },
+    },
+    headings: {
+      description:
+        "You will learn how to use the six available HTML headings to structure your page. A logical structure is very important for web accessibility.",
+      openGraph: {
+        description:
+          "You will learn how to use the six available HTML headings to structure your page. A logical structure is very important for web accessibility.",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-headings.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "You will learn how to use the six available HTML headings to structure your page. A logical structure is very important for web accessibility.",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-headings.jpg" }],
+      },
+    },
+    links: {
+      description:
+        "Hyperlinks are one of the most fundamental concepts of the web. Without meaningful links, users might be unable to find the desired information.",
+      openGraph: {
+        description:
+          "Hyperlinks are one of the most fundamental concepts of the web. Without meaningful links, users might be unable to find the desired information.",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-links.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "Hyperlinks are one of the most fundamental concepts of the web. Without meaningful links, users might be unable to find the desired information.",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-links.jpg" }],
+      },
+    },
+    "page-regions": {
+      description:
+        "The foundation to building accessible websites is using semantically meaningful markup. It structures a page into common sections, like headers and navigations.",
+      openGraph: {
+        description:
+          "The foundation to building accessible websites is using semantically meaningful markup. It structures a page into common sections, like headers and navigations.",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-page-regions.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "The foundation to building accessible websites is using semantically meaningful markup. It structures a page into common sections, like headers and navigations.",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-page-regions.jpg" }],
+      },
+    },
+    buttons: {
+      description:
+        "Learn how to utilise and design HTML buttons to make them accessible. Buttons are critical to user engagement. There are many things to consider. ",
+      openGraph: {
+        description:
+          "Learn how to utilise and design HTML buttons to make them accessible. Buttons are critical to user engagement. There are many things to consider. ",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-buttons.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "Learn how to utilise and design HTML buttons to make them accessible. Buttons are critical to user engagement. There are many things to consider. ",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-buttons.jpg" }],
+      },
+    },
+    "intro-to-web-accessibility": {
+      description:
+        "This quiz-only challenge gives a brief introduction to what web accessibility is. The accessibility of websites is an important aspect of social inclusion. ",
+      openGraph: {
+        description:
+          "This quiz-only challenge gives a brief introduction to what web accessibility is. The accessibility of websites is an important aspect of social inclusion. ",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-a11y-intro.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "This quiz-only challenge gives a brief introduction to what web accessibility is. The accessibility of websites is an important aspect of social inclusion. ",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-a11y-intro.jpg" }],
+      },
+    },
+    "content-elements": {
+      description:
+        "In this challenge, you will get an overview of a few simple HTML elements that you can use to structure the content on your page.",
+      openGraph: {
+        description:
+          "In this challenge, you will get an overview of a few simple HTML elements that you can use to structure the content on your page.",
+        images: [
+          {
+            url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-content-element.jpg",
+            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+          },
+        ],
+      },
+      twitter: {
+        description:
+          "In this challenge, you will get an overview of a few simple HTML elements that you can use to structure the content on your page.",
+        images: [{ url: "https://a11yphant.com/images/SEO/mockups-CHALLENGE-content-element.jpg" }],
+      },
+    },
+  };
+
+  const metadata = challengeMetadata[params.challengeSlug] || {};
+
   const challenge = await getChallenge(params.challengeSlug);
   return {
-    title: `${challenge.name} | a11yphant`,
+    title: `Challenge: ${challenge.name} | a11yphant`,
+    openGraph: {
+      url: `https://a11yphant.com/challenges/${challenge.name}`,
+      title: `Challenge: ${challenge.name} | a11yphant`,
+    },
+    twitter: {
+      title: `Challenge: ${challenge.name} | a11yphant`,
+    },
+    ...metadata,
   };
 }

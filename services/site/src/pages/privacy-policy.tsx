@@ -13,30 +13,13 @@ const PrivacyPolicy: React.FunctionComponent = () => {
       <Head>
         <title>Privacy Policy | a11yphant</title>
         <meta name="robots" content="noindex,nofollow" />
-        <meta name="description" content="Details about the privacy policy of a11yphant." />
-        {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content="https://a11yphant.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en" />
-        <meta property="og:title" content="Privacy Policy" />
-        <meta property="og:description" content="Details about the privacy policy of a11yphant." />
-        <meta property="og:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
-        <meta
-          property="og:image:alt"
-          content="A coding challenge in a11yphant with an instruction section, a code editor and a preview section to view the code you have just written."
-        />
-        {/* <!-- Twitter Meta Tags --> */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@a11yphant" />
-        <meta name="twitter:title" content="Privacy Policy" />
-        <meta name="twitter:description" content="Details about the privacy policy of a11yphant." />
-        <meta name="twitter:image" content="https://a11yphant.com/images/SEO/mockups-social-media.jpg" />
         {/* <!-- General Meta Tags --> */}
+        <meta name="author" content="a11yphant" />
         <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
+      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <div className={clsx("py-4 mx-8 h-main max-w-screen-3xl", "sm:mx-12", "md:py-8", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8 h3", "sm:h2", "md:h1")}>Privacy Policy</h1>
           <p className={clsx("italic mb-8")}>Last updated on March 10, 2023</p>

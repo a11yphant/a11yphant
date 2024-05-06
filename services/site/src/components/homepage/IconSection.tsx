@@ -8,7 +8,7 @@ import Monitor from "../icons/Monitor";
 const IconSection: React.FunctionComponent<React.PropsWithChildren> = () => {
   return (
     <section className={clsx("flex flex-col items-center", "sm:my-20", "xl:my-28")}>
-      <h2 className={clsx("h4 mb-10", "sm:h3 sm:max-w-[38ch] sm:text-center", "xl:h2 xl:max-w-[38ch]")}>
+      <h2 className={clsx("h4 mb-10", "sm:h3 sm:max-w-[38ch] xs:text-center", "xl:h2 xl:max-w-[38ch]")}>
         We believe that{" "}
         <strong className={clsx("text-primary-text h4", "sm:h3 sm:leading-snug sm:text-primary-text", "xl:h2 xl:leading-snug xl:text-primary-text")}>
           education
