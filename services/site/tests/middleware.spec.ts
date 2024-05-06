@@ -13,6 +13,7 @@ jest.mock("app/lib/apollo-client/create-apollo-client-rsc", () => ({
 jest.mock("app/lib/config/rsc", () => ({
   getConfig: () => ({
     baseUrl: "https://a11yphant.com",
+    getGraphqlEndpointUrl: () => "https://a11yphant.com/api/graphql",
   }),
 }));
 
@@ -39,7 +40,7 @@ describe("middleware", () => {
     const req = {
       nextUrl: { clone: () => new NextURL("https://a11yphant.com/page") },
       cookies: { has: () => false },
-      headers: { toString: () => "" },
+      headers: { toString: () => "", get: () => "a11yphant.com" },
     } as unknown as NextRequest;
 
     await middleware(req);
