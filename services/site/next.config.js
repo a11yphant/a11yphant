@@ -21,9 +21,9 @@ const config = {
   },
 
   webpack(config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) {
-    // Important: return the modified config
-    config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /(class-transformer\/storage|@apollo\/subgraph)/ }));
     config.resolve.alias["@"] = path.resolve(__dirname, "src/api");
+
+    // Important: return the modified config
     return config;
   },
 
