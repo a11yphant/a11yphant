@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import { ClientConfig } from "app/lib/config";
 
-import ClientProviders from "../../src/app/ClientProviders";
+import ClientProviders from "app/app/ClientProviders";
 
 const config: ClientConfig = {
   isDevelopmentMode: true,
-  graphqlEndpointClient: "http://localhost:3001/graphql",
+  graphqlEndpointPath: "http://localhost:3001/graphql",
   githubLoginEndpoint: "/github",
   twitterLoginEndpoint: "/twitter",
   isPlausibleEnabled: false,

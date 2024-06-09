@@ -1,6 +1,8 @@
+const graphqlEndpointPath = "/api/graphql";
+
 export type ClientConfig = {
   isDevelopmentMode: boolean;
-  graphqlEndpointClient: string;
+  graphqlEndpointPath: string;
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
   isPlausibleEnabled?: boolean;
@@ -9,7 +11,7 @@ export type ClientConfig = {
 
 export const getClientConfig = (): ClientConfig => ({
   isDevelopmentMode: process.env.NODE_ENV === "development",
-  graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT || warnMissingEnvVariable("SITE_GRAPHQL_ENDPOINT_CLIENT"),
+  graphqlEndpointPath: graphqlEndpointPath,
   githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_GITHUB_LOGIN_ENDPOINT"),
   twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
   isPlausibleEnabled: !!process.env.SITE_PLAUSIBLE_BASE_URL,
@@ -20,7 +22,7 @@ export function getConfig(): {
   isDevelopmentMode: boolean;
   host: string;
   port: number;
-  graphqlEndpointClient: string;
+  graphqlEndpointPath: string;
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
   plausibleBaseUrl?: string;
@@ -31,7 +33,7 @@ export function getConfig(): {
     isDevelopmentMode: process.env.NODE_ENV === "development",
     host: process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.SITE_HOST || "localhost",
     port: Number(process.env.PORT) || 3001,
-    graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT || warnMissingEnvVariable("SITE_GRAPHQL_ENDPOINT_CLIENT"),
+    graphqlEndpointPath: graphqlEndpointPath,
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     plausibleBaseUrl: process.env.SITE_PLAUSIBLE_BASE_URL,
@@ -45,7 +47,7 @@ function getBaseUrl(host: string): string {
 }
 
 function getGraphqlEndpointUrl(host: string): string {
-  return getUrl("/api/graphql", host);
+  return getUrl(graphqlEndpointPath, host);
 }
 
 function getUrl(path: string, host: string): string {

@@ -47,7 +47,7 @@ const ConditionalWrapper = <T,>({
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
-  const apolloClient = useApollo(pageProps.config?.graphqlEndpointClient, pageProps.initialApolloState, errorDialogApi);
+  const apolloClient = useApollo(pageProps.config?.graphqlEndpointPath, pageProps.initialApolloState, errorDialogApi);
 
   return (
     <>

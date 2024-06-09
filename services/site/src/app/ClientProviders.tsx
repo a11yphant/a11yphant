@@ -21,7 +21,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 const ClientProviders: React.FC<React.PropsWithChildren<{ config: ClientConfig }>> = ({ config, children }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
-  const apolloClient = createApolloClientSSR(config.graphqlEndpointClient, errorDialogApi);
+  const apolloClient = createApolloClientSSR(config.graphqlEndpointPath, errorDialogApi);
 
   return (
     <>
