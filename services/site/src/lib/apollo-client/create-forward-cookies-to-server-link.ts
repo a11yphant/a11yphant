@@ -9,6 +9,7 @@ export function createForwardCookiesToServerLink(getCookieHeader: GetCookieHeade
     operation.setContext({
       headers: cookie ? { cookie: cookie } : undefined,
     });
+    console.log(operation.getContext());
 
     return forward(operation);
   });
