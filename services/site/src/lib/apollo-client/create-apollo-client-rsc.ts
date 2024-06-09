@@ -8,7 +8,6 @@ export function createApolloClientRSC(uri: string, getCookieHeader: GetCookieHea
     uri,
     fetch: crossFetch,
   });
-  console.log(uri);
 
   return new ApolloClient({
     cache: new InMemoryCache(),
