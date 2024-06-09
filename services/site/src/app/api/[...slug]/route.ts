@@ -17,6 +17,8 @@ function getRequest({ event }: { event: ParsedRequest }): ExpressRequest {
     }
   }
 
+  console.log(headers);
+
   return {
     method: request.method,
     path: request.url,
