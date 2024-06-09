@@ -14,7 +14,7 @@ type Middleware = {
 };
 
 export default async function middleware(req: NextRequest): Promise<NextResponse | null> {
-  const middlewares = [forwardGraphqlRequests, redirectChallengeOverlayUrls, redirectChallengeUrls, authentication];
+  const middlewares = [redirectChallengeOverlayUrls, redirectChallengeUrls, authentication];
 
   for (const middleware of middlewares) {
     if (!middleware.match(req)) {
@@ -24,11 +24,6 @@ export default async function middleware(req: NextRequest): Promise<NextResponse
     return middleware.run(req);
   }
 }
-
-const forwardGraphqlRequests: Middleware = {
-  match: (req) => process.env.SITE_GRAPHQL_ENDPOINT_SERVER && req.nextUrl.clone().pathname === "/graphql",
-  run: async () => NextResponse.rewrite(process.env.SITE_GRAPHQL_ENDPOINT_SERVER),
-};
 
 const redirectChallengeOverlayUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname === "/" && req.nextUrl.clone().searchParams.has("challenge"),
