@@ -6,7 +6,7 @@ import { ApolloNextAppProvider } from "@apollo/experimental-nextjs-app-support/s
 import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error/useErrorDialog";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";
-import { createApolloClientSSR } from "app/lib/apollo-client";
+import { createApolloClientSSR } from "app/lib/apollo-client/create-apollo-client-ssr";
 import { ClientConfig, ConfigProvider } from "app/lib/config";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -19,9 +19,9 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-const ClientProviders: React.FC<React.PropsWithChildren<{ config: ClientConfig }>> = ({ config, children }) => {
+const ClientProviders: React.FC<React.PropsWithChildren<{ config: ClientConfig; ssrCookie: string | null }>> = ({ config, ssrCookie, children }) => {
   const { errorDialog, errorDialogApi } = useErrorDialog();
-  const apolloClient = createApolloClientSSR(config.graphqlEndpointPath, errorDialogApi);
+  const apolloClient = createApolloClientSSR(config.graphqlEndpointPath, ssrCookie, errorDialogApi);
 
   return (
     <>

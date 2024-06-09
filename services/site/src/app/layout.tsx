@@ -6,6 +6,7 @@ import "app/styles/custom.scss";
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { getClientConfig, getConfig } from "app/lib/config/rsc";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import Script from "next/script";
 
 import ClientProviders from "./ClientProviders";
@@ -22,7 +23,9 @@ const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children
     <html lang="en">
       <head>{config.plausibleBaseUrl && <Script data-domain={config.host} src="/js/script.js" />}</head>
       <body>
-        <ClientProviders config={getClientConfig()}>{children}</ClientProviders>
+        <ClientProviders config={getClientConfig()} ssrCookie={headers().get("cookie")}>
+          {children}
+        </ClientProviders>
       </body>
     </html>
   );
