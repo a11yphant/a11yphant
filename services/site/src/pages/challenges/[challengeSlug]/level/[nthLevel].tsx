@@ -101,7 +101,8 @@ const Level: React.FunctionComponent = () => {
 export default Level;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(getConfig().getGraphqlEndpointUrl(context.req.headers.host), null, context);
+  const host = context.req.headers.host;
+  const apolloClient = initializeApollo(getConfig(host).graphqlEndpointPath, null, context);
 
   const { challengeSlug, nthLevel } = context.params;
 
@@ -133,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       initialApolloState: apolloClient.cache.extract(),
       displaySave: true,
       showScrollOverlay: false,
-      config: getClientConfig(),
+      config: getClientConfig(host),
     },
   };
 };

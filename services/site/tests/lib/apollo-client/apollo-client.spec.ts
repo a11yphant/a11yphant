@@ -1,6 +1,7 @@
 import { gql, InMemoryCache } from "@apollo/client";
 import { renderHook } from "@testing-library/react";
 import { createApolloClientSSR, initializeApollo, useApollo } from "app/lib/apollo-client";
+import { createApolloClient } from "app/lib/apollo-client/create-apollo-client-ssr";
 
 const query = gql`
   query test {

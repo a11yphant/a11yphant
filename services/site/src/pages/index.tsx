@@ -182,7 +182,8 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const apolloClient = initializeApollo(getConfig().getGraphqlEndpointUrl(context.req.headers.host), null, context);
+  const host = context.req.headers.host;
+  const apolloClient = initializeApollo(getConfig(host).graphqlEndpointPath, null, context);
 
   const fmType = context.query?.["fm-type"] ?? null;
 
@@ -197,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       initialApolloState: apolloClient.cache.extract(),
       fmType,
-      config: getClientConfig(),
+      config: getClientConfig(host),
     },
   };
 };
