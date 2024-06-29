@@ -1,4 +1,4 @@
-import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
+import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
 import crossFetch from "cross-fetch";
 
 import { createForwardCookiesToServerLink, GetCookieHeaderFunction } from "./create-forward-cookies-to-server-link";
@@ -9,8 +9,15 @@ export function createApolloClientRSC(uri: string, getCookieHeader: GetCookieHea
     fetch: crossFetch,
   });
 
+  const logResponse = new ApolloLink((operation, forward) => {
+    return forward(operation).map((response) => {
+      console.log(response);
+      return response;
+    });
+  });
+
   return new ApolloClient({
     cache: new InMemoryCache(),
-    link: from([createForwardCookiesToServerLink(getCookieHeader), httpLink]),
+    link: from([createForwardCookiesToServerLink(getCookieHeader), logResponse, httpLink]),
   });
 }
