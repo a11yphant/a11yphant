@@ -25,7 +25,7 @@ export function createForwardCookiesToClientLink(setCookie: SetCookieFunction | 
       const setCookieHeader = apolloContext.response.headers.get("Set-Cookie");
       const cookies: Cookie[] = setCookieParser.parse(setCookieHeader);
 
-      console.log({ response: { headers: { ...apolloContext.response.headers } } });
+      console.log({ response: { headers: { ...apolloContext.response.headers }, body: apolloContext.response.body } });
 
       if (setCookie) {
         cookies.forEach((cookie) => setCookie(cookie));
