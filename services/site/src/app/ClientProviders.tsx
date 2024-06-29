@@ -2,7 +2,7 @@
 
 import "focus-visible/dist/focus-visible";
 
-import { ApolloNextAppProvider } from "@apollo/experimental-nextjs-app-support/ssr";
+import { ApolloNextAppProvider } from "@apollo/experimental-nextjs-app-support";
 import { ErrorDialogProvider, useErrorDialog } from "app/components/common/error/useErrorDialog";
 import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { UserAccountModalProvider } from "app/components/user/UserAccountModalProvider";

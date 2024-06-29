@@ -34,8 +34,8 @@
     "prisma:migrate:prod": "prisma migrate deploy"
   },
   "dependencies": {
-    "@apollo/client": "3.10.1",
-    "@apollo/experimental-nextjs-app-support": "0.10.0",
+    "@apollo/client": "3.10.4",
+    "@apollo/experimental-nextjs-app-support": "^0.11.2",
     "@apollo/server": "^4.10.4",
     "@codegenie/serverless-express": "^4.13.0",
     "@headlessui/react": "1.7.19",
