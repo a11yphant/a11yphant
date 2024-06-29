@@ -15,6 +15,7 @@ export function createApolloClientSSR(uri: string, ssrCookie: string, errorDialo
   });
 
   const links = [createErrorLink({ errorDialogApi }), httpLink];
+  console.log(ssrCookie);
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
