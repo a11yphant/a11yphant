@@ -1,4 +1,4 @@
-import { from, HttpLink, NormalizedCacheObject } from "@apollo/client";
+import { ApolloLink, from, HttpLink, NormalizedCacheObject } from "@apollo/client";
 import { ApolloClient, InMemoryCache, SSRMultipartLink } from "@apollo/experimental-nextjs-app-support";
 import { ErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
@@ -14,7 +14,14 @@ export function createApolloClientSSR(uri: string, ssrCookie: string, errorDialo
     fetchOptions: { cache: "no-store" },
   });
 
-  const links = [createErrorLink({ errorDialogApi }), httpLink];
+  const logResponse = new ApolloLink((operation, forward) => {
+    return forward(operation).map((response) => {
+      console.log(response);
+      return response;
+    });
+  });
+
+  const links = [createErrorLink({ errorDialogApi }), logResponse, httpLink];
 
   return new ApolloClient({
     cache: new InMemoryCache(),
