@@ -16,10 +16,12 @@ export function createApolloClientSSR(uri: string, ssrCookie: string, errorDialo
 
   const logResponse = new ApolloLink((operation, forward) => {
     return forward(operation).map((response) => {
-      console.log(response);
+      console.log({ operationName: operation.operationName, response });
       return response;
     });
   });
+
+  console.log({ ssrCookie });
 
   const links = [createErrorLink({ errorDialogApi }), logResponse, httpLink];
 
