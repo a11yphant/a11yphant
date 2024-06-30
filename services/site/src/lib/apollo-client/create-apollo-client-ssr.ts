@@ -8,7 +8,6 @@ import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-se
 
 export function createApolloClientSSR(uri: string, ssrCookie: string, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
   const isServer = typeof window === "undefined";
-  console.log({ uri, ssrCookie });
   const httpLink = new HttpLink({
     uri,
     fetch: crossFetch,

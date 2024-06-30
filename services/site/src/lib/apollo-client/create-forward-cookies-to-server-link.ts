@@ -11,6 +11,8 @@ export function createForwardCookiesToServerLink(getCookieHeader: GetCookieHeade
       headers: cookie ? { cookie: cookie } : undefined,
     });
 
+    console.log({ name: operation.operationName, context: operation.getContext() });
+
     return forward(operation);
   });
 }
