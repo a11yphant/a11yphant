@@ -10,5 +10,5 @@ export const { getClient: getApolloClient } = registerApolloClient(() => {
     return headers().get("cookie");
   };
 
-  return createApolloClientRSC(getConfig().getGraphqlEndpointUrl(headers().get("host")), getCookieHeader);
+  return createApolloClientRSC(getConfig(headers().get("host")).graphqlEndpointPath, getCookieHeader);
 });

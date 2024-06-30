@@ -12,7 +12,8 @@ import Script from "next/script";
 import ClientProviders from "./ClientProviders";
 
 const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
-  const config = getConfig();
+  const host = headers().get("host");
+  const config = getConfig(host);
 
   if (config.isDevelopmentMode) {
     loadDevMessages();
@@ -23,7 +24,7 @@ const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children
     <html lang="en">
       <head>{config.plausibleBaseUrl && <Script data-domain={config.host} src="/js/script.js" />}</head>
       <body>
-        <ClientProviders config={getClientConfig()} ssrCookie={headers().get("cookie")}>
+        <ClientProviders config={getClientConfig(host)} ssrCookie={headers().get("cookie")}>
           {children}
         </ClientProviders>
       </body>

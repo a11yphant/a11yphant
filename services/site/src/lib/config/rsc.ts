@@ -9,16 +9,16 @@ export type ClientConfig = {
   baseUrl: string;
 };
 
-export const getClientConfig = (): ClientConfig => ({
+export const getClientConfig = (host: string): ClientConfig => ({
   isDevelopmentMode: process.env.NODE_ENV === "development",
-  graphqlEndpointPath: graphqlEndpointPath,
+  graphqlEndpointPath: getGraphqlEndpointUrl(host),
   githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_GITHUB_LOGIN_ENDPOINT"),
   twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
   isPlausibleEnabled: !!process.env.SITE_PLAUSIBLE_BASE_URL,
   baseUrl: process.env.SITE_BASE_URL || "http://localhost:3001",
 });
 
-export function getConfig(): {
+export function getConfig(host: string): {
   isDevelopmentMode: boolean;
   host: string;
   port: number;
@@ -26,19 +26,17 @@ export function getConfig(): {
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
   plausibleBaseUrl?: string;
-  getBaseUrl: (host: string) => string;
-  getGraphqlEndpointUrl: (host: string) => string;
+  baseUrl: string;
 } {
   return {
     isDevelopmentMode: process.env.NODE_ENV === "development",
     host: process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.SITE_HOST || "localhost",
     port: Number(process.env.PORT) || 3001,
-    graphqlEndpointPath: graphqlEndpointPath,
+    graphqlEndpointPath: getGraphqlEndpointUrl(host),
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     plausibleBaseUrl: process.env.SITE_PLAUSIBLE_BASE_URL,
-    getBaseUrl,
-    getGraphqlEndpointUrl,
+    baseUrl: getBaseUrl(host),
   };
 }
 

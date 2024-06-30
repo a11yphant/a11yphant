@@ -28,8 +28,8 @@ export default async function middleware(req: NextRequest): Promise<NextResponse
 const redirectChallengeOverlayUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname === "/" && req.nextUrl.clone().searchParams.has("challenge"),
   run: async (req) => {
-    const { getBaseUrl } = getConfig();
-    return NextResponse.redirect(`${getBaseUrl(req.headers.get("host"))}/challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, {
+    const { baseUrl } = getConfig(req.headers.get("host"));
+    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, {
       status: 308,
     });
   },
@@ -38,14 +38,15 @@ const redirectChallengeOverlayUrls: Middleware = {
 const redirectChallengeUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname.startsWith("/challenge/"),
   run: async (req) => {
-    const { getBaseUrl } = getConfig();
-    return NextResponse.redirect(`${getBaseUrl(req.headers.get("host"))}/challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
+    const { baseUrl } = getConfig(req.headers.get("host"));
+    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
   },
 };
 
 const authentication: Middleware = {
   match: (req) => !req.cookies.has("a11yphant_session"),
   run: async (req) => {
+    const { graphqlEndpointPath } = getConfig(req.headers.get("host"));
     const cookies: Cookie[] = [];
 
     const setCookie: SetCookieFunction = (cookie) => {
@@ -56,7 +57,7 @@ const authentication: Middleware = {
       return req.headers.get("cookie");
     };
 
-    const client = createApolloClientRSC(getConfig().getGraphqlEndpointUrl(req.headers.get("host")), getCookiesHeader);
+    const client = createApolloClientRSC(graphqlEndpointPath, getCookiesHeader);
     client.setLink(from([createForwardCookiesToClientLink(setCookie), client.link]));
 
     await client.query<CurrentUserQuery>({
