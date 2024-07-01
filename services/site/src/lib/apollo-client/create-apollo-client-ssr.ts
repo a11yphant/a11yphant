@@ -1,0 +1,29 @@
+import { ApolloLink, from, HttpLink, NormalizedCacheObject } from "@apollo/client";
+import { ApolloClient, InMemoryCache, SSRMultipartLink } from "@apollo/experimental-nextjs-app-support";
+import { ErrorDialogApi } from "app/components/common/error/useErrorDialog";
+import { createErrorLink } from "app/lib/apollo-client/create-error-link";
+
+import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-server-link";
+
+export function createApolloClientSSR(uri: string, ssrCookie: string, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
+  const isServer = typeof window === "undefined";
+  const httpLink = new HttpLink({
+    uri,
+    fetchOptions: { cache: "no-store" },
+  });
+
+  const logResponse = new ApolloLink((operation, forward) => {
+    return forward(operation).map((response) => {
+      console.log({ operationName: operation.operationName, response });
+      return response;
+    });
+  });
+
+  const links = [createErrorLink({ errorDialogApi }), logResponse, httpLink];
+
+  return new ApolloClient({
+    cache: new InMemoryCache(),
+    link: from(isServer ? [createForwardCookiesToServerLink(() => ssrCookie), new SSRMultipartLink({ stripDefer: true }), ...links] : links),
+    credentials: "same-site",
+  });
+}

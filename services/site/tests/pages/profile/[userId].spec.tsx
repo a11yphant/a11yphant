@@ -116,6 +116,7 @@ describe("user profile page", () => {
         },
       });
       const context: Partial<GetServerSidePropsContext> = {
+        req: { headers: { host: "a11yphant.com" } } as GetServerSidePropsContext["req"],
         params: {
           userId: "92136047-3a39-4c22-bc09-ead41b8e2e08",
         },
@@ -137,6 +138,7 @@ describe("user profile page", () => {
         }),
       });
       const context: Partial<GetServerSidePropsContext> = {
+        req: { headers: { host: "a11yphant.com" } } as GetServerSidePropsContext["req"],
         params: {
           userId: "92136047-3a39-4c22-bc09-ead41b8e2e08",
         },

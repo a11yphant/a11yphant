@@ -67,10 +67,10 @@ const LegalNotice: React.FunctionComponent = () => {
 
 export default LegalNotice;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
-      config: getClientConfig(),
+      config: getClientConfig(context.req.headers.host),
     },
   };
 };

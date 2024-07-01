@@ -77,6 +77,7 @@ describe("reset password page", () => {
     it("returns the token", async () => {
       const { props } = (await getServerSideProps({
         query: { token: "token" },
+        req: { headers: { host: "a11yphant.com" } },
       } as unknown as GetServerSidePropsContext)) as { props: ResetPasswordProps };
 
       expect(props.token).toBe("token");
@@ -84,6 +85,7 @@ describe("reset password page", () => {
 
     it("returns the token validation result", async () => {
       const { props } = (await getServerSideProps({
+        req: { headers: { host: "a11yphant.com" } },
         query: { token: "token" },
       } as unknown as GetServerSidePropsContext)) as { props: ResetPasswordProps };
 

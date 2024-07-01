@@ -214,6 +214,7 @@ describe("Evaluation", () => {
 
       const result: any = await getServerSideProps({
         apolloClient,
+        req: { headers: { host: "a11yphant.com" } },
         params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "valid-uuid" },
       } as unknown as GetServerSidePropsContext);
 
@@ -236,6 +237,7 @@ describe("Evaluation", () => {
 
       const result: any = await getServerSideProps({
         apolloClient,
+        req: { headers: { host: "a11yphant.com" } },
         params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "unknown-uuid" },
       } as unknown as GetServerSidePropsContext);
 
@@ -258,6 +260,7 @@ describe("Evaluation", () => {
 
       const result: any = await getServerSideProps({
         apolloClient,
+        req: { headers: { host: "a11yphant.com" } },
         params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "unknown-uuid" },
       } as unknown as GetServerSidePropsContext);
 
@@ -282,6 +285,7 @@ describe("Evaluation", () => {
 
       const result: any = await getServerSideProps({
         apolloClient,
+        req: { headers: { host: "a11yphant.com" } },
         params: { challengeSlug: "challenge-1", nthLevel: "4", submissionId: "unknown-uuid" },
       } as unknown as GetServerSidePropsContext);
 

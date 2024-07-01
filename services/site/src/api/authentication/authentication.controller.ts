@@ -12,7 +12,7 @@ import { ProviderInformation } from "./interfaces/provider-information.interface
 import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
 
-@Controller("auth")
+@Controller("api/auth")
 export class AuthenticationController {
   constructor(
     private userService: UserService,

@@ -1,5 +1,4 @@
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
-import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from "@apollo/experimental-nextjs-app-support/ssr";
 import { ErrorDialogApi, useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
 import crossFetch from "cross-fetch";
@@ -9,23 +8,6 @@ import { useMemo } from "react";
 import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-server-link";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
-
-export function createApolloClientSSR(uri: string, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
-  const isServer = typeof window === "undefined";
-  const httpLink = new HttpLink({
-    uri,
-    fetch: crossFetch,
-    fetchOptions: { cache: "no-store" },
-  });
-
-  const links = [createErrorLink({ errorDialogApi }), httpLink];
-
-  return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
-    link: from(isServer ? [new SSRMultipartLink({ stripDefer: true }), ...links] : links),
-    credentials: "same-site",
-  });
-}
 
 function createApolloClient(
   uri: string,

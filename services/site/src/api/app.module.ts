@@ -44,6 +44,7 @@ export const appModuleMetadata: ModuleMetadata = {
           : false,
         introspection: configService.get<boolean>("gql.schemaIntrospection"),
         autoSchemaFile: configService.get<boolean>("gql.inMemorySchema") ? true : "schema.gql",
+        path: "/api/graphql",
         context: ({ req, res }) => ({ req, res }),
       }),
       inject: [ConfigService],
@@ -56,7 +57,6 @@ export const appModuleMetadata: ModuleMetadata = {
       inject: [ConfigService],
     }),
     ConsoleModule,
-
     AuthenticationModule,
     ChallengeModule,
     SubmissionModule,
