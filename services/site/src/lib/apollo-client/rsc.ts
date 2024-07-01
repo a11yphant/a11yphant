@@ -7,7 +7,9 @@ import { GetCookieHeaderFunction } from "./create-forward-cookies-to-server-link
 
 export const { getClient: getApolloClient } = registerApolloClient(() => {
   const getCookieHeader: GetCookieHeaderFunction = () => {
-    return headers().get("cookie");
+    const c = headers().get("cookie");
+    console.log({ cookies: c });
+    return c;
   };
 
   return createApolloClientRSC(getConfig(headers().get("host")).graphqlEndpointPath, getCookieHeader);
