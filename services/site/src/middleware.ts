@@ -14,6 +14,7 @@ type Middleware = {
 };
 
 export default async function middleware(req: NextRequest): Promise<NextResponse | null> {
+  console.log({ middlewareCookies: req.headers.get("cookie") });
   const middlewares = [redirectChallengeOverlayUrls, redirectChallengeUrls, authentication];
 
   for (const middleware of middlewares) {
