@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 
-import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
+import type { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
 import { ReferenceNotValidException } from "@/submission/exceptions/reference-not-valid.excpetion";
 import { QuizLevelSubmissionService } from "@/submission/services/quiz-level-submission.service";

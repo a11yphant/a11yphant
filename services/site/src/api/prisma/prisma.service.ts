@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from "@nest
 import { PrismaClient } from "@prisma/client";
 
 import { PRISMA_MODULE_CONFIG } from "./constants";
-import { PrismaModuleConfig } from "./prisma-module-config.interface";
+import type { PrismaModuleConfig } from "./prisma-module-config.interface";
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {

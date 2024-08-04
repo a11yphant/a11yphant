@@ -9,7 +9,7 @@ import { JwtScope } from "./enums/jwt-scope.enum";
 import { GithubAuthGuard } from "./guards/github.guard";
 import { TwitterAuthGuard } from "./guards/twitter.guard";
 import { ProviderInformation } from "./interfaces/provider-information.interface";
-import { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
+import type { SessionToken as SessionTokenInterface } from "./interfaces/session-token.interface";
 import { JwtService } from "./jwt.service";
 
 @Controller("api/auth")

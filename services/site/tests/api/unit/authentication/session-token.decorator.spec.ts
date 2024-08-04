@@ -3,7 +3,7 @@ import { ExecutionContext } from "@nestjs/common";
 import { ROUTE_ARGS_METADATA } from "@nestjs/common/constants";
 
 import { Context } from "@/authentication/interfaces/context.interface";
-import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
+import type { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
 
 // source: https://github.com/nestjs/nest/issues/1020

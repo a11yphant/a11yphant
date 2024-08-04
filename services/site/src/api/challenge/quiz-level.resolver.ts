@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
 
-import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
+import type { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { SessionToken } from "@/authentication/session-token.decorator";
 
 import { AnswerOptionService } from "./answer-option.service";

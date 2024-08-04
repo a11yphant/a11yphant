@@ -9,7 +9,6 @@ import { getApolloClient } from "app/lib/apollo-client/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { Metadata } from "next";
-import { cookies } from "next/headers";
 
 const Challenges = async (): Promise<React.ReactElement> => {
   const client = getApolloClient();

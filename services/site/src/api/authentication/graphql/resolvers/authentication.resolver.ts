@@ -9,8 +9,8 @@ import { ResendEmailConfirmationResultEnum } from "@/authentication/enums/resend
 import { InvalidJwtException } from "@/authentication/exceptions/invalid-jwt.exception";
 import { UserNotFoundException } from "@/authentication/exceptions/user-not-found.exception";
 import { LoginInput } from "@/authentication/graphql/inputs/login.input";
-import { Context as IContext } from "@/authentication/interfaces/context.interface";
-import { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
+import type { Context as IContext } from "@/authentication/interfaces/context.interface";
+import type { SessionToken as SessionTokenInterface } from "@/authentication/interfaces/session-token.interface";
 import { JwtService } from "@/authentication/jwt.service";
 import { SessionToken } from "@/authentication/session-token.decorator";
 import { User } from "@/user/models/user.model";
