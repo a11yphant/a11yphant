@@ -31,7 +31,7 @@ const redirectChallengeOverlayUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname === "/" && req.nextUrl.clone().searchParams.has("challenge"),
   run: async (req) => {
     const { baseUrl } = getConfig(req.headers.get("host"));
-    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, {
+    return NextResponse.redirect(`${baseUrl}challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, {
       status: 308,
     });
   },
@@ -41,7 +41,7 @@ const redirectChallengeUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname.startsWith("/challenge/"),
   run: async (req) => {
     const { baseUrl } = getConfig(req.headers.get("host"));
-    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
+    return NextResponse.redirect(`${baseUrl}challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
   },
 };
 

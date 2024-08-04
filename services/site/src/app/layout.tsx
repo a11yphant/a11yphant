@@ -22,7 +22,7 @@ const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children
 
   return (
     <html lang="en">
-      <head>{config.plausibleBaseUrl && <Script data-domain={config.host} src="/js/script.js" />}</head>
+      <head>{config.plausibleBaseUrl && <Script data-domain={host} src="/js/script.js" />}</head>
       <body>
         <ClientProviders config={getClientConfig(host)}>{children}</ClientProviders>
       </body>

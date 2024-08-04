@@ -3,7 +3,6 @@ import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from "@a
 import { GetCookieHeaderFunction } from "./create-forward-cookies-to-server-link";
 
 export function createApolloClientRSC(uri: string, getCookieHeader: GetCookieHeaderFunction = () => null): ApolloClient<NormalizedCacheObject> {
-  console.log(uri);
   const httpLink = new HttpLink({
     uri,
     fetchOptions: { cache: "no-store" },

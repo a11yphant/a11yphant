@@ -20,7 +20,6 @@ export const getClientConfig = (host: string): ClientConfig => ({
 
 export function getConfig(host: string): {
   isDevelopmentMode: boolean;
-  host: string;
   port: number;
   graphqlEndpointPath: string;
   githubLoginEndpoint: string;
@@ -30,7 +29,6 @@ export function getConfig(host: string): {
 } {
   return {
     isDevelopmentMode: process.env.NODE_ENV === "development",
-    host: process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.SITE_HOST || "localhost",
     port: Number(process.env.PORT) || 3001,
     graphqlEndpointPath: getGraphqlEndpointUrl(host),
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
