@@ -45,7 +45,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
     }
   }, [fmType]);
 
-  const topChallenges = useTopThreeChallengesQuery();
+  const topChallenges = useTopThreeChallengesQuery({ ssr: false });
 
   return (
     <>
