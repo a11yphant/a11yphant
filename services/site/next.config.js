@@ -18,6 +18,9 @@ const config = {
       "@nestjs/platform-express",
       "handlebars",
     ],
+    outputFileTracingIncludes: {
+      "/api/\\[\\.\\.\\.slug\\]": ["./mail-templates/**/*"],
+    },
   },
 
   webpack(config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) {
