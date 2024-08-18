@@ -49,7 +49,7 @@ jobs:
       - name: Lint Content
         run: npm run lint:content
 
-  generate-graphql-schema:
+  lint-site:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -66,33 +66,6 @@ jobs:
 
       - name: Generate GraphQL Schema
         run: npm run schema:generate --prefix services/site
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: graphql-schema
-          path: services/site/schema.gql
-          retention-days: 1
-
-  lint-site:
-    needs: generate-graphql-schema
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/site
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: graphql-schema
-          path: services/site/schema.gql
 
       - name: Lint
         run: npm run lint --prefix services/site
@@ -154,7 +127,6 @@ jobs:
       - variables
       - lint-site
       - test-site
-      - generate-graphql-schema
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -165,10 +137,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: graphql-schema
-          path: services/site/schema.gql
+      - name: Generate GraphQL Schema
+        run: npm run schema:generate --prefix services/site
 
       - name: Build
         id: build
