@@ -49,23 +49,6 @@ jobs:
       - name: Lint Content
         run: npm run lint:content
 
-  # ESLint Config
-  lint-eslint-config:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: packages/eslint-config
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Lint
-        run: npm run lint --prefix packages/eslint-config
-
-  # API
   generate-graphql-schema:
     runs-on: ubuntu-22.04
     permissions:
@@ -78,103 +61,18 @@ jobs:
       - name: Prepare
         uses: ./.github/actions/prepare-node
         with:
-          path: services/api
+          path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate GraphQL Schema
-        run: npm run generate-schema --prefix services/api
+        run: npm run generate-schema --prefix services/site
 
       - uses: actions/upload-artifact@v4
         with:
           name: graphql-schema
-          path: services/api/schema.gql
+          path: services/site/schema.gql
           retention-days: 1
 
-  lint-api:
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/api
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Lint
-        run: npm run lint --prefix services/api
-
-  test-api:
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_DB: a11yphant
-          POSTGRES_USER: a11yphant
-          POSTGRES_PASSWORD: secret
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Prepare
-        uses: ./.github/actions/prepare-node
-        with:
-          path: services/api
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Test
-        run: npm run test:coverage --prefix services/api
-        env:
-          DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
-
-      - name: Upload Coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-coverage-api
-          path: services/api/coverage
-
-  build-api:
-    needs:
-      - variables
-      - lint-api
-      - test-api
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      digest: ${{ steps.build.outputs.digest }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build
-        id: build
-        uses: ./.github/actions/docker-build
-        with:
-          path: services/api
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: api
-          version: ${{ needs.variables.outputs.environment-name }}
-          registry-user: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-
-  # Site
   lint-site:
     needs: generate-graphql-schema
     runs-on: ubuntu-22.04
@@ -194,7 +92,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
-          path: services/api/schema.gql
+          path: services/site/schema.gql
 
       - name: Lint
         run: npm run lint --prefix services/site
@@ -205,6 +103,20 @@ jobs:
     permissions:
       contents: read
       packages: read
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: a11yphant
+          POSTGRES_USER: a11yphant
+          POSTGRES_PASSWORD: secret
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     env:
       SITE_HOST: localhost
       SITE_PORT: 3001
@@ -214,6 +126,8 @@ jobs:
       SITE_TWITTER_LOGIN_ENDPOINT: /auth/twitter
       SITE_PLAUSIBLE_BASE_URL: "https://plausible.a11yphant.com"
       SITE_BASE_URL: "http://localhost:3001"
+      DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
+      DB_URL_UNPOOLED: postgresql://a11yphant:secret@localhost:5432/a11yphant
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -227,7 +141,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
-          path: services/api/schema.gql
+          path: services/site/schema.gql
 
       - name: Test
         run: npm run test:coverage --prefix services/site
@@ -257,7 +171,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: graphql-schema
-          path: services/api/schema.gql
+          path: services/site/schema.gql
 
       - name: Build
         id: build
@@ -272,7 +186,6 @@ jobs:
 
   upload-coverage-reports:
     needs:
-      - test-api
       - test-site
     runs-on: ubuntu-22.04
     permissions:
@@ -302,22 +215,12 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
 
-      - name: Download API test coverage
-        uses: actions/download-artifact@v4
-        with:
-          name: test-coverage-api
-          path: services/api/coverage/
-
       - name: Download Site test coverage
         uses: actions/download-artifact@v4
         with:
           name: test-coverage-site
           path: services/site/coverage/
 
-      - name: Format API Coverage
-        run: |
-          cd services/api
-          ./../../cc-test-reporter format-coverage -t lcov --add-prefix services/api -o coverage/codeclimate.json coverage/lcov.info
         env:
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
@@ -346,7 +249,6 @@ jobs:
   test-end-to-end:
     needs:
       - variables
-      - build-api
       - build-site
     runs-on: ubuntu-22.04
     permissions:
@@ -372,15 +274,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get API Image Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: api-image
-          path: /tmp/api-image/
-
-      - name: Load API Image
-        run: docker load --input /tmp/api-image/image.tar
-
       - name: Get Site Image Artifact
         uses: actions/download-artifact@v4
         with:
@@ -396,10 +289,10 @@ jobs:
           IMAGE_TAG: ${{ needs.variables.outputs.environment-name }}
 
       - name: Migrate Database
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run prisma:migrate:prod
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec site npm run prisma:migrate:prod
 
       - name: Seed Database
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec api npm run console:prod import:challenges
+        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec site npm run console:prod import:challenges
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
@@ -419,10 +312,6 @@ jobs:
           path: tests/cypress/screenshots/
           retention-days: 1
 
-      - name: Echo API Logs
-        if: failure()
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs api --no-color --tail all
-
       - name: Echo Site Logs
         if: failure()
         run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
@@ -433,29 +322,6 @@ jobs:
           name: cypress-screenshots
           path: tests/cypress/screenshots
           retention-days: 1
-
-  publish-api-image:
-    needs:
-      - variables
-      - test-end-to-end
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      image-digest: ${{ steps.publish.outputs.digest }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Publish Image
-        id: publish
-        uses: ./.github/actions/docker-push-image-from-artifact
-        with:
-          artifact-name: api-image
-          image: ghcr.io/a11yphant/api:${{ needs.variables.outputs.environment-name }}
-          registry-user: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
 
   publish-site-image:
     needs:
@@ -479,65 +345,3 @@ jobs:
           image: ghcr.io/a11yphant/site:${{ needs.variables.outputs.environment-name }}
           registry-user: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
-
-  trigger-review-deploy:
-    if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-22.04
-    needs:
-      - variables
-      - publish-site-image
-      - publish-api-image
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
-          repository: a11yphant/infrastructure
-          event-type: create-or-update-review-app
-          client-payload: |
-            {
-              "environment-name": "${{ needs.variables.outputs.environment-name }}",
-              "image-tag": "${{ needs.variables.outputs.environment-name }}",
-              "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}"
-            }
-
-  trigger-beta-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/develop' }}
-    runs-on: ubuntu-22.04
-    needs:
-      - variables
-      - publish-site-image
-      - publish-api-image
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
-          repository: a11yphant/infrastructure
-          event-type: update-a11yphant-beta
-          client-payload: |
-            {
-              "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}"
-            }
-
-  trigger-production-deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-22.04
-    needs:
-      - variables
-      - publish-site-image
-      - publish-api-image
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
-          repository: a11yphant/infrastructure
-          event-type: update-a11yphant-production
-          client-payload: |
-            {
-              "image-digest-site": "${{ needs.publish-site-image.outputs.image-digest }}",
-              "image-digest-api": "${{ needs.publish-api-image.outputs.image-digest }}"
-            }

@@ -1,10 +1,13 @@
 version: "3"
 
 services:
-  api:
-    image: ghcr.io/a11yphant/api:${IMAGE_TAG:-develop}
+  site:
+    image: ghcr.io/a11yphant/site:${IMAGE_TAG:-develop}
+    entrypoint: ""
+    command: npm start
     environment:
       DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
+      DB_URL_UNPOOLED: postgresql://a11yphant:secret@postgres:5432/a11yphant
       AWS_ACCESS_KEY_ID: mock_access_key
       AWS_SECRET_ACCESS_KEY: mock_secret_key
       API_HOST: 0.0.0.0
@@ -12,17 +15,6 @@ services:
       API_KEY: please-generate-a-secret-key-for-production
       API_CHALLENGES_LOCATION: "../../challenges"
       API_CHALLENGE_IMPORTER_ENABLED: 1
-    ports:
-      - 3000:3000
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  site:
-    image: ghcr.io/a11yphant/site:${IMAGE_TAG:-develop}
-    entrypoint: ""
-    command: npm start
-    environment:
       SITE_HOST: 0.0.0.0
       SITE_PORT: 3001
       SITE_GRAPHQL_ENDPOINT_SERVER: http://api:3000/graphql
@@ -30,5 +22,5 @@ services:
     ports:
       - 3001:3001
     depends_on:
-      api:
-        condition: service_started
+      postgres:
+        condition: service_healthy
