@@ -98,7 +98,6 @@ jobs:
         run: npm run lint --prefix services/site
 
   test-site:
-    needs: generate-graphql-schema
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -137,11 +136,6 @@ jobs:
         with:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: graphql-schema
-          path: services/site/schema.gql
 
       - name: Test
         run: npm run test:coverage --prefix services/site
