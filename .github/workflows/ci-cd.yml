@@ -126,8 +126,8 @@ jobs:
       SITE_TWITTER_LOGIN_ENDPOINT: /auth/twitter
       SITE_PLAUSIBLE_BASE_URL: "https://plausible.a11yphant.com"
       SITE_BASE_URL: "http://localhost:3001"
-      DB_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
-      DB_URL_UNPOOLED: postgresql://a11yphant:secret@localhost:5432/a11yphant
+      DATABASE_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
+      DATABASE_URL_UNPOOLED: postgresql://a11yphant:secret@localhost:5432/a11yphant
     steps:
       - name: Checkout
         uses: actions/checkout@v4

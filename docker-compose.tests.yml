@@ -6,8 +6,8 @@ services:
     entrypoint: ""
     command: npm start
     environment:
-      DB_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
-      DB_URL_UNPOOLED: postgresql://a11yphant:secret@postgres:5432/a11yphant
+      DATABASE_URL: postgresql://a11yphant:secret@postgres:5432/a11yphant
+      DATABASE_URL_UNPOOLED: postgresql://a11yphant:secret@postgres:5432/a11yphant
       AWS_ACCESS_KEY_ID: mock_access_key
       AWS_SECRET_ACCESS_KEY: mock_secret_key
       API_HOST: 0.0.0.0
