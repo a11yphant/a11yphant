@@ -137,9 +137,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate GraphQL Schema
-        run: npm run schema:generate --prefix services/site
-
       - name: Build
         id: build
         uses: ./.github/actions/docker-build
