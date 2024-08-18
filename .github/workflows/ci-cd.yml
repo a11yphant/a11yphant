@@ -137,6 +137,9 @@ jobs:
           path: services/site
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate GraphQL Schema
+        run: npm run schema:generate --prefix services/site
+
       - name: Test
         run: npm run test:coverage --prefix services/site
 
