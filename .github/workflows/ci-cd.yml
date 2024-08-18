@@ -65,7 +65,7 @@ jobs:
           npm-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate GraphQL Schema
-        run: npm run generate-schema --prefix services/site
+        run: npm run schema:generate --prefix services/site
 
       - uses: actions/upload-artifact@v4
         with:
