@@ -19,6 +19,7 @@
     "paths": {
       "app/*": ["src/*"],
       "@/*": ["src/api/*"],
+      "@tests/*": ["tests/api/*"]
     },
     "incremental": true,
     "plugins": [
