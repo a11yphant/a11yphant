@@ -64,14 +64,14 @@ describe("authentication service", () => {
       expect(loggedInUser.email).toBe(email);
     });
 
-    it("throws an error if the email is not found", () => {
+    it("throws an error if the email is not found", async () => {
       const service = createAuthenticationService({
         userService: {
           findByEmail: jest.fn().mockResolvedValue(null),
         },
       });
 
-      expect(service.login({ email: "test_mail", password: "test_pw" })).rejects.toThrowError(errorMessage);
+      await expect(service.login({ email: "test_mail", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
 
     it("throws an error if the password is wrong", async () => {
@@ -81,7 +81,7 @@ describe("authentication service", () => {
         },
       });
 
-      expect(service.login({ email: "mail@example.com", password: "test_pw" })).rejects.toThrowError(errorMessage);
+      await expect(service.login({ email: "mail@example.com", password: "test_pw" })).rejects.toThrowError(errorMessage);
     });
   });
 
@@ -99,7 +99,7 @@ describe("authentication service", () => {
         },
       });
 
-      expect(service.validatePasswordResetToken("invalid_token")).rejects.toThrow(InvalidJwtException);
+      await expect(service.validatePasswordResetToken("invalid_token")).rejects.toThrow(InvalidJwtException);
     });
 
     it("returns unknown user if the embedded email cannot be found", async () => {
@@ -113,7 +113,7 @@ describe("authentication service", () => {
       });
 
       const validationPromise = service.validatePasswordResetToken("valid_token");
-      expect(validationPromise).rejects.toThrow(UserNotFoundException);
+      await expect(validationPromise).rejects.toThrow(UserNotFoundException);
 
       validationPromise.catch(() => {
         expect(findById).toHaveBeenCalledWith(userId);
@@ -143,7 +143,7 @@ describe("authentication service", () => {
         },
       });
 
-      expect(service.resetPassword("invalid_token", "password")).rejects.toThrow(InvalidJwtException);
+      await expect(service.resetPassword("invalid_token", "password")).rejects.toThrow(InvalidJwtException);
     });
   });
 
@@ -262,7 +262,7 @@ describe("authentication service", () => {
         },
       });
 
-      expect(service.resendConfirmationEmail("invalid_token")).rejects.toThrow(UserNotFoundException);
+      await expect(service.resendConfirmationEmail("invalid_token")).rejects.toThrow(UserNotFoundException);
     });
   });
 });

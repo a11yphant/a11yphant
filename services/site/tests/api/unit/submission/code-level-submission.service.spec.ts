@@ -141,7 +141,7 @@ describe("code level submission service", () => {
         data: Factory.build<UserData>(USER),
       });
 
-      expect(async () =>
+      await expect(async () =>
         service.create({
           levelId: "badId",
           userId,
@@ -214,7 +214,7 @@ describe("code level submission service", () => {
         data: Factory.build<CodeLevelData>(CODE_LEVEL),
       });
 
-      expect(async () =>
+      await expect(async () =>
         service.update({
           id: faker.string.uuid(),
           levelId,
@@ -355,7 +355,7 @@ describe("code level submission service", () => {
         },
       });
 
-      expect(async () => await service.requestCheck("uuid")).rejects.toBeTruthy();
+      await expect(async () => await service.requestCheck("uuid")).rejects.toBeTruthy();
     });
   });
 });

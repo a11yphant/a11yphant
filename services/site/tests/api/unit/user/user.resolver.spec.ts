@@ -144,13 +144,13 @@ describe("user resolver", () => {
       });
     });
 
-    it("throws an input error if the service throws an unknown error", () => {
+    it("throws an input error if the service throws an unknown error", async () => {
       const registerUser = jest.fn().mockRejectedValue(new Error());
       const registerUserInput: RegisterUserInput = { email: "test", password: "test" };
       const sessionToken: SessionToken = { userId: "test" };
 
       const resolver = createUserResolver({ userService: { registerUser } });
-      expect(resolver.register(registerUserInput, sessionToken)).rejects.toThrow(Error);
+      await expect(resolver.register(registerUserInput, sessionToken)).rejects.toThrow(Error);
     });
 
     it("maps the thrown error correctly", async () => {

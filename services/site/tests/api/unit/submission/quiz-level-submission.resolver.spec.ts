@@ -24,14 +24,14 @@ describe("quiz level submission resolver", () => {
     expect(result.result.status).toBeTruthy();
   });
 
-  it("can handle submission creation errors", () => {
+  it("can handle submission creation errors", async () => {
     const resolver = new QuizLevelSubmissionResolver(
       createMock<QuizLevelSubmissionService>({
         create: jest.fn().mockRejectedValue(new ReferenceNotValidException()),
       }),
     );
 
-    expect(() =>
+    await expect(() =>
       resolver.submitQuizLevelAnswer(
         {
           levelId: faker.string.uuid(),

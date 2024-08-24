@@ -56,7 +56,7 @@ describe("code level submission resolver", () => {
     expect(update).toHaveBeenCalledWith({ ...submission, userId: sessionToken.userId });
   });
 
-  it("returns an error if the submission to update was not found", () => {
+  it("returns an error if the submission to update was not found", async () => {
     const update = jest.fn().mockRejectedValue(new SubmissionNotFoundException());
 
     const submission: UpdateCodeLevelSubmissionInput = {
@@ -68,7 +68,7 @@ describe("code level submission resolver", () => {
 
     const resolver = createCodeLevelSubmissionResolver({ submissionService: { update } });
 
-    expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toThrowError(GraphQLError);
+    await expect(resolver.updateCodeLevelSubmission(submission, sessionToken)).rejects.toThrowError(GraphQLError);
     expect(update).toHaveBeenCalled();
   });
 
@@ -82,10 +82,10 @@ describe("code level submission resolver", () => {
     expect(requestCheck).toHaveBeenCalledWith("bla");
   });
 
-  it("cannot request a check for the same submission multiple time", () => {
+  it("cannot request a check for the same submission multiple time", async () => {
     const requestCheck = jest.fn().mockRejectedValue(new SubmissionAlreadyHasCheckResultException());
 
     const resolver = createCodeLevelSubmissionResolver({ submissionService: { requestCheck } });
-    expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toThrowError(GraphQLError);
+    await expect(resolver.requestCodeLevelCheck({ submissionId: "bla" })).rejects.toThrowError(GraphQLError);
   });
 });

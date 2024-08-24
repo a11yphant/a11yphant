@@ -90,10 +90,12 @@ describe("authentication resolver", () => {
       expect(cookie).toHaveBeenCalledWith(expect.stringContaining(""), token, expect.anything());
     });
 
-    it("throws an error if username or password are wrong", () => {
+    it("throws an error if username or password are wrong", async () => {
       login.mockRejectedValue(new Error("E-Mail or password wrong."));
 
-      expect(resolver.login({ email: "test_mail", password: "test_pw" }, createMock<IContext>())).rejects.toThrowError("E-Mail or password wrong.");
+      await expect(resolver.login({ email: "test_mail", password: "test_pw" }, createMock<IContext>())).rejects.toThrowError(
+        "E-Mail or password wrong.",
+      );
     });
   });
 

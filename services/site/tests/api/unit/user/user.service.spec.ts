@@ -106,7 +106,7 @@ describe("user service", () => {
 
     it("throws an error if the anonymous user is not found", async () => {
       const service = getUserService();
-      expect(service.registerUser({ email: "test", password: "test" }, faker.string.uuid())).rejects.toBeInstanceOf(AnonymousUserInvalidError);
+      await expect(service.registerUser({ email: "test", password: "test" }, faker.string.uuid())).rejects.toBeInstanceOf(AnonymousUserInvalidError);
     });
 
     it("throws an error if the email addres is already in use", async () => {
@@ -125,7 +125,7 @@ describe("user service", () => {
         }),
       ]);
 
-      expect(service.registerUser({ email, password: "test" }, userId)).rejects.toBeInstanceOf(EmailInUseError);
+      await expect(service.registerUser({ email, password: "test" }, userId)).rejects.toBeInstanceOf(EmailInUseError);
     });
 
     it("throws an error if the user is already registered", async () => {
@@ -138,7 +138,7 @@ describe("user service", () => {
         data: UserFactory.build({ id: userId, authProvider: "github" }),
       });
 
-      expect(service.registerUser({ email: "test", password: "test" }, userId)).rejects.toBeInstanceOf(UserRegisteredError);
+      await expect(service.registerUser({ email: "test", password: "test" }, userId)).rejects.toBeInstanceOf(UserRegisteredError);
     });
   });
 
