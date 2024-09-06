@@ -57,7 +57,7 @@ const Navigation: React.FC<NavigationProps> = ({ displayBreadcrumbs = true, isSt
           )}
         >
           <A11yphantLogo className="w-48 xs:w-52 md:w-36" />
-          <span className="sr-only">Allyphant Homepage</span>
+          <span className="sr-only">a11yphant Homepage</span>
         </Link>
 
         {/* Mobile Nav */}

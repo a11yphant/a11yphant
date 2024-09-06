@@ -22,18 +22,16 @@ const PrivacyPolicy: React.FunctionComponent = () => {
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <div className={clsx("py-4 mx-8 h-main max-w-screen-3xl", "sm:mx-12", "md:py-8", "lg:mt-12 lg:mx-24")}>
           <h1 className={clsx("mb-8 h3", "sm:h2", "md:h1")}>Privacy Policy</h1>
-          <p className={clsx("italic mb-8")}>Last updated on March 10, 2023</p>
+          <p className={clsx("italic mb-8")}>Last updated on September 6, 2024</p>
 
           <section role="contentinfo" aria-label="Purpose of the Privacy Policy">
             <p>
               Thank you for choosing to be part of our community at <InTextLink href="https://a11yphant.com">a11yphant.com</InTextLink>
               .
               <br />
-              <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All rights
-              are equally split between these four creators. When the website says "<span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>", "we at <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>", "us" or "our", it is meant that statements are made on behalf of all four co-creators.
+              a11yphant is a project by Daniela Kubesch, Thomas Dax, Luca Pircher and Michael Hinterhofer. All rights are equally split between these
+              four creators. When the website says "a11yphant", "we at a11yphant", "us" or "our", it is meant that statements are made on behalf of
+              all four co-creators.
             </p>
             <p>
               We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this
