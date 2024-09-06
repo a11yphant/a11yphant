@@ -44,8 +44,9 @@ export const FlashMessage: React.FC<React.PropsWithChildren<FlashMessageProps>> 
         leaveTo="-translate-y-[3.75rem]"
       >
         <div
-          className={clsx("w-full absolute py-2 px-2 bg-primary z-0", "flex justify-center items-center", className)}
+          className={clsx("w-full absolute py-2 px-2 bg-primary z-0 mt-24", "flex justify-center items-center", "md:mt-20", className)}
           role={type === FlashMessageType.ALERT ? "alert" : "status"}
+          aria-live="assertive"
         >
           <span className={clsx("basis-12 flex-shrink hidden", "md:block")} />
           <div className={clsx("flex justify-center pr-4 pl-9 text-left", "md:text-center")}>{children}</div>

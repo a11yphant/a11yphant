@@ -74,8 +74,8 @@ const Footer: React.FunctionComponent = () => (
             className={clsx("group")}
             target="_blank"
             rel="noopener noreferrer nofollow"
+            aria-label="Product Hunt campaign of a11yphant, opens in a new tab"
           >
-            <span className="sr-only">Product Hunt campaign of a11yphant (opens in a new tab)</span>
             <img
               src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=328460&theme=dark"
               alt="Featured on Product Hunt badge"
@@ -101,9 +101,10 @@ const Footer: React.FunctionComponent = () => (
           )}
           target="_blank"
           rel="noopener noreferrer nofollow"
+          aria-label="Sponsor a11yphant, opens in a new tab"
         >
           <Heart className="w-4 mr-3" />
-          <span aria-label="Sponsor Allyphant (opens in a new tab)">Sponsor a11yphant</span>
+          Sponsor a11yphant
         </Link>
       </div>
     </div>

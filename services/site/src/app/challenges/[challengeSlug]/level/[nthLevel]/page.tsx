@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       "Solve coding levels and single-choice quizzes about web accessibility on a11yphant, broken down into manageable pieces. Start your accessibility journey today!",
     authors: [{ name: "a11yphant", url: "https://a11yphant.com" }],
     openGraph: {
-      url: `https://a11yphant.com/challenge/${challenge.name}/level/${params.nthLevel}`,
+      url: `https://a11yphant.com/challenge/${challenge.name.replace(/ /g, "-").replace(/\./g, "").toLowerCase()}/level/${params.nthLevel}`,
       type: "website",
       locale: "en",
       images: [

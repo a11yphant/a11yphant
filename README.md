@@ -57,7 +57,9 @@ Nowadays, the a11yphant core-team continues developing a11yphant as Open Source 
 
 <img src="https://unavatar.io/github/dnikub" height="138">
 
-<a href="https://dnikub.dev"  target="_blank" rel="noopener noreferrer nofollow">Daniela Kubesch</a> is a frontend developer who is passionate about accessibility and inclusive design. She strongly believes in equality and inclusion. Daniela is co-founder of a11yphant. When she is not coding, she juggles all things of organisational nature.
+<a href="https://dnikub.dev"  target="_blank" rel="noopener noreferrer nofollow">Daniela Kubesch</a> is an accessibility engineer who is passionate about user experience and inclusive design. She strongly believes in equality and
+inclusion and is committed to making digital services accessible. Daniela is co-founder of a11yphant. When she is not coding, she
+juggles all things of organisational nature.
 
 <img src="https://unavatar.io/github/lucapircher" height="138">
 
