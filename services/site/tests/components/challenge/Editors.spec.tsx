@@ -28,7 +28,7 @@ describe("Editors", () => {
     const { container } = render(<Editors className={mockClassName} editors={[htmlEditorConfig]} onReset={handleReset} autoSave={true} />);
 
     // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
-    expect(container.querySelector(`div.${mockClassName}`)).toBeInTheDocument();
+    expect(container.querySelector(`section.${mockClassName}`)).toBeInTheDocument();
   });
 
   it("renders a single editor if its configured to do so", () => {

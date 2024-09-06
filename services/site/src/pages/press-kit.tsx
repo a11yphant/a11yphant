@@ -69,8 +69,10 @@ const PressKit: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>The Motivation</h2>
+          <section className="my-16" aria-labelledby="presskit1">
+            <h2 id="presskit1" className={clsx("mb-8", "h4", "md:h3")}>
+              The Motivation
+            </h2>
             <p className="my-8">
               In an ideal world, all websites are designed and developed so everyone can use them. Sadly, many websites do not comply with web
               accessibility guidelines. Therefore, especially people with impairments and disabilities are barred from using them. One of the main
@@ -84,8 +86,10 @@ const PressKit: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>What does a11yphant mean?</h2>
+          <section className="my-16" aria-labelledby="presskit2">
+            <h2 id="presskit2" className={clsx("mb-8", "h4", "md:h3")}>
+              What does a11yphant mean?
+            </h2>
 
             <p>
               The name a11yphant is a combination of the numeronym "a11y", which is an abbreviation for "accessibility", and the word "elephant". We
@@ -93,8 +97,10 @@ const PressKit: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>How do I pronounce a11yphant?</h2>
+          <section className="my-16" aria-labelledby="presskit3">
+            <h2 id="presskit3" className={clsx("mb-8", "h4", "md:h3")}>
+              How do I pronounce a11yphant?
+            </h2>
 
             <p>
               In the accessibility community, the term "a11y" is often pronounced as "ally" because the number "1" looks similar to the letter "l",
@@ -103,8 +109,10 @@ const PressKit: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Corporate Identity</h2>
+          <section className="my-16" aria-labelledby="presskit4">
+            <h2 id="presskit4" className={clsx("mb-8", "h4", "md:h3")}>
+              Corporate Identity
+            </h2>
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>a11yphant is always written in lowercase letters.</p>
@@ -148,8 +156,10 @@ const PressKit: React.FunctionComponent = () => {
             </ul>
           </section>
 
-          <section className="mt-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>The Team behind a11yphant</h2>
+          <section className="mt-16" aria-labelledby="presskit5">
+            <h2 id="presskit5" className={clsx("mb-8", "h4", "md:h3")}>
+              The Team behind a11yphant
+            </h2>
 
             <h3 className={clsx("h5 mt-8", "md:h4")}>Concept and Development</h3>
             <ul className="mt-4 ml-6 list-disc">
@@ -223,8 +233,10 @@ const PressKit: React.FunctionComponent = () => {
             </ul>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Application Screenshots</h2>
+          <section className="my-16" aria-labelledby="presskit6">
+            <h2 id="presskit6" className={clsx("mb-8", "h4", "md:h3")}>
+              Application Screenshots
+            </h2>
             <div className="flex flex-wrap items-center">
               <div className="w-[70ch] h-full my-6 md:m-8">
                 <Image

@@ -24,7 +24,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
           <h1 className={clsx("mb-8 h3", "sm:h2", "md:h1")}>Privacy Policy</h1>
           <p className={clsx("italic mb-8")}>Last updated on September 6, 2024</p>
 
-          <section role="contentinfo" aria-label="Purpose of the Privacy Policy">
+          <section>
             <p>
               Thank you for choosing to be part of our community at <InTextLink href="https://a11yphant.com">a11yphant.com</InTextLink>
               .
@@ -70,8 +70,10 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="Table of contents" className={clsx("my-8 md:my-16")}>
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Table of contents</h2>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="TableOfContents">
+            <h2 className={clsx("mb-8", "h4", "md:h3")} id="TableOfContents">
+              Table of contents
+            </h2>
             <ul className={clsx("list-decimal ml-8 mb-8")}>
               <li className={clsx("m-0 my-4")}>
                 <InTextLink href="#chapter1">What information do we collect?</InTextLink>
@@ -112,7 +114,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </ul>
           </section>
 
-          <section role="contentinfo" aria-label="What information do we collect?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter1">
             <h2 id="chapter1" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>1.</span> What information do we collect?
             </h2>
@@ -149,7 +151,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="How do we use your information?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter2">
             <h2 id="chapter2" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>2.</span> How do we use your information?
             </h2>
@@ -184,7 +186,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </ul>
           </section>
 
-          <section role="contentinfo" aria-label="Will your information be shared with anyone?" className={clsx("my-12")}>
+          <section className={clsx("my-12")} aria-labelledby="chapter3">
             <h2 id="chapter3" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>3.</span> Will your information be shared with anyone?
             </h2>
@@ -232,7 +234,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </ul>
           </section>
 
-          <section role="contentinfo" aria-label="Do we use cookies and other tracking technologies?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter4">
             <h2 id="chapter4" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>4.</span> Do we use cookies and other tracking technologies?
             </h2>
@@ -257,7 +259,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <p>We use a functional session cookie called "a11yphant-session" to handle the login process and assigning submissions to a user.</p>
           </section>
 
-          <section role="contentinfo" aria-label="How do we handle your social logins?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter5">
             <h2 id="chapter5" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>5.</span> How do we handle your social logins?
             </h2>
@@ -282,7 +284,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="How long do we keep your information?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter6">
             <h2 id="chapter6" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>6.</span> How long do we keep your information?
             </h2>
@@ -305,7 +307,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="How do we keep your information safe?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter7">
             <h2 id="chapter7" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>7.</span> How do we keep your information safe?
             </h2>
@@ -323,7 +325,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="What are your privacy rights?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter8">
             <h2 id="chapter8" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>8.</span> What are your privacy rights?
             </h2>
@@ -384,7 +386,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="Controls for do not track features" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter9">
             <h2 id="chapter9" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>9.</span> Controls for do not track features
             </h2>
@@ -398,7 +400,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="Do we make updates to this notice" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter10">
             <h2 id="chapter10" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>10.</span> Do we make updates to this notice?
             </h2>
@@ -414,7 +416,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section role="contentinfo" aria-label="How can you contact us about this notice?" className={clsx("my-8 md:my-16")}>
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter11">
             <h2 id="chapter11" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>11.</span> How can you contact us about this notice?
             </h2>
@@ -424,11 +426,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section
-            role="contentinfo"
-            aria-label="How can you review, update or delete the data we collect from you?"
-            className={clsx("my-8 md:my-16")}
-          >
+          <section className={clsx("my-8 md:my-16")} aria-labelledby="chapter12">
             <h2 id="chapter12" className={clsx("mb-8", "h4", "md:h3")}>
               <span className={clsx("not-sr-only", "h4", "md:h3")}>12.</span> How can you review, update or delete the data we collect from you?
             </h2>

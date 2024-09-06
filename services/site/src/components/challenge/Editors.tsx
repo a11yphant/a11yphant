@@ -18,11 +18,11 @@ interface CustomEditorProps extends Omit<EditorProps, "language" | "value" | "on
 
 const Editors: React.FunctionComponent<CustomEditorProps> = ({ className, editors, onReset, autoSave, ...props }) => {
   return (
-    <div className={clsx("pb-4 flex flex-col justify-between box-border", "md:flex-row", className)}>
+    <section className={clsx("pb-4 flex flex-col justify-between box-border", "md:flex-row", className)} aria-label="Editor">
       {editors.map((config) => (
         <WrappedEditor onReset={onReset} key={config.heading} config={config} autoSave={autoSave} {...props} />
       ))}
-    </div>
+    </section>
   );
 };
 

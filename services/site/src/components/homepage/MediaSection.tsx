@@ -10,8 +10,10 @@ import smashingLogo from "../../../public/images/otherLogos/smashingmagazine.png
 
 const MediaSection: React.FunctionComponent<React.PropsWithChildren> = () => {
   return (
-    <section className={clsx("flex flex-col items-center", "sm:my-20", "xl:my-24")}>
-      <h2 className={clsx("h4 mb-2", "sm:h3 sm:text-center", "xl:h2")}>Recognized by the media</h2>
+    <section className={clsx("flex flex-col items-center", "sm:my-20", "xl:my-24")} aria-labelledby="MediaSectionHeading">
+      <h2 id="MediaSectionHeading" className={clsx("h4 mb-2", "sm:h3 sm:text-center", "xl:h2")}>
+        Recognized by the media
+      </h2>
       <p className={clsx("block py-1.5 px-4 mb-8 mt-4 text-light font-medium not-italic uppercase tracking-[0.18rem] text-center text-sm")}>
         Awarded 1x Distinction and 1x Shortlist in 2023
       </p>

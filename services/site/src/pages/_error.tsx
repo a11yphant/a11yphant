@@ -23,10 +23,13 @@ const CustomError: NextPage<CustomErrorProps> = ({ statusCode, hasGetInitialProp
       <Navigation />
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <section
+          aria-labelledby="ErrorHeading"
           className={clsx("mx-8 h-full flex flex-col justify-center items-left", "md:flex-row md:items-center md:justify-between", "lg:mx-24")}
         >
           <div>
-            <h1 className={clsx("font-normal mb-4", "h5", "sm:h4")}>Error {statusCode}</h1>
+            <h1 id="ErrorHeading" className={clsx("font-normal mb-4", "h5", "sm:h4")}>
+              Error {statusCode}
+            </h1>
             <p className={clsx("text-3xl max-w-lg font-bold leading-tight", "md:text-4xl", "xl:text-6xl")}>Ooops, something went wrong</p>
             <Link
               href="/"

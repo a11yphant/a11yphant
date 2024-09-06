@@ -99,8 +99,10 @@ const About: React.FunctionComponent = () => {
             )} */}
           </div>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>But what is a11yphant?</h2>
+          <section className="my-16" aria-labelledby="about1">
+            <h2 id="about1" className={clsx("mb-8", "h4", "md:h3")}>
+              But what is a11yphant?
+            </h2>
 
             <p>
               a11yphant is an interactive online course for web accessibility. In this course, you will revisit web development topics from an
@@ -110,8 +112,10 @@ const About: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Coding-Challenges and Quizzes</h2>
+          <section className="my-16" aria-labelledby="about2">
+            <h2 id="about2" className={clsx("mb-8", "h4", "md:h3")}>
+              Coding-Challenges and Quizzes
+            </h2>
 
             <p>
               Various accessibility topics are split up into short challenges. On a11yphant, you solve coding levels and single-choice quizzes in each
@@ -120,8 +124,10 @@ const About: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Meet the team</h2>
+          <section className="my-16" aria-labelledby="about3">
+            <h2 id="about3" className={clsx("mb-8", "h4", "md:h3")}>
+              Meet the team
+            </h2>
 
             <p>
               a11yphant started as a master’s project created by six students at the{" "}
@@ -173,8 +179,10 @@ const About: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="mt-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>What others say about us:</h2>
+          <section className="mt-16" aria-labelledby="about4">
+            <h2 id="about4" className={clsx("mb-8", "h4", "md:h3")}>
+              What others say about us:
+            </h2>
 
             <h3 className={clsx("h5 mt-8", "md:h4")}>Awards</h3>
             <ul className="mt-4 ml-6 list-disc">
