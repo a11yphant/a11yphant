@@ -9,6 +9,7 @@ import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import Evaluation, { getServerSideProps } from "app/pages/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import { GraphQLError } from "graphql";
 import { GetServerSidePropsContext } from "next";
+import { useParams } from "next/navigation";
 import router from "next/router";
 import React from "react";
 
@@ -17,6 +18,7 @@ jest.mock("next/navigation", () => ({
   useRouter: () => ({
     refresh: jest.fn(),
   }),
+  useParams: jest.fn(),
 }));
 
 jest.mock("app/components/Lottie", () => (): React.FunctionComponent<LottieProps> => {
@@ -112,6 +114,8 @@ beforeEach(() => {
     nthLevel: mockNthLevel,
     submissionId: mockSubmissionId,
   };
+
+  (useParams as jest.Mock).mockImplementation(() => router.query);
 
   (useSessionState as jest.Mock).mockImplementation(() => [1, jest.fn()]);
 
