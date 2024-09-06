@@ -1,3 +1,5 @@
+"use client";
+
 import LoadingButton from "app/components/buttons/LoadingButton";
 import Editors, { EditorLanguage } from "app/components/challenge/Editors";
 import Preview from "app/components/challenge/Preview";
@@ -11,19 +13,18 @@ import { getNumFailedLevelsInARowKey } from "app/hooks/sessionState/sessionState
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
 import { useSubmissionAutoSave } from "app/hooks/useSubmissionAutoSave";
 import clsx from "clsx";
-import { useRouter } from "next/router";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 export interface CodeLevelProps {
   challengeName: string;
   level: CodeLevelDetailsFragment;
-  onAutoSaveLoadingChange: (autoSaveLoading: boolean) => void;
-  autoSave: boolean;
 }
 
-const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange, autoSave }: CodeLevelProps): React.ReactElement => {
+const CodeLevel = ({ challengeName, level }: CodeLevelProps): React.ReactElement => {
   const router = useRouter();
-  const { challengeSlug, nthLevel } = router.query;
+  const pathname = usePathname();
+  const { challengeSlug, nthLevel } = useParams();
   const errorDialogApi = useErrorDialogApi();
   const flashMessageApi = useFlashMessageApi();
   const [failedLevelsInARow] = useSessionState<number>(getNumFailedLevelsInARowKey(challengeSlug as string, nthLevel as string), 0);
@@ -54,10 +55,6 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange, autoSave }: 
       flashMessageApi.hide();
     };
   }, [failedLevelsInARow]);
-
-  React.useEffect(() => {
-    onAutoSaveLoadingChange(autoSaveLoading);
-  }, [autoSaveLoading, onAutoSaveLoadingChange]);
 
   React.useEffect(() => {
     setLevelId(level.id);
@@ -118,7 +115,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange, autoSave }: 
     });
 
     if (errors === undefined) {
-      router.push(`${router.asPath}/evaluation/${submissionId}`);
+      router.push(`${pathname}/evaluation/${submissionId}`);
     }
   };
 
@@ -178,7 +175,7 @@ const CodeLevel = ({ challengeName, level, onAutoSaveLoadingChange, autoSave }: 
                 enabled: false,
               },
             }}
-            autoSave={autoSave}
+            autoSave={autoSaveLoading}
           />
           <Preview
             className={clsx("w-full h-80 md:h-2/5")}

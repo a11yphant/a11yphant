@@ -2,7 +2,7 @@ import LoadingButton from "app/components/buttons/LoadingButton";
 import { ResultStatus } from "app/generated/graphql";
 import { EvaluationRouterParams } from "app/pages/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import clsx from "clsx";
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
 interface CompleteEvaluationButtonProps {
@@ -23,7 +23,7 @@ export const CompleteEvaluationButton = ({
   onRetry,
 }: CompleteEvaluationButtonProps): React.ReactElement => {
   const router = useRouter();
-  const { challengeSlug, nthLevel }: EvaluationRouterParams = router.query;
+  const { challengeSlug, nthLevel }: EvaluationRouterParams = useParams();
 
   const [loadingAnimation, setLoadingAnimation] = React.useState(false);
 
