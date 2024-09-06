@@ -17,6 +17,8 @@ jobs:
   testdocker:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - run: docker compose up postgres -d
       - run: docker ps
 
