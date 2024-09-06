@@ -60,9 +60,9 @@ const About: React.FunctionComponent = () => {
             <A11yphantLogoWithoutText className={clsx("w-28 mr-4 hidden", "sm:block")} />
             <div>
               <p>
-                <span className="sr-only">allyphant</span>
-                <span aria-hidden="true">a11yphant</span> <span aria-hidden="true">(pronounced [ˈɛlifənt])</span> teaches developers the basics of web
-                accessibility. Learn step by step by completing short, interactive coding challenges and quizzes.
+                a11yphant (pronounced <span className="sr-only">allyphant</span>
+                <span aria-hidden="true">[ˈɛlifənt]</span>) teaches developers the basics of web accessibility. Learn step by step by completing
+                short, interactive coding challenges and quizzes.
               </p>
             </div>
           </div>
@@ -70,9 +70,8 @@ const About: React.FunctionComponent = () => {
           <p className="my-8">
             In an ideal world, all websites are designed and developed so everyone can use them. Sadly, many websites do not comply with web
             accessibility guidelines. Therefore, especially people with impairments and disabilities are barred from using them. One of the main
-            problems is that many developers don't know enough about web accessibility. <span className="sr-only">allyphant</span>
-            <span aria-hidden="true">a11yphant</span> wants to improve this situation by giving them a tool for learning accessibility in a fun,
-            interactive way.
+            problems is that many developers don't know enough about web accessibility. a11yphant wants to improve this situation by giving them a
+            tool for learning accessibility in a fun, interactive way.
           </p>
 
           <div className="max-w-80ch">
@@ -100,17 +99,13 @@ const About: React.FunctionComponent = () => {
           </div>
 
           <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>
-              But what is <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>?
-            </h2>
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>But what is a11yphant?</h2>
 
             <p>
-              <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> is an interactive online course for web accessibility. In this course, you will revisit web
-              development topics from an accessibility perspective. For example, how to make sure that assistive technologies like screen readers can
-              interact with the website? Or, what is the purpose of the different semantic HTML elements? These are some of the things you will learn
-              by writing meaningful markup and completing quizzes.
+              a11yphant is an interactive online course for web accessibility. In this course, you will revisit web development topics from an
+              accessibility perspective. For example, how to make sure that assistive technologies like screen readers can interact with the website?
+              Or, what is the purpose of the different semantic HTML elements? These are some of the things you will learn by writing meaningful
+              markup and completing quizzes.
             </p>
           </section>
 
@@ -118,10 +113,9 @@ const About: React.FunctionComponent = () => {
             <h2 className={clsx("mb-8", "h4", "md:h3")}>Coding-Challenges and Quizzes</h2>
 
             <p>
-              Various accessibility topics are split up into short challenges. On <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>, you solve coding levels and single-choice quizzes in each challenge. Each level teaches you
-              one thing at a time. Our evaluation provides you with detailed feedback on our success criteria. If you struggle to solve a challenge,
-              hints will help you out.
+              Various accessibility topics are split up into short challenges. On a11yphant, you solve coding levels and single-choice quizzes in each
+              challenge. Each level teaches you one thing at a time. Our evaluation provides you with detailed feedback on our success criteria. If
+              you struggle to solve a challenge, hints will help you out.
             </p>
           </section>
 
@@ -129,8 +123,7 @@ const About: React.FunctionComponent = () => {
             <h2 className={clsx("mb-8", "h4", "md:h3")}>Meet the team</h2>
 
             <p>
-              <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> started as a master’s project created by six students at the{" "}
+              a11yphant started as a master’s project created by six students at the{" "}
               <InTextLink href="https://www.fh-salzburg.ac.at/en/" opensInNewTab>
                 Salzburg University of Applied Sciences (Austria)<span className="sr-only">(opens in a new tab)</span>
               </InTextLink>
@@ -158,9 +151,8 @@ const About: React.FunctionComponent = () => {
             </p>
 
             <p>
-              As we hope to make the world more inclusive, we continue developing <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> as an Open Source project. So, if you find an accessibility issue or want to contribute or
-              support us in any other way, please let us know by writing to{" "}
+              As we hope to make the world more inclusive, we continue developing a11yphant as an Open Source project. So, if you find an
+              accessibility issue or want to contribute or support us in any other way, please let us know by writing to{" "}
               <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>.
             </p>
           </section>

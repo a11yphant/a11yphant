@@ -108,11 +108,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               imageLeft
               heading="Study from the comfort of your home"
               paragraph={
-                <>
-                  For challenges on <span className="sr-only">allyphant</span>
-                  <span aria-hidden="true">a11yphant</span> you won't need to read large amounts. Instead, you will learn by applying the concepts in
-                  code.
-                </>
+                <>For challenges on a11yphant you won't need to read large amounts. Instead, you will learn by applying the concepts in code.</>
               }
             >
               <div className="flex flex-row-reverse md:flex-row justify-start min-w-[46%] md:max-w-xs lg:max-w-sm xl:max-w-full lg:justify-end lg:pr-12">
@@ -126,8 +122,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
               heading="Interactive coding challenges and quizzes"
               paragraph={
                 <>
-                  With a phone, computer or tablet, <span className="sr-only">allyphant</span>
-                  <span aria-hidden="true">a11yphant</span> works wherever you are. Get started with your first web accessibility challenge and
+                  With a phone, computer or tablet, a11yphant works wherever you are. Get started with your first web accessibility challenge and
                   improve your skills.
                 </>
               }

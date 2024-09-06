@@ -63,8 +63,8 @@ const PressKit: React.FunctionComponent = () => {
           <section className="mb-16">
             <h1 className={clsx("mb-8", "h2", "md:h1")}>Press Kit</h1>
             <p>
-              Here you can find more information about the origin of and motivation behind <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>. We also provide some pictures and logos for you to use if you want to write about us.
+              Here you can find more information about the origin of and motivation behind a11yphant. We also provide some pictures and logos for you
+              to use if you want to write about us.
             </p>
           </section>
 
@@ -73,41 +73,32 @@ const PressKit: React.FunctionComponent = () => {
             <p className="my-8">
               In an ideal world, all websites are designed and developed so everyone can use them. Sadly, many websites do not comply with web
               accessibility guidelines. Therefore, especially people with impairments and disabilities are barred from using them. One of the main
-              problems is that many developers don't know enough about web accessibility. <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> wants to improve this situation by giving them a tool for learning accessibility in a fun,
-              interactive way.
+              problems is that many developers don't know enough about web accessibility. a11yphant wants to improve this situation by giving them a
+              tool for learning accessibility in a fun, interactive way.
             </p>
 
             <p className="my-8">
-              <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> teaches developers the basics of web accessibility. Learn step by step by completing short,
-              interactive coding challenges and quizzes.
+              a11yphant teaches developers the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and
+              quizzes.
             </p>
           </section>
 
           <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>
-              What does <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> mean?
-            </h2>
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>What does a11yphant mean?</h2>
 
             <p>
-              The name <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> is a combination of the numeronym "a11y", which is an abbreviation for "accessibility", and
-              the word "elephant". We chose "elephant" as part of our name because elephants are very smart animals and we like them.{" "}
+              The name a11yphant is a combination of the numeronym "a11y", which is an abbreviation for "accessibility", and the word "elephant". We
+              chose "elephant" as part of our name because elephants are very smart animals and we like them.{" "}
             </p>
           </section>
 
           <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>
-              How do I pronounce <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span>?
-            </h2>
+            <h2 className={clsx("mb-8", "h4", "md:h3")}>How do I pronounce a11yphant?</h2>
 
             <p>
               In the accessibility community, the term "a11y" is often pronounced as "ally" because the number "1" looks similar to the letter "l",
-              depending on the font. Therefore <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> is pronounced as [ˈɛlifənt].
+              depending on the font. Therefore a11yphant is pronounced as <span className="sr-only">allyphant</span>
+              <span aria-hidden="true">[ˈɛlifənt]</span>.
             </p>
           </section>
 
@@ -115,10 +106,7 @@ const PressKit: React.FunctionComponent = () => {
             <h2 className={clsx("mb-8", "h4", "md:h3")}>Corporate Identity</h2>
             <ul className="mt-4 ml-6 list-disc">
               <li>
-                <p>
-                  <span className="sr-only">allyphant</span>
-                  <span aria-hidden="true">a11yphant</span> is always written in lowercase letters.
-                </p>
+                <p>a11yphant is always written in lowercase letters.</p>
               </li>
               <li>
                 <p>The a11yphant color code is #7331FF.</p>
@@ -130,10 +118,8 @@ const PressKit: React.FunctionComponent = () => {
 
             <h3 className={clsx("my-8", "h5", "md:h4")}>Logo</h3>
             <p>
-              The <span className="sr-only">allyphant</span>
-              <span aria-hidden="true">a11yphant</span> logo is a combination mark. Depending on the case, using only the pictorial mark is allowed.
-              The logo can't be altered in any way (strech, rotate, crop, change the opacity or colour, change the font, put something else on top,
-              etc.).
+              The a11yphant logo is a combination mark. Depending on the case, using only the pictorial mark is allowed. The logo can't be altered in
+              any way (strech, rotate, crop, change the opacity or colour, change the font, put something else on top, etc.).
             </p>
             <ul className="mt-4">
               <li>
@@ -141,7 +127,7 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(dark on light background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <Image alt="Allyphant Logo Dark" src={a11yphantLogo} placeholder="blur" sizes="80ch" quality={100} />
+                  <Image alt="a11yphant Logo Dark" src={a11yphantLogo} placeholder="blur" sizes="80ch" quality={100} />
                 </div>
               </li>
               <li>
@@ -149,13 +135,13 @@ const PressKit: React.FunctionComponent = () => {
                   Combination mark <span className={clsx("font-normal h6")}>(light on dark background)</span>
                 </h4>
                 <div className="max-w-[50ch]">
-                  <Image alt="Allyphant Logo Light" src={a11yphantLogoLight} placeholder="blur" sizes="80ch" quality={100} />
+                  <Image alt="a11yphant Logo Light" src={a11yphantLogoLight} placeholder="blur" sizes="80ch" quality={100} />
                 </div>
               </li>
               <li>
                 <h4 className={clsx("h5 mt-8")}>Pictorial mark</h4>
                 <div className="max-w-[20ch]">
-                  <Image alt="Allyphant Logo" src={a11yphantPictorialMark} placeholder="blur" sizes="80ch" quality={100} />
+                  <Image alt="a11yphant Logo" src={a11yphantPictorialMark} placeholder="blur" sizes="80ch" quality={100} />
                 </div>
               </li>
             </ul>

@@ -31,8 +31,7 @@ const SignUpSection: React.FC = () => {
           >
             1900+ other registered users
           </strong>{" "}
-          and be part of the <span className="sr-only">allyphant</span>
-          <span aria-hidden="true">a11yphant</span> community.
+          and be part of the a11yphant community.
         </p>
       </div>
     </section>

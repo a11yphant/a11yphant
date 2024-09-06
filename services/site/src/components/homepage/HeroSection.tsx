@@ -18,11 +18,7 @@ const HeroSection: React.FunctionComponent<React.PropsWithChildren> = ({ childre
           Learning web accessibility made easy
         </h1>
         <p className={clsx("text-grey-middle text-lg max-w-[60ch]")}>
-          <span className="sr-only">allyphant</span>
-          <span aria-hidden="true" className="text-inherit">
-            a11yphant
-          </span>{" "}
-          teaches web accessibility, one step at a time, broken down into manageable pieces. Completely free of charge.
+          a11yphant teaches web accessibility, one step at a time, broken down into manageable pieces. Completely free of charge.
         </p>
         <Link
           href="/challenges"

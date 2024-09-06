@@ -26,7 +26,7 @@ The easy way to learn web accessibility
 ## About a11yphant
 
 <p>
-  <span aria-label="Allyphant">a11yphant</span> <span aria-hidden="true">(pronounced [ˈɛlifənt])</span> teaches developers the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes.
+  a11yphant <span aria-hidden="true">(pronounced [ˈɛlifənt])</span> teaches developers the basics of web accessibility. Learn step by step by completing short, interactive coding challenges and quizzes.
 </p>
 
 In an ideal world, all websites are designed and developed so everyone can use them. Sadly, many websites do not comply with web accessibility guidelines. Therefore, especially people with impairments and disabilities are barred from using them. One of the main problems is that many developers don't know enough about web accessibility. a11yphant wants to improve this situation by giving them a tool for learning accessibility in a fun, interactive way.
@@ -40,7 +40,7 @@ In an ideal world, all websites are designed and developed so everyone can use t
 />
 
 <p>
-  <span aria-label="Allyphant">a11yphant</span> is an interactive online course for web accessibility. In this course, you will revisit web
+  a11yphant is an interactive online course for web accessibility. In this course, you will revisit web
   development topics from an accessibility perspective. For example, how to make sure that assistive technologies like screen readers can
   interact with the website? Or, what is the purpose of the different semantic HTML elements? These are some of the things you will learn by
   writing meaningful markup and completing quizzes.
@@ -48,7 +48,7 @@ In an ideal world, all websites are designed and developed so everyone can use t
 
 ## Meet the Team
 
-<span aria-label="Allyphant">a11yphant</span> started as a master’s project created by six students at the <a href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
+a11yphant started as a master’s project created by six students at the <a href="https://www.fh-salzburg.ac.at/en/" target="_blank" rel="noopener noreferrer nofollow">
 Salzburg University of Applied Sciences</a> in Austria. The interdisciplinary team consisted of four web engineering and two communication design students.
 
 Nowadays, the a11yphant core-team continues developing a11yphant as Open Source project. Their goal is to make the web a more accessible and inclusive place.
