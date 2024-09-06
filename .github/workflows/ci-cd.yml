@@ -14,14 +14,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  testdocker:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - run: docker compose up postgres -d --wait
-      - run: docker ps
-
   lint-content:
     runs-on: ubuntu-22.04
     steps:
@@ -209,12 +201,12 @@ jobs:
 
       - name: Set up Database
         run: |
-          docker compose postgres up -d --wait
+          docker compose up -d --wait
           npm run prisma:migrate:prod --prefix services/site
           npm run console import:challenges --prefix services/site
 
       - name: Start app
-        run: npm run start --prefix services/site
+        run: npm run start --prefix services/site &
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
