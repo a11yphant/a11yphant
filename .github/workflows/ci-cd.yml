@@ -188,14 +188,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - name: Prepare
+        uses: ./.github/actions/prepare-node
         with:
-          node-version: 18.15.0
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-          cache-dependency-path: tests/package-lock.json
+          path: services/site
+
+      - name: NPM Install
+        run: npm ci --prefix tests
 
       - name: Build app
         run: npm run build --prefix services/site
