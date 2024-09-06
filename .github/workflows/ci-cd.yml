@@ -187,7 +187,6 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v4
         with:
-          working-directory: tests/cypress
           command: npm test:e2e
           build: npm run cypress:db-dump:update
         env:
