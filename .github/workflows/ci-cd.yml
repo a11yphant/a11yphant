@@ -21,16 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-          registry-url: https://npm.pkg.github.com/
-          scope: '@a11yphant'
-          cache-dependency-path: package-lock.json
-
-      - name: NPM Install
-        run: npm ci --ignore-scripts
+        uses: ./.github/actions/prepare-node
 
       - name: Lint Content
         run: npm run lint:content
@@ -44,16 +35,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare
+      - name: Setup node
         uses: ./.github/actions/prepare-node
-        with:
-          path: services/site
 
       - name: Generate GraphQL Schema
-        run: npm run schema:generate --prefix services/site
+        run: npm run schema:generate
 
       - name: Lint
-        run: npm run lint --prefix services/site
+        run: npm run lint
 
   test:
     needs:
@@ -89,22 +78,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare
+      - name: Setup node
         uses: ./.github/actions/prepare-node
-        with:
-          path: services/site
 
       - name: Generate GraphQL Schema
-        run: npm run schema:generate --prefix services/site
+        run: npm run schema:generate
 
       - name: Test
-        run: npm run test:coverage --prefix services/site
+        run: npm run test:coverage
 
       - name: Upload Coverage
         uses: actions/upload-artifact@v4
         with:
           name: test-coverage-site
-          path: services/site/coverage
+          path: coverage
 
   upload-coverage-reports:
     needs:
@@ -141,22 +128,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: test-coverage-site
-          path: services/site/coverage/
+          path: coverage/
 
         env:
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
       - name: Format Site Coverage
-        run: |
-          cd services/site
-          ./../../cc-test-reporter format-coverage -t lcov --add-prefix services/site -o coverage/codeclimate.json coverage/lcov.info
-        env:
-          GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
-          GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
-
-      - name: Sum Coverage
-        run: ./cc-test-reporter sum-coverage services/*/coverage/codeclimate.json -p 1
+        run: ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json coverage/lcov.info
         env:
           GIT_BRANCH: ${{ steps.git-variables.outputs.git-branch }}
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
@@ -190,25 +169,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare
+      - name: Setup node
         uses: ./.github/actions/prepare-node
-        with:
-          path: services/site
 
       - name: NPM Install
         run: npm ci --prefix tests
 
       - name: Build app
-        run: npm run build --prefix services/site
+        run: npm run build
 
       - name: Set up Database
         run: |
           docker compose up -d --wait
-          npm run prisma:migrate:prod --prefix services/site
-          npm run console import:challenges --prefix services/site
+          npm run prisma:migrate:prod
+          npm run console import:challenges
 
       - name: Start app
-        run: npm run start --prefix services/site > app-log.txt &
+        run: npm run start > app-log.txt &
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
