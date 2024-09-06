@@ -25,7 +25,6 @@ jobs:
       - run: echo "environment-name=${{ env.GITHUB_REF_SLUG }}" >> $GITHUB_OUTPUT
         id: environment-name
 
-  # Lint Content
   lint-content:
     runs-on: ubuntu-22.04
     steps:
@@ -49,7 +48,7 @@ jobs:
       - name: Lint Content
         run: npm run lint:content
 
-  lint-site:
+  lint-app:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -60,9 +59,6 @@ jobs:
 
       - name: Prepare
         uses: ./.github/actions/prepare-node
-        with:
-          path: services/site
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate GraphQL Schema
         run: npm run schema:generate --prefix services/site
@@ -70,11 +66,8 @@ jobs:
       - name: Lint
         run: npm run lint --prefix services/site
 
-  test-site:
+  test:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
     services:
       postgres:
         image: postgres
@@ -122,35 +115,9 @@ jobs:
           name: test-coverage-site
           path: services/site/coverage
 
-  build-site:
-    needs:
-      - variables
-      - lint-site
-      - test-site
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      digest: ${{ steps.build.outputs.digest }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build
-        id: build
-        uses: ./.github/actions/docker-build
-        with:
-          path: services/site
-          npm-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: site
-          version: ${{ needs.variables.outputs.environment-name }}
-          registry-user: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-
   upload-coverage-reports:
     needs:
-      - test-site
+      - test
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -213,11 +180,19 @@ jobs:
   test-end-to-end:
     needs:
       - variables
-      - build-site
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: read
+    env:
+      SITE_HOST: localhost
+      SITE_PORT: 3001
+      SITE_GRAPHQL_ENDPOINT_SERVER: http://localhost:3000/graphql
+      SITE_GRAPHQL_ENDPOINT_CLIENT: http://localhost:3001/graphql
+      SITE_GITHUB_LOGIN_ENDPOINT: /auth/github
+      SITE_TWITTER_LOGIN_ENDPOINT: /auth/twitter
+      SITE_PLAUSIBLE_BASE_URL: "https://plausible.a11yphant.com"
+      SITE_BASE_URL: "http://localhost:3001"
+      DATABASE_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
+      DATABASE_URL_UNPOOLED: postgresql://a11yphant:secret@localhost:5432/a11yphant
+      API_CHALLENGES_LOCATION: "../../../../challenges"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -231,32 +206,17 @@ jobs:
           scope: '@a11yphant'
           cache-dependency-path: tests/package-lock.json
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build app
+        run: npm run build --prefix services/site
 
-      - name: Get Site Image Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: site-image
-          path: /tmp/site-image/
+      - name: Set up Database
+        run: |
+          docker-compose up -d
+          npm run prisma:migrate:prod --prefix services/site
+          npm run console import:challenges --prefix services/site
 
-      - name: Load Site Image
-        run: docker load --input /tmp/site-image/image.tar
-
-      - name: Start services
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml up -d --quiet-pull --wait --no-color
-        env:
-          IMAGE_TAG: ${{ needs.variables.outputs.environment-name }}
-
-      - name: Migrate Database
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec site npm run prisma:migrate:prod
-
-      - name: Seed Database
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml exec site npm run console:prod import:challenges
+      - name: Start app
+        run: npm run start --prefix services/site
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
@@ -276,36 +236,9 @@ jobs:
           path: tests/cypress/screenshots/
           retention-days: 1
 
-      - name: Echo Site Logs
-        if: failure()
-        run: docker compose -f docker-compose.yml -f docker-compose.tests.yml logs site --no-color --tail all
-
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: tests/cypress/screenshots
           retention-days: 1
-
-  publish-site-image:
-    needs:
-      - variables
-      - test-end-to-end
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      image-digest: ${{ steps.publish.outputs.digest }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Publish Image
-        id: publish
-        uses: ./.github/actions/docker-push-image-from-artifact
-        with:
-          artifact-name: site-image
-          image: ghcr.io/a11yphant/site:${{ needs.variables.outputs.environment-name }}
-          registry-user: ${{ github.actor }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}

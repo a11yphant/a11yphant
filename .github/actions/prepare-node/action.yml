@@ -16,12 +16,8 @@ runs:
       with:
         node-version: 18.15.0
         cache: npm
-        registry-url: https://npm.pkg.github.com/
-        scope: '@a11yphant'
         cache-dependency-path: ${{ inputs.path }}/package-lock.json
 
     - name: NPM Install
       shell: bash
       run: npm ci --prefix ${{ inputs.path }}
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
