@@ -4,10 +4,17 @@ import CodeLevel, { CodeLevelProps } from "app/components/challenge/level/CodeLe
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { CodeLevelDetailsFragment, LevelByChallengeSlugDocument } from "app/generated/graphql";
 import { useSessionState } from "app/hooks/sessionState/useSessionState";
+import { useParams } from "next/navigation";
 import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+  useParams: jest.fn(),
+  usePathname: jest.fn(),
+}));
 
 jest.mock("react-resize-detector", () => ({
   useResizeDetector: () => {
@@ -26,7 +33,6 @@ jest.mock("app/components/common/flashMessage/FlashMessageContext", () => ({
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
 const mockChallengeName = "HTML Basics";
-const mockOnAutoSaveLoadingChange = jest.fn();
 const mockLevel: CodeLevelDetailsFragment = {
   id: "1",
   instructions: "This is a instruction.",
@@ -76,13 +82,7 @@ const mountCodeLevel = (options?: MountCodeLevelParams): RenderResult => {
 
   return render(
     <MockedProvider mocks={mockedResponses}>
-      <CodeLevel
-        challengeName={mockChallengeName}
-        level={mockLevel}
-        onAutoSaveLoadingChange={mockOnAutoSaveLoadingChange}
-        autoSave={true}
-        {...options?.props}
-      />
+      <CodeLevel challengeName={mockChallengeName} level={mockLevel} {...options?.props} />
     </MockedProvider>,
   );
 };
@@ -90,6 +90,7 @@ const mountCodeLevel = (options?: MountCodeLevelParams): RenderResult => {
 describe("Code Level", () => {
   beforeEach(() => {
     router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
+    (useParams as jest.Mock).mockImplementation(() => router.query);
     router.back = jest.fn();
     jest.restoreAllMocks();
     (useSessionState as jest.Mock).mockImplementation(() => [1, jest.fn()]);
@@ -156,3 +157,5 @@ describe("Code Level", () => {
     expect(useFlashMessageApi().hide).toHaveBeenCalledTimes(1);
   });
 });
+
+// a
