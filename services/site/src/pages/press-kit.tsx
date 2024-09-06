@@ -318,10 +318,10 @@ const PressKit: React.FunctionComponent = () => {
 
 export default PressKit;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
-      config: getClientConfig(),
+      config: getClientConfig(context.req.headers.host),
     },
   };
 };

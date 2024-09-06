@@ -1,5 +1,4 @@
 import { ApolloClient, from, HttpLink, InMemoryCache, NormalizedCacheObject } from "@apollo/client";
-import { NextSSRApolloClient, NextSSRInMemoryCache, SSRMultipartLink } from "@apollo/experimental-nextjs-app-support/ssr";
 import { ErrorDialogApi, useErrorDialogApi } from "app/components/common/error/useErrorDialog";
 import { createErrorLink } from "app/lib/apollo-client/create-error-link";
 import crossFetch from "cross-fetch";
@@ -10,24 +9,7 @@ import { createForwardCookiesToServerLink } from "./create-forward-cookies-to-se
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-export function createApolloClientSSR(uri: string, errorDialogApi: ErrorDialogApi): ApolloClient<NormalizedCacheObject> {
-  const isServer = typeof window === "undefined";
-  const httpLink = new HttpLink({
-    uri,
-    fetch: crossFetch,
-    fetchOptions: { cache: "no-store" },
-  });
-
-  const links = [createErrorLink({ errorDialogApi }), httpLink];
-
-  return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
-    link: from(isServer ? [new SSRMultipartLink({ stripDefer: true }), ...links] : links),
-    credentials: "same-site",
-  });
-}
-
-function createApolloClient(
+function createApolloClientPagesRouter(
   uri: string,
   context: GetServerSidePropsContext | null = null,
   errorDialogApi: ErrorDialogApi | undefined,
@@ -47,7 +29,7 @@ function createApolloClient(
     // the http link has to be at the end because it is a terminating link
     link: from([createForwardCookiesToServerLink(getCookieHeader), createErrorLink({ errorDialogApi }), httpLink]),
     cache: new InMemoryCache(),
-    credentials: "same-site",
+    credentials: "same-origin",
   });
 }
 
@@ -57,7 +39,7 @@ export function initializeApollo(
   context: GetServerSidePropsContext | null = null,
   errorDialogApi?: ErrorDialogApi,
 ): ApolloClient<NormalizedCacheObject> {
-  const _apolloClient = apolloClient ?? createApolloClient(uri, context, errorDialogApi);
+  const _apolloClient = apolloClient ?? createApolloClientPagesRouter(uri, context, errorDialogApi);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here

@@ -6,12 +6,14 @@ import "app/styles/custom.scss";
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { getClientConfig, getConfig } from "app/lib/config/rsc";
 import { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import Script from "next/script";
 
 import ClientProviders from "./ClientProviders";
 
 const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
-  const config = getConfig();
+  const host = headers().get("host");
+  const config = getConfig(host);
 
   if (config.isDevelopmentMode) {
     loadDevMessages();
@@ -20,9 +22,9 @@ const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children
 
   return (
     <html lang="en">
-      <head>{config.plausibleBaseUrl && <Script data-domain={config.host} src="/js/script.js" />}</head>
+      <head>{config.plausibleBaseUrl && <Script data-domain={host} src="/js/script.js" />}</head>
       <body>
-        <ClientProviders config={getClientConfig()}>{children}</ClientProviders>
+        <ClientProviders config={getClientConfig(host)}>{children}</ClientProviders>
       </body>
     </html>
   );

@@ -23,7 +23,7 @@ fi
 
 echo "Loading dump file into database..."
 
-psql $DB_URL -c 'TRUNCATE TABLE challenges, rules CASCADE';
+psql $DATABASE_URL -c 'TRUNCATE TABLE challenges, rules CASCADE';
 echo "Truncated challenges"
-pg_restore -d $DB_URL $(pwd)/$DUMP_DIR/$DUMP_FILE
+pg_restore -d $DATABASE_URL $(pwd)/$DUMP_DIR/$DUMP_FILE
 echo "Imported challenges"
