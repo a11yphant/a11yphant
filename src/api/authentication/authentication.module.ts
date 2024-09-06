@@ -31,3 +31,10 @@ import { TwitterStrategy } from "./strategies/twitter.strategy";
   exports: [SessionInterceptor, HashService, JwtService, AuthenticationService],
 })
 export class AuthenticationModule {}
+
+@Module({
+  imports: [ConfigModule, UserModule, MailModule],
+  providers: [AuthenticationService, HashService, JwtService],
+  exports: [AuthenticationService],
+})
+export class AuthenticationModuleLite {}

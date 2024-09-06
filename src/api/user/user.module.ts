@@ -16,3 +16,11 @@ import { UserService } from "./user.service";
   exports: [UserService, LastSeenInterceptor],
 })
 export class UserModule {}
+
+
+@Module({
+  imports: [PrismaModule, forwardRef(() => AuthenticationModule), MailModule],
+  providers: [ConfigService, UserService, Logger],
+  exports: [UserService],
+})
+export class UserModuleLite {}

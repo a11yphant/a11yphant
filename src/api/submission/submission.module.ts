@@ -67,3 +67,34 @@ import { RequirementResultService } from "./services/requirement-result.service"
   exports: [CodeLevelSubmissionService],
 })
 export class SubmissionModule {}
+
+@Module({
+  imports: [PrismaModule, forwardRef(() => ChallengeModule)],
+  controllers: [RendererController],
+  providers: [
+    CodeLevelSubmissionService,
+    CodeLevelResultService,
+    RequirementResultService,
+    Logger,
+    QuizLevelSubmissionService,
+    CheckSubmissionService,
+    CheckFactory,
+    { provide: CHECK_TO_CLASS_MAP, useValue: checkToClassMap },
+    { provide: "fetch", useValue: fetch },
+    ColorContrastGreaterThanOrEqual,
+    DocumentLanguageIsSpecified,
+    DocumentStartsWithHtml5Doctype,
+    ElementContainsText,
+    ElementExists,
+    ElementHasCssPropertyValue,
+    ElementHasCssPropertyValueGreaterThan,
+    ElementNotContainsText,
+    ElementNotExists,
+    ElementHasMinimumDimension,
+    HtmlIsValid,
+    MarginBetweenElementsGreaterThanOrEqual,
+    ...buildCheckProviders(AVAILABLE_AXE_CHECKS),
+  ],
+  exports: [CodeLevelSubmissionService],
+})
+export class SubmissionModuleLite {}
