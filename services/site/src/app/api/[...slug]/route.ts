@@ -65,6 +65,7 @@ function getHandler(): Promise<Handler> {
       handler = bootstrap();
     }
   } else {
+    // cache the handler globally so that the app isn't restarted when HMR kicks in
     if (!global.handler) {
       global.handler = bootstrap();
     }
