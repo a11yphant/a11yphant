@@ -148,8 +148,8 @@ jobs:
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
   test-end-to-end:
-    needs:
-      - test
+    # needs:
+    #   - test
     runs-on: ubuntu-22.04
     env:
       SITE_HOST: localhost
@@ -172,9 +172,6 @@ jobs:
       - name: Setup node
         uses: ./.github/actions/prepare-node
 
-      - name: NPM Install
-        run: npm ci --prefix tests
-
       - name: Build app
         run: npm run build
 
@@ -190,10 +187,9 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v4
         with:
-          working-directory: tests
-          install-command: npm ci
-          command: npm test
-          build: npm run db-dump:update
+          working-directory: tests/cypress
+          command: npm test:e2e
+          build: npm run cypress:db-dump:update
         env:
           CYPRESS_BASE_URL: "http://localhost:3001"
 
