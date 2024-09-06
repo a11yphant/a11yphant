@@ -121,7 +121,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-valid-doc.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the valid HTML challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
@@ -140,7 +140,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-headings.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the HTML Headings challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
@@ -159,7 +159,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-links.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the HTML Links challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
@@ -178,7 +178,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-page-regions.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the HTML Page Regions challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
@@ -197,7 +197,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-buttons.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the HTML Buttons challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
@@ -216,7 +216,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-a11y-intro.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the Intro to Web Accessibility challenge overview, displaying an introduction text and all possible quiz levels to complete.",
           },
         ],
       },
@@ -235,7 +235,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         images: [
           {
             url: "https://a11yphant.com/images/SEO/challenge/mockups-CHALLENGE-content-element.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the Content Elements challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
@@ -246,18 +246,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
     },
     "buttons-vs-links": {
-      description: "...........",
+      description:
+        "This challenge will help you differentiate between buttons and links and show you how to style a link as a button and vice versa.",
       openGraph: {
-        description: "...........",
+        description:
+          "This challenge will help you differentiate between buttons and links and show you how to style a link as a button and vice versa.",
         images: [
           {
             url: "https://a11yphant.com/images/challenge/mockups-CHALLENGES.jpg",
-            alt: "A screenshot of the a11yphant challenge page, displaying all possible quiz and coding levels to complete.",
+            alt: "A screenshot of the HTML Buttons versus Links challenge overview, displaying an introduction text and all possible quiz and coding levels to complete.",
           },
         ],
       },
       twitter: {
-        description: "...........",
+        description:
+          "This challenge will help you differentiate between buttons and links and show you how to style a link as a button and vice versa.",
         images: [{ url: "https://a11yphant.com/images/challenge/mockups-CHALLENGES.jpg" }],
       },
     },
