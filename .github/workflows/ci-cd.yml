@@ -169,8 +169,8 @@ jobs:
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
   test-end-to-end:
-    # needs:
-    #   - test
+    needs:
+      - test
     runs-on: ubuntu-22.04
     env:
       SITE_HOST: localhost
