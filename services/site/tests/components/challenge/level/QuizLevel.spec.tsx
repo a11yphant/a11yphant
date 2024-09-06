@@ -4,10 +4,16 @@ import userEvent from "@testing-library/user-event";
 import EndOfChallengeFlashMessage from "app/components/challenge/EndOfChallengeFlashMessage";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
 import { ResultStatus, SubmitQuizLevelAnswerDocument } from "app/generated/graphql";
+import { useParams } from "next/navigation";
 import router from "next/router";
 import React from "react";
 
 jest.mock("next/router", () => require("next-router-mock"));
+
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+  useParams: jest.fn(),
+}));
 
 jest.mock(
   "app/components/Lottie",
@@ -91,6 +97,7 @@ const mockedResponsesForIncorrect: MockedResponse[] = [
 beforeEach(() => {
   jest.resetAllMocks();
   router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
+  (useParams as jest.Mock).mockImplementation(() => router.query);
   router.back = jest.fn();
 });
 

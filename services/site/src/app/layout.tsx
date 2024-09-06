@@ -5,7 +5,7 @@ import "app/styles/custom.scss";
 
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { getClientConfig, getConfig } from "app/lib/config/rsc";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import Script from "next/script";
 
@@ -56,6 +56,9 @@ export const metadata: Metadata = {
     description: "a11yphant is an interactive online course for web accessibility.",
     images: [{ url: "https://a11yphant.com/images/SEO/mockups-social-media.jpg" }],
   },
+};
+
+export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#121212" },
     { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },

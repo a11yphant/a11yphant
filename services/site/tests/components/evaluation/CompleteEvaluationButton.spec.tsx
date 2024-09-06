@@ -2,17 +2,24 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import { ResultStatus } from "app/generated/graphql";
-import router from "next/router";
+import { useParams } from "next/navigation";
 import React from "react";
 
-jest.mock("next/router", () => require("next-router-mock"));
+const mockedBack = jest.fn();
+const mockedPush = jest.fn();
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    back: mockedBack,
+    push: mockedPush,
+  })),
+  useParams: jest.fn(),
+}));
 
 const mockChallengeSlug = "mock-slug";
 const mockNthLevel = 2;
 
 beforeEach(() => {
-  router.query = { challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) };
-  router.back = jest.fn();
+  (useParams as jest.Mock).mockImplementation(() => ({ challengeSlug: mockChallengeSlug, nthLevel: String(mockNthLevel) }));
 });
 
 describe("CompleteEvaluationButton", () => {
@@ -23,7 +30,7 @@ describe("CompleteEvaluationButton", () => {
     expect(retryButton).toBeInTheDocument();
 
     await userEvent.click(retryButton);
-    expect(router.back).toHaveBeenCalledTimes(1);
+    expect(mockedBack).toHaveBeenCalledTimes(1);
   });
 
   it("renders the 'Finish Challenge' button", async () => {
@@ -33,7 +40,7 @@ describe("CompleteEvaluationButton", () => {
     expect(finishButton).toBeInTheDocument();
 
     await userEvent.click(finishButton);
-    expect(router.asPath).toBe("/challenges");
+    expect(mockedPush).toHaveBeenCalledWith("/challenges");
   });
 
   it("renders the 'Next Level' button", async () => {
@@ -43,6 +50,6 @@ describe("CompleteEvaluationButton", () => {
     expect(finishButton).toBeInTheDocument();
 
     await userEvent.click(finishButton);
-    expect(router.asPath).toBe(`/challenges/${mockChallengeSlug}/level/0${mockNthLevel + 1}`);
+    expect(mockedPush).toHaveBeenCalledWith(`/challenges/${mockChallengeSlug}/level/0${mockNthLevel + 1}`);
   });
 });

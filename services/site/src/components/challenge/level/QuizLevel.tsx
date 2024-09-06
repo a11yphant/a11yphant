@@ -1,3 +1,4 @@
+"use client";
 import LoadingButton from "app/components/buttons/LoadingButton";
 import SingleAnswer from "app/components/challenge/quiz/SingleAnswer";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
