@@ -47,7 +47,7 @@
     "cypress:db-dump:update": "docker compose exec -T postgres pg_dump -U a11yphant a11yphant > db-dump.sql",
     "cypress:db-dump:import": "docker compose exec -T postgres psql -U a11yphant a11yphant < db-dump.sql",
     "start": "next start -p ${SITE_PORT-3001}",
-    "console": "ts-node services/site/src/api/console.ts",
+    "console": "ts-node src/api/console.ts",
     "import-challenges": "npm run console import:challenges",
     "delete:staleusers": "npm run console delete:staleusers",
     "prepare": "husky",
