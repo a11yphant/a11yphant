@@ -183,8 +183,9 @@ jobs:
       SITE_BASE_URL: "http://localhost:3001"
       DATABASE_URL: postgresql://a11yphant:secret@localhost:5432/a11yphant
       DATABASE_URL_UNPOOLED: postgresql://a11yphant:secret@localhost:5432/a11yphant
-      API_CHALLENGES_LOCATION: "../../../../challenges"
+      API_CHALLENGES_LOCATION: "../../../../../challenges"
       API_KEY: "I-am-a-very-secret-key"
+      API_CHALLENGE_IMPORTER_ENABLED: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
