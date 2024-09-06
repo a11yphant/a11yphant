@@ -1,4 +1,35 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require("path");
+
+/** @type {import('next').NextConfig} */
 const config = {
+  experimental: {
+    serverMinification: false,
+    serverComponentsExternalPackages: [
+      "@apollo/server",
+      "@nestjs/core",
+      "fsevents",
+      "@nestjs-modules/mailer",
+      "@nestjs/apollo",
+      "@nestjs/common",
+      "@nestjs/config",
+      "@nestjs/graphql",
+      "@nestjs/passport",
+      "@nestjs/platform-express",
+      "handlebars",
+    ],
+    outputFileTracingIncludes: {
+      "/api/\\[\\.\\.\\.slug\\]": ["./mail-templates/**/*"],
+    },
+  },
+
+  webpack(config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) {
+    config.resolve.alias["@"] = path.resolve(__dirname, "src/api");
+
+    // Important: return the modified config
+    return config;
+  },
+
   async headers() {
     return [
       {

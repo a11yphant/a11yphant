@@ -25,11 +25,11 @@ export function setupIntersectionObserverMock({
     unobserve: (target: Element) => void = unobserve;
   }
 
-  Object.defineProperty(window, "IntersectionObserver", {
-    writable: true,
-    configurable: true,
-    value: MockIntersectionObserver,
-  });
+  // Object.defineProperty(window, "IntersectionObserver", {
+  //   writable: true,
+  //   configurable: true,
+  //   value: MockIntersectionObserver,
+  // });
 
   Object.defineProperty(global, "IntersectionObserver", {
     writable: true,
