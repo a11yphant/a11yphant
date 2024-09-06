@@ -169,8 +169,8 @@ jobs:
           GIT_COMMIT_SHA: ${{ steps.git-variables.outputs.git-commit-sha }}
 
   test-end-to-end:
-    needs:
-      - test
+    # needs:
+    #   - test
     runs-on: ubuntu-22.04
     env:
       SITE_HOST: localhost
@@ -206,7 +206,7 @@ jobs:
           npm run console import:challenges --prefix services/site
 
       - name: Start app
-        run: npm run start --prefix services/site &
+        run: npm run start --prefix services/site > app-log.txt &
 
       - name: Run Cypress
         uses: cypress-io/github-action@v4
@@ -217,6 +217,10 @@ jobs:
           build: npm run db-dump:update
         env:
           CYPRESS_BASE_URL: "http://localhost:3001"
+
+      - name: Log output
+        if: failure()
+        run: cat app-log.txt
 
       - name: Upload artifact
         if: failure()
