@@ -9,7 +9,7 @@ function loginContainer() {
 function createUser({ name, email, password }) {
     cy.request({
         method: "POST",
-        url: "/graphql",
+        url: "/api/graphql",
         headers: {
             "Content-Type": "application/json",
         },

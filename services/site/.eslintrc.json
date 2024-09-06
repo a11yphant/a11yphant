@@ -1,4 +1,5 @@
 {
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -6,8 +7,25 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": ["jsx-a11y", "testing-library", "jest-dom"],
-  "extends": ["@a11yphant/eslint-config/react", "plugin:jsx-a11y/recommended", "plugin:testing-library/react", "plugin:jest-dom/recommended"],
+  "plugins": [
+    "simple-import-sort",
+    "unused-imports",
+    "@typescript-eslint/eslint-plugin",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "testing-library",
+    "jest-dom"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+  ],
   "root": true,
   "env": {
     "node": true,
@@ -16,8 +34,27 @@
     "es6": true
   },
   "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-imports": "off",
+    "import/order": "off",
+    "unused-imports/no-unused-imports": "error",
+    "prefer-template": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "error",
     "jsx-a11y/anchor-is-valid": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/display-name": "off",
+    "react/prop-types": "off"
   },
   "ignorePatterns": ["src/generated/**", "**/node_modules"]
 }
