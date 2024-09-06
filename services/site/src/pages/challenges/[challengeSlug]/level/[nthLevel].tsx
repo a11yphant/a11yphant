@@ -61,7 +61,10 @@ const Level: React.FunctionComponent = () => {
         />
         <meta name="author" content="a11yphant" />
         {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content={`https://a11yphant.com/challenge/${challenge.name}/level/${nthLevel}`} />
+        <meta
+          property="og:url"
+          content={`https://a11yphant.com/challenge/${challenge.name.replace(/ /g, "-").replace(/\./g, "").toLowerCase()}/level/${nthLevel}`}
+        />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="a11yphant" />

@@ -420,14 +420,8 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </h2>
             <p>
               If you have questions or comments about this notice, you may email us at{" "}
-              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink> or by post to:
+              <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink> or by post (address upon request).
             </p>
-            <address className={clsx("not-italic")}>
-              <strong>Daniela Kubesch, BSc</strong> <br />
-              Wiesengasse 18 <br />
-              3001 Mauerbach <br />
-              Austria
-            </address>
           </section>
 
           <section
