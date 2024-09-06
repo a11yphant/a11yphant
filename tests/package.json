@@ -12,7 +12,7 @@
     "cypress:run": "cypress run",
     "db:reset": "docker compose exec -T postgres psql -U a11yphant -c \"DROP SCHEMA public CASCADE; CREATE SCHEMA public;\" a11yphant",
     "db-dump:update": "docker compose exec -T postgres pg_dump -U a11yphant a11yphant > db-dump.sql",
-    "db-dump:import": "docker-compose exec -T postgres psql -U a11yphant a11yphant < db-dump.sql"
+    "db-dump:import": "docker compose exec -T postgres psql -U a11yphant a11yphant < db-dump.sql"
   },
   "devDependencies": {
     "cypress": "12.7.0"

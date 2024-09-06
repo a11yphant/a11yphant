@@ -449,10 +449,10 @@ const PrivacyPolicy: React.FunctionComponent = () => {
 
 export default PrivacyPolicy;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
-      config: getClientConfig(),
+      config: getClientConfig(context.req.headers.host),
     },
   };
 };

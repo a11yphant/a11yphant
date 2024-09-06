@@ -14,7 +14,7 @@ type Middleware = {
 };
 
 export default async function middleware(req: NextRequest): Promise<NextResponse | null> {
-  const middlewares = [forwardGraphqlRequests, redirectChallengeOverlayUrls, redirectChallengeUrls, authentication];
+  const middlewares = [redirectChallengeOverlayUrls, redirectChallengeUrls, authentication];
 
   for (const middleware of middlewares) {
     if (!middleware.match(req)) {
@@ -23,32 +23,32 @@ export default async function middleware(req: NextRequest): Promise<NextResponse
 
     return middleware.run(req);
   }
-}
 
-const forwardGraphqlRequests: Middleware = {
-  match: (req) => process.env.SITE_GRAPHQL_ENDPOINT_SERVER && req.nextUrl.clone().pathname === "/graphql",
-  run: async () => NextResponse.rewrite(process.env.SITE_GRAPHQL_ENDPOINT_SERVER),
-};
+  return NextResponse.next();
+}
 
 const redirectChallengeOverlayUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname === "/" && req.nextUrl.clone().searchParams.has("challenge"),
   run: async (req) => {
-    const { baseUrl } = getConfig();
-    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, { status: 308 });
+    const { baseUrl } = getConfig(req.headers.get("host"));
+    return NextResponse.redirect(`${baseUrl}challenges/${req.nextUrl.clone().searchParams.get("challenge")}`, {
+      status: 308,
+    });
   },
 };
 
 const redirectChallengeUrls: Middleware = {
   match: (req) => req.nextUrl.clone().pathname.startsWith("/challenge/"),
   run: async (req) => {
-    const { baseUrl } = getConfig();
-    return NextResponse.redirect(`${baseUrl}/challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
+    const { baseUrl } = getConfig(req.headers.get("host"));
+    return NextResponse.redirect(`${baseUrl}challenges/${req.nextUrl.clone().pathname.slice(11)}`, { status: 308 });
   },
 };
 
 const authentication: Middleware = {
   match: (req) => !req.cookies.has("a11yphant_session"),
   run: async (req) => {
+    const { graphqlEndpointPath } = getConfig(req.headers.get("host"));
     const cookies: Cookie[] = [];
 
     const setCookie: SetCookieFunction = (cookie) => {
@@ -56,21 +56,25 @@ const authentication: Middleware = {
     };
 
     const getCookiesHeader: GetCookieHeaderFunction = () => {
-      return req.headers.toString();
+      return req.headers.get("cookie");
     };
 
-    const client = createApolloClientRSC(getCookiesHeader);
+    const client = createApolloClientRSC(graphqlEndpointPath, getCookiesHeader);
     client.setLink(from([createForwardCookiesToClientLink(setCookie), client.link]));
 
     await client.query<CurrentUserQuery>({
       query: CurrentUserDocument,
     });
 
-    for (const cookie of cookies) {
-      req.cookies.set(cookie);
+    for (const { name, value } of cookies) {
+      req.cookies.set(name, value);
     }
 
-    const response = NextResponse.next();
+    const response = NextResponse.next({
+      request: {
+        headers: new Headers(req.headers),
+      },
+    });
 
     for (const { name, value } of cookies) {
       response.cookies.set(name, value);

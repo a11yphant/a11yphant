@@ -7,20 +7,24 @@ const createJestConfig = nextJest({
 });
 
 // Add any custom config to be passed to Jest
+/** @type {import('jest').Config} */
 const customJestConfig = {
   testRegex: ".*\\.spec\\.tsx?$",
-  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  testEnvironment: "jsdom",
   moduleNameMapper: {
     "^app/(.*)": "<rootDir>/src/$1",
     "^tests/(.*)": "<rootDir>/tests/$1",
+    "^@tests/(.*)$": "<rootDir>/tests/api/$1",
+    "^@/(.*)$": "<rootDir>/src/api/$1",
   },
-  testEnvironment: "jest-environment-jsdom",
+  // testEnvironment: "jsdom",
   reporters: ["default", "jest-junit"],
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s?(x)"],
   coverageReporters: ["text", "text-summary", "lcov"],
   coveragePathIgnorePatterns: ["<rootDir>/src/generated", "<rootDir>/tests"],
   coverageDirectory: "<rootDir>/coverage",
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
+  globalSetup: "<rootDir>/global-setup.ts",
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

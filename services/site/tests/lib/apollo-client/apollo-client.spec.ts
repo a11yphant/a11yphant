@@ -1,6 +1,7 @@
 import { gql, InMemoryCache } from "@apollo/client";
 import { renderHook } from "@testing-library/react";
-import { createApolloClientSSR, initializeApollo, useApollo } from "app/lib/apollo-client";
+import { initializeApollo, useApollo } from "app/lib/apollo-client";
+import { createApolloClient as createApolloClientSSR } from "app/lib/apollo-client/create-apollo-client-ssr";
 
 const query = gql`
   query test {
@@ -47,7 +48,7 @@ describe("apollo client", () => {
 
   describe("createApolloClient", () => {
     it("returns an apollo client", () => {
-      const client = createApolloClientSSR("/graphql", { showApolloError: jest.fn() });
+      const client = createApolloClientSSR("/graphql", null, { showApolloError: jest.fn() });
 
       expect(client).toBeTruthy();
     });
