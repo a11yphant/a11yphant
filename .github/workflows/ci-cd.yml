@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - run: docker compose up postgres -d
+      - run: docker compose up postgres -d --wait
       - run: docker ps
 
   lint-content:
@@ -209,7 +209,7 @@ jobs:
 
       - name: Set up Database
         run: |
-          docker compose up -d
+          docker compose postgres up -d --wait
           npm run prisma:migrate:prod --prefix services/site
           npm run console import:challenges --prefix services/site
 
