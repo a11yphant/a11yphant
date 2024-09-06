@@ -2,6 +2,7 @@ import ChallengeHeader from "app/components/challengePage/ChallengeHeader";
 import ChallengeList from "app/components/challengePage/ChallengeList";
 import Legend from "app/components/challengePage/Legend";
 import Footer from "app/components/Footer";
+import NewTab from "app/components/icons/NewTab";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { ChallengesDocument, ChallengesQuery, ChallengeStatus } from "app/generated/graphql";
@@ -49,8 +50,10 @@ const Challenges = async (): Promise<React.ReactElement> => {
         transition-colors duration-300
         hover:text-primary-light hover:border-transparent
         focus-rounded-instead-of-underline"
+                aria-label="Twitter account, opens in a new tab"
               >
                 Twitter account
+                <NewTab />
               </InTextLink>
               . <br />
             </p>
