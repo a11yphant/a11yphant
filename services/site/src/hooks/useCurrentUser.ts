@@ -5,7 +5,7 @@ interface CurrentUserApi {
 }
 
 export const useCurrentUser = (): CurrentUserApi => {
-  const { data } = useCurrentUserQuery({ ssr: false });
+  const { data } = useCurrentUserQuery();
 
   return { currentUser: data?.currentUser };
 };
