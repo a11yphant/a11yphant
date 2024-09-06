@@ -56,5 +56,5 @@
     "react/display-name": "off",
     "react/prop-types": "off"
   },
-  "ignorePatterns": ["src/generated/**", "**/node_modules"]
+  "ignorePatterns": ["src/generated/**", "**/node_modules", "tests/cypress/**"]
 }

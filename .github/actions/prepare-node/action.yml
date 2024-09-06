@@ -1,9 +1,5 @@
 name: Prepare Node
-
-inputs:
-  path:
-    required: true
-    type: string
+description: Install node and dependencies
 
 runs:
   using: composite
@@ -13,8 +9,8 @@ runs:
       with:
         node-version-file: .nvmrc
         cache: npm
-        cache-dependency-path: ${{ inputs.path }}/package-lock.json
+        cache-dependency-path: package-lock.json
 
     - name: NPM Install
       shell: bash
-      run: npm ci --prefix ${{ inputs.path }}
+      run: npm ci
