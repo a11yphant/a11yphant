@@ -50,8 +50,13 @@ const QuizLevel: React.FunctionComponent<QuizLevelProps> = ({ levelId, question,
 
   return (
     <>
-      <section className={clsx("mx-auto h-full w-full box-border pt-6 flex flex-col justify-between", "container-dark", "sm:pt-8", "lg:pt-12")}>
-        <h2 className={clsx("mb-2 px-5 sm:px-8 lg:px-12 text-grey-middle", "h5 md:h4 md:text-grey-middle")}>Quiz</h2>
+      <section
+        aria-labelledby="QuizHeading"
+        className={clsx("mx-auto h-full w-full box-border pt-6 flex flex-col justify-between", "container-dark", "sm:pt-8", "lg:pt-12")}
+      >
+        <h2 id="QuizHeading" className={clsx("mb-2 px-5 sm:px-8 lg:px-12 text-grey-middle", "h5 md:h4 md:text-grey-middle")}>
+          Quiz
+        </h2>
         <div className={clsx("grid grid-cols-7 px-5 sm:px-8 lg:px-12 min-h-[50vh]")}>
           <h3
             className={clsx(

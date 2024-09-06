@@ -60,7 +60,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
   }, [htmlCode, cssCode, javascriptCode]);
 
   return (
-    <div className={clsx("px-4 py-3 sm:p-4", "container-light overflow-hidden", className)}>
+    <section className={clsx("px-4 py-3 sm:p-4", "container-light overflow-hidden", className)} aria-label="Preview">
       <h3 className={clsx("text-primary font-normal mb-2", "h6")}>
         {heading}
         {title && (
@@ -83,7 +83,7 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
         className={clsx("w-full h-[90%] pb-8")}
         srcDoc={`<style>${innerCssCode}</style><base target="_blank">${innerHtmlCode}<script>${innerJavascriptCode}</script>`}
       />
-    </div>
+    </section>
   );
 };
 

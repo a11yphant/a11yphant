@@ -99,8 +99,8 @@ const About: React.FunctionComponent = () => {
             )} */}
           </div>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>
+          <section className="my-16" aria-labelledby="about1">
+            <h2 id="about1" className={clsx("mb-8", "h4", "md:h3")}>
               But what is <span className="sr-only">allyphant</span>
               <span aria-hidden="true">a11yphant</span>?
             </h2>
@@ -114,8 +114,10 @@ const About: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Coding-Challenges and Quizzes</h2>
+          <section className="my-16" aria-labelledby="about2">
+            <h2 id="about2" className={clsx("mb-8", "h4", "md:h3")}>
+              Coding-Challenges and Quizzes
+            </h2>
 
             <p>
               Various accessibility topics are split up into short challenges. On <span className="sr-only">allyphant</span>
@@ -125,8 +127,10 @@ const About: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="my-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>Meet the team</h2>
+          <section className="my-16" aria-labelledby="about3">
+            <h2 id="about3" className={clsx("mb-8", "h4", "md:h3")}>
+              Meet the team
+            </h2>
 
             <p>
               <span className="sr-only">allyphant</span>
@@ -165,8 +169,10 @@ const About: React.FunctionComponent = () => {
             </p>
           </section>
 
-          <section className="mt-16">
-            <h2 className={clsx("mb-8", "h4", "md:h3")}>What others say about us:</h2>
+          <section className="mt-16" aria-labelledby="about4">
+            <h2 id="about4" className={clsx("mb-8", "h4", "md:h3")}>
+              What others say about us:
+            </h2>
 
             <h3 className={clsx("h5 mt-8", "md:h4")}>Awards</h3>
             <ul className="mt-4 ml-6 list-disc">
