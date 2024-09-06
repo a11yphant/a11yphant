@@ -60,8 +60,17 @@ async function getContent(stream: ReadableStream<Uint8Array>): Promise<Uint8Arra
 }
 
 function getHandler(): Promise<Handler> {
-  if (!handler) {
-    handler = bootstrap();
+  if (process.env.NODE_ENV === "production") {
+    if (!handler) {
+      handler = bootstrap();
+    }
+  } else {
+    // cache the handler globally so that the app isn't restarted when HMR kicks in
+    if (!global.handler) {
+      global.handler = bootstrap();
+    }
+
+    handler = global.handler;
   }
 
   return handler;

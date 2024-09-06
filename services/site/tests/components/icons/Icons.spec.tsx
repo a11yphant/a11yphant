@@ -15,6 +15,7 @@ import IllustrationRocket from "app/components/icons/IllustrationRocket";
 import LoadingIndicator from "app/components/icons/LoadingIndicator";
 import Money from "app/components/icons/Money";
 import Monitor from "app/components/icons/Monitor";
+import NewTab from "app/components/icons/NewTab";
 import Reset from "app/components/icons/Reset";
 import Slash from "app/components/icons/Slash";
 import Twitter from "app/components/icons/Twitter";
@@ -44,6 +45,7 @@ describe.each([
   ["Monitor", Monitor],
   ["Money", Money],
   ["Education", Education],
+  ["NewTab", NewTab],
 ])("Icons", (_, Component) => {
   test("the %s icon renders without failure", () => {
     expect(() => Component({})).not.toThrow();
