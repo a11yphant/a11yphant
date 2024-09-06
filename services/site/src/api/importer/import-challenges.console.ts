@@ -1,4 +1,4 @@
-import { LoggerService } from "@nestjs/common";
+import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Command, Console } from "nestjs-console";
 
@@ -9,7 +9,7 @@ export class ImportChallenges {
   constructor(
     private config: ConfigService,
     private importer: ImportService,
-    private logger: LoggerService,
+    private logger: Logger,
   ) {}
 
   @Command({
