@@ -1,27 +1,27 @@
+const graphqlEndpointPath = "/api/graphql";
+
 export type ClientConfig = {
   isDevelopmentMode: boolean;
-  graphqlEndpointClient: string;
+  graphqlEndpointPath: string;
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
   isPlausibleEnabled?: boolean;
   baseUrl: string;
 };
 
-export const getClientConfig = (): ClientConfig => ({
+export const getClientConfig = (host: string): ClientConfig => ({
   isDevelopmentMode: process.env.NODE_ENV === "development",
-  graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT || warnMissingEnvVariable("SITE_GRAPHQL_ENDPOINT_CLIENT"),
+  graphqlEndpointPath: getGraphqlEndpointUrl(host),
   githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_GITHUB_LOGIN_ENDPOINT"),
   twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
   isPlausibleEnabled: !!process.env.SITE_PLAUSIBLE_BASE_URL,
   baseUrl: process.env.SITE_BASE_URL || "http://localhost:3001",
 });
 
-export function getConfig(): {
+export function getConfig(host: string): {
   isDevelopmentMode: boolean;
-  host: string;
   port: number;
-  graphqlEndpointClient: string;
-  graphqlEndpointServer: string;
+  graphqlEndpointPath: string;
   githubLoginEndpoint: string;
   twitterLoginEndpoint: string;
   plausibleBaseUrl?: string;
@@ -29,15 +29,27 @@ export function getConfig(): {
 } {
   return {
     isDevelopmentMode: process.env.NODE_ENV === "development",
-    host: process.env.SITE_HOST || "localhost",
     port: Number(process.env.PORT) || 3001,
-    graphqlEndpointServer: process.env.SITE_GRAPHQL_ENDPOINT_SERVER || warnMissingEnvVariable("SITE_GRAPHQL_ENDPOINT_CLIENT"),
-    graphqlEndpointClient: process.env.SITE_GRAPHQL_ENDPOINT_CLIENT || warnMissingEnvVariable("SITE_GITHUB_LOGIN_ENDPOINT"),
+    graphqlEndpointPath: getGraphqlEndpointUrl(host),
     githubLoginEndpoint: process.env.SITE_GITHUB_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     twitterLoginEndpoint: process.env.SITE_TWITTER_LOGIN_ENDPOINT || warnMissingEnvVariable("SITE_TWITTER_LOGIN_ENDPOINT"),
     plausibleBaseUrl: process.env.SITE_PLAUSIBLE_BASE_URL,
-    baseUrl: process.env.SITE_BASE_URL || "http://localhost:3001",
+    baseUrl: getBaseUrl(host),
   };
+}
+
+function getBaseUrl(host: string): string {
+  return getUrl("/", host);
+}
+
+function getGraphqlEndpointUrl(host: string): string {
+  return getUrl(graphqlEndpointPath, host);
+}
+
+function getUrl(path: string, host: string): string {
+  const url = new URL(path, `${process.env.SITE_PROTOCOL || "http"}://${host}`);
+
+  return url.toString();
 }
 
 function warnMissingEnvVariable(name: string): string {

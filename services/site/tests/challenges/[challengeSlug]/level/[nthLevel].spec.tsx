@@ -23,6 +23,7 @@ describe("nth level", () => {
 
     const result: any = await getServerSideProps({
       apolloClient,
+      req: { headers: { host: "a11yphant.com" } },
       params: { challengeSlug: "challenge-1", nthLevel: "4" },
     } as unknown as GetServerSidePropsContext);
 
@@ -44,6 +45,7 @@ describe("nth level", () => {
 
     const result: any = await getServerSideProps({
       apolloClient,
+      req: { headers: { host: "a11yphant.com" } },
       params: { challengeSlug: "challenge-1", nthLevel: "4" },
     } as unknown as GetServerSidePropsContext);
 
@@ -66,6 +68,7 @@ describe("nth level", () => {
 
     const result: any = await getServerSideProps({
       apolloClient,
+      req: { headers: { host: "a11yphant.com" } },
       params: { challengeSlug: "challenge-1", nthLevel: "4" },
     } as unknown as GetServerSidePropsContext);
 

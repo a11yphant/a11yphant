@@ -288,10 +288,10 @@ const About: React.FunctionComponent = () => {
 
 export default About;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
-      config: getClientConfig(),
+      config: getClientConfig(context.req.headers.host),
     },
   };
 };
