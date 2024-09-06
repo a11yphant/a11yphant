@@ -100,7 +100,9 @@ const About: React.FunctionComponent = () => {
           </div>
 
           <section className="my-16" aria-labelledby="about1">
-            <h2 id="about1" className={clsx("mb-8", "h4", "md:h3")}>But what is a11yphant?</h2>
+            <h2 id="about1" className={clsx("mb-8", "h4", "md:h3")}>
+              But what is a11yphant?
+            </h2>
 
             <p>
               a11yphant is an interactive online course for web accessibility. In this course, you will revisit web development topics from an

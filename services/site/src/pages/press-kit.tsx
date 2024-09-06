@@ -87,7 +87,9 @@ const PressKit: React.FunctionComponent = () => {
           </section>
 
           <section className="my-16" aria-labelledby="presskit2">
-            <h2 id="presskit2" className={clsx("mb-8", "h4", "md:h3")}>What does a11yphant mean?</h2>
+            <h2 id="presskit2" className={clsx("mb-8", "h4", "md:h3")}>
+              What does a11yphant mean?
+            </h2>
 
             <p>
               The name a11yphant is a combination of the numeronym "a11y", which is an abbreviation for "accessibility", and the word "elephant". We
@@ -96,7 +98,9 @@ const PressKit: React.FunctionComponent = () => {
           </section>
 
           <section className="my-16" aria-labelledby="presskit3">
-            <h2 id="presskit3" className={clsx("mb-8", "h4", "md:h3")}>How do I pronounce a11yphant?</h2>
+            <h2 id="presskit3" className={clsx("mb-8", "h4", "md:h3")}>
+              How do I pronounce a11yphant?
+            </h2>
 
             <p>
               In the accessibility community, the term "a11y" is often pronounced as "ally" because the number "1" looks similar to the letter "l",
