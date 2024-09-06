@@ -1,3 +1,4 @@
+import { LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Command, Console } from "nestjs-console";
 
@@ -8,6 +9,7 @@ export class ImportChallenges {
   constructor(
     private config: ConfigService,
     private importer: ImportService,
+    private logger: LoggerService,
   ) {}
 
   @Command({
@@ -16,6 +18,7 @@ export class ImportChallenges {
   })
   async importChallenges(): Promise<void> {
     if (!this.config.get<boolean>("api.importer-enabled")) {
+      this.logger.warn("You are trying to import challenges, but the importer is disabled.");
       return;
     }
 
