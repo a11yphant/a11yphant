@@ -2,6 +2,8 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
+import NewTab from "../icons/NewTab";
+
 interface QuoteCardProps {
   quote: string;
   author: string;
@@ -37,9 +39,10 @@ const QuoteCard: React.FunctionComponent<React.PropsWithChildren<QuoteCardProps>
               "hover:text-primary-light hover:decoration-transparent",
               "focus-rounded-instead-of-underline",
             )}
+            aria-label={`${author}, opens in a new tab`}
           >
             {author}
-            <span className="sr-only">(opens in a new tab)</span>
+            <NewTab />
           </Link>
         </cite>
       </footer>

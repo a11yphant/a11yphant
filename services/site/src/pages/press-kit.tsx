@@ -1,4 +1,5 @@
 import Footer from "app/components/Footer";
+import NewTab from "app/components/icons/NewTab";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { getClientConfig } from "app/lib/config";
@@ -168,19 +169,20 @@ const PressKit: React.FunctionComponent = () => {
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
-                  <InTextLink href="https://dnikub.dev" opensInNewTab>
+                  <InTextLink href="https://dnikub.dev" opensInNewTab aria-label="Daniela Kubesch, opens in a new tab">
                     Daniela Kubesch
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <NewTab />
                   </InTextLink>{" "}
-                  is a frontend developer who is passionate about accessibility and inclusive design. She strongly believes in equality and inclusion.
-                  Daniela is co-founder of a11yphant. When she is not coding, she juggles all things of organisational nature.
+                  is an accessibility engineer who is passionate about user experience and inclusive design. She strongly believes in equality and
+                  inclusion and is committed to making digital services accessible. Daniela is co-founder of a11yphant. When she is not coding, she
+                  juggles all things of organisational nature.
                 </p>
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://lucapircher.at" opensInNewTab>
+                  <InTextLink href="https://lucapircher.at" opensInNewTab aria-label="Luca Pircher, opens in a new tab">
                     Luca Pircher
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <NewTab />
                   </InTextLink>{" "}
                   is a web developer based in Austria who firmly believes the web should be inclusive. At a11yphant, Luca supports the team as the
                   "Technical Project Lead" by ensuring that the project is a joy to work on for the dev team and planning the technical requirements
@@ -189,9 +191,9 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://github.com/thomasdax98" opensInNewTab>
+                  <InTextLink href="https://github.com/thomasdax98" opensInNewTab aria-label="Thomas Dax, opens in a new tab">
                     Thomas Dax
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <NewTab />
                   </InTextLink>{" "}
                   is a full-stack developer interested in product development and developer experience. As "Head of Text", he has supported the team
                   with copywriting since co-founding a11yphant. Thomas further does a lot of frontend development work and takes care of the
@@ -200,9 +202,9 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://github.com/hntrhfr" opensInNewTab>
+                  <InTextLink href="https://github.com/hntrhfr" opensInNewTab aria-label="Michael Hinterhofer, opens in a new tab">
                     Michael Hinterhofer
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <NewTab />
                   </InTextLink>{" "}
                   is a corporate backend developer on weekdays and "Chief of Happiness Officer" for a11yphant on the weekend. Since co-founding
                   a11yphant, he supported the team with his magic in the backend.
@@ -214,9 +216,9 @@ const PressKit: React.FunctionComponent = () => {
             <ul className="mt-4 ml-6 list-disc">
               <li>
                 <p>
-                  <InTextLink href="https://johannawicht.com" opensInNewTab>
+                  <InTextLink href="https://johannawicht.com" opensInNewTab aria-label="Johanna Wicht, opens in a new tab">
                     Johanna Wicht
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <NewTab />
                   </InTextLink>{" "}
                   is a communication designer based in Salzburg with a strong interest in visualizing data and identities. She received multiple
                   awards, including ADC Talent and CCA Student of the year.
@@ -224,9 +226,9 @@ const PressKit: React.FunctionComponent = () => {
               </li>
               <li>
                 <p>
-                  <InTextLink href="https://www.fabianhellerdesign.com" opensInNewTab>
+                  <InTextLink href="https://www.fabianhellerdesign.com" opensInNewTab aria-label="Fabian Heller, opens in a new tab">
                     Fabian Heller
-                    <span className="sr-only"> (opens in a new tab)</span>
+                    <NewTab />
                   </InTextLink>{" "}
                   is an interdisciplinary digital designer at the intersection of Graphic Design, Motion Design and Illustration. He received multiple
                   awards for his work in these fields.

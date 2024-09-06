@@ -1,4 +1,5 @@
 import Footer from "app/components/Footer";
+import NewTab from "app/components/icons/NewTab";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { getClientConfig } from "app/lib/config";
@@ -38,23 +39,27 @@ const LegalNotice: React.FunctionComponent = () => {
           <h2 className={clsx("h5 mb-4", "sm:h4")}>Responsible for the Content</h2>
           <ul className={clsx("list-disc ml-6 mb-0 md:mb-8")}>
             <li className={clsx("m-0 my-4")}>
-              <InTextLink href="https://dnikub.dev/" opensInNewTab>
-                Daniela Kubesch <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              <InTextLink href="https://dnikub.dev" opensInNewTab aria-label="Daniela Kubesch, opens in a new tab">
+                Daniela Kubesch
+                <NewTab />
               </InTextLink>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <InTextLink href="https://lucapircher.at" opensInNewTab>
-                Luca Pircher <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              <InTextLink href="https://lucapircher.at" opensInNewTab aria-label="Luca Pircher, opens in a new tab">
+                Luca Pircher
+                <NewTab />
               </InTextLink>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <InTextLink href="https://github.com/thomasdax98" opensInNewTab>
-                Thomas Dax <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              <InTextLink href="https://github.com/thomasdax98" opensInNewTab aria-label="Thomas Dax, opens in a new tab">
+                Thomas Dax
+                <NewTab />
               </InTextLink>
             </li>
             <li className={clsx("m-0 my-4")}>
-              <InTextLink href="https://github.com/hntrhfr" opensInNewTab>
-                Michael Hinterhofer <span className={clsx("sr-only")}>(opens in a new tab)</span>
+              <InTextLink href="https://github.com/hntrhfr" opensInNewTab aria-label="Michael Hinterhofer, opens in a new tab">
+                Michael Hinterhofer
+                <NewTab />
               </InTextLink>
             </li>
           </ul>
