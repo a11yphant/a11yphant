@@ -201,7 +201,7 @@ jobs:
 
       - name: Set up Database
         run: |
-          docker-compose up -d
+          docker compose up -d
           npm run prisma:migrate:prod --prefix services/site
           npm run console import:challenges --prefix services/site
 
