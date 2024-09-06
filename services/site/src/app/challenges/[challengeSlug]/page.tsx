@@ -252,13 +252,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const challenge = await getChallenge(params.challengeSlug);
   return {
     title: `Challenge: ${challenge.name} | a11yphant`,
+    ...metadata,
     openGraph: {
-      url: `https://a11yphant.com/challenges/${challenge.name}`,
+      url: `https://a11yphant.com/challenges/${challenge.name.replace(/ /g, "-").replace(/\./g, "").toLowerCase()}`,
       title: `Challenge: ${challenge.name} | a11yphant`,
+      ...metadata.openGraph,
     },
     twitter: {
       title: `Challenge: ${challenge.name} | a11yphant`,
+      ...metadata.twitter,
     },
-    ...metadata,
   };
 }
