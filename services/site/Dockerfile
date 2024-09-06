@@ -23,7 +23,7 @@ COPY services/site/postcss.config.js ./
 COPY services/site/tailwind.config.js ./
 COPY services/site/tsconfig.json ./
 
-COPY services/api/schema.gql /api/schema.gql
+RUN npm run schema:generate
 
 RUN npm run build
 
