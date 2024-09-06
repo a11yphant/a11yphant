@@ -21,6 +21,7 @@ export async function bootstrap(): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   configureApp(app);
+  app.enableShutdownHooks();
   await app.init();
   return app;
 }
