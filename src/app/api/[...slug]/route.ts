@@ -1,9 +1,8 @@
 import "reflect-metadata";
 
 import serverlessExpress from "@codegenie/serverless-express";
+import { getApp } from "app/api/main";
 import { Request as ExpressRequest } from "express";
-
-import { bootstrap as initializeApp } from "../../../api/main";
 
 type ParsedRequest = { request: Request; body?: Uint8Array };
 
@@ -31,10 +30,9 @@ function getResponse(response): Response {
 }
 
 type Handler = (request: ParsedRequest) => Response;
-let handler: Promise<Handler>;
 
-async function bootstrap(): Promise<Handler> {
-  const app = await initializeApp();
+async function getHandler(): Promise<Handler> {
+  const app = await getApp();
 
   const expressApp = app.getHttpAdapter().getInstance();
   return serverlessExpress<Request, Response>({ app: expressApp, eventSourceName: "custom", eventSource: { getRequest, getResponse } });
@@ -57,23 +55,6 @@ async function getContent(stream: ReadableStream<Uint8Array>): Promise<Uint8Arra
   reader.releaseLock();
 
   return content;
-}
-
-function getHandler(): Promise<Handler> {
-  if (process.env.NODE_ENV === "production") {
-    if (!handler) {
-      handler = bootstrap();
-    }
-  } else {
-    // cache the handler globally so that the app isn't restarted when HMR kicks in
-    if (!global.handler) {
-      global.handler = bootstrap();
-    }
-
-    handler = global.handler;
-  }
-
-  return handler;
 }
 
 export async function GET(request: Request): Promise<Response> {
