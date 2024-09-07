@@ -1,14 +1,16 @@
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
-import CodeLevel from "app/components/challenge/level/CodeLevel";
-import QuizLevel from "app/components/challenge/level/QuizLevel";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
 import { getChallenge } from "app/lib/server-side-props/get-challenge";
 import { getLevel } from "app/lib/server-side-props/get-level";
 import clsx from "clsx";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import React from "react";
+
+const CodeLevel = dynamic(() => import("app/components/challenge/level/CodeLevel"), { ssr: false });
+const QuizLevel = dynamic(() => import("app/components/challenge/level/QuizLevel"), { ssr: false });
 
 type PageProps = {
   params: {
