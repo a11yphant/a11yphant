@@ -11,6 +11,10 @@ import { TextDecoder, TextEncoder } from "util";
 
 import config from "./next.config";
 
+jest.mock("@vercel/analytics/react", () => ({
+  Analytics: jest.fn(),
+}));
+
 Object.assign(global, { TextDecoder, TextEncoder });
 
 setConfig(config);
