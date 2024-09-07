@@ -14,7 +14,7 @@
     "@": "src/api/"
   },
   "scripts": {
-    "schema:generate": "ts-node src/api/generate-schema.ts",
+    "schema:generate": "ts-node --compilerOptions '{\"jsx\": \"react-jsx\"}' src/api/generate-schema.ts",
     "gql:generate": "graphql-codegen",
     "gql:generate:watch": "graphql-codegen --watch",
     "generate": "npm run schema:generate && npm run gql:generate",
@@ -47,11 +47,12 @@
     "cypress:db-dump:update": "docker compose exec -T postgres pg_dump -U a11yphant a11yphant > db-dump.sql",
     "cypress:db-dump:import": "docker compose exec -T postgres psql -U a11yphant a11yphant < db-dump.sql",
     "start": "next start -p ${SITE_PORT-3001}",
-    "console": "ts-node src/api/console.ts",
+    "console": "ts-node --compilerOptions '{\"jsx\": \"react-jsx\"}' src/api/console.ts",
     "import-challenges": "npm run console import:challenges",
     "delete:staleusers": "npm run console delete:staleusers",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "email": "email dev"
   },
   "dependencies": {
     "@apollo/client": "3.10.4",
@@ -63,7 +64,6 @@
     "@headlessui/react": "1.7.19",
     "@hookform/resolvers": "3.3.4",
     "@monaco-editor/react": "4.6.0",
-    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/apollo": "^12.1.0",
     "@nestjs/common": "^10.3.0",
     "@nestjs/config": "3.2.2",
@@ -72,6 +72,9 @@
     "@nestjs/passport": "10.0.3",
     "@nestjs/platform-express": "^10.3.0",
     "@prisma/client": "5.13.0",
+    "@react-email/components": "0.0.25",
+    "@react-email/render": "1.0.1",
+    "@vercel/analytics": "^1.3.1",
     "axe-core": "^4.7.2",
     "bcrypt": "5.1.1",
     "class-transformer": "^0.5.1",
@@ -189,6 +192,7 @@
     "next-router-mock": "0.9.13",
     "postcss": "8.4.38",
     "prettier": "3.2.5",
+    "react-email": "3.0.1",
     "remark": "15.0.1",
     "remark-html": "16.0.1",
     "rosie": "2.1.1",

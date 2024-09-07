@@ -39,7 +39,7 @@ const About: React.FunctionComponent = () => {
           property="og:image:alt"
           content="Illustrations of people coding along with a textual description of a11ypahnt's benefits, which are studying from the comfort of your home and interactive coding challenges and quizzes."
         />
-        {/* <!-- Twitter Meta Tags --> */}
+        {/* <!-- X/Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="About a11yphant" />

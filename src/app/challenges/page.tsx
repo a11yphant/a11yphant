@@ -1,5 +1,6 @@
 import ChallengeHeader from "app/components/challengePage/ChallengeHeader";
 import ChallengeList from "app/components/challengePage/ChallengeList";
+import ChallengeSignUpPrompt from "app/components/challengePage/ChallengeSignUpPrompt";
 import Legend from "app/components/challengePage/Legend";
 import Footer from "app/components/Footer";
 import NewTab from "app/components/icons/NewTab";
@@ -32,7 +33,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <section id="challenges">
-            <ChallengeHeader className={clsx("2xl:mx-24")} userLoggedIn={currentUser?.isRegistered} />
+            <ChallengeHeader className={clsx("2xl:mx-24")} />
 
             <Legend className={clsx("2xl:mx-24")} />
             <p className={clsx("mb-12 text-grey-middle", "2xl:mx-24")}>
@@ -41,7 +42,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
                 *
               </span>{" "}
               Currently, we only offer easy and medium challenges. However, our small team is dedicated to producing more content for you. We will
-              announce new challenges on our{" "}
+              announce new challenges on{" "}
               <InTextLink
                 href="https://twitter.com/a11yphant"
                 opensInNewTab
@@ -50,9 +51,23 @@ const Challenges = async (): Promise<React.ReactElement> => {
         transition-colors duration-300
         hover:text-primary-light hover:border-transparent
         focus-rounded-instead-of-underline"
-                aria-label="Twitter account, opens in a new tab"
+                aria-label="X/Twitter, opens in a new tab"
               >
-                Twitter account
+                X/Twitter
+                <NewTab />
+              </InTextLink>{" "}
+              or{" "}
+              <InTextLink
+                href="https://www.linkedin.com/company/a11yphant"
+                opensInNewTab
+                overrideClassName
+                className="text-grey-middle font-sans font-normal border-grey-middle
+        transition-colors duration-300
+        hover:text-primary-light hover:border-transparent
+        focus-rounded-instead-of-underline"
+                aria-label="LinkedIn, opens in a new tab"
+              >
+                LinkedIn
                 <NewTab />
               </InTextLink>
               . <br />
@@ -74,6 +89,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
                 challenges={openAndFinishedChallenges}
               />
             )}
+            <ChallengeSignUpPrompt userLoggedIn={currentUser?.isRegistered} />
           </section>
         </div>
       </main>

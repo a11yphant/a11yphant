@@ -12,6 +12,7 @@ interface ChallengeListProps {
 
 const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className, heading, challenges, displayCompleted = true }) => {
   const numberOfCompletedChallenges = challenges.filter((challenge) => challenge.status === ChallengeStatus.Finished).length;
+
   return (
     <div className={clsx("mt-2 mb-6", className)}>
       <div className={clsx("mb-6 flex flex-row items-center")}>

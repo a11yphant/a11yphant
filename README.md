@@ -5,7 +5,7 @@
 The easy way to learn web accessibility
 
 [![Sponsor Us](https://img.shields.io/badge/-Sponsor%20Us-5719D9)](https://github.com/sponsors/a11yphant)
-[![Twitter](https://img.shields.io/badge/-Twitter-7331FF)](https://twitter.com/a11yphant)
+[![X/Twitter](https://img.shields.io/badge/-Twitter-7331FF)](https://x.com/a11yphant)
 [![ProductHunt](https://img.shields.io/badge/-ProductHunt-7331FF)](https://www.producthunt.com/products/a11yphant)
 ![Open Source Project](https://img.shields.io/badge/-Open%20Source%20Project-121212)
 ![Launched 2022](https://img.shields.io/badge/-Launched%202022-121212)
