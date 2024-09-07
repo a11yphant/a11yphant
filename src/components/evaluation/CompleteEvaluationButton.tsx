@@ -1,10 +1,10 @@
 "use client";
 
+import { PageProps } from "app/app/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]/page";
 import LoadingButton from "app/components/buttons/LoadingButton";
 import EndOfChallengeFlashMessage from "app/components/challenge/EndOfChallengeFlashMessage";
 import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { ResultStatus } from "app/generated/graphql";
-import { EvaluationRouterParams } from "app/pages/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import clsx from "clsx";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
@@ -28,7 +28,7 @@ export const CompleteEvaluationButton = ({
 }: CompleteEvaluationButtonProps): React.ReactElement => {
   const router = useRouter();
   const flashMessageApi = useFlashMessageApi();
-  const { challengeSlug, nthLevel }: EvaluationRouterParams = useParams();
+  const { challengeSlug, nthLevel }: PageProps["params"] = useParams();
 
   const [loadingAnimation, setLoadingAnimation] = React.useState(false);
 

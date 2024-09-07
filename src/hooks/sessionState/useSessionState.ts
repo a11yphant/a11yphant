@@ -9,7 +9,7 @@ type NoFunctionObject = {
 };
 type NoFunctionArray = Array<NoFunctionValue>;
 
-export const useSessionState = <S extends NoFunctionValue = undefined>(key: string, initialValue: S): [S, React.Dispatch<SetStateAction<S>>] => {
+export const useSessionState = <S extends NoFunctionValue = undefined>(key: string, initialValue?: S): [S, React.Dispatch<SetStateAction<S>>] => {
   if (typeof window === "undefined") {
     throw new Error("useSessionState must be used in a browser environment");
   }
