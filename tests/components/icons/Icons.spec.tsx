@@ -21,6 +21,7 @@ import Slash from "app/components/icons/Slash";
 import Twitter from "app/components/icons/Twitter";
 import UserAvatar from "app/components/icons/UserAvatar";
 import ClosingX from "app/components/icons/ClosingX";
+import XTwitter from "app/components/icons/XTwitter";
 
 describe.each([
   ["Logo", A11yphantLogo],
@@ -39,13 +40,14 @@ describe.each([
   ["Slash", Slash],
   ["Twitter", Twitter],
   ["UserAvatar", UserAvatar],
-  ["X", ClosingX],
+  ["ClosingX", ClosingX],
   ["LoadingIndicator", LoadingIndicator],
   ["Heart", Heart],
   ["Monitor", Monitor],
   ["Money", Money],
   ["Education", Education],
   ["NewTab", NewTab],
+  ["XTwitter", XTwitter],
 ])("Icons", (_, Component) => {
   test("the %s icon renders without failure", () => {
     expect(() => Component({})).not.toThrow();
