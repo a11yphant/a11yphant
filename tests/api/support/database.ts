@@ -82,12 +82,21 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
 
 export function useDatabase(logger?: Logger): { getPrismaService: () => PrismaService } {
   const client = createTestingPrismaClient(logger || new NoopLogger());
+  let originalDBUrl: string;
+
   beforeAll(async () => {
+    originalDBUrl = getDbUrl().toString();
+    process.env.DATABASE_URL = getCurrentSchemaUrl();
+    process.env.DATABASE_URL_UNPOOLED = getCurrentSchemaUrl();
+
     await client.$connect();
   });
 
   afterAll(async () => {
     await client.$disconnect();
+
+    process.env.DATABASE_URL = originalDBUrl;
+    process.env.DATABASE_URL_UNPOOLED = originalDBUrl;
   });
 
   afterEach(async () => {

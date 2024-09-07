@@ -11,7 +11,6 @@ import { cookies } from "next/headers";
 
 export async function useServerSideCurrentUser(): Promise<User> {
   const jwtService = await useService<JwtService>(JwtService);
-  await useService<JwtService>(JwtService);
   const userService = await useService<UserService>(UserService);
   const configService = await useService<ConfigService>(ConfigService);
 
