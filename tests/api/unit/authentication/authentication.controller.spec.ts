@@ -14,9 +14,9 @@ import { UserService } from "@/user/user.service";
 
 const getAuthController = (
   partials: {
-    userService?: Partial<UserService>;
-    jwtService?: Partial<JwtService>;
-    configData?: Record<string, any>;
+    userService?: Partial;
+    jwtService?: Partial;
+    configData?: Record;
   } = {},
 ): AuthenticationController => {
   const userService = createMock<UserService>(partials.userService);
@@ -129,15 +129,18 @@ describe("authentication controller", () => {
 
     describe("createOauthCookie", () => {
       it("sets the configured cookie", async () => {
-        let cookie: { name: string; token: string; options: Record<string, unknown> };
+        let cookie: { name: string; token: string; options: Record };
 
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
           },
+          user: {
+            id: "12345",
+          },
         });
         const res = createMock<Response>({
-          cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
+          cookie: jest.fn().mockImplementation((name: string, token: string, options: Record) => {
             cookie = {
               name,
               token,
@@ -158,10 +161,13 @@ describe("authentication controller", () => {
         expect(authController.github()).toBeFalsy();
       });
 
-      it("sets the the auth cookie and redirects", async () => {
+      it("sets the auth cookie and redirects", async () => {
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
+          },
+          user: {
+            id: "12345",
           },
         });
         const res = createMock<Response>();
@@ -182,6 +188,9 @@ describe("authentication controller", () => {
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
+          },
+          user: {
+            id: "12345",
           },
         });
         const res = createMock<Response>();
