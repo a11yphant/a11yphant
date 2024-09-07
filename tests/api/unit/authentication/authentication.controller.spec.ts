@@ -14,9 +14,9 @@ import { UserService } from "@/user/user.service";
 
 const getAuthController = (
   partials: {
-    userService?: Partial;
-    jwtService?: Partial;
-    configData?: Record;
+    userService?: Partial<UserService>;
+    jwtService?: Partial<JwtService>;
+    configData?: Record<string, unknown>;
   } = {},
 ): AuthenticationController => {
   const userService = createMock<UserService>(partials.userService);
@@ -129,7 +129,7 @@ describe("authentication controller", () => {
 
     describe("createOauthCookie", () => {
       it("sets the configured cookie", async () => {
-        let cookie: { name: string; token: string; options: Record };
+        let cookie: { name: string; token: string; options: Record<string, unknown> };
 
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
@@ -140,7 +140,7 @@ describe("authentication controller", () => {
           },
         });
         const res = createMock<Response>({
-          cookie: jest.fn().mockImplementation((name: string, token: string, options: Record) => {
+          cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
             cookie = {
               name,
               token,
