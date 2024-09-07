@@ -29,6 +29,7 @@ const ChallengeSignUpPrompt: React.FunctionComponent<ChallengeSignUpPromptProps>
             "2xl:mx-24",
             className,
           )}
+          aria-label="SignUp"
         >
           <p className={clsx("max-w-xs mx-1 mb-0", "xs:ml-4 xs:mt-6", "lg:mr-2 lg:ml-8")}>
             Why not sign up and track your <br></br> stats and save your progress?
