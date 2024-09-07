@@ -1,8 +1,15 @@
+"use client";
+
+import IllustrationFloatingWoman from "app/components/icons/IllustrationFloatingWomen";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-const HeroSection: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
+import AnimationButton from "../buttons/AnimationButton";
+import { useAnimationsContext } from "./UseAnimationsContext";
+
+const HeroSection: React.FunctionComponent = () => {
+  const { animationsEnabled, toggleAnimations } = useAnimationsContext();
   return (
     <section
       className={clsx(
@@ -31,7 +38,10 @@ const HeroSection: React.FunctionComponent<React.PropsWithChildren> = ({ childre
           Start Coding
         </Link>
       </div>
-      <div className={clsx("flex justify-center mb-6", "md:mb-0 md:max-w-xs md:ml-12", "lg:max-w-sm", "xl:max-w-full")}>{children}</div>
+      <div className={clsx("flex justify-center mb-6", "md:mb-0 md:max-w-xs md:ml-12", "lg:max-w-sm", "xl:max-w-full")}>
+        <IllustrationFloatingWoman className={clsx("h-auto move-floating-woman", !animationsEnabled && "stopAnimation")} />
+        <AnimationButton animation={animationsEnabled} onClick={() => toggleAnimations()} />
+      </div>
     </section>
   );
 };

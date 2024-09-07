@@ -4,6 +4,8 @@ import { FlashMessage, FlashMessageProps } from "app/components/common/flashMess
 import React from "react";
 import { createPortal } from "react-dom";
 
+import FlashMessageTrigger from "./FlashMessageTrigger";
+
 type UserDefinedFlashMessageProps = Omit<FlashMessageProps, "show" | "onClose">;
 
 export interface FlashMessageApi {
@@ -54,6 +56,7 @@ export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({
           </FlashMessage>,
           portalRootRef.current,
         )}
+      <FlashMessageTrigger />
     </FlashMessageContext.Provider>
   );
 };
