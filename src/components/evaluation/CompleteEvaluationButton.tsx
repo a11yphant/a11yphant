@@ -1,4 +1,8 @@
+"use client";
+
 import LoadingButton from "app/components/buttons/LoadingButton";
+import EndOfChallengeFlashMessage from "app/components/challenge/EndOfChallengeFlashMessage";
+import { useFlashMessageApi } from "app/components/common/flashMessage/FlashMessageContext";
 import { ResultStatus } from "app/generated/graphql";
 import { EvaluationRouterParams } from "app/pages/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]";
 import clsx from "clsx";
@@ -23,9 +27,16 @@ export const CompleteEvaluationButton = ({
   onRetry,
 }: CompleteEvaluationButtonProps): React.ReactElement => {
   const router = useRouter();
+  const flashMessageApi = useFlashMessageApi();
   const { challengeSlug, nthLevel }: EvaluationRouterParams = useParams();
 
   const [loadingAnimation, setLoadingAnimation] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isLastLevel && status === ResultStatus.Success) {
+      flashMessageApi.show(<EndOfChallengeFlashMessage />);
+    }
+  }, [flashMessageApi, isLastLevel, status]);
 
   if (status === ResultStatus.Fail) {
     return (
