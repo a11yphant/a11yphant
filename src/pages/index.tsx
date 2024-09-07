@@ -71,7 +71,7 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
           property="og:image:alt"
           content="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
         />
-        {/* <!-- Twitter Meta Tags --> */}
+        {/* <!-- X/Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content="a11yphant - The easy way to learn web accessibility" />
@@ -137,32 +137,32 @@ const Home: React.VoidFunctionComponent<HomeProps> = ({ fmType }) => {
             <QuoteCard
               quote="Thank you for your wonderful work!"
               author="Vitaly Friedman (@vitalyf)"
-              url="https://twitter.com/vitalyf/status/1592382098391842817"
+              url="https://x.com/vitalyf/status/1592382098391842817"
             />
             <QuoteCard
               quote="a11yphant is such a good resource to learn the basics of HTML accessibility by doing."
               author="Kitty Giraudel (@KittyGiraudel)"
-              url="https://twitter.com/KittyGiraudel/status/1586278237407440897"
+              url="https://x.com/KittyGiraudel/status/1586278237407440897"
             />
             <QuoteCard
               quote="If you are looking for a way to get started learning about #WebAccessibility, check out a11yphant. Bit sized coding challenges, super fun & interactive."
               author="Josefine Schaefer (@JsfnSchfr)"
-              url="https://twitter.com/JsfnSchfr/status/1698260298551988251"
+              url="https://x.com/JsfnSchfr/status/1698260298551988251"
             />
             <QuoteCard
               quote="When thinking about how to train developers on #accessibility (after researching their views) this interactive coding tutorial by a11yphant is what I envisaged.  It's outstanding."
               author="James Buller (@jbuller)"
-              url="https://twitter.com/jbuller/status/1512392777346211844"
+              url="https://x.com/jbuller/status/1512392777346211844"
             />
             <QuoteCard
               quote="Love it - much better than just documentation. Will put it on our developer onboarding list."
               author="@a11y_mmo"
-              url="https://twitter.com/a11y_mmo/status/1592598812237139968"
+              url="https://x.com/a11y_mmo/status/1592598812237139968"
             />
             <QuoteCard
               quote="a11yphant - A cool project that teaches the basics of web accessibility."
               author="Vincent Will (@wweb_dev)"
-              url="https://twitter.com/wweb_dev/status/1491014410487611393"
+              url="https://x.com/wweb_dev/status/1491014410487611393"
             />
           </TestimonialSection>
           <CTASection>

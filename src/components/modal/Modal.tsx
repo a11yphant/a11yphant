@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "app/components/buttons/Button";
-import X from "app/components/icons/X";
+import ClosingX from "app/components/icons/ClosingX";
 import clsx from "clsx";
 import React, { useRef } from "react";
 
@@ -57,7 +57,7 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
             )}
           >
             <span className={clsx("sr-only")}>Close</span>
-            <X />
+            <ClosingX />
           </Button>
 
           {children}
