@@ -69,7 +69,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                     "hover:bg-light hover:text-primary",
                     "xl:max-w-none",
                   )}
-                  aria-label="Sign up via Twitter"
+                  aria-label="Sign up via X/Twitter"
                 >
                   <Twitter
                     className={clsx("inline-block h-10 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")}

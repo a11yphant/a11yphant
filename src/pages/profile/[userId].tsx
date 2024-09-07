@@ -75,7 +75,7 @@ const Challenge: React.FunctionComponent = () => {
           property="og:image:alt"
           content="A screenshot compilation of the homepage, a quiz and a coding level on a11yphant. The homepage shows an illustration of a person coding and the text `learning web accessibility made easy`. The quiz is multiple choice and the coding level consists of an instruction section, a code editor and a preview section to view the code one has just written."
         />
-        {/* <!-- Twitter Meta Tags --> */}
+        {/* <!-- X/Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@a11yphant" />
         <meta name="twitter:title" content={`${user.displayName || "An anonymous user"}'s profile | a11yphant`} />

@@ -33,7 +33,7 @@ const SignUpBox: React.FC = () => {
           <Github className={clsx("inline-block h-6 -m-2 ml-6 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
         </ThirdPartyAuthLink>
         <ThirdPartyAuthLink href={twitterLoginEndpoint || "/auth/twitter"}>
-          {"Sign Up via Twitter"}
+          {"Sign Up via X/Twitter"}
           <Twitter className={clsx("inline-block h-8 -m-2 ml-4 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
         </ThirdPartyAuthLink>
       </div>

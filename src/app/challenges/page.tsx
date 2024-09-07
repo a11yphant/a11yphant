@@ -50,9 +50,9 @@ const Challenges = async (): Promise<React.ReactElement> => {
         transition-colors duration-300
         hover:text-primary-light hover:border-transparent
         focus-rounded-instead-of-underline"
-                aria-label="Twitter account, opens in a new tab"
+                aria-label="X/Twitter account, opens in a new tab"
               >
-                Twitter account
+                X/Twitter account
                 <NewTab />
               </InTextLink>
               . <br />

@@ -51,7 +51,7 @@ const Footer: React.FunctionComponent = () => (
           <h3 className="h6 mb-3 uppercase">Social</h3>
           <LinkList>
             <LinkListItem href="mailto:info@a11yphant.com" title="Contact" />
-            <LinkListItem href="https://twitter.com/a11yphant" title="Twitter" />
+            <LinkListItem href="https://x.com/a11yphant" title="X/Twitter" />
             <LinkListItem href="https://github.com/a11yphant/a11yphant" title="GitHub" />
           </LinkList>
         </div>
