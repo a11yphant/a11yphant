@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { MockedResponse, MockLink } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
+import { UserFactory } from "@tests/support/factories/models/user.factory";
 import Challenges from "app/app/challenges/page";
-import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus, CurrentUserDocument } from "app/generated/graphql";
+import { ChallengeDifficulty, ChallengesDocument, ChallengeStatus } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
 
 jest.mock("app/lib/apollo-client/rsc", () => ({
@@ -20,23 +21,12 @@ jest.mock("app/components/Navigation", () => ({
   default: jest.fn(),
 }));
 
+jest.mock("app/hooks/useServerSideCurrentUser", () => ({
+  useServerSideCurrentUser: () => UserFactory.build(),
+}));
+
 function mockApolloClient(): void {
   const mocks: MockedResponse[] = [
-    {
-      request: {
-        query: CurrentUserDocument,
-      },
-      result: {
-        data: {
-          currentUser: {
-            id: "uuid",
-            displayName: null,
-            isRegistered: false,
-            isVerified: false,
-          },
-        },
-      },
-    },
     {
       request: {
         query: ChallengesDocument,
