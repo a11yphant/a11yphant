@@ -213,3 +213,4 @@ jobs:
 
   deploy:
     uses: ./.github/workflows/deploy.yml
+    secrets: inherit
