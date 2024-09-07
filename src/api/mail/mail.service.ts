@@ -49,7 +49,7 @@ export class MailService {
   async generateConfirmationLink(token: string): Promise<string> {
     const url = this.config.get<string>("api.url");
 
-    return `${url}/auth/confirm?code=${token}`;
+    return `${url}/api/auth/confirm?code=${token}`;
   }
 
   async generatePasswordResetLink(token: string): Promise<string> {
