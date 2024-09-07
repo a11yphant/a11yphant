@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { MockedResponse, MockLink } from "@apollo/client/testing";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import Level from "app/app/challenges/[challengeSlug]/level/[nthLevel]/page";
 import CodeLevel from "app/components/challenge/level/CodeLevel";
 import QuizLevel from "app/components/challenge/level/QuizLevel";
@@ -199,7 +199,10 @@ describe("level page", () => {
   });
 
   it("renders h1 with challenge name and level", async () => {
-    render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
+    });
 
     expect(screen.getByRole("heading", { level: 1, name: `${defaultChallenge.name} - Level 1` })).toBeInTheDocument();
   });
@@ -217,7 +220,10 @@ describe("level page", () => {
     mockApolloClient({ level: defaultQuizLevel });
     (QuizLevel as unknown as jest.Mock).mockImplementation(() => <></>);
 
-    render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
+    });
 
     expect(QuizLevel).toHaveBeenCalled();
   });
