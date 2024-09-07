@@ -4,13 +4,13 @@
 
 import { useDatabase } from "@tests/support/database";
 import { UserService } from "app/api/user/user.service";
-import { useService } from "app/hooks/useService";
+import { getService } from "app/lib/get-service";
 
-describe("use service", () => {
+describe("get service", () => {
   useDatabase();
 
   it("can resolve a service", async () => {
-    const service = await useService<UserService>(UserService);
+    const service = await getService<UserService>(UserService);
 
     expect(service).toBeInstanceOf(UserService);
   });

@@ -21,8 +21,8 @@ jest.mock("app/components/Navigation", () => ({
   default: jest.fn(),
 }));
 
-jest.mock("app/hooks/useServerSideCurrentUser", () => ({
-  useServerSideCurrentUser: () => UserFactory.build(),
+jest.mock("app/lib/get-server-side-current-user", () => ({
+  getServerSideCurrentUser: () => UserFactory.build(),
 }));
 
 function mockApolloClient(): void {

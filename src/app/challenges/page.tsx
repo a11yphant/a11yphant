@@ -7,14 +7,14 @@ import NewTab from "app/components/icons/NewTab";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { ChallengesDocument, ChallengesQuery, ChallengeStatus } from "app/generated/graphql";
-import { useServerSideCurrentUser } from "app/hooks/useServerSideCurrentUser";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
+import { getServerSideCurrentUser } from "app/lib/get-server-side-current-user";
 import clsx from "clsx";
 import { Metadata } from "next";
 
 const Challenges = async (): Promise<React.ReactElement> => {
   const client = getApolloClient();
-  const currentUser = await useServerSideCurrentUser();
+  const currentUser = await getServerSideCurrentUser();
 
   const {
     data: { challenges },
