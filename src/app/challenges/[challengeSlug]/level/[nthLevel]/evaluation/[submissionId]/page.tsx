@@ -19,11 +19,11 @@ async function EvaluationResultLoader({
   return <EvaluationResult submissionResult={submissionResult} {...props} />;
 }
 
-function EvaluationResultWithSuspense({
+async function EvaluationResultWithSuspense({
   submissionResult,
   submissionId,
   ...props
-}: EvaluationResultProps & { submissionResult?: CustomSubmissionResult; submissionId: string }): JSX.Element {
+}: EvaluationResultProps & { submissionResult?: CustomSubmissionResult; submissionId: string }): Promise<JSX.Element> {
   const heading = (
     <h1 className={clsx("sr-only")}>
       Evaluation - {props.challenge.name} - Level {props.nthLevel}
@@ -50,7 +50,7 @@ function EvaluationResultWithSuspense({
     >
       <main className={clsx("h-full max-w-screen-3xl mx-auto px-5", "sm:px-8", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}>
         {heading}
-        <EvaluationResultLoader submissionId={submissionId} {...props} />
+        {await EvaluationResultLoader({ submissionId, ...props })}
       </main>
     </Suspense>
   );
@@ -81,14 +81,14 @@ const Evaluation = async ({ params: { challengeSlug, nthLevel, submissionId } }:
   return (
     <>
       <FullScreenLayout header={<Navigation displayBreadcrumbs isSticky={false} />}>
-        <EvaluationResultWithSuspense
-          submissionResult={submissionResult}
-          submissionId={submissionId}
-          challengeSlug={challengeSlug}
-          challenge={challenge}
-          nthLevel={Number(nthLevel)}
-          isLastLevel={isLastLevel}
-        />
+        {await EvaluationResultWithSuspense({
+          challenge,
+          challengeSlug,
+          nthLevel: Number(nthLevel),
+          submissionId,
+          isLastLevel,
+          submissionResult,
+        })}
       </FullScreenLayout>
     </>
   );
