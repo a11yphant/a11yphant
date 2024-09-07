@@ -36,7 +36,7 @@ export class MailService {
     this.logger.log(`Sending password reset mail to ${context.email}`);
 
     const passwordResetLink = await this.generatePasswordResetLink(context.token);
-    const mailComponent = PasswordReset({ passwordResetLink });
+    const mailComponent = PasswordReset({ passwordResetLink, displayName: context.displayName || context.email });
 
     try {
       await this.sendMailService.sendMail(mailComponent, { to: context.email, subject: "Reset your password for a11yphant.com" });
