@@ -55,8 +55,7 @@ const Registration: React.FunctionComponent<{ confirmationLink: string; displayN
             Welcome to a11yphant! Confirm your registration by activating the link within this email. Start your accessibility journey today!
           </Preview>
           <Container className="px-2">
-            {/* TODO: change image URL */}
-            {/* https://a11yphant.com/images/logo/a11yphant_Logo_combination-mark_light.png */}
+            {/* TODO: find out why URL is not working */}
             <Img src="https://a11yphant.com/images/logo/a11yphant_Logo_combination-mark_light.png" alt="Logo a11yphant" width="auto" height="70" />
             <Hr />
             <Heading as="h1" className="mt-8 leading-tight">
