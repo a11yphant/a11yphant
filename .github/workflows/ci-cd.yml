@@ -210,3 +210,6 @@ jobs:
           name: cypress-screenshots
           path: tests/cypress/screenshots
           retention-days: 1
+
+  deploy:
+    uses: ./.github/workflows/deploy.yml
