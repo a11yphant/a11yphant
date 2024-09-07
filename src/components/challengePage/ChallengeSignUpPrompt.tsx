@@ -21,8 +21,16 @@ const ChallengeSignUpPrompt: React.FunctionComponent<ChallengeSignUpPromptProps>
   return (
     <>
       {!userLoggedIn && (
-        <section className={clsx("flex flex-col -mt-10 mb-3", "xs:flex-row xs:justify-end xs:flex-grow xs:items-baseline", "lg:mb-0", className)}>
-          <p className={clsx("max-w-xs mx-1 my-1", "xs:mr-4", "lg:ml-2 lg:mr-8")}>
+        <section
+          className={clsx(
+            "flex flex-col -mt-10 mb-20",
+            "xs:flex-row-reverse xs:justify-end xs:flex-grow xs:items-center",
+            "lg:mb-0",
+            "2xl:mx-24",
+            className,
+          )}
+        >
+          <p className={clsx("max-w-xs mx-1 mb-0", "xs:ml-4 xs:mt-6", "lg:mr-2 lg:ml-8")}>
             Why not sign up and track your <br></br> stats and save your progress?
           </p>
           <div className="flex flex-col">
