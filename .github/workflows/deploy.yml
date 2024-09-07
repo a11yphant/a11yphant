@@ -17,6 +17,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Setup node
+        uses: ./.github/actions/prepare-node
+
       - name: Create Neon Branch
         id: create-branch
         uses: neondatabase/create-branch-action@v4
