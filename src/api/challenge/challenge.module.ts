@@ -19,16 +19,16 @@ import { RuleService } from "./rule.service";
 import { TaskResolver } from "./task.resolver";
 import { TaskService } from "./task.service";
 
-const definition = {
-  imports: [PrismaModule, SubmissionModule],
-  providers: [ChallengeService, LevelService, RequirementService, HintService, RuleService, TaskService, AnswerOptionService],
-  exports: [LevelService, RequirementService, RuleService],
-};
-
 @Module({
-  ...definition,
+  imports: [PrismaModule, SubmissionModule],
   providers: [
-    ...definition.providers,
+    ChallengeService,
+    LevelService,
+    RequirementService,
+    HintService,
+    RuleService,
+    TaskService,
+    AnswerOptionService,
     ChallengeResolver,
     ChallengesArgs,
     CodeLevelResolver,
@@ -38,8 +38,6 @@ const definition = {
     TaskResolver,
     QuizLevelResolver,
   ],
+  exports: [LevelService, RequirementService, RuleService],
 })
 export class ChallengeModule {}
-
-@Module(definition)
-export class ChallengeModuleLite {}

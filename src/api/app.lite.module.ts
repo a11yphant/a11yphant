@@ -2,6 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { AuthenticationModuleLite } from "./authentication/authentication.lite.module";
+import { ChallengeModuleLite } from "./challenge/challenge.lite.module";
 import apiConfig from "./config/api.config";
 import cookieConfig from "./config/cookie.config";
 import databaseConfig from "./config/database.config";
@@ -11,6 +12,7 @@ import nodeConfig from "./config/node.config";
 import oauthConfig from "./config/oauth.config";
 import siteConfig from "./config/site.config";
 import { PrismaModule } from "./prisma/prisma.module";
+import { SubmissionModuleLite } from "./submission/submission.lite.module";
 import { UserModuleLite } from "./user/user.lite.module";
 
 @Module({
@@ -27,8 +29,8 @@ import { UserModuleLite } from "./user/user.lite.module";
       inject: [ConfigService],
     }),
     AuthenticationModuleLite,
-    // ChallengeModuleLite,
-    // SubmissionModuleLite,
+    ChallengeModuleLite,
+    SubmissionModuleLite,
     UserModuleLite,
   ],
   providers: [Logger],
