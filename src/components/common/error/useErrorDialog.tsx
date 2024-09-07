@@ -3,7 +3,7 @@
 import { ApolloError } from "@apollo/client";
 import ErrorDialog, { ErrorDialogProps } from "app/components/common/error/ErrorDialog";
 import { NetworkError, UnknownError } from "app/components/common/error/errorMessages";
-import { GraphQLFormattedError } from "graphql";
+import { GraphQLError } from "graphql";
 import React from "react";
 
 export interface ApolloErrorResponse {
@@ -29,7 +29,7 @@ const ErrorDialogContext = React.createContext<ErrorDialogApi>({
   },
 });
 
-const getMessageForGraphQLError = (graphQLError: GraphQLFormattedError, options: ErrorDialogOptions): React.ReactNode => {
+const getMessageForGraphQLError = (graphQLError: GraphQLError, options: ErrorDialogOptions): React.ReactNode => {
   if (options?.specificMessages?.[graphQLError.extensions.code as string]) {
     // Show error message for this error code if it has been defined
     return options?.specificMessages?.[graphQLError.extensions.code as string];
