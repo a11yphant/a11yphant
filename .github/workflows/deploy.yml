@@ -29,7 +29,6 @@ jobs:
           username: ${{ env.NEON_DATABASE_USERNAME }}
           api_key: ${{ env.NEON_API_KEY }}
           database: "a11yphant"
-          prisma: true
 
       - name: Run Migrations
         run: |
