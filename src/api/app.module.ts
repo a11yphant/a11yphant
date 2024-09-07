@@ -5,9 +5,9 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ConsoleModule } from "nestjs-console";
 
-import { AuthenticationModule, AuthenticationModuleLite } from "./authentication/authentication.module";
+import { AuthenticationModule } from "./authentication/authentication.module";
 import { SessionInterceptor } from "./authentication/session.interceptor";
-import { ChallengeModule, ChallengeModuleLite } from "./challenge/challenge.module";
+import { ChallengeModule } from "./challenge/challenge.module";
 import apiConfig from "./config/api.config";
 import cookieConfig from "./config/cookie.config";
 import databaseConfig from "./config/database.config";
@@ -19,9 +19,9 @@ import siteConfig from "./config/site.config";
 import { ImporterModule } from "./importer/importer.module";
 import { MailModule } from "./mail/mail.module";
 import { PrismaModule } from "./prisma/prisma.module";
-import { SubmissionModule, SubmissionModuleLite } from "./submission/submission.module";
+import { SubmissionModule } from "./submission/submission.module";
 import { LastSeenInterceptor } from "./user/last-seen.interceptor";
-import { UserModule, UserModuleLite } from "./user/user.module";
+import { UserModule } from "./user/user.module";
 
 export const appModuleMetadata: ModuleMetadata = {
   imports: [
@@ -78,25 +78,3 @@ export const appModuleMetadata: ModuleMetadata = {
 };
 @Module(appModuleMetadata)
 export class AppModule {}
-
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      load: [apiConfig, cookieConfig, gqlConfig, mailConfig, nodeConfig, databaseConfig, oauthConfig, siteConfig],
-      ignoreEnvFile: process.env.IGNORE_ENV_FILE === "true",
-    }),
-    PrismaModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        databaseUrl: config.get<string>("database.url"),
-      }),
-      inject: [ConfigService],
-    }),
-    AuthenticationModuleLite,
-    ChallengeModuleLite,
-    SubmissionModuleLite,
-    UserModuleLite,
-  ],
-  providers: [Logger],
-})
-export class FunctionAppModule {}

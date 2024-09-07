@@ -1,6 +1,3 @@
-import { ChallengeService } from "app/api/challenge/challenge.service";
-import { ChallengeStatus } from "app/api/challenge/enums/challenge-status";
-import { bootstrapFunctionApp } from "app/api/main";
 import ChallengeHeader from "app/components/challengePage/ChallengeHeader";
 import ChallengeList from "app/components/challengePage/ChallengeList";
 import ChallengeSignUpPrompt from "app/components/challengePage/ChallengeSignUpPrompt";
@@ -9,24 +6,15 @@ import Footer from "app/components/Footer";
 import NewTab from "app/components/icons/NewTab";
 import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
-import { ChallengesDocument, ChallengesQuery } from "app/generated/graphql";
+import { ChallengesDocument, ChallengesQuery, ChallengeStatus } from "app/generated/graphql";
+import { useServerSideCurrentUser } from "app/hooks/useServerSideCurrentUser";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
-import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { Metadata } from "next";
 
-const appPromise = bootstrapFunctionApp();
-
 const Challenges = async (): Promise<React.ReactElement> => {
-  const app = await appPromise;
-
-  const service = app.get<ChallengeService>(ChallengeService);
   const client = getApolloClient();
-  const {
-    data: { currentUser },
-  } = await getServerSideCurrentUser(client);
-
-  return <p>{JSON.stringify(await service.findAll(currentUser.id, { currentUserStatus: ChallengeStatus.IN_PROGRESS }))}</p>;
+  const currentUser = await useServerSideCurrentUser();
 
   const {
     data: { challenges },

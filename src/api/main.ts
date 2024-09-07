@@ -3,7 +3,7 @@ import { NestFactory } from "@nestjs/core";
 import * as TypeMetadataStorage from "@nestjs/graphql/dist/schema-builder/storages/type-metadata.storage";
 import cookieParser from "cookie-parser";
 
-import { AppModule, FunctionAppModule } from "./app.module";
+import { AppModule } from "./app.module";
 
 export function configureApp(app: INestApplication): void {
   app.use(cookieParser());
@@ -22,13 +22,6 @@ export async function bootstrap(): Promise<INestApplication> {
   app.enableCors();
   configureApp(app);
   app.enableShutdownHooks();
-  await app.init();
-  return app;
-}
-
-export async function bootstrapFunctionApp(): Promise<INestApplication> {
-  const app = await NestFactory.create(FunctionAppModule);
-  configureApp(app);
   await app.init();
   return app;
 }
