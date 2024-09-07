@@ -38,16 +38,6 @@ const Registration: React.FunctionComponent<{ confirmationLink: string; displayN
       >
         <Html className="font-sans tracking-wide break-words bg-background text-grey text-lg leading-relaxed">
           <Head>
-            <Font
-              fontFamily="IBM Plex Sans"
-              fallbackFontFamily="sans-serif"
-              webFont={{
-                url: "https://a11yphant.com/fonts/ibm-plex-sans/ibm-plex-sans-regular.woff2",
-                format: "woff2",
-              }}
-              fontWeight={400}
-              fontStyle="normal"
-            />
             <title>a11yphant registration</title>
           </Head>
           <Preview>
