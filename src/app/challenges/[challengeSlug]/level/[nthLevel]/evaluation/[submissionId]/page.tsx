@@ -6,8 +6,8 @@ import { getChallenge } from "app/lib/server-side-props/get-challenge";
 import { CustomSubmissionResult, getSubmissionResult } from "app/lib/server-side-props/get-submission-result";
 import clsx from "clsx";
 import { Metadata } from "next";
-import Head from "next/head";
 import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
 
 async function EvaluationResultLoader({
@@ -22,14 +22,22 @@ async function EvaluationResultLoader({
 function EvaluationResultWithSuspense({
   submissionResult,
   submissionId,
-  pageTitle,
   ...props
-}: EvaluationResultProps & { submissionResult?: CustomSubmissionResult; submissionId: string; pageTitle: string }): JSX.Element {
-  if (submissionResult) {
-    return <EvaluationResult submissionResult={submissionResult} {...props} />;
-  }
+}: EvaluationResultProps & { submissionResult?: CustomSubmissionResult; submissionId: string }): JSX.Element {
+  const heading = (
+    <h1 className={clsx("sr-only")}>
+      Evaluation - {props.challenge.name} - Level {props.nthLevel}
+    </h1>
+  );
 
-  const heading = <h1 className={clsx("sr-only")}>{pageTitle}</h1>;
+  if (submissionResult) {
+    return (
+      <main className={clsx("h-full max-w-screen-3xl mx-auto px-5", "sm:px-8", "md:px-12 md:pt-12 md:pb-4 md:flex md:flex-col md:justify-between")}>
+        {heading}
+        <EvaluationResult submissionResult={submissionResult} {...props} />
+      </main>
+    );
+  }
 
   return (
     <Suspense
@@ -59,6 +67,10 @@ export interface PageProps {
 const Evaluation = async ({ params: { challengeSlug, nthLevel, submissionId } }: PageProps): Promise<JSX.Element> => {
   const challenge = await getChallenge(challengeSlug);
 
+  if (!challenge) {
+    notFound();
+  }
+
   let submissionResult: CustomSubmissionResult | undefined;
   if (headers().get("accept")?.includes("text/html")) {
     submissionResult = await getSubmissionResult(submissionId);
@@ -66,16 +78,10 @@ const Evaluation = async ({ params: { challengeSlug, nthLevel, submissionId } }:
 
   const isLastLevel = parseInt(nthLevel as string) + 1 > challenge.levels.length;
 
-  const pageTitle = `Evaluation - ${challenge.name} - Level ${nthLevel}`;
-
   return (
     <>
-      <Head>
-        <title>{pageTitle} | a11yphant</title>
-      </Head>
       <FullScreenLayout header={<Navigation displayBreadcrumbs isSticky={false} />}>
         <EvaluationResultWithSuspense
-          pageTitle={pageTitle}
           submissionResult={submissionResult}
           submissionId={submissionId}
           challengeSlug={challengeSlug}

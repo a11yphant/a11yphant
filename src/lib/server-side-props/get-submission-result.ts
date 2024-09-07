@@ -7,6 +7,7 @@ import {
   ResultStatus,
 } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
+import { notFound } from "next/navigation";
 
 export interface CustomSubmissionResult {
   status: ResultStatus;
@@ -26,6 +27,10 @@ export async function getSubmissionResult(submissionId: string): Promise<CustomS
   } while (response.data.resultForSubmission?.status === ResultStatus.Pending);
 
   const result = response.data.resultForSubmission;
+
+  if (!result) {
+    notFound();
+  }
 
   const failedChecks = result.numberOfFailedRequirementChecks;
   const totalChecks = result.numberOfCheckedRequirements;
