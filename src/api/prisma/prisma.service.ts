@@ -17,7 +17,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         },
       },
     });
-    logger.log(`Establishing connection to ${config.databaseUrl}`, PrismaService.name);
   }
 
   async onModuleInit(): Promise<void> {
