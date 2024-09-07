@@ -1,7 +1,7 @@
 import { Html } from "@react-email/components";
 import * as React from "react";
 
-const PasswordReset: React.FunctionComponent = (props: { passwordResetLink: string }) => {
+const PasswordReset: React.FunctionComponent<{ passwordResetLink: string }> = (props) => {
   return (
     <Html>
       <p>

@@ -1,7 +1,7 @@
 import { Html } from "@react-email/components";
 import * as React from "react";
 
-const Registration: React.FunctionComponent = (props: { confirmationLink: string; displayName: string }) => {
+const Registration: React.FunctionComponent<{ confirmationLink: string; displayName: string }> = (props) => {
   return (
     <Html>
       <h1>Welcome to a11yphant!</h1>
