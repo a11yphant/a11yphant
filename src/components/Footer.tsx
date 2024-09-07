@@ -50,7 +50,7 @@ const Footer: React.FunctionComponent = () => (
         <div className={clsx("flex flex-col my-5", "sm:my-0 sm:mx-9")}>
           <h3 className="h6 mb-3 uppercase">Social</h3>
           <LinkList>
-            <LinkListItem href="mailto:info@a11yphant.com" title="Contact" />
+            <LinkListItem href="mhttps://www.linkedin.com/company/a11yphant" title="LinkedIn" />
             <LinkListItem href="https://x.com/a11yphant" title="X/Twitter" />
             <LinkListItem href="https://github.com/a11yphant/a11yphant" title="GitHub" />
           </LinkList>
@@ -61,6 +61,7 @@ const Footer: React.FunctionComponent = () => (
           <LinkList>
             <LinkListItem href="/legal-notice" title="Legal Notice" />
             <LinkListItem href="/privacy-policy" title="Privacy Policy" />
+            <LinkListItem href="mailto:info@a11yphant.com" title="Contact (Mail)" />
           </LinkList>
         </div>
       </nav>

@@ -42,7 +42,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
                 *
               </span>{" "}
               Currently, we only offer easy and medium challenges. However, our small team is dedicated to producing more content for you. We will
-              announce new challenges on our{" "}
+              announce new challenges on{" "}
               <InTextLink
                 href="https://twitter.com/a11yphant"
                 opensInNewTab
@@ -51,9 +51,23 @@ const Challenges = async (): Promise<React.ReactElement> => {
         transition-colors duration-300
         hover:text-primary-light hover:border-transparent
         focus-rounded-instead-of-underline"
-                aria-label="X/Twitter account, opens in a new tab"
+                aria-label="X/Twitter, opens in a new tab"
               >
-                X/Twitter account
+                X/Twitter
+                <NewTab />
+              </InTextLink>{" "}
+              or{" "}
+              <InTextLink
+                href="https://www.linkedin.com/company/a11yphant"
+                opensInNewTab
+                overrideClassName
+                className="text-grey-middle font-sans font-normal border-grey-middle
+        transition-colors duration-300
+        hover:text-primary-light hover:border-transparent
+        focus-rounded-instead-of-underline"
+                aria-label="LinkedIn, opens in a new tab"
+              >
+                LinkedIn
                 <NewTab />
               </InTextLink>
               . <br />
