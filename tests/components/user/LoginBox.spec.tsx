@@ -54,7 +54,7 @@ describe("login box", () => {
   it("renders the login via twitter link", () => {
     renderLoginBox();
 
-    expect(screen.getByRole("link", { name: /Log in via Twitter/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Log in via X\/Twitter/ })).toBeInTheDocument();
   });
 
   it("renders a button to create an account", () => {
