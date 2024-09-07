@@ -20,7 +20,7 @@ import Reset from "app/components/icons/Reset";
 import Slash from "app/components/icons/Slash";
 import Twitter from "app/components/icons/Twitter";
 import UserAvatar from "app/components/icons/UserAvatar";
-import X from "app/components/icons/X";
+import ClosingX from "app/components/icons/ClosingX";
 
 describe.each([
   ["Logo", A11yphantLogo],
@@ -39,7 +39,7 @@ describe.each([
   ["Slash", Slash],
   ["Twitter", Twitter],
   ["UserAvatar", UserAvatar],
-  ["X", X],
+  ["X", ClosingX],
   ["LoadingIndicator", LoadingIndicator],
   ["Heart", Heart],
   ["Monitor", Monitor],
