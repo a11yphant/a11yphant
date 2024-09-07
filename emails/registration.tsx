@@ -1,5 +1,4 @@
-import { Container, Font, Head, Heading, Hr, Html, Img, Link, Preview } from "@react-email/components";
-import { Tailwind } from "@react-email/tailwind";
+import { Container, Font, Head, Heading, Hr, Html, Img, Link, Preview, Tailwind } from "@react-email/components";
 import * as React from "react";
 
 const Registration: React.FunctionComponent<{ confirmationLink: string; displayName: string }> = (props) => {

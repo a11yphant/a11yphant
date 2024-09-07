@@ -140,7 +140,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               </li>
               <li className={clsx("m-0 my-4")}>
                 <strong>Social Media Login Data.</strong> We may provide you with the option to register with us using your existing social media
-                account details, like your Twitter and GitHub account. If you choose to register in this way, we will collect the information
+                account details, like your X/Twitter and GitHub account. If you choose to register in this way, we will collect the information
                 described in the section called <InTextLink href="#chapter5">"how do we handle your social logins"</InTextLink> below.
               </li>
             </ul>
@@ -172,7 +172,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             <ul className={clsx("list-disc ml-6 mb-8")}>
               <li className={clsx("m-0 my-4")}>
                 <strong>To facilitate account creation and login process.</strong> If you choose to InTextLink your account with us to a third-party
-                account (such as your Twitter or Github account), we use the information you allowed us to collect from those third parties to
+                account (such as your X/Twitter or Github account), we use the information you allowed us to collect from those third parties to
                 facilitate account creation and login process for the performance of the contract. See the section below headed{" "}
                 <InTextLink href="#chapter5">"how do we handle your social logins"</InTextLink> for further information.
               </li>
@@ -272,9 +272,9 @@ const PrivacyPolicy: React.FunctionComponent = () => {
 
             <p className={clsx("mt-10")}>
               Our Website offers you the ability to register and login using your third-party social media account details (like your GitHub or
-              Twitter logins). Where you choose to do this, we will receive certain profile information about you from your social media provider. The
-              profile information we receive may vary depending on the social media provider concerned, but will often include your name, username,
-              profile picture as well as other information you choose to make public on such social media platform.
+              X/Twitter logins). Where you choose to do this, we will receive certain profile information about you from your social media provider.
+              The profile information we receive may vary depending on the social media provider concerned, but will often include your name,
+              username, profile picture as well as other information you choose to make public on such social media platform.
             </p>
             <p>
               We will use the information we receive only for the purposes that are described in this privacy notice or that are otherwise made clear
