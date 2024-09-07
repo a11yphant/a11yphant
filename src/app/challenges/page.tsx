@@ -81,7 +81,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
                 challenges={openAndFinishedChallenges}
               />
             )}
-            <ChallengeSignUpPrompt userLoggedIn={currentUser?.isRegistered} />
+            <ChallengeSignUpPrompt userLoggedIn={currentUser?.authProvider !== "anonymous"} />
           </section>
         </div>
       </main>
