@@ -16,11 +16,9 @@ export class SendMailService {
 
     switch (this.config.get<string>("mail.provider")) {
       case "ses":
-        this.sendWithSes(view, context);
-        break;
+        return this.sendWithSes(view, context);
       default:
-        this.sendWithSmtp(view, context);
-        break;
+        return this.sendWithSmtp(view, context);
     }
   }
 
@@ -31,7 +29,7 @@ export class SendMailService {
       credentials: defaultProvider(),
     });
 
-    sesClient.sendEmail({
+    await sesClient.sendEmail({
       Source: this.config.get<string>("mail.from"),
       Destination: {
         ToAddresses: [context.to],
@@ -52,17 +50,23 @@ export class SendMailService {
   }
 
   private async sendWithSmtp(content: string, context: SendMailParams): Promise<void> {
-    const transport = nodemailer.createTransport({
+    const transportConfig = {
       host: this.config.get<string>("mail.smtp.endpoint"),
       port: this.config.get<number>("mail.smtp.port"),
       secure: false, // secure: false causes smtp to uprade to STARTTLS when available
-      auth: {
+      auth: null,
+    };
+
+    if (this.config.get<string>("mail.smtp.username") && this.config.get<string>("mail.smtp.password")) {
+      transportConfig.auth = {
         user: this.config.get<string>("mail.smtp.username"),
         pass: this.config.get<string>("mail.smtp.password"),
-      },
-    });
+      };
+    }
 
-    transport.sendMail({
+    const transport = nodemailer.createTransport(transportConfig);
+
+    await transport.sendMail({
       from: this.config.get<string>("mail.from"),
       to: context.to,
       subject: context.subject,
