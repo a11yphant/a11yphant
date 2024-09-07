@@ -34,7 +34,7 @@ jobs:
             touch .env
 
             echo DATABASE_URL=${{ steps.create-branch.outputs.db_url_with_pooler }}?sslmode=require >> .env
-            echo DIRECT_URL=${{ steps.create-branch.outputs.db_url }}?sslmode=require >> .env
+            echo DATABSE_URL_UNPOOLED=${{ steps.create-branch.outputs.db_url }}?sslmode=require >> .env
 
             npm run db:generate
             npm run db:migrate:prod
