@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 import Github from "../icons/Github";
-import Twitter from "../icons/Twitter";
+import XTwitter from "../icons/XTwitter";
 import LoginForm from "./LoginForm";
 import ThirdPartyAuthLink from "./ThirdPartyAuthLink";
 import UnderlinedTextButton from "./UnderlinedTextButton";
@@ -32,7 +32,7 @@ const LoginBox: React.FC = () => {
         </ThirdPartyAuthLink>
         <ThirdPartyAuthLink href={twitterLoginEndpoint || "/auth/twitter"}>
           {"Log in via X/Twitter"}
-          <Twitter className={clsx("inline-block h-8 -m-2 ml-4 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
+          <XTwitter className={clsx("inline-block h-5 -m-2 ml-4 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
         </ThirdPartyAuthLink>
       </div>
       <UnderlinedTextButton onClick={() => userAccountModalApi.show("reset-password")}>Forgot your password? Reset it here.</UnderlinedTextButton>

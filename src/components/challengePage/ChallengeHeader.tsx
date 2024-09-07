@@ -6,7 +6,7 @@ import React from "react";
 
 import Button from "../buttons/Button";
 import Github from "../icons/Github";
-import Twitter from "../icons/Twitter";
+import XTwitter from "../icons/XTwitter";
 import { useUserAccountModalApi } from "../user/useUserAccountModalApi";
 
 export interface ChallengeHeaderProps {
@@ -60,7 +60,7 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                   <Github className={clsx("inline-block h-6 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")} />
                 </a>
               </div>
-              <div className={clsx("max-w-full block mx-1")}>
+              <div className={clsx("max-w-full block mx-1 flex-grow")}>
                 <a
                   href={twitterLoginEndpoint || "/auth/twitter"}
                   className={clsx(
@@ -71,8 +71,8 @@ const ChallengeHeader: React.FunctionComponent<ChallengeHeaderProps> = ({ classN
                   )}
                   aria-label="Sign up via X/Twitter"
                 >
-                  <Twitter
-                    className={clsx("inline-block h-10 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")}
+                  <XTwitter
+                    className={clsx("inline-block h-5 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")}
                   />
                 </a>
               </div>
