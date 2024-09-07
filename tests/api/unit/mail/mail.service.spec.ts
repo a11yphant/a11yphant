@@ -1,19 +1,19 @@
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { MailerService } from "@nestjs-modules/mailer";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock } from "@tests/support/helpers";
+import { SendMailService } from "app/api/mail/sendMail.service";
 
 import { MailService } from "@/mail/mail.service";
 import { SendRegistrationMailContext } from "@/mail/send-registration-mail-context.interface";
 import { User } from "@/user/models/user.model";
 
 const getMailService = (
-  partials: { mailerService?: Partial<MailerService>; logger?: Partial<Logger> } = {},
+  partials: { sendMailService?: Partial<SendMailService>; logger?: Partial<Logger> } = {},
   configData?: Record<string, any>,
 ): MailService => {
-  const mailerService = createMock<MailerService>(partials?.mailerService);
+  const mailerService = createMock<SendMailService>(partials?.sendMailService);
   const config = createMock<ConfigService>(createConfigServiceMock(configData));
   const logger = createMock<Logger>(partials?.logger);
 
@@ -33,17 +33,17 @@ describe("mailService", () => {
   describe("send registration mail", () => {
     it("sends a registration mail", async () => {
       const sendMail = jest.fn();
-      const service = getMailService({ mailerService: { sendMail } });
+      const service = getMailService({ sendMailService: { sendMail } });
       const context = buildContext();
 
       await service.sendRegistrationMail(context);
 
-      expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: context.email }));
+      expect(sendMail).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ to: context.email }));
     });
 
     it("logs an error if mail sending fails", async () => {
       const error = jest.fn();
-      const service = getMailService({ mailerService: { sendMail: jest.fn().mockRejectedValue("Error") }, logger: { error } });
+      const service = getMailService({ sendMailService: { sendMail: jest.fn().mockRejectedValue("Error") }, logger: { error } });
 
       await service.sendRegistrationMail(buildContext(UserFactory.build()));
 
@@ -54,17 +54,17 @@ describe("mailService", () => {
   describe("send password reset mail", () => {
     it("sends a password reset mail", async () => {
       const sendMail = jest.fn();
-      const service = getMailService({ mailerService: { sendMail } });
+      const service = getMailService({ sendMailService: { sendMail } });
       const context = buildContext();
 
       await service.sendPasswordResetMail(context);
 
-      expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: context.email }));
+      expect(sendMail).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ to: context.email }));
     });
 
     it("logs an error if mail sending fails", async () => {
       const error = jest.fn();
-      const service = getMailService({ mailerService: { sendMail: jest.fn().mockRejectedValue("Error") }, logger: { error } });
+      const service = getMailService({ sendMailService: { sendMail: jest.fn().mockRejectedValue("Error") }, logger: { error } });
 
       await service.sendPasswordResetMail(buildContext(UserFactory.build()));
 
