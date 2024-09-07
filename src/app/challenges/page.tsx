@@ -33,10 +33,10 @@ const Challenges = async (): Promise<React.ReactElement> => {
       <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
         <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
           <section id="challenges">
-            <ChallengeHeader className={clsx("2xl:mx-24")} />
+            <ChallengeHeader />
 
-            <Legend className={clsx("2xl:mx-24")} />
-            <p className={clsx("mb-12 text-grey-middle", "2xl:mx-24")}>
+            <Legend />
+            <p className={clsx("mb-12 text-grey-middle")}>
               <span className="sr-only">Disclaimer:</span>
               <span aria-hidden="true" className="text-xl text-grey-middle">
                 *
@@ -74,17 +74,11 @@ const Challenges = async (): Promise<React.ReactElement> => {
             </p>
 
             {inProgressChallenges.length > 0 && (
-              <ChallengeList
-                className={clsx("2xl:mx-24")}
-                heading={"Continue where you left"}
-                challenges={inProgressChallenges}
-                displayCompleted={false}
-              />
+              <ChallengeList heading={"Continue where you left"} challenges={inProgressChallenges} displayCompleted={false} />
             )}
 
             {openAndFinishedChallenges.length > 0 && (
               <ChallengeList
-                className={clsx("2xl:mx-24")}
                 heading={inProgressChallenges.length === 0 ? "All challenges" : "Other challenges"}
                 challenges={openAndFinishedChallenges}
               />
