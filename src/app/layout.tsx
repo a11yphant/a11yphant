@@ -5,7 +5,6 @@ import "app/styles/custom.scss";
 
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getClientConfig, getConfig } from "app/lib/config/rsc";
 import { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
@@ -28,7 +27,6 @@ const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children
       <body>
         <ClientProviders config={getClientConfig(host)}>{children}</ClientProviders>
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
