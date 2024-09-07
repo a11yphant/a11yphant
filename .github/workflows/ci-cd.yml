@@ -64,6 +64,7 @@ jobs:
         ports:
           - 5432:5432
     env:
+      API_KEY: please-generate-a-secret-key-for-production
       SITE_HOST: localhost
       SITE_PORT: 3001
       SITE_GRAPHQL_ENDPOINT_SERVER: http://localhost:3000/graphql
