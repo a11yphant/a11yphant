@@ -4,6 +4,7 @@ import "app/styles/fonts.scss";
 import "app/styles/custom.scss";
 
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
+import { Analytics } from "@vercel/analytics/react";
 import { getClientConfig, getConfig } from "app/lib/config/rsc";
 import { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
@@ -25,6 +26,7 @@ const RootLayout: React.FunctionComponent<React.PropsWithChildren> = ({ children
       <head>{config.plausibleBaseUrl && <Script data-domain={host} src="/js/script.js" />}</head>
       <body>
         <ClientProviders config={getClientConfig(host)}>{children}</ClientProviders>
+        <Analytics />
       </body>
     </html>
   );
