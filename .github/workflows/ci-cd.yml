@@ -214,3 +214,5 @@ jobs:
   deploy:
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
+    permissions:
+      pull-requests: write
