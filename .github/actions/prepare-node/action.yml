@@ -1,12 +1,5 @@
 name: Prepare Node
-
-inputs:
-  path:
-    required: true
-    type: string
-  npm-token:
-    required: true
-    type: string
+description: Install node and dependencies
 
 runs:
   using: composite
@@ -14,14 +7,10 @@ runs:
     - name: Setup node
       uses: actions/setup-node@v4
       with:
-        node-version: 18.15.0
+        node-version-file: .nvmrc
         cache: npm
-        registry-url: https://npm.pkg.github.com/
-        scope: '@a11yphant'
-        cache-dependency-path: ${{ inputs.path }}/package-lock.json
+        cache-dependency-path: package-lock.json
 
     - name: NPM Install
       shell: bash
-      run: npm ci --prefix ${{ inputs.path }}
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
+      run: npm ci

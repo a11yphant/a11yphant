@@ -12,12 +12,4 @@ if [ ! -f ./.env ]; then
     cp ./.env.example ./.env
 fi
 
-# create api symlinks
-rm -f ./services/api/.env
-ln -s ./../../.env ./services/api/.env
-
-# create site symlinks
-rm -f ./services/site/.env
-ln -s ./../../.env ./services/site/.env
-
 npm install
