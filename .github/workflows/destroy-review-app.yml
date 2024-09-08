@@ -17,3 +17,6 @@ jobs:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
           branch: preview/pr-${{ github.event.number }}-${{ env.BRANCH_NAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
+
+      - name: Unlink domain alias
+        run: vercel alias --token=${{ secrets.VERCEL_TOKEN }} --yes rm pr-${{ github.event.number }}-a11yphant.vercel.app
