@@ -117,8 +117,6 @@
     "server-only": "^0.0.1",
     "set-cookie-parser": "2.7.0",
     "sharp": "0.33.5",
-    "set-cookie-parser": "2.6.0",
-    "sharp": "0.32.6",
     "yup": "1.4.0"
   },
   "devDependencies": {
