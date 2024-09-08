@@ -35,7 +35,7 @@ const ChallengeStatus: React.FunctionComponent<ChallengeStatusProps> = ({ id, ch
                     challengeStatus === ChallengeStatusEnum.Open && "border-grey-dark",
                   )}
                 >
-                  <span className={clsx("font-normal mb-0 block px-4 py-3", "text-white")} aria-label={`Challenge:${challenge.name}`}>
+                  <span className={clsx("font-normal mb-0 block px-4 py-3", "text-white")} aria-label={`Challenge: ${challenge.name}`}>
                     {challenge.name}
                   </span>
                   {challengeStatus !== ChallengeStatusEnum.Finished && (
@@ -53,12 +53,14 @@ const ChallengeStatus: React.FunctionComponent<ChallengeStatusProps> = ({ id, ch
                           "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
                         )}
                       >
+                        <span className="sr-only"> - </span>
                         {(challenge.numberOfFinishedLevels / challenge.numberOfLevels) * 100}% completed
                       </span>
                     </div>
                   )}
                   {challengeStatus === ChallengeStatusEnum.Finished && (
                     <>
+                      <span className="sr-only"> - completed</span>
                       <Check className="h-4 w-10 absolute top-4 right-5 text-grey-light" />
                     </>
                   )}

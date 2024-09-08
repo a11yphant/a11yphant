@@ -117,15 +117,22 @@ const Challenge: React.FunctionComponent = () => {
             >
               <div className={clsx("flex justify-between flex-col mb-4", "md:flex-row sm:mb-0")}>
                 <div>
-                  <h2 className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")}>Hey, {user.displayName || "Anonymous coder"}</h2>
+                  <h2 className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")} aria-label={`Hey, ${user.displayName || "Anonymous coder"}`}>
+                    Hey, {user.displayName || "anonymous coder"}
+                  </h2>
                   <p className={clsx("text-grey-middle")}>You are learning to code accessibly.</p>
                 </div>
 
                 <div>
                   <div className="border-solid border-2 border-primary rounded-xl bg-primary px-6 py-4 text-center">
-                    <h3 className={clsx("h5 font-normal", "md:mb-2", "lg:h5 lg:font-normal")}>finished challenges</h3>
-                    <p className={clsx("font-mono", "h1 font-normal", "sm:text-7xl")}>
-                      {completedChallenges.length}/{totalChallenges} <span className="sr-only">challenges</span>
+                    <h3 className={clsx("h5 font-normal", "md:mb-2", "lg:h5 lg:font-normal")} aria-label="Finished challenges: ">
+                      finished challenges
+                    </h3>
+                    <p
+                      className={clsx("font-mono", "h1 font-normal", "sm:text-7xl")}
+                      aria-label={`${completedChallenges.length} of ${totalChallenges}`}
+                    >
+                      {completedChallenges.length}/{totalChallenges}
                     </p>
                   </div>
 
