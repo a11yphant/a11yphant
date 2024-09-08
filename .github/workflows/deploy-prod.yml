@@ -7,7 +7,11 @@ jobs:
   deploy-production:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: ./.github/actions/prepare-node
 
       - name: Run Prisma Migrate
         run: |
