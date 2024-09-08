@@ -16,9 +16,10 @@ const ChallengeStatus: React.FunctionComponent<ChallengeStatusProps> = ({ id, ch
     <>
       <h3 id={id} className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>
         {challengeStatus === ChallengeStatusEnum.Finished && "Completed"}
-        {challengeStatus === ChallengeStatusEnum.InProgress && "Currently coding"}
+        {challengeStatus === ChallengeStatusEnum.InProgress && "Currently solving"}
         {challengeStatus === ChallengeStatusEnum.Open && "Not started yet"}
       </h3>
+
       <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {challenges.map(
           (challenge) =>
@@ -52,8 +53,7 @@ const ChallengeStatus: React.FunctionComponent<ChallengeStatusProps> = ({ id, ch
                           "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
                         )}
                       >
-                        {challengeStatus === ChallengeStatusEnum.InProgress && "X% completed"}
-                        {challengeStatus === ChallengeStatusEnum.Open && "0% completed"}
+                        {(challenge.numberOfFinishedLevels / challenge.numberOfLevels) * 100}% completed
                       </span>
                     </div>
                   )}

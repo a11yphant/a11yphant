@@ -92,7 +92,7 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("bg-texture bg-repeat-space bg-contain bg-origin-border bg-top mt-32 pb-8")}>
+      <main className={clsx("bg-texture bg-repeat-round bg-contain bg-origin-border bg-top mt-32 pb-8")}>
         <div className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
             <div
@@ -136,11 +136,12 @@ const Challenge: React.FunctionComponent = () => {
                 </div>
               </div>
 
-              {/* {completedChallenges.length > 0 && ( */}
-              <section aria-labelledby="completedChallengeStats">
-                <ChallengeStatus id="completedChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.Finished} />
-              </section>
-              {/* )} */}
+              {startedChallenges.length > 0 && (
+                // {completedChallenges.length > 0 && (
+                <section aria-labelledby="completedChallengeStats">
+                  <ChallengeStatus id="completedChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.Finished} />
+                </section>
+              )}
 
               {startedChallenges.length > 0 && (
                 <section aria-labelledby="startedChallengeStats">
