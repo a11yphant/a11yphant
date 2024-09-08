@@ -96,7 +96,7 @@ describe("user profile page", () => {
 
       expect(screen.getByText("Dummy Challenge 3")).toBeInTheDocument();
       // eslint-disable-next-line testing-library/no-node-access
-      expect(screen.getByText("Currently coding", { selector: "h3" }).parentElement.innerHTML).toContain("Dummy Challenge 3");
+      expect(screen.getByText("Currently solving", { selector: "h3" }).parentElement.innerHTML).toContain("Dummy Challenge 3");
     });
   });
 
