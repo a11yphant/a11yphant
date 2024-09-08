@@ -36,7 +36,7 @@ describe("ChallengeList", () => {
     );
 
     expect(screen.getByText(headingTextDifficulty, { selector: "h2" })).toBeInTheDocument();
-    expect(screen.getByText("(1/1)", { selector: "p" })).toBeInTheDocument();
+    expect(screen.getByText("(1/1)", { selector: "span" })).toBeInTheDocument();
   });
 
   it("renders no number of completed challenges", () => {
