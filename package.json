@@ -31,7 +31,7 @@
     "db:migrate:prod": "prisma migrate deploy",
     "prebuild": "npm run generate",
     "build": "next build",
-    "vercel-build": "npm run db:generate && npm run db:migrate:prod && npm run build",
+    "vercel-build": "npm run build",
     "pretest": "npm run generate",
     "test": "jest",
     "pretest:coverage": "npm run generate",
