@@ -4,6 +4,7 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { render } from "@react-email/components";
 import nodemailer from "nodemailer";
+import { ReactElement, ReactNode } from "react";
 
 import { SendMailParams } from "./send-mail-params.interface";
 
@@ -11,8 +12,8 @@ import { SendMailParams } from "./send-mail-params.interface";
 export class SendMailService {
   constructor(private readonly config: ConfigService) {}
 
-  async sendMail(content: JSX.Element, context: SendMailParams): Promise<void> {
-    const view = await render(content);
+  async sendMail(content: ReactNode, context: SendMailParams): Promise<void> {
+    const view = await render(content as ReactElement);
 
     switch (this.config.get<string>("mail.provider")) {
       case "ses":
