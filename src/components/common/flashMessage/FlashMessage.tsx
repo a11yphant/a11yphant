@@ -67,6 +67,7 @@ export const FlashMessage: React.FC<React.PropsWithChildren<FlashMessageProps>> 
         </div>
       </Transition>
       <Transition
+        as="div"
         appear={true}
         show={show}
         enter={prefersReducedMotion ? "" : "transition-[height] duration-500 ease-in-out delay-500"}

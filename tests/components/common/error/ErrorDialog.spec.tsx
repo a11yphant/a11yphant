@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ErrorDialog from "app/components/common/error/ErrorDialog";
 import { GraphQLError } from "graphql";
@@ -32,20 +32,29 @@ describe("Error Dialog", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("passes the 'open' state to the modal", () => {
-    render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+  it("passes the 'open' state to the modal", async () => {
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+    });
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
-  it("renders the title", () => {
-    render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+  it("renders the title", async () => {
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+    });
 
     expect(screen.getByRole("heading", { level: 2, name: mockTitle })).toBeInTheDocument();
   });
 
-  it("renders the error messages", () => {
-    render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+  it("renders the error messages", async () => {
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+    });
 
     expect(screen.getByRole("list")).toBeInTheDocument();
 
@@ -62,7 +71,10 @@ describe("Error Dialog", () => {
     process.env.NODE_ENV = "development";
     console.error = jest.fn();
 
-    render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      render(<ErrorDialog open={true} title={mockTitle} messages={mockMessages} onClose={mockOnClose} errorResponse={mockErrorResponse} />);
+    });
 
     expect(screen.getByText("Original Error was logged to console (only in development mode)")).toBeInTheDocument();
 

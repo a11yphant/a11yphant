@@ -61,7 +61,7 @@
     "@aws-sdk/client-ses": "^3.624.0",
     "@aws-sdk/credential-provider-node": "^3.624.0",
     "@codegenie/serverless-express": "^4.13.0",
-    "@headlessui/react": "1.7.19",
+    "@headlessui/react": "2.1.5",
     "@hookform/resolvers": "3.9.0",
     "@monaco-editor/react": "4.6.0",
     "@nestjs/apollo": "^12.1.0",
