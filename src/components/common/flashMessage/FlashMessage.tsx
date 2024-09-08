@@ -60,8 +60,8 @@ export const FlashMessage: React.FC<React.PropsWithChildren<FlashMessageProps>> 
               "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
               "focus:text-light",
             )}
+            aria-label="Close"
           >
-            <span className={clsx("sr-only")}>Close</span>
             <ClosingX className={clsx("w-4 h-4")} />
           </Button>
         </div>

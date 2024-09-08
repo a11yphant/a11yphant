@@ -55,8 +55,8 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
               "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
               "focus:text-light",
             )}
+            aria-label="Close"
           >
-            <span className={clsx("sr-only")}>Close</span>
             <ClosingX />
           </Button>
 
