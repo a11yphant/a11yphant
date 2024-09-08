@@ -53,9 +53,10 @@ jobs:
         id: deploy
         run: echo preview_url=$(vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }}) >> $GITHUB_OUTPUT
 
-      - name: Add staging domain alias
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: vercel alias set ${{ steps.deploy.outputs.preview_url }} beta.a11yphant.com --token=${{ env.VERCEL_TOKEN }}
+      - name: Add domain alias
+        env:
+          SUBDOMAIN: preview-pr-${{ github.event.number }}
+        run: vercel alias --token=${{ env.VERCEL_TOKEN }} set ${{ steps.deploy.outputs.preview_url }} ${{ github.ref == 'refs/heads/main' && 'beta' || env.SUBDOMAIN  }}.a11yphant.com
 
       - name: Comment on Pull Request
         if: ${{ github.ref != 'refs/heads/main' }}
