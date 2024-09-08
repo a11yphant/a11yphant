@@ -23,5 +23,7 @@ jobs:
     steps:
       - name: Setup node
         uses: ./.github/actions/prepare-node
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
       - name: Unlink domain alias
         run: vercel alias --token=${{ secrets.VERCEL_TOKEN }} --yes rm pr-${{ github.event.number }}-a11yphant.vercel.app
