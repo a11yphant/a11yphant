@@ -18,11 +18,9 @@ const ChallengeList: React.FunctionComponent<ChallengeListProps> = ({ className,
       <div className={clsx("mb-6 flex flex-row items-center")}>
         <h2 className={clsx("mb-0 flex items-center text-grey font-bold leading-10", "h4")}>{heading}</h2>
         {displayCompleted === true && (
-          <p
-            className={clsx("ml-4 mb-0 text-grey font-normal", "h4")}
-            aria-label={`${numberOfCompletedChallenges} of ${challenges.length} challenges completed`}
-          >
-            {`(${numberOfCompletedChallenges}/${challenges.length})`}
+          <p className={clsx("ml-4 mb-0 text-grey font-normal", "h4")}>
+            <span className="sr-only">{`${numberOfCompletedChallenges} of ${challenges.length} challenges completed`}</span>
+            <span aria-hidden>{`(${numberOfCompletedChallenges}/${challenges.length})`}</span>
           </p>
         )}
       </div>

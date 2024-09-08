@@ -17,20 +17,20 @@ describe("EmailConfirmationFailedMessage", () => {
   it("renders failed email confirmation message", () => {
     render(<EmailConfirmationFailedMessage />);
 
-    expect(screen.getByText(/Your email could not be confirmed/)).toBeInTheDocument();
+    expect(screen.getByText(/Your e-mail could not be confirmed./)).toBeInTheDocument();
   });
 
   it("renders resend confirmation email button", () => {
     render(<EmailConfirmationFailedMessage />);
 
-    expect(screen.getByRole("button", { name: /Resend Confirmation Email/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Resend confirmation e-mail/ })).toBeInTheDocument();
   });
 
   it("click on resend confirmation email button triggers resendConfirmationEmail mutation", async () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.Successful } });
     render(<EmailConfirmationFailedMessage />);
 
-    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Resend confirmation e-mail/ }));
 
     expect(resendConfirmationEmailMock).toHaveBeenCalledTimes(1);
   });
@@ -39,7 +39,7 @@ describe("EmailConfirmationFailedMessage", () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.Successful } });
     render(<EmailConfirmationFailedMessage />);
 
-    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Resend confirmation e-mail/ }));
 
     expect(screen.getByText(/Check your inbox/)).toBeInTheDocument();
   });
@@ -48,17 +48,17 @@ describe("EmailConfirmationFailedMessage", () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.AlreadyVerified } });
     render(<EmailConfirmationFailedMessage />);
 
-    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Resend confirmation e-mail/ }));
 
-    expect(screen.getByText(/Your email has already been verified/)).toBeInTheDocument();
+    expect(screen.getByText(/Your e-mail has already been verified/)).toBeInTheDocument();
   });
 
   it("renders 'Your email has already been verified' if ResendEmailConfirmationResult == NOT_APPLICABLE", async () => {
     resendConfirmationEmailMock.mockReturnValue({ data: { resendConfirmationEmail: ResendEmailConfirmationResultEnum.NotApplicable } });
     render(<EmailConfirmationFailedMessage />);
 
-    await userEvent.click(screen.getByRole("button", { name: /Resend Confirmation Email/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Resend confirmation e-mail/ }));
 
-    expect(screen.getByText(/Your email has already been verified/)).toBeInTheDocument();
+    expect(screen.getByText(/Your e-mail has already been verified/)).toBeInTheDocument();
   });
 });

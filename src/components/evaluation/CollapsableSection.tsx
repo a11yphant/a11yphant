@@ -31,11 +31,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
         )}
       >
         {passed ? <Check className={clsx("h-9 w-14 text-success")} /> : <ClosingX className={clsx("h-10 w-10 text-error")} />}
-        {passed ? (
-          <p className={clsx("sr-only")}>The following requirement is fulfilled:</p>
-        ) : (
-          <p className={clsx("sr-only")}>The following requirement is not fulfilled:</p>
-        )}
+        {passed ? <p className={clsx("sr-only")}>Passed requirement:</p> : <p className={clsx("sr-only")}>Failed requirement:</p>}
       </div>
 
       <div className={clsx("flex flex-col col-start-2 col-span-9 -ml-5")}>

@@ -1,7 +1,14 @@
+fragment ChallengeWithStatusForUser on Challenge {
+  id
+  name
+  slug
+  numberOfLevels
+  numberOfFinishedLevels
+  statusForUser(userId: $userId)
+}
+
 query challengesWithStatusForUser($userId: ID!) {
-    challenges {
-        id
-        name
-        statusForUser(userId: $userId)
-    }
+  challenges {
+    ...ChallengeWithStatusForUser
+  }
 }

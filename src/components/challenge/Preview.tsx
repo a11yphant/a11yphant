@@ -65,10 +65,8 @@ const Preview: React.FunctionComponent<PreviewProps> = ({ className, cssCode, ht
         {heading}
         {title && (
           <>
-            :{" "}
-            <span className={clsx("text-black")} aria-label={`Title: ${title}`}>
-              {title}
-            </span>
+            : <span className="sr-only">Title: </span>
+            <span className={clsx("text-black")}>{title}</span>
           </>
         )}
         {!previewUpdated && (
