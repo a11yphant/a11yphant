@@ -17,7 +17,7 @@ describe("EmailConfirmationFailedMessage", () => {
   it("renders failed e-mail confirmation message", () => {
     render(<EmailConfirmationFailedMessage />);
 
-    expect(screen.getByText(/Your e-mail could not be confirmed/)).toBeInTheDocument();
+    expect(screen.getByText(/Your e-mail could not be confirmed./)).toBeInTheDocument();
   });
 
   it("renders resend confirmation e-mail button", () => {

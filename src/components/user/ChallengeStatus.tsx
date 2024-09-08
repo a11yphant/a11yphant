@@ -55,7 +55,7 @@ const ChallengeStatus: React.FunctionComponent<ChallengeStatusProps> = ({ id, ch
                         )}
                       >
                         <span className="sr-only"> - </span>
-                        {(challenge.numberOfFinishedLevels / challenge.numberOfLevels) * 100}% completed
+                        {((challenge.numberOfFinishedLevels / challenge.numberOfLevels) * 100).toFixed(1)}% completed
                       </span>
                     </div>
                   )}
