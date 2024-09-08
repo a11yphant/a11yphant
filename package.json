@@ -91,7 +91,7 @@
     "graphql": "16.9.0",
     "handlebars": "4.7.8",
     "js-yaml": "4.1.0",
-    "jsdom": "^24.0.0",
+    "jsdom": "^25.0.0",
     "jsonwebtoken": "9.0.2",
     "lodash.debounce": "4.0.8",
     "lottie-web": "5.12.2",
