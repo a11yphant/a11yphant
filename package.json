@@ -157,7 +157,7 @@
     "@types/rosie": "0.0.45",
     "@types/sanitize-html": "2.13.0",
     "@types/supertest": "6.0.2",
-    "@types/uuid": "9.0.8",
+    "@types/uuid": "10.0.0",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "autoprefixer": "10.4.20",
