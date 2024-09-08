@@ -27,6 +27,7 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
   return (
     <Transition
       show={open}
+      as="div"
       enter="transition duration-100 ease-out"
       enterFrom="scale-95 opacity-0"
       enterTo="scale-100 opacity-100"
