@@ -7,7 +7,6 @@ jest.mock("next/navigation", () => ({
   useSearchParams: () => new Map(),
 }));
 
-
 afterEach(() => {
   jest.resetAllMocks();
 });
