@@ -163,7 +163,7 @@
     "autoprefixer": "10.4.20",
     "babel-plugin-superjson-next": "^0.4.5",
     "concurrently": "8.2.2",
-    "cypress": "12.17.4",
+    "cypress": "13.14.2",
     "dotenv": "16.4.5",
     "dotenv-cli": "7.4.2",
     "eslint": "8.57.0",
