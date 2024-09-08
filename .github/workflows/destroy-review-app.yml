@@ -8,7 +8,7 @@ env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
-  delete-preview:
+  delete-neon-branch:
     runs-on: ubuntu-latest
     steps:
       - name: Delete Neon Branch
@@ -18,5 +18,12 @@ jobs:
           branch: preview/pr-${{ github.event.number }}-${{ env.BRANCH_NAME }}
           api_key: ${{ secrets.NEON_API_KEY }}
 
+  unlink-domain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node
+        uses: ./.github/actions/prepare-node
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
       - name: Unlink domain alias
         run: vercel alias --token=${{ secrets.VERCEL_TOKEN }} --yes rm pr-${{ github.event.number }}-a11yphant.vercel.app
