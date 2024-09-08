@@ -93,158 +93,168 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("bg-texture h-full box-border max-w-screen-3xl mx-auto mt-32")}>
-        <div className={clsx("mx-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
-          <div className={clsx("flex flex-col justify-between content-start pb-6 mb-20 border-grey-light border-b", "md:flex-row md:content-end")}>
-            <div className={clsx("self-center")}>
-              <h1 className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h1 sm:leading-[1.1]")}>
-                Your <br></br> accessibility <br></br> journey
-              </h1>
-            </div>
-
-            <IllustrationRocket className={clsx("h-auto")} />
-          </div>
-          <section
-            className={clsx("flex flex-col my-6 py-12 px-4 sm:px-6 lg:p-12 container-dark", "sm:my-8", "xl:my-10")}
-            aria-labelledby="profileStats"
-          >
-            <div className={clsx("flex justify-between")}>
-              <div>
-                <h2 id="profileStats" className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")}>
-                  Hey, {user.displayName || "Anonymous coder"}
-                </h2>
-                <p className={clsx("text-grey-middle")}>You are learning to code accessibly.</p>
+      <main className={clsx("bg-texture bg-repeat-space bg-contain bg-origin-border bg-top mt-32")}>
+        <div className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
+          <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
+            <div
+              className={clsx(
+                "flex flex-col justify-between content-start pb-6 mb-6 border-grey-light border-b",
+                "xs:flex-row",
+                "md:mb-14 md:content-end",
+              )}
+            >
+              <div className={clsx("md:self-center")}>
+                <h1 className={clsx("mb-4 text-grey", "h3 leading-[1.1]", "sm:h2 sm:leading-[1.1]", "md:h1 md:leading-[1.1] sm:mb-2.5 sm:mr-4")}>
+                  Your <br></br> accessibility <br></br> journey
+                </h1>
               </div>
 
-              <div>
-                <div className="border-solid border-2 border-primary rounded-xl bg-primary px-6 py-4 text-center">
-                  <h3 className={clsx("h5 font-normal", "md:mb-2", "lg:h5 lg:font-normal")}>finished challenges</h3>
-                  <p className={clsx("font-mono", "h1 font-normal", "sm:text-7xl")}>
-                    {completedChallenges.length}/{totalChallenges} <span className="sr-only">challenges</span>
-                  </p>
+              <IllustrationRocket
+                className={clsx("h-auto w-full max-w-48 -mt-10 self-end", "xs:-mt-2 xs:pl-4", "sm:-mt-6 sm:max-w-60", "md:mt-0 md:max-w-xs")}
+              />
+            </div>
+            <section
+              className={clsx("flex flex-col my-6 py-12 px-4 sm:px-6 lg:p-12 container-dark", "sm:my-8", "xl:my-10")}
+              aria-labelledby="profileStats"
+            >
+              <div className={clsx("flex justify-between flex-col mb-4", "md:flex-row sm:mb-0")}>
+                <div>
+                  <h2 id="profileStats" className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")}>
+                    Hey, {user.displayName || "Anonymous coder"}
+                  </h2>
+                  <p className={clsx("text-grey-middle")}>You are learning to code accessibly.</p>
                 </div>
 
-                <p className="mt-2 pr-1 text-right">
-                  {completedChallenges.length === totalChallenges ? "Yay, you're great!" : "Keep going, you can do it!"}
-                </p>
+                <div>
+                  <div className="border-solid border-2 border-primary rounded-xl bg-primary px-6 py-4 text-center">
+                    <h3 className={clsx("h5 font-normal", "md:mb-2", "lg:h5 lg:font-normal")}>finished challenges</h3>
+                    <p className={clsx("font-mono", "h1 font-normal", "sm:text-7xl")}>
+                      {completedChallenges.length}/{totalChallenges} <span className="sr-only">challenges</span>
+                    </p>
+                  </div>
+
+                  <p className="mt-2 pr-1 text-right">
+                    {completedChallenges.length === totalChallenges ? "Yay, you're great!" : "Keep going, you can do it!"}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* {completedChallenges.length > 0 && ( */}
-            <div>
-              <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Completed</h3>
-              <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                {challenges.map(
-                  (challenge) =>
-                    // {/*  TODO: change to finished */}
-                    challenge.statusForUser === ChallengeStatus.Open && (
-                      <li key={challenge.id} className={clsx("m-0 p-0")}>
-                        <Link
-                          href={`/challenges`}
-                          className={clsx(
-                            "relative block border border-solid rounded-lg px-4 py-3 w-full h-18",
-                            "group hover:bg-primary-dark hover:border-primary-dark",
-                            "border-primary bg-primary",
-                          )}
-                        >
-                          <span className={clsx("font-normal mb-0 block", "text-white")}>{challenge.name}</span>
-                          {/*  TODO: change to finished */}
-                          {challenge.statusForUser === ChallengeStatus.Open && (
-                            <>
-                              <Check className="h-4 w-10 absolute top-4 right-5 text-grey-light" />
-                            </>
-                          )}
-                        </Link>
-                      </li>
-                    ),
-                )}
-              </ul>
-            </div>
-            {/* )} */}
-
-            {startedChallenges.length > 0 && (
+              {/* {completedChallenges.length > 0 && ( */}
               <div>
-                <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Currently coding</h3>
+                <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Completed</h3>
                 <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                   {challenges.map(
                     (challenge) =>
-                      challenge.statusForUser === ChallengeStatus.InProgress && (
-                        <li key={challenge.id} className={clsx("m-0 p-0")}>
-                          <Link
-                            href={`/challenges`}
-                            className={clsx(
-                              "relative block border border-solid rounded-lg w-full h-18",
-                              "group hover:bg-primary-dark hover:border-primary-dark",
-                              "border-grey-light",
-                            )}
-                          >
-                            <span
-                              className={clsx(
-                                "font-normal mb-0 block px-4 py-3",
-                                "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
-                              )}
-                            >
-                              {challenge.name}
-                            </span>
-                            <div className="w-full h-fit-content bg-primary-dark border-t border-solid rounded-bl-lg rounded-br-lg border-grey-light">
-                              <span
-                                className={clsx(
-                                  "font-normal text-sm text-right py-1 px-2 block",
-                                  "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
-                                )}
-                              >
-                                24% completed
-                              </span>
-                            </div>
-                          </Link>
-                        </li>
-                      ),
-                  )}
-                </ul>
-              </div>
-            )}
-            {openChallenges.length > 0 && (
-              <div>
-                <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Not started yet</h3>
-                <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                  {challenges.map(
-                    (challenge) =>
+                      // {/*  TODO: change to finished */}
                       challenge.statusForUser === ChallengeStatus.Open && (
                         <li key={challenge.id} className={clsx("m-0 p-0")}>
                           <Link
                             href={`/challenges`}
                             className={clsx(
-                              "relative block border border-solid rounded-lg w-full h-18",
+                              "relative block border border-solid rounded-lg px-4 py-3 w-full h-18",
                               "group hover:bg-primary-dark hover:border-primary-dark",
-                              "border-grey-dark",
+                              "border-primary bg-primary",
                             )}
                           >
-                            <span
-                              className={clsx(
-                                "font-normal px-4 py-3 block",
-                                "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
-                              )}
-                            >
-                              {challenge.name}
-                            </span>
-                            <div className="w-full h-fit-content  border-t border-solid rounded-bl-lg rounded-br-lg border-grey-dark group-hover:border-grey-middle">
-                              <span
-                                className={clsx(
-                                  "font-normal text-sm text-right py-1 px-2 block",
-                                  "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
-                                )}
-                              >
-                                0% completed
-                              </span>
-                            </div>
+                            <span className={clsx("font-normal mb-0 block", "text-white")}>{challenge.name}</span>
+                            {/*  TODO: change to finished */}
+                            {challenge.statusForUser === ChallengeStatus.Open && (
+                              <>
+                                <Check className="h-4 w-10 absolute top-4 right-5 text-grey-light" />
+                              </>
+                            )}
                           </Link>
                         </li>
                       ),
                   )}
                 </ul>
               </div>
-            )}
-          </section>
+              {/* )} */}
+
+              {startedChallenges.length > 0 && (
+                <div>
+                  <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Currently coding</h3>
+                  <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                    {challenges.map(
+                      (challenge) =>
+                        challenge.statusForUser === ChallengeStatus.InProgress && (
+                          <li key={challenge.id} className={clsx("m-0 p-0")}>
+                            <Link
+                              href={`/challenges`}
+                              className={clsx(
+                                "relative block border border-solid rounded-lg w-full h-18",
+                                "group hover:bg-primary-dark hover:border-primary-dark",
+                                "border-grey-light",
+                              )}
+                            >
+                              <span
+                                className={clsx(
+                                  "font-normal mb-0 block px-4 py-3",
+                                  "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
+                                )}
+                              >
+                                {challenge.name}
+                              </span>
+                              <div className="w-full h-fit-content bg-primary-dark border-t border-solid rounded-bl-lg rounded-br-lg border-grey-light">
+                                <span
+                                  className={clsx(
+                                    "font-normal text-sm text-right py-1 px-2 block",
+                                    "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
+                                  )}
+                                >
+                                  24% completed
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                        ),
+                    )}
+                  </ul>
+                </div>
+              )}
+              {openChallenges.length > 0 && (
+                <div>
+                  <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Not started yet</h3>
+                  <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                    {challenges.map(
+                      (challenge) =>
+                        challenge.statusForUser === ChallengeStatus.Open && (
+                          <li key={challenge.id} className={clsx("m-0 p-0")}>
+                            <Link
+                              href={`/challenges`}
+                              className={clsx(
+                                "relative block border border-solid rounded-lg w-full h-18",
+                                "group hover:bg-primary-dark hover:border-primary-dark",
+                                "border-grey-dark",
+                              )}
+                            >
+                              <span
+                                className={clsx(
+                                  "font-normal px-4 py-3 block",
+                                  "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
+                                )}
+                              >
+                                {challenge.name}
+                              </span>
+                              <div className="w-full h-fit-content  border-t border-solid rounded-bl-lg rounded-br-lg border-grey-dark group-hover:border-grey-middle">
+                                <span
+                                  className={clsx(
+                                    "font-normal text-sm text-right py-1 px-2 block",
+                                    "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
+                                  )}
+                                >
+                                  0% completed
+                                </span>
+                              </div>
+                            </Link>
+                          </li>
+                        ),
+                    )}
+                  </ul>
+                </div>
+              )}
+            </section>
+          </div>
         </div>
       </main>
       <Footer />
