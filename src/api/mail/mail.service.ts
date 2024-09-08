@@ -24,7 +24,7 @@ export class MailService {
     try {
       await this.sendMailService.sendMail(mailComponent, {
         to: context.email,
-        subject: "Confirm your E-Mail",
+        subject: "Confirm your e-mail & start your a11yphant journey",
       });
       this.logger.log(`Successfully sent mail to ${context.email}`);
     } catch (error) {
@@ -36,10 +36,10 @@ export class MailService {
     this.logger.log(`Sending password reset mail to ${context.email}`);
 
     const passwordResetLink = await this.generatePasswordResetLink(context.token);
-    const mailComponent = PasswordReset({ passwordResetLink });
+    const mailComponent = PasswordReset({ passwordResetLink, displayName: context.displayName || context.email });
 
     try {
-      await this.sendMailService.sendMail(mailComponent, { to: context.email, subject: "Reset your password" });
+      await this.sendMailService.sendMail(mailComponent, { to: context.email, subject: "Reset your password for a11yphant.com" });
       this.logger.log(`Successfully sent mail to ${context.email}`);
     } catch (error) {
       this.logger.error(`Encountered error while sending password reset mail to ${context.email}: ${error.message}`);

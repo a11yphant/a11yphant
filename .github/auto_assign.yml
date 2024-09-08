@@ -1,0 +1,5 @@
+addAssignees: author
+
+skipKeywords:
+  - fix(deps)
+  - chore(deps)

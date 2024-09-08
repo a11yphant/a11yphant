@@ -19,7 +19,7 @@ const SignUpBox: React.FC = () => {
 
   const onSuccessfulSignUp = (): void => {
     flashMessageApi.show(
-      "Welcome! Thank's for signing up. We sent you an e-mail to confirm your account. If you don't see the e-mail, please check your spam folder.",
+      "Welcome! Thank's for signing up. We sent you an e-mail to confirm your account registration. If you don't see the e-mail, please check your spam folder.",
     );
     userAccountModalApi.hide();
   };
