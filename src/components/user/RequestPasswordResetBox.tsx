@@ -10,7 +10,7 @@ const RequestPasswordResetBox: React.VFC = () => {
   const flashMessageApi = useFlashMessageApi();
 
   function afterFormSubmit(): void {
-    flashMessageApi.show("We sent you an email with a link to reset your password. If you don't see the email, please check your spam folder.");
+    flashMessageApi.show("We sent you an e-mail with a link to reset your password. If you don't see the email, please check your spam folder.");
     userAccountModalApi.hide();
   }
 

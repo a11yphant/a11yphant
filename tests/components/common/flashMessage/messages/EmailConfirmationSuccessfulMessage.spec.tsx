@@ -3,9 +3,9 @@ import { EmailConfirmationSuccessfulMessage } from "app/components/common/flashM
 import React from "react";
 
 describe("EmailConfirmationSuccessfulMessage", () => {
-  it("renders successful email confirmation message", () => {
+  it("renders successful e-mail confirmation message", () => {
     render(<EmailConfirmationSuccessfulMessage />);
 
-    expect(screen.getByText(/Your email was confirmed successfully/)).toBeInTheDocument();
+    expect(screen.getByText(/Your e-mail was confirmed successfully/)).toBeInTheDocument();
   });
 });

@@ -67,7 +67,7 @@ describe("user service", () => {
       const service = getUserService(prisma);
 
       const user = await prisma.user.create({
-        data: UserFactory.build({ email: "hallo@a11yphant.com" }),
+        data: UserFactory.build({ email: "hello@a11yphant.com" }),
       });
 
       expect(await service.findByEmail(user.email)).toHaveProperty("email", user.email);
@@ -85,7 +85,7 @@ describe("user service", () => {
       });
 
       const userId = faker.string.uuid();
-      const email = "hallo@a11yphant.com";
+      const email = "hello@a11yphant.com";
       const password = "fake_password";
 
       await prisma.user.create({
@@ -109,7 +109,7 @@ describe("user service", () => {
       await expect(service.registerUser({ email: "test", password: "test" }, faker.string.uuid())).rejects.toBeInstanceOf(AnonymousUserInvalidError);
     });
 
-    it("throws an error if the email addres is already in use", async () => {
+    it("throws an error if the e-mail addres is already in use", async () => {
       const prisma = getPrismaService();
       const service = getUserService(prisma);
 

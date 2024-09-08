@@ -135,7 +135,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
             </p>
             <ul className={clsx("list-disc ml-6 mb-8")}>
               <li className={clsx("m-0 my-4")}>
-                <strong>Personal Information Provided by you.</strong> We collect names; email addresses; usernames; passwords; and other similar
+                <strong>Personal Information Provided by you.</strong> We collect names; e-mail addresses; usernames; passwords; and other similar
                 information.
               </li>
               <li className={clsx("m-0 my-4")}>
@@ -364,7 +364,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               .
             </p>
             <p>
-              If you have questions or comments about your privacy rights, you may email us at{" "}
+              If you have questions or comments about your privacy rights, you may e-mail us at{" "}
               <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink>.
             </p>
 
@@ -421,7 +421,7 @@ const PrivacyPolicy: React.FunctionComponent = () => {
               <span className={clsx("not-sr-only", "h4", "md:h3")}>11.</span> How can you contact us about this notice?
             </h2>
             <p>
-              If you have questions or comments about this notice, you may email us at{" "}
+              If you have questions or comments about this notice, you may e-mail us at{" "}
               <InTextLink href="mailto:info@a11yphant.com">info@a11yphant.com</InTextLink> or by post (address upon request).
             </p>
           </section>

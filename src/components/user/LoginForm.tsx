@@ -12,7 +12,7 @@ import InvertedLoadingButton from "./InvertedLoadingButton";
 
 const schema = yup
   .object({
-    email: yup.string().email("This email address is not valid").required("The email address is required"),
+    email: yup.string().email("This e-mail address is not valid").required("The e-mail address is required"),
     password: yup.string().required("The password is required"),
   })
   .required();
@@ -40,7 +40,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onAfterSubmit }) => {
     refetchQueries: [{ query: CurrentUserDocument }],
     onError: (error) => {
       if (error.graphQLErrors?.[0]?.extensions.code === "BAD_USER_INPUT") {
-        setError("password", { message: "The email or the password is incorrect." });
+        setError("password", { message: "The e-mail or the password is incorrect." });
         return;
       }
       setError("password", { message: "An unknown error occurred" });

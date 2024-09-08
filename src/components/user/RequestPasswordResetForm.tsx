@@ -12,7 +12,7 @@ import InvertedLoadingButton from "./InvertedLoadingButton";
 
 const schema = yup
   .object({
-    email: yup.string().email("This email address is not valid").required("The email address is required"),
+    email: yup.string().email("This e-mail address is not valid").required("The e-mail address is required"),
   })
   .required();
 
@@ -43,7 +43,7 @@ const RequestPasswordResetForm: React.VFC<RequestPasswordResetFormProps> = ({ on
     }
 
     if (data?.requestPasswordReset.__typename === "RequestPasswordResetErrorResult") {
-      setError("email", { message: "The email is not valid" });
+      setError("email", { message: "The e-mail is not valid" });
     }
   }
 

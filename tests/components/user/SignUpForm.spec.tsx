@@ -29,7 +29,7 @@ describe("sign up form", () => {
     expect(screen.getByRole("textbox", { name: /Name/ })).toBeInTheDocument();
   });
 
-  it("renders a email input", () => {
+  it("renders a e-mail input", () => {
     render(<SignUpForm />);
     expect(screen.getByRole("textbox", { name: /Email/ })).toBeInTheDocument();
   });
@@ -78,7 +78,7 @@ describe("sign up form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await screen.findByText("The email address is required");
+    await screen.findByText("The e-mail address is required");
 
     expect(onAfterSubmit).not.toHaveBeenCalled();
   });
@@ -117,7 +117,7 @@ describe("sign up form", () => {
     await waitFor(() => expect(passwordInput).toHaveValue(""));
   });
 
-  it("renders a email already taken message if the graphql mutation returns an email already in use", async () => {
+  it("renders a e-mail already taken message if the graphql mutation returns an e-mail already in use", async () => {
     const register = jest.fn().mockReturnValue({ errors: null, data: { register: { errorCode: RegisterErrorCodes.EmailInUse } } });
     (useRegisterMutation as jest.Mock).mockReturnValue([register, { loading: false }]);
 
@@ -127,7 +127,7 @@ describe("sign up form", () => {
 
     await waitForMutation();
 
-    expect(await screen.findByText("This email is already taken")).toBeInTheDocument();
+    expect(await screen.findByText("This e-mail is already taken")).toBeInTheDocument();
   });
 
   it("renders a try again message if the graphql mutation returns an technical error", async () => {
@@ -140,7 +140,7 @@ describe("sign up form", () => {
 
     await waitForMutation();
 
-    expect(await screen.findByText("We hit an error while processing your signup, please refresh the page and try again")).toBeInTheDocument();
+    expect(await screen.findByText("We hit an error while processing your registration, please refresh the page and try again")).toBeInTheDocument();
   });
 
   it("renders a unknown error message if the graphql mutation fails", async () => {

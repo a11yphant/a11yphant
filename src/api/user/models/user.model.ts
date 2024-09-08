@@ -26,7 +26,7 @@ export class User {
   @Field(() => String, { nullable: true, description: "The users display name." })
   displayName?: string;
 
-  @Field(() => String, { nullable: true, description: "The email of an locally registered user" })
+  @Field(() => String, { nullable: true, description: "The e-mail of a locally registered user" })
   email?: string;
 
   @HideField()
