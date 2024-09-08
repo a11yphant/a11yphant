@@ -3,6 +3,10 @@ import { FlashMessageApi, FlashMessageContextProvider, useFlashMessageApi } from
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import React from "react";
 
+jest.mock("next/navigation", () => ({
+  useSearchParams: () => new Map(),
+}));
+
 describe("FlashMessageContextProvider", () => {
   it("renders children", () => {
     render(

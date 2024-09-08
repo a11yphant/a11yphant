@@ -11,6 +11,10 @@ const config: ClientConfig = {
   baseUrl: "http://localhost:3001",
 };
 
+jest.mock("next/navigation", () => ({
+  useSearchParams: () => new Map(),
+}));
+
 describe("ClientProviders", () => {
   it("renders", () => {
     render(<ClientProviders config={config} />);

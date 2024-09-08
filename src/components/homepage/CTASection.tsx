@@ -1,8 +1,15 @@
+"use client";
+
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-const CTASection: React.FunctionComponent<React.PropsWithChildren> = ({ children }) => {
+import AnimationButton from "../buttons/AnimationButton";
+import IllustrationRocket from "../icons/IllustrationRocket";
+import { useAnimationsContext } from "./UseAnimationsContext";
+
+const CTASection: React.FunctionComponent<React.PropsWithChildren> = () => {
+  const { animationsEnabled, toggleAnimations } = useAnimationsContext();
   return (
     <section
       className={clsx(
@@ -37,7 +44,8 @@ const CTASection: React.FunctionComponent<React.PropsWithChildren> = ({ children
       <div
         className={clsx("flex justify-end min-w-[46%] mt-4 xs:-mt-20", "md:mt-0", "md:max-w-xs md:justify-center", "lg:max-w-sm", "xl:max-w-full")}
       >
-        {children}
+        <IllustrationRocket className={clsx("h-auto", "move-floating-woman", !animationsEnabled && "stopAnimation")} />
+        <AnimationButton animation={animationsEnabled} onClick={() => toggleAnimations()} />
       </div>
     </section>
   );

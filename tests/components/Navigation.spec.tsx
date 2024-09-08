@@ -18,6 +18,7 @@ jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: jest.fn(),
   }),
+  useSearchParams: () => new Map(),
 }));
 
 jest.mock("app/components/breadcrumbs/Breadcrumbs", () => ({

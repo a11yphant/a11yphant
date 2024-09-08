@@ -1,8 +1,11 @@
 "use client";
 
 import { FlashMessage, FlashMessageProps } from "app/components/common/flashMessage/FlashMessage";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { createPortal } from "react-dom";
+
+import { FlashMessageEnum, getFlashMessage } from "./messages/getFlashMessage";
 
 type UserDefinedFlashMessageProps = Omit<FlashMessageProps, "show" | "onClose">;
 
@@ -27,6 +30,8 @@ export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({
   const [message, setMessage] = React.useState<React.ReactNode>();
   const [props, setProps] = React.useState<UserDefinedFlashMessageProps>({});
   const portalRootRef = React.useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const fmType = searchParams.get("fm-type") as FlashMessageEnum | null;
 
   const closeFlashMessage = (): void => {
     setIsShowing(false);
@@ -37,6 +42,13 @@ export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({
     setProps(props);
     setIsShowing(true);
   };
+
+  React.useEffect(() => {
+    if (fmType) {
+      const { message, type } = getFlashMessage(fmType);
+      showFlashMessage(message, { type });
+    }
+  }, [fmType]);
 
   return (
     <FlashMessageContext.Provider
