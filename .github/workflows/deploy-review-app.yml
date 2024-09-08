@@ -57,10 +57,9 @@ jobs:
         id: alias
         env:
           SUBDOMAIN: pr-${{ github.event.number }}
-          DOMAIN: ${{ github.ref == 'refs/heads/main' && 'beta' || env.SUBDOMAIN }}-a11yphant.vercel.app
         run: |
-          vercel alias --token=${{ env.VERCEL_TOKEN }} set ${{ steps.deploy.outputs.preview_url }} ${{ env.DOMAIN }}
-          echo domain=${{ env.DOMAIN }} >> $GITHUB_OUTPUT
+          vercel alias --token=${{ env.VERCEL_TOKEN }} set ${{ steps.deploy.outputs.preview_url }} ${{ github.ref == 'refs/heads/main' && 'beta' || env.SUBDOMAIN }}-a11yphant.vercel.app
+          echo domain=${{ github.ref == 'refs/heads/main' && 'beta' || env.SUBDOMAIN }}-a11yphant.vercel.app >> $GITHUB_OUTPUT
 
       - name: Comment on Pull Request
         if: ${{ github.ref != 'refs/heads/main' }}
