@@ -55,7 +55,7 @@ jobs:
 
       - name: Add staging domain alias
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: vercel alias set ${{ steps.deploy.outputs.preview_url }} beta.a11yphant.com
+        run: vercel alias set ${{ steps.deploy.outputs.preview_url }} beta.a11yphant.com --token=${{ env.VERCEL_TOKEN }}
 
       - name: Comment on Pull Request
         if: ${{ github.ref != 'refs/heads/main' }}
