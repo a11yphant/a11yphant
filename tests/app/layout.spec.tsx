@@ -8,6 +8,10 @@ jest.mock("next/headers", () => ({
   headers: () => ({ get: () => "a11yphant.com" }),
 }));
 
+jest.mock("next/navigation", () => ({
+  useSearchParams: () => new Map(),
+}));
+
 describe("Root Layout", () => {
   it("renders children", async () => {
     /* eslint-disable-next-line testing-library/render-result-naming-convention */

@@ -3,6 +3,11 @@ import { FlashMessageContextProvider } from "app/components/common/flashMessage/
 import { FlashMessagePortalRoot } from "app/components/common/flashMessage/FlashMessagePortalRoot";
 import React from "react";
 
+jest.mock("next/navigation", () => ({
+  useSearchParams: () => new Map(),
+}));
+
+
 afterEach(() => {
   jest.resetAllMocks();
 });
