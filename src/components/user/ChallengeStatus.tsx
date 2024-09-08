@@ -35,7 +35,8 @@ const ChallengeStatus: React.FunctionComponent<ChallengeStatusProps> = ({ id, ch
                     challengeStatus === ChallengeStatusEnum.Open && "border-grey-dark",
                   )}
                 >
-                  <span className={clsx("font-normal mb-0 block px-4 py-3", "text-white")} aria-label={`Challenge: ${challenge.name}`}>
+                  <span className={clsx("font-normal mb-0 block px-4 py-3", "text-white")}>
+                    <span className="sr-only">Challenge: </span>
                     {challenge.name}
                   </span>
                   {challengeStatus !== ChallengeStatusEnum.Finished && (

@@ -37,9 +37,9 @@ const EvaluationHeader: React.FunctionComponent<EvaluationHeaderProps> = ({ clas
             "lg:text-8xl",
             passed ? "text-success" : "text-light",
           )}
-          aria-label={`You reached a score of ${score.toFixed(0)} percent`}
         >
-          {score.toFixed(0)}%
+          <span className="sr-only">{`You reached a score of ${score.toFixed(0)} percent`}</span>
+          <span aria-hidden>{score.toFixed(0)}%</span>
         </p>
       </div>
     </div>
