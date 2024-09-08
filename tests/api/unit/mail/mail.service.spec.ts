@@ -72,7 +72,7 @@ describe("mailService", () => {
     });
   });
 
-  describe("generate email confirmation link", () => {
+  describe("generate e-mail confirmation link", () => {
     it("creates a confirmation link", async () => {
       const apiUrl = "localhost";
       const token = "a11ytoken";

@@ -114,7 +114,7 @@ describe("authentication resolver", () => {
       expect(requestPasswordReset).toHaveBeenCalledWith(email);
     });
 
-    it("fails with an invalid email error when the email is not valid", async () => {
+    it("fails with an invalid e-mail error when the e-mail is not valid", async () => {
       const email = "not-a-valid-email";
 
       const resolver = createAuthenticationResolver();
@@ -313,7 +313,7 @@ describe("authentication resolver", () => {
   describe("resend confirmation email", () => {
     const user = new User(UserFactory.build());
 
-    it("calls resend confirmation email on the auth service with the provided userId", async () => {
+    it("calls resend confirmation e-mail on the auth service with the provided userId", async () => {
       const resendConfirmationEmail = jest.fn().mockResolvedValue(ResendEmailConfirmationResultEnum.SUCCESSFUL);
 
       const resolver = createAuthenticationResolver({

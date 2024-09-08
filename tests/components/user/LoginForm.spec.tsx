@@ -14,7 +14,7 @@ describe("login form", () => {
     (useLoginMutation as jest.Mock).mockReturnValue([jest.fn().mockResolvedValue({ errors: null }), { loading: false }]);
   });
 
-  it("renders a email input", () => {
+  it("renders a e-mail input", () => {
     render(<LoginForm />);
     expect(screen.getByRole("textbox", { name: /Email/ })).toBeInTheDocument();
   });
@@ -111,7 +111,7 @@ describe("login form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    expect(await screen.findByText("The email or the password is incorrect.")).toBeInTheDocument();
+    expect(await screen.findByText("The e-mail or the password is incorrect.")).toBeInTheDocument();
   });
 
   it("renders a unknown error message if the graphql mutation fails with an unknown error type", async () => {

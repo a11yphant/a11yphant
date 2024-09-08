@@ -82,7 +82,7 @@ describe("authentication controller", () => {
       expect(redirect).toHaveBeenCalledWith(expect.stringContaining(FlashMessage.EMAIL_CONFIRMATION_FAILED));
     });
 
-    it("redirects with email confirmation failed message if update throws error", async () => {
+    it("redirects with e-mail confirmation failed message if update throws error", async () => {
       const redirect = jest.fn();
       const res = createMock<Response>({
         redirect,

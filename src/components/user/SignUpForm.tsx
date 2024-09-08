@@ -11,7 +11,7 @@ import InvertedLoadingButton from "./InvertedLoadingButton";
 const schema = yup
   .object({
     name: yup.string().required("Please tell us your name"),
-    email: yup.string().email("This email address is not valid").required("The email address is required"),
+    email: yup.string().email("This e-mail address is not valid").required("The e-mail address is required"),
     password: yup.string().min(8, "The password must be at least 8 characters long").required("The password is required"),
   })
   .required();
@@ -52,11 +52,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onAfterSubmit }) => {
 
     if ("errorCode" in data.register) {
       if (data.register.errorCode === RegisterErrorCodes.EmailInUse) {
-        setError("email", { message: "This email is already taken" });
+        setError("email", { message: "This e-mail is already taken" });
         return;
       }
 
-      setError("password", { message: "We hit an error while processing your signup, please refresh the page and try again" });
+      setError("password", { message: "We hit an error while processing your registration, please refresh the page and try again" });
       return;
     }
 

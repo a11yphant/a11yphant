@@ -49,7 +49,7 @@ describe("authentication service", () => {
 
   describe("login", () => {
     it("can log in an user", async () => {
-      const email = "hallo@a11yphant.com";
+      const email = "hello@a11yphant.com";
 
       const service = createAuthenticationService({
         userService: {
@@ -60,11 +60,11 @@ describe("authentication service", () => {
         },
       });
 
-      const loggedInUser = await service.login({ email: "hallo@a11yphant.com", password: "test_pw" });
+      const loggedInUser = await service.login({ email: "hello@a11yphant.com", password: "test_pw" });
       expect(loggedInUser.email).toBe(email);
     });
 
-    it("throws an error if the email is not found", async () => {
+    it("throws an error if the e-mail is not found", async () => {
       const service = createAuthenticationService({
         userService: {
           findByEmail: jest.fn().mockResolvedValue(null),
@@ -209,7 +209,7 @@ describe("authentication service", () => {
   });
 
   describe("resend confirmation email", () => {
-    const email = "hallo@a11yphant.com";
+    const email = "hello@a11yphant.com";
 
     it("returns SUCCESSFUL if user exists, is not verified yet and has authProvider = local", async () => {
       const service = createAuthenticationService({

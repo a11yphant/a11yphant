@@ -123,7 +123,7 @@ describe("user resolver", () => {
       expect(registerUser).toHaveBeenCalledWith(registerUserInput, sessionToken.userId);
     });
 
-    it("sends an registration email if a user is registered.", async () => {
+    it("sends an registration e-mail if a user is registered.", async () => {
       const token = "token";
       const sendRegistrationMail = jest.fn();
 
