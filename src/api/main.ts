@@ -30,17 +30,8 @@ async function bootstrap(): Promise<INestApplication> {
 }
 
 export async function getApp(): Promise<INestApplication> {
-  if (process.env.NODE_ENV === "production") {
-    if (!instance) {
-      instance = await bootstrap();
-    }
-  } else {
-    // cache the handler globally so that the app isn't restarted when HMR kicks in
-    if (!global.instance) {
-      global.instance = await bootstrap();
-    }
-
-    instance = global.instance;
+  if (!instance) {
+    instance = await bootstrap();
   }
 
   return instance;
