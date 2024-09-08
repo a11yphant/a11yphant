@@ -1,3 +1,4 @@
+import { DifficultyEasy } from "app/components/challengePage/difficulties/Difficulties";
 import Footer from "app/components/Footer";
 import Check from "app/components/icons/Check";
 import IllustrationRocket from "app/components/icons/IllustrationRocket";
@@ -226,7 +227,7 @@ const Challenge: React.FunctionComponent = () => {
                             >
                               {challenge.name}
                             </span>
-                            <div className="w-full h-fit-content  border-t border-solid rounded-bl-lg rounded-br-lg border-grey-dark">
+                            <div className="w-full h-fit-content  border-t border-solid rounded-bl-lg rounded-br-lg border-grey-dark group-hover:border-grey-middle">
                               <span
                                 className={clsx(
                                   "font-normal text-sm text-right py-1 px-2 block",
