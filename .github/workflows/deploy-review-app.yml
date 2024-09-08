@@ -53,14 +53,18 @@ jobs:
         id: deploy
         run: echo preview_url=$(vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }}) >> $GITHUB_OUTPUT
 
-      - name: Add staging domain alias
-        if: ${{ github.ref == 'refs/heads/main' }}
-        run: vercel alias --token=${{ env.VERCEL_TOKEN }} set ${{ steps.deploy.outputs.preview_url }} beta.a11yphant.com
+      - name: Add domain alias
+        id: alias
+        env:
+          SUBDOMAIN: pr-${{ github.event.number }}
+        run: |
+          vercel alias --token=${{ env.VERCEL_TOKEN }} set ${{ steps.deploy.outputs.preview_url }} ${{ github.ref == 'refs/heads/main' && 'beta' || env.SUBDOMAIN }}-a11yphant.vercel.app
+          echo domain=https://${{ github.ref == 'refs/heads/main' && 'beta' || env.SUBDOMAIN }}-a11yphant.vercel.app >> $GITHUB_OUTPUT
 
       - name: Comment on Pull Request
         if: ${{ github.ref != 'refs/heads/main' }}
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Vercel Preview URL :rocket: : ${{ steps.deploy.outputs.preview_url }}
+            Vercel Preview URL :rocket: : ${{ steps.alias.outputs.domain }}
             Neon branch :elephant: : https://console.neon.tech/app/projects/${{ env.NEON_PROJECT_ID }}/branches/${{ steps.create-branch.outputs.branch_id }}
