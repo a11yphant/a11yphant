@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import { createPortal } from "react-dom";
 
-import { getFlashMessage } from "./messages/getFlashMessage";
+import { FlashMessageEnum, getFlashMessage } from "./messages/getFlashMessage";
 
 type UserDefinedFlashMessageProps = Omit<FlashMessageProps, "show" | "onClose">;
 
@@ -31,7 +31,7 @@ export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({
   const [props, setProps] = React.useState<UserDefinedFlashMessageProps>({});
   const portalRootRef = React.useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
-  const fmType = searchParams.get("fm-type");
+  const fmType = searchParams.get("fm-type") as FlashMessageEnum | null;
 
   const closeFlashMessage = (): void => {
     setIsShowing(false);

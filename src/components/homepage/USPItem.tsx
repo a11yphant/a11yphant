@@ -4,29 +4,20 @@ import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
 
-import AnimationButton from "../buttons/AnimationButton";
-import { useAnimationsContext } from "./UseAnimationsContext";
-
 interface USPItemProps {
   imageLeft?: boolean;
   heading: string;
   paragraph: React.ReactNode;
   displayButton?: boolean;
-  Illustration: React.FunctionComponent<{ className: string }>;
-  illustrationClassName?: string;
-  illustrationWrapperClassNames?: string;
 }
 
-const USPItem: React.FunctionComponent<USPItemProps> = ({
+const USPItem: React.FunctionComponent<React.PropsWithChildren<USPItemProps>> = ({
+  children,
   imageLeft = false,
   heading,
   paragraph,
   displayButton = false,
-  Illustration,
-  illustrationClassName,
-  illustrationWrapperClassNames,
 }) => {
-  const { animationsEnabled, toggleAnimations } = useAnimationsContext();
   return (
     <section
       className={clsx(
@@ -82,10 +73,7 @@ const USPItem: React.FunctionComponent<USPItemProps> = ({
           !imageLeft && "md:ml-12 lg:justify-start lg:pl-12",
         )}
       >
-        <div className={illustrationWrapperClassNames}>
-          <Illustration className={clsx(illustrationClassName, !animationsEnabled && "stopAnimation")} />
-          <AnimationButton animation={animationsEnabled} onClick={() => toggleAnimations()} />
-        </div>
+        {children}
       </div>
     </section>
   );

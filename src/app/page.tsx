@@ -11,7 +11,7 @@ import TopChallengeSection from "app/components/homepage/TopChallengeSection";
 import { UseAnimationsContextProvider } from "app/components/homepage/UseAnimationsContext";
 import USPSection from "app/components/homepage/USPSection";
 import Navigation from "app/components/Navigation";
-import { TopThreeChallengesDocument } from "app/generated/graphql";
+import { TopThreeChallengesDocument, TopThreeChallengesQuery, TopThreeChallengesQueryVariables } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
@@ -21,7 +21,7 @@ import React from "react";
 export default async function Home(): Promise<React.ReactElement> {
   const apollo = getApolloClient();
   const currentUser = await getServerSideCurrentUser(apollo);
-  const topChallenges = await apollo.query<TopThreeChallengesDocument>({
+  const topChallenges = await apollo.query<TopThreeChallengesQuery, TopThreeChallengesQueryVariables>({
     query: TopThreeChallengesDocument,
   });
 
