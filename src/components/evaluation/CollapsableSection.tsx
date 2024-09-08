@@ -6,7 +6,7 @@ import sanitizeHtml from "sanitize-html";
 import Button from "../buttons/Button";
 import Check from "../icons/Check";
 import Chevron from "../icons/Chevron";
-import X from "../icons/X";
+import ClosingX from "../icons/ClosingX";
 
 interface CollapsibleSectionProps {
   className?: string;
@@ -30,7 +30,7 @@ const CollapsibleSection: React.FunctionComponent<CollapsibleSectionProps> = ({ 
           "lg:mr-20 lg:ml-8",
         )}
       >
-        {passed ? <Check className={clsx("h-9 w-14 text-success")} /> : <X className={clsx("h-10 w-10 text-error")} />}
+        {passed ? <Check className={clsx("h-9 w-14 text-success")} /> : <ClosingX className={clsx("h-10 w-10 text-error")} />}
         {passed ? (
           <p className={clsx("sr-only")}>The following requirement is fulfilled:</p>
         ) : (

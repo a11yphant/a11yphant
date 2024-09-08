@@ -210,3 +210,11 @@ jobs:
           name: cypress-screenshots
           path: tests/cypress/screenshots
           retention-days: 1
+
+  deploy:
+    needs:
+      - test-end-to-end
+    uses: ./.github/workflows/deploy-review-app.yml
+    secrets: inherit
+    permissions:
+      pull-requests: write

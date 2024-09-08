@@ -2,7 +2,7 @@
 
 import { Transition } from "@headlessui/react";
 import Button from "app/components/buttons/Button";
-import X from "app/components/icons/X";
+import ClosingX from "app/components/icons/ClosingX";
 import { usePrefersReducedMotion } from "app/hooks/prefersReducedMotion";
 import clsx from "clsx";
 import React from "react";
@@ -62,7 +62,7 @@ export const FlashMessage: React.FC<React.PropsWithChildren<FlashMessageProps>> 
             )}
           >
             <span className={clsx("sr-only")}>Close</span>
-            <X className={clsx("w-4 h-4")} />
+            <ClosingX className={clsx("w-4 h-4")} />
           </Button>
         </div>
       </Transition>
