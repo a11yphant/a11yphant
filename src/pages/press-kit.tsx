@@ -292,7 +292,7 @@ const PressKit: React.FunctionComponent = () => {
 
           <section className="mt-24">
             <p className={clsx("text-base", "md:text-xl")}>
-              Want to know more? Send us an email with your question to{" "}
+              Want to know more? Send us an e-mail with your question to{" "}
               <Link
                 href={"mailto:info@a11yphant.com"}
                 className={clsx(

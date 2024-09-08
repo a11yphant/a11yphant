@@ -22,13 +22,7 @@ const ChallengeSignUpPrompt: React.FunctionComponent<ChallengeSignUpPromptProps>
     <>
       {!userLoggedIn && (
         <section
-          className={clsx(
-            "flex flex-col -mt-10 mb-20",
-            "xs:flex-row-reverse xs:justify-end xs:flex-grow xs:items-center",
-            "lg:mb-0",
-            "2xl:mx-24",
-            className,
-          )}
+          className={clsx("flex flex-col -mt-10 mb-20", "xs:flex-row-reverse xs:justify-end xs:flex-grow xs:items-center", "lg:mb-0", className)}
           aria-label="SignUp"
         >
           <p className={clsx("max-w-xs mx-1 mb-0", "xs:ml-4 xs:mt-6", "lg:mr-2 lg:ml-8")}>

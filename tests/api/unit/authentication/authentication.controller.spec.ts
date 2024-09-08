@@ -16,7 +16,7 @@ const getAuthController = (
   partials: {
     userService?: Partial<UserService>;
     jwtService?: Partial<JwtService>;
-    configData?: Record<string, any>;
+    configData?: Record<string, unknown>;
   } = {},
 ): AuthenticationController => {
   const userService = createMock<UserService>(partials.userService);
@@ -82,7 +82,7 @@ describe("authentication controller", () => {
       expect(redirect).toHaveBeenCalledWith(expect.stringContaining(FlashMessage.EMAIL_CONFIRMATION_FAILED));
     });
 
-    it("redirects with email confirmation failed message if update throws error", async () => {
+    it("redirects with e-mail confirmation failed message if update throws error", async () => {
       const redirect = jest.fn();
       const res = createMock<Response>({
         redirect,
@@ -135,6 +135,9 @@ describe("authentication controller", () => {
           sessionToken: {
             userId,
           },
+          user: {
+            id: "12345",
+          },
         });
         const res = createMock<Response>({
           cookie: jest.fn().mockImplementation((name: string, token: string, options: Record<string, unknown>) => {
@@ -158,10 +161,13 @@ describe("authentication controller", () => {
         expect(authController.github()).toBeFalsy();
       });
 
-      it("sets the the auth cookie and redirects", async () => {
+      it("sets the auth cookie and redirects", async () => {
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
+          },
+          user: {
+            id: "12345",
           },
         });
         const res = createMock<Response>();
@@ -182,6 +188,9 @@ describe("authentication controller", () => {
         const req = createMock<Request & { user: ProviderInformation; sessionToken: SessionTokenInterface }>({
           sessionToken: {
             userId,
+          },
+          user: {
+            id: "12345",
           },
         });
         const res = createMock<Response>();

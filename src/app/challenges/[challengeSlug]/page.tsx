@@ -43,6 +43,14 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
             {challenge.levels.map((level, index) => {
               const isFirstUnfinishedLevel = level.id === firstUnfinishedLevel?.id;
 
+              function getSRPrefix(): string {
+                if (level.status === LevelStatus.Finished) {
+                  return "Completed: ";
+                }
+
+                return "";
+              }
+
               function getTitlePrefix(): string {
                 if (index === 0 && isFirstUnfinishedLevel) {
                   return "Start here: ";
@@ -67,6 +75,7 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     )}
                   >
                     <span className="h3 text-base text-grey block">
+                      {level.status === LevelStatus.Finished && <span className="sr-only">{getSRPrefix()}</span>}
                       {getTitlePrefix()}Level {String(level.order).padStart(2, "0")}
                     </span>
                     <span
@@ -80,7 +89,6 @@ const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<Reac
                     </span>
                     {level.status === LevelStatus.Finished && (
                       <>
-                        <span className="sr-only">Completed</span>
                         <Check className="h-7 w-10 absolute top-5 right-5 text-light" />
                       </>
                     )}

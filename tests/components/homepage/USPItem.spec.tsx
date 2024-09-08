@@ -1,16 +1,16 @@
 import { MockedProvider } from "@apollo/client/testing";
 import { render, screen } from "@testing-library/react";
-import USPSection from "app/components/homepage/USPSection";
+import USPItem from "app/components/homepage/USPItem";
 
 jest.mock("app/generated/graphql", () => ({
   useRegisterMutation: jest.fn().mockReturnValue([{}, {}]),
 }));
 
-describe("USP Section", () => {
+describe("USP Item", () => {
   it("renders one heading", () => {
     render(
       <MockedProvider>
-        <USPSection
+        <USPItem
           heading="Interactive coding challenges and quizzes"
           paragraph="With a phone, computer or tablet, a11yphant works wherever you are. Get started with your first web accessibility challenge and improve your skills."
         />

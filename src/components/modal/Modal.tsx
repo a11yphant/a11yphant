@@ -27,6 +27,7 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
   return (
     <Transition
       show={open}
+      as="div"
       enter="transition duration-100 ease-out"
       enterFrom="scale-95 opacity-0"
       enterTo="scale-100 opacity-100"
@@ -40,9 +41,8 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
         onClose={onClose}
         className={clsx("fixed z-30 inset-0 overflow-y-auto h-screen h-[100dvh]  flex items-center justify-center")}
       >
-        <div className={clsx("relative", !overrideClassName && "rounded-lg", className)}>
-          <Dialog.Overlay className={clsx("fixed inset-0 bg-background opacity-70 z-[-1] cursor-pointer")} />
-
+        <div className={clsx("fixed inset-0 bg-background opacity-70 z-[-1] cursor-pointer")} />
+        <Dialog.Panel className={clsx("relative", !overrideClassName && "rounded-lg", className)}>
           <Button
             innerRef={closeButtonRef}
             onClick={onClose}
@@ -55,13 +55,13 @@ export const Modal: React.FC<React.PropsWithChildren<ConfirmationModalProps & Re
               "motion-safe:hover:scale-125 motion-reduce:hover:outline-light motion-reduce:hover:outline-2 motion-reduce:hover:outline",
               "focus:text-light",
             )}
+            aria-label="Close"
           >
-            <span className={clsx("sr-only")}>Close</span>
             <ClosingX />
           </Button>
 
           {children}
-        </div>
+        </Dialog.Panel>
       </Dialog>
     </Transition>
   );

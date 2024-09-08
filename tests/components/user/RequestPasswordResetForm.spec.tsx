@@ -23,7 +23,7 @@ describe("reset password form", () => {
     jest.resetAllMocks();
   });
 
-  it("renders a email input", () => {
+  it("renders a e-mail input", () => {
     renderRequestPasswordResetForm();
     expect(screen.getByRole("textbox", { name: /Email/ })).toBeInTheDocument();
   });
@@ -79,12 +79,12 @@ describe("reset password form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    await screen.findByText("The email address is required");
+    await screen.findByText("The e-mail address is required");
 
     expect(onAfterSubmit).not.toHaveBeenCalled();
   });
 
-  it("shows an error if the server side email validation mutation fails", async () => {
+  it("shows an error if the server side e-mail validation mutation fails", async () => {
     const email = "user@a11yphant.com";
     const response: MockedResponse<RequestPasswordResetMutation> = {
       request: {
@@ -101,7 +101,7 @@ describe("reset password form", () => {
             inputErrors: [
               {
                 field: RequestPasswordResetFields.Email,
-                message: "The email is not valid",
+                message: "The e-mail is not valid",
               },
             ],
           },
@@ -117,6 +117,6 @@ describe("reset password form", () => {
     const form = screen.getByRole("form");
     fireEvent.submit(form);
 
-    expect(await screen.findByText("The email is not valid")).toBeInTheDocument();
+    expect(await screen.findByText("The e-mail is not valid")).toBeInTheDocument();
   });
 });

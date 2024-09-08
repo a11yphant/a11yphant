@@ -57,7 +57,10 @@ const Card: React.FunctionComponent<CardProps> = ({
 
       {isUserFavorite && (
         <span className="text-light font-medium px-3 py-0.5 bg-gradient-to-l bg-primary absolute right-0 top-3 rounded-l-lg shadow-md">
-          <span className="sr-only">Loved</span> <span aria-hidden="true">🤍</span> by our community
+          <span aria-label="loved" role="img">
+            🤍
+          </span>{" "}
+          by our community
         </span>
       )}
 

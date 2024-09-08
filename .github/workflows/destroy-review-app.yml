@@ -1,33 +1,22 @@
-name: Destroy Review App
+name: Clean up Preview Deployment
 
 on:
   pull_request:
-    types:
-      - closed
+    types: [closed]
+
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
-  variables:
-    runs-on: ubuntu-22.04
-    outputs:
-      environment-name: ${{ steps.environment-name.outputs.environment-name }}
+  delete-preview:
+    runs-on: ubuntu-latest
     steps:
-        # manually create the environment name since the inject slug action
-        # inserts develop into env.GITHUB_REF_SLUG
-      - run: echo "environment-name=${{ github.event.number }}-merge" >> $GITHUB_OUTPUT
-        id: environment-name
-
-  destroy-review-app:
-    runs-on: ubuntu-22.04
-    needs:
-      - variables
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
+      - name: Delete Neon Branch
+        uses: neondatabase/delete-branch-action@v3.1.5
         with:
-          token: ${{ secrets.INFRASTRUCTURE_REPOSITORY_DISPATCH }}
-          repository: a11yphant/infrastructure
-          event-type: destroy-review-app
-          client-payload: |
-            {
-              "environment-name": "${{ needs.variables.outputs.environment-name }}"
-            }
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          branch: preview/pr-${{ github.event.number }}-${{ env.BRANCH_NAME }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+
+      - name: Unlink domain alias
+        run: vercel alias --token=${{ secrets.VERCEL_TOKEN }} --yes rm pr-${{ github.event.number }}-a11yphant.vercel.app

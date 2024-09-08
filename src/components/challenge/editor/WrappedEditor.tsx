@@ -119,6 +119,7 @@ const WrappedEditor: React.FunctionComponent<CustomEditorProps> = ({ onReset, co
               {config.heading}
             </h3>
             <Transition
+              as="div"
               show={autoSave}
               enter="transition-opacity duration-300"
               enterTo="opacity-100"

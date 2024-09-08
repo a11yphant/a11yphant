@@ -1,5 +1,7 @@
 import Footer from "app/components/Footer";
+import IllustrationRocket from "app/components/icons/IllustrationRocket";
 import Navigation from "app/components/Navigation";
+import ChallengeStatus from "app/components/user/ChallengeStatus";
 import {
   ChallengeStatus as ChallengeStatusEnum,
   ChallengesWithStatusForUserDocument,
@@ -22,7 +24,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 // Workaround due to ts-jests issues with enums: https://github.com/kulshekhar/ts-jest/issues/1357#issuecomment-580736356
-const ChallengeStatus = { ...ChallengeStatusEnum };
+const ChallengeStatusData = { ...ChallengeStatusEnum };
 
 const Challenge: React.FunctionComponent = () => {
   const router = useRouter();
@@ -45,9 +47,9 @@ const Challenge: React.FunctionComponent = () => {
     },
   });
 
-  const openChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.Open);
-  const startedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.InProgress);
-  const completedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.Finished);
+  const openChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatusData.Open);
+  const startedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatusData.InProgress);
+  const completedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatusData.Finished);
   const totalChallenges = challenges.length;
 
   return (
@@ -89,69 +91,69 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("h-full box-border max-w-screen-3xl mx-auto mt-32")}>
-        <div className={clsx("mx-8 h-main max-w-screen-3xl mt-12", "sm:mx-12 sm:mt-24", "lg:mx-24")}>
-          <div className={clsx("flex flex-col justify-between content-start pb-6 mb-20 border-grey-light border-b", "md:flex-row md:content-end")}>
-            <div className={clsx("md:self-end")}>
-              <h1 className={clsx("pb-2.5 pr-4 text-grey", "h3", "sm:h2")}>{user.displayName || "Anonymous coder"}</h1>
-              <p className={clsx("text-grey-middle")}>Is learning to code accessibly</p>
-            </div>
+      <main className={clsx("bg-texture bg-repeat-round bg-contain bg-origin-border bg-top mt-32 pb-8")}>
+        <div className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
+          <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
+            <div
+              className={clsx(
+                "flex flex-col justify-between content-start pb-6 mb-6 border-grey-light border-b",
+                "xs:flex-row",
+                "md:mb-14 md:content-end",
+              )}
+            >
+              <div className={clsx("md:self-center")}>
+                <h1 className={clsx("mb-4 text-grey", "h3 leading-[1.1]", "sm:h2 sm:leading-[1.1]", "md:h1 md:leading-[1.1] sm:mb-2.5 sm:mr-4")}>
+                  Your <br></br> accessibility <br></br> journey
+                </h1>
+              </div>
 
-            <div className={clsx("hidden", "md:flex md:flex-col")}>
-              <h2 className={clsx("font-normal text-right", "h4", "md:mb-2", "lg:h3")}>
-                finished <br /> challenges
-              </h2>
-              <p className={clsx("font-mono", "h1 font-normal", "sm:text-8xl", "md:text-right")}>
-                {completedChallenges.length}/{totalChallenges} <span className="sr-only">challenges</span>
-              </p>
+              <IllustrationRocket
+                className={clsx("h-auto w-full max-w-48 -mt-10 self-end", "xs:-mt-2 xs:pl-4", "sm:-mt-6 sm:max-w-60", "md:mt-0 md:max-w-xs")}
+              />
             </div>
+            <section
+              className={clsx("flex flex-col my-6 py-12 px-4 sm:px-6 lg:p-12 container-dark", "sm:my-8", "xl:my-10")}
+              aria-label="Profile statistics"
+            >
+              <div className={clsx("flex justify-between flex-col mb-4", "md:flex-row sm:mb-0")}>
+                <div>
+                  <h2 className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")}>{`Hey, ${user.displayName}`}</h2>
+                  <p className={clsx("text-grey-middle")}>You are learning to code accessibly.</p>
+                </div>
+
+                <div>
+                  <div className="border-solid border-2 border-primary rounded-xl bg-primary px-6 py-4 text-center">
+                    <p className={clsx("h5 font-normal", "md:mb-2", "lg:h5 lg:font-normal")}>finished challenges</p>
+                    <p className={clsx("font-mono", "h1 font-normal", "sm:text-7xl")}>
+                      {completedChallenges.length}/{totalChallenges}
+                    </p>
+                  </div>
+
+                  <p className="mt-2 pr-1 text-right">
+                    {completedChallenges.length === totalChallenges ? "Yay, you're great!" : "Keep going, you can do it!"}
+                  </p>
+                </div>
+              </div>
+
+              {startedChallenges.length > 0 && (
+                // {completedChallenges.length > 0 && (
+                <section aria-labelledby="completedChallengeStats">
+                  <ChallengeStatus id="completedChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.Finished} />
+                </section>
+              )}
+
+              {startedChallenges.length > 0 && (
+                <section aria-labelledby="startedChallengeStats">
+                  <ChallengeStatus id="startedChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.InProgress} />
+                </section>
+              )}
+              {openChallenges.length > 0 && (
+                <section aria-labelledby="openChallengeStats">
+                  <ChallengeStatus id="openChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.Open} />
+                </section>
+              )}
+            </section>
           </div>
-          <h2 className={clsx("mb-6", "h4", "sm:h3")}>Challenges</h2>
-          {completedChallenges.length > 0 && (
-            <div>
-              <h3 className={clsx("mb-2.5", "h5", "sm:h4")}>Completed</h3>
-              <ul className={clsx("list-disc ml-6 mb-16")}>
-                {challenges.map(
-                  (challenge) =>
-                    challenge.statusForUser === ChallengeStatus.Finished && (
-                      <li key={challenge.id} className={clsx("m-0 my-4")}>
-                        {challenge.name}
-                      </li>
-                    ),
-                )}
-              </ul>
-            </div>
-          )}
-          {startedChallenges.length > 0 && (
-            <div>
-              <h3 className={clsx("mb-2.5", "h5", "sm:h4")}>Currently coding</h3>
-              <ul className={clsx("list-disc ml-6 mb-16")}>
-                {challenges.map(
-                  (challenge) =>
-                    challenge.statusForUser === ChallengeStatus.InProgress && (
-                      <li key={challenge.id} className={clsx("m-0 my-4")}>
-                        {challenge.name}
-                      </li>
-                    ),
-                )}
-              </ul>
-            </div>
-          )}
-          {openChallenges.length > 0 && (
-            <div>
-              <h3 className={clsx("mb-2.5", "h5", "sm:h4")}>Not started yet</h3>
-              <ul className={clsx("list-disc ml-6 mb-4")}>
-                {challenges.map(
-                  (challenge) =>
-                    challenge.statusForUser === ChallengeStatus.Open && (
-                      <li key={challenge.id} className={clsx("m-0 my-4")}>
-                        {challenge.name}
-                      </li>
-                    ),
-                )}
-              </ul>
-            </div>
-          )}
         </div>
       </main>
       <Footer />
