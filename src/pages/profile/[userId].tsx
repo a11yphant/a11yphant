@@ -1,8 +1,7 @@
-import { DifficultyEasy } from "app/components/challengePage/difficulties/Difficulties";
 import Footer from "app/components/Footer";
-import Check from "app/components/icons/Check";
 import IllustrationRocket from "app/components/icons/IllustrationRocket";
 import Navigation from "app/components/Navigation";
+import ChallengeStatus from "app/components/user/ChallengeStatus";
 import {
   ChallengeStatus as ChallengeStatusEnum,
   ChallengesWithStatusForUserDocument,
@@ -26,7 +25,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 // Workaround due to ts-jests issues with enums: https://github.com/kulshekhar/ts-jest/issues/1357#issuecomment-580736356
-const ChallengeStatus = { ...ChallengeStatusEnum };
+const ChallengeStatusData = { ...ChallengeStatusEnum };
 
 const Challenge: React.FunctionComponent = () => {
   const router = useRouter();
@@ -49,9 +48,9 @@ const Challenge: React.FunctionComponent = () => {
     },
   });
 
-  const openChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.Open);
-  const startedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.InProgress);
-  const completedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatus.Finished);
+  const openChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatusData.Open);
+  const startedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatusData.InProgress);
+  const completedChallenges = challenges.filter((challenge) => challenge.statusForUser === ChallengeStatusData.Finished);
   const totalChallenges = challenges.length;
 
   return (
@@ -93,7 +92,7 @@ const Challenge: React.FunctionComponent = () => {
         <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
       </Head>
       <Navigation />
-      <main className={clsx("bg-texture bg-repeat-space bg-contain bg-origin-border bg-top mt-32")}>
+      <main className={clsx("bg-texture bg-repeat-space bg-contain bg-origin-border bg-top mt-32 pb-8")}>
         <div className={clsx("h-full box-border max-w-screen-3xl mx-auto")}>
           <div className={clsx("mx-8 h-main max-w-screen-3xl", "sm:mx-12", "lg:mt-12 lg:mx-24")}>
             <div
@@ -115,13 +114,11 @@ const Challenge: React.FunctionComponent = () => {
             </div>
             <section
               className={clsx("flex flex-col my-6 py-12 px-4 sm:px-6 lg:p-12 container-dark", "sm:my-8", "xl:my-10")}
-              aria-labelledby="profileStats"
+              aria-label="Profile statistics"
             >
               <div className={clsx("flex justify-between flex-col mb-4", "md:flex-row sm:mb-0")}>
                 <div>
-                  <h2 id="profileStats" className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")}>
-                    Hey, {user.displayName || "Anonymous coder"}
-                  </h2>
+                  <h2 className={clsx("pb-2.5 pr-4 text-grey", "h2", "sm:h3")}>Hey, {user.displayName || "Anonymous coder"}</h2>
                   <p className={clsx("text-grey-middle")}>You are learning to code accessibly.</p>
                 </div>
 
@@ -140,118 +137,20 @@ const Challenge: React.FunctionComponent = () => {
               </div>
 
               {/* {completedChallenges.length > 0 && ( */}
-              <div>
-                <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Completed</h3>
-                <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                  {challenges.map(
-                    (challenge) =>
-                      // {/*  TODO: change to finished */}
-                      challenge.statusForUser === ChallengeStatus.Open && (
-                        <li key={challenge.id} className={clsx("m-0 p-0")}>
-                          <Link
-                            href={`/challenges`}
-                            className={clsx(
-                              "relative block border border-solid rounded-lg px-4 py-3 w-full h-18",
-                              "group hover:bg-primary-dark hover:border-primary-dark",
-                              "border-primary bg-primary",
-                            )}
-                          >
-                            <span className={clsx("font-normal mb-0 block", "text-white")}>{challenge.name}</span>
-                            {/*  TODO: change to finished */}
-                            {challenge.statusForUser === ChallengeStatus.Open && (
-                              <>
-                                <Check className="h-4 w-10 absolute top-4 right-5 text-grey-light" />
-                              </>
-                            )}
-                          </Link>
-                        </li>
-                      ),
-                  )}
-                </ul>
-              </div>
+              <section aria-labelledby="completedChallengeStats">
+                <ChallengeStatus id="completedChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.Finished} />
+              </section>
               {/* )} */}
 
               {startedChallenges.length > 0 && (
-                <div>
-                  <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Currently coding</h3>
-                  <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {challenges.map(
-                      (challenge) =>
-                        challenge.statusForUser === ChallengeStatus.InProgress && (
-                          <li key={challenge.id} className={clsx("m-0 p-0")}>
-                            <Link
-                              href={`/challenges`}
-                              className={clsx(
-                                "relative block border border-solid rounded-lg w-full h-18",
-                                "group hover:bg-primary-dark hover:border-primary-dark",
-                                "border-grey-light",
-                              )}
-                            >
-                              <span
-                                className={clsx(
-                                  "font-normal mb-0 block px-4 py-3",
-                                  "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
-                                )}
-                              >
-                                {challenge.name}
-                              </span>
-                              <div className="w-full h-fit-content bg-primary-dark border-t border-solid rounded-bl-lg rounded-br-lg border-grey-light">
-                                <span
-                                  className={clsx(
-                                    "font-normal text-sm text-right py-1 px-2 block",
-                                    "text-grey-light group-hover:text-white motion-safe:transition-colors transition-300",
-                                  )}
-                                >
-                                  24% completed
-                                </span>
-                              </div>
-                            </Link>
-                          </li>
-                        ),
-                    )}
-                  </ul>
-                </div>
+                <section aria-labelledby="startedChallengeStats">
+                  <ChallengeStatus id="startedChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.InProgress} />
+                </section>
               )}
               {openChallenges.length > 0 && (
-                <div>
-                  <h3 className={clsx("mb-2.5", "h5 font-medium", "sm:h4 sm:font-medium")}>Not started yet</h3>
-                  <ul className="gap-4 pt-2 mb-10 grid grid-cols-1 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-                    {challenges.map(
-                      (challenge) =>
-                        challenge.statusForUser === ChallengeStatus.Open && (
-                          <li key={challenge.id} className={clsx("m-0 p-0")}>
-                            <Link
-                              href={`/challenges`}
-                              className={clsx(
-                                "relative block border border-solid rounded-lg w-full h-18",
-                                "group hover:bg-primary-dark hover:border-primary-dark",
-                                "border-grey-dark",
-                              )}
-                            >
-                              <span
-                                className={clsx(
-                                  "font-normal px-4 py-3 block",
-                                  "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
-                                )}
-                              >
-                                {challenge.name}
-                              </span>
-                              <div className="w-full h-fit-content  border-t border-solid rounded-bl-lg rounded-br-lg border-grey-dark group-hover:border-grey-middle">
-                                <span
-                                  className={clsx(
-                                    "font-normal text-sm text-right py-1 px-2 block",
-                                    "text-grey-middle group-hover:text-white motion-safe:transition-colors transition-300",
-                                  )}
-                                >
-                                  0% completed
-                                </span>
-                              </div>
-                            </Link>
-                          </li>
-                        ),
-                    )}
-                  </ul>
-                </div>
+                <section aria-labelledby="openChallengeStats">
+                  <ChallengeStatus id="openChallengeStats" challenges={challenges} challengeStatus={ChallengeStatusData.Open} />
+                </section>
               )}
             </section>
           </div>
