@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { createMock } from "@golevelup/ts-jest";
 import { Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";

@@ -4,6 +4,9 @@ import { createMock, PartialFuncReturn } from "@golevelup/ts-jest";
 import { CallHandler, ExecutionContext, INestApplication, Logger, NestInterceptor } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
+import { JwtScope } from "app/api/authentication/enums/jwt-scope.enum";
+import crypto from "crypto";
+import * as jose from "jose";
 import { Observable, of } from "rxjs";
 
 import { CodeLevelSubmission as Submission } from "@/submission/graphql/models/code-level-submission.model";
@@ -30,7 +33,10 @@ interface GetGraphQlClientOptions {
   authCookie?: string;
 }
 
-export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClientOptions) => ApolloClient<unknown>; getApp: () => INestApplication } {
+export function useTestingApp(): {
+  getGraphQlClient: (options?: GetGraphQlClientOptions) => Promise<ApolloClient<unknown>>;
+  getApp: () => INestApplication;
+} {
   process.env.API_KEY = "secret";
   process.env.IGNORE_ENV_FILE = "true";
   process.env.DATABASE_URL = getCurrentSchemaUrl();
@@ -54,22 +60,32 @@ export function useTestingApp(): { getGraphQlClient: (options?: GetGraphQlClient
     await app.close();
   });
 
-  const getGraphQlClient = ({ authCookie } = { authCookie: undefined }): ApolloClient<unknown> => {
+  const createAuthToken = (): Promise<string> =>
+    new jose.SignJWT({ scope: JwtScope.SESSION })
+      .setProtectedHeader({
+        alg: "HS256",
+      })
+      .setIssuer("a11yphant")
+      .setSubject(crypto.randomUUID())
+      .setExpirationTime(`10 seconds from now`)
+      .sign(Buffer.from(process.env.API_KEY));
+
+  const getGraphQlClient = async ({ authCookie = undefined }: { authCookie?: string } = {}): Promise<ApolloClient<unknown>> => {
     const httpLink = new HttpLink({
       uri: `http://localhost:${app.getHttpServer().address().port}/api/graphql`,
       fetch,
       credentials: "include",
     });
 
+    const authToken = authCookie || (await createAuthToken());
+
     const headerMiddleware = new ApolloLink((operation, forward) => {
-      if (authCookie) {
-        operation.setContext(({ headers = {} }) => ({
-          headers: {
-            ...headers,
-            cookie: `a11yphant_session=${authCookie}`,
-          },
-        }));
-      }
+      operation.setContext(({ headers = {} }) => ({
+        headers: {
+          ...headers,
+          cookie: `a11yphant_session=${authToken}`,
+        },
+      }));
 
       return forward(operation);
     });

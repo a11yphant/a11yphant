@@ -24,8 +24,10 @@ describe("code level", () => {
       data: Factory.build<CodeLevelData>(CODE_LEVEL),
     });
 
-    const graphqlClient = getGraphQlClient({ authCookie: cookie });
-    const { data } = await graphqlClient.mutate({
+    const graphqlClient = await getGraphQlClient({ authCookie: cookie });
+    const { data } = await (
+      await graphqlClient
+    ).mutate({
       mutation: gql`
         mutation createCodeLevelSubmission($submissionInput: CreateCodeLevelSubmissionInput!) {
           createCodeLevelSubmission(submissionInput: $submissionInput) {
@@ -66,7 +68,7 @@ describe("code level", () => {
       data: Factory.build<CodeLevelSubmissionData>(CODE_LEVEL_SUBMISSION, { user: { connect: { id: user.id } } }),
     });
 
-    const graphqlClient = getGraphQlClient({ authCookie: cookie });
+    const graphqlClient = await getGraphQlClient({ authCookie: cookie });
     const { data } = await graphqlClient.mutate({
       mutation: gql`
         mutation requestCodeLevelCheck($requestCheckInput: RequestCodeLevelCheckInput!) {
@@ -109,7 +111,7 @@ describe("code level", () => {
       }),
     });
 
-    const graphqlClient = getGraphQlClient({ authCookie: cookie });
+    const graphqlClient = await getGraphQlClient({ authCookie: cookie });
     const { data } = await graphqlClient.query({
       query: gql`
         query resultForSubmission($id: String!) {
