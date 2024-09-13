@@ -79,7 +79,7 @@ const authentication: Middleware = {
       name: "a11yphant_session",
       value: token,
       sameSite: "lax",
-      secure: true,
+      secure: process.env.SITE_PROTOCOL === "https" ? true : false,
       httpOnly: true,
     });
 

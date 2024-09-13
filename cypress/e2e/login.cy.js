@@ -31,12 +31,13 @@ function createUser({ name, email, password }) {
 describe("login", () => {
   it("can login", () => {
     Cypress.Cookies.debug(true);
+    cy.visit("/");
     createUser({
       name: "Login user",
       email: "login@a11yphant.com",
       password: "very-secret",
     });
-    cy.visit("/");
+    cy.reload();
     cy.contains("button", "Login").click();
     getInputByLabel("Email", loginContainer()).type("login@a11yphant.com");
     getInputByLabel("Password", loginContainer()).type("very-secret");
