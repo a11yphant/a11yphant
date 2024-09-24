@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { FlashMessageContextProvider } from "app/components/common/flashMessage/FlashMessageContext";
 import { CompleteEvaluationButton } from "app/components/evaluation/CompleteEvaluationButton";
 import { ResultStatus } from "app/generated/graphql";
 import { useParams } from "next/navigation";
@@ -34,7 +35,7 @@ describe("CompleteEvaluationButton", () => {
   });
 
   it("renders the 'Finish Challenge' button", async () => {
-    render(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={true} />);
+    render(<CompleteEvaluationButton status={ResultStatus.Success} isLastLevel={true} />, { wrapper: FlashMessageContextProvider });
 
     const finishButton = screen.getByRole("button", { name: "Finish Challenge" });
     expect(finishButton).toBeInTheDocument();

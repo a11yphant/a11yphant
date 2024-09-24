@@ -1,22 +1,16 @@
 import { isCodeLevel, isQuizLevel } from "app/components/challenge/helpers";
-import CodeLevel from "app/components/challenge/level/CodeLevel";
-import QuizLevel from "app/components/challenge/level/QuizLevel";
 import FullScreenLayout from "app/components/layouts/FullScreenLayout";
 import Navigation from "app/components/Navigation";
-import {
-  ChallengeDetailsBySlugDocument,
-  ChallengeDetailsBySlugQuery,
-  ChallengeDetailsBySlugQueryResult,
-  LevelByChallengeSlugDocument,
-  LevelByChallengeSlugQuery,
-  LevelByChallengeSlugQueryResult,
-  LevelByChallengeSlugQueryVariables,
-} from "app/generated/graphql";
-import { getApolloClient } from "app/lib/apollo-client/rsc";
+import { getChallenge } from "app/lib/server-side-props/get-challenge";
+import { getLevel } from "app/lib/server-side-props/get-level";
 import clsx from "clsx";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import React from "react";
+
+const CodeLevel = dynamic(() => import("app/components/challenge/level/CodeLevel"), { ssr: false });
+const QuizLevel = dynamic(() => import("app/components/challenge/level/QuizLevel"), { ssr: false });
 
 type PageProps = {
   params: {
@@ -24,28 +18,6 @@ type PageProps = {
     nthLevel: string;
   };
 };
-
-async function getChallenge(slug: string): Promise<ChallengeDetailsBySlugQueryResult["data"]["challenge"]> {
-  const client = getApolloClient();
-
-  const response = await client.query<ChallengeDetailsBySlugQuery>({
-    query: ChallengeDetailsBySlugDocument,
-    variables: { slug },
-  });
-
-  return response.data.challenge;
-}
-
-async function getLevel(nthLevel: string, challengeSlug: string): Promise<LevelByChallengeSlugQueryResult["data"]["level"]> {
-  const client = getApolloClient();
-
-  const response = await client.query<LevelByChallengeSlugQuery, LevelByChallengeSlugQueryVariables>({
-    query: LevelByChallengeSlugDocument,
-    variables: { nth: Number(nthLevel), challengeSlug },
-  });
-
-  return response.data.level;
-}
 
 const Level = async ({ params: { challengeSlug, nthLevel } }: PageProps): Promise<React.ReactElement> => {
   const challenge = await getChallenge(challengeSlug);

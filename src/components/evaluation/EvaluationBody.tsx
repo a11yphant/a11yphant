@@ -1,3 +1,5 @@
+"use client";
+
 import { EvaluationRequirementResultFragment, RequirementStatus } from "app/generated/graphql";
 import clsx from "clsx";
 import React from "react";
