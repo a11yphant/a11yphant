@@ -12,7 +12,9 @@ describe("current user", () => {
   const { getGraphQlClient, getApp } = useTestingApp();
 
   it("returns an anonymous user if the user is not registered", async () => {
-    const { data } = await getGraphQlClient().query({
+    const { data } = await (
+      await getGraphQlClient()
+    ).query({
       query: gql`
         query currentUser {
           currentUser {
@@ -33,7 +35,7 @@ describe("current user", () => {
 
     const { cookie, user } = await createUserWithSessionCookie(prisma, app);
 
-    const graphqlClient = getGraphQlClient({ authCookie: cookie });
+    const graphqlClient = await getGraphQlClient({ authCookie: cookie });
     const { data } = await graphqlClient.query({
       query: gql`
         query currentUser {

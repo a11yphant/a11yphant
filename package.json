@@ -90,6 +90,7 @@
     "focus-visible": "5.2.1",
     "graphql": "16.9.0",
     "handlebars": "4.7.8",
+    "jose": "5.8.0",
     "js-yaml": "4.1.0",
     "jsdom": "^25.0.0",
     "jsonwebtoken": "9.0.2",

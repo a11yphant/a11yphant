@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { Prisma } from "@prisma/client";
 import { PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
 
 import { HashService } from "@/authentication/hash.service";
@@ -8,6 +9,7 @@ import { PrismaService } from "@/prisma/prisma.service";
 
 import { AnonymousUserInvalidError } from "./exceptions/anonymous-user-invalid.error";
 import { EmailInUseError } from "./exceptions/email-in-use.error";
+import { TransactionRetriesExhaustedError } from "./exceptions/transaction-retries-exhausted.error";
 import { UserRegisteredError } from "./exceptions/user-registered.error";
 import { RegisterUserInput } from "./inputs/register-user.input";
 import { User } from "./models/user.model";
@@ -20,12 +22,50 @@ export class UserService {
     private config: ConfigService,
   ) {}
 
-  async create(): Promise<User> {
+  async create(userId?: string): Promise<User> {
     const record = await this.prisma.user.create({
-      data: {},
+      data: {
+        id: userId,
+      },
     });
 
     return new User(record);
+  }
+
+  async createIfNotExists(userId: string): Promise<User> {
+    let retries = 0;
+
+    while (retries < 3) {
+      try {
+        const record = await this.prisma.$transaction(
+          async (prisma) => {
+            const user = await prisma.user.findUnique({ where: { id: userId } });
+            if (user) {
+              return user;
+            }
+
+            return await prisma.user.create({
+              data: {
+                id: userId,
+              },
+            });
+          },
+          {
+            isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+          },
+        );
+
+        return new User(record);
+      } catch (error) {
+        if (error.code === "P2034") {
+          retries++;
+          continue;
+        }
+        throw error;
+      }
+    }
+
+    throw new TransactionRetriesExhaustedError();
   }
 
   async findById(userId: string): Promise<User> {

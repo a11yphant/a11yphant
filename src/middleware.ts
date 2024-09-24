@@ -1,11 +1,9 @@
-import { from } from "@apollo/client";
-import { CurrentUserDocument, CurrentUserQuery } from "app/generated/graphql";
-import { createApolloClientRSC } from "app/lib/apollo-client/create-apollo-client-rsc";
-import { Cookie, createForwardCookiesToClientLink } from "app/lib/apollo-client/create-forward-cookies-to-client-link";
-import { SetCookieFunction } from "app/lib/apollo-client/create-forward-cookies-to-client-link";
-import { GetCookieHeaderFunction } from "app/lib/apollo-client/create-forward-cookies-to-server-link";
+import * as jose from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
+import { JwtScope } from "./api/authentication/enums/jwt-scope.enum";
+import { JwtOptions } from "./api/authentication/interfaces/jwt-options.interface";
+import { SessionToken } from "./api/authentication/interfaces/session-token.interface";
 import { getConfig } from "./lib/config/rsc";
 
 type Middleware = {
@@ -46,40 +44,76 @@ const redirectChallengeUrls: Middleware = {
 };
 
 const authentication: Middleware = {
-  match: (req) => !req.cookies.has("a11yphant_session"),
+  match: (_) => true,
   run: async (req) => {
-    const { graphqlEndpointPath } = getConfig(req.headers.get("host"));
-    const cookies: Cookie[] = [];
+    if (req.cookies.has("a11yphant_session") && (await validateToken(req.cookies.get("a11yphant_session").value, JwtScope.SESSION))) {
+      const { sub: userId } = decodeToken(req.cookies.get("a11yphant_session").value);
+      const tokenData: SessionToken = {
+        userId,
+      };
 
-    const setCookie: SetCookieFunction = (cookie) => {
-      cookies.push(cookie);
-    };
+      const token = await createSignedToken({ scope: JwtScope.SESSION }, { subject: tokenData.userId, expiresInSeconds: 3600 * 24 * 365 });
 
-    const getCookiesHeader: GetCookieHeaderFunction = () => {
-      return req.headers.get("cookie");
-    };
+      const response = NextResponse.next();
 
-    const client = createApolloClientRSC(graphqlEndpointPath, getCookiesHeader);
-    client.setLink(from([createForwardCookiesToClientLink(setCookie), client.link]));
+      response.cookies.set({
+        name: "a11yphant_session",
+        value: token,
+        sameSite: "lax",
+        secure: true,
+        httpOnly: true,
+      });
 
-    await client.query<CurrentUserQuery>({
-      query: CurrentUserDocument,
-    });
-
-    for (const { name, value } of cookies) {
-      req.cookies.set(name, value);
+      return response;
     }
 
-    const response = NextResponse.next({
-      request: {
-        headers: new Headers(req.headers),
-      },
-    });
+    const tokenData: SessionToken = {
+      userId: self.crypto.randomUUID(),
+    };
 
-    for (const { name, value } of cookies) {
-      response.cookies.set(name, value);
-    }
+    const token = await createSignedToken({ scope: JwtScope.SESSION }, { subject: tokenData.userId, expiresInSeconds: 3600 * 24 * 365 });
+
+    const response = NextResponse.next();
+
+    response.cookies.set({
+      name: "a11yphant_session",
+      value: token,
+      sameSite: "lax",
+      secure: process.env.SITE_PROTOCOL === "https" ? true : false,
+      httpOnly: true,
+    });
 
     return response;
   },
 };
+
+async function createSignedToken(content: Record<string, any>, options: JwtOptions): Promise<string> {
+  const secret = process.env.API_KEY;
+  const token = await new jose.SignJWT(content)
+    .setProtectedHeader({
+      alg: "HS256",
+    })
+    .setIssuer("a11yphant")
+    .setSubject(options.subject)
+    .setExpirationTime(`${options.expiresInSeconds} seconds from now`)
+    .sign(Buffer.from(secret));
+
+  return token;
+}
+
+async function validateToken(token: string, scope: JwtScope): Promise<boolean> {
+  const secret = process.env.API_KEY;
+  try {
+    const { payload } = await jose.jwtVerify<{ scope: JwtScope }>(token, Buffer.from(secret), {
+      issuer: "a11yphant",
+    });
+
+    return scope === payload.scope;
+  } catch (e) {
+    return false;
+  }
+}
+
+function decodeToken<T extends Record<string, any>>(token: string): T {
+  return jose.decodeJwt<T>(token);
+}

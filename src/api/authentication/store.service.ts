@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Request } from "express";

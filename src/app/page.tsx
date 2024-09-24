@@ -16,15 +16,9 @@ import { getApolloClient } from "app/lib/apollo-client/rsc";
 import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
 import clsx from "clsx";
 import { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default async function Home(): Promise<React.ReactElement> {
-  const apollo = getApolloClient();
-  const currentUser = await getServerSideCurrentUser(apollo);
-  const topChallenges = await apollo.query<TopThreeChallengesQuery, TopThreeChallengesQueryVariables>({
-    query: TopThreeChallengesDocument,
-  });
-
   return (
     <>
       <Navigation />
@@ -33,17 +27,13 @@ export default async function Home(): Promise<React.ReactElement> {
           <div className={clsx("h-full max-w-screen-3xl px-8", "sm:px-12", "md:px-24", "xl:px-24", "2xl:mx-auto")}>
             <HeroSection />
             <IconSection />
-            <TopChallengeSection>
-              {topChallenges.data && (
-                <>
-                  <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="1500" isUserFavorite />
-                  <TopChallenge challenge={topChallenges.data.challenge2} timesCompleted="1000" />
-                  <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="100" isNew />
-                </>
-              )}
-            </TopChallengeSection>
+            <Suspense>
+              <TopChallenges />
+            </Suspense>
             <MediaSection />
-            {!currentUser?.data.currentUser?.isRegistered && <SignUpSection />}
+            <Suspense>
+              <SignUp />
+            </Suspense>
             <USPSection />
             <TestimonialSection>
               <QuoteCard
@@ -87,3 +77,25 @@ export default async function Home(): Promise<React.ReactElement> {
 }
 
 export const metadata: Metadata = {};
+
+async function TopChallenges(): Promise<React.ReactElement> {
+  const apollo = getApolloClient();
+  const topChallenges = await apollo.query<TopThreeChallengesQuery, TopThreeChallengesQueryVariables>({
+    query: TopThreeChallengesDocument,
+  });
+
+  return topChallenges.data ? (
+    <TopChallengeSection>
+      <TopChallenge challenge={topChallenges.data.challenge1} timesCompleted="1500" isUserFavorite />
+      <TopChallenge challenge={topChallenges.data.challenge2} timesCompleted="1000" />
+      <TopChallenge challenge={topChallenges.data.challenge3} timesCompleted="100" isNew />
+    </TopChallengeSection>
+  ) : undefined;
+}
+
+async function SignUp(): Promise<React.ReactElement> {
+  const apollo = getApolloClient();
+  const currentUser = await getServerSideCurrentUser(apollo);
+
+  return !currentUser?.data.currentUser?.isRegistered ? <SignUpSection /> : undefined;
+}

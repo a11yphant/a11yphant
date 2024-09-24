@@ -9,6 +9,7 @@ import { ConfigService } from "@nestjs/config";
 import { CODE_LEVEL_SUBMISSION, CodeLevelSubmissionData, Factory, USER, UserData } from "@tests/support/factories/database";
 import { UserFactory } from "@tests/support/factories/models/user.factory";
 import { createConfigServiceMock, useDatabase } from "@tests/support/helpers";
+import crypto from "crypto";
 
 import { HashService } from "@/authentication/hash.service";
 import { ProviderInformation } from "@/authentication/interfaces/provider-information.interface";
@@ -40,6 +41,21 @@ describe("user service", () => {
     it("can create a user", async () => {
       const service = getUserService();
       expect(await service.create()).toHaveProperty("id", expect.any(String));
+    });
+  });
+
+  describe("createIfNotExists", () => {
+    it("creates a user if doesn't exist", async () => {
+      const id = crypto.randomUUID();
+      const service = getUserService();
+      expect(await service.createIfNotExists(id)).toHaveProperty("id", id);
+    });
+
+    it("returns the existing user if already exists", async () => {
+      const id = crypto.randomUUID();
+      const service = getUserService();
+      await service.create(id);
+      expect(await service.createIfNotExists(id)).toHaveProperty("id", id);
     });
   });
 

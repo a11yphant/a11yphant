@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { AXE_CHECKS_TO_CHECK_NAMES_MAP, buildCheckNames, buildCheckProviders } from "@/submission/checks/axe-checks";
 
 describe("axe checks", () => {

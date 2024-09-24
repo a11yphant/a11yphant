@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { createMock, DeepMocked } from "@golevelup/ts-jest";
 import { ExecutionContext } from "@nestjs/common";
 import { runInterceptor } from "@tests/support/helpers";
