@@ -49,13 +49,7 @@ export const appModuleMetadata: ModuleMetadata = {
       }),
       inject: [ConfigService],
     }),
-    PrismaModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        databaseUrl: config.get<string>("database.url"),
-      }),
-      inject: [ConfigService],
-    }),
+    PrismaModule,
     ConsoleModule,
     AuthenticationModule,
     ChallengeModule,

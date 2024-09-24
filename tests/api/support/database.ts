@@ -64,9 +64,7 @@ export function getCurrentSchemaUrl(workerId?: number): string {
 }
 
 export function createTestingPrismaClient(logger: Logger): PrismaService {
-  return new PrismaService(logger, {
-    databaseUrl: getCurrentSchemaUrl(),
-  });
+  return new PrismaService(logger);
 }
 
 async function clearTableContents(client: PrismaClient): Promise<void> {
@@ -81,13 +79,21 @@ async function clearTableContents(client: PrismaClient): Promise<void> {
 }
 
 export function useDatabase(logger?: Logger): { getPrismaService: () => PrismaService } {
+  const originalDBUrl = getDbUrl().toString();
+  process.env.DATABASE_URL = getCurrentSchemaUrl();
+  process.env.DATABASE_URL_UNPOOLED = getCurrentSchemaUrl();
+
   const client = createTestingPrismaClient(logger || new NoopLogger());
+
   beforeAll(async () => {
     await client.$connect();
   });
 
   afterAll(async () => {
     await client.$disconnect();
+
+    process.env.DATABASE_URL = originalDBUrl;
+    process.env.DATABASE_URL_UNPOOLED = originalDBUrl;
   });
 
   afterEach(async () => {

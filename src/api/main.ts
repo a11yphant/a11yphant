@@ -5,12 +5,14 @@ import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
 
+let instance: INestApplication;
+
 export function configureApp(app: INestApplication): void {
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
 }
 
-export async function bootstrap(): Promise<INestApplication> {
+async function bootstrap(): Promise<INestApplication> {
   // We manually rest the type metadata storage for the graphql module before initializtion
   // of the application. This needs to be done because NestJS creates an instance of
   // the storage in the module. This leads to duplicate entries if the application
@@ -23,9 +25,14 @@ export async function bootstrap(): Promise<INestApplication> {
   configureApp(app);
   app.enableShutdownHooks();
   await app.init();
+
   return app;
 }
 
-if (require.main === module) {
-  bootstrap();
+export async function getApp(): Promise<INestApplication> {
+  if (!instance) {
+    instance = await bootstrap();
+  }
+
+  return instance;
 }

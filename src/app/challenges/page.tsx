@@ -8,15 +8,13 @@ import InTextLink from "app/components/links/InTextLink";
 import Navigation from "app/components/Navigation";
 import { ChallengesDocument, ChallengesQuery, ChallengeStatus } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
-import { getServerSideCurrentUser } from "app/lib/server-side-props/get-current-user";
+import { getServerSideCurrentUser } from "app/lib/get-server-side-current-user";
 import clsx from "clsx";
 import { Metadata } from "next";
 
 const Challenges = async (): Promise<React.ReactElement> => {
   const client = getApolloClient();
-  const {
-    data: { currentUser },
-  } = await getServerSideCurrentUser(client);
+  const currentUser = await getServerSideCurrentUser();
 
   const {
     data: { challenges },
@@ -83,7 +81,7 @@ const Challenges = async (): Promise<React.ReactElement> => {
                 challenges={openAndFinishedChallenges}
               />
             )}
-            <ChallengeSignUpPrompt userLoggedIn={currentUser?.isRegistered} />
+            <ChallengeSignUpPrompt userLoggedIn={currentUser?.authProvider !== "anonymous"} />
           </section>
         </div>
       </main>
