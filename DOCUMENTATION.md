@@ -35,6 +35,8 @@ The **API** uses the Node framework [NestJS](https://nestjs.com). The **API** al
 
 ## Prerequisites
 
+The local development environment uses [Docker](https://www.docker.com/) to run databases and other services locally. Please make sure you have it installed.
+
 `nvm` must be installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
 ## Setup
