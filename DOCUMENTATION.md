@@ -10,14 +10,7 @@ Everything you need to know to setup the project.
 
 - [General Information](#general-information)
 - [Prerequisites](#prerequisites)
-    - [1. Install Docker](#1-install-docker)
-    - [2. Create a GitHub Access Token](#2-create-a-github-access-token)
-    - [3. Install Node via nvm](#3-install-node-via-nvm)
 - [Setup](#setup)
-- [Custom NPM Commands](#custom-npm-commands)
-    - [Start Services](#start-services)
-    - [Logs](#logs)
-    - [Stop Services](#stop-services)
 - [Coding Conventions](#coding-conventions)
     - [HTML](#html)
         - [Class Order](#class-order)
@@ -25,14 +18,6 @@ Everything you need to know to setup the project.
     - [Testing](#testing)
     - [Commit Messages](#commit-messages)
     - [Branches](#branches)
-- [Useful pm2 Commands](#useful-pm2-commands)
-    - [Show All Running Services](#show-all-running-services)
-    - [Synchronize Running Services](#synchronize-running-services)
-    - [Show Logs](#show-logs)
-    - [Stop All Services](#stop-all-services)
-    - [Stop Individual Service](#stop-individual-service)
-    - [Delete All Services](#delete-all-services)
-    - [Delete Individual Service](#delete-individual-service)
 
 <hr style="color:white; height:1.5px; width:100%;"/>
 
@@ -46,29 +31,9 @@ Technically, a11yphant is split into two applications:
 
 Both applications are written in [Typescript](https://www.typescriptlang.org).
 The **Site** uses the React framework [NextJS](https://nextjs.org), [GraphQL](https://graphql.org/) and [Tailwind](https://tailwindcss.com/).
-The **API** uses the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database.
+The **API** uses the Node framework [NestJS](https://nestjs.com). The **API** also uses [Prisma](https://www.prisma.io) and GraphQL. [PostgreSQL](https://www.postgresql.org/) is used as the database. Recently the API was merged into the site application and is now running in a NextJS API route.
 
 ## Prerequisites
-
-### 1. Install Docker
-
-This project uses [Docker](https://www.docker.com/). Please make sure you have it installed.
-
-### 2. Create a GitHub Access Token
-
-Create an access token for the Github API. This access token is required to install our NPM packages from the GitHub NPM registry. You can follow [this guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
-
-**TLDR:**
-
-1. Log into your GitHub account.
-2. Go to *Settings* -> *Developer settings* -> *Personal access tokens* -> *Tokens (classic)*.
-3. Create a token and choose the scope `read:packages`.
-4. In your terminal, run the following command and login with your github user and the just created token as password:
-```bash
-npm login --scope=@a11yphant --auth-type=legacy --registry=https://npm.pkg.github.com
-```
-
-### 3. Install Node via `nvm`
 
 `nvm` must be installed for our setup script to work correctly ([Setup Instructions](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
@@ -95,8 +60,8 @@ git clone git@github.com:<your-username>/a11yphant.git
 
 5. Start the application.
 ```bash
-# Start all services in the background with pm2:
-npm start
+# Start the app in dev mode
+npm run dev
 ```
 
 6. Import the existing challenges into the database.
@@ -105,43 +70,7 @@ npm start
 npm run import-challenges
 ```
 
-7. Your application is now up and running at [http://localhost:3001](http://localhost:3001). You can also explore the API using GraphQL Playground at [http://localhost:3000/graphql](http://localhost:3000/graphql).
-
-8. To stop the application or examine the logs of an individual service, have a look at the sections [Custom NPM Commands](#custom-npm-commands) and [Useful pm2 Commands](#useful-pm2-commands).
-
-## Custom NPM Commands
-
-### Start Services
-
-All services will start in the background. This means that they are running but you can still use the shell/terminal in the meantime.
-
-```bash
-#Starts all services in the background with `pm2`
-npm start
-
-# or
-
-npm run dev
-```
-
-> **Note:** With `pm2 list` you can see which processes are currently running
-
-### Logs
-To look into the logs of an individual service, you can use the following commands:
-
-```bash
-# API
-npm run debug:api
-
-# Site
-npm run debug:site
-```
-
-### Stop Services
-
-```bash
-npm run stop
-```
+7. Your application is now up and running at [http://localhost:3001](http://localhost:3001). You can also explore the API using GraphQL Playground at [http://localhost:3001/graphql](http://localhost:3001/graphql).
 
 ## Coding Conventions
 
@@ -262,50 +191,6 @@ We never work on the `development` branch directly. All changes are made on a se
 
 - `<short-description-of-task>` should give a very short description what this branch does.
 
-
-## Useful pm2 Commands
-
-> **Note:** You have to install `pm2` globally using `npm i -g pm2` before these commands will work.
-
-### Show All Running Services
-```bash
-pm2 list
-```
-
-### Synchronize Running Services
-```bash
-# This is useful as sometimes the list is out of sync
-pm2 save
-
-# if this does not help
-pm2 save --force
-```
-
-### Show Logs
-```bash
-# same as: npm run debug:<service-name>
-pm2 logs <pm2-service-name>
-```
-
-### Stop All Services
-```bash
-# same as: npm run stop
-pm2 stop all
-```
-
-### Stop Individual Service
-```bash
-pm2 stop <pm2-service-name>
-```
-
-### Delete All Services
-```bash
-pm2 del all
-```
-
-### Delete Individual Service
-```bash
-pm2 del <pm2-service-name>
 ```
 
 <hr style="color:white; height:1.5px; width:100%;"/>
