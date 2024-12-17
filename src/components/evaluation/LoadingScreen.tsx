@@ -1,3 +1,5 @@
+"use client";
+
 import Lottie from "app/components/Lottie";
 import loadingAnimation from "app/lotties/loading_lottie_eval.json";
 import clsx from "clsx";
