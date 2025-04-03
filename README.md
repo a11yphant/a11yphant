@@ -1,4 +1,4 @@
-<img src="services/site/public/images/logo/a11yphant_Logo_pictorial-mark.png" height="138">
+<img src="public/images/logo/a11yphant_Logo_pictorial-mark.png" height="138">
 
 # [a11yphant.com](https://a11yphant.com)
 
@@ -75,7 +75,7 @@ juggles all things of organisational nature.
 
 ### Interface and Corporate Design
 
-<img src="services/site/public/images/github-docs/johanna-wicht-2023.jpg" height="138">
+<img src="public/images/github-docs/johanna-wicht-2023.jpg" height="138">
 
 <a href="https://johannawicht.com" target="_blank" rel="noopener noreferrer nofollow">Johanna Wicht</a> is a communication designer based in Salzburg with a strong interest in visualizing data and identities. She received multiple awards, including ADC Talent and CCA Student of the year.
 
