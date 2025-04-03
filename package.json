@@ -149,7 +149,7 @@
     "@types/jsonwebtoken": "9.0.6",
     "@types/lodash.debounce": "4.0.9",
     "@types/mock-fs": "4.13.4",
-    "@types/node": "20.16.5",
+    "@types/node": "22.14.0",
     "@types/nodemailer": "6.4.15",
     "@types/nprogress": "0.2.3",
     "@types/passport-github2": "1.2.9",
