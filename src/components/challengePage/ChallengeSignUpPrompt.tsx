@@ -1,12 +1,12 @@
 "use client";
 
-import { useClientConfig } from "app/lib/config";
+// import { useClientConfig } from "app/lib/config";
 import clsx from "clsx";
 import React from "react";
 
 import Button from "../buttons/Button";
-import Github from "../icons/Github";
-import XTwitter from "../icons/XTwitter";
+// import Github from "../icons/Github";
+// import XTwitter from "../icons/XTwitter";
 import { useUserAccountModalApi } from "../user/useUserAccountModalApi";
 
 export interface ChallengeSignUpPromptProps {
@@ -15,7 +15,7 @@ export interface ChallengeSignUpPromptProps {
 }
 
 const ChallengeSignUpPrompt: React.FunctionComponent<ChallengeSignUpPromptProps> = ({ className, userLoggedIn }) => {
-  const { githubLoginEndpoint, twitterLoginEndpoint } = useClientConfig();
+  // const { githubLoginEndpoint, twitterLoginEndpoint } = useClientConfig();
   const userAccountModalApi = useUserAccountModalApi();
 
   return (
@@ -47,7 +47,7 @@ const ChallengeSignUpPrompt: React.FunctionComponent<ChallengeSignUpPromptProps>
 
             <div className={clsx("flex")}>
               <div className={clsx("max-w-full block ml-1 mr-2 flex-grow")}>
-                <a
+                {/*<a
                   href={githubLoginEndpoint || "/auth/github"}
                   className={clsx(
                     "px-10 py-2.5 w-full min-w-max max-w-xs block text-center align-middle rounded border border-light",
@@ -74,7 +74,7 @@ const ChallengeSignUpPrompt: React.FunctionComponent<ChallengeSignUpPromptProps>
                   <XTwitter
                     className={clsx("inline-block h-5 -m-2 -mt-3 w-auto text-light", "transition duration-300", "group-hover:text-primary")}
                   />
-                </a>
+                </a>*/}
               </div>
             </div>
           </div>

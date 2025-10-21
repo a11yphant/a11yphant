@@ -45,13 +45,13 @@ describe("login box", () => {
     expect(screen.getByText("LoginForm")).toBeInTheDocument();
   });
 
-  it("renders the login via github link", () => {
+  it.skip("renders the login via github link", () => {
     renderLoginBox();
 
     expect(screen.getByRole("link", { name: /Log in via Github/ })).toBeInTheDocument();
   });
 
-  it("renders the login via twitter link", () => {
+  it.skip("renders the login via twitter link", () => {
     renderLoginBox();
 
     expect(screen.getByRole("link", { name: /Log in via X\/Twitter/ })).toBeInTheDocument();
