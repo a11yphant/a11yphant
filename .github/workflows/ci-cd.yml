@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   lint-content:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         run: npm run lint:content
 
   lint-app:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: read
@@ -48,7 +48,7 @@ jobs:
     needs:
       - lint-app
       - lint-content
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     services:
       postgres:
         image: postgres
@@ -97,7 +97,7 @@ jobs:
   upload-coverage-reports:
     needs:
       - test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -151,7 +151,7 @@ jobs:
   test-end-to-end:
     needs:
       - test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       SITE_HOST: localhost
       SITE_PORT: 3001
