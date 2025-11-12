@@ -33,15 +33,24 @@ export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({
   const searchParams = useSearchParams();
   const fmType = searchParams.get("fm-type") as FlashMessageEnum | null;
 
-  const closeFlashMessage = (): void => {
+  const closeFlashMessage = React.useCallback((): void => {
     setIsShowing(false);
-  };
+  }, []);
 
-  const showFlashMessage = (message: React.ReactNode, props: UserDefinedFlashMessageProps): void => {
+  const showFlashMessage = React.useCallback((message: React.ReactNode, props: UserDefinedFlashMessageProps): void => {
     setMessage(message);
     setProps(props);
     setIsShowing(true);
-  };
+  }, []);
+
+  const ret = React.useMemo(
+    () => ({
+      show: showFlashMessage,
+      hide: closeFlashMessage,
+      portalRootRef,
+    }),
+    [showFlashMessage, closeFlashMessage],
+  );
 
   React.useEffect(() => {
     if (fmType) {
@@ -51,13 +60,7 @@ export const FlashMessageContextProvider: React.FC<React.PropsWithChildren> = ({
   }, [fmType]);
 
   return (
-    <FlashMessageContext.Provider
-      value={{
-        show: showFlashMessage,
-        hide: closeFlashMessage,
-        portalRootRef,
-      }}
-    >
+    <FlashMessageContext.Provider value={ret}>
       {children}
       {portalRootRef.current &&
         createPortal(

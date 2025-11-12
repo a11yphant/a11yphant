@@ -2,8 +2,8 @@ import { getDifficultyIconByChallengeDifficulty } from "app/components/challenge
 import Footer from "app/components/Footer";
 import Check from "app/components/icons/Check";
 import Navigation from "app/components/Navigation";
-import { ChallengeDetailsBySlugDocument, ChallengeDetailsBySlugQuery, ChallengeDetailsBySlugQueryResult, LevelStatus } from "app/generated/graphql";
-import { getApolloClient } from "app/lib/apollo-client/rsc";
+import { LevelStatus } from "app/generated/graphql";
+import { getChallenge } from "app/lib/server-side-props/get-challenge";
 import clsx from "clsx";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -15,18 +15,6 @@ type PageProps = {
     challengeSlug: string;
   };
 };
-
-async function getChallenge(slug: string): Promise<ChallengeDetailsBySlugQueryResult["data"]["challenge"]> {
-  const client = getApolloClient();
-
-  const response = await client.query<ChallengeDetailsBySlugQuery>({
-    query: ChallengeDetailsBySlugDocument,
-    variables: { slug },
-  });
-
-  return response.data.challenge;
-}
-
 const Challenge = async ({ params: { challengeSlug } }: PageProps): Promise<React.ReactElement> => {
   const challenge = await getChallenge(challengeSlug);
 

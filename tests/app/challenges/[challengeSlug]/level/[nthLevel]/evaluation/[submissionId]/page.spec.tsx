@@ -1,9 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { MockedResponse, MockLink } from "@apollo/client/testing";
-import { act, render, screen } from "@testing-library/react";
-import Level from "app/app/challenges/[challengeSlug]/level/[nthLevel]/page";
-import CodeLevel from "app/components/challenge/level/CodeLevel";
-import QuizLevel from "app/components/challenge/level/QuizLevel";
+import { render, screen } from "@testing-library/react";
+import Evaluation from "app/app/challenges/[challengeSlug]/level/[nthLevel]/evaluation/[submissionId]/page";
 import {
   ChallengeDetailsBySlugDocument,
   ChallengeDetailsBySlugQueryResult,
@@ -11,8 +9,11 @@ import {
   LevelByChallengeSlugDocument,
   LevelByChallengeSlugQueryResult,
   LevelStatus,
+  ResultStatus,
 } from "app/generated/graphql";
 import { getApolloClient } from "app/lib/apollo-client/rsc";
+import { getChallenge } from "app/lib/server-side-props/get-challenge";
+import { CustomSubmissionResult, getSubmissionResult } from "app/lib/server-side-props/get-submission-result";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -27,19 +28,32 @@ jest.mock("next/navigation", () => ({
   notFound: jest.fn(),
 }));
 
+jest.mock("next/headers", () => ({
+  headers: () => ({
+    get: () => "text/html",
+  }),
+}));
+
 jest.mock("app/components/Navigation", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
-jest.mock("app/components/challenge/level/CodeLevel", () => ({
+jest.mock("app/components/evaluation/LoadingScreen", () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: () => jest.fn(),
 }));
 
-jest.mock("app/components/challenge/level/QuizLevel", () => ({
-  __esModule: true,
-  default: jest.fn(),
+jest.mock("app/components/evaluation/EvaluationResult", () => ({
+  EvaluationResult: jest.fn(),
+}));
+
+jest.mock("app/lib/server-side-props/get-challenge", () => ({
+  getChallenge: jest.fn(),
+}));
+
+jest.mock("app/lib/server-side-props/get-submission-result", () => ({
+  getSubmissionResult: jest.fn(),
 }));
 
 type ChallengeType = ChallengeDetailsBySlugQueryResult["data"]["challenge"];
@@ -51,6 +65,12 @@ const defaultChallenge: ChallengeType = {
   difficulty: ChallengeDifficulty.Easy,
   introduction: "Introduction",
   levels: [{ id: "level-id", order: 1, status: LevelStatus.Open }],
+};
+
+const defaultSubmissionResult: CustomSubmissionResult = {
+  status: ResultStatus.Success,
+  requirements: [],
+  totalScore: 100,
 };
 
 const defaultCodeLevel: LevelType = {
@@ -85,30 +105,6 @@ const defaultCodeLevel: LevelType = {
     js: null,
     result: null,
   },
-};
-
-const defaultQuizLevel: LevelType = {
-  __typename: "QuizLevel",
-  id: "71aab54b-0c51-4c4e-b134-3ed2f6b41d83",
-  question: "Which statement about <code>&lt;!DOCTYPE html&gt;</code> is true?",
-  answerOptions: [
-    {
-      __typename: "AnswerOption",
-      id: "c6427184-0cd9-45d9-9aeb-fdf326aa70e5",
-      text: "It tells the browser to use the latest html version to render the page.",
-    },
-    {
-      __typename: "AnswerOption",
-      id: "8c5748a7-eaf8-4168-ac63-33d35f3a92ba",
-      text: "It specifies that no HTML code will be used in the following document.",
-    },
-    {
-      __typename: "AnswerOption",
-      id: "18472aed-1e05-45e2-a2e4-b2126716e7a9",
-      text: "<code>&lt;!DOCTYPE html&gt;</code> does not exist in the HTML specification.",
-    },
-    { __typename: "AnswerOption", id: "64f297c7-f7ed-4214-90b5-13babcae6f81", text: "It is not required in a valid HTML document." },
-  ],
 };
 
 function mockApolloClient({ challenge = defaultChallenge, level = defaultCodeLevel }: { challenge?: ChallengeType; level?: LevelType }): void {
@@ -168,7 +164,7 @@ beforeEach(() => {
   mockApolloClient({});
 });
 
-describe("level page", () => {
+describe("evaluation page", () => {
   it("calls notFound if challenge can't be found", async () => {
     (notFound as unknown as jest.Mock).mockImplementation(() => <></>);
 
@@ -176,7 +172,7 @@ describe("level page", () => {
       // expect error because notFound doesn't stop the execution
       jest.spyOn(console, "warn").mockImplementation();
       jest.spyOn(console, "error").mockImplementation();
-      render(await Level({ params: { challengeSlug: "non-existing", nthLevel: "69" } }));
+      render(await Evaluation({ params: { challengeSlug: "non-existing", nthLevel: "69", submissionId: "id" } }));
     } catch {
       // noop
     }
@@ -184,47 +180,17 @@ describe("level page", () => {
     expect(notFound).toHaveBeenCalled();
   });
 
-  it("calls notFound if level can't be found", async () => {
-    (notFound as unknown as jest.Mock).mockImplementation(() => <></>);
-
-    try {
-      // expect error because notFound doesn't stop the execution
-      jest.spyOn(console, "error").mockImplementation();
-      render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "69" } }));
-    } catch {
-      // noop
-    }
-
-    expect(notFound).toHaveBeenCalled();
-  });
-
-  it("renders h1 with challenge name and level", async () => {
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
+  it("renders heading", async () => {
+    (getChallenge as jest.Mock).mockImplementation(() => {
+      return defaultChallenge;
     });
 
-    expect(screen.getByRole("heading", { level: 1, name: `${defaultChallenge.name} - Level 1` })).toBeInTheDocument();
-  });
-
-  it("renders CodeLevel if is CodeLevel", async () => {
-    mockApolloClient({ level: defaultCodeLevel });
-    (CodeLevel as unknown as jest.Mock).mockImplementation(() => <></>);
-
-    render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
-
-    expect(CodeLevel).toHaveBeenCalled();
-  });
-
-  it("renders QuizLevel if is QuizLevel", async () => {
-    mockApolloClient({ level: defaultQuizLevel });
-    (QuizLevel as unknown as jest.Mock).mockImplementation(() => <></>);
-
-    // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(async () => {
-      render(await Level({ params: { challengeSlug: "challenge-slug", nthLevel: "1" } }));
+    (getSubmissionResult as jest.Mock).mockImplementation(() => {
+      return defaultSubmissionResult;
     });
 
-    expect(QuizLevel).toHaveBeenCalled();
+    render(await Evaluation({ params: { challengeSlug: "non-existing", nthLevel: "69", submissionId: "id" } }));
+
+    expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
   });
 });
